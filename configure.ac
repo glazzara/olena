@@ -216,8 +216,8 @@ AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 # Qt.  #
 # ---- #
 
-AT_WITH_QT([xml], [], [], [], [oln_have_qt=yes])
-if test $oln_have_qt = yes; then
+AT_WITH_QT([xml], [], [], [:], [oln_have_qt=yes])
+if test x$oln_have_qt = xyes; then
   AT_REQUIRE_QT_VERSION([4],
     AC_MSG_WARN([Qt-dependent programs will be disabled.]),
     oln_have_expected_qt_version=yes)
