@@ -1,3 +1,11 @@
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Require Tesseract for scribo/toolchain/text_in_doc.hh's unit test.
+
+	* tests/unit_test/cond_tests_tesseract_tiff:
+	Add scribo/toolchain/text_in_doc.hh.
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix `link' name lookup in Scribo.
