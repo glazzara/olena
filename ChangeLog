@@ -1,3 +1,7 @@
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure new test directories.
+
 2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Force headers lookup in specified path.
