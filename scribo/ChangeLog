@@ -1,3 +1,15 @@
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new test for primitive::link::merge_double_link.
+
+	* tests/img/pixels.pbm: New test image.
+
+	* tests/Makefile.am (SUBDIRS): add primitive directory.
+
+	* tests/primitive/Makefile.am,
+	* tests/primitive/link/Makefile.am,
+	* tests/primitive/link/merge_double_link.cc: New.
+
 2010-10-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Negate Sauvola's result.

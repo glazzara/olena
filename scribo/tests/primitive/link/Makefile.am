@@ -1,5 +1,4 @@
-# Copyright (C) 2009 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -15,22 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(srcdir)/tests.mk
+include $(top_srcdir)/scribo/tests/tests.mk
 
-SUBDIRS = 		\
-  binarization 		\
-  core 			\
-  filter 		\
-  preprocessing 	\
-  primitive 		\
-  text 			\
-  toolchain 		\
-  unit_test
+check_PROGRAMS =				\
+  merge_double_link
 
-# Disabled directories:
-#
-#  table
 
-# Regen files recursively.
-include $(top_srcdir)/build-aux/regen-recursive.mk
-REGEN_SUBDIRS += unit_test
+merge_double_link_SOURCES = merge_double_link.cc
+
+TESTS = $(check_PROGRAMS)
