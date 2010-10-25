@@ -1,3 +1,10 @@
+2010-10-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Swilena's dependency tracking.
+
+	* python/Makefile.am (%-wrap.cc %.py): Honor Automake's `AMDEP'
+	internal conditional.
+
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Canonize Swilena's tests' output file names.
