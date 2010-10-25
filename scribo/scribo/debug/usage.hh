@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,6 @@ namespace scribo
     /// \param[in] desc Description of the program.
     /// \param[in] args The expected arguments.
     /// \param[in] args_desc The description of the expected arguments.
-    /// \param[in] out_desc The description of the output.
     ///
     /// \return Return 1.
     //
@@ -67,11 +67,8 @@ namespace scribo
 	std::cout << "  " << args_desc[i][0] << ": " << args_desc[i][1]
 	  << std::endl;
 
-//       if (out_desc)
-//	std::cout << std::endl << "Output: " << out_desc << std::endl;
-
       std::cout << "-----------" << std::endl;
-      std::cout << "EPITA/LRDE - Scribo 2009" << std::endl;
+      std::cout << "EPITA/LRDE - Scribo 2008-2010" << std::endl;
       return 1;
     }
 

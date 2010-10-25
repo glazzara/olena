@@ -1,6 +1,13 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Add a new toolchain.
+	Cleanup files.
+
+	* scribo/debug/usage.hh,
+	* scribo/text/recognition.hh: Remove useless comments.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new example.
 
 	* src/Makefile.am: Add toolchain subdir.
 

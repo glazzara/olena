@@ -121,10 +121,6 @@ namespace scribo
 	if (! lines(i).is_valid() || lines(i).is_hidden() || lines(i).type() != line::Text)
 	  continue;
 
-// 	std::cout << "Text recognition... ("
-// 		  << i << "/" << lines.nelements() << ")" << std::endl;
-// 	std::cout << "x_height = " << lines(i).x_height() << std::endl;
-
 	mln_domain(I) box = lines(i).bbox();
 
 	// Make sure characters are isolated from the borders.
@@ -150,7 +146,6 @@ namespace scribo
 
 	/// text_ima_cleaned domain may be larger than text_ima's.
 	text::clean_inplace(lines(i), text_ima);
-// 	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
 
 	// Make sure characters are isolated from the borders.
 	// Help Tesseract.
@@ -160,7 +155,6 @@ namespace scribo
 	data::fill(line_image, false);
 	data::paste_without_localization(text_ima, line_image);
 
-//	mln::io::pbm::save(line_image, mln::debug::filename("line_image.pbm", debug_id++));
 
 	// Recognize characters.
 	char* s = TessBaseAPI::TesseractRect(
@@ -175,7 +169,6 @@ namespace scribo
 
 	if (s != 0)
 	{
-//  	  std::cerr << s << std::endl;
 	  std::string str(s);
 	  str = str.substr(0, str.length() - 2);
 	  lines(i).update_text(str);
@@ -232,7 +225,6 @@ namespace scribo
 
 	if (s != 0)
 	{
-// 	  std::cout << s << std::endl;
 	  if (!output_file.empty())
 	  {
 	    std::string str(s);
