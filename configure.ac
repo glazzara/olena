@@ -39,13 +39,13 @@ AM_INIT_AUTOMAKE([1.10 subdir-objects check-news dist-bzip2 nostdinc -Wall])
 # Package metadata.
 AC_CONFIG_FILES([milena/mln/version.hh])
 AC_DEFINE_UNQUOTED([OLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
-		   [Package Full name.])
+                   [Package Full name.])
 AC_DEFINE_UNQUOTED([OLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
-		   [Bug report address.])
+                   [Bug report address.])
 AC_DEFINE_UNQUOTED([OLN_PACKAGE_STRING], ["$PACKAGE_STRING"],
-		   [Full name and version.])
+                   [Full name and version.])
 AC_DEFINE_UNQUOTED([OLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
-		   [Package Version.])
+                   [Package Version.])
 
 ## --------------------- ##
 ## C++ compiler set up.  ##
@@ -90,11 +90,11 @@ AC_ARG_VAR([WARNINGS_CXXFLAGS], [C++ compiler warning flags])
 case "$CXX" in
      # Intel compiler
      *icpc*)
-	WARNINGS_CXXFLAGS="-Wall -wd111,193,279,383,444,522,654,810,981,1418"
-	;;
+        WARNINGS_CXXFLAGS="-Wall -wd111,193,279,383,444,522,654,810,981,1418"
+        ;;
      *)
-	WARNINGS_CXXFLAGS="-Wall -W"
-	;;
+        WARNINGS_CXXFLAGS="-Wall -W"
+        ;;
 esac
 
 
@@ -161,17 +161,16 @@ fi
 # ``--disable-apps''), then the disable flag has priority.
 
 AC_ARG_ENABLE([all],
-              [AS_HELP_STRING([--enable-all],
-                              [enable maintainer mode])],
-              [
-               enable_trimesh=yes
-               enable_swilena=yes
+  [AS_HELP_STRING([--enable-all], [enable maintainer mode])],
+  [if test "x$enable_all" != xno; then
+     enable_trimesh=yes
+     enable_swilena=yes
 dnl<<lrde
-               enable_scribo=yes
+     enable_scribo=yes
 dnl>>
-               enable_apps=yes
-               enable_tools=yes
-              ])
+     enable_apps=yes
+     enable_tools=yes
+   fi])
 
 
 ## ------------------ ##
@@ -191,216 +190,73 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 ## External libraries.  ##
 ## -------------------- ##
 
-# Prepare calls to pkg-config
-PKG_PROG_PKG_CONFIG
+# ------- #
+# Boost.  #
+# ------- #
 
-AC_MSG_RESULT([])
-AC_MSG_RESULT([])
-AC_MSG_RESULT([Checking external libraries])
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
+BOOST_TUPLE
+AM_CONDITIONAL([HAVE_BOOST_TUPLE],
+               [test "x$ac_cv_header_boost_tuple_tuple_hpp" = xyes])
 
-
-### Support for FreeImagePlus has been disabled for Olena 1.0.
-## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
-
-## ----- ##
-## Boost ##
-## ----- ##
-
-oln_have_boost_preprocessor=no
-oln_have_boost_tuple=no
-
-if test "x$with_boost" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Boost])
-   AC_MSG_RESULT([-------])
-
-   # Is Boost installed?
-   BOOST_REQUIRE([], oln_have_boost=no)
-
-   if test "x$oln_have_boost" != xno; then
-
-      # Preprocessor
-      BOOST_FIND_HEADER([boost/preprocessor/repetition/repeat.hpp],
-			oln_have_boost_preprocessor=no,
-		        oln_have_boost_preprocessor=yes)
-      if test "x$oln_have_boost_preprocessor" = xyes; then
-      	 AC_DEFINE([HAVE_BOOST_PREPROCESSOR], 1,
-	 	   [Define to 1 if we can use Boost Preprocessor.])
-      fi
-
-      # Tuple
-      BOOST_FIND_HEADER([boost/tuple/tuple.hpp],
-		        oln_have_boost_tuple=no,
-		        oln_have_boost_tuple=yes)
-      if test "x$oln_have_boost_tuple" = xyes; then
-      	 AC_DEFINE([HAVE_BOOST_TUPLE], 1,
-	 	   [Define to 1 if we can use Boost Tuple.])
-      fi
-   fi
-fi
-
-AM_CONDITIONAL([HAVE_BOOST_PREPROCESSOR],
-	       [test "x$oln_have_boost_preprocessor" = xyes])
-AM_CONDITIONAL([HAVE_BOOST_TUPLE], [test "x$oln_have_boost_tuple" = xyes])
-
-
-## ---------------- ##
-## CFITSIO library. ##
-## ---------------- ##
-
-if test "x$with_cfitsio" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libcfitsio])
-   AC_MSG_RESULT([------------])
-fi
+# ----------------- #
+# CFITSIO library.  #
+# ----------------- #
 
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
+# ---------- #
+# Magick++.  #
+# ---------- #
 
-#------------------------------------------------------------
-
-## --------- ##
-## Magick++. ##
-## --------- ##
-
-# FIXME: We should handle Magick++ both with Magick++-config and
-# pkg-config?  instead of OLN_WITH_LIB.  See how other projects handle
-# this.
-
-
-AC_ARG_WITH([magickxx],
-    [AC_HELP_STRING([--with-magickxx],
-                    [enable magickxx support (default)])],
-        [with_magickxx=$withval],
-        [with_magickxx='yes'])
-
-oln_have_magickxx=no
-
-if test "x$with_magickxx" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libMagick++])
-   AC_MSG_RESULT([---------------])
-
-   # Try to use ImageMagick from a specified path.
-   if test "x$with_magickxx" != xyes; then
-      AC_MSG_CHECKING([with given path $with_magickxx])
-      AC_MSG_RESULT([])
-      OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx],
-      		   [MAGICKXX])
-   fi
-
-   # Check with pkg-config if previous test failed or if no path have
-   # been passed through --with-magickxx argument.
-   if test "x$oln_have_magickxx" = xno; then
-      AC_MSG_CHECKING([with pkg-config])
-      AC_MSG_RESULT([])
-      PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes,
-      						  oln_have_magickxx=no)
-   AC_MSG_RESULT([])
-
-      if test "x$oln_have_magickxx" = xyes; then
-         AC_DEFINE([HAVE_MAGICKXX], 1,
-	 	   [Define to 1 if we can use libMagick++])
-	 # Use standard variable names.
-	 MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
-	 MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
-	 AC_SUBST(MAGICKXX_CPPFLAGS)
-	 AC_SUBST(MAGICKXX_LDFLAGS)
-      fi
-   fi
-fi
-
+OLN_WITH_LIB_PKG_CONFIG([Magick++], [Magick++.h], [Magick++], [magickxx],
+                        [MAGICKXX], [], [ImageMagick++])
 AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 
-#------------------------------------------------------------
+# ---- #
+# Qt.  #
+# ---- #
 
-## --- ##
-## Qt. ##
-## --- ##
-
-oln_have_qt=no
-
-if test "x$with_qt" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Qt])
-   AC_MSG_RESULT([----])
-
-   AT_WITH_QT([+xml], [], [],
-              AC_MSG_WARN([Qt dependent programs will be disabled.]))
-
-   if test "x$QT_VERSION_MAJOR" != x; then
-      AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
-	 		    AC_DEFINE([HAVE_QT], 1,
-				      [Define to 1 if we can use Qt]) oln_have_qt=yes)
-      if test "x$QT_VERSION_MAJOR" = x4; then
-      	 oln_have_qt=yes
-      fi
-   fi
+AT_WITH_QT([xml], [], [], [:], [oln_have_qt=yes])
+if test x$oln_have_qt = xyes; then
+  AT_REQUIRE_QT_VERSION([4],
+    AC_MSG_WARN([Qt-dependent programs will be disabled.]),
+    oln_have_expected_qt_version=yes)
 fi
+AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_expected_qt_version" = xyes])
 
-AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_qt" = xyes])
-
-
-## ---------- ##
-## Tesseract. ##
-## ---------- ##
-
-if test "x$with_tesseract" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Tesseract])
-   AC_MSG_RESULT([-----------])
-fi
+# ----------- #
+# Tesseract.  #
+# ----------- #
 
 OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
-   	     [tesseract], [TESSERACT])
+             [tesseract], [TESSERACT])
 
-
-## ------------- ##
-## TIFF library. ##
-## ------------- ##
-
-if test "x$with_tiff" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libtiff])
-   AC_MSG_RESULT([---------])
-fi
+# -------------- #
+# TIFF library.  #
+# -------------- #
 
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
-
-## -------------------------------- ##
-## GDCM library (Grassroots DiCom). ##
-## -------------------------------- ##
-
-if test "x$with_gdcm" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libgdcm])
-   AC_MSG_RESULT([---------])
-fi
+# --------------------------------- #
+# GDCM library (Grassroots DiCom).  #
+# --------------------------------- #
 
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
-   	     [GDCM],
-	     [-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib])
+             [GDCM],
+             m4_do([-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF],
+                   [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
+                   [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
 
-
-
-
-AC_MSG_RESULT([])
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
-AC_MSG_RESULT([])
-AC_MSG_RESULT([])
-
-
-## ---------------------------- ##
-## (Bundled) trimesh2 library.  ##
-## ---------------------------- ##
+# ---------------------------- #
+# (Bundled) trimesh2 library.  #
+# ---------------------------- #
 
 AC_ARG_ENABLE([trimesh],
               [AS_HELP_STRING([--enable-trimesh],
                               [build the (bundled) trimesh2 library])])
 AM_CONDITIONAL([ENABLE_TRIMESH], [test "x$enable_trimesh" = xyes])
 AC_CONFIG_SUBDIRS([external/trimesh])
+
 
 ## --------- ##
 ## Swilena.  ##
@@ -423,6 +279,8 @@ disabled.  Try to invoke configure with `--enable-shared'.])
        # Check for Python.
        AM_PATH_PYTHON([2.4], [],
                       [AC_MSG_ERROR([Python 2.4 is required for Swilena.])])
+       AS_VERSION_COMPARE([2.5], [$am_cv_python_version],
+         [AC_MSG_WARN([Python 2.6 and greater may not work with Swilena.])])
        adl_CHECK_PYTHON
        # Check for Python headers.
        save_CPPFLAGS=$CPPFLAGS
@@ -434,18 +292,18 @@ Try adding `-I <Python include path>' to `CPPFLAGS'.])])
 AM_CONDITIONAL([ENABLE_SWILENA], [test "x$enable_swilena" = xyes])
 
 AC_CONFIG_FILES([swilena/Makefile
-		 swilena/python/Makefile])
+                 swilena/python/Makefile])
 
 AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
 
 AC_CONFIG_FILES(m4_do([swilena/python/sps],
-		      [:swilena/python/sps-common.in],
-		      [:swilena/python/sps.in]),
-		[chmod +x swilena/python/sps])
+                      [:swilena/python/sps-common.in],
+                      [:swilena/python/sps.in]),
+                [chmod +x swilena/python/sps])
 AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
-		      [:swilena/python/sps-common.in],
-		      [:swilena/python/sps-local.in]),
-		[chmod +x swilena/python/sps-local])
+                      [:swilena/python/sps-common.in],
+                      [:swilena/python/sps-local.in]),
+                [chmod +x swilena/python/sps-local])
 
 dnl<<lrde
 ## -------- ##
@@ -472,8 +330,8 @@ AC_CONFIG_FILES([
       scribo/src/postprocessing/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/primitive/Makefile
-	scribo/src/primitive/extract/Makefile
-	scribo/src/primitive/find/Makefile
+        scribo/src/primitive/extract/Makefile
+        scribo/src/primitive/find/Makefile
         scribo/src/primitive/group/Makefile
       scribo/src/table/Makefile
       scribo/src/text/Makefile
@@ -558,9 +416,9 @@ AC_CONFIG_FILES([
     milena/tests/core/Makefile
       milena/tests/core/alias/Makefile
       milena/tests/core/image/Makefile
-	milena/tests/core/image/dmorph/Makefile
-	milena/tests/core/image/imorph/Makefile
-	milena/tests/core/image/vmorph/Makefile
+        milena/tests/core/image/dmorph/Makefile
+        milena/tests/core/image/imorph/Makefile
+        milena/tests/core/image/vmorph/Makefile
       milena/tests/core/other/Makefile
       milena/tests/core/routine/Makefile
       milena/tests/core/site_set/Makefile
@@ -623,7 +481,7 @@ AC_CONFIG_FILES([
         milena/tests/morpho/reconstruction/by_dilation/Makefile
         milena/tests/morpho/reconstruction/by_erosion/Makefile
       milena/tests/morpho/tree/Makefile
-	milena/tests/morpho/tree/filter/Makefile
+        milena/tests/morpho/tree/filter/Makefile
       milena/tests/morpho/watershed/Makefile
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
@@ -650,7 +508,7 @@ AC_CONFIG_FILES([
     milena/tests/world/Makefile
       milena/tests/world/binary_2d/Makefile
       milena/tests/world/inter_pixel/Makefile
-	milena/tests/world/inter_pixel/dim2/Makefile
+        milena/tests/world/inter_pixel/dim2/Makefile
 ])
 
 dnl<<lrde
@@ -690,20 +548,20 @@ AC_CONFIG_FILES([
 # FIXME: Consider using `sed' instead of `configure' to create these
 # tests for the sake of speed.
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-max-curv],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-max-curv])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-max-curv])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-segm],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-segm])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-segm],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-skel],
-		[chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-skel])
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-skel])
 
 AC_CONFIG_FILES([milena/apps/constrained-connectivity/test-constrained-connectivity],
-		[chmod +x milena/apps/constrained-connectivity/test-constrained-connectivity])
+                [chmod +x milena/apps/constrained-connectivity/test-constrained-connectivity])
 
 # Flags for apps.
 AC_ARG_VAR([APPS_CXXFLAGS], [C++ compiler flags for applications])
@@ -721,8 +579,7 @@ fi
 ## ------- ##
 
 AC_ARG_ENABLE([tools],
-              [AS_HELP_STRING([--enable-tools],
-                              [enable tools])])
+              [AS_HELP_STRING([--enable-tools], [enable tools])])
 AM_CONDITIONAL([ENABLE_TOOLS], [test "x$enable_tools" = "xyes"])
 
 # Ask for the creation of tools' Makefiles.
@@ -739,12 +596,19 @@ if test -z "$TOOLS_CXXFLAGS"; then
   fi
 fi
 
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
-AC_MSG_RESULT([Update Olena configuration])
-AC_OUTPUT
 
+## ----------------- ##
+## Verbose display.  ##
+## ----------------- ##
 
-AC_MSG_RESULT([
+# Do not print this information by default, since `configure' outputs
+# should be kept short.  Longer explanations are always available in
+# config.log.
+
+AC_ARG_ENABLE([verbose],
+  [AS_HELP_STRING([--enable-verbose], [enable verbose display])],
+  [if test "x$enable_verbose" != xno; then
+     AC_MSG_RESULT([
 -------------------------------------------------------------------------------
 Configuration summary.
 
@@ -757,17 +621,16 @@ Build system type: $build
 ================
 
 
-			Option			Enabled and available
+                        Option                  Enabled and available
 -------------------------------------------------------------------------------
-Boost Preprocessor      --with-boost=[DIR]	$oln_have_boost_preprocessor
-Boost Tuple		--with-boost=[DIR]	$oln_have_boost_tuple
-CFITSIO			--with-cfitsio[=DIR]	$oln_have_cfitsio
-GDCM			--with-gdcm[=DIR]		$oln_have_gdcm
-Magick++		--with-magickxx		$oln_have_magickxx
-Qt			--with-qt		$oln_have_qt
-Tesseract		--with-tesseract[=DIR]	$oln_have_tesseract
-TIFF 			--with-tiff[=DIR]		$oln_have_tiff
-Trimesh 		--enable-trimesh	$enable_trimesh
+Boost Tuple             --with-boost=@<:@=DIR@:>@     $oln_have_boost_tuple
+CFITSIO                 --with-cfitsio@<:@=DIR@:>@    $oln_have_cfitsio
+GDCM                    --with-gdcm@<:@=DIR@:>@       $oln_have_gdcm
+Magick++                --with-magickxx         $oln_have_magickxx
+Qt                      --with-qt               $oln_have_qt
+Tesseract               --with-tesseract@<:@=DIR@:>@  $oln_have_tesseract
+TIFF                    --with-tiff@<:@=DIR@:>@       $oln_have_tiff
+Trimesh                 --enable-trimesh        $enable_trimesh
 -------------------------------------------------------------------------------
 
 
@@ -778,10 +641,10 @@ Trimesh 		--enable-trimesh	$enable_trimesh
 ===========
 
 
-			Option			Enabled
+                        Option                  Enabled
 -------------------------------------------------------------------------------
-Scribo			--enable-scribo		$enable_scribo
-Swilena			--enable-swilena	$enable_swilena
+Scribo                  --enable-scribo         $enable_scribo
+Swilena                 --enable-swilena        $enable_swilena
 -------------------------------------------------------------------------------
 
 
@@ -792,10 +655,10 @@ Swilena			--enable-swilena	$enable_swilena
 =============
 
 
-			Option			Enabled
+                        Option                  Enabled
 -------------------------------------------------------------------------------
-Apps			--enable-apps		$enable_apps
-Tools			--enable-tools		$enable_tools
+Apps                    --enable-apps           $enable_apps
+Tools                   --enable-tools          $enable_tools
 -------------------------------------------------------------------------------
 
 
@@ -812,13 +675,13 @@ Options used to compile and link:
   LIBS            = $MAGICK_LIBS
   CXX             = $CXX
   CXXFLAGS        = $CXXFLAGS
-  PKG_CONFIG	  = $PKG_CONFIG
-  QT_PATH	  = $QT_PATH
-  QMAKE		  = $QMAKE
-  MOC		  = $MOC
-  UIC		  = $UIC
-  RCC		  = $RCC
-  BOOST_ROOT 	  = $BOOST_ROOT
+  PKG_CONFIG      = $PKG_CONFIG
+  QT_PATH         = $QT_PATH
+  QMAKE           = $QMAKE
+  MOC             = $MOC
+  UIC             = $UIC
+  RCC             = $RCC
+  BOOST_ROOT      = $BOOST_ROOT
   MAGICKXX_CFLAGS = $MAGICKXX_CPPFLAGS
   MAGICKXX_LIBS   = $MAGICKXX_LDFLAGS
   SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
@@ -828,9 +691,17 @@ Options used to compile and link:
 
 
 *******************************************************************************
-Olena is configured as stated above. Please verify that this configuration
+Olena is configured as stated above.  Please verify that this configuration
 matches your expectations.
 
 Then, type 'make' to build Olena and 'make install' to install it on
 your system.
 ])
+fi])
+
+
+## -------- ##
+## Output.  ##
+## -------- ##
+
+AC_OUTPUT

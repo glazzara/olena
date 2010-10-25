@@ -17,11 +17,11 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-COND_TESTS = cond_tests_boost-preprocessor_boost-tuple	\
-	     cond_tests_cfitsio 			\
-	     cond_tests_gdcm 				\
-	     cond_tests_magickxx 			\
-	     cond_tests_qt 				\
+COND_TESTS = cond_tests_boost-tuple		\
+	     cond_tests_cfitsio			\
+	     cond_tests_gdcm			\
+	     cond_tests_magickxx		\
+	     cond_tests_qt			\
 	     cond_tests_tiff
 
 EXTRA_DIST = disabled_tests \

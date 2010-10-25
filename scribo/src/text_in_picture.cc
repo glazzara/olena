@@ -332,7 +332,7 @@ int main(int argc, char* argv[])
   /// linking potential components
   timer_.restart();
   mln::util::couple<object_links<L>, object_links<L> >
-    links = link::left_right(filtered_components);
+    links = scribo::primitive::link::left_right(filtered_components);
 
   object_links<L>& left_link = links.first();
   object_links<L>& right_link = links.second();
@@ -368,8 +368,8 @@ int main(int argc, char* argv[])
 
   // Validating left and right links.
   timer_.restart();
-  object_links<L>
-    merged_links = link::merge_double_link(left_link, right_link);
+  object_links<L> merged_links =
+    scribo::primitive::link::merge_double_link(left_link, right_link);
   t_ = timer_;
   std::cout << "Right/Left Validation. " << t_ << std::endl;
 

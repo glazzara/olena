@@ -51,15 +51,9 @@ transform_directional_SOURCES = transform_directional.cc
 transform_line_SOURCES = transform_line.cc
 transform_snake_SOURCES = transform_snake.cc
 
-
-if HAVE_BOOST_PREPROCESSOR
 if HAVE_BOOST_TUPLE
-
-check_PROGRAMS += tuple
-tuple_SOURCES = tuple.cc
-
+  check_PROGRAMS += tuple
+  tuple_SOURCES = tuple.cc
 endif HAVE_BOOST_TUPLE
-endif HAVE_BOOST_PREPROCESSOR
-
 
 TESTS = $(check_PROGRAMS)

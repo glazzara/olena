@@ -66,6 +66,21 @@
 
 	* src/text_in_picture.cc: Do not negate Sauvola's output anymore.
 
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Require Tesseract for scribo/toolchain/text_in_doc.hh's unit test.
+
+	* tests/unit_test/cond_tests_tesseract_tiff:
+	Add scribo/toolchain/text_in_doc.hh.
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix `link' name lookup in Scribo.
+
+	* src/text_in_picture.cc: Help the C++ compiler not to mix up
+	scribo::primitive::link with unistd.h's link(2).
+
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo

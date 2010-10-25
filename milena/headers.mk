@@ -1229,6 +1229,7 @@ mln/value/label_32.hh \
 mln/value/label_8.hh \
 mln/value/lut_vec.hh \
 mln/value/mixin.hh \
+mln/value/next.hh \
 mln/value/ops.hh \
 mln/value/other.hh \
 mln/value/proxy.hh \

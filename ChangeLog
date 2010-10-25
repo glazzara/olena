@@ -6,6 +6,107 @@
 
 	* configure.ac: Configure new test directories.
 
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not trigger an error when Qt is missing, too old or not working.
+
+	* configure.ac: Here.
+	Protect a test from a variable expanding to an empty string.
+
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have AutoTroll always restore the initial ``current directory''.
+
+	* m4/autotroll.m4 (AT_WITH_QT): Always come back to the top-level
+	directory upon failure.
+
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a warning about Python 2.6 and greater regarding Swilena.
+
+	* configure.ac: Here.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor the implementations of OLN_WITH_LIB and OLN_WITH_LIB_PKG_CONFIG.
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB_SHARED_IMPL): New macro.
+	Use it to factor...
+	(_OLN_WITH_LIB, _OLN_WITH_LIB_PKG_CONFIG): ...these.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Aesthetic changes.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix configure option `--enable-all'.
+
+	* configure.ac: Check the value of `enable_all' before triggering
+	optional modules.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp the handling of Qt.
+
+	* configure.ac: Here.
+	Use autotroll.m4's features instead of duplicating them.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp the handling of Boost libraries.
+
+	* configure.ac: Here.
+	Use boost.m4's features instead of duplicating them.
+	Do not explictly look for the Boost Preprocessor (Boost.PP)
+	Library, as we do not directly use it.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp the handling of Magick++.
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB): Make all arguments
+	mandatory.
+	(OLN_WITH_LIB_PKG_CONFIG, _OLN_WITH_LIB_PKG_CONFIG): New macros.
+	* configure.ac: Use OLN_WITH_LIB_PKG_CONFIG to handle Magick++
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have configure be terser.
+
+	* configure.ac: Remove intermediate messages.
+	Add option `--enable-verbose', and show the final summary only
+	when it is turned on.
+	Use escaped version of `[' and `]' in message.
+	Document this option...
+	* README (Verbose Display): ...here.
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ensure paths passed to `--with-*' options are visited before others.
+
+	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Here.
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* m4/oln-with-lib.m4: Revert the previous changes.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update HACKING.
+
+	* HACKING (Required Software): Update.
+	(Useful Tools): New section.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update README.
+
+	* README: Aesthetic changes.
+	(Overview): Fix an URL.
+	(Other libraries): New section.
+	(Bibliography): Add publications of 2010.
+
 2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Force headers lookup in specified path.

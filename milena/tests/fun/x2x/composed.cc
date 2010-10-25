@@ -24,11 +24,11 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <iostream>
+
 #include <mln/fun/x2x/translation.hh>
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/fun/x2x/composed.hh>
 #include <mln/fun/i2v/all_to.hh>
-
 
 
 int main()
@@ -43,9 +43,7 @@ int main()
   algebra::vec<3,float> vec1 = make::vec(a, b, c);
   fun::x2x::translation<3,float> tr(all_to(1.6));
   algebra::vec<3,float> axis;
-  axis[0] = 0;
-  axis[1] = 1;
-  axis[0] = 0;
+  axis.set(0, 1, 0);
   fun::x2x::rotation<3,float> rot(0.3, axis);
 
   std::cout << "vec : " << vec1 << std::endl;

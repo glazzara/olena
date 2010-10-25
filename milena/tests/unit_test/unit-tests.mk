@@ -3,16 +3,14 @@
 check_PROGRAMS =
 
 # Starting a conditional unit test list.
-if HAVE_BOOST_PREPROCESSOR
 if HAVE_BOOST_TUPLE
 check_PROGRAMS +=  \
 mln_accu_tuple
 
-mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${BOOST_PREPROCESSOR_CPPFLAGS}  ${AM_CPPFLAGS}
-mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${BOOST_PREPROCESSOR_LDFLAGS}  ${AM_LDFLAGS}
+mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${AM_LDFLAGS}
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 endif HAVE_BOOST_TUPLE
-endif HAVE_BOOST_PREPROCESSOR
 
 # Starting a conditional unit test list.
 if HAVE_CFITSIO
@@ -1355,6 +1353,7 @@ mln_value_label_32 \
 mln_value_label_8 \
 mln_value_lut_vec \
 mln_value_mixin \
+mln_value_next \
 mln_value_ops \
 mln_value_other \
 mln_value_proxy \
@@ -2674,6 +2673,7 @@ mln_value_label_32_SOURCES = mln_value_label_32.cc
 mln_value_label_8_SOURCES = mln_value_label_8.cc
 mln_value_lut_vec_SOURCES = mln_value_lut_vec.cc
 mln_value_mixin_SOURCES = mln_value_mixin.cc
+mln_value_next_SOURCES = mln_value_next.cc
 mln_value_ops_SOURCES = mln_value_ops.cc
 mln_value_other_SOURCES = mln_value_other.cc
 mln_value_proxy_SOURCES = mln_value_proxy.cc

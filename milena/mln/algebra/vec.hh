@@ -540,8 +540,8 @@ namespace mln
     inline
     const vec<n, T>& vec<n, T>::normalize()
     {
-      float l2_norm = float(norm::l2(*this));
-      mln_assertion(l2_norm > 0.f);
+      mln_sum_product(T,T) l2_norm = norm::l2(*this);
+      mln_assertion(l2_norm > mln_sum_product(T,T)(0));
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = static_cast<T>(data_[i] / l2_norm);
       return *this;

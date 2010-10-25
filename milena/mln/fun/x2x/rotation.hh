@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,6 +37,7 @@
 /// Conversion from Quaternion to (angle,axis), Source:
 ///   http://jeux.developpez.com/faq/matquat/?page=quaternions#Q56
 
+# include <cstdlib>
 # include <cmath>
 
 # include <mln/core/concept/function.hh>
@@ -59,75 +61,83 @@ namespace mln
 
       namespace internal
       {
-        template < unsigned n, typename C >
-        algebra::h_mat<n, C>
-        get_rot_h_mat(const C alpha_, const algebra::vec<n,C>& axis_)
-        {
-          mln_assertion(!"get_h_mat : n not implemented");
-        }
+	// (Axis, angle)-based rotation: general case (not implemented).
+	template < unsigned n, typename C >
+	algebra::h_mat<n, C>
+	get_rot_h_mat(const C alpha_, const algebra::vec<n,C>& axis_)
+	{
+	  std::cerr
+	    << __FILE__ << ":" << __LINE__ << ": error:"
+	    << " generic mln::fun::x2x::internal::get_rot_h_mat<n, C>"
+	    << " not implemented."
+	    << std::endl;
+	  std::abort();
+	}
 
-        template <typename C >
-        algebra::h_mat<3, C>
-        get_rot_h_mat(const C alpha_, const algebra::vec<3,C>& axis_)
-        {
-	  //test axis is valid
+	// (Axis, angle)-based rotation: 2D case.
+	template <typename C >
+	algebra::h_mat<2, C>
+	get_rot_h_mat(const C alpha, const algebra::vec<2,C>&)
+	{
+	  const C cos_a = cos(alpha);
+	  const C sin_a = sin(alpha);
+
+	  algebra::h_mat<2, C> m;
+
+	  m(0,0) = cos_a; m(0,1) = -sin_a; m(0,2) = 0;
+	  m(1,0) = sin_a; m(1,1) = cos_a;  m(1,2) = 0;
+	  m(2,0) = 0;     m(2,1) = 0;      m(2,2) = 1;
+
+	  return m;
+	}
+
+	// (Axis, angle)-based rotation: 3D case.
+	template <typename C >
+	algebra::h_mat<3, C>
+	get_rot_h_mat(const C alpha, const algebra::vec<3,C>& axis)
+	{
+	  // Ensure axis is valid.
 	  typedef algebra::vec<3,C> vec_t;
-	  //FIXME: cannot use '!=' operator.
-          mln_precondition(!(axis_ == vec_t(literal::zero)));
+	  // FIXME: This check is not precise enought when the vector
+	  // holds floating point values.
+	  mln_precondition(axis != vec_t(literal::zero));
 
-	  /// Be sure that axis is normalized.
-	  algebra::vec<3,C> axis = axis_;
-	  axis.normalize();
+	  algebra::vec<3,C> normed_axis = axis;
+	  normed_axis.normalize();
 
-          const C cos_a = cos(alpha_);
-          const C sin_a = sin(alpha_);
-          const C u = axis_[0];
-          const C v = axis_[1];
-          const C w = axis_[2];
-          const C u2 = u * u;
-          const C v2 = v * v;
-          const C w2 = w * w;
+	  const C cos_a = cos(alpha);
+	  const C sin_a = sin(alpha);
+	  const C u = normed_axis[0];
+	  const C v = normed_axis[1];
+	  const C w = normed_axis[2];
+	  const C u2 = u * u;
+	  const C v2 = v * v;
+	  const C w2 = w * w;
 
-          algebra::h_mat<3, C> m_;
+	  algebra::h_mat<3, C> m;
 
-	  m_(0,0) = u2 + (1 - u2) * cos_a;
-          m_(0,1) = u*v * (1 - cos_a) - w * sin_a;
-          m_(0,2) = u*w * (1 - cos_a) + v * sin_a;
-          m_(0,3) = 0;
+	  m(0,0) = u2 + (1 - u2) * cos_a;
+	  m(0,1) = u * v * (1 - cos_a) - w * sin_a;
+	  m(0,2) = u * w * (1 - cos_a) + v * sin_a;
+	  m(0,3) = 0;
 
-          m_(1,0) = u*v * (1 - cos_a) + w * sin_a;
-          m_(1,1) = v2 + (1 - v2) * cos_a;
-          m_(1,2) = v * w * (1 - cos_a) - u * sin_a;
-          m_(1,3) = 0;
+	  m(1,0) = u * v * (1 - cos_a) + w * sin_a;
+	  m(1,1) = v2 + (1 - v2) * cos_a;
+	  m(1,2) = v * w * (1 - cos_a) - u * sin_a;
+	  m(1,3) = 0;
 
-          m_(2,0) = u * w * (1 - cos_a) - v * sin_a;
-          m_(2,1) = u * w * (1 - cos_a) + u * sin_a;
-          m_(2,2) = w2 + (1 - w2) * cos_a;
-          m_(2,3) = 0;
+	  m(2,0) = u * w * (1 - cos_a) - v * sin_a;
+	  m(2,1) = v * w * (1 - cos_a) + u * sin_a;
+	  m(2,2) = w2 + (1 - w2) * cos_a;
+	  m(2,3) = 0;
 
-          m_(3,0) = 0;
-          m_(3,1) = 0;
-          m_(3,2) = 0;
-          m_(3,3) = 1;
+	  m(3,0) = 0;
+	  m(3,1) = 0;
+	  m(3,2) = 0;
+	  m(3,3) = 1;
 
-          return m_;
-        }
-
-        template <typename C >
-        algebra::h_mat<2, C>
-        get_rot_h_mat(const C alpha_, const algebra::vec<2,C>&)
-        {
-          const C cos_a = cos(alpha_);
-          const C sin_a = sin(alpha_);
-
-          algebra::h_mat<2, C> m_;
-
-          m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
-          m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;
-          m_(2,0) = 0;     m_(2,1) = 0;      m_(2,2) = 1;
-
-          return m_;
-        }
+	  return m;
+	}
 
       } // end of namespace internal
 
@@ -135,44 +145,43 @@ namespace mln
       /// Represent a rotation function.
       template <unsigned n, typename C>
       struct rotation
-	:
-	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, C, rotation<n,C> >
-	,
-	public Function_v2v< rotation<n,C> >
+	: fun::internal::x2x_linear_impl_< algebra::vec<n,C>, C, rotation<n,C> >,
+	  public Function_v2v< rotation<n,C> >
       {
 	/// Type of the underlying data stored in vectors and matrices.
 	typedef C data_t;
 
 	/// Type of the inverse function.
 	typedef rotation<n,C> invert;
-	/// Return the invere function.
+	/// Return the inverse function.
 	invert inv() const;
 
 	/// Constructor without argument.
-        rotation();
-	/// Constructor with radian alpha and a facultative direction (rotation axis).
-        rotation(C alpha, const algebra::vec<n,C>& axis);
-        /// Constructor with quaternion
-        rotation(const algebra::quat& q);
+	rotation();
+	/// Constructor with radian alpha and a facultative direction
+	/// (rotation axis).
+	rotation(C alpha, const algebra::vec<n,C>& axis);
+	/// Constructor with quaternion
+	rotation(const algebra::quat& q);
 	/// Constructor with h_mat.
-        rotation(const algebra::h_mat<n,C>& m);
+	rotation(const algebra::h_mat<n,C>& m);
 
 	/// Perform the rotation of the given vector.
-        algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
+	algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
 	/// Set a new grade alpha.
-        void set_alpha(C alpha);
+	void set_alpha(C alpha);
 	/// Set a new rotation axis.
-        void set_axis(const algebra::vec<n,C>& axis);
+	void set_axis(const algebra::vec<n,C>& axis);
 
       protected:
-        void update();
+	void update();
 	bool check_rotation(const algebra::quat& q);
 
-
-	/// FIXME: Is it useful?
-        C alpha_;
-        algebra::vec<n,C> axis_;
+	/* FIXME: Is it useful to keep these values, since they are
+	   primarily used to build the matrix `m_'?  */
+	C alpha_;
+	algebra::vec<n,C> axis_;
       };
 
 
@@ -187,8 +196,8 @@ namespace mln
       template <unsigned n, typename C>
       inline
       rotation<n,C>::rotation(C alpha, const algebra::vec<n,C>& axis)
-	:alpha_(alpha),
-	 axis_(axis)
+	: alpha_(alpha),
+	  axis_(axis)
       {
 	this->m_ = algebra::h_mat<n,C>::Id;
 	update();
@@ -198,25 +207,24 @@ namespace mln
       inline
       rotation<n,C>::rotation(const algebra::quat& q)
       {
-        // FIXME: Should also work for 2d.
-        mlc_bool(n == 3)::check();
-        mln_precondition(q.is_unit());
+	// FIXME: Should also work for 2D.
+	mlc_bool(n == 3)::check();
+	mln_precondition(q.is_unit());
 
-        C
-          w = q.to_vec()[0],
-          x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
-          y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
-          z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+	C
+	  w = q.to_vec()[0],
+	  x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+	  y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+	  z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
 
-        C t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
-                      xy + zw,  1.f - x2 - z2,  yz - xw,
-                      xz - yw,  yz + xw,  1.f - x2 - y2};
+	C t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+		      xy + zw,  1.f - x2 - z2,  yz - xw,
+		      xz - yw,  yz + xw,  1.f - x2 - y2};
 
-        this->m_ = mln::make::h_mat(t);
+	this->m_ = mln::make::h_mat(t);
 	mln_assertion(check_rotation(q));
 
-	/// Update attributes
-
+	/// Update attributes.
 	alpha_ = acos(w) * 2;
 	axis_[0] = x;
 	axis_[1] = y;
@@ -274,18 +282,18 @@ namespace mln
       void
       rotation<n,C>::set_axis(const algebra::vec<n,C>& axis)
       {
-        axis_ = axis;
+	axis_ = axis;
 	update();
       }
 
       // Homogenous matrix for a rotation of a point (x,y,z)
-      // about the vector (u,v,w) by the angle alpha
+      // about the vector (u,v,w) by the angle alpha.
       template <unsigned n, typename C>
       inline
       void
       rotation<n,C>::update()
       {
-        this->m_ = internal::get_rot_h_mat(alpha_, axis_);
+	this->m_ = internal::get_rot_h_mat(alpha_, axis_);
       }
 
       template <unsigned n, typename C>

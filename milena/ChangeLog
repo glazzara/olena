@@ -1,3 +1,78 @@
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable the non deterministic test on mln::labeling::colorize.
+
+	* tests/labeling/Makefile.am (check_PROGRAMS): Remove colorize.
+	(colorize_SOURCES): Disable.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a test on built-in floating point value's traits.
+
+	* tests/value/builtin/floatings.cc: New.
+	* tests/value/builtin/Makefile.am (check_PROGRAMS): Add floatings.
+	(floatings_SOURCES): New.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add macros for non-template contexts in mln/value/ops.hh.
+
+	* mln/value/ops.hh (mln_trait_value_sum_product_)
+	(mln_sum_product_): New macros.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the genericity of vector normalization.
+
+	* mln/algebra/vec.hh (mln::algebra::vec<n,T>::normalize): Use
+	mln_sum_product(T,T) instead of the hard-coded type `float' as
+	return value of mln::norm::l2.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/fun/x2x/rotation.hh: Aesthetic changes.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ensure non implemented rotation code stops the execution.
+
+	* mln/fun/x2x/rotation.hh
+	(fun::x2x::internal::get_rot_h_mat(const C, const algebra::vec<n,C>&)):
+	Use std::abort instead of a precondition to stop the execution,
+	since preconditions can be skipped by defining NDEBUG.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix test fun/x2x/composed.
+
+	* tests/fun/x2x/composed.cc: Fix the initialization of the axis
+	vector.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix 3D rotations.
+
+	* mln/fun/x2x/rotation.hh
+	(fun::x2x::internal::get_rot_h_mat(const C, const algebra::vec<3,C>&)):
+	Fix the definition of the (2,1) coefficient.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Boost-related changes in configure.ac.
+
+	* tests/accu/Makefile.am: Remove uses of the old
+	HAVE_BOOST_PREPROCESSOR conditional.
+	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple:
+	Rename as...
+	* milena/tests/unit_test/cond_tests_boost-tuple: ...this.
+	* tests/unit_test/Makefile.am (COND_TESTS):
+	s/cond_tests_boost-preprocessor_boost-tuple/cond_tests_boost-tuple/.
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make use of value::next in Milena.
