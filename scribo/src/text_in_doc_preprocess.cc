@@ -97,7 +97,5 @@ int main(int argc, char* argv[])
   std::cout << "Binarizing foreground..." << std::endl;
   image2d<bool> input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
 
-  logical::not_inplace(input_bin);
-
   mln::io::pbm::save(input_bin, argv[2]);
 }

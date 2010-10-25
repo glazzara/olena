@@ -24,6 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+// \file
+
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/io/pbm/load.hh>
@@ -37,7 +39,7 @@
 
 #include "tests/data.hh"
 
-int main(int argc, char *argv[])
+int main()
 {
   using namespace mln;
   using namespace scribo;

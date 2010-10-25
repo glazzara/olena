@@ -672,6 +672,11 @@ namespace scribo
     if (D <= 2 && A > 2)
       D = A;
 
+    if (D < 0)
+      D = 0;
+    if (A < 0)
+      A = 0;
+
     int delta = delta_of_line();
 
     ebbox_ = mln::make::box2d(meanline_ - A, bbox().pmin().col() - delta,

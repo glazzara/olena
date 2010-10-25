@@ -1,5 +1,15 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo
+
+	* scribo/core/line_info.hh: Fix invalid extended bboxes.
+
+	* src/text_in_doc_preprocess.cc: Do not invert data anymore.
+
+	* tests/filter/objects_with_holes.cc: Remove useless arguments.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new test for primitive::link::merge_double_link.
 
 	* tests/img/pixels.pbm: New test image.
