@@ -50,9 +50,9 @@ int main()
 
   std::string img = SCRIBO_IMG_DIR "/pixels.pbm";
 
-  unsigned ref_left[] = {0, 1, 1, 3, 4, 5, 6, 6, 8};
-  unsigned ref_right[] = {0, 2, 2, 3, 4, 5, 6, 7, 8};
-  unsigned ref_merged[] = {0, 1, 1, 3, 4, 5, 6, 7, 8};
+  unsigned ref_left[] = {0, 1, 1, 2, 4, 5, 6, 7, 7, 9};
+  unsigned ref_right[] = {0, 2, 3, 3, 4, 5, 6, 7, 8, 9};
+  unsigned ref_merged[] = {0, 1, 1, 2, 4, 5, 6, 7, 8, 9};
 
 
   image2d<bool> input;
@@ -78,7 +78,6 @@ int main()
   object_links<L>
     merged_links = primitive::link::merge_double_link(left_link,
 						      right_link);
-
 
   for_all_links(i, left_link)
     mln_assertion(ref_left[i] == left_link(i));

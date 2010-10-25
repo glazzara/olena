@@ -20,6 +20,8 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS =
+check_PROGRAMS = line_info
+
+line_info_SOURCES = line_info.cc
 
 TESTS = $(check_PROGRAMS)

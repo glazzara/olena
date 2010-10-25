@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,28 +27,32 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/util/graph.hh>
 #include <mln/value/label_16.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/literal/colors.hh>
 #include <scribo/primitive/extract/components.hh>
-#include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
-#include <scribo/filter/objects_small.hh>
-
-#include <scribo/make/debug_filename.hh>
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/core/line_set.hh>
 
 #include "tests/data.hh"
+
 
 int main()
 {
   using namespace scribo;
   using namespace mln;
 
-  std::string img = SCRIBO_IMG_DIR "/text_to_group_and_clean.pbm";
+
+  int ref[][9] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		   // baseline, meanline, ascent, descent, x_height, d_height, a_height, char_space, char_width
+		   {         2,        2,      2,       2,        1,        0,        1,          1,          1 },
+		   {         4,        4,      4,       4,        1,        0,        1,          0,          1 },
+		   {         6,        6,      6,       6,        1,        0,        1,          0,          1 },
+		   {         7,        7,      7,       7,        1,        0,        1,          0,          1 },
+		   {        12,       12,      10,     12,        1,        0,        3,          0,          1 },
+		   {        17,       15,      15,     17,        3,        0,        3,          0,          4 } };
+
+  std::string img = SCRIBO_IMG_DIR "/pixels.pbm";
 
   image2d<bool> input;
   io::pbm::load(input, img.c_str());
@@ -61,23 +64,24 @@ int main()
 
   object_links<L> links = primitive::link::with_single_left_link(text, 30);
 
-
-  mln_assertion(nbboxes == 12u);
-
   object_groups<L> groups = primitive::group::from_single_link(links);
 
-  component_set<L> grouped_comps = primitive::group::apply(groups);
+  line_set<L> lines = scribo::line_set<L>(groups);
 
-  mln_assertion(grouped_comps.nelements() == 6u);
 
-  component_set<L>
-    filtered_comps = scribo::filter::components_small(grouped_comps, 20);
-
-  unsigned valid_comps = 0;
-  for_all_comps(c, filtered_comps)
-    if (filtered_comps(c).is_valid())
-      ++valid_comps;
-
-  mln_assertion(valid_comps == 2u);
+  for_all_lines(l, lines)
+  {
+    mln_assertion(lines(l).baseline() == ref[l][0]);
+    mln_assertion(lines(l).meanline() == ref[l][1]);
+    mln_assertion(lines(l).ascent() == ref[l][2]);
+    mln_assertion(lines(l).descent() == ref[l][3]);
+    mln_assertion(lines(l).x_height() == unsigned(ref[l][4]));
+    mln_assertion(lines(l).d_height() == ref[l][5]);
+    mln_assertion(lines(l).a_height() == ref[l][6]);
+    mln_assertion(lines(l).char_space() == unsigned(ref[l][7]));
+    mln_assertion(lines(l).char_width() == unsigned(ref[l][8]));
+  }
 
 }
+
+

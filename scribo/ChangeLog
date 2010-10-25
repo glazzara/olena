@@ -1,5 +1,21 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update tests in Scribo.
+
+	* tests/binarization/global_threshold.cc,
+	* tests/binarization/local_threshold.cc,
+	* tests/primitive/link/merge_double_link.cc: Fix tests.
+
+	* tests/core/Makefile.am: Add a new test.
+
+	* tests/core/line_info.cc: New.
+
+	* tests/filter/small_and_large_bboxes.cc: Remove useless arguments.
+
+	* tests/img/pixels.pbm: Update.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo
 
 	* scribo/core/line_info.hh: Fix invalid extended bboxes.
