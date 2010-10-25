@@ -26,7 +26,8 @@ SUBDIRS =					\
   misc 						\
   postprocessing 				\
   preprocessing 				\
-  text
+  text 						\
+  toolchain
 
 # Disabled for the moment:
 #  table

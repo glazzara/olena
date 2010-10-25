@@ -1,5 +1,15 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new toolchain.
+
+	* src/Makefile.am: Add toolchain subdir.
+
+	* src/toolchain/Makefile.am,
+	* src/toolchain/nepomuk/Makefile.am,
+	* src/toolchain/nepomuk/text_extraction.cc: New.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/line_info.hh: Fix line statistics.
 
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
