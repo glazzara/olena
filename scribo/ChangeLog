@@ -1,5 +1,9 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/line_info.hh: Fix line statistics.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tests in Scribo.
 
 	* tests/binarization/global_threshold.cc,

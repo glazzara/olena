@@ -328,7 +328,7 @@ namespace scribo
 
       0 1 2 3 4 5 6 7 8 9
      ---------------------
-   0 | | | |x| | | | | | |   ----> a_height = 4
+   0 | | | |x| | | | | | |   ----> a_height = 5
      ---------------------
    1 | | | |x| | | | | | |
      ---------------------
@@ -467,7 +467,7 @@ namespace scribo
   int
   line_info<L>::descent() const
   {
-    return baseline_ - d_height() + 1;
+    return baseline_ - d_height();
   }
 
 
@@ -672,11 +672,6 @@ namespace scribo
     if (D <= 2 && A > 2)
       D = A;
 
-    if (D < 0)
-      D = 0;
-    if (A < 0)
-      A = 0;
-
     int delta = delta_of_line();
 
     ebbox_ = mln::make::box2d(meanline_ - A, bbox().pmin().col() - delta,
@@ -847,13 +842,27 @@ namespace scribo
 
 
 
-      // Space between characters.
-      int space = bb.pmin().col()
-	- comp_set(holder_.links()(c)).bbox().pmax().col() + 1;
+      // FIXME: we must guaranty here that the relationship is from
+      // right to left, otherwise, the space size computed between
+      // boxes might be wrong...
+      //
+      // x------|  |-|     !=     |------|  x-|
+      // |------|  x-|            |------x  |-|
+      //
+      //  (incorrect)              (correct)
+      //  (right link)            (left link)
 
-      // -- Ignore overlapped characters.
-      if (space > 0)
-	char_space.take(space);
+      // Space between characters.
+      if (holder_.links()(c) != c)
+      {
+	int
+	  space = bb.pmin().col()
+	  - comp_set(holder_.links()(c)).bbox().pmax().col() - 1;
+
+	// -- Ignore overlapped characters.
+	if (space > 0)
+	  char_space.take(space);
+      }
 
       // Character width
       // -- Ignore too large components.
@@ -896,7 +905,7 @@ namespace scribo
       baseline_ = absolute_baseline_r;
       meanline_ = absolute_meanline_r;
       x_height_ = baseline_ - meanline_ + 1;
-      d_height_ = baseline_ - bbox.to_result().pmax().row() + 1;
+      d_height_ = baseline_ - bbox.to_result().pmax().row();
       a_height_ = baseline_ - bbox.to_result().pmin().row() + 1;
 
       //FIXME
@@ -955,7 +964,7 @@ namespace scribo
   }
 
 
-# endif // ! MLN_INCLUDE_ONLY
+# endif// ! MLN_INCLUDE_ONLY
 
 
 } // end of namespace scribo
