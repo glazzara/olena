@@ -42,7 +42,8 @@ if HAVE_TESSERACT
     pbm_text_in_doc_SOURCES  = pbm_text_in_doc.cc
     pbm_text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(TESSERACT_CPPFLAGS) \
-			       $(TIFF_CPPFLAGS)
+			       $(TIFF_CPPFLAGS) \
+			       -I$(top_builddir)
     pbm_text_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
 			       $(TESSERACT_LDFLAGS) \
 			       $(TIFF_LDFLAGS) \
@@ -77,7 +78,8 @@ if HAVE_TESSERACT
     text_recognition_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
 	  			           $(TESSERACT_CPPFLAGS) \
 			       		   $(TIFF_CPPFLAGS) \
-			       		   $(MAGICKXX_CPPFLAGS)
+			       		   $(MAGICKXX_CPPFLAGS) \
+					   -I$(top_builddir)
     text_recognition_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
 		      	       		   -lpthread \
 	  			           $(TESSERACT_LDFLAGS) \

@@ -24,6 +24,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <libgen.h>
 #include <fstream>
@@ -119,7 +122,7 @@ int main(int argc, char* argv[])
   typedef image2d<scribo::def::lbl_type> L;
   line_set<L>
     lines = scribo::toolchain::text_in_doc(input, denoise, debug);
-  
+
   // Saving results
   scribo::io::xml::save(argv[1], lines, "out.xml", true);
 

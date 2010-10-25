@@ -31,7 +31,8 @@ text_extraction_SOURCES = text_extraction.cc
 text_extraction_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS)
 text_extraction_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) \
 			   $(TESSERACT_CPPFLAGS) \
-			   $(TIFF_CPPFLAGS)
+			   $(TIFF_CPPFLAGS) \
+			   -I$(top_builddir)
 text_extraction_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \

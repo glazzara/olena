@@ -27,6 +27,10 @@
 ///
 /// Test of scribo::toolchain::nepomuk::text_extraction
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <QtGui/QImage>
 #include <QtCore>
 #include <scribo/toolchain/nepomuk/text_extraction.hh>

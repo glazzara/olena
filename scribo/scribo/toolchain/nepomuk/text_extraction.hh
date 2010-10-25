@@ -64,11 +64,16 @@ namespace scribo
 
 	This is a convenient routine to be used in Nepomuk.
 
-
-
 	\param[in] ima A document image. The
 
 	\return A set of recognized words.
+
+
+	Don't forget to define NDEBUG for compilation to disable debug
+	checks.
+
+	Depending on your version of Tesseract (OCR) you may define
+	HAVE_TESSERACT_2 or HAVE_TESSERACT_3 .
 
        */
       QSet<QString>

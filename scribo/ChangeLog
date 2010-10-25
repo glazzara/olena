@@ -1,5 +1,27 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Support for Tesseract 2.x and 3.x in Scribo.
+
+	* scribo/text/recognition.hh: Use the correct code depending on
+	Tesseract version.
+
+	* scribo/toolchain/nepomuk/text_extraction.hh: Add few comments
+	about how to handle Tesseract versions.
+
+	* src/Makefile.am,
+	* src/text/Makefile.am,
+	* src/toolchain/nepomuk/Makefile.am,
+	* tests/toolchain/nepomuk/Makefile.am: Add path to config.h.
+
+	* src/pbm_text_in_doc.cc,
+	* src/text/pbm_lines_recognition.cc,
+	* src/text/pbm_recognition.cc,
+	* src/text_recognition_in_picture.cc,
+	* src/toolchain/nepomuk/text_extraction.cc,
+	* tests/toolchain/nepomuk/text_extraction.cc: Include config.h
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup files.
 
 	* scribo/debug/usage.hh,

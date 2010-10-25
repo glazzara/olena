@@ -23,6 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <libgen.h>
 #include <iostream>
 #include <QtCore/QDebug>

@@ -30,7 +30,8 @@ if HAVE_TIFF
     pbm_lines_recognition_SOURCES  = pbm_lines_recognition.cc
     pbm_lines_recognition_CPPFLAGS = $(AM_CPPFLAGS) \
 		  		     $(TESSERACT_CPPFLAGS) \
-				     $(TIFF_CPPFLAGS)
+				     $(TIFF_CPPFLAGS) \
+				     -I$(top_builddir)
     pbm_lines_recognition_LDFLAGS  = $(AM_LDFLAGS) \
 			 	     $(TESSERACT_LDFLAGS) \
 				     $(TIFF_LDFLAGS) \
@@ -40,7 +41,8 @@ if HAVE_TIFF
     pbm_recognition_SOURCES   = pbm_recognition.cc
     pbm_recognition_CPPFLAGS  = $(AM_CPPFLAGS) \
 			        $(TESSERACT_CPPFLAGS) \
-			   	$(TIFF_CPPFLAGS)
+			   	$(TIFF_CPPFLAGS) \
+			        -I$(top_builddir)
     pbm_recognition_LDFLAGS   = $(AM_LDFLAGS) \
 			   	$(TESSERACT_LDFLAGS) \
 			   	$(TIFF_LDFLAGS) \

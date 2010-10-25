@@ -61,6 +61,11 @@
 # include <tesseract/baseapi.h>
 
 
+# if !defined HAVE_TESSERACT_2 && !defined HAVE_TESSERACT_3
+#  define HAVE_TESSERACT_2
+# endif
+
+
 
 namespace scribo
 {
@@ -103,8 +108,19 @@ namespace scribo
     {
       trace::entering("scribo::text::recognition");
 
+
       // Initialize Tesseract.
+#  ifdef HAVE_TESSERACT_2
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
+#  else // HAVE_TESSERACT_3
+      tesseract::TessBaseAPI tess;
+      if (tess.Init(NULL, language, NULL, 0, false) == -1)
+      {
+	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	abort();
+      }
+      tess.SetPageSegMode(tesseract::PSM_SINGLE_LINE);
+#  endif // HAVE_TESSERACT_2
 
       typedef mln_ch_value(L,bool) I;
       int vals[] = { 0, 9, 0, 9, 0,
@@ -155,8 +171,8 @@ namespace scribo
 	data::fill(line_image, false);
 	data::paste_without_localization(text_ima, line_image);
 
-
 	// Recognize characters.
+#  ifdef HAVE_TESSERACT_2
 	char* s = TessBaseAPI::TesseractRect(
 	    (unsigned char*) line_image.buffer(),
 	    sizeof (bool),			 // Pixel size.
@@ -165,7 +181,16 @@ namespace scribo
 	    0,					 // Top
 	    line_image.ncols(),		         // n cols
 	    line_image.nrows());		 // n rows
-
+#  else // HAVE_TESSERACT_3
+	char* s = tess.TesseractRect(
+	  (unsigned char*) line_image.buffer(),
+	  sizeof (bool),			 // Pixel size.
+	  line_image.ncols() * sizeof (bool),    // Row_offset
+	  0,					 // Left
+	  0,					 // Top
+	  line_image.ncols(),		         // n cols
+	  line_image.nrows());		         // n rows
+#  endif // ! HAVE_TESSERACT_2
 
 	if (s != 0)
 	{
@@ -194,7 +219,16 @@ namespace scribo
       mln_precondition(line.is_valid());
 
       // Initialize Tesseract.
+#  ifdef HAVE_TESSERACT_2
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
+#  else // HAVE_TESSERACT_3
+      tesseract::TessBaseAPI tess;
+      if (tess.Init(NULL, language, NULL, 0, false) == -1)
+      {
+	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	abort();
+      }
+#  endif // ! HAVE_TESSERACT_2
 
       std::ofstream file;
       if (!output_file.empty())
@@ -213,6 +247,7 @@ namespace scribo
       border::resize(text_ima, 0);
 
       // Recognize characters.
+#  ifdef HAVE_TESSERACT_2
       char* s = TessBaseAPI::TesseractRect(
 	(unsigned char*) text_ima.buffer(),
 	sizeof (bool),			  // Pixel size.
@@ -221,7 +256,16 @@ namespace scribo
 	0,				  // Top
 	text_ima.ncols(),		  // n cols
 	text_ima.nrows());		  // n rows
-
+#  else // HAVE_TESSERACT_3
+      char* s = tess.TesseractRect(
+	(unsigned char*) text_ima.buffer(),
+	sizeof (bool),			  // Pixel size.
+	text_ima.ncols() * sizeof (bool), // Row_offset
+	0,				  // Left
+	0,				  // Top
+	text_ima.ncols(),		  // n cols
+	text_ima.nrows());		  // n rows
+#  endif // ! HAVE_TESSERACT_2
 
 	if (s != 0)
 	{
