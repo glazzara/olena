@@ -1,5 +1,13 @@
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle Tesseract 2.x and 3.x in configuration.
+
+	* configure.ac: Call OLN_WITH_TESSERACT macro.
+
+	* m4/oln-with-lib.m4: Define a new macro OLN_WITH_TESSERACT.
+
+2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Configure scribo/src/toolchain/nepomuk directory.
 
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -61,6 +61,53 @@ m4_default([$5], m4_toupper([$3])),dnl
 ])# OLN_WITH_LIB
 
 
+# OLN_WITH_TESSERACT()
+# -------------------------------------------------------------
+# Check if Tesseract 2 or 3 is available.
+#
+# FIXME: if version 3 is installed in a standard directory, version 2
+# is installed in a non standard directory and its path is passed with
+# the --with-tesseract option, this macro may use the version 3
+# anyway... This is because, the _OLN_WITH_LIB_SHARED_IMPL will try to
+# link to tesseract_api and it will be available in the standard
+# lib directory...
+
+AC_DEFUN([OLN_WITH_TESSERACT],
+[dnl
+ AC_REQUIRE([AC_PROG_CXX])
+ AC_LANG_PUSH([C++])
+ AC_ARG_WITH([tesseract],
+   [AC_HELP_STRING([--with-tesseract@<:@=DIR@:>@],
+     [use $1 (DIR = prefix for TESSERACT installation)])])
+ TESSERACT_CPPFLAGS=''
+ TESSERACT_LDFLAGS=''
+
+ if test "x$with_tesseract" != xno; then
+   # Checking for Tesseract 3.x
+   _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_api],
+	       		     [tesseract], [TESSERACT_3], [])
+
+   if test x$oln_have_tesseract != xyes; then
+      # Tesseract 2.x not found, checking for Tesseract 2.x
+      _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
+	       		        [tesseract], [TESSERACT_2], [])
+      TESSERACT_CPPFLAGS="$TESSERACT_2_CPPFLAGS -DHAVE_TESSERACT_2"
+      TESSERACT_LDFLAGS=$TESSERACT_2_LDFLAGS
+   else
+     TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
+     TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
+   fi
+ fi
+
+
+ AC_SUBST([TESSERACT_CPPFLAGS])
+ AC_SUBST([TESSERACT_LDFLAGS])
+ AM_CONDITIONAL([HAVE_TESSERACT], [test x$oln_have_tesseract = xyes ])
+ AC_LANG_POP([C++])
+])# _OLN_WITH_LIB
+
+
+
 # _OLN_WITH_LIB(PACKAGE, HEADER, LIBRARY, SHELL_NAME, CPP_NAME,
 #               OTHER-LIBRARIES)
 # -------------------------------------------------------------

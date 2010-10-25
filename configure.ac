@@ -228,8 +228,7 @@ AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_expected_qt_version" = xyes])
 # Tesseract.  #
 # ----------- #
 
-OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
-             [tesseract], [TESSERACT])
+OLN_WITH_TESSERACT
 
 # -------------- #
 # TIFF library.  #
