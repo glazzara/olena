@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,10 +19,12 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
   objects_with_holes 				\
-  small_and_large_bboxes
+  components_small 				\
+  components_large
 
 
 objects_with_holes_SOURCES = objects_with_holes.cc
-small_and_large_bboxes_SOURCES = small_and_large_bboxes.cc
+components_small_SOURCES = components_small.cc
+components_large_SOURCES = components_large.cc
 
 TESTS = $(check_PROGRAMS)

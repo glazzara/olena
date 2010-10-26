@@ -1,5 +1,16 @@
 2010-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add tests for objects filtering routines.
+
+	* tests/filter/Makefile.am: Add targets.
+
+	* tests/filter/components_large.cc,
+	* tests/filter/components_small.cc: New.
+
+	* tests/filter/small_and_large_bboxes.cc: Remove. Depracted.
+
+2010-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix objects filtering routines.
 
 	* scribo/filter/objects_large.hh: Add an overload.

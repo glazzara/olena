@@ -24,6 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
@@ -36,7 +38,7 @@
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
-#include <scribo/filter/objects_small.hh>
+#include <scribo/filter/objects_large.hh>
 
 #include <scribo/make/debug_filename.hh>
 #include <scribo/debug/save_bboxes_image.hh>
@@ -54,30 +56,43 @@ int main()
   image2d<bool> input;
   io::pbm::load(input, img.c_str());
 
-  value::label_16 nbboxes;
-  typedef image2d<value::label_16> L;
-  component_set<L>
-    text = primitive::extract::components(input, c8(), nbboxes);
+  typedef value::label_16 V;
+  typedef image2d<V> L;
 
-  object_links<L> links = primitive::link::with_single_left_link(text, 30);
+  {
+    V nbboxes;
+    component_set<L>
+      text = primitive::extract::components(input, c8(), nbboxes);
+
+    object_links<L> links = primitive::link::with_single_left_link(text, 30);
 
 
-  mln_assertion(nbboxes == 12u);
+    mln_assertion(nbboxes == 12u);
 
-  object_groups<L> groups = primitive::group::from_single_link(links);
+    object_groups<L> groups = primitive::group::from_single_link(links);
 
-  component_set<L> grouped_comps = primitive::group::apply(groups);
+    component_set<L> grouped_comps = primitive::group::apply(groups);
 
-  mln_assertion(grouped_comps.nelements() == 6u);
+    mln_assertion(grouped_comps.nelements() == 6u);
 
-  component_set<L>
-    filtered_comps = scribo::filter::components_small(grouped_comps, 20);
+    component_set<L>
+      filtered_comps = scribo::filter::components_large(grouped_comps, 20);
 
-  unsigned valid_comps = 0;
-  for_all_comps(c, filtered_comps)
-    if (filtered_comps(c).is_valid())
-      ++valid_comps;
+    unsigned valid_comps = 0;
+    for_all_comps(c, filtered_comps)
+      if (filtered_comps(c).is_valid())
+	++valid_comps;
 
-  mln_assertion(valid_comps == 2u);
+    mln_assertion(valid_comps == 4u);
+  }
+
+
+  {
+    V nlabels;
+    image2d<bool> output = scribo::filter::components_large(input, c8(),
+							    nlabels, 20);
+
+    mln_assertion(nlabels == 4u);
+  }
 
 }
