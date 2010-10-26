@@ -94,6 +94,7 @@ dist_img_DATA =					\
   img/medium.ppm				\
   img/picasso.pbm				\
   img/picasso.pgm				\
+  img/picasso.ppm				\
   img/quite-small.pgm				\
   img/small.pbm					\
   img/small.pgm					\
