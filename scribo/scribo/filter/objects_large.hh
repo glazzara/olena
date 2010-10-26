@@ -72,8 +72,54 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_size);
 
+    /// Remove too large components.
+    ///
+    /// \param[in] components    An object image.
+    /// \param[in] max_size   The maximum cardinality of an object.
+    ///
+    /// \return A component set with large components set to
+    /// component::Ignored.
+    template <typename L>
+    inline
+    component_set<L>
+    components_large(const component_set<L>& components,
+		     unsigned max_size);
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+
+   template <typename I, typename N, typename V>
+   inline
+   mln_concrete(I)
+   components_large(const Image<I>& input_,
+		    const Neighborhood<N>& nbh_,
+		    V& nlabels,
+		    unsigned min_size)
+   {
+     trace::entering("scribo::filter::components_large");
+
+     const I& input = exact(input_);
+     const N& nbh = exact(nbh_);
+
+     mln_precondition(input.is_valid());
+     mln_precondition(nbh.is_valid());
+
+     typedef mln_ch_value(I,V) lbl_t;
+     component_set<lbl_t>
+       lbl = primitive::extract::components(input, nbh, nlabels);
+
+     typedef fun::v2b::components_large_filter<mln_ch_value(I,V)> func_t;
+     func_t fv2b(lbl, min_size);
+     mln_concrete(I)
+       output = mln::data::transform(lbl.labeled_image(), fv2b);
+     nlabels = fv2b.nlabels_;
+
+     trace::exiting("scribo::filter::components_large");
+     return output;
+   }
+
 
 
     template <typename L>

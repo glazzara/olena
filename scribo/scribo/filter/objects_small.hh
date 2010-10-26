@@ -70,7 +70,7 @@ namespace scribo
     mln_concrete(I)
     components_small(const Image<I>& input_,
 		     const Neighborhood<N>& nbh_,
-		     const V& label_type,
+		     V& nlabels,
 		     unsigned min_size);
 
 
@@ -79,7 +79,8 @@ namespace scribo
     /// \param[in] components    An object image.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
-    /// \return An object image without small components.
+    /// \return A component set with small components set to
+    /// component::Ignored.
     template <typename L>
     component_set<L>
     components_small(const component_set<L>& components,
@@ -104,9 +105,7 @@ namespace scribo
 
      mln_precondition(input.is_valid());
      mln_precondition(nbh.is_valid());
-     (void) label_type;
 
-     V nlabels;
      typedef mln_ch_value(I,V) lbl_t;
      component_set<lbl_t>
        lbl = primitive::extract::components(input, nbh, nlabels);

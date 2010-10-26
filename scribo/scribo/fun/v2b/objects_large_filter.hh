@@ -88,7 +88,10 @@ namespace scribo
 	const component_set<L> components_;
 
 	/// The number of labels remaining after filtering.
-	mln_value(L) nlabels_;
+	mutable mln_value(L) nlabels_;
+
+	/// Has already been taken into account.
+	mutable util::array<bool> marked_;
       };
 
 
@@ -102,7 +105,8 @@ namespace scribo
       components_large_filter<L>::components_large_filter(
 	const component_set<L>& components,
 	unsigned max_size)
-	: max_size_(max_size), components_(components)
+	: max_size_(max_size), components_(components), nlabels_(0),
+	  marked_(mln::value::next(components.nelements()), false)
       {
       }
 
@@ -117,9 +121,14 @@ namespace scribo
 	  return false;
 	if (components_.info(l).card() <= max_size_)
 	{
-	  ++nlabels_;
+	  if (!marked_(l))
+	  {
+	    nlabels_ = value::next(nlabels_);
+	    marked_(l) = true;
+	  }
 	  return true;
 	}
+
 	return false;
       }
 

@@ -32,7 +32,6 @@
 /// Remove small components in a binary image.
 
 
-
 # include <mln/core/concept/function.hh>
 
 # include <mln/util/array.hh>
@@ -41,8 +40,9 @@
 
 # include <mln/labeling/compute.hh>
 
-# include <scribo/core/component_set.hh>
+# include <mln/value/next.hh>
 
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {
@@ -89,7 +89,10 @@ namespace scribo
 	const component_set<L> components_;
 
 	/// The number of labels remaining after filtering.
-	mln_value(L) nlabels_;
+	mutable mln_value(L) nlabels_;
+
+	/// Has already been taken into account.
+	mutable mln::util::array<bool> marked_;
       };
 
 
@@ -103,7 +106,8 @@ namespace scribo
       components_small_filter<L>::components_small_filter(
 	const component_set<L>& components,
 	unsigned min_size)
-	: min_size_(min_size), components_(components), nlabels_(0)
+	: min_size_(min_size), components_(components), nlabels_(0),
+	  marked_(mln::value::next(components.nelements()), false)
       {
       }
 
@@ -118,9 +122,14 @@ namespace scribo
 	  return false;
 	if (components_.info(l).card() >= min_size_)
 	{
-	  ++nlabels_;
+	  if (!marked_(l))
+	  {
+	    nlabels_ = value::next(nlabels_);
+	    marked_(l) = true;
+	  }
 	  return true;
 	}
+
 	return false;
       }
 
