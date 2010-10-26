@@ -53,7 +53,7 @@ namespace scribo
         width.
 
 	\param[in] links       Link objects information.
-	\param[in] min_w_ratio The minimum width ratio of two linked
+	\param[in] max_w_ratio The minimum width ratio of two linked
                                bounding boxes.
 
 	\result A filtered object link information.
@@ -61,7 +61,7 @@ namespace scribo
     template <typename L>
     object_links<L>
     object_links_bbox_w_ratio(const object_links<L>& links,
-			      float min_w_ratio);
+			      float max_w_ratio);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,14 +70,14 @@ namespace scribo
     template <typename L>
     object_links<L>
     object_links_bbox_w_ratio(const object_links<L>& links,
-			      float min_w_ratio)
+			      float max_w_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_w_ratio");
 
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_bbox_ratio(links, 1, min_w_ratio);
+	output = object_links_bbox_ratio(links, 1, max_w_ratio);
 
       trace::exiting("scribo::filter::object_links_bbox_w_ratio");
       return output;

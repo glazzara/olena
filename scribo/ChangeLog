@@ -1,3 +1,7 @@
+2010-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/filter/object_links_bbox_w_ratio.hh: Rename arguments.
+
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Support for Tesseract 2.x and 3.x in Scribo.
