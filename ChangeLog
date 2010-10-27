@@ -1,3 +1,13 @@
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add advice about the release process.
+
+	* HACKING (Required Software): Add LaTeX2HTML.
+	Aesthetic changes.
+	(Useful Tools): Rename as...
+	(Useful Developer Tools): ...this.
+	(Releasing): New section.
+
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update texi2dvi from upstream.
