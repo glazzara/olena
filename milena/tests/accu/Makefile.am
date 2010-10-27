@@ -54,6 +54,7 @@ transform_snake_SOURCES = transform_snake.cc
 if HAVE_BOOST_TUPLE
   check_PROGRAMS += tuple
   tuple_SOURCES = tuple.cc
+  tuple_CPPFLAGS = $(AM_CPPFLAGS) $(BOOST_CPPFLAGS)
 endif HAVE_BOOST_TUPLE
 
 TESTS = $(check_PROGRAMS)
