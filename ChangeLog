@@ -1,3 +1,9 @@
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove a superfluous invocation of AM_CONDITIONAL regarding Magick++.
+
+	* configure.ac: Here.
+
 2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Do not trigger an error when Qt is missing, too old or not working.
