@@ -1,3 +1,18 @@
+2010-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo
+
+	* scribo/binarization/global_threshold.hh: Add a fixme.
+
+	* scribo/binarization/global_threshold_auto.hh: Make the result
+	consistent with other binarization methods.
+
+	* scribo/preprocessing/deskew.hh: Use mln_min(V) as background
+	value.
+
+	* src/preprocessing/preprocess.cc: Do not negate anymore. Don't
+	pass const nlabel value anymore.
+
 2010-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add tests for objects filtering routines.

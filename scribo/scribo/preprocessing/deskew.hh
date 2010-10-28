@@ -420,7 +420,7 @@ namespace scribo
       if (angle > 0.5 || angle < -0.5)
 	output = geom::rotate(input_gl, - angle,
 			      //mln_max(mln_value(I)),
-			      extend(input_gl, mln_max(mln_value(I))),
+			      extend(input_gl, mln_min(mln_value(I))),
 			      mln::make::box2d(input_gl.nrows(),
 					       input_gl.ncols()));
 

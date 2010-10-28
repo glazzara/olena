@@ -35,6 +35,11 @@
 ///
 /// \brief Binarize an image using a global threshold value.
 
+
+/// FIXME: result is not consistent with other binarization
+/// methods. The result is inverted because of the threshold functor:
+/// should we invert the test in this functor?
+
 namespace scribo
 {
 

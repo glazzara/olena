@@ -34,8 +34,6 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/logical/not.hh>
-
 #include <scribo/binarization/global_threshold_auto.hh>
 #include <scribo/preprocessing/deskew.hh>
 #include <scribo/filter/objects_small.hh>
@@ -68,18 +66,17 @@ int main(int argc, char *argv[])
   image2d<bool>
     input_bw = scribo::binarization::global_threshold_auto(input);
 
-  logical::not_inplace(input_bw);
+  value::label_16 nlabels;
   input_bw = scribo::filter::components_small(input_bw, c8(),
-					      value::label_16(), 3);
+					      nlabels, 3);
   input_bw = scribo::filter::components_thin(input_bw, c8(),
-					     value::label_16(), 1);
+					     nlabels, 1);
 
   image2d<value::int_u8>
     input_gl = data::convert(value::int_u8(), input_bw);
   input_gl = scribo::preprocessing::deskew(input_gl);
   input_bw = data::convert(bool(), input_gl);
 
-  logical::not_inplace(input_bw);
   io::pbm::save(input_bw, argv[2]);
 
   trace::exiting("main");

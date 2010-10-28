@@ -152,7 +152,7 @@ namespace scribo
       }
 
       mln_ch_value(I, bool) output;
-      output = duplicate((pw::value(input) > pw::cst(threshold)) | input.domain());
+      output = duplicate((pw::value(input) < pw::cst(threshold)) | input.domain());
 
       trace::exiting("scribo::binarization::global_threshold_auto");
       return output;
