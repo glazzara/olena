@@ -35,8 +35,6 @@
 /// <em>before</em> using any of these functions, as advised by the
 /// GraphicsMagick documentation
 /// (http://www.graphicsmagick.org/Magick++/Image.html).
-///
-/// \fixme: re-enable quantum size check
 
 # include <cstdlib>
 
@@ -142,9 +140,6 @@ namespace mln
       {
 	trace::entering("mln::io::magick::load");
 
-	// Ensure a Magick++'s Quantum is an 8-bit value.
-	//mln::metal::equal<Magick::Quantum, unsigned char>::check();
-
 	I& ima = exact(ima_);
 
 	// FIXME: Handle Magick++'s exceptions (see either
@@ -166,7 +161,17 @@ namespace mln
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	{
-	  value::rgb8 c(pixels->red, pixels->green, pixels->blue);
+	  /* Each channel of a Magick++ image is coded on a
+	     Magick::Quantum value, which can be an 8-, 16- or 32-bit
+	     integer.  Load the most significant bits of each channel
+	     into a component of an mln::value::rgb8 value (i.e., into
+	     an mln::value::int_u8 value).  */
+	  value::rgb8 c(pixels->red   >> 8 * (sizeof(Magick::Quantum)
+					      - sizeof(value::rgb8::red_t)),
+			pixels->green >> 8 * (sizeof(Magick::Quantum)
+					      - sizeof(value::rgb8::green_t)),
+			pixels->blue  >> 8 * (sizeof(Magick::Quantum)
+					      - sizeof(value::rgb8::blue_t)));
 	  mln_value(I) res;
 	  if (!impl::do_it(c, res))
 	    {
