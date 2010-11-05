@@ -1,3 +1,7 @@
+2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	* AUTHORS: Clean up whitespace.
+
 2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove a superfluous invocation of AM_CONDITIONAL regarding Magick++.
