@@ -17,7 +17,7 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-include $(top_srcdir)/scribo/tests/tests.mk
+include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS = 		\
   hdibco-2010
