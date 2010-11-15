@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/io/xml/save.hh: Make use of document structure.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/extract/elements.hh: New routine.
 
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
