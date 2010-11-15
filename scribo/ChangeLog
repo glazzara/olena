@@ -1,5 +1,11 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Import rgb8 to rgbn conversion function from Yann's sandbox.
+
+	* mln/fun/v2v/rgb8_to_rgbn.hh: New.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/macros.hh: Remove deprecated macro.
 
 2010-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
