@@ -1,3 +1,7 @@
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/macros.hh: Remove deprecated macro.
+
 2010-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/core/document.hh: Introduce new document structure.

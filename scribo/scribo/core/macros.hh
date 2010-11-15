@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,9 +29,6 @@
 
 # define for_all_ncomponents(C, NCOMP) \
   for (unsigned C = 1; C <= NCOMP; ++C)
-
-// # define for_all_components(C, S)
-//   for (unsigned C = 1; C <= S.nelements(); ++C)
 
 # define for_all_elements(E, S) \
   for (unsigned E = 0; E < S.nelements(); ++E)
