@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/plot/save.hh: Remove an inline keyword.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing MLN_WO_GLOBAL_VARS conditions.
 
 	* mln/canvas/browsing/backdiagonal2d.hh

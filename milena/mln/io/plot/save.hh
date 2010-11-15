@@ -58,12 +58,11 @@ namespace mln
 	  \param[in] start_value The start index value of the plot
 	             (optional).  */
       template <typename T>
-      void save(util::array<T>& arr, const std::string& filename,
-		int start_value);
+      void save(const util::array<T>& arr, const std::string& filename,
+		int start_value = 0);
 
       /// \overload
       template <typename T>
-      inline
       void save(const histo::array<T>& arr, const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
