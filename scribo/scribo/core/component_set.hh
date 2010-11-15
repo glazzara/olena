@@ -46,6 +46,8 @@
 # include <mln/labeling/compute.hh>
 # include <mln/labeling/relabel.hh>
 
+# include <mln/logical/or.hh>
+
 # include <mln/convert/from_to.hh>
 
 # include <mln/core/image/dmorph/image_if.hh>
@@ -541,7 +543,10 @@ namespace scribo
   void
   component_set<L>::add_separators(const mln_ch_value(L, bool)& ima)
   {
-    this->data_->separators_ = ima;
+    if (! has_separators())
+      this->data_->separators_ = ima;
+    else
+      mln::logical::or_inplace(this->data_->separators_, ima);
   }
 
 
