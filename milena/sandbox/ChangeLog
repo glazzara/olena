@@ -1,3 +1,10 @@
+2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Experiment variation on regional maxima labeling.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(demo_17_12_2009): New function that describes the experimentation.
+
 2009-12-18  Yann Jacquelet<jacquelet@lrde.epita.fr>
 
 	Fix the right behaviour of the regmax software.
