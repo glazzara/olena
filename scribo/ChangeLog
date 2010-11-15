@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/binarization/sauvola_ms.cc: Add missing includes.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Set default window size to 101 in Sauvola examples.
 
 	* src/binarization/pgm_sauvola.cc,

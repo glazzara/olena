@@ -28,6 +28,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/usage.hh>
