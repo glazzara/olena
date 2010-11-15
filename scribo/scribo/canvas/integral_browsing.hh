@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,9 +59,6 @@ namespace scribo
 	double& mean, double& stddev)
       {
 	mean = sum / n;
-//	stddev = std::sqrt(sum_2 / n - mean * mean);
-
-// 	std::cout << "(" << mean << " - " << stddev << " - " << n << "),";
 
 	// unbias version:
 	double num = (sum_2 - sum * sum / n);

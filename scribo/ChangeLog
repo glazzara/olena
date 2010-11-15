@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/canvas/integral_browsing.hh: Cleanup comments.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/binarization/sauvola_ms.cc: Add missing includes.
 
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
