@@ -369,6 +369,13 @@ namespace mln
     namespace qt
     {
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
+      const rgb32 rgb32::zero(0,0,0);
+
+#  endif // !MLN_WO_GLOBAL_VARS
+
+
       /*---------------.
       | Construction.  |
       `---------------*/
@@ -756,6 +763,7 @@ namespace mln
     namespace over_load
     {
 
+      // int_u -> qt::rgb32
       template <unsigned m>
       void
       from_to_(const value::int_u<m>& from, value::qt::rgb32& to)
@@ -774,6 +782,7 @@ namespace mln
       }
 
 
+      // qt::rgb32 -> bool
       inline
       void from_to_(const value::qt::rgb32& from, bool& to)
       {
@@ -781,6 +790,7 @@ namespace mln
       }
 
 
+      // bool -> qt::rgb32
       inline
       void from_to_(const bool& from, value::qt::rgb32& to)
       {
