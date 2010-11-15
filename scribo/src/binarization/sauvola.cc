@@ -24,8 +24,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
@@ -34,7 +38,7 @@ const char *args_desc[][2] =
 {
   { "input.*", "An image." },
   { "output.pbm", "A binary image." },
-  { "w", "Window size (default 51)." },
+  { "w", "Window size (default 101)." },
   { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
 };
@@ -56,7 +60,7 @@ int main(int argc, char *argv[])
   if (argc >= 4)
     w = atoi(argv[3]);
   else
-    w = 51;
+    w = 101;
 
   double k;
   if (argc >= 5)
@@ -69,7 +73,12 @@ int main(int argc, char *argv[])
   image2d<value::rgb8> input;
   io::magick::load(input, argv[1]);
 
-  image2d<bool> out = scribo::binarization::sauvola(input, w, k);
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_int_u<8>());
+
+
+  image2d<bool> out = scribo::binarization::sauvola(input_1_gl, w, k);
 
 
   io::pbm::save(out, argv[2]);

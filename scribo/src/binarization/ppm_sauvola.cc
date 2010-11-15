@@ -34,7 +34,7 @@ const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
   { "output.pbm", "A binary image." },
-  { "w", "Window size (default 51)." },
+  { "w", "Window size (default 101)." },
   { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
 };
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   if (argc == 4)
     w = atoi(argv[3]);
   else
-    w = 51;
+    w = 101;
 
   double k;
   if (argc == 5)

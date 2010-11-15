@@ -1,5 +1,13 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Set default window size to 101 in Sauvola examples.
+
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/ppm_sauvola.cc,
+	* src/binarization/sauvola.cc: Set default window size to 101.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve debug management and outputs for Sauvola.
 
 	* scribo/binarization/internal/compute_sauvola_threshold.hh:
