@@ -1,3 +1,8 @@
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/clustering/kmean_rgb.hh: Import Kmean RGB from Yann's
+	sandbox.
+
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix the way to convert unsigned to float.
