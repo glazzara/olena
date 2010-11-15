@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -201,6 +202,14 @@ namespace mln
       template <unsigned n>
       void
       from_to_(const value::int_u<n>& from, bool& to_);
+
+      // int_u -> float
+      template <unsigned n>
+      void from_to_(const value::int_u<n>& from, float& to_);
+
+      // int_u -> double
+      template <unsigned n>
+      void from_to_(const value::int_u<n>& from, double& to_);
 
       // label -> int_u.
       template <unsigned n>

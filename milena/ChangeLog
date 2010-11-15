@@ -1,5 +1,12 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add conversions from int_u to float and double.
+
+	* mln/convert/from_to.hxx,
+	* mln/value/int_u.hh: Here.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/convert/from_to.hh: Make use of value::cast for conversions
 	between built-in types.
 

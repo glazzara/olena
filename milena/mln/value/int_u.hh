@@ -128,6 +128,18 @@ namespace mln
       from_to_(const value::int_u<n>& from, bool& to_);
 
 
+      // int_u -> float.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, float& to_);
+
+
+      // int_u -> double.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, double& to_);
+
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -230,6 +242,24 @@ namespace mln
       from_to_(const value::int_u<n>& from, bool& to_)
       {
 	to_ = (from != 0u);
+      }
+
+      // int_u -> float.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, float& to_)
+      {
+	to_ = static_cast<float>(from);
+      }
+
+      // int_u -> double.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, double& to_)
+      {
+	to_ = static_cast<double>(from);
       }
 
 
