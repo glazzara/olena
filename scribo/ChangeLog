@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/separators_nonvisible.hh: New routine.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Import rgb8 to rgbn conversion function from Yann's sandbox.
 
 	* mln/fun/v2v/rgb8_to_rgbn.hh: New.
