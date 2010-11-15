@@ -22,12 +22,9 @@ scribo_viewer_SOURCES = $(BUILT_SOURCES)	\
 			image_widget.cc		\
 			xml_widget.cc		\
 			key_widget.cc		\
-			property_widget.cc	\
 			browser_widget.cc	\
 			image_scene.cc		\
 			image_view.cc		\
-			dommodel.cc		\
-			domitem.cc		\
 			image_region.cc		\
 			help_dialog.cc		\
 			step_widget.cc
@@ -54,12 +51,9 @@ noinst_HEADERS = viewer.hh		\
 	 	 image_widget.hh	\
 	 	 xml_widget.hh		\
 	 	 key_widget.hh		\
-	 	 property_widget.hh	\
 	 	 browser_widget.hh	\
 	 	 image_scene.hh		\
 	 	 image_view.hh		\
-	 	 dommodel.hh		\
-	 	 domitem.hh		\
 	 	 image_region.hh	\
 	 	 image_region.hxx	\
 	 	 common.hh		\

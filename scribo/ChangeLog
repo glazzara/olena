@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* demo/viewer/Makefile.am: Remove deprecated dependencies.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Include scribo.mk instead of tests.mk.
 
 	* src/contest/Makefile.am,
