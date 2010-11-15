@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,8 +36,6 @@
 # include <scribo/binarization/sauvola_threshold_image.hh>
 
 
-// #include <mln/border/adjust.hh>
-
 namespace scribo
 {
 
@@ -45,13 +44,6 @@ namespace scribo
 
     namespace internal
     {
-
-# ifdef SCRIBO_SAUVOLA_DEBUG
-      // Global debug images.
-      extern image2d<value::int_u8> debug_k;
-      extern image2d<float> debug_s_n;
-      extern image2d<float> debug_k_l;
-# endif // ! SCRIBO_SAUVOLA_DEBUG
 
       using namespace mln;
 
@@ -94,9 +86,8 @@ namespace scribo
 	  initialize(msk, input);
 
 # ifdef SCRIBO_SAUVOLA_DEBUG
-	  initialize(debug_k, input);
-	  initialize(debug_s_n, input);
-	  initialize(debug_k_l, input);
+	  initialize(debug_mean, input);
+	  initialize(debug_stddev, input);
 # endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	  mln::extension::fill(msk, false);
@@ -114,24 +105,11 @@ namespace scribo
 
 	  unsigned p = pxl.offset();
 
-# ifdef SCRIBO_SAUVOLA_DEBUG
-          value::int_u8 t_p;
-	  convert::from_to(
-	    sauvola_threshold_formula(mean, stddev,
-				      K_,
-				      SCRIBO_DEFAULT_SAUVOLA_R,
-				      debug_k.element(p),
-				      debug_s_n.element(p),
-				      debug_k_l.element(p)),
-	    t_p);
-# else
           value::int_u8 t_p;
 	  mln::convert::from_to(sauvola_threshold_formula(mean, stddev,
 							  K_,
 							  SCRIBO_DEFAULT_SAUVOLA_R),
 			   t_p);
-# endif // SCRIBO_SAUVOLA_DEBUG
-
 
 	  msk.element(p) = input.element(p) < t_p;
 	  t_sub.element(p) = t_p;

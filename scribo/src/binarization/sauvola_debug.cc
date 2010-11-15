@@ -32,8 +32,10 @@
 #include <mln/data/convert.hh>
 #include <mln/data/saturate.hh>
 
+#include <mln/fun/v2v/rgb_to_int_u.hh>
+
 #include <scribo/binarization/local_threshold.hh>
-#include <scribo/binarization/sauvola_threshold_image_debug.hh>
+#include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -42,9 +44,15 @@ const char *args_desc[][2] =
   { "output.pbm", "A binary image." },
   { "mean.pgm", "The local mean image." },
   { "stddev.pgm", "The local standard deviation image." },
+  { "threshold.pgm", "Threshold image." },
+  { "alpham.pgm", "alpha * m values" },
+  { "alphacond.pbm", "Boolean image. True if s < (alpha * m / 2)" },
+
   { "mean_factor", "Mean value factor (default 1)." },
-  { "stddev_factor", "Standard deviation value factor (default 10)." },
-  { "w", "Window size (default 51)." },
+  { "stddev_factor", "Standard deviation value factor (default 2)." },
+  { "alphamfact", "" },
+
+  { "w", "Window size (default 101)." },
   { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
 };
@@ -55,41 +63,56 @@ int main(int argc, char *argv[])
   using namespace mln;
   using namespace scribo::binarization;
 
-  if (argc < 5 || argc >= 9)
+  if (argc < 5 || argc >= 13)
     return scribo::debug::usage(argv,
 				"Binarization based on Sauvola's algorithm.",
-				"input.* output.pbm mean.pgm stddev.pgm <mean_factor> <stddev_factor> <w> <k>",
+				"input.* output.pbm mean.pgm stddev.pgm threshold.pgm alpham.pgm "
+				"alphacond.pbm <mean_factor> <stddev_factor> <alphamfact> <w> <k>",
 				args_desc);
 
   trace::entering("main");
 
   unsigned w;
-  if (argc >= 8)
-    w = atoi(argv[7]);
+  if (argc >= 12)
+    w = atoi(argv[11]);
   else
-    w = 51;
+    w = 101;
 
   double k;
-  if (argc >= 9)
-    k = atof(argv[8]);
+  if (argc >= 13)
+    k = atof(argv[12]);
   else
     k = 0.34f;
 
   std::cout << "Using w=" << w << " and k=" << k << std::endl;
 
+  if (argc >= 4)
+    scribo::binarization::internal::mean_image_output  = argv[3];
+  if (argc >= 5)
+    scribo::binarization::internal::stddev_image_output  = argv[4];
   if (argc >= 6)
-    scribo::binarization::internal::mean_debug_factor   = atoi(argv[5]);
+    scribo::binarization::internal::threshold_image_output  = argv[5];
   if (argc >= 7)
-    scribo::binarization::internal::stddev_debug_factor = atoi(argv[6]);
+    scribo::binarization::internal::alpham_image_output  = argv[6];
+  if (argc >= 8)
+    scribo::binarization::internal::alphacond_image_output  = argv[7];
+
+  if (argc >= 9)
+    scribo::binarization::internal::mean_debug_factor   = atof(argv[8]);
+  else
+    scribo::binarization::internal::mean_debug_factor = 1;
+  if (argc >= 10)
+    scribo::binarization::internal::stddev_debug_factor = atof(argv[9]);
+  else
+    scribo::binarization::internal::stddev_debug_factor = 2;
+  if (argc >= 11)
+    scribo::binarization::internal::alpham_debug_factor = atof(argv[10]);
+  else
+    scribo::binarization::internal::alpham_debug_factor = 2;
 
   image2d<value::rgb8> input;
   io::magick::load(input, argv[1]);
 
-
-  image2d<float> mean, stddev, thres;
-  initialize(mean, input);
-  initialize(stddev, input);
-  initialize(thres, input);
 
   image2d<value::int_u8>
     gima = data::transform(input,
@@ -97,20 +120,13 @@ int main(int argc, char *argv[])
 
 
   image2d<bool>
-    out = local_threshold(gima,
-			  sauvola_threshold_image_debug(gima, w, k,
-							mean, stddev, thres));
+    out = scribo::binarization::sauvola(gima, w, k);
 
 
   io::pbm::save(out, argv[2]);
 
-  io::pgm::save(data::stretch(value::int_u8(), mean), argv[3]);
-  io::pgm::save(data::stretch(value::int_u8(), stddev), argv[4]);
 
-  io::pgm::save(data::saturate(value::int_u8(), mean), "mean_saturated.pgm");
-  io::pgm::save(data::saturate(value::int_u8(), stddev), "stddev_saturated.pgm");
-
-  io::pgm::save(data::saturate(value::int_u8(), thres), "thres_saturated.pgm");
+//io::pgm::save(data::saturate(value::int_u8(), thres), "thres_saturated.pgm");
 
   trace::exiting("main");
 }

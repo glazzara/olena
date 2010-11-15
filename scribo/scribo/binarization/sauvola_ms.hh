@@ -32,6 +32,8 @@
 ///
 /// \brief Binarize an image using a multi-scale implementation of
 /// Sauvola's algoritm.
+///
+/// \fixme Use the integral image for successive subsampling.
 
 
 # include <mln/core/alias/neighb2d.hh>
@@ -64,10 +66,9 @@
 # include <scribo/canvas/integral_browsing.hh>
 
 # ifdef SCRIBO_SAUVOLA_DEBUG
+#  include <scribo/binarization/internal/sauvola_debug.hh>
 #  include <mln/io/pgm/save.hh>
-#  include <mln/data/saturate.hh>
-#  include <mln/data/convert.hh>
-#  include <mln/arith/times.hh>
+#  include <scribo/make/debug_filename.hh>
 # endif // ! SCRIBO_SAUVOLA_DEBUG
 
 
@@ -121,13 +122,6 @@ namespace scribo
       using namespace mln;
 
 
-# ifdef SCRIBO_SAUVOLA_DEBUG
-      char* scale_image_output = 0;
-      char* k_image_output = 0;
-      char* s_n_image_output = 0;
-      char* k_l_image_output = 0;
-# endif // ! SCRIBO_SAUVOLA_DEBUG
-
       template <typename V>
       V my_find_root(image2d<V>& parent, const V& x)
       {
@@ -160,15 +154,19 @@ namespace scribo
 	// Make sure the window fits in the image domain.
 	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
 	{
-	  w_local_w = std::min(integral_sum_sum_2.ncols(), integral_sum_sum_2.nrows()) - integral_sum_sum_2.border();
+	  w_local_w = std::min(integral_sum_sum_2.ncols(),
+			       integral_sum_sum_2.nrows()) - integral_sum_sum_2.border();
 	  w_local_h = w_local_w;
-	  trace::warning("integral_browsing - Adjusting window width since it was larger than image width.");
+	  trace::warning("integral_browsing - Adjusting window width since it"
+			 " was larger than image width.");
 	}
 	if (w_local_h >= static_cast<const unsigned>(integral_sum_sum_2.nrows()))
 	{
-	  w_local_h = std::min(integral_sum_sum_2.nrows(), integral_sum_sum_2.ncols()) - integral_sum_sum_2.border();
+	  w_local_h = std::min(integral_sum_sum_2.nrows(),
+			       integral_sum_sum_2.ncols()) - integral_sum_sum_2.border();
 	  w_local_w = w_local_h;
-	  trace::warning("integral_browsing - Adjusting window height since it was larger than image height.");
+	  trace::warning("integral_browsing - Adjusting window height since it"
+			 " was larger than image height.");
 	}
 
 	if (! (w_local % 2))
@@ -258,6 +256,12 @@ namespace scribo
 
 	  }
 	} // end of 2nd pass
+
+
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+	io::pbm::save(f.msk,
+		      scribo::make::debug_filename(internal::threshold_image_output).c_str());
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	return f.t_sub;
       }
@@ -860,8 +864,10 @@ namespace scribo
 						       sub_domains[2].first(),
 						       sub_domains[2].second()));
 
-
 	  // Subsampling to scale 3 and 4.
+	  //
+	  // FIXME: we may use the integral image to compute
+	  // subsampled images -> faster and more precise.
 	  for (unsigned i = 3; i <= nb_subscale + 1; ++i)
 	    sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q,
 							 sub_domains[i].first(),
@@ -913,13 +919,18 @@ namespace scribo
 	  }
 
 
-	  // Propagate scale values.
-	  e_2 = transform::influence_zone_geodesic(e_2, c8());
-
 #  ifdef SCRIBO_SAUVOLA_DEBUG
 	  if (internal::scale_image_output)
 	    io::pgm::save(e_2, internal::scale_image_output);
 #  endif // ! SCRIBO_SAUVOLA_DEBUG
+
+	  // Propagate scale values.
+	  e_2 = transform::influence_zone_geodesic(e_2, c8());
+
+// #  ifdef SCRIBO_SAUVOLA_DEBUG
+// 	  if (internal::scale_image_output)
+// 	    io::pgm::save(e_2, internal::scale_image_output);
+// #  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	  // Binarize
 	  image2d<bool>
@@ -951,20 +962,6 @@ namespace scribo
 
       mln_ch_value(I,bool)
 	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K);
-
-
-# ifdef SCRIBO_SAUVOLA_DEBUG
-      if (internal::k_image_output)
-	io::pgm::save(internal::debug_k, internal::k_image_output);
-
-      if (internal::s_n_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_s_n * 100),
-		      internal::s_n_image_output);
-      if (internal::k_l_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_k_l * 10),
-		      internal::k_l_image_output);
-# endif // ! SCRIBO_SAUVOLA_DEBUG
-
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;

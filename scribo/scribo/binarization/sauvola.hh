@@ -34,13 +34,16 @@
 # include <mln/core/concept/image.hh>
 # include <mln/data/transform.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/value/rgb8.hh>
-
-# include <mln/fun/v2v/rgb_to_int_u.hh>
 
 # include <scribo/binarization/sauvola_threshold_image.hh>
 # include <scribo/binarization/local_threshold.hh>
+# include <scribo/binarization/internal/sauvola_debug.hh>
 
+# ifdef SCRIBO_SAUVOLA_DEBUG
+#  include <mln/io/pgm/save.hh>
+#  include <mln/io/pbm/save.hh>
+#  include <mln/data/saturate.hh>
+# endif // ! SCRIBO_SAUVOLA_DEBUG
 
 namespace scribo
 {
@@ -91,6 +94,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     // Implementations.
 
     namespace impl
@@ -119,26 +123,6 @@ namespace scribo
       } // end of namespace scribo::binarization::impl::generic
 
 
-      template <typename I>
-      mln_ch_value(I, bool)
-      sauvola_rgb8(const Image<I>& input, unsigned window_size, double K)
-      {
-	trace::entering("scribo::binarization::impl::generic::sauvola");
-	mln_precondition(exact(input).is_valid());
-
-	mln_ch_value(I, value::int_u8) gima;
-	gima = data::transform(input, mln::fun::v2v::rgb_to_int_u<8>());
-
-	mln_ch_value(I, bool)
-	  output = local_threshold(gima,
-				   binarization::sauvola_threshold_image(gima,
-									 window_size,
-									 K));
-
-	trace::exiting("scribo::binarization::impl::generic::sauvola");
-	return output;
-      }
-
     } // end of namespace scribo::binarization::impl
 
 
@@ -155,15 +139,6 @@ namespace scribo
 			 double K)
       {
 	return impl::generic::sauvola(input, window_size, K);
-      }
-
-      template <typename I>
-      mln_ch_value(I, bool)
-      sauvola_dispatch(const value::rgb8&,
-		       const Image<I>& input, unsigned window_size,
-		       double K)
-      {
-	return impl::sauvola_rgb8(input, window_size, K);
       }
 
 
@@ -193,6 +168,25 @@ namespace scribo
       mln_ch_value(I, bool)
 	output = internal::sauvola_dispatch(input, window_size, K);
 
+# ifdef SCRIBO_SAUVOLA_DEBUG
+      if (internal::stddev_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_stddev),
+		      internal::stddev_image_output);
+      if (internal::mean_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_mean),
+		      internal::mean_image_output);
+      if (internal::threshold_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_threshold),
+		      internal::threshold_image_output);
+
+      if (internal::alpham_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_alpham),
+		      internal::alpham_image_output);
+      if (internal::alphacond_image_output)
+	io::pbm::save(internal::debug_alphacond, internal::alphacond_image_output);
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
+
       trace::exiting("scribo::binarization::sauvola");
       return output;
     }
@@ -202,16 +196,7 @@ namespace scribo
     mln_ch_value(I, bool)
     sauvola(const Image<I>& input, unsigned window_size)
     {
-      trace::entering("scribo::binarization::sauvola");
-
-      mln_precondition(exact(input).is_valid());
-
-      mln_ch_value(I, bool)
-	output = internal::sauvola_dispatch(input, window_size,
-					    SCRIBO_DEFAULT_SAUVOLA_K);
-
-      trace::exiting("scribo::binarization::sauvola");
-      return output;
+      return sauvola(input, window_size, SCRIBO_DEFAULT_SAUVOLA_K);
     }
 
 
