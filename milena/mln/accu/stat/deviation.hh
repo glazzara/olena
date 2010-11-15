@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -84,7 +84,11 @@ namespace mln
     protected:
 
       accu::math::count<T> count_;
-      accu::math::sum<T,S>   sum_;
+
+      // NOTE: accu::math::sum takes mln_sum(T) as first template
+      // parameter since in the core of the deviation::take method,
+      // this accumulator takes data of type mln_sum(T).
+      accu::math::sum<mln_sum(T),S>   sum_;
       T mean_;
     };
 

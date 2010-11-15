@@ -1,5 +1,10 @@
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/accu/stat/deviation.hh: Set first template parameter of
+	accu::stat:sum to mln_sum(T).
+
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/labeling/compute.hh: Add a missing overload in dispatch.
 
 2010-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
