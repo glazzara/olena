@@ -85,6 +85,21 @@ if HAVE_TESSERACT
 			       		   $(TIFF_LDFLAGS) \
 					   $(MAGICKXX_LDFLAGS)
 
+
+    utilexec_PROGRAMS	   += content_in_doc
+    content_in_doc_SOURCES  = content_in_doc.cc
+    content_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
+			-I/home/lazzara/git/oln/scribo/sandbox/green/ \
+			-I/home/lazzara/git/oln/scribo/sandbox/z/ \
+			      $(TESSERACT_CPPFLAGS) \
+			      $(TIFF_CPPFLAGS) \
+			      $(MAGICKXX_CPPFLAGS)
+    content_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
+			      $(TESSERACT_LDFLAGS) \
+			      $(TIFF_LDFLAGS) \
+			      $(MAGICKXX_LDFLAGS) \
+			      -lpthread
+
 endif HAVE_TESSERACT
 
 endif HAVE_MAGICKXX

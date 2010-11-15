@@ -1,5 +1,9 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/content_in_doc.cc: New example extracting document content.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/toolchain/text_in_doc.hh: Make use of non visible
 	separators information.
 
