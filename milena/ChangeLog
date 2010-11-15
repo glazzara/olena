@@ -1,5 +1,10 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/convert/from_to.hh: Make use of value::cast for conversions
+	between built-in types.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/data/paste_without_localization.hh: Add a missing dispatch
 	overload.
 

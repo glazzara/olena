@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +45,7 @@
 # include <mln/metal/is.hh>
 # include <mln/metal/is_a.hh>
 
+# include <mln/value/cast.hh>
 
 namespace mln
 {
@@ -156,7 +158,12 @@ namespace mln
       from_to_dispatch(metal::false_,  const F& from,
 		       metal::false_,  T&	to)
       {
-	over_load::from_to_(from, to);
+	to = mln::value::cast<T>(from);
+
+	// We prefer using value::cast instead of a from_to_ overload.
+	// We don't want to write explicitly every from_to_ overload
+	// for all built-in types.
+	// over_load::from_to_(from, to);
       }
 
 
