@@ -236,13 +236,94 @@ n'importe quel algorithme type huffman (tous les archiveurs en possède un).
 VIII VISUALISATION HISTOGRAMMES 3D
 ----------------------------------
 
-==> to do
+Les histogrammes sur lesquels nous sommes amenés à travailler sont en
+3d.  Nous étudions des images couleurs dans l'espace RGB, donc
+l'histogramme dans cet espace possède 3 dimensions (une par axe, R, G
+et B) et la cellule désignée par cette position RGB renfermera le nombre
+de pixels de l'image ayant exactement cette couleur. Il est très
+difficile de bien visualiser ces images, car elles sont en 3d. Gnuplot
+nous donne qu'une aide très limitée, car il faut afficher 3 axes et la
+force de la cellule, ce qui fait en fait quatre informations à
+afficher. Il est possible de jouer avec les couleurs, mais il n'y a
+pas de représentation très utile, on peut afficher le nuage des
+couleurs pour percevoir sa forme générale, mais l'interprétation ne
+peut pas vraiment aller plus loin. C'est pourquoi, nous proposons une
+représentation plus pertinente. C'est Théo qui a roulé sa bosse en
+classification qui a developpé ce genre de technique, je ne fais que
+réutilliser les mêmes analyses en beaucoup moins fins que ce qu'il a
+déjà pu développer par ailleurs.
 
+La première idée est de gommer une dimension, et c'est possible de le
+faire car dans une image RGB, souvent l'axe bleu est fortement
+correllé avec l'axe vert. Cela dépend beaucoup de la formation des
+images et pour des images synthétiques, il n'y a aucune raison que
+ce soit le cas. C'est juste une propriété qui s'applique pour les
+images naturelles. La forte corrélation obtenue ne veut pas dire qu'il
+y a exactement les mêmes informations, juste que dans l'ensemble on
+note une relative redondance (du point de vue statistique). Pour t'en
+convaincre, tu peux regarder sous gimp, les histogrammes sur les
+différents canaux et tu observeras qu'il y a deux canaux (le vert et
+bleu) pour lesquels les histogrammes sont presque identiques.
 
-* demo/accu/stat/histo2d
+La dernière étape est de réaliser un traitement sur la dimension qui a
+été supprimée. Par exemple, sommer toutes les valeurs rencontrées ou
+ne retenir que la valeur max ...
 
-* mln/display/dispay_histo.hh
-* mln/display/project_histo.hh
+Le fichier display_histo.hh joue le rôle de front hand pour les
+routines de visualisation. Il a pour rôle d'initialiser, d'instancier,
+de coordonner la chaine de visualisation. Le fichier project_histo.hh
+décrit les algorithmes au coeur de la visualisation, comment est
+construite concrêtement l'information que l'on visualise à la fin.
+
+Nous avons construit 3 sortes de projecteurs. Le premier va sommer le
+long de l'axe bleu les différentes informations
+rencontrées. Globalement, cela signifie, que plus il y a de pixels
+dans le sous espace (red=v1,green=v2) avec pour chaque pixel
+rencontrés des valeurs de bleu différentes, plus le nombre construit
+sera grand. Sur cette information, on fera passer un logarithme pour
+diminuer les pics et ne faire ressortir visuellement que les
+informations les plus saillantes. En dernier lieu, on rescalera les
+valeurs obtenues pour utiliser pleinement la dynamique d'une image de
+256 niveaux de gris. La visualisation obtenue nous donne un aperçu de
+la densité de l'espace des couleurs. On observera en très lumineux les
+endroits de forte population de couleurs et en presque noir l'absence
+de couleur dans l'image pour cette portion de l'espace RGB.
+
+Les autres techniques de visualisation sont des variantes du même
+traitement que nous allons decrire. La chaine de base consiste à
+parcourir la dimension bleu pour chaque point de l'espace rouge/vert
+(comme dans la première technique). Cette fois-ci, ce n'est plus la
+somme qui nous intéresse, mais la couleur la plus représentée. On va
+faire un max des valeurs obtenues en parcourant l'axe bleu. Une
+première version rapportera la position bleue qui rassemble le plus de
+pixels. Une seconde version remplacera cette position bleue par un
+label associé à une segmentation déjà effectuée dans cet espace.
+
+La dernière technique modifie la version précédente de la manière
+suivante: Nous sommes toujours interessé par le max, mais on va remplacer
+cette information directement par la couleur reconstituée (nous sommes
+sur un point particulier de l'espace red/green donc red et green sont
+connus, et on vient d'obtenir la valeur bleue la plus représentée, on
+utilisera cette valeur pour former une couleur RGB). A l'issu du
+processus, on obtient donc une image couleur. L'information obtenue
+ici, n'est plus la densité de l'histogramme, mais plutôt la couleur la
+plus représentée à cet endroit. La toute première technique et celle-ci
+sont complémentaires pour la bonne visualisation d'un histogramme
+3d. Si l'on dispose d'une segmentation de l'espace des couleurs, on
+peut trouver le label associé au bleu prédominant et récupérer dans
+une palette de couleur annexe la couleur associée au label.
+
+* mln/display/dispay_histo.hh: Front hand pour les routines de projection.
+* mln/display/project_histo.hh: Les algorithmes de visualisations.
+
+Le travail dans use ne représente que deux routines sur six de
+display_histo.  Par manque de temps, je ne fais pas le reste de
+manière à insister sur d'autres points documentaires plus
+importants. Le cadre est en place et les autres routines plus
+sophistiquées faisant intervenir la segmentation de l'histogramme
+peuvent être tirées de tools/labeling/regmax par exemple.
+
+* use/display/display_histo: Visualisations des histogrammes.
 
 
 IX KMEANS
@@ -388,29 +469,266 @@ tests effectués et montrent l'évolution du temps de calcul suivant la
 progression du paramètre observé (taille de l'image ou nombre de
 centres).
 
-==> to do : le changelog + commit + give it to scribo-z branch
-
 
 X REGIONAL MAXIMA
 -----------------
 
-==> to do
+Pour cette partie, le temps a commencé à s'accélérer, ce qui fait
+qu'il n'y a plus de tests unitaires. Par ailleurs, comme la
+fonctionnalité n'a pas été pensée comme un élément de la librairie, il
+n'y a donc pas non plus de répertoire "use" à cet effet.
+
+
+a) Segmentation basé sur le watershed
+
+Cet exemple essaye une première méthode de filtrage de
+l'histogramme. A noter elle ne compile pas. Elle eu compilé dans le
+temps, mais le source a été tellement remanié que sa reconstruction
+doit régler encore quelques détails.  Sa compilation n'a pas vraiment
+d'intérêt en soi, seule la démarche compte ici.  Le temps me manque et
+je ne persisterais pas à essayer de le faire compiler à tout prix. D'autres
+sources sont beaucoup plus intéressant. Nota, gaussian.sh est un gnuplot
+script shell qui sert à calibrer le filtrage de l'histogramme. Il permet
+de déterminer visuellement la taille de la fenêtre win utilisée lors de la
+convolution en fonction d'un écart type sigma donné.
+
+* demo/labeling/watershed: Demonstrator de la segmentation d'un histogramme.
+
+
+b) Second essai avec les regional_maxima
+
+Le programme actuel ne compile pas non plus. Il n'est pas d'une grande
+importance, alors du coup je le laisse tel quel. Il a servi a
+plusieurs choses, en premier à tester les regional_maxima mais en
+dernier lieu surtout à tester le filtrage par attribut (volume) qui
+semblait avoir quelques soucis.  A l'heure d'aujourd'hui, je ne peux
+toujours pas dire s'il fonctionne convenablement ou non, il semble que
+parfois des anomalies se produisent à ce niveau, mais elles peuvent
+aussi bien être générées par un problème interne à mon programme.
+
+* demo/labeling/regional_maxima: Testeur du filtrage par attribut de volume.
+
+
+c) Déplacement du programme b) dans exp.
+
+Même programme que b) mais qui compile.
+
+* exp/labeling/regional_maxima: Testeur du filtrage par attribut de volume.
+
+
+d) Sources importantes ==> regional_maxima
+
+Il y avait une autre version des regional_maxima ou toute la chaine était
+présente, si j'avais davantage de temps, je l'aurais réecrite. Il semble
+qu'elle se soit perdue lors de la migration de SVN vers GIT. Aucune importance.
+Les outils "up to date" sont ceux dont les sources sont dans tools. La classe
+outil représente des binaires un peu plus travaillé au niveau de l'interface
+texte, en gros ils prennent plein de paramètres et génèrent des résultats
+intermédiaires. Chaque outil à son usage ...
+
+
+Ce qu'il faut savoir sur l'outil histo. Tout d'abord le programme
+prend 7 ou 8 arguments et c'est le dernier qui est optionnel. Les
+arguments sont l'image couleur à partir de laquelle on veut extraire
+l'histogramme couleur (3d), le degré de quantification que l'on veut
+utiliser (sous échantillonnnage de l'image), le chemin de l'image
+couleur quantifiée résultante après analyse, le chemin de
+l'histogramme produit (réutilisé par les autres outils), la
+visualisation rouge/verte de l'histogramme (brute) et la visualisation
+augmentée de ce même histogramme avec les maxima dessus. Se reporter à
+la documentation des histogrammes pour avoir plus d'information sur ce
+sujet. Le dernier paramètre optionnel est un masque à appliquer sur
+les pixels de l'image d'entrée. La chaine de traitement de l'outil,
+commence par sous échantillonner l'image en n bits, n < 8, puis
+construit l'histogramme 3d à partir des pixels présents dans le masque,
+si ce dernier existe et enfin sauvegarde des résultats et des images
+servant à la visualisation.
+
+* tools/labeling/histo: Construction de l'histogramme.
+
+
+Ce qu'il faut savoir sur l'outil de filtrage de l'histogramme. Tout
+d'abord, il prend en paramètre 6 arguments obligatoires. Les arguments
+sont la quantification utilisée par l'outil de création de
+l'histogramme, le chemin de l'histogramme à filtrer, le seuil utilisé
+pour le filtrage (c'est le volume minimal en dessous duquel
+l'information est jugée comme du bruit et donc ne doit pas passer), le
+chemin de l'histogramme filtré, le chemin de la projection en densité
+de l'histogramme et le chemin de la projection en couleurs
+majoritaires de l'histogramme. Se reporter au chapitre sur la
+visualisation pour comprendre les différentes projections. Le filtrage
+est un traitement très simple, il applique uniquement l'algorithme
+morphologique d'ouverture sur les attributs de volume. Imagine un
+histogramme en 1d, l'attribut de volume est alors la surface sous la
+courbe de l'histogramme. Une ouverture volumique consiste à supprimer
+tous les pics ayant un volume inférieur au seuil. Cela fonctionne très
+bien en général, toutefois, il y a des cas où les informations
+retournées ne sont pas celles attendues. Concrêtement, des composantes
+de volume inférieur au seuil sont retrouvées plus loin dans la chaine
+de traitement, ce qui contredit l'usage de l'ouverture
+morphologique. Il est difficile de définir ce qui se passe vraiment,
+il est possible qu'il y ait un bug ou simplement que le reste de ma
+chaine induise quelque fois ce résultat étrange. Honnêtement, je ne
+sais pas ce qui se passe. Le cas n'arrive pas fréquemment, donc il est
+très difficile d'isoler l'erreur.
+
+* tools/labeling/opening: Filtrage de l'histogramme.
+
+
+Ce qu'il faut savoir sur l'outil de labellisation. Tout d'abord, il
+prend 11 arguments dont le dernier est optionel. Les arguments sont
+l'image originale (nécessaire pour calculer la couleur moyenne des
+labels ==> réalité augmentée), la quantification utilisée
+précédemment, l'image préalablement quantifiée, l'histogramme
+original, l'histogramme filtré, le voisinage sur lequel effectué les
+opérations (c6, c18 ou c26), l'histogramme segmenté en 3d, la
+projection red/green associée, la colormap, l'image reconstruite des
+moyennes associé à chaque label et éventuellement un fichier décrivant
+les statistiques associés aux labels (couleur moyenne associé au
+label, plus nombre de pixels concernés dans l'image, plus pourcentage
+absolu et pourcentage sans tenir compte du fond). Le seul appel
+intéressant est la labellisation de l'histogramme filtré qui produit
+une image 3d de label. Tout le reste est de la tuyauterie pour faire
+de la rélatité augmentée. Par exemple pour formée l'image des moyennes
+associées à chaque label, il est nécessaire de construire l'image 2d
+des labels qui fait intervenir elle-même l'image d'entrée quantifiée
+et l'image originale. Idem pour la construction de la
+colormap. L'outil segmente l'histogramme filtré par la détermination
+des maxima régionnaux, autrement dit des zones de très fortes
+densités. Ces zones sont en général très petites, quelques pixels pas
+plus. C'est pourquoi l'outil suivant va nous servir à les étendre un
+peu.
+
+* tools/labeling/regmax: Segmentation de l'histogramme.
+
+
+Petite suprise désagréable, l'outil iz ne compile plus. La raison en
+est toute simple, il y a eu du mouvement dans les fonctions
+mln::transform::influence_zone_geodesic(). Un revamp un peu violent,
+avec une version
+mln::transform::influence_zone_geodesic_saturated(). J'ai corrigé le
+changement d'appel, mais cela ne suffit pas. Dans la méthode
+mln::transform::influence_zone_geodesic_fastest(), l.127, tu utilises
+la méthode at() pour une image 2d et là pas de chance, moi j'utilise
+cet algorithme pour une image de labels 3d (nous sommes dans un espace
+RGB quantifié en n bits, n < 8). Je ne veux surtout rien détruire dans
+scribo, donc je te laisse effectuer les changements qui s'imposent et
+je continue la documentation.
+
+Ce qu'il faut savoir sur iz. Tout d'abord cette routine prend 12
+arguments dont le dernier est optionel. Les arguments sont
+l'histogramme labelisé par l'outil précédent, la profondeur utilisée
+pour l'influence par zone géodésique (0 signifie l'infini), puis vient
+le voisinage 3d utilisé pour la propagation, puis l'image initiale,
+puis le degrée de quantification utilisé par tous les outils, puis le
+dump de l'histogramme, la colormap (utilisée pour la projection r/g
+avec segmentation, puis l'histogramme labelisé après propagation nommé
+iz et enfin la projection r/g, l'image reconstruite à l'aide des
+moyennes des classes et le fichier de statistiques intégrant la
+propagation des classes. La propagation a pour vocation d'agrandir les
+classes obtenues jusqu'à maintenant. C'est une information que l'on
+voit bien avec les changements dans les projections r/g.
+
+* tools/labeling/iz: Propagation des classes par zone d'influence.
+
+
+Comme le paramétrage est difficile, il est conseillé de relire les
+scripts des jeux de tests qui coordonnent l'appel de ces routines avec
+une sucession de paramètres cohérents. Je sais ce que tu vas me dire,
+c'est mal, il ne faut pas mettre d'images sur le dépot git. Dans
+l'absolu, je suis d'accord, mais aujourd'hui, le code iz est cassé et
+rejouer ces tests peut prendre énormément de temps, donc par facilité,
+je me contente des résultats que j'avais archivé et que tu seras
+content de trouver pour en inclure une partie dans ton rapport.
+
+Tout d'abord un jeu de répertoire de test en instance d'être lancé. Le
+répertoire porte le nom de l'image sur laquelle est effectué le
+test. On y trouvera l'image originale pleine résolution, et les deux
+masques de gradient fin et un peu plus épais. Pour faire le test, il
+suffit d'écrire le script comme dans doc/labeling/mp00307.
+
+* doc/labeling/mp00215c
+* doc/labeling/mp00234c
+* doc/labeling/mp00248c
+* doc/labeling/ta00031c
+* doc/labeling/ta00083c
+
+
+Puis, nous avons les tous premiers tests qui ont servi pour déterminer
+la quantification à utiliser et la méthode de propagation (infinie ou
+saturée). Il y a longtemps, pour ces tests, je disposais d'une chaine
+complète mais cette dernière c'est perdu dans la migration entre svn
+et git. Il n'y a donc pas de script shell qui lance les outils, par
+contre il existe un fichier de synthese qui explique exactement ce qui
+a avait été lancé et avec quels paramètres, histoire de pouvoir rejouer le test.
+
+* doc/labeling/cmp_method: Test sur le type de propagation à utiliser.
+* doc/labelling/cmp_quant: Test sur la quantification a utiliser.
+
+
+Puis, nous avons les tests effectués à l'aide d'un script. Lire les
+scripts pour situer correctement les binaires outils utilisés. Le
+premier jeu test avait pour but d'étudier la combinatoire des options
+et de choisir ensuite les paramètres qui vont bien. Il n'y a pas de
+certitude complète en la matière. Lire attentivement le fichier
+synthèse. Tout ces éléments ont été validés par théo. Je ne me rapelle
+plus du détail, mais j'ai rédigé tout ce que je pouvais. Le dernier
+répertoire n'a pas de fichier synthèse, je pense que l'étude était du
+même gabarit que le test précédent. J'en étais à tester la routine sur
+un maximum d'images pour voir si le jeu réduit de couleurs obtenues
+correspondait à nos attentes ou non. Les paramètres stables sont à
+rechercher dans les derniers répertoires mp00042c et mp00307c.
+
+* doc/labeling/mp00307c_bis: Test sur un grand nombre de combinaisons.
+* doc/labeling/mp00411c: Test sur l'altération des statistiques.
+* doc/labeling/mp00042c: Test sur la representativité des couleurs trouvées.
+* doc/labeling/mp00307c: Test sur la representativité des couleurs trouvées.
+
+
+Faire le changelog, il y a de l'aide dans git/doc/Changelog
+... et commiter
 
 
 XI ANNOTATING
--------------
+--------------
 
 ==> to do
 
 
-a) La sauvegarde des images au format gnuplot shell
 
-* mln/io/plot/save_image_sh.hh: Librairie sauvegarde format gnuplot shell.
-
-to do ...
+* doc/annotating
 
 
 
+XI AUTRES ASPECTS DOCUMENTAIRES
+-------------------------------
+
+Ces exemples de codes sont livrés tels quels sans aucune documentation
+de ma part. Si tu as besoin de quelque chose, sert toi, tu les
+remanieras à ta sauce. Il n'y a pas de raison de les documenter, se
+serait disperser mes efforts vainement.
+
+* doc/examples/accu_color: Petit programme pour se bidouiller avec la couleur.
+* doc/examples/frac: Librairie pour manipuler des fractions sous milena.
+* doc/examples/hello_milena: Petit exemple allant avec la doc de milena.
+* doc/examples/hello_world: Test de la plateforme c++.
+* doc/examples/io: Rien de vraiment intéressant dans l'état actuel.
+* doc/examples/learn_milena: Autre exemple de base avec milena.
+* doc/examples/otsu: Petit programme Otsu.
+* doc/examples/stats: Exemple de manipulation d'accumulateurs.
 
 
+Voici deux exemples sous LaTex. Un jeu de test avec la confection de
+vecteur et de matrices pour relater les forrmules connues en espace
+3d. La version actuelle est dégradée par rapport à ce que j'avais pu
+écrire. J'étais arrivé à la mise au point d'un extracteur de valeurs
+propres mais je n'ai jamais pu retrouver cette version là, surement
+une erreur sous svn. Le second document devait présenter la
+documentation quick tour sous milena, mais j'avoue que c'est un
+lamentable échec, je n'ai pas pris le temps de le faire. Je pense que
+l'idée d'une documentation collaborative permettrait de répartir
+l'effort.
+
+* doc/formulae: LaTex directory.
+* doc/quick_tour: LaTex directory.
 
