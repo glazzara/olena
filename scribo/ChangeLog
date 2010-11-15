@@ -19,6 +19,29 @@
 	* src/binarization/sauvola_debug.cc,
 	* src/binarization/sauvola_ms_debug.cc: Improve debug outputs.
 
+	* src/binarization/pgm_sauvola_threshold_image.cc: New.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve debug management and outputs for Sauvola.
+
+	* scribo/binarization/internal/compute_sauvola_threshold.hh:
+	New. Move sauvola_threshold related routines here.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold_image.hh: Move debug
+	variables...
+
+	* scribo/binarization/internal/sauvola_debug.hh: ... here. New.
+
+	* scribo/binarization/sauvola_threshold_image_debug.hh: Remove.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/sauvola_debug.cc,
+	* src/binarization/sauvola_ms_debug.cc: Improve debug outputs.
+
 2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
 
 	Add arrows shortcuts.
