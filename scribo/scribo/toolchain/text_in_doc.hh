@@ -37,6 +37,7 @@
 
 # include <scribo/primitive/extract/components.hh>
 # include <scribo/primitive/extract/vertical_separators.hh>
+# include <scribo/primitive/extract/separators_nonvisible.hh>
 
 # include <scribo/primitive/remove/separators.hh>
 
@@ -63,12 +64,14 @@
 # include <scribo/debug/looks_like_a_text_line_image.hh>
 
 
-
 namespace scribo
 {
 
   namespace toolchain
   {
+
+    using namespace mln;
+
 
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
@@ -77,6 +80,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
     text_in_doc(const Image<I>& input, bool denoise, bool debug = false)
@@ -84,15 +88,11 @@ namespace scribo
       typedef value::label<30> V;
       typedef image2d<V> L;
 
-      // Add whitespace separators.
-      //   win::rectangle2d win = win::rectangle2d(151, 41);
-      //   image2d<bool> whitespaces = morpho::closing::structural(input, win);
-      //   logical::not_inplace(whitespaces);
-
       // Remove separators
       if (debug)
 	std::cout << "Find vertical separators..." << std::endl;
 
+      // Vertical separators
       image2d<bool>
 	separators = primitive::extract::vertical_separators(input, 81);
 
@@ -102,15 +102,23 @@ namespace scribo
       image2d<bool> input_cleaned = primitive::remove::separators(input,
 								  separators);
 
-//   whitespaces += separators;
+      // Whitespace separators
+      if (debug)
+	std::cout << "Find whitespace separators..." << std::endl;
+
+      image2d<bool>
+	whitespaces = primitive::extract::separators_nonvisible(input);
 
       if (debug)
       {
+	mln::io::pbm::save(whitespaces,
+			   scribo::make::debug_filename("whitespaces.pbm"));
+
 	mln::io::pbm::save(separators,
 			   scribo::make::debug_filename("vseparators.pbm"));
-//   mln::io::pbm::save(whitespaces, "separators.pbm");
 
-	mln::io::pbm::save(input_cleaned, scribo::make::debug_filename("input_wo_vseparators.pbm"));
+	mln::io::pbm::save(input_cleaned,
+			   scribo::make::debug_filename("input_wo_vseparators.pbm"));
       }
 
       // Denoise
@@ -137,10 +145,13 @@ namespace scribo
 
       /// Set separator components.
       components.add_separators(separators);
-//  components.add_separators(whitespaces);
+      components.add_separators(whitespaces);
 
       components = scribo::filter::components_small(components, 3);
 
+      if (debug)
+	mln::io::pbm::save(components.separators(),
+			   scribo::make::debug_filename("all_separators.pbm"));
 
       /// Linking potential objects
       if (debug)
