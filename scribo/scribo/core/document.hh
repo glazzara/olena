@@ -48,21 +48,24 @@ namespace scribo
     document();
     document(const char *filename);
 
+    void open();
+
     const char * filename() const;
+    void set_filename(const char*name);
 
     bool is_valid() const;
 
     const line_set<L>& text() const;
+    bool has_text() const;
     void set_text(const line_set<L>& line);
 
     const component_set<L>& elements() const;
+    bool has_elements() const;
     void set_elements(const component_set<L>& elements);
 
     const mln::image2d<value::rgb8>& image() const;
 
   private:
-    void open();
-
     const char *filename_;
     mln::image2d<mln::value::rgb8> image_;
 
@@ -99,6 +102,14 @@ namespace scribo
 
   template <typename L>
   void
+  document<L>::set_filename(const char *filename)
+  {
+    filename_ = filename;
+  }
+
+
+  template <typename L>
+  void
   document<L>::open()
   {
     mln::io::magick::load(image_, filename_);
@@ -122,6 +133,14 @@ namespace scribo
 
 
   template <typename L>
+  bool
+  document<L>::has_text() const
+  {
+    return lines_.is_valid();
+  }
+
+
+  template <typename L>
   void
   document<L>::set_text(const line_set<L>& line)
   {
@@ -134,6 +153,14 @@ namespace scribo
   document<L>::elements() const
   {
     return elements_;
+  }
+
+
+  template <typename L>
+  bool
+  document<L>::has_elements() const
+  {
+    return elements_.is_valid();
   }
 
 

@@ -1,5 +1,9 @@
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/document.hh: Add new methods.
+
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/io/xml/save.hh: Add conditions before saving elements and
 	text.
 
