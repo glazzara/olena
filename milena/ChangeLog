@@ -1,5 +1,10 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/accu/stat/histo3d_rgb.hh: Import histo3d RGB accu from
+	Yann's sandbox.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/clustering/kmean_rgb.hh: Import Kmean RGB from Yann's
 	sandbox.
 
