@@ -38,6 +38,8 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/magick/all.hh>
 
+#include <mln/arith/revert.hh>
+
 #include <mln/math/min.hh>
 
 #include <mln/logical/not.hh>
@@ -162,14 +164,13 @@ int main(int argc, char* argv[])
   typedef image2d<value::label_16> L;
   component_set<L>
     comps = toolchain::text_in_picture(input_rgb, bg_removal, multi_scale_bin,
-				       false,
 				       max_dim_size, lambda, out_base_dir);
 
 
   typedef image2d<value::label_16> L;
   component_set<L>
-    comps_neg = toolchain::text_in_picture(input_rgb, bg_removal, multi_scale_bin,
-					   true,
+    comps_neg = toolchain::text_in_picture(arith::revert(input_rgb), bg_removal,
+					   multi_scale_bin,
 					   max_dim_size, lambda, out_base_dir);
 
 
@@ -192,4 +193,5 @@ int main(int argc, char* argv[])
 
   std::cout << "# objects = " << merged_comps.nelements() << std::endl;
 
+  return merged_comps.nelements() != 0;
 }

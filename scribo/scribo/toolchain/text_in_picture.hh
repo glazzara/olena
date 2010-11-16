@@ -56,7 +56,6 @@ namespace scribo
     component_set<mln_ch_value(I, value::label_16)>
     text_in_picture(const Image<I>& input_rgb_orig,
 		    bool bg_removal, bool multi_scale_bin,
-		    bool negate = false,
 		    unsigned max_dim_size = 0, unsigned lambda = 0,
 		    const char *debug_outdir = 0);
 
@@ -120,7 +119,7 @@ namespace scribo
     template <typename I>
     component_set<mln_ch_value(I, value::label_16)>
     text_in_picture(const Image<I>& input_rgb_orig_,
-		    bool bg_removal, bool multi_scale_bin, bool negate = false,
+		    bool bg_removal, bool multi_scale_bin,
 		    unsigned max_dim_size = 0, unsigned lambda = 0,
 		    const char *debug_outdir = 0)
     {

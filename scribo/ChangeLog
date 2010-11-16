@@ -1,3 +1,11 @@
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve text_in_picture_neg.
+
+	* scribo/toolchain/text_in_picture.hh: Remove useless argument.
+
+	* src/text_in_picture_neg.cc: Revert color image.
+
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/content_in_doc.cc: New example extracting document content.
