@@ -311,10 +311,6 @@ namespace mln
       void
       from_to_(const Value<F>& from, Value<T>& to);
 
-      // unsigned -> float
-      void
-      from_to_(const unsigned& from, float& to);
-
       // double-> Value
       template <typename V>
       void

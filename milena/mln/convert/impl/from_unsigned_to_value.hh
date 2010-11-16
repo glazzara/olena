@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -116,15 +117,6 @@ namespace mln
 	from_to_(const unsigned& from, Value<V>& to)
 	{
 	  internal::from_unsigned_to_value_dispatch(from, to);
-	}
-
-
-	// Facades.
-	// unsigned-> float
-	void
-	from_to_(const unsigned& from, float& to)
-	{
-	  to = from;
 	}
 
 

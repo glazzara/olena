@@ -1,3 +1,11 @@
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove a useless from_to overload.
+
+	* mln/convert/from_to.hxx,
+	* mln/convert/impl/from_unsigned_to_value.hh: Remove overload
+	converting unsigned to float.
+
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen mk files in Milena.
