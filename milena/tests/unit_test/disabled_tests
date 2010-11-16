@@ -31,3 +31,4 @@ mln/histo/compute.spe.hh
 mln/labeling/value.spe.hh
 mln/logical/not.spe.hh
 mln/morpho/general.spe.hh
+mln/world/rgb/invert.spe.hh
