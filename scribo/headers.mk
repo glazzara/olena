@@ -5,13 +5,14 @@ scribo/all.hh \
 scribo/binarization/all.hh \
 scribo/binarization/global_threshold.hh \
 scribo/binarization/global_threshold_auto.hh \
+scribo/binarization/internal/compute_sauvola_threshold.hh \
 scribo/binarization/internal/first_pass_functor.hh \
+scribo/binarization/internal/sauvola_debug.hh \
 scribo/binarization/local_threshold.hh \
 scribo/binarization/sauvola.hh \
 scribo/binarization/sauvola_ms.hh \
 scribo/binarization/sauvola_ms_split.hh \
 scribo/binarization/sauvola_threshold_image.hh \
-scribo/binarization/sauvola_threshold_image_debug.hh \
 scribo/canvas/integral_browsing.hh \
 scribo/convert/from_qimage.hh \
 scribo/core/all.hh \
@@ -21,6 +22,7 @@ scribo/core/component_set.hh \
 scribo/core/concept/dmax_functor.hh \
 scribo/core/concept/link_functor.hh \
 scribo/core/def/lbl_type.hh \
+scribo/core/document.hh \
 scribo/core/erase_objects.hh \
 scribo/core/init_integral_image.hh \
 scribo/core/line_info.hh \
@@ -109,6 +111,7 @@ scribo/primitive/extract/all.hh \
 scribo/primitive/extract/canvas.hh \
 scribo/primitive/extract/cells.hh \
 scribo/primitive/extract/components.hh \
+scribo/primitive/extract/elements.hh \
 scribo/primitive/extract/horizontal_separators.hh \
 scribo/primitive/extract/lines_discontinued.hh \
 scribo/primitive/extract/lines_h_discontinued.hh \
@@ -124,10 +127,12 @@ scribo/primitive/extract/lines_v_single.hh \
 scribo/primitive/extract/lines_v_thick.hh \
 scribo/primitive/extract/lines_v_thick_and_single.hh \
 scribo/primitive/extract/separators.hh \
+scribo/primitive/extract/separators_nonvisible.hh \
 scribo/primitive/extract/vertical_separators.hh \
 scribo/primitive/group/all.hh \
 scribo/primitive/group/apply.hh \
 scribo/primitive/group/from_double_link.hh \
+scribo/primitive/group/from_double_link_any.hh \
 scribo/primitive/group/from_graph.hh \
 scribo/primitive/group/from_single_link.hh \
 scribo/primitive/internal/all.hh \
@@ -165,8 +170,10 @@ scribo/primitive/link/with_single_left_link_dmax_ratio.hh \
 scribo/primitive/link/with_single_right_link.hh \
 scribo/primitive/link/with_single_right_link_bottom.hh \
 scribo/primitive/link/with_single_right_link_dmax_ratio.hh \
+scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh \
 scribo/primitive/link/with_single_right_link_top.hh \
 scribo/primitive/link/with_single_up_link.hh \
+scribo/primitive/merge/components.hh \
 scribo/primitive/regroup/from_single_left_link.hh \
 scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh \
 scribo/primitive/remove/separators.hh \
@@ -197,6 +204,7 @@ scribo/text/recognition.hh \
 scribo/toolchain/nepomuk/text_extraction.hh \
 scribo/toolchain/text_in_doc.hh \
 scribo/toolchain/text_in_doc_preprocess.hh \
+scribo/toolchain/text_in_picture.hh \
 scribo/upsampling/bs2x.hh \
 scribo/upsampling/eagle.hh
 
