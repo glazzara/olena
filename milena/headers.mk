@@ -49,6 +49,7 @@ mln/accu/site_set/rectangularity.hh \
 mln/accu/stat/all.hh \
 mln/accu/stat/deviation.hh \
 mln/accu/stat/essential.hh \
+mln/accu/stat/histo3d_rgb.hh \
 mln/accu/stat/max.hh \
 mln/accu/stat/max_h.hh \
 mln/accu/stat/mean.hh \
@@ -141,6 +142,7 @@ mln/canvas/morpho/all.hh \
 mln/canvas/morpho/attribute_filter.hh \
 mln/canvas/morpho/essential.hh \
 mln/canvas/morpho/internal/find_root.hh \
+mln/clustering/kmean_rgb.hh \
 mln/convert/all.hh \
 mln/convert/essential.hh \
 mln/convert/from_to.hh \
@@ -556,6 +558,7 @@ mln/fun/v2v/linear.hh \
 mln/fun/v2v/norm.hh \
 mln/fun/v2v/projection.hh \
 mln/fun/v2v/qt_rgb_to_int_u.hh \
+mln/fun/v2v/rgb8_to_rgbn.hh \
 mln/fun/v2v/rgb_to_int_u.hh \
 mln/fun/v2v/saturate.hh \
 mln/fun/v2v/wrap.hh \
@@ -1284,7 +1287,9 @@ mln/world/inter_pixel/immerse.hh \
 mln/world/inter_pixel/is_pixel.hh \
 mln/world/inter_pixel/is_separator.hh \
 mln/world/inter_pixel/neighb2d.hh \
-mln/world/inter_pixel/separator_to_pixels.hh
+mln/world/inter_pixel/separator_to_pixels.hh \
+mln/world/rgb/invert.hh \
+mln/world/rgb/invert.spe.hh
 
 #<<lrde
 nobase_include_HEADERS += \

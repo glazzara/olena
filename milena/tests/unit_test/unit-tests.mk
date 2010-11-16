@@ -229,6 +229,7 @@ mln_canvas_morpho_all \
 mln_canvas_morpho_attribute_filter \
 mln_canvas_morpho_essential \
 mln_canvas_morpho_internal_find_root \
+mln_clustering_kmean_rgb \
 mln_convert_all \
 mln_convert_essential \
 mln_convert_from_to \
@@ -668,6 +669,7 @@ mln_fun_v2v_linear \
 mln_fun_v2v_norm \
 mln_fun_v2v_projection \
 mln_fun_v2v_qt_rgb_to_int_u \
+mln_fun_v2v_rgb8_to_rgbn \
 mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_rgb_to_int_u \
@@ -1410,7 +1412,9 @@ mln_world_inter_pixel_immerse \
 mln_world_inter_pixel_is_pixel \
 mln_world_inter_pixel_is_separator \
 mln_world_inter_pixel_neighb2d \
-mln_world_inter_pixel_separator_to_pixels
+mln_world_inter_pixel_separator_to_pixels \
+mln_world_rgb_invert \
+mln_world_rgb_invert_spe
 
 mln_accu_all_SOURCES = mln_accu_all.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
@@ -1549,6 +1553,7 @@ mln_canvas_morpho_all_SOURCES = mln_canvas_morpho_all.cc
 mln_canvas_morpho_attribute_filter_SOURCES = mln_canvas_morpho_attribute_filter.cc
 mln_canvas_morpho_essential_SOURCES = mln_canvas_morpho_essential.cc
 mln_canvas_morpho_internal_find_root_SOURCES = mln_canvas_morpho_internal_find_root.cc
+mln_clustering_kmean_rgb_SOURCES = mln_clustering_kmean_rgb.cc
 mln_convert_all_SOURCES = mln_convert_all.cc
 mln_convert_essential_SOURCES = mln_convert_essential.cc
 mln_convert_from_to_SOURCES = mln_convert_from_to.cc
@@ -1988,6 +1993,7 @@ mln_fun_v2v_linear_SOURCES = mln_fun_v2v_linear.cc
 mln_fun_v2v_norm_SOURCES = mln_fun_v2v_norm.cc
 mln_fun_v2v_projection_SOURCES = mln_fun_v2v_projection.cc
 mln_fun_v2v_qt_rgb_to_int_u_SOURCES = mln_fun_v2v_qt_rgb_to_int_u.cc
+mln_fun_v2v_rgb8_to_rgbn_SOURCES = mln_fun_v2v_rgb8_to_rgbn.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_rgb_to_int_u_SOURCES = mln_fun_v2v_rgb_to_int_u.cc
@@ -2731,4 +2737,6 @@ mln_world_inter_pixel_is_pixel_SOURCES = mln_world_inter_pixel_is_pixel.cc
 mln_world_inter_pixel_is_separator_SOURCES = mln_world_inter_pixel_is_separator.cc
 mln_world_inter_pixel_neighb2d_SOURCES = mln_world_inter_pixel_neighb2d.cc
 mln_world_inter_pixel_separator_to_pixels_SOURCES = mln_world_inter_pixel_separator_to_pixels.cc
+mln_world_rgb_invert_SOURCES = mln_world_rgb_invert.cc
+mln_world_rgb_invert_spe_SOURCES = mln_world_rgb_invert_spe.cc
 
