@@ -221,12 +221,6 @@ namespace scribo
 		      scribo::make::debug_filename("binarization.pbm"));
       }
 
-
-      // Yeah, looks strange, but we need to negate by default to
-      // process dark objects on light background.
-      if (!negate)
-	logical::not_inplace(input);
-
       t_ = timer_;
       std::cout << "Foreground binarized. " << t_ << std::endl;
 

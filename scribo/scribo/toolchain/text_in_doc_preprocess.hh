@@ -32,7 +32,6 @@
 
 
 #include <mln/core/concept/image.hh>
-#include <mln/logical/not.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 
@@ -156,8 +155,6 @@ namespace scribo
       std::cout << "Binarizing foreground..." << std::endl;
       mln_ch_value(I,bool)
 	input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
-
-      logical::not_inplace(input_bin);
 
       trace::exiting("scribo::toolchain::text_in_doc_preprocess");
       return input_bin;
