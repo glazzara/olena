@@ -154,6 +154,9 @@ namespace scribo
 
     /// @}
 
+
+    bool is_valid() const;
+
   private:
     /// Duplicate the underlying image and create a new line_set.
     void init_(const line_set<L>& model);
@@ -386,6 +389,14 @@ namespace scribo
   line_set<L>::infos_() const
   {
     return data_->infos_;
+  }
+
+  template <typename L>
+  inline
+  bool
+  line_set<L>::is_valid() const
+  {
+    return data_->links_.is_valid() && data_->groups_.is_valid();
   }
 
   template <typename L>
