@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,24 +50,19 @@ namespace mln
     namespace impl
     {
 
-      namespace generic
-      {
-	template <typename I, typename O>
-	void revert_(const I& input, O& output);
-      }
-
+      // FIXME: This is a fast implementation not a fastest one!
       template <typename I, typename O>
       inline
-      void revert_(trait::image::speed::any, const I& input, O& output)
+      void revert_fastest(const Image<I>& input_, Image<O>& output_)
       {
-	generic::revert_(input, output);
-      }
+	trace::entering("arith::impl::revert_fastest");
 
-      template <typename I, typename O>
-      inline
-      void revert_(trait::image::speed::fastest, const I& input, O& output)
-      {
-	trace::entering("arith::impl::revert_");
+	const I& input = exact(input_);
+	O& output = exact(output_);
+
+	mln_precondition(input.is_valid());
+	mln_precondition(output.is_valid());
+	mln_precondition(input.domain() == output.domain());
 
 	typedef mln_value(I) V;
 	mln_pixter(const I) ip(input);
@@ -74,7 +70,7 @@ namespace mln
 	for_all_2(ip, op)
 	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
 
-	trace::entering("arith::impl::revert_");
+	trace::entering("arith::impl::revert_fastest");
       }
 
     } // end of namespace mln::arith::impl

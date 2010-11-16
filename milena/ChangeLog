@@ -1,5 +1,12 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve dispatch in arith::revert routine.
+
+	* mln/arith/revert.hh,
+	* mln/arith/revert.spe.hh: Add a standard dispatch.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/data/paste_without_localization.hh: Remove duplicate
 	declarations.
 

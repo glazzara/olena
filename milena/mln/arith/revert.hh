@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,8 @@
 
 
 // FIXME: Rely instead on mln/fun/v2v/revert.hh.
-// FIXME: Revert on int value 0 does not give 0 (since min != - max; idem for float etc.)
+// FIXME: Revert on int value 0 does not give 0 (since min != - max;
+//        idem for float etc.)
 
 
 namespace mln
@@ -88,9 +90,16 @@ namespace mln
 
 	template <typename I, typename O>
 	inline
-	void revert_(const I& input, O& output)
+	void revert(const Image<I>& input_, Image<O>& output_)
 	{
 	  trace::entering("arith::impl::generic::revert_");
+
+	  const I& input = exact(input_);
+	  O& output = exact(output_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(output.is_valid());
+	  mln_precondition(input.domain() == output.domain());
 
 	  typedef mln_value(I) V;
 	  mln_piter(I) p(input.domain());
@@ -105,6 +114,43 @@ namespace mln
     } // end of namespace mln::arith::impl
 
 
+
+    // Dispatch.
+
+    namespace internal
+    {
+
+      template <typename I, typename O>
+      inline
+      void
+      revert_dispatch(trait::image::speed::any, const I& input, O& output)
+      {
+	impl::generic::revert(input, output);
+      }
+
+      template <typename I, typename O>
+      inline
+      void
+      revert_dispatch(trait::image::speed::fastest, const I& input, O& output)
+      {
+	impl::revert_fastest(input, output);
+      }
+
+      template <typename I, typename O>
+      inline
+      void
+      revert_dispatch(const Image<I>& input, Image<O>& output)
+      {
+	revert_dispatch(mln_trait_image_speed(I)(),
+			exact(input), exact(output));
+
+      }
+
+
+    } // end of namespace mln::arith::internal
+
+
+
     // Facades.
 
     template <typename I>
@@ -117,7 +163,7 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      impl::revert_(mln_trait_image_speed(I)(), exact(input), output);
+      internal::revert_dispatch(exact(input), exact(output));
 
       trace::exiting("arith::revert");
       return output;
@@ -131,7 +177,7 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
-      impl::revert_(mln_trait_image_speed(I)(), exact(input), exact(input));
+      internal::revert_dispatch(exact(input), exact(input));
 
       trace::exiting("arith::revert_inplace");
     }
