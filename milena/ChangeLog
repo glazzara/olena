@@ -1,5 +1,12 @@
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce world::rgb::invert.
+
+	* mln/world/rgb/invert.hh,
+	* mln/world/rgb/invert.spe.hh: New.
+
+2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve dispatch in arith::revert routine.
 
 	* mln/arith/revert.hh,
