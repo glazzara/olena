@@ -155,87 +155,93 @@ namespace scribo
 	     << "\" image_height=\"" << lines.components().labeled_image().nrows()
 	     << "\">" << std::endl;
 
-	for_all_lines(l, lines)
+	// Text
+	if (doc.has_text())
 	{
-	  if (! lines(l).is_valid()
-	      || lines(l).tag() != line::None
-	      || lines(l).type() != line::Text) // Is NOT a text line.
-	    continue;
+	  for_all_lines(l, lines)
 	  {
-	    file << "    <text_region id=\"" << lines(l).id()
-		 << "\" txt_orientation=\"" << lines(l).orientation()
-		 << "\" txt_reading_orientation=\"" << lines(l).reading_orientation()
-		 << "\" txt_reading_direction=\"" << lines(l).reading_direction()
-		 << "\" txt_text_type=\"" << lines(l).type()
-		 << "\" txt_reverse_video=\"" << (lines(l).reverse_video() ? "true" : "false")
-		 << "\" txt_indented=\"" << (lines(l).indented() ? "true" : "false")
-		 << "\" kerning=\"" << lines(l).char_space();
-
-	    // EXTENSIONS - Not officially supported
-	    if (extended_format)
+	    if (! lines(l).is_valid()
+		|| lines(l).tag() != line::None
+		|| lines(l).type() != line::Text) // Is NOT a text line.
+	      continue;
 	    {
-	      file << "\" baseline=\"" << lines(l).baseline()
-		   << "\" meanline=\"" << lines(l).meanline()
-		   << "\" x_height=\"" << lines(l).x_height()
-		   << "\" d_height=\"" << lines(l).d_height()
-		   << "\" a_height=\"" << lines(l).a_height()
-		   << "\" char_width=\"" << lines(l).char_width();
-	    }
-	    // End of EXTENSIONS
-	    file << "\">"
-		 << std::endl;
+	      file << "    <text_region id=\"" << lines(l).id()
+		   << "\" txt_orientation=\"" << lines(l).orientation()
+		   << "\" txt_reading_orientation=\"" << lines(l).reading_orientation()
+		   << "\" txt_reading_direction=\"" << lines(l).reading_direction()
+		   << "\" txt_text_type=\"" << lines(l).type()
+		   << "\" txt_reverse_video=\"" << (lines(l).reverse_video() ? "true" : "false")
+		   << "\" txt_indented=\"" << (lines(l).indented() ? "true" : "false")
+		   << "\" kerning=\"" << lines(l).char_space();
 
-	    internal::print_box_coords(file, lines(l).bbox(), "      ");
-
-	    if (extended_format)
-	    {
-	      file << "      <paragraph>" << std::endl;
-
-	      internal::print_box_coords(file, lines(l).bbox(), "        ");
-
-	      if (lines(l).has_text())
+	      // EXTENSIONS - Not officially supported
+	      if (extended_format)
 	      {
-		std::string tmp = lines(l).text();
-		tmp = internal::html_markups_replace(tmp, html_map);
-
-		file << "        <line text=\""
-		     << tmp
-		     << "\">" << std::endl;
+		file << "\" baseline=\"" << lines(l).baseline()
+		     << "\" meanline=\"" << lines(l).meanline()
+		     << "\" x_height=\"" << lines(l).x_height()
+		     << "\" d_height=\"" << lines(l).d_height()
+		     << "\" a_height=\"" << lines(l).a_height()
+		     << "\" char_width=\"" << lines(l).char_width();
 	      }
-	      else
-		file << "        <line>" << std::endl;
+	      // End of EXTENSIONS
+	      file << "\">"
+		   << std::endl;
 
-	      internal::print_box_coords(file, lines(l).bbox(), "          ");
+	      internal::print_box_coords(file, lines(l).bbox(), "      ");
 
-	      file << "        </line>" << std::endl;
+	      if (extended_format)
+	      {
+		file << "      <paragraph>" << std::endl;
 
-	      file << "      </paragraph>" << std::endl;
+		internal::print_box_coords(file, lines(l).bbox(), "        ");
+
+		if (lines(l).has_text())
+		{
+		  std::string tmp = lines(l).text();
+		  tmp = internal::html_markups_replace(tmp, html_map);
+
+		  file << "        <line text=\""
+		       << tmp
+		       << "\">" << std::endl;
+		}
+		else
+		  file << "        <line>" << std::endl;
+
+		internal::print_box_coords(file, lines(l).bbox(), "          ");
+
+		file << "        </line>" << std::endl;
+
+		file << "      </paragraph>" << std::endl;
+	      }
+
+	      file << "    </text_region>" << std::endl;
 	    }
-
-	    file << "    </text_region>" << std::endl;
 	  }
 	}
 
+	// Page elements (Pictures, ...)
+	if (doc.has_elements())
+	{
+	  const component_set<L>& elts = doc.elements();
+	  for_all_comps(e, elts)
+	    if (elts(e).is_valid())
+	    {
+	      file << "    <image_region id=\"ir" << elts(e).id()
+		   << "\" img_colour_type=\"24_Bit_Colour\""
+		   << " img_orientation=\"0.000000\" "
+		   << " img_emb_text=\"No\" "
+		   << " img_bgcolour=\"White\">" << std::endl;
 
-	const component_set<L>& elts = doc.elements();
-	for_all_comps(e, elts)
-	  if (elts(e).is_valid())
-	  {
-	    file << "    <image_region id=\"ir" << elts(e).id()
-		 << "\" img_colour_type=\"24_Bit_Colour\""
-		 << " img_orientation=\"0.000000\" "
-		 << " img_emb_text=\"No\" "
-		 << " img_bgcolour=\"White\">" << std::endl;
+	      internal::print_box_coords(file, elts(e).bbox(), "      ");
 
-	    internal::print_box_coords(file, elts(e).bbox(), "      ");
+	      file << "    </image_region>" << std::endl;
+	    }
+	}
 
-	    file << "    </image_region>" << std::endl;
-	  }
 
 	file << "  </page>" << std::endl;
 	file << "</pcGts>" << std::endl;
-
-
 
 	trace::exiting("scribo::io::xml::save_text_lines");
       }
