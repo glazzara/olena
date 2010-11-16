@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,6 +18,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  deviation 					\
   var						\
   min						\
   min_h						\
@@ -27,6 +29,7 @@ check_PROGRAMS =				\
   mean						\
   rank
 
+deviation_SOURCES = deviation.cc
 var_SOURCES = var.cc
 mean_SOURCES = mean.cc
 median_h_SOURCES = median_h.cc

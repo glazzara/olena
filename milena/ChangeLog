@@ -1,5 +1,13 @@
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new test for accu::stat:deviation.
+
+	* tests/accu/stat/Makefile.am: Add a new target.
+
+	* tests/accu/stat/deviation.cc: New.
+
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove a useless from_to overload.
 
 	* mln/convert/from_to.hxx,
