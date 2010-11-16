@@ -1,5 +1,9 @@
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/separators_nonvisible.hh: Fix warnings.
+
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Regen .mk files in Scribo.
 
 	* headers.mk,

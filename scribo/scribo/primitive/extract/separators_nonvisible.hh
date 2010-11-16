@@ -322,7 +322,9 @@ namespace scribo
 	      angle = (angle * 180.0f) / math::pi;
 	      angle = angle * 20.0f + 1.0f;
 	      mln::draw::line(debug_angle_, p1, p2,
-			      value::rgb8(angle, angle, angle));
+			      value::rgb8(unsigned(angle),
+					  unsigned(angle),
+					  unsigned(angle)));
 	    }
 	  }
 
@@ -355,7 +357,9 @@ namespace scribo
 		angle = (angle * 180.0f) / math::pi;
 		angle = angle * 20.0f + 1.0f;
 		mln::draw::line(debug_angle_, p1, p2,
-				value::rgb8(angle, angle, angle));
+				value::rgb8(unsigned(angle),
+					    unsigned(angle),
+					    unsigned(angle)));
 	      }
 	    }
 	  }
