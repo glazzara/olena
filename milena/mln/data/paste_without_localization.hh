@@ -329,19 +329,6 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      void paste_without_localization_dispatch(
-	mln::trait::image::value_storage::any,
-	mln::trait::image::value_storage::any,
-	const Image<I>& input,
-	Image<J>& output)
-      {
-	impl::generic::paste_without_localization(input, output);
-      }
-
-
-
-      template <typename I, typename J>
-      inline
       void paste_without_localization_dispatch(const Image<I>& input,
 					       Image<J>& output)
       {
