@@ -33,11 +33,58 @@
 /// Localize text in a picture.
 
 
+# include <libgen.h>
+# include <iostream>
 
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 
-#include <src/afp/components.hh>
-#include <src/afp/link.hh>
-#include <src/afp/regroup.hh>
+# include <mln/literal/colors.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/label_16.hh>
+
+# include <mln/fun/v2v/rgb_to_int_u.hh>
+
+# include <mln/subsampling/antialiased.hh>
+
+# include <scribo/draw/bounding_boxes.hh>
+# include <scribo/draw/groups_bboxes.hh>
+
+# include <scribo/binarization/sauvola_ms.hh>
+# include <scribo/binarization/sauvola.hh>
+
+# include <scribo/primitive/extract/components.hh>
+
+# include <scribo/primitive/link/merge_double_link.hh>
+# include <scribo/primitive/link/with_single_left_link.hh>
+# include <scribo/primitive/link/with_single_right_link.hh>
+
+# include <scribo/primitive/group/apply.hh>
+# include <scribo/primitive/group/from_double_link.hh>
+# include <scribo/primitive/group/from_single_link.hh>
+
+# include <scribo/primitive/regroup/from_single_left_link.hh>
+
+# include <scribo/filter/object_groups_with_holes.hh>
+
+# include <scribo/filter/object_links_bbox_h_ratio.hh>
+# include <scribo/filter/object_links_bbox_overlap.hh>
+
+# include <scribo/filter/object_groups_small.hh>
+# include <scribo/filter/object_groups_v_thickness.hh>
+
+# include <scribo/debug/decision_image.hh>
+# include <scribo/debug/save_linked_bboxes_image.hh>
+
+# include <scribo/debug/usage.hh>
+
+# include <scribo/preprocessing/split_bg_fg.hh>
+
+# include <scribo/make/debug_filename.hh>
+
+# include <src/afp/components.hh>
+# include <src/afp/link.hh>
+# include <src/afp/regroup.hh>
 
 
 # include <mln/util/timer.hh>
@@ -126,7 +173,7 @@ namespace scribo
       trace::entering("scribo::toolchain::text_in_picture");
 
       const I& input_rgb_orig = exact(input_rgb_orig_);
-      mln_precondition(input.is_valid());
+      mln_precondition(input_rgb_orig.is_valid());
 
       using namespace scribo;
       using namespace scribo::primitive;

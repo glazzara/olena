@@ -35,6 +35,7 @@
 
 # include <map>
 
+# include <scribo/core/document.hh>
 # include <scribo/core/line_set.hh>
 
 namespace scribo

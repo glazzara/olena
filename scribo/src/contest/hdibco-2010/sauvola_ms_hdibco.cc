@@ -29,6 +29,8 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/postprocessing/fill_object_holes.hh>

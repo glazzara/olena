@@ -33,6 +33,7 @@
 # define SCRIBO_PRIMITIVE_EXTRACT_ELEMENTS_HH
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/data/fill.hh>
 # include <mln/util/array.hh>
 # include <mln/labeling/compute.hh>
@@ -40,16 +41,21 @@
 # include <mln/accu/math/count.hh>
 # include <mln/pw/all.hh>
 
+# include <mln/draw/box_plain.hh>
+
 # include <mln/value/label_8.hh>
+# include <mln/value/rgb.hh>
 # include <mln/value/rgb8.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_set.hh>
+# include <scribo/core/document.hh>
 # include <scribo/core/line_set.hh>
+# include <scribo/core/def/lbl_type.hh>
 # include <scribo/filter/objects_small.hh>
 
-#include <mln/clustering/kmean_rgb.hh>
-#include <mln/fun/v2v/rgb8_to_rgbn.hh>
+# include <mln/clustering/kmean_rgb.hh>
+# include <mln/fun/v2v/rgb8_to_rgbn.hh>
 
 namespace scribo
 {
@@ -59,6 +65,8 @@ namespace scribo
 
     namespace extract
     {
+
+      using namespace mln;
 
 
       template <typename L, typename I>

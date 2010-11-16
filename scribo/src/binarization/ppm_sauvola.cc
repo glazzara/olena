@@ -26,6 +26,8 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
@@ -66,10 +68,16 @@ int main(int argc, char *argv[])
 
   std::cout << "Using w=" << w << " and k=" << k << std::endl;
 
+  // Load
   image2d<value::rgb8> input;
   io::ppm::load(input, argv[1]);
 
-  image2d<bool> out = scribo::binarization::sauvola(input, w, k);
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    input_gl = data::transform(input, mln::fun::v2v::rgb_to_int_u<8>());
+
+  // Binarize
+  image2d<bool> out = scribo::binarization::sauvola(input_gl, w, k);
 
 
   io::pbm::save(out, argv[2]);

@@ -28,32 +28,19 @@
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/imorph/tr_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/colorize.hh>
 
-#include <mln/data/stretch.hh>
-
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/io/magick/all.hh>
-
-#include <mln/math/min.hh>
-
-#include <mln/logical/not.hh>
 
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 
 #include <mln/fun/v2v/rgb_to_int_u.hh>
-
-#include <mln/data/wrap.hh>
-
-#include <mln/draw/box.hh>
-
-#include <mln/geom/translate.hh>
 
 #include <mln/subsampling/antialiased.hh>
 
@@ -80,8 +67,6 @@
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
 #include <scribo/filter/object_links_bbox_overlap.hh>
-
-#include <scribo/filter/common/objects_photo.hh>
 
 #include <scribo/filter/object_groups_small.hh>
 #include <scribo/filter/object_groups_v_thickness.hh>

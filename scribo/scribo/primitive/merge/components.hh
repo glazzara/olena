@@ -30,7 +30,12 @@
 #ifndef SCRIBO_PRIMITIVE_MERGE_COMPONENTS_HH
 # define SCRIBO_PRIMITIVE_MERGE_COMPONENTS_HH
 
+# include <mln/core/concept/function.hh>
 # include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/data/fill.hh>
+# include <mln/pw/all.hh>
+
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo

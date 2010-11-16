@@ -24,10 +24,14 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+
 #include <mln/core/image/image2d.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/preprocessing/split_bg_fg.hh>
@@ -85,6 +89,8 @@ int main(int argc, char *argv[])
   // First subsampling scale.
   unsigned s = atoi(argv[4]);
 
+
+  std::cout << "Using w_1=" << w_1 << " - s=" << s << std::endl;
 
   // Load
   image2d<value::rgb8> input_1;

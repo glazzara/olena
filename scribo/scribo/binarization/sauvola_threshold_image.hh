@@ -144,8 +144,8 @@ namespace scribo
 	    ncols = static_cast<mln::def::coord>(input.ncols());
 
 
-	  for(def::coord row = 0; row < nrows; ++row)
-	    for(def::coord col = 0; col < ncols; ++col)
+	  for(mln::def::coord row = 0; row < nrows; ++row)
+	    for(mln::def::coord col = 0; col < ncols; ++col)
 	    {
 #  ifdef SCRIBO_SAUVOLA_DEBUG
 

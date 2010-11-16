@@ -28,6 +28,8 @@
 #include <mln/value/rgb8.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola_ms_split.hh>
 #include <scribo/debug/usage.hh>
@@ -113,11 +115,13 @@ int main(int argc, char *argv[])
   image2d<value::rgb8> input_1;
   io::ppm::load(input_1, argv[1]);
 
-  std::cout << "Using w=" << w_1 << " - s=" << s << " - min_ntrue=" << min_ntrue << " - k=" << k << std::endl;
+  std::cout << "Using w=" << w_1 << " - s=" << s
+	    << " - min_ntrue=" << min_ntrue << " - k=" << k << std::endl;
 
   // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s,
+						    min_ntrue, k);
 
   io::pbm::save(output, argv[2]);
 }

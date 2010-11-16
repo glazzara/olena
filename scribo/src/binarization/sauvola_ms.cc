@@ -24,6 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/magick/load.hh>
@@ -101,6 +103,9 @@ int main(int argc, char *argv[])
     k = atof(argv[5]);
   else
     k = 0.34f;
+
+  std::cout << "Using w_1=" << w_1 << " - s=" << s
+	    << " - k=" << k << std::endl;
 
   // Load
   image2d<value::rgb8> input_1;

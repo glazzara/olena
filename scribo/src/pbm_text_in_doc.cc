@@ -40,6 +40,7 @@
 
 #include <scribo/toolchain/text_in_doc.hh>
 
+#include <scribo/core/document.hh>
 #include <scribo/core/line_set.hh>
 
 #include <scribo/debug/usage.hh>
@@ -91,10 +92,10 @@ int main(int argc, char* argv[])
 
   trace::entering("main");
 
+  typedef image2d<scribo::def::lbl_type> L;
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
-
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
@@ -119,12 +120,15 @@ int main(int argc, char* argv[])
 
 
   // Run document toolchain.
-  typedef image2d<scribo::def::lbl_type> L;
   line_set<L>
     lines = scribo::toolchain::text_in_doc(input, denoise, debug);
 
+  scribo::document<L> doc;
+  doc.set_filename(argv[1]);
+  doc.set_text(lines);
+
   // Saving results
-  scribo::io::xml::save(argv[1], lines, "out.xml", true);
+  scribo::io::xml::save(doc, "out.xml", true);
 
   // Specify shift due to potential previous crop.
   scribo::io::text_boxes::save(lines, argv[2], crop_shift);

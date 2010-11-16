@@ -99,8 +99,6 @@ if HAVE_TESSERACT
     utilexec_PROGRAMS	   += content_in_doc
     content_in_doc_SOURCES  = content_in_doc.cc
     content_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
-			-I/home/lazzara/git/oln/scribo/sandbox/green/ \
-			-I/home/lazzara/git/oln/scribo/sandbox/z/ \
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \
 			      $(MAGICKXX_CPPFLAGS)

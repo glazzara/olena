@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /// \file
 ///
 /// Extract vertical lines matching a specific pattern.
+
+# include <cmath>
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>
@@ -85,9 +88,12 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 0, win);
 
+	unsigned new_length = length / 2 + delta;
+	new_length += 1 - (new_length % 2); // Guaranty that new_length is odd.
+
 	mln_concrete(I)
 	  output_dil = morpho::dilation(output,
-					win::rectangle2d(length / 2 + delta, 3));
+					win::rectangle2d(new_length, 3));
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 

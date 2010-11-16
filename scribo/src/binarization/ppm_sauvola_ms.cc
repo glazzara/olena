@@ -28,6 +28,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/usage.hh>
@@ -98,6 +100,9 @@ int main(int argc, char *argv[])
     k = atof(argv[5]);
   else
     k = 0.34f;
+
+  std::cout << "Using w_1=" << w_1 << " - s=" << s
+	    << " - k=" << k << std::endl;
 
   // Load
   image2d<value::rgb8> input_1;

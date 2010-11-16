@@ -107,7 +107,8 @@ int main(int argc, char *argv[])
   else
     k = 0.34f;
 
-
+  std::cout << "Using w_1=" << w_1 << " - s=" << s
+	    << " - k=" << k << std::endl;
 
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, argv[1]);

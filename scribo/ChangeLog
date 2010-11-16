@@ -1,5 +1,38 @@
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Compilation fixes.
+
+	* scribo/binarization/sauvola_threshold_image.hh: Fix namespace
+	ambiguity.
+
+	* scribo/io/xml/save.hh
+	* scribo/primitive/extract/elements.hh
+	* scribo/primitive/merge/components.hh
+	* scribo/toolchain/text_in_doc_preprocess.hh
+	* scribo/toolchain/text_in_picture.hh
+	* src/binarization/ppm_sauvola_ms.cc
+	* src/binarization/ppm_sauvola_ms_fg.cc
+	* src/binarization/ppm_sauvola_ms_split.cc
+	* src/binarization/sauvola_ms.cc
+	* src/binarization/sauvola_ms_fg.cc
+	* src/binarization/sauvola_ms_split.cc
+	* src/contest/hdibco-2010/sauvola_ms_hdibco.cc
+	* src/text_in_picture.cc: Add missing includes.
+
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh: Make sure the
+	rectangle have odd dimensions.
+
+	* src/Makefile.am: Remove deprecated include path.
+
+	* src/binarization/ppm_sauvola.cc: Convert to gray level.
+
+	* src/pbm_text_in_doc.cc: Use doc structure.
+
+	* src/text_in_picture_neg.cc: Make use of world::rgb::invert.
+
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/document.hh: Add new methods.
 
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>

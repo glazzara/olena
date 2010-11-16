@@ -58,6 +58,8 @@
 
 #include <mln/subsampling/antialiased.hh>
 
+#include <mln/world/rgb/invert.hh>
+
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/draw/groups_bboxes.hh>
 
@@ -169,7 +171,8 @@ int main(int argc, char* argv[])
 
   typedef image2d<value::label_16> L;
   component_set<L>
-    comps_neg = toolchain::text_in_picture(arith::revert(input_rgb), bg_removal,
+    comps_neg = toolchain::text_in_picture(world::rgb::invert(input_rgb),
+					   bg_removal,
 					   multi_scale_bin,
 					   max_dim_size, lambda, out_base_dir);
 
