@@ -1,5 +1,10 @@
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh:
+	New.
+
+2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve text_in_picture_neg.
 
 	* scribo/toolchain/text_in_picture.hh: Remove useless argument.
