@@ -1,3 +1,9 @@
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove a superfluous invocation of AM_CONDITIONAL regarding Magick++.
+
+	* configure.ac: Here.
+
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Distribute Scribo.

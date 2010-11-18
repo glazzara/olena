@@ -1,3 +1,28 @@
+2010-10-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Handle properly non 8-bit Magick::Quantum's.
+
+	* mln/io/magick/load.hh
+	(mln::io::magick::load(Image<I>&, const std::string&))
+	* mln/io/magick/save.hh
+	(mln::io::magick::impl::get_color(const value::int_u8&))
+	(mln::io::magick::impl::get_color(const value::rgb8&)):
+	Properly convert values between Magick::Quantum and
+	mln::value::int_u8, and vice versa.
+
+2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Boost.Tuple handling.
+
+	* tests/accu/Makefile.am (tuple_CPPFLAGS): New.
+	* tests/unit_test/Makefile.am (BOOST_TUPLE_CPPFLAGS): New.
+
+2010-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Milena's distribution.
+
+	* Makefile.am (dist_img_DATA): Add img/picasso.ppm.
+
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/io/pnm/save.hh: Add a fixme related to an ICE with GCC

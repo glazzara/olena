@@ -208,7 +208,6 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 OLN_WITH_LIB_PKG_CONFIG([Magick++], [Magick++.h], [Magick++], [magickxx],
                         [MAGICKXX], [], [ImageMagick++])
-AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 
 # ---- #
 # Qt.  #

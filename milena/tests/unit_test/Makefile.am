@@ -51,6 +51,11 @@ $(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tes
 		milena/tests/unit_test/disabled_tests 		\
 		mln
 
+# Handling Boost.Tuple-dependent programs: `boost.m4' defines
+# BOOST_CPPFLAGS, but `unit-tests.mk' expects BOOST_TUPLE_CPPFLAGS;
+# help it by defining the later using the former.
+BOOST_TUPLE_CPPFLAGS = $(BOOST_CPPFLAGS)
+
 include $(srcdir)/unit-tests.mk
 
 MAINTAINERCLEANFILES = $(srcdir)/mln_*.cc

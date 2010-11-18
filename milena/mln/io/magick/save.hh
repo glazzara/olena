@@ -35,8 +35,6 @@
 /// <em>before</em> using any of these functions, as advised by the
 /// GraphicsMagick documentation
 /// (http://www.graphicsmagick.org/Magick++/Image.html).
-///
-/// \fixme: re-enable quantum size check
 
 # include <cstdlib>
 
@@ -95,17 +93,33 @@ namespace mln
 	inline
 	Magick::Color get_color(const value::int_u8& value)
 	{
-	  // Ensure a Magick++'s Quantum is an 8-bit value.
-	  //mln::metal::equal<Magick::Quantum, unsigned char>::check();
-	  return Magick::Color(value, value, value);
+	  /* Each channel of a Magick++ image is coded on a
+	     Magick::Quantum value, which can be an 8-, 16- or 32-bit
+	     integer.  Store the data from each mln::value::int_u8
+	     values into the most significant bits of Magick::Color's
+	     channels.  */
+	  return Magick::Color
+	    (value << 8 * (sizeof(Magick::Quantum) - sizeof(value::int_u8)),
+	     value << 8 * (sizeof(Magick::Quantum) - sizeof(value::int_u8)),
+	     value << 8 * (sizeof(Magick::Quantum) - sizeof(value::int_u8)));
 	}
 
 	inline
 	Magick::Color get_color(const value::rgb8& value)
 	{
-	  // Ensure a Magick++'s Quantum is an 8-bit value.
-	  //mln::metal::equal<Magick::Quantum, unsigned char>::check();
-	  return Magick::Color(value.red(), value.green(), value.blue());
+	  /* Each channel of a Magick++ image is coded on a
+	     Magick::Quantum value, which can be an 8-, 16- or 32-bit
+	     integer.  Store the data from each component of
+	     mln::value::rgb8 values (of type mln::value::int_u8) into
+	     the most significant bits of Magick::Color's
+	     channels.  */
+	  return Magick::Color
+	    (value.red()   << 8 * (sizeof(Magick::Quantum)
+				   - sizeof(value::rgb8::red_t)),
+	     value.green() << 8 * (sizeof(Magick::Quantum)
+				   - sizeof(value::rgb8::green_t)),
+	     value.blue()  << 8 * (sizeof(Magick::Quantum)
+				   - sizeof(value::rgb8::blue_t)));
 	}
 
       } // end of namespace mln::io::magick::impl

@@ -32,11 +32,12 @@ AM_LDFLAGS = -avoid-version -module -shared
 ## Run Swig to create the C++ wrapper files, the Python interface
 ## files, and the dependency Makefile snippets.
 %-wrap.cc %.py: $(top_srcdir)/swilena/%.i
-	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
-	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
-	else \
-	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
-	fi
+@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
+@AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
+@AMDEP_TRUE@	else \
+@AMDEP_TRUE@	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
+@AMDEP_TRUE@	fi
+@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
 
 
 # ltihooks.py: Python import hooks that understand Libtool libraries.
