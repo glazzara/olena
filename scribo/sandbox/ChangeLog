@@ -1,3 +1,16 @@
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve image cropping in xml_transform.
+
+	* arthur/xml_transform/image_crop.cc,
+	* arthur/xml_transform/image_crop.hh: Load the input image only
+	once.
+
+	* arthur/xml_transform/main.cc: Undef MLN_WO_GLOBAL_VARS macro.
+
+	* arthur/xml_transform/xml_transform.pro: Enable
+	MLN_WO_GLOBAL_VARS macro.
+
 2010-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* arthur/xml_transform/xml_transform.pro: Define NDEBUG at compile

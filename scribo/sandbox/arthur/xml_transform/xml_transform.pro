@@ -6,12 +6,12 @@ TEMPLATE = app
 TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
-QMAKE_CXXFLAGS += -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/milena -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/
-DEFINES += NDEBUG
+QMAKE_CXXFLAGS += -I../../../../milena -I../../../../scribo
+DEFINES += NDEBUG MLN_WO_GLOBAL_VARS
 QT += xml
 LIBS += `Magick++-config --libs`
+
+
+# Input
 HEADERS += common.hh image_crop.hh loader.hh xml_transform.hh
 SOURCES += common.cc image_crop.cc loader.cc main.cc xml_transform.cc
-PWD +=
-
-QMAKE_POST_LINK += cp -r $$PWD/templates $$OUT_PWD

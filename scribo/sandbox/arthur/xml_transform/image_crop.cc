@@ -23,11 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-# include "image_crop.hh"
-# include "loader.hh"
-# include "common.hh"
-
-# include <limits.h>
+#include <limits.h>
 
 #include <scribo/preprocessing/crop.hh>
 #include <mln/value/rgb8.hh>
@@ -37,12 +33,18 @@
 #include <mln/io/magick/load.hh>
 #include <mln/io/ppm/all.hh>
 
+#include "image_crop.hh"
+#include "loader.hh"
+#include "common.hh"
+
+
 ImageCrop::ImageCrop(const QString& xml, const QString& img,
 		     const QString& output)
   : xml_(xml),
     image_(img),
     output_dir_(output)
 {
+  mln::io::magick::load(ima_, image_.toStdString());
 }
 
 ImageCrop::~ImageCrop()
@@ -53,12 +55,7 @@ ImageCrop::~ImageCrop()
 /* Save image to PNG format in output_dir/img. */
 void ImageCrop::save_image(const QString& out)
 {
-  using namespace mln;
-
-  image2d<value::rgb8> ima;
-  io::magick::load(ima, image_.toStdString());
-
-  io::magick::save(ima, out.toStdString());
+  mln::io::magick::save(ima_, out.toStdString());
 }
 
 /* Return the image in base 64. */
@@ -315,9 +312,7 @@ bool ImageCrop::crop_regions(bool temp)
 	      using namespace mln;
 	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
 
-	      image2d<value::rgb8> ima;
-	      io::magick::load(ima, image_.toStdString());
-	      ima = scribo::preprocessing::crop(ima, box);
+	      image2d<value::rgb8> crop = scribo::preprocessing::crop(ima_, box);
 
 	      if (temp)
 		{
@@ -325,10 +320,10 @@ bool ImageCrop::crop_regions(bool temp)
 		  tmp.open();
 		  region_map_[id] = tmp.fileName();
 		  tmp.setAutoRemove(false);
-		  io::magick::save(ima, tmp.fileName().toStdString());
+		  io::magick::save(crop, tmp.fileName().toStdString());
 		}
 	      else
-		io::magick::save(ima, QString(output_dir_ + id + ".png").toStdString());
+		io::magick::save(crop, QString(output_dir_ + id + ".png").toStdString());
 	    }
 	  region = region.nextSibling();
 	}

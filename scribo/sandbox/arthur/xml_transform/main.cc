@@ -3,6 +3,10 @@
 #include <string>
 #include <cstdlib>
 #include <Magick++.h>
+
+#undef MLN_WO_GLOBAL_VARS
+#include <mln/core/image/image2d.hh>
+
 #include "xml_transform.hh"
 
 int main(int argc, char **argv)

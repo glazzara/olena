@@ -23,11 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef   	IMAGE_CROP_HH
-# define   	IMAGE_CROP_HH
+#ifndef IMAGE_CROP_HH
+# define IMAGE_CROP_HH
 
-#include <QDomDocument>
+# include <QDomDocument>
 # include <QtCore>
+
+# include <mln/value/rgb8.hh>
+# include <mln/core/image/image2d.hh>
+
 
 class DomModel;
 
@@ -36,17 +40,6 @@ class ImageCrop : public QObject
   Q_OBJECT
   public:
 
-<<<<<<< HEAD
-  ImageCrop(QString, QString, QString);
-  ~ImageCrop();
-
-  void save_image(QString);
-  bool crop_regions(bool temp = false);
-
-  QString img_to_base64();
-  bool img_from_base64(QString, QString);
-  void to_base64(QString, bool);
-=======
   ImageCrop(const QString&, const QString&, const QString&);
   ~ImageCrop();
 
@@ -56,7 +49,6 @@ class ImageCrop : public QObject
   QString img_to_base64();
   bool img_from_base64(const QString&, const QString&);
   void to_base64(const QString&, bool);
->>>>>>> 6f0918c... Add missing const references to function arguments.
 
   void from_base64();
 
@@ -65,6 +57,7 @@ private:
   QString image_;
   QString output_dir_;
   QMap<QString, QString> region_map_;
+  mln::image2d<mln::value::rgb8> ima_;
 };
 
 #endif	    /* !IMAGE_CROP_HH  */
