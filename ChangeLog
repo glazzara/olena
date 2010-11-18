@@ -1,3 +1,8 @@
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Use tar-ustar to allow filenames with more than 99
+	characters.
+
 2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove a superfluous invocation of AM_CONDITIONAL regarding Magick++.
