@@ -1,5 +1,11 @@
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/convert/from_to.hh: Use value::cast for default builtin
+	conversions and use specific from_to_ overloads for float/double
+	conversions
+
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix disabled unit tests in Milena.
 
 	* tests/unit_test/disabled_tests: Add a missing new line at end of
