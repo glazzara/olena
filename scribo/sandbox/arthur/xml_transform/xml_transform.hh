@@ -40,6 +40,7 @@ class XmlTransform : public QObject
   XmlTransform(QString xml_file, QString image_file, QString output, QString file = QString::Null());
   ~XmlTransform();
 
+  QString out() { return output_dir_; }
   void createHTML(bool base64);
   void createPDF(bool crop, bool base64);
   void createSVG();
@@ -54,6 +55,7 @@ private:
   Loader* loader_;
   ImageCrop* crop_;
   QString file_;
+  bool tmp_;
 };
 
 #endif // !XML_TRANFORM_HH

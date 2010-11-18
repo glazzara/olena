@@ -4,6 +4,7 @@
   <!-- FILE: main.xsl
        DESCRIPTION: produce pdf output -->
 
+  <xsl:import href="regions.xsl"/>
   <xsl:import href="line.xsl"/>
 
   <xsl:template match="/">
@@ -31,28 +32,7 @@
       <fo:page-sequence master-reference="page">
 
 	<fo:flow flow-name="xsl-region-body">
-
 	  <xsl:apply-imports />
-
-	  <fo:block-container position="absolute" z-index="-3">
-
-	    <xsl:attribute name="left">
-	      0px
-	    </xsl:attribute>
-	    <xsl:attribute name="top">
-	      0px
-	    </xsl:attribute>
-
-	    <fo:block>
-	      <fo:external-graphic>
-		<xsl:attribute name="src">
-		  url('img/image.png')
-		</xsl:attribute>
-	      </fo:external-graphic>
-	    </fo:block>
-
-	  </fo:block-container>
-
 	</fo:flow>
 
       </fo:page-sequence>

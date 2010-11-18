@@ -3,14 +3,14 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 QMAKE_CXXFLAGS += -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/milena -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/
 QT += xml
 LIBS += `Magick++-config --libs`
-
-
-# Input
 HEADERS += common.hh image_crop.hh loader.hh xml_transform.hh
 SOURCES += common.cc image_crop.cc loader.cc main.cc xml_transform.cc
+PWD +=
+
+QMAKE_POST_LINK += cp -r $$PWD/templates $$OUT_PWD

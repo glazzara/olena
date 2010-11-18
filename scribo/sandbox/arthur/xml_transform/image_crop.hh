@@ -36,15 +36,15 @@ class ImageCrop : public QObject
   Q_OBJECT
   public:
 
-  ImageCrop(QString xml, QString img, QString output);
+  ImageCrop(QString, QString, QString);
   ~ImageCrop();
 
-  void save_image(QString file = QString::Null());
-  bool crop_regions();
+  void save_image(QString);
+  bool crop_regions(bool temp = false);
 
   QString img_to_base64();
-  bool img_from_base64(QString str, QString img_name, QString mime);
-  void to_base64(QString out_file, bool no_crop);
+  bool img_from_base64(QString, QString);
+  void to_base64(QString, bool);
 
   void from_base64();
 
@@ -52,6 +52,7 @@ private:
   QString xml_;
   QString image_;
   QString output_dir_;
+  QMap<QString, QString> region_map_;
 };
 
 #endif	    /* !IMAGE_CROP_HH  */

@@ -6,7 +6,40 @@
       <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SCRIBO</title>
-	<link rel="stylesheet" type="text/css" href="css.css" />
+	<style type="text/css">
+     	  .line
+	  {
+	  position:absolute;
+	  background-color:white;
+	  z-index:7;
+	  display:inline;
+	  white-space:pre;
+
+	  /* FIXME */
+	  letter-spacing:-2px;
+
+	  padding:0px;
+	  margin:0px;
+	  filter:alpha(opacity=100);
+	  font-family:"Times New Roman", Times, serif;
+	  }
+	  .para
+	  {
+	  position:absolute;
+	  z-index:6;
+	  }
+	  .region
+	  {
+	  position:absolute;
+	  z-index:5;
+	  }
+	  .image
+	  {
+	  position:absolute;
+	  border:0;
+	  }
+	</style>
+<!--	<link rel="stylesheet" type="text/css" href="css.css" /> -->
       </head>
       <body>
 
@@ -174,44 +207,48 @@
 	  <!-- NON-TEXT REGIONS -->
 	  <xsl:if test="name() = 'image_region' or name() = 'separator_region' or name() = 'graphic_region' or name() = 'chart_region' or name() = 'table_region'">
 
-	    <!-- id -->
-	    <xsl:variable name="id">
-	      <xsl:value-of select="@id" />
-	    </xsl:variable>
+	    <xsl:if test="container">
+	      <!-- data -->
+	      <xsl:variable name="data">
+		<xsl:value-of select="container/data" />
+	      </xsl:variable>
 
-	    <!-- depth -->
-	    <xsl:variable name="depth">
-	      <xsl:choose>
-		<xsl:when test="name() = 'separator_region'">
-		  1
-		</xsl:when>
-		<xsl:otherwise>
-		  4
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
+	      <!-- depth -->
+	      <xsl:variable name="depth">
+		<xsl:choose>
+		  <xsl:when test="name() = 'separator_region'">
+		    1
+		  </xsl:when>
+		  <xsl:otherwise>
+		    4
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:variable>
 
-	    <div class="image">
-	      <xsl:attribute name="style">
-		top:<xsl:value-of select="$y1" />px;
-		left:<xsl:value-of select="$x1" />px;
-		width:<xsl:value-of select="$x2 - $x1"/>px;
-		height:<xsl:value-of select="$y2 - $y1"/>px;
-		z-index:<xsl:value-of select="$depth"/>;
-	      </xsl:attribute>
-	      <img>
-		<xsl:attribute name="alt">
-		  <xsl:value-of select="name()" />
+	      <div class="image">
+		<xsl:attribute name="style">
+		  top:<xsl:value-of select="$y1" />px;
+		  left:<xsl:value-of select="$x1" />px;
+		  width:<xsl:value-of select="$x2 - $x1"/>px;
+		  height:<xsl:value-of select="$y2 - $y1"/>px;
+		  z-index:<xsl:value-of select="$depth"/>;
 		</xsl:attribute>
-		<xsl:attribute name="width">
-		  <xsl:value-of select="$x2 - $x1" />
-		</xsl:attribute>
-		<xsl:attribute name="height">
-		  <xsl:value-of select="$y2 - $y1" />
-		</xsl:attribute>
-		<xsl:attribute name="src">img/<xsl:value-of select="$id"/>.png</xsl:attribute>
-	      </img>
-	    </div>
+		<img>
+		  <xsl:attribute name="alt">
+		    <xsl:value-of select="name()" />
+		  </xsl:attribute>
+		  <xsl:attribute name="width">
+		    <xsl:value-of select="$x2 - $x1" />
+		  </xsl:attribute>
+		  <xsl:attribute name="height">
+		    <xsl:value-of select="$y2 - $y1" />
+		  </xsl:attribute>
+		  <xsl:attribute name="src">
+		    data:image/png;base64,<xsl:value-of select="$data"/>
+		  </xsl:attribute>
+		</img>
+	      </div>
+	    </xsl:if>
 
 	  </xsl:if>
 	  <!-- END NON-TEXT REGIONS -->

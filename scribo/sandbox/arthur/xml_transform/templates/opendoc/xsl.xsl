@@ -6,7 +6,38 @@
       <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SCRIBO</title>
-	<link rel="stylesheet" type="text/css" href="css.css" />
+	<style type="text/css">
+	  .line
+	  {
+	  position:absolute;
+	  z-index:7;
+	  display:inline;
+	  white-space:pre;
+
+	  /* FIXME */
+	  letter-spacing:-2px;
+
+	  padding:0px;
+	  margin:0px;
+	  filter:alpha(opacity=100);
+	  font-family:"Times New Roman", Times, serif;
+	  }
+	  .para
+	  {
+	  position:absolute;
+	  z-index:6;
+	  }
+	  .region
+	  {
+	  position:absolute;
+	  z-index:5;
+	  }
+	  .image
+	  {
+	  position:absolute;
+	  border:0;
+	  }
+	</style>
       </head>
       <body>
 

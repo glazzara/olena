@@ -2,35 +2,31 @@ xml_transform
 OPTIONS:
 
 HTML output:
-     --html <xml> <ppm> <out_dir> : HTML output with non-text regions cropped into many png files.
-     --html-base64 <xml> <out_dir> : HTML output from a container XML file.
+     --html input.xml image output.html			Creates HTML file, images are embedded inside in base 64 format.
+     --html-base64 input.xml output.html		Same as --html but input is a XML file with images encoded in base 64 inside.
+     --html-full input.xml image output_dir		Creates HTML file without converting images in base 64. Images + HTML file are placed in output_dir.
 
 PDF output:
-    --pdf <xml> <ppm> <out_dir> : PDF output with non-text regions cropped into many png files.
-    --pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.
-    --pdf-base64 <xml> <out_dir> : PDF output from a container XML file.
-    --pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text, the picture is loaded from a container XML file.
+    --pdf input.xml image output.pdf			Creates PDF file, images are embedded inside in base 64 format.
+    --pdf-base64 input.xml output.pdf			Same as --pdf but input is a XML file with images encoded in base 64 inside.
 
-SVG output:
-    --svg <xml> <out_dir> : SVG output (works only with base 64 xml encoded.
-
-Base 64 operations:
-     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.
+SVG output (experimental, may not work with all files):
+    --svg input.xml image output.svg			Creates SVG file, images are embedded inside in base 64 format.
+    --svg-base64 input.xml output.svg			Same as --svg but input is a XML file with images encoded in base 64 inside.
 
 OpenDocument output:
-	     --open <xml> <ppm> <out_dir> : OpenDocument output (odt, odf).
+	     --oo-doc input.xml image output.odt	Creates Open Document Writer (odt) file.
 
 Base 64 operations:
-     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.
-     --to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.
-     --from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.
+     --to-base64 input.xml image output.xml		Creates a container XML file. It will contain regions which are cropped and converted in base 64.
+     --to-base64-no-crop input.xml mage output.xml	Same as --to-base64 but only the full picture will be converted, regions are not cropped
+     --from-base64 input.xml output_dir			Decodes a XML file which has been encoded in base 64, regions will be converted into png files and saved in output_dir.
 
-For PDF/HTML/SVG/OD output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh
 Requirements:
 PDF : fop >= 0.95
 HTML : xsltproc
 SVG : trunk version of fop
-OpenDocument : ooconvert
+OpenDocument : ooconvert (included)
 
 BUILD:
 
@@ -38,7 +34,6 @@ Chnage the environment variable QMAKE_CXXFLAGS in xml_transfrom.pro then
 
 mkdir _build
 cd _build
-cp -r ../templates .
 qmake ../xml_transfrom.pro
 make
 

@@ -34,6 +34,7 @@
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/io/magick/save.hh>
+#include <mln/io/magick/load.hh>
 #include <mln/io/ppm/all.hh>
 
 ImageCrop::ImageCrop(QString xml, QString img, QString output) :
@@ -47,26 +48,15 @@ ImageCrop::~ImageCrop()
 {
 }
 
-/* Save PPM image to PNG format in output_dir/img. */
-void ImageCrop::save_image(QString file)
+/* Save image to PNG format in output_dir/img. */
+void ImageCrop::save_image(QString out)
 {
   using namespace mln;
 
   image2d<value::rgb8> ima;
-  io::ppm::load(ima, image_.toStdString());
+  io::magick::load(ima, image_.toStdString());
 
-  QString filename;
-  if (file == QString::Null())
-    filename =  Common::get_file_name(image_);
-  else
-    filename = file;
-
-  //  std::cout << "Saving " << image_.toStdString() << " to "
-  //	    << output_dir_.toStdString() << "img/"
-  //	    << filename.toStdString()  << ".png"
-  //	    << std::endl;
-
-  io::magick::save(ima, output_dir_.toStdString() + "img/" + filename.toStdString() + ".png");
+  io::magick::save(ima, out.toStdString());
 }
 
 /* Return the image in base 64. */
@@ -83,7 +73,7 @@ QString ImageCrop::img_to_base64()
 }
 
 /* Decode the base 64 string str and save into output_dir_/img/img_name. */
-bool ImageCrop::img_from_base64(QString str, QString img_name, QString mime)
+bool ImageCrop::img_from_base64(QString str, QString img)
 {
   QByteArray ba;
 
@@ -91,7 +81,7 @@ bool ImageCrop::img_from_base64(QString str, QString img_name, QString mime)
   QByteArray out_ba = QByteArray::fromBase64(ba);
   QImage ima = QImage::fromData(out_ba);
 
-  return ima.save(output_dir_ + "img/" + img_name + "." + mime);
+  return ima.save(output_dir_ + img);
 }
 
 /* Read all regions of the XML file and save all base 64 data into output_dir/img */
@@ -125,7 +115,8 @@ void ImageCrop::from_base64()
 	    {
 	      QString data = node.firstChildElement("data").text();
 	      QString mime = node.firstChildElement("mime").text();
-	      img_from_base64(data, id, mime);
+	      QString img = id + "." + mime;
+	      img_from_base64(data, img);
 	    }
 	}
       child = child.nextSibling();
@@ -137,6 +128,21 @@ void ImageCrop::from_base64()
 void ImageCrop::to_base64(QString out_file, bool no_crop)
 {
   QFile file(xml_);
+  file.open(QIODevice::ReadOnly);
+
+  QDomDocument doc;
+  doc.setContent(&file);
+
+  QDomElement root = doc.documentElement();
+  QDomNode child = root.firstChild();
+
+  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+    child = child.nextSibling();
+
+  QString width = child.toElement().attribute("image_width", "0");
+  QString height = child.toElement().attribute("image_height", "0");
+
+  file.close();
   file.open(QIODevice::ReadOnly);
   QTextStream stream(&file);
 
@@ -163,9 +169,10 @@ void ImageCrop::to_base64(QString out_file, bool no_crop)
       stream2 << "\n" << "      <container>\n";
       stream2 << "        <mime>png</mime>\n";
 
-      QString file_name = Common::get_file_name(image_);
-      save_image();
-      QFile img(output_dir_ + "img/" + file_name + ".png");
+      QTemporaryFile tmp(output_dir_ + Common::get_file_name(image_) + "_XXXXXX.png");
+      tmp.open();
+      save_image(tmp.fileName());
+      QFile img(tmp.fileName());
 
       img.open(QIODevice::ReadOnly);
       stream2 << "        <data>\n";
@@ -178,7 +185,9 @@ void ImageCrop::to_base64(QString out_file, bool no_crop)
       stream2 << "\n      <coords>\n";
 
       stream2 << "        <point x=\"0\" y=\"0\" />\n";
-      stream2 << "        <point x=\"0\" y=\"0\" />";
+      stream2 << "        <point x=\"" << width << "\" y=\"0\" />\n";
+      stream2 << "        <point x=\"" << width << "\" y=\"" << height << "\" />\n";
+      stream2 << "        <point x=\"0\" y=\"" << height << "\" />";
 
       stream2 << "\n      </coords>";
       stream2 << "\n" << "    </image_region>\n";
@@ -210,7 +219,7 @@ void ImageCrop::to_base64(QString out_file, bool no_crop)
 	      QDomElement root = doc.documentElement();
 	      QString id = root.attribute("id", "none");
 
-	      QFile img(output_dir_ + "img/" + id + ".png");
+	      QFile img(region_map_[id]);
 
 	      img.open(QIODevice::ReadOnly);
 	      stream2 << "        <data>\n";
@@ -220,6 +229,7 @@ void ImageCrop::to_base64(QString out_file, bool no_crop)
 
 	      stream2 << "        </data>";
 	      stream2 << "\n      </container>";
+	      img.remove();
 	      img.close();
 	    }
 
@@ -233,7 +243,7 @@ void ImageCrop::to_base64(QString out_file, bool no_crop)
   file.close();
 }
 
-bool ImageCrop::crop_regions()
+bool ImageCrop::crop_regions(bool temp)
 {
   Loader loader;
   QFile f(xml_);
@@ -265,7 +275,7 @@ bool ImageCrop::crop_regions()
 	      QDomNode coords = region.firstChild();
 	      QString id = region.toElement().attribute("id", "none");
 
-	      qDebug() << region.toElement().tagName();
+	      //	      qDebug() << region.toElement().tagName();
 
 	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
 		coords = coords.nextSibling();
@@ -301,10 +311,19 @@ bool ImageCrop::crop_regions()
 	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
 
 	      image2d<value::rgb8> ima;
-	      io::ppm::load(ima, image_.toStdString());
+	      io::magick::load(ima, image_.toStdString());
 	      ima = scribo::preprocessing::crop(ima, box);
 
-	      io::magick::save(ima, output_dir_.toStdString() + "img/" + id.toStdString() + ".png");
+	      if (temp)
+		{
+		  QTemporaryFile tmp(output_dir_ + id + ".XXXXXX.png");
+		  tmp.open();
+		  region_map_[id] = tmp.fileName();
+		  tmp.setAutoRemove(false);
+		  io::magick::save(ima, tmp.fileName().toStdString());
+		}
+	      else
+		io::magick::save(ima, QString(output_dir_ + id + ".png").toStdString());
 	    }
 	  region = region.nextSibling();
 	}

@@ -39,9 +39,15 @@ XmlTransform::XmlTransform(QString xml_file, QString image_file, QString output,
   QFile fx(xml_file_);
 
   if (file_ != QString::Null())
-    output_dir_ = "/tmp/xml_transform";
+    {
+      output_dir_ = QDir::tempPath() + "/xml_transform/";
+      tmp_ = true;
+    }
   else
-    output_dir_ = output;
+    {
+      tmp_ = false;
+      output_dir_ = output;
+    }
 
   if (output_dir_ != QString::Null() && !loader_->set_output(output_dir_))
     {
@@ -68,29 +74,15 @@ XmlTransform::~XmlTransform()
 
 void XmlTransform::fromBase64()
 {
-  QString output = output_dir_;
-  output.append("img");
-
-  if (loader_->set_output(output))
-    crop_->from_base64();
-  else
-    abort();
+  crop_->from_base64();
 }
 
-void XmlTransform::toBase64(bool crop)
+void XmlTransform::toBase64(bool nocrop)
 {
-  QString output = output_dir_;
-  output.append("img");
+  if (!nocrop)
+    crop_->crop_regions(tmp_);
 
-  if (loader_->set_output(output))
-    {
-      if (!crop)
-	crop_->crop_regions();
-
-      crop_->to_base64(file_, crop);
-    }
-  else
-    abort();
+  crop_->to_base64(file_, nocrop);
 }
 
 void XmlTransform::createPDF (bool crop, bool base64)
@@ -99,16 +91,10 @@ void XmlTransform::createPDF (bool crop, bool base64)
     {
       if (!base64)
 	{
-	  QString output = output_dir_;
-	  output.append("img");
-
-	  if (loader_->set_output(output))
-	    {
-	      if (crop)
-		crop_->crop_regions();
-	      else
-		crop_->save_image("image");
-	    }
+	  if (crop)
+	    crop_->crop_regions(tmp_);
+	  else
+	    crop_->save_image(output_dir_ + "image.png");
 	}
 
       loader_->add_pdf_templates(crop, base64, output_dir_);
@@ -120,18 +106,7 @@ void XmlTransform::createPDF (bool crop, bool base64)
 void XmlTransform::createOpen ()
 {
   if (loader_->xml_output(xml_file_, false, output_dir_))
-    {
-      QString output = output_dir_;
-      output.append("img");
-
-      if (loader_->set_output(output))
-	{
-	  crop_->crop_regions();
-	  loader_->add_open_templates(output_dir_);
-	}
-      else
-	abort();
-    }
+    crop_->crop_regions(tmp_);
   else
     abort();
 }
@@ -139,9 +114,7 @@ void XmlTransform::createOpen ()
 void XmlTransform::createSVG ()
 {
   if (loader_->xml_output(xml_file_, false, output_dir_))
-    {
-      loader_->add_svg_templates(output_dir_);
-    }
+    loader_->add_svg_templates(output_dir_);
   else
     abort();
 }
@@ -151,15 +124,8 @@ void XmlTransform::createHTML(bool base64)
   if (loader_->xml_output(xml_file_, true, output_dir_))
     {
       if (!base64)
-	{
-	  QString output = output_dir_;
-	  output.append("img");
-	  if (loader_->set_output(output))
-	    crop_->crop_regions();
-	  else
-	    abort();
-	}
-      loader_->add_html_templates(base64, output_dir_);
+	crop_->crop_regions(tmp_);
+      //      loader_->add_html_templates(base64, output_dir_);
     }
   else
     abort();

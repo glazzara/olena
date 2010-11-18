@@ -6,7 +6,37 @@
       <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SCRIBO</title>
-	<link rel="stylesheet" type="text/css" href="css.css" />
+	<style type="text/css">
+	  .line
+	  {
+	  position:absolute;
+	  z-index:7;
+	  display:inline;
+	  white-space:pre;
+
+	  <!-- FIXME -->
+	  letter-spacing:-2px;
+
+	  padding:0px;
+	  margin:0px;
+	  font-family:"Times New Roman", Times, serif;
+	  }
+	  .para
+	  {
+	  position:absolute;
+	  z-index:6;
+	  }
+	  .region
+	  {
+	  position:absolute;
+	  z-index:5;
+	  }
+	  .image
+	  {
+	  position:absolute;
+	  border:0;
+	  }
+	</style>
       </head>
       <body>
 
@@ -129,10 +159,8 @@
 	      </xsl:choose>
 	    </xsl:variable>
 
-            <div class="line" onmouseover="this.style.opacity=0.2;this.filters.alpha.opacity=20"
-		 onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100">
+            <div class="line">
               <xsl:attribute name="style">
-                opacity:1;
                 height:auto;
                 font-size:<xsl:value-of select="$a+$d" />px;
 		width:<xsl:value-of select="$x2 - $x1" />px;
@@ -146,7 +174,7 @@
 	  <!-- ENF OF TEXT LINE -->
 
 	  <!-- TEXT REGION -->
-	  <xsl:if test="name() = 'text_region'">
+<!--	  <xsl:if test="name() = 'text_region'">
 	    <div class="region">
 	      <xsl:attribute name="style">
 		height:<xsl:value-of select="$y2 - $y1" />px;
@@ -155,11 +183,11 @@
 		top:<xsl:value-of select="$y1" />px;
 	      </xsl:attribute>
 	    </div>
-	  </xsl:if>
+	  </xsl:if>-->
 	  <!-- ENF OF TEXT REGION -->
 
 	  <!-- PARAGRAPH -->
-	  <xsl:if test="name() = 'paragraph'">
+<!--	  <xsl:if test="name() = 'paragraph'">
 	    <div class="para">
 	      <xsl:attribute name="style">
 		height:<xsl:value-of select="$y2 - $y1" />px;
@@ -168,15 +196,15 @@
 		top:<xsl:value-of select="$y1" />px;
 	      </xsl:attribute>
 	    </div>
-	  </xsl:if>
+	  </xsl:if>-->
 	  <!-- ENF OF PARAGRAPH -->
 
 	  <!-- NON-TEXT REGIONS -->
 	  <xsl:if test="name() = 'image_region' or name() = 'separator_region' or name() = 'graphic_region' or name() = 'chart_region' or name() = 'table_region'">
 
-	    <!-- data -->
-	    <xsl:variable name="data">
-	      <xsl:value-of select="container/data" />
+	    <!-- id -->
+	    <xsl:variable name="id">
+	      <xsl:value-of select="@id" />
 	    </xsl:variable>
 
 	    <!-- depth -->
@@ -209,9 +237,7 @@
 		<xsl:attribute name="height">
 		  <xsl:value-of select="$y2 - $y1" />
 		</xsl:attribute>
-		<xsl:attribute name="src">
-		  data:image/png;base64,<xsl:value-of select="$data"/>
-		</xsl:attribute>
+		<xsl:attribute name="src"><xsl:value-of select="$id"/>.png</xsl:attribute>
 	      </img>
 	    </div>
 
