@@ -1,3 +1,10 @@
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Distribute more files with Scribo.
+
+	* src/Makefile.am,
+	* tests/Makefile.am (EXTRA_DIST): Add new files.
+
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/primitive/extract/separators_nonvisible.hh: Fix warnings.

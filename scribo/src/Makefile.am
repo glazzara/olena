@@ -129,4 +129,11 @@ scribo-cli: $(srcdir)/scribo-cli.in Makefile
 
 CLEANFILES = $(dist_bin_SCRIPTS)
 
+
 EXTRA_DIST = scribo-cli.in
+
+
+EXTRA_DIST += 		\
+  afp/components.hh 	\
+  afp/link.hh 		\
+  afp/regroup.hh
