@@ -1,5 +1,13 @@
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix QImage conversions.
+
+	* mln/convert/to_qimage.hh: Fix a duplicate declaration.
+
+	* mln/convert/to_qimage_nocopy.hh: Fix the minimum version required.
+
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/convert/from_to.hh: Use value::cast for default builtin
 	conversions and use specific from_to_ overloads for float/double
 	conversions

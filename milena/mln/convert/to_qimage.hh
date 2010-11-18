@@ -86,7 +86,6 @@ namespace mln
 # if QT_VERSION >= 0x040000 && QT_VERSION < 0x040400
 	QImage qima(ncols, nrows, QImage::Format_RGB32);
 	uchar * ptr_qima = qima.bits();
-	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
 	unsigned padding = 0;
 #  if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 	++ptr_qima;

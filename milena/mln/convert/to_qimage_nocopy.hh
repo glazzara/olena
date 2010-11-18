@@ -77,7 +77,7 @@ namespace mln
       }
 
 
-# if QT_VERSION > 0x040300
+# if QT_VERSION >= 0x040400
 
       template <typename I>
       inline
@@ -120,7 +120,7 @@ namespace mln
       }
 
 
-# if QT_VERSION > 0x040300
+# if QT_VERSION >= 0x040400
 
       template <typename I>
       inline
