@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,15 +45,30 @@ namespace mln
 
     namespace p2b
     {
-      /// \brief Functor that compare the i-th component of a value.
-      // V is for the type of the value received
-      // i is the ith component to select
+
+      /// \brief Functor that compare the i-th component with a threshold.
+      ///
+      /// T_rgb is the kind of RGB we use.
       template <typename T_rgb>
       struct achromatic : public Function_v2b< achromatic<T_rgb> >
       {
 	typedef bool result;
+
+	/// \brief Operator that makes the threshold [millet.phd.2008.pdf]
+	///
+	/// \param[in] p the selected site
+	///
+	/// \return if the site is achromatic or not.
+	///
+        /// This a try for opimized the call to the achromatic
+	/// routine.  The goal is to decide if a site has got an
+	/// achromatic status or not. This is the true Millet test.
 	bool operator()(const point2d& p) const;
 
+	/// \brief Cstor of the object.
+	///
+	/// \param[in] img the RGB input image.
+	/// \param[in] threshold the value to compare with.
 	achromatic(const image2d<T_rgb>& img, const float threshold);
 
 	const float           threshold_;

@@ -34,6 +34,11 @@
 #include <mln/value/hsv.hh>
 #include <mln/value/rgb.hh>
 
+/// \file
+///
+/// This is the millet [millet.phd.2008.pdf] transformation from RGB
+/// space to HSV space.
+
 namespace mln
 {
 
@@ -57,7 +62,15 @@ namespace mln
 	typedef T_hsv result;
 
 
-	/// HSV implementation from millet.2008.phd.pdf p67
+	/// \brief HSV implementation from millet.2008.phd.pdf p67
+	///
+	/// \param[in] rgb the input rgb pixel.
+	///
+	/// \return a HSV pixel.
+	///
+	/// This is the Millet implementation of its transformation
+	/// operator to go from RGB space to HSV space. When pixels
+	/// are achromatic, hue equals -1.
 	template <typename T_rgb>
 	T_hsv operator()(const T_rgb& rgb) const;
 

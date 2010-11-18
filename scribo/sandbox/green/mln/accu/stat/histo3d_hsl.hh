@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA LRDE
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -168,7 +169,6 @@ namespace mln
       /// \ingroup modaccuvalues
       template <unsigned q, typename V>
       struct histo3d_hsl :
-
 	public mln::accu::internal::base<image3d<unsigned>, histo3d_hsl<q,V> >
       {
 	typedef V                 argument;

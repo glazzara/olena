@@ -1,3 +1,17 @@
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix the way to convert unsigned to float.
+
+	* mln/convert/from_to.hxx: New conversion utilities.
+	* mln/convert/impl/from_unsigned_to_value.hh: New conversion utilities.
+
+2009-12-02  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Fix the outside template use case for the convolve macros.
+
+	* mln/linear/ch_convolve.hh (mln_ch_convolve_, mln_ch_convolve_grad_):
+	Define new macros to work outside templates.
+
 2010-11-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add conversions from int_u to float and double.

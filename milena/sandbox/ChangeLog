@@ -1,3 +1,357 @@
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Add milena library components.
+
+	* green/mln/accu/stat/histo1d.hh: New header component.
+	* green/mln/fun/p2b/achromatic.hh: New header component.
+	* green/mln/fun/p2b/component_equals.hh: New header component.
+	* green/mln/fun/v2v/achromatism.hh: New header component.
+	* green/mln/fun/v2v/hue_concentration.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_achromatism_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_hsv.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_hue_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_saturation_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_value_map.hh: New header component.
+	* green/mln/img_path.hh: New header component.
+	* green/mln/math/ceil.hh: New header component.
+	* green/mln/math/floor.hh: New header component.
+	* green/mln/math/hsv.hh: New header component.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet value descriptor.
+
+	* green/exp/annotating/value: New directory.
+	* green/exp/annotating/value/Makefile.am: New Makefile.
+	* green/exp/annotating/value/value.cc: New source file.
+	* green/exp/annotating/value/text-color.txt: New image class.
+	* green/exp/annotating/value/text-img.txt: New image class.
+	* green/exp/annotating/value/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet hue descriptor.
+
+	* green/exp/annotating/hue: New directory.
+	* green/exp/annotating/hue/Makefile.am: New Makefile.
+	* green/exp/annotating/hue/hue.cc: New source file.
+	* green/exp/annotating/hue/text-color.txt: New image class.
+	* green/exp/annotating/hue/text-img.txt: New image class.
+	* green/exp/annotating/hue/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet saturation descriptor.
+
+	* green/exp/annotating/saturation: New directory.
+	* green/exp/annotating/saturation/Makefile.am: New Makefile.
+	* green/exp/annotating/saturation/saturation.cc: New source file.
+	* green/exp/annotating/saturation/text-color.txt: New image class.
+	* green/exp/annotating/saturation/text-img.txt: New image class.
+	* green/exp/annotating/saturation/text-only.txt: New image class.
+
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet hsv descriptors.
+
+	* green/exp/annotating/hsv: New directory.
+	* green/exp/annotating/hsv/hsv.cc: New source file.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on histograms view as density.
+
+	* green/exp/annotating/histo: New directory.
+	* green/exp/annotating/histo/histo.cc: New Makefile.am.
+	* green/exp/annotating/histo/histo.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test error quantification as a color descriptor in our database.
+
+	* green/exp/annotating/error: New directory.
+	* green/exp/annotating/error/Makefile.am: New Makefile.
+	* green/exp/annotating/error/error.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Benchmark few descriptors.
+
+	* green/exp/annotating/bench: New directory.
+	* green/exp/annotating/bench/Makefile.am: New Makefile.
+	* green/exp/annotating/bench/bench.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test on image database the achromatism descriptor.
+
+	* green/exp/annotating/achromatism: New directory.
+	* green/exp/annotating/achromatism/Makefile.am: New Makefile.
+	* green/exp/annotating/achromatism/achromatism.am: New source.
+	* green/exp/annotating/achromatism/text-color.txt: New image class.
+	* green/exp/annotating/achromatism/text-img.txt: New image class.
+	* green/exp/annotating/achromatism/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Turn around Millet 2008 hsv descriptors.
+
+	* green/demo/annotating/hsv: New directory.
+	* green/demo/annotating/hsv/Makefile.am: New Makefile.
+
+
+2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bugs in the histogram visualization tools.
+
+	* green/mln/display/display_histo.cc: Add new vizualisations.
+	* green/mln/display/project_histo.cc: Add new color projections.
+
+2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix last details in the image processing chain.
+
+	* green/tools/annotating/histo/histo.cc: Manage new inputs/outputs.
+	* green/tools/annotating/opening/opening.cc: Manage new inputs/outputs.
+	* green/tools/annotating/iz/Makefile.am: New Makefile.
+	* green/tools/annotating/iz/iz.cc: New file.
+	* green/tools/annotating/regmax/regmax.cc: Manage new inputs/outputs.
+
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Extend the histogram visualization tools for new projection concept.
+
+	* green/mln/display/project_histo.hh (project2_histo): New functions
+	that keep the max of the histogram or the class associate to it while
+	projecting along a direction.
+	* green/mln/display/project_histo.hh (project3_histo): New functions
+	that keep the color of the class associate to the histogram maximum
+	while projecting along a direction.
+	* green/mln/display/display_histo.hh: New interface functions for
+	project2_histo and project3_histo.
+
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Build translation table between number of pixels and percentage of
+	pixels in image for the scribo database.
+
+	* green/demo/labeling/regional_maxima/threshold.txt: New translation
+	table.
+
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Split the regional maxima binary in small atomic binaries.
+
+	* green/tools/annotating/histo: New directory.
+	* green/tools/annotating/histo/Makefile.am: New Makefile.
+	* green/tools/annotating/histo/histo.cc: New source file.
+	* green/tools/annotating/opening: New directory.
+	* green/tools/annotating/opening/Makefile.am: New Makefile.
+	* green/tools/annotating/opening/opening.cc: New source file.
+	* green/tools/annotating/regmax: New directory.
+	* green/tools/annotating/regmax/Makefile.am: New Makefile.
+	* green/tools/annotating/regmax/regmax.cc: New source file.
+
+2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Write the opening volume thresholds for the scribo image mp00082c.ppm.
+
+	* green/demo/labeling/regional_maxima/thresholds.txt: New documentation.
+
+2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Experiment variation on regional maxima labeling.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(demo_17_12_2009): New function that describes the experimentation.
+
+2009-12-18  Yann Jacquelet<jacquelet@lrde.epita.fr>
+
+	Fix the right behaviour of the regmax software.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc: Add
+	many modifications to reach the current software state. There is some
+	nomenclatura, some refactoring and debugging.
+
+2009-12-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bug in the direction of projection.
+
+	* green/mln/display/display_histo.hh: Fix bug in the direction.
+	* green/mln/display/project_histo.hh: Add spaces to follow the LRDE
+	norm.
+
+2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bugs in regional_maxima routine, work with rgb8 for stats.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(compute_stats): New function.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(demo,main): Update functions to map Theo's view.
+
+2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Test the local deviation operator (Millet2008) on the annotating base.
+
+	* green/exp/annotating/stddev_color_16: New directory.
+	* green/exp/annotating/stddev_color_16/Makefile.am: New Makefile.
+	* green/exp/annotating/stddev_color_16/stddev_color_16.cc: New demo.
+
+2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Introduce the local deviation operator (Millet2008) which
+	subdivise the image in 16 parts.
+
+	* green/demo/annotating/stddev_color_16: New directory.
+	* green/demo/annotating/stddev_color_16/Makefile.am: New Makefile.
+	* green/demo/annotating/stddev_color_16/stddev_color_16.cc: New demo.
+
+2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Group Millet2008 documentation files.
+
+	* green/doc/annotating: New directory.
+	* green/doc/annotating/class.txt: New hierarchy description.
+	* green/doc/annotating/testMillet2008.txt: New result interpretations.
+	* green/doc/annotating/syntheseMillet2008.txt: New feature extractions.
+	* green/demo/annotating/class.txt: Remove this obsolete file.
+
+2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Correct typo into directories.
+
+	* green/demo/annoting: Rename as ...
+	* green/demo/annotating: ... these.
+
+	* green/exp/annoting: Rename as ...
+	* green/exp/annotating: ... these.
+
+	* green/mln/img_path.hh: Propagate mistake corrections.
+
+	* green/exp/labeling/regional_maxima/regional_maxima.cc (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
+	* green/exp/annotating/stddev_color/stddev_color (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
+	* green/exp/annotating/nb_color/nb_color.cc (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
+2009-12-15  green  <jacquelet@lrde.epita.fr>
+
+	Introduce new image converter from color to greyscale.
+
+	* green/mln/fun/v2v/rgb8_to_int_u8.hh: New image converter.
+
+2009-12-15  green  <jacquelet@lrde.epita.fr>
+
+	Add new image paths to use the annoting database.
+
+	* green/mln/img_path.hh: Update to LRDE norm and add annoting database.
+
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work around the regional labeling chain and experiment it on the
+	annoting database.
+
+	* green/exp/labeling/regional_maxima/Makefile.am: Add boost library.
+	* green/exp/labeling/regional_maxima/regional_maxima.cc: Count colors.
+
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test clipart operators described by Millet on annoting database.
+
+	* green/exp/annoting/nb_color: New experimentation directory.
+	* green/exp/annoting/nb_color/Makefile.am: New Makefile.
+	* green/exp/annoting/nb_color/nb_color.cc: New experementation.
+
+	* green/exp/annoting/stddev_color: New experimentation directory.
+	* green/exp/annoting/stddev_color/Makefile.am: New Makefile.
+	* green/exp/annoting/stddev_color/stddev_color.cc: New experimentation.
+
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Introduce clipart operators described by Millet.
+
+	* green/demo/annoting/nb_color: New demonstration directory.
+	* green/demo/annoting/nb_color/Makefile.am: New Makefile.
+	* green/demo/annoting/nb_color/nb_color.cc: New source file.
+
+	* green/demo/annoting/stddev_color: New demonstration directory.
+	* green/demo/annoting/stddev_color/Makefile.am: New Makefile.
+	* green/demo/annoting/stddev_color/stddev_color.cc: New source file.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Optimize regional maxima processing for statistical counts and outputs.
+
+	* green/demo/labeling/regional_maxima/Makefile.am: Add some compilation
+	directives.
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(t_channel,t_labeling_rgbn,label_image,unquant,print_count2): New.
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(print_count, merge, do_demo) : Update.
+
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test experimentation with regmax code on annoting database.
+
+	* green/exp/labeling/regional_maxima/Makefile.am: New Makefile.
+	* green/exp/labeling/regional_maxima/regional_maxima.cc: New directory
+	oriented demonstration code.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Transform kmean object in a big function and then a canvas.
+
+	* green/mln/clustering/kmean_rgb.hh: New library source code.
+	* green/demo/clustering/kmean_rgb/Makefile.am: New Makefile.
+	* green/demo/clustering/kmean_rgb/kmean_rgb.cc: New demo. code.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Benchmark on distance, preliminary work before optimizing kmean.
+
+	* green/bench/transform/distance/Makefile.am: New Makefile.
+	* green/bench/transform/distance/distance.cc: New processing chain.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Works on Millet2008 descriptors.
+
+	* green/mln/demo/annoting/bic/Makefile.am: New Makefile.
+	* green/mln/demo/annoting/bic/bic.cc: New impl. of the bic descriptor.
+
+	* green/mln/demo/annoting/lep/Makefile.am: New Makefile.
+	* green/mln/demo/annoting/lep/lep.cc: New impl. of the lep descriptor.
+
+	* green/mln/demo/annoting/project/Makefile.am: New Makefile.
+	* green/mln/demo/annoting/project/project.cc: New impl. of the project
+	descriptor.
+
+	* green/mln/demo/annoting/rgb_64/Makefile.am: New Makefile.
+	* green/mln/demo/annoting/rgb_64/rgb_64.cc: New impl. of the rgb_64
+	descriptor.
+
+	* green/mln/demo/annoting/rgb_64_9/Makefile.am: New Makefile.
+	* green/mln/demo/annoting/rgb_64_9/rgb_64_9.cc: New impl. of the
+	rgb_64_9 descriptor.
+
+	* green/mln/demo/annoting/class.txt: New notes on fax class.
+
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Extend the test image database.
+
+	* green/mln/img_path.hh: Add annoting directories to experiment
+	algorithms on fax, handwritten, typed, logo, bill, map, screenshot,
+	slide image.
+
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* bench/fastest.cc: New. Add a bench for the best fastest

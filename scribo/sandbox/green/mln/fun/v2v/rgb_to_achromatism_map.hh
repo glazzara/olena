@@ -1,6 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,7 +24,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef  MLN_FUN_V2V_RGB_TO_ACHROMATISM_MAP_HH
+#ifndef MLN_FUN_V2V_RGB_TO_ACHROMATISM_MAP_HH
 # define MLN_FUN_V2V_RGB_TO_ACHROMATISM_MAP_HH
 
 # include <mln/math/abs.hh>
@@ -48,6 +47,11 @@ namespace mln
     {
 
       /// \brief Convert rgb value to achromatism map.
+      ///
+      /// Convert rgb value to binary achromastism map using the
+      /// rebuilded Millet phd formulae [millet.phd.2008.pdf]. The
+      /// idea is to look at the minimum and maximum of the channels
+      /// and to return the difference.
       ///
       /// \ingroup modfunv2v
 

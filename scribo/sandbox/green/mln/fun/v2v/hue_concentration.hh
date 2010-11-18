@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,6 +33,10 @@
 # include <mln/value/hsv.hh>
 # include <mln/value/rgb8.hh>
 
+/// \file
+///
+/// This is the code for building hue_concentration_map.
+
 namespace mln
 {
 
@@ -41,12 +46,18 @@ namespace mln
     namespace v2v
     {
 
+      /// \brief internal method for detecting the histogram peak.
+      ///
+      /// \param[in] hue_histo the histogram of hue.
+      ///
+      /// \return the seed of the peek.
       unsigned peak_histo(const mln::image1d<unsigned>& hue_histo);
 
       struct hue_concentration : public Function_v2v< hue_concentration >
       {
 	typedef float result;
 
+	/// \brief Gibe the distance map between actual hue and the peak.
 	float operator()(const float hue) const;
 
 	hue_concentration(const mln::image1d<unsigned>& hue_histo)
