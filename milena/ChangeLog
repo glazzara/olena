@@ -1,3 +1,12 @@
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix disabled unit tests in Milena.
+
+	* tests/unit_test/disabled_tests: Add a missing new line at end of
+	file.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/disabled_tests: Disable mln_world_rgb_invert.spe

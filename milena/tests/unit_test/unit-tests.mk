@@ -142,6 +142,7 @@ mln_accu_site_set_rectangularity \
 mln_accu_stat_all \
 mln_accu_stat_deviation \
 mln_accu_stat_essential \
+mln_accu_stat_histo3d_rgb \
 mln_accu_stat_max \
 mln_accu_stat_max_h \
 mln_accu_stat_mean \
@@ -1413,8 +1414,7 @@ mln_world_inter_pixel_is_pixel \
 mln_world_inter_pixel_is_separator \
 mln_world_inter_pixel_neighb2d \
 mln_world_inter_pixel_separator_to_pixels \
-mln_world_rgb_invert \
-mln_world_rgb_invert_spe
+mln_world_rgb_invert
 
 mln_accu_all_SOURCES = mln_accu_all.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
@@ -1466,6 +1466,7 @@ mln_accu_site_set_rectangularity_SOURCES = mln_accu_site_set_rectangularity.cc
 mln_accu_stat_all_SOURCES = mln_accu_stat_all.cc
 mln_accu_stat_deviation_SOURCES = mln_accu_stat_deviation.cc
 mln_accu_stat_essential_SOURCES = mln_accu_stat_essential.cc
+mln_accu_stat_histo3d_rgb_SOURCES = mln_accu_stat_histo3d_rgb.cc
 mln_accu_stat_max_SOURCES = mln_accu_stat_max.cc
 mln_accu_stat_max_h_SOURCES = mln_accu_stat_max_h.cc
 mln_accu_stat_mean_SOURCES = mln_accu_stat_mean.cc
@@ -2738,5 +2739,4 @@ mln_world_inter_pixel_is_separator_SOURCES = mln_world_inter_pixel_is_separator.
 mln_world_inter_pixel_neighb2d_SOURCES = mln_world_inter_pixel_neighb2d.cc
 mln_world_inter_pixel_separator_to_pixels_SOURCES = mln_world_inter_pixel_separator_to_pixels.cc
 mln_world_rgb_invert_SOURCES = mln_world_rgb_invert.cc
-mln_world_rgb_invert_spe_SOURCES = mln_world_rgb_invert_spe.cc
 
