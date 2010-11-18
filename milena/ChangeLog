@@ -1,10 +1,16 @@
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/pnm/save.hh: Add a fixme related to an ICE with GCC
+	4.1.1.
+
+2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix QImage conversions.
 
 	* mln/convert/to_qimage.hh: Fix a duplicate declaration.
 
-	* mln/convert/to_qimage_nocopy.hh: Fix the minimum version required.
+	* mln/convert/to_qimage_nocopy.hh: Fix the minimum version
+	required.
 
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 

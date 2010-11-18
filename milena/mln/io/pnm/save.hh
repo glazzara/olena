@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+// 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -158,6 +159,7 @@ namespace mln
 	void save_data_(std::ofstream& file,
 			trait::image::speed::fastest, const I& ima)
 	{
+	  // FIXME: GCC 4.1.1 crashes on that line.
 	  if (sizeof(value::int_u8) == 1)
 	    save_data_contiguous(file, ima);
 	  else
