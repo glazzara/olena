@@ -1,3 +1,7 @@
+2010-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* lrde-upload.sh: Upload tarball for branch next-build-test.
+
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Use tar-ustar to allow filenames with more than 99
