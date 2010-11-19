@@ -1,3 +1,10 @@
+2010-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a fastest implementation in io::magick.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Use pointers to access image data.
+
 2010-10-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Handle properly non 8-bit Magick::Quantum's.

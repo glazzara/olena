@@ -150,18 +150,32 @@ namespace mln
 
 	const I& ima = exact(ima_);
 
+	def::coord
+	  minrow = geom::min_row(ima),
+	  mincol = geom::min_col(ima),
+	  maxrow = geom::max_row(ima),
+	  maxcol = geom::max_col(ima),
+	  ncols  = geom::ncols(ima),
+	  nrows  = geom::nrows(ima);
+
+
 	Magick::Image magick_ima;
 	// In the construction of a Geometry object, the width (i.e.
 	// `ncols') comes first, then the height (i.e. `nrows')
 	// follows.
-	magick_ima.size(Magick::Geometry(ima.ncols(), ima.nrows()));
+	magick_ima.size(Magick::Geometry(ncols, nrows));
 
 	Magick::Pixels view(magick_ima);
 	// As above, `ncols' is passed before `nrows'.
-	Magick::PixelPacket* pixels = view.get(0, 0, ima.ncols(), ima.nrows());
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  *pixels++ = impl::get_color(ima(p));
+	Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+	const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
+
+	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+
+	for (def::coord row = minrow; row <= maxrow;
+	     ++row, ptr_ima += row_offset)
+	  for (def::coord col = mincol; col <= maxcol; ++col)
+	    *pixels++ = impl::get_color(*ptr_ima++);
 
 	view.sync();
 	magick_ima.write(filename);
