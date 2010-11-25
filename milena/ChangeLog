@@ -1,3 +1,8 @@
+2010-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/magick/save.hh: Fix a crash when using GraphicsMagick
+	instead of ImageMagick.
+
 2010-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a fastest implementation in io::magick.

@@ -158,12 +158,21 @@ namespace mln
 	  ncols  = geom::ncols(ima),
 	  nrows  = geom::nrows(ima);
 
-
-	Magick::Image magick_ima;
 	// In the construction of a Geometry object, the width (i.e.
 	// `ncols') comes first, then the height (i.e. `nrows')
 	// follows.
-	magick_ima.size(Magick::Geometry(ncols, nrows));
+	//
+	// FIXME: Default pixel value is set to "white". If the image is
+	// declared with the default constructor, without specifying a
+	// default value, no data seems to be allocated and the Pixel view
+	// declared further fails and segfault...
+	Magick::Image magick_ima(Magick::Geometry(ncols, nrows), "white");
+
+	magick_ima.type(Magick::TrueColorType);
+
+        // Ensure that there is only one reference to underlying image
+        // If this is not done, then image pixels will not be modified.
+	magick_ima.modifyImage();
 
 	Magick::Pixels view(magick_ima);
 	// As above, `ncols' is passed before `nrows'.
