@@ -147,10 +147,12 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
   file.close();
   file.open(QIODevice::ReadOnly);
   QTextStream stream(&file);
+  stream.setCodec("UTF-8");
 
   QFile file2(out_file);
   file2.open(QIODevice::ReadWrite);
   QTextStream stream2(&file2);
+  stream2.setCodec("UTF-8");
 
   QString line = stream.readLine();
   stream2 << line;

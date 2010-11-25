@@ -164,6 +164,8 @@ bool Loader::xml_output(const QString& xml_file, bool html, const QString& outpu
 
   QTextStream stream_in(&file);
   QTextStream stream_out(&out_file);
+  stream_in.setCodec("UTF-8");
+  stream_out.setCodec("UTF-8");
 
   QString line = stream_in.readLine();
 
