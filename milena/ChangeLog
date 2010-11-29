@@ -1,3 +1,12 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the type of the underlying site of p_n_faces_piters.
+
+	* mln/core/site_set/p_n_faces_piter.hh
+	(mln::p_n_faces_fwd_piter, mln::p_n_faces_bkd_piter):
+	Change the third parameter of the base class from `P' to
+	`mln_site(P)'.
+
 2010-07-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix output streams uses.

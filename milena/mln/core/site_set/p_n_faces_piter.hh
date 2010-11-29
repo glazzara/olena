@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,13 +52,13 @@ namespace mln
   class p_n_faces_fwd_piter
     : public internal::p_complex_piter_base_< topo::n_face_fwd_iter<D>,
 					      p_complex<D, P>,
-					      P,
+					      mln_site(P),
 					      p_n_faces_fwd_piter<D, P> >
   {
     typedef p_n_faces_fwd_piter<D, P> self_;
     typedef internal::p_complex_piter_base_< topo::n_face_fwd_iter<D>,
 					     p_complex<D, P>,
-					     P,
+					     mln_site(P),
 					     self_ > super_;
 
   public:
@@ -89,13 +90,13 @@ namespace mln
      as it is also used for p_faces piters! */
     : public internal::p_complex_piter_base_< topo::n_face_bkd_iter<D>,
 					      p_complex<D, P>,
-					      P,
+					      mln_site(P),
 					      p_n_faces_bkd_piter<D, P> >
   {
     typedef p_n_faces_bkd_piter<D, P> self_;
     typedef internal::p_complex_piter_base_< topo::n_face_bkd_iter<D>,
 					     p_complex<D, P>,
-					     P,
+					     mln_site(P),
 					     self_ > super_;
 
   public:
