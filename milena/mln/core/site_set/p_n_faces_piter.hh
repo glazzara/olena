@@ -43,29 +43,29 @@ namespace mln
 {
 
   /*----------------------------.
-  | p_n_faces_fwd_piter<D, P>.  |
+  | p_n_faces_fwd_piter<D, G>.  |
   `----------------------------*/
 
   /// \brief Forward iterator on the n-faces sites of an
-  /// mln::p_complex<D, P>.
-  template <unsigned D, typename P>
+  /// mln::p_complex<D, G>.
+  template <unsigned D, typename G>
   class p_n_faces_fwd_piter
     : public internal::p_complex_piter_base_< topo::n_face_fwd_iter<D>,
-					      p_complex<D, P>,
-					      mln_site(P),
-					      p_n_faces_fwd_piter<D, P> >
+					      p_complex<D, G>,
+					      mln_site(G),
+					      p_n_faces_fwd_piter<D, G> >
   {
-    typedef p_n_faces_fwd_piter<D, P> self_;
+    typedef p_n_faces_fwd_piter<D, G> self_;
     typedef internal::p_complex_piter_base_< topo::n_face_fwd_iter<D>,
-					     p_complex<D, P>,
-					     mln_site(P),
+					     p_complex<D, G>,
+					     mln_site(G),
 					     self_ > super_;
 
   public:
     /// Construction and assignment.
     /// \{
     p_n_faces_fwd_piter();
-    p_n_faces_fwd_piter(const p_complex<D, P>& pc, unsigned n);
+    p_n_faces_fwd_piter(const p_complex<D, G>& pc, unsigned n);
     /// \}
 
     /// \brief Accessors.
@@ -79,31 +79,31 @@ namespace mln
 
 
   /*----------------------------.
-  | p_n_faces_bkd_piter<D, P>.  |
+  | p_n_faces_bkd_piter<D, G>.  |
   `----------------------------*/
 
   /// \brief Backward iterator on the n-faces sites of an
-  /// mln::p_complex<D, P>.
-  template <unsigned D, typename P>
+  /// mln::p_complex<D, G>.
+  template <unsigned D, typename G>
   class p_n_faces_bkd_piter
   /* FIXME: Rename internal::p_complex_piter_base_ to something else,
      as it is also used for p_faces piters! */
     : public internal::p_complex_piter_base_< topo::n_face_bkd_iter<D>,
-					      p_complex<D, P>,
-					      mln_site(P),
-					      p_n_faces_bkd_piter<D, P> >
+					      p_complex<D, G>,
+					      mln_site(G),
+					      p_n_faces_bkd_piter<D, G> >
   {
-    typedef p_n_faces_bkd_piter<D, P> self_;
+    typedef p_n_faces_bkd_piter<D, G> self_;
     typedef internal::p_complex_piter_base_< topo::n_face_bkd_iter<D>,
-					     p_complex<D, P>,
-					     mln_site(P),
+					     p_complex<D, G>,
+					     mln_site(G),
 					     self_ > super_;
 
   public:
     /// Construction and assignment.
     /// \{
     p_n_faces_bkd_piter();
-    p_n_faces_bkd_piter(const p_complex<D, P>& pc, unsigned n);
+    p_n_faces_bkd_piter(const p_complex<D, G>& pc, unsigned n);
     /// \}
 
     /// \brief Accessors.
@@ -120,18 +120,18 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   /*----------------------------.
-  | p_n_faces_fwd_piter<D, P>.  |
+  | p_n_faces_fwd_piter<D, G>.  |
   `----------------------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_n_faces_fwd_piter<D, P>::p_n_faces_fwd_piter()
+  p_n_faces_fwd_piter<D, G>::p_n_faces_fwd_piter()
   {
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_n_faces_fwd_piter<D, P>::p_n_faces_fwd_piter(const p_complex<D, P>& pc,
+  p_n_faces_fwd_piter<D, G>::p_n_faces_fwd_piter(const p_complex<D, G>& pc,
 						 unsigned n)
     : super_(pc)
   {
@@ -139,36 +139,36 @@ namespace mln
     set_n(n);
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   unsigned 
-  p_n_faces_fwd_piter<D, P>::n() const
+  p_n_faces_fwd_piter<D, G>::n() const
   {
     return this->iter_.n();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   void
-  p_n_faces_fwd_piter<D, P>::set_n (unsigned n)
+  p_n_faces_fwd_piter<D, G>::set_n (unsigned n)
   {
     this->iter_.set_n(n);
   }
     
 
   /*----------------------------.
-  | p_n_faces_bkd_piter<D, P>.  |
+  | p_n_faces_bkd_piter<D, G>.  |
   `----------------------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_n_faces_bkd_piter<D, P>::p_n_faces_bkd_piter()
+  p_n_faces_bkd_piter<D, G>::p_n_faces_bkd_piter()
   {
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_n_faces_bkd_piter<D, P>::p_n_faces_bkd_piter(const p_complex<D, P>& pc,
+  p_n_faces_bkd_piter<D, G>::p_n_faces_bkd_piter(const p_complex<D, G>& pc,
 						 unsigned n)
     : super_(pc)
   {
@@ -176,18 +176,18 @@ namespace mln
     set_n(n);
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   unsigned 
-  p_n_faces_bkd_piter<D, P>::n() const
+  p_n_faces_bkd_piter<D, G>::n() const
   {
     return this->iter_.n();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   void
-  p_n_faces_bkd_piter<D, P>::set_n (unsigned n)
+  p_n_faces_bkd_piter<D, G>::set_n (unsigned n)
   {
     this->iter_.set_n(n);
   }

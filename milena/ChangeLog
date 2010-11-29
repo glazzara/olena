@@ -1,5 +1,11 @@
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename parameter `P' as `G' (geometry) in p_n_faces_piters.
+
+	* mln/core/site_set/p_complex_piter.hh: Here.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the type of the underlying site of p_n_faces_piters.
 
 	* mln/core/site_set/p_n_faces_piter.hh
