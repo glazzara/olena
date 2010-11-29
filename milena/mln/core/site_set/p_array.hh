@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,9 +52,9 @@ namespace mln
   // Forward declarations.
   template <typename P> class  p_array;
 
-  template <typename S> class  p_indexed_psite;
-  template <typename S> struct p_indexed_fwd_piter;
-  template <typename S> struct p_indexed_bkd_piter;
+  template <typename S> class p_indexed_psite;
+  template <typename S> class p_indexed_fwd_piter;
+  template <typename S> class p_indexed_bkd_piter;
 
 
 

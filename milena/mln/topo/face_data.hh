@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -115,8 +116,8 @@ namespace mln
 	void connect_lower_dim_face(const algebraic_n_face<N - 1, D>& f);
 
       private:
-	friend class mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
-	friend class mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>;
+	friend struct mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
+	friend struct mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>;
 	friend lower_dim_faces_type
 	mln::topo::n_face<N, D>::lower_dim_adj_faces() const;
 
@@ -133,8 +134,8 @@ namespace mln
 	void connect_higher_dim_face(const algebraic_n_face<N + 1, D>& f);
 
       private:
-	friend class mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
-	friend class mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>;
+	friend struct mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
+	friend struct mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>;
 	friend higher_dim_faces_type
 	mln::topo::n_face<N, D>::higher_dim_adj_faces() const;
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -135,7 +136,7 @@ namespace mln
     template <typename S, typename T>
     inline
     unsigned
-    lut_vec<S,T>::index_of(const T& v) const
+    lut_vec<S,T>::index_of(const T& /* v */) const
     {
       mln_invariant(0); // FIXME
       return 0;

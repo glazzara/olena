@@ -1,3 +1,32 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address clang's warnings.
+
+	* mln/algebra/h_vec.hh,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/site_set/box.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/metal/vec.hh,
+	* mln/pw/internal/image_base.hh,
+	* mln/topo/adj_higher_face_iter.hh,
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/algebraic_face.hh,
+	* mln/topo/face.hh,
+	* mln/topo/face_data.hh:
+	Use `class' and `struct' uniformly in declarations and
+	definitions.
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_int_to_value.hh,
+	* mln/core/image/complex_window_piter.hh,
+	* mln/core/point.hh,
+	* mln/opt/element.hh,
+	* mln/value/lut_vec.hh:
+	Comment out unused arguments.
+	* mln/topo/complex.hh [NDEBUG]:	Avoid a warning about an unused
+	variable.
+
 2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update tests/core/image/graph_image.

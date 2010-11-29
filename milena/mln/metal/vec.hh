@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009  EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,7 +58,7 @@ namespace mln
   namespace literal {
     struct zero_t;
   }
-  template <unsigned d, typename C> struct h_vec;
+  template <unsigned d, typename C> class h_vec;
 
 
 

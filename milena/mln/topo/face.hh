@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,7 @@ namespace mln
     /// Contrary to an mln::topo::n_face, the dimension of an
     /// mln::topo::face is not fixed.
     template <unsigned D>
-    struct face
+    class face
     {
     public:
       // The type of the complex this handle points to.

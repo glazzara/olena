@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,7 +57,7 @@ namespace mln
     } // end of namespace mln::topo::internal
 
     template <unsigned D>
-    struct algebraic_face;
+    class algebraic_face;
 
 
     /*-----------------------------------.

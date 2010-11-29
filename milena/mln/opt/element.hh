@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +60,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) element_impl(trait::image::category::domain_morpher,
-                                 const Image<I>& ima, unsigned index)
+                                 const Image<I>& ima, unsigned /* index */)
       {
         return element(*exact(ima).delegatee_());
       }
@@ -82,7 +82,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) element_impl(trait::image::category::domain_morpher,
-                                 Image<I>& ima, unsigned index)
+                                 Image<I>& ima, unsigned /* index */)
       {
         return element(*exact(ima).delegatee_());
       }

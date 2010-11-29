@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,7 @@ namespace mln
     // image whatever it is a fastest one or not.
 
     template <bool is_fastest, typename I, typename E>
-    class pixel_impl_base_;
+    struct pixel_impl_base_;
 
 
     template <typename I, typename E>

@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,7 @@ namespace mln
     {
 
       template <typename F, typename S, typename E>
-      struct image_base;
+      class image_base;
 
     } // end of namespace mln::pw::internal
 
@@ -111,7 +111,7 @@ namespace mln
       /// Parameter \p F is the image value type.
       /// Parameter \p S is the image site set type.
       template <typename F, typename S, typename E>
-      struct image_base
+      class image_base
 	: public mln::internal::image_primary<mln_result(F), S, E >
       {
         typedef typename F::mutable_result mutable_result;

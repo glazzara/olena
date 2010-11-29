@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,7 +57,7 @@ namespace mln
     /// Contrary to an mln::topo::algebraic_n_face, the dimension of an
     /// mln::topo::algebraic_face is not fixed.
     template <unsigned D>
-    struct algebraic_face : public face<D>
+    class algebraic_face : public face<D>
     {
       typedef face<D> super_;
 

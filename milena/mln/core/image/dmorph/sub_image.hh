@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -98,10 +99,11 @@ namespace mln
   /// \ingroup modimagedomainmorpher
   //
   template <typename I, typename S>
-  struct sub_image : public internal::image_domain_morpher< I,
+  class sub_image : public internal::image_domain_morpher< I,
 							    S,
 							    sub_image<I,S> >
   {
+  public:
     /// Skeleton.
     typedef sub_image< tag::image_<I>, tag::domain_<S> > skeleton;
 

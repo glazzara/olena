@@ -43,9 +43,9 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct box;
-  template <typename P> struct box_fwd_piter_;
-  template <typename P> struct box_bkd_piter_;
+  template <typename P> class box;
+  template <typename P> class box_fwd_piter_;
+  template <typename P> class box_bkd_piter_;
 
 
   namespace trait
@@ -78,10 +78,11 @@ namespace mln
   /// \ingroup modsitesetbasic
   //
   template <typename P>
-  struct box : public Box< box<P> >,
-	       public internal::box_impl_< P::dim, mln_coord(P), box<P> >,
-               private mlc_is_unqualif(P)::check_t
+  class box : public Box< box<P> >,
+              public internal::box_impl_< P::dim, mln_coord(P), box<P> >,
+              private mlc_is_unqualif(P)::check_t
   {
+  public:
     /// Dimension.
     enum { dim = P::dim };
 

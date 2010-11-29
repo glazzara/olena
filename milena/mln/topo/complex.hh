@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -961,6 +962,8 @@ namespace mln
       {
 	// If we reached this method, then N should be 0.
 	mln_precondition(n == 0);
+	// Prevent ``unused variable'' warnings when NDEBUG is defined.
+	(void) n;
 	return f(faces_);
       }
 
