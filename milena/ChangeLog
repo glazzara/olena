@@ -1,5 +1,25 @@
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Work around g++ 4.5 deficiencies to compile Milena.
+
+	* mln/core/concept/proxy.hxx
+	(internal::helper_unproxy_rec< P, true >::P_)
+	(internal::helper_unproxy_rec< const P, true >::P_):
+	Remove these intermediate typedefs...
+	(internal::helper_unproxy_rec< P, true >::ret)
+	(internal::helper_unproxy_rec< const P, true >::ret):
+	...to inline these definitions.
+	* mln/util/array.hh
+	(internal::subject_impl<util::array<T>&, E>::operator())
+	(internal::subject_impl<util::array<T>&, E>::operator[])
+	(internal::subject_impl<const util::array<T>&, E>::operator() const)
+	(internal::subject_impl<const util::array<T>&, E>::operator[] const):
+	* mln/core/site_set/p_graph_piter.hh
+	(internal::subject_impl< const p_graph_piter<S,I>&, E >::graph):
+	Use the exact same return type as in the declaration.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix forward declarations in complex piters.
 
 	* mln/core/site_set/p_complex_piter.hh,

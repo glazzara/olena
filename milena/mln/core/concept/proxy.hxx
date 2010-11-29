@@ -92,16 +92,14 @@ namespace mln
     template <typename P>
     struct helper_unproxy_rec< P, true >
     {
-      typedef mln_exact(P) P_;
-      typedef typename P_::HOT_actual_subject ret;
+      typedef mln_exact(P)::HOT_actual_subject ret;
       static ret on(P& p);
     };
 
     template <typename P>
     struct helper_unproxy_rec< const P, true >
     {
-      typedef mln_exact(P) P_;
-      typedef mlc_const(typename P_::HOT_actual_subject) ret;
+      typedef mlc_const(mln_exact(P)::HOT_actual_subject) ret;
       static ret on(const P& p);
     };
 
