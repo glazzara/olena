@@ -42,6 +42,10 @@
 namespace mln
 {
 
+  // Forward declarations.
+  template <unsigned D, typename G> class p_complex;
+
+
   /*----------------------------.
   | p_n_faces_fwd_piter<D, G>.  |
   `----------------------------*/
