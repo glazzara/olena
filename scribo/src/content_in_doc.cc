@@ -100,6 +100,8 @@ int main(int argc, char* argv[])
 
   trace::entering("main");
 
+  Magick::InitializeMagick(*argv);
+
   typedef image2d<scribo::def::lbl_type> L;
   scribo::document<L> doc(argv[1]);
 
