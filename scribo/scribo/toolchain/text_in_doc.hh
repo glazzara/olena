@@ -287,7 +287,7 @@ namespace scribo
 
 
 
-      scribo::text::recognition(lines, "fra");
+      scribo::text::recognition(lines, "eng");
 
       return lines;
     }

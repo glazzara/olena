@@ -1,5 +1,10 @@
 2010-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/toolchain/text_in_doc.hh: Set english as default
+	recognized language.
+
+2010-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/content_in_doc.cc: Add missing ImageMagick initialization.
 
 2010-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
