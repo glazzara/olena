@@ -1,3 +1,9 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Honor `--without-qt' in configure.
+
+	* m4/autotroll.m4: Here.
+
 2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	* AUTHORS: Clean up whitespace.
