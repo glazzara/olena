@@ -388,3 +388,27 @@ MOSTLYCLEANFILES =				\
   morpho-fun-opening_area.pgm			\
   morpho-segm-gradient.pgm			\
   morpho-segm-ws.pgm
+
+
+## --------------- ##
+## Install tests.  ##
+## --------------- ##
+
+# Inspired by Automake's silent rules (see node ``Options'' in
+# Automake's manual).  Run `make installcheck' with `VERBOSE=1' to
+# enable the output of install tests.
+#
+# This feature uses recursive variable expansion, a fairly portable,
+# non-POSIX construct, hence Automake's warning.
+run_install_test_verbose = $(run_install_test_verbose_$(VERBOSE))
+run_install_test_verbose_ = $(run_install_test_verbose_0)
+# We have to silence the standard error too, because it is used by
+# libextatica to emit messages during JIT-compiling.  We should make
+# these messages optional, and turn on the standard error back.
+run_install_test_verbose_0 = >/dev/null 2>/dev/null
+
+include $(srcdir)/installcheck.mk
+# Like `run', but with PYTHONPATH pointing to an installed directory.
+INSTALL_TESTS_ENVIRONMENT = \
+  PYTHONPATH="$(pythondir):$$PYTHONPATH" $(run_install_test_verbose) $(PYTHON)
+INSTALL_TESTS = $(TESTS)

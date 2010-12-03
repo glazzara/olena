@@ -1,3 +1,15 @@
+2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Perform install tests in Swilena.
+
+	* python/installcheck.mk: New.
+	Include it...
+	* python/Makefile.am: ...here.
+	(run_install_test_verbose, run_install_test_verbose_)
+	(run_install_test_verbose_0)
+	(INSTALL_TESTS_ENVIRONMENT, INSTALL_TESTS):
+	New variables.
+
 2010-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix cleaning rules.
