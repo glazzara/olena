@@ -1,3 +1,15 @@
+2010-12-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/bench: More (specialized) test/bench gradient on lena.pgm.
+
+	* apps/bench/gradient-spe-lena.cc,
+	* apps/bench/and_not.hh,
+	* apps/bench/minus.hh:
+	New.
+	* apps/bench/Makefile.am (noinst_PROGRAMS): Add gradient-spe-lena.
+	(noinst_HEADERS): Add and_not.hh and minus.h.
+	(MOSTLYCLEANFILES): Update.
+
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* apps/Makefile.am (SUBDIRS): Add bench.

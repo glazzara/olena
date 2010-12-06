@@ -17,7 +17,17 @@
 include $(top_srcdir)/milena/apps/apps.mk
 
 noinst_PROGRAMS =				\
-  gradient-lena
+  gradient-lena					\
+  gradient-spe-lena
+
+noinst_HEADERS =				\
+  and_not.hh					\
+  minus.hh
 
 MOSTLYCLEANFILES =				\
-  gradient-lena-out.pgm
+  gradient-lena-out.pgm				\
+  gradient-spe-lena-out-0.pgm			\
+  gradient-spe-lena-out-1.pgm			\
+  gradient-spe-lena-out-2.pgm			\
+  gradient-spe-lena-out-3.pgm			\
+  gradient-spe-lena-out-4.pgm
