@@ -55,6 +55,15 @@ List of available COMMAND argument:
      pic-ocr           Localize and try to recognize text.
 
 
+
+  Tools
+  -----
+
+
+     * xml2doc	       Convert the XML results of document toolchains
+       		       into user documents (HTML, PDF...).
+
+
   Algorithms
   ----------
 
@@ -98,6 +107,10 @@ run_cmd()
 
 	pic-ocr)
 	    $bdir/text_recognition_in_picture $@
+	    ;;
+
+	xml2doc)
+	    $bdir/scribo-xml2doc $@
 	    ;;
 
 	*)

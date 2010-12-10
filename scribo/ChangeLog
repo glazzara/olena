@@ -1,5 +1,9 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/scribo-cli.in: Add a call to xml2doc.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* scribo/text/recognition.hh: Add comments.
