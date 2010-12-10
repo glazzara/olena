@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,14 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_TOOLCHAIN_TEXT_IN_DOC_HH
-# define SCRIBO_TOOLCHAIN_TEXT_IN_DOC_HH
-
-/// \file
-///
-/// Extract text from a document.
-
-# include <scribo/toolchain/internal/text_in_doc_functor.hh>
+#ifndef SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
+# define SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 
 namespace scribo
 {
@@ -39,46 +32,63 @@ namespace scribo
   namespace toolchain
   {
 
-    using namespace mln;
+    namespace internal
+    {
+
+      class Toolchain_Functor
+      {
+      public:
+
+	Toolchain_Functor();
+
+	virtual int nsteps() const = 0;
 
 
-    template <typename I>
-    line_set<mln_ch_value(I, def::lbl_type)>
-    text_in_doc(const Image<I>& input, bool denoise,
-		bool find_line_seps = true,
-		bool find_whitespace_seps = true,
-		bool debug = false);
+	//==========
+	// Triggers
+	//==========
+
+	virtual void on_progress();
+	virtual void on_new_progress_label(const char *label);
+
+	// Attributes
+	bool verbose;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
+      Toolchain_Functor::Toolchain_Functor()
+	: verbose(true)
+      {
+      }
 
-    template <typename I>
-    line_set<mln_ch_value(I, def::lbl_type)>
-    text_in_doc(const Image<I>& input, bool denoise,
-		bool find_line_seps = true,
-		bool find_whitespace_seps = true,
-		bool debug = false)
-    {
-      internal::text_in_doc_functor<I> f;
-      f.enable_denoising = denoise;
-      f.enable_line_seps = find_line_seps;
-      f.enable_whitespace_seps = find_whitespace_seps;
-      f.enable_debug = debug;
 
-      line_set<mln_ch_value(I, def::lbl_type)> lines = f(input);
+      //==========
+      // Triggers
+      //==========
 
-      return lines;
-    }
+      inline
+      void Toolchain_Functor::on_progress()
+      {
+	// Nothing
+      }
 
+      inline
+      void Toolchain_Functor::on_new_progress_label(const char *label)
+      {
+	if (verbose)
+	  std::cout << label << std::endl;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
+
+    } // end of namespace scribo::toolchain::internal
 
   } // end of namespace scribo::toolchain
 
 } // end of namespace scribo
 
-
-#endif // SCRIBO_TOOLCHAIN_TEXT_IN_DOC_HH
-
+#endif // ! SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH

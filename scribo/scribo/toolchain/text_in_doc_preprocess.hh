@@ -40,6 +40,7 @@
 #include <scribo/preprocessing/split_bg_fg.hh>
 #include <scribo/preprocessing/deskew.hh>
 
+#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
 
 namespace scribo
 {
@@ -53,6 +54,7 @@ namespace scribo
 
       \param[in] input An image.
       \param[in] enable_fg_bg Enable/Disable background removal.
+      \param[in] K Binarization threshold parameter. (Default 0.34)
 
       If \p enable_fg_bg is set to 'True' then a background removal is
       performed. Its parameter lambda is automatically set according
@@ -61,7 +63,15 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg, double K);
+
+    /*! \overload
+      K is set to 0.34.
+    */
+    template <typename I>
+    mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg);
+
 
     /*! \brief Preprocess a document before looking for its content.
 
@@ -81,6 +91,7 @@ namespace scribo
 
       \param[in] input An image.
       \param[in] lambda Parameter to the background removal.
+      \param[in] K Binarization threshold parameter. (Default 0.34)
       \param[in,out] fg The foreground layer of \p input.
 
       If lambda is set to '0' no background removal is
@@ -91,7 +102,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   Image<I>& fg);
+			   double K, bool enable_fg_bg, Image<I>& fg);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -99,7 +110,15 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg)
+    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg)
+    {
+      return text_in_doc_preprocess(input, enable_fg_bg, 0.34);
+    }
+
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg, double K)
     {
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -108,7 +127,9 @@ namespace scribo
       if (enable_fg_bg)
 	lambda = 1.2 * (input.nrows() + input.ncols());
 
-      mln_ch_value(I,bool) output = text_in_doc_preprocess(input, lambda);
+      mln_concrete(I) tmp_fg;
+      mln_ch_value(I,bool)
+	output = text_in_doc_preprocess(input, lambda, K, enable_fg_bg, tmp_fg);
 
       return output;
     }
@@ -118,48 +139,33 @@ namespace scribo
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda)
     {
       I tmp;
-      return text_in_doc_preprocess(input, lambda, tmp);
+      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp);
     }
 
 
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
-			   Image<I>& fg_)
+			   double K, bool enable_fg_bg, Image<I>& fg)
     {
       trace::entering("scribo::toolchain::text_in_doc_preprocess");
 
       const I& input = exact(input_);
-            I& fg = exact(fg_);
       mln_precondition(input.is_valid());
 
-      mln_concrete(I) input_rgb = input;
+      internal::text_in_doc_preprocess_functor<I> f;
 
-      // Extract foreground
-      if (lambda != 0)
-      {
-	std::cout << "Extracting foreground..." << std::endl;
-	input_rgb = preprocessing::split_bg_fg(input, lambda, 32).second();
-	fg = input_rgb;
-      }
+      // Setup functor.
+      f.sauvola_K = K;
+      f.enable_fg_extraction = enable_fg_bg;
+      f.lambda = lambda;
 
-      // Convert to Gray level image.
-      mln_ch_value(I,value::int_u8)
-	input_gl = data::transform(input_rgb,
-				   mln::fun::v2v::rgb_to_int_u<8>());
-
-
-      // Deskewing
-      std::cout << "Deskew if needed..." << std::endl;
-      input_gl = preprocessing::deskew(input_gl);
-
-      // Binarize foreground to use it in the processing chain.
-      std::cout << "Binarizing foreground..." << std::endl;
-      mln_ch_value(I,bool)
-	input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
+      // Get results.
+      mln_ch_value(I,bool) output = f(input);
+      exact(fg) = f.fg;
 
       trace::exiting("scribo::toolchain::text_in_doc_preprocess");
-      return input_bin;
+      return output;
     }
 
 

@@ -1,5 +1,18 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rewrite toolchains as functors.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/toolchain/internal/toolchain_functor.hh: New.
+
+	* scribo/toolchain/text_in_doc.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh: Make use of the
+	functors.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/document.hh: Add new methods.
 
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
