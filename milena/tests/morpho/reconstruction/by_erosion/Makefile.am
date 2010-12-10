@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,12 +16,14 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-
 check_PROGRAMS =				\
-  union_find
+  union_find_on_functions			\
+  union_find_on_sets
 
-
-union_find_SOURCES = union_find.cc
-
+union_find_on_functions_SOURCES = union_find_on_functions.cc
+union_find_on_sets_SOURCES = union_find_on_sets.cc
 
 TESTS = $(check_PROGRAMS)
+
+# Reconstruction by erosion on sets in not implemented yet.
+XFAIL_TESTS = union_find_on_sets
