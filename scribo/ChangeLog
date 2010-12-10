@@ -1,5 +1,30 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix guards and license.
+
+	* demo/viewer/README,
+	* demo/viewer/browser_widget.cc,
+	* demo/viewer/browser_widget.hh,
+	* demo/viewer/common.hh,
+	* demo/viewer/help_dialog.cc,
+	* demo/viewer/help_dialog.hh,
+	* demo/viewer/image_region.cc,
+	* demo/viewer/image_region.hh,
+	* demo/viewer/image_region.hxx,
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh,
+	* demo/viewer/image_view.cc,
+	* demo/viewer/image_view.hh,
+	* demo/viewer/image_widget.cc,
+	* demo/viewer/image_widget.hh,
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh,
+	* demo/viewer/main.cc,
+	* demo/viewer/xml_widget.cc,
+	* demo/viewer/xml_widget.hh: Here.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add configuration widgets in Scribo viewer.
 
 	* demo/viewer/config.cc,
