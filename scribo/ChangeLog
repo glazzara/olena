@@ -1,5 +1,27 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Integrate the DIA toolchain in Scribo viewer.
+
+	* demo/viewer/Makefile.am: Add new files.
+
+	* demo/viewer/main.cc: Initialize libMagick++.
+
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/step_widget.hh: Improve interface.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh,
+	* demo/viewer/viewer.hxx: Handle calls to the DIA toolchain.
+
+	* demo/viewer/preprocess.cc,
+	* demo/viewer/preprocess.hh,
+	* demo/viewer/process.cc,
+	* demo/viewer/process.hh,
+	* demo/viewer/runner.cc,
+	* demo/viewer/runner.hh: New.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix guards and license.
 
 	* demo/viewer/README,

@@ -1,16 +1,19 @@
-##
-## Document layout viewer.
-##
-## Copyright (C) 2009 Florent D'Halluin.
-##
-## This program is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License
-## as published by the Free Software Foundation; either version 2
-## of the License, or (at your option) any later version.
-##
-## The complete GNU General Public Licence Notice can be found as the
-## `COPYING' file in the root directory.
-##
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 include $(top_srcdir)/build-aux/autotroll.mk
 
@@ -27,11 +30,26 @@ scribo_viewer_SOURCES = $(BUILT_SOURCES)	\
 			image_view.cc		\
 			image_region.cc		\
 			help_dialog.cc		\
-			step_widget.cc
+			step_widget.cc 		\
+			toolchain_options.cc 	\
+			runner.cc		\
+			preprocess.cc		\
+			process.cc		\
+			general_options.cc 	\
+			preferences_dialog.cc 	\
+			option_widget.cc 	\
+			config.cc
 
-scribo_viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
+scribo_viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir) 	\
+			 -I$(top_srcdir)/milena				\
+			 -I$(top_srcdir)/scribo 			\
+			 $(MAGICKXX_CPPFLAGS) 				\
+			 $(TESSERACT_CPPFLAGS) 				\
+			 -DNDEBUG -DMLN_WO_GLOBAL_VARS
 scribo_viewer_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
-scribo_viewer_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS)
+scribo_viewer_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) 			\
+			 $(MAGICKXX_LDFLAGS)				\
+			 $(TESSERACT_LDFLAGS)
 scribo_viewer_LDADD    = $(QT_LIBS) $(LDADD)
 
 BUILT_SOURCES = viewer.moc.cc			\
@@ -43,7 +61,16 @@ BUILT_SOURCES = viewer.moc.cc			\
 		image_view.moc.cc		\
 		image_region.moc.cc		\
 		help_dialog.moc.cc		\
-		step_widget.moc.cc
+		step_widget.moc.cc 		\
+		toolchain_options.moc.cc	\
+		toolchain_options.ui.h		\
+		runner.moc.cc 			\
+		preprocess.moc.cc		\
+		process.moc.cc			\
+		preferences_dialog.moc.cc	\
+		preferences_dialog.ui.h		\
+		general_options.moc.cc		\
+		general_options.ui.h
 
 
 noinst_HEADERS = viewer.hh		\
@@ -58,6 +85,16 @@ noinst_HEADERS = viewer.hh		\
 	 	 image_region.hxx	\
 	 	 common.hh		\
 	 	 help_dialog.hh		\
-	 	 step_widget.hh
+	 	 step_widget.hh		\
+		 toolchain_options.hh	\
+		 runner.hh 		\
+		 preprocess.hh		\
+		 process.hh 		\
+		 general_options.hh 	\
+		 preferences_dialog.hh 	\
+		 option_widget.hh 	\
+		 config.hh
 
 EXTRA_DIST = README
+
+CLEANFILES = $(BUILT_SOURCES)

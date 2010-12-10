@@ -35,8 +35,4 @@ inline Viewer* Viewer::Instance(int &argc, char** argv)
   return &viewer;
 }
 
-inline Viewer::~Viewer()
-{
-}
-
 #endif	    /* !VIEWER_HXX_ */

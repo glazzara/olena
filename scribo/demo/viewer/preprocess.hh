@@ -14,33 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtGui>
-#include <iostream>
+#ifndef SCRIBO_DEMO_VIEWER_PREPROCESS_HH
+# define SCRIBO_DEMO_VIEWER_PREPROCESS_HH
 
-#undef MLN_WO_GLOBAL_VARS
-#include "viewer.hh"
-#include <mln/labeling/colorize.hh>
-#include <mln/math/pi.hh>
-#include <mln/io/magick/load.hh>
-#include <scribo/make/debug_filename.hh>
+# include <QtCore/QObject>
+# include <mln/core/image/image2d.hh>
+# include <mln/value/rgb8.hh>
+# include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
 
-int main(int argc, char** argv)
+using namespace scribo::toolchain::internal;
+
+struct preprocess
+  : public QObject,
+    public text_in_doc_preprocess_functor<mln::image2d<mln::value::rgb8> >
 {
-  if (argc > 2 ||
-      (argc == 2 &&
-       (QString(argv[1]) == "--help" || QString(argv[1]) == "-h")))
-  {
-    std::cout << "Usage:" << std::endl
-	      << argv[0] << " <image dir>" << std::endl;
-    return 0;
-  }
+  Q_OBJECT;
 
-  Magick::InitializeMagick(*argv);
+  virtual void on_progress();
+  virtual void on_new_progress_label(const char *label);
 
-  Viewer* viewer = Viewer::Instance(argc, argv);
+signals:
+  void new_progress_label(const QString& label);
+  void progress();
+};
 
-  if (!viewer)
-    return -1;
-
-  return viewer->exec();
-}
+#endif // ! SCRIBO_DEMO_VIEWER_PREPROCESS_HH

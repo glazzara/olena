@@ -13,27 +13,20 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-//
-// As a special exception, you may use this file as part of a free
-// software project without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to produce
-// an executable, this file does not by itself cause the resulting
-// executable to be covered by the GNU General Public License.  This
-// exception does not however invalidate any other reasons why the
-// executable file might be covered by the GNU General Public License.
 
-#ifndef   	VIEWER_HH_
-# define   	VIEWER_HH_
+#ifndef SCRIBO_DEMO_VIEWER_VIEWER_HH
+# define SCRIBO_DEMO_VIEWER_VIEWER_HH
 
 # include <QtGui>
-# include "common.hh"
 # include <QDomNode>
+# include "common.hh"
+# include "runner.hh"
 
 class ImageScene;
 class DomModel;
 class KeyWidget;
 class ImageRegion;
+class StepWidget;
 
 class Viewer
   : public QObject
@@ -60,6 +53,12 @@ public slots:
   void useImage(bool b);
   void change_base(bool b);
 
+private slots:
+  void on_preferences();
+  void run_process();
+  void run_progress();
+  void on_xml_saved(const QString& filename);
+
 signals:
   void updated();
   void key_updated(int key, bool checked);
@@ -81,6 +80,7 @@ private:
 
   QApplication* app_;
   QMainWindow* win_;
+  StepWidget* step_widget_;
 
   QGraphicsPixmapItem* image_;
 
@@ -105,8 +105,14 @@ private:
   bool use_image_;
   QVector<QGraphicsTextItem *> text_vector_;
   QVector<QGraphicsPixmapItem*> image_vector_;
+  QString current_image_;
+
+  QProgressDialog pdialog_;
+  runner runner_;
+
+  QSet<QString> tmp_files_to_remove_;
 };
 
 #include "viewer.hxx"
 
-#endif	    /* !VIEWER_HH_ */
+#endif // ! SCRIBO_DEMO_VIEWER_VIEWER_HH

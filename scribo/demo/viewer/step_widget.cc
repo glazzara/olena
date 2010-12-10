@@ -13,17 +13,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-//
-// As a special exception, you may use this file as part of a free
-// software project without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to produce
-// an executable, this file does not by itself cause the resulting
-// executable to be covered by the GNU General Public License.  This
-// exception does not however invalidate any other reasons why the
-// executable file might be covered by the GNU General Public License.
 
 # include "step_widget.hh"
+# include "config.hh"
 
 StepWidget::StepWidget()
   : view_(new QListWidget()),
@@ -48,25 +40,30 @@ StepWidget::StepWidget()
 	  this, SLOT(activate(QListWidgetItem*)));
 }
 
+StepWidget::~StepWidget()
+{
+}
+
+
 void StepWidget::activate(QListWidgetItem* item)
 {
   QString key, value;
 
   StepQMap::iterator iter = map_.find(item->text());
 
-  view_->setCurrentItem(item);
   if (iter != map_.end())
-    {
-      step_ = item->text();
-      key = iter.key();
-      value = iter.value();
+  {
+    view_->setCurrentItem(item);
+    step_ = item->text();
+    key = iter.key();
+    value = iter.value();
 
-      emit load_xml(value);
-    }
+    emit load_xml(value);
+  }
   else
     qDebug() << "Step not found!";
-
 }
+
 
 void StepWidget::fill_steps(QString file, bool step, bool container)
 {
@@ -85,38 +82,31 @@ void StepWidget::fill_steps(QString file, bool step, bool container)
       // image is loaded once
       emit load_image(file, false);
 
-      int cut = file.lastIndexOf(QChar('/'));
-      QString path = file.left(cut+1);
-      QString filename = file.mid(cut+1);
 
-      cut = filename.lastIndexOf(QChar('.'));
+      QFileInfo f(file);
+      file_with_no_ext_ = f.baseName();
 
-      QString file_with_no_ext = filename.left(cut);
-      //  view_->addItem(file_with_no_ext);
+      QStringList dirlist;
+      dirlist << f.absolutePath() << QDir::tempPath();
 
-      QDir dir(path);
+      // Set directories to look at according to settings.
+      config * const conf = config::get_instance();
+      if (conf->general_save_xml_custom_dir())
+	dirlist << conf->general_save_xml_custom_dir_path();
 
-      if (dir.isReadable())
+      foreach(QString path, dirlist)
+      {
+	QDir dir(path);
+
+	if (dir.isReadable())
 	{
 	  QStringList filter;
 	  filter << "*.xml";
-	  QStringList xml_list = dir.entryList(filter);
+	  QFileInfoList xml_list = dir.entryInfoList(filter);
 	  for (int i = 0; i < xml_list.size(); ++i)
-	    {
-	      if (xml_list.at(i).startsWith(file_with_no_ext))
-		{
-		  cut = xml_list.at(i).lastIndexOf(QChar('.'));
-		  QString key = xml_list.at(i).left(cut);
-		  key.replace(file_with_no_ext + QString("_"), QString(""));
-		  key.replace(QRegExp("^step([0-9])"), "Step \\1");
-		  key.replace(QRegExp("^Step ([0-9])_"), "Step \\1 : ");
-		  key.replace("_", " ");
-		  QString value = path;
-		  map_.insertMulti(key, value.append(xml_list.at(i)));
-		  view_->addItem(key);
-		}
-	    }
+	    insert_new_entry(xml_list.at(i));
 	}
+      }
 
       if ( (step && step_ != QString::Null()))
 	{
@@ -130,15 +120,43 @@ void StepWidget::fill_steps(QString file, bool step, bool container)
     }
 }
 
-void StepWidget::add_element(const QString& element)
+
+QListWidgetItem* StepWidget::insert_new_entry(const QFileInfo& file)
 {
-  view_->addItem(element);
+  QListWidgetItem *item  = 0;
+
+  if (file.fileName().startsWith(file_with_no_ext_))
+  {
+    QString key = file.baseName();
+    key.replace(file_with_no_ext_ + QString("_"), QString(""));
+    key.replace(QRegExp("^step([0-9])"), "Step \\1");
+    key.replace(QRegExp("^Step ([0-9])_"), "Step \\1 : ");
+    key.replace("_", " ");
+
+    bool exists = (map_.find(key) != map_.end());
+
+    map_.insertMulti(key, file.absoluteFilePath());
+
+    if (!exists)
+    {
+      item = new QListWidgetItem(key);
+      view_->addItem(item);
+    }
+    else
+      item = view_->findItems(key, Qt::MatchCaseSensitive).at(0);
+  }
+
+  return item;
 }
 
-StepWidget::~StepWidget()
-{
-}
 
+QListWidgetItem* StepWidget::add_element(const QString& element)
+{
+  QListWidgetItem *item = new QListWidgetItem(element);
+  view_->addItem(item);
+
+  return item;
+}
 
 
 

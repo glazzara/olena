@@ -13,15 +13,10 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-//
-// As a special exception, you may use this file as part of a free
-// software project without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to produce
-// an executable, this file does not by itself cause the resulting
-// executable to be covered by the GNU General Public License.  This
-// exception does not however invalidate any other reasons why the
-// executable file might be covered by the GNU General Public License.
+
+
+#include <iostream>
+#include <limits.h>
 
 #include "viewer.hh"
 #include "key_widget.hh"
@@ -32,7 +27,9 @@
 #include "image_scene.hh"
 #include "image_region.hh"
 #include "help_dialog.hh"
-#include <limits.h>
+#include "preferences_dialog.hh"
+#include "runner.hh"
+#include "config.hh"
 
 #include "common.hh"
 
@@ -49,7 +46,8 @@ Viewer::Viewer(int &argc, char** argv)
     xml_file_(QString::Null()),
     base64_(false),
     text_(true),
-    use_image_(true)
+    use_image_(true),
+    pdialog_(win_)
 {
   // Key map
 
@@ -81,14 +79,25 @@ Viewer::Viewer(int &argc, char** argv)
   region_ids_["chart_region"] = region::Chart;
   region_ids_["maths_region"] = region::Maths;
 
-  // Layout
 
   win_->resize(1152, 864);
   win_->statusBar();
 
   QMenu* file_menu = win_->menuBar()->addMenu(tr("File"));
   QMenu* option_menu = win_->menuBar()->addMenu(tr("Options"));
+  QMenu* view_menu = win_->menuBar()->addMenu(tr("View"));
   QMenu* help_menu = win_->menuBar()->addMenu(tr("Help"));
+
+
+  // File menu
+
+  QAction *doc_seg_action = create_action("Segment document", file_menu,
+					  "Segment document", "Ctrl+S");
+  connect(doc_seg_action, SIGNAL(triggered()),
+	  this, SLOT(run_process()));
+  file_menu->addAction(doc_seg_action);
+
+  file_menu->addSeparator();
 
   QAction* quit_action = create_action("Quit", file_menu,
 				       "Exit the program.", "Ctrl+q");
@@ -96,15 +105,27 @@ Viewer::Viewer(int &argc, char** argv)
 	  app_, SLOT(quit()));
   file_menu->addAction(quit_action);
 
-  outline_action_ = create_action("Draw outline", option_menu,
+  // Option menu
+
+  QAction* preferences_action_ = create_action("Preferences", option_menu,
+					     "Preferences", "Ctrl+Alt+P");
+  preferences_action_->setCheckable(false);
+  connect(preferences_action_, SIGNAL(triggered(bool)),
+	  this, SLOT(on_preferences()));
+  option_menu->addAction(preferences_action_);
+
+
+  // View menu
+
+  outline_action_ = create_action("Draw outline", view_menu,
 				  "Draw region outlines.", "Ctrl+o");
   outline_action_->setCheckable(true);
   outline_action_->setChecked(true);
   connect(outline_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setOutline(bool)));
-  option_menu->addAction(outline_action_);
+  view_menu->addAction(outline_action_);
 
-  precise_action_ = create_action("Precise outline", option_menu,
+  precise_action_ = create_action("Precise outline", view_menu,
 				  "1px outline relative to the image "
 				  "(1px relative to the view if off).",
 				  "Ctrl+p");
@@ -112,27 +133,27 @@ Viewer::Viewer(int &argc, char** argv)
   precise_action_->setChecked(false);
   connect(precise_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setPrecise(bool)));
-  option_menu->addAction(precise_action_);
+  view_menu->addAction(precise_action_);
 
-  fill_action_ = create_action("Fill regions", option_menu,
+  fill_action_ = create_action("Fill regions", view_menu,
 			       "Color the inside of regions.", "Ctrl+f");
   fill_action_->setCheckable(true);
   fill_action_->setChecked(true);
   connect(fill_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setFill(bool)));
-  option_menu->addAction(fill_action_);
+  view_menu->addAction(fill_action_);
 
-  QAction* cache_action = create_action("Disable cache", option_menu,
+  QAction* cache_action = create_action("Disable cache", view_menu,
 					"Disable the image cache (useful for"
 					" large images).", "Ctrl+c");
   cache_action->setCheckable(true);
   cache_action->setChecked(false);
   connect(cache_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useCache(bool)));
-  option_menu->addAction(cache_action);
+  view_menu->addAction(cache_action);
 
 
-  QAction* extended_action = create_action("Extended mode", option_menu,
+  QAction* extended_action = create_action("Extended mode", view_menu,
 					   "If enabled, some features "
 					   "not supported by ICDAR"
 					   " are added such as text regions"
@@ -141,28 +162,28 @@ Viewer::Viewer(int &argc, char** argv)
   extended_action->setChecked(false);
   connect(extended_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useExtended(bool)));
-  option_menu->addAction(extended_action);
+  view_menu->addAction(extended_action);
 
-  QAction* show_image_action = create_action("Show pictures", option_menu,
+  QAction* show_image_action = create_action("Show pictures", view_menu,
 					     "Display pictures on the scene or not",
 					     "Ctrl+i");
   show_image_action->setCheckable(true);
   show_image_action->setChecked(true);
   connect(show_image_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useImage(bool)));
-  option_menu->addAction(show_image_action);
+  view_menu->addAction(show_image_action);
 
-  QAction* show_text_action = create_action("Show text", option_menu,
+  QAction* show_text_action = create_action("Show text", view_menu,
 					    "Show detected text inside boxes.",
 					    "Ctrl+t");
   show_text_action->setCheckable(true);
   show_text_action->setChecked(true);
   connect(show_text_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useText(bool)));
-  option_menu->addAction(show_text_action);
+  view_menu->addAction(show_text_action);
 
   key_wgt_ = new KeyWidget(key_map_);
-  QAction *show_region_action = create_action("Show regions", option_menu,
+  QAction *show_region_action = create_action("Show regions", view_menu,
 					      "Display regions that are present in"
 					      " the XML file.",
 					      "Ctrl+r");
@@ -170,7 +191,9 @@ Viewer::Viewer(int &argc, char** argv)
   show_region_action->setChecked(true);
   connect(show_region_action, SIGNAL(toggled(bool)),
 	  key_wgt_, SLOT(setAll(bool)));
-  option_menu->addAction(show_region_action);
+  view_menu->addAction(show_region_action);
+
+  // Help menu
 
   QAction* about_action = create_action("About", help_menu,
 					"About this program",
@@ -179,11 +202,13 @@ Viewer::Viewer(int &argc, char** argv)
 	  this, SLOT(help()));
   help_menu->addAction(about_action);
 
+  // Layout
+
   QSplitter* h_splitter = new QSplitter();
   QSplitter* v_splitter = new QSplitter(Qt::Vertical);
   QSplitter* v_splitter2 = new QSplitter(Qt::Vertical);
 
-  StepWidget* step_widget = new StepWidget();
+  step_widget_ = new StepWidget();
   XmlWidget* xml_wgt = new XmlWidget();
   BrowserWidget* browser_wgt =
     new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
@@ -191,7 +216,7 @@ Viewer::Viewer(int &argc, char** argv)
 
   scene_->setBackgroundBrush(scene_->palette().window());
 
-  v_splitter->addWidget(step_widget);
+  v_splitter->addWidget(step_widget_);
   v_splitter->addWidget(key_wgt_);
   v_splitter->addWidget(browser_wgt);
 
@@ -216,13 +241,13 @@ Viewer::Viewer(int &argc, char** argv)
   h_splitter->setSizes(h_sizes);
 
   connect(browser_wgt, SIGNAL(activated(QString, bool, bool)),
-	  step_widget, SLOT(fill_steps(QString, bool, bool)));
+	  step_widget_, SLOT(fill_steps(QString, bool, bool)));
 
-  connect(step_widget, SIGNAL(change_base(bool)),
+  connect(step_widget_, SIGNAL(change_base(bool)),
 	  this, SLOT(change_base(bool)));
-  connect(step_widget, SIGNAL(load_image(QString, bool)),
+  connect(step_widget_, SIGNAL(load_image(QString, bool)),
 	  this, SLOT(load(QString, bool)));
-  connect(step_widget, SIGNAL(load_xml(QString)),
+  connect(step_widget_, SIGNAL(load_xml(QString)),
 	  this, SLOT(load_xml(QString)));
 
   connect(this, SIGNAL(mode_changed(bool)),
@@ -242,8 +267,33 @@ Viewer::Viewer(int &argc, char** argv)
 
   connect(image_wgt, SIGNAL(scaleUpdated(qreal)),
 	  this, SLOT(maybeChangeCacheMode(qreal)));
+
+
+  // Progress dialog and process runner.
+  pdialog_.setModal(true);
+  pdialog_.setAutoClose(false);
+  pdialog_.setCancelButton(0);
+  connect(&runner_, SIGNAL(finished()), &pdialog_, SLOT(close()));
+
+  connect(&runner_, SIGNAL(new_step(const QString&)),
+	  &pdialog_, SLOT(setWindowTitle(const QString&)));
+  connect(&runner_, SIGNAL(new_progress_max_value(int)),
+	  &pdialog_, SLOT(setMaximum(int)));
+  connect(&runner_, SIGNAL(new_progress_label(const QString&)),
+	  &pdialog_, SLOT(setLabelText(const QString&)));
+  connect(&runner_, SIGNAL(progress()),
+	  this, SLOT(run_progress()));
+  connect(&runner_, SIGNAL(xml_saved(const QString&)),
+	  this, SLOT(on_xml_saved(const QString&)));
 }
 
+
+Viewer::~Viewer()
+{
+  // Remove temporary xml files.
+  foreach(QString file, tmp_files_to_remove_)
+    QFile::remove(file);
+}
 
 void
 Viewer::add_text(QDomNode line, QDomNode region)
@@ -518,6 +568,8 @@ Viewer::load(QString filename, bool b)
   else
     image_ = new QGraphicsPixmapItem(QPixmap(filename));
 
+  current_image_ = filename;
+
   image_->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
   image_->setZValue(0);
   if (use_image_)
@@ -686,4 +738,44 @@ QAction
   action->setShortcut(QKeySequence(shortcut));
 
   return (action);
+}
+
+void
+Viewer::on_preferences()
+{
+  preferences_dialog *win = new preferences_dialog(win_);
+  win->show();
+}
+
+
+void
+Viewer::run_process()
+{
+  if (!current_image_.isEmpty())
+  {
+    pdialog_.setValue(0);
+    pdialog_.setLabelText("");
+    pdialog_.show();
+    runner_.start(current_image_);
+  }
+}
+
+
+void
+Viewer::run_progress()
+{
+  pdialog_.setValue(pdialog_.value() + 1);
+}
+
+
+void
+Viewer::on_xml_saved(const QString& filename)
+{
+  config * const conf = config::get_instance();
+
+  if (!conf->general_save_xml_enabled())
+    tmp_files_to_remove_.insert(filename);
+
+  QListWidgetItem *item = step_widget_->insert_new_entry(filename);
+  step_widget_->activate(item);
 }

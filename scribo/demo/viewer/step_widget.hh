@@ -13,19 +13,10 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-//
-// As a special exception, you may use this file as part of a free
-// software project without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to produce
-// an executable, this file does not by itself cause the resulting
-// executable to be covered by the GNU General Public License.  This
-// exception does not however invalidate any other reasons why the
-// executable file might be covered by the GNU General Public License.
 
 
-#ifndef   	STEP_WIDGET_HH_
-# define   	STEP_WIDGET_HH_
+#ifndef SCRIBO_DEMO_VIEWER_STEP_WIDGET_HH_
+# define SCRIBO_DEMO_VIEWER_STEP_WIDGET_HH_
 
 # include <QtGui>
 
@@ -39,7 +30,7 @@ class StepWidget
 public:
   StepWidget();
   ~StepWidget();
-  void add_element(const QString& element);
+  QListWidgetItem* add_element(const QString& element);
 
 signals:
   void load_image(QString, bool);
@@ -50,11 +41,13 @@ signals:
 public slots:
   void fill_steps(QString file, bool step = false, bool container = false);
   void activate(QListWidgetItem* item);
+  QListWidgetItem* insert_new_entry(const QFileInfo& file);
 
 private:
   QListWidget* view_;
   StepQMap map_;
   QString step_;
+  QString file_with_no_ext_;
 };
 
-#endif	    /* !STEP_WIDGET_HH_ */
+#endif // ! SCRIBO_DEMO_VIEWER_STEP_WIDGET_HH_

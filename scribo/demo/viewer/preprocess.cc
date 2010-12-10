@@ -14,33 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <QtGui>
-#include <iostream>
+#include "preprocess.hh"
 
-#undef MLN_WO_GLOBAL_VARS
-#include "viewer.hh"
-#include <mln/labeling/colorize.hh>
-#include <mln/math/pi.hh>
-#include <mln/io/magick/load.hh>
-#include <scribo/make/debug_filename.hh>
-
-int main(int argc, char** argv)
+void preprocess::on_progress()
 {
-  if (argc > 2 ||
-      (argc == 2 &&
-       (QString(argv[1]) == "--help" || QString(argv[1]) == "-h")))
-  {
-    std::cout << "Usage:" << std::endl
-	      << argv[0] << " <image dir>" << std::endl;
-    return 0;
-  }
+  emit progress();
+}
 
-  Magick::InitializeMagick(*argv);
 
-  Viewer* viewer = Viewer::Instance(argc, argv);
-
-  if (!viewer)
-    return -1;
-
-  return viewer->exec();
+void preprocess::on_new_progress_label(const char *label)
+{
+  QString lbl(label);
+  emit new_progress_label(label);
 }
