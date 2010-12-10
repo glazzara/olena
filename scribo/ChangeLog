@@ -1,5 +1,9 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/document.hh: Add new methods.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix missing inlines and MLN_WO_GLOBALS_VARS guards in Scribo.
 
 	* scribo/binarization/internal/first_pass_functor.hh,

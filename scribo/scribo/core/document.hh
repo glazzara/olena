@@ -47,8 +47,11 @@ namespace scribo
 
     document();
     document(const char *filename);
+    document(const char *filename,
+	     const mln::image2d<mln::value::rgb8>& input);
 
     void open();
+    bool is_open() const;
 
     const char * filename() const;
     void set_filename(const char*name);
@@ -64,6 +67,7 @@ namespace scribo
     void set_elements(const component_set<L>& elements);
 
     const mln::image2d<value::rgb8>& image() const;
+    void set_image(const mln::image2d<value::rgb8>& image);
 
   private:
     const char *filename_;
@@ -88,7 +92,15 @@ namespace scribo
   document<L>::document(const char *filename)
     : filename_(filename)
   {
-    open();
+  }
+
+
+  template <typename L>
+  document<L>::document(const char *filename,
+			const mln::image2d<mln::value::rgb8>& input)
+    : filename_(filename),
+      image_(input)
+  {
   }
 
 
@@ -113,6 +125,14 @@ namespace scribo
   document<L>::open()
   {
     mln::io::magick::load(image_, filename_);
+  }
+
+
+  template <typename L>
+  bool
+  document<L>::is_open() const
+  {
+    return image_.is_valid();
   }
 
 
@@ -177,6 +197,14 @@ namespace scribo
   document<L>::image() const
   {
     return image_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_image(const mln::image2d<value::rgb8>& image)
+  {
+    image_ = image;
   }
 
 
