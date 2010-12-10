@@ -1,3 +1,57 @@
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Import xml_transform from Arthur's sandbox to demo/xml2doc.
+
+	* sandbox/arthur/xml_transform/README,
+	* sandbox/arthur/xml_transform/common.cc,
+	* sandbox/arthur/xml_transform/common.hh,
+	* sandbox/arthur/xml_transform/image_crop.cc,
+	* sandbox/arthur/xml_transform/image_crop.hh,
+	* sandbox/arthur/xml_transform/loader.cc,
+	* sandbox/arthur/xml_transform/loader.hh,
+	* sandbox/arthur/xml_transform/main.cc,
+	* sandbox/arthur/xml_transform/templates/html/css.css,
+	* sandbox/arthur/xml_transform/templates/html/main.xsl,
+	* sandbox/arthur/xml_transform/templates/html/main_base64.xsl,
+	* sandbox/arthur/xml_transform/templates/ooconvert,
+	* sandbox/arthur/xml_transform/templates/opendoc/css.css,
+	* sandbox/arthur/xml_transform/templates/opendoc/xsl.xsl,
+	* sandbox/arthur/xml_transform/templates/pdf/line.xsl,
+	* sandbox/arthur/xml_transform/templates/pdf/main.xsl,
+	* sandbox/arthur/xml_transform/templates/pdf/regions.xsl,
+	* sandbox/arthur/xml_transform/templates/svg/line.xsl,
+	* sandbox/arthur/xml_transform/templates/svg/main.xsl,
+	* sandbox/arthur/xml_transform/templates/svg/regions.xsl,
+	* sandbox/arthur/xml_transform/templates/xml_transform.sh,
+	* sandbox/arthur/xml_transform/xml_transform.cc,
+	* sandbox/arthur/xml_transform/xml_transform.hh,
+	* sandbox/arthur/xml_transform/xml_transform.pro: Move...
+
+	* demo/xml2doc/README,
+	* demo/xml2doc/common.cc,
+	* demo/xml2doc/common.hh,
+	* demo/xml2doc/image_crop.cc,
+	* demo/xml2doc/image_crop.hh,
+	* demo/xml2doc/loader.cc,
+	* demo/xml2doc/loader.hh,
+	* demo/xml2doc/main.cc,
+	* demo/xml2doc/templates/html/css.css,
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl,
+	* demo/xml2doc/templates/ooconvert,
+	* demo/xml2doc/templates/opendoc/css.css,
+	* demo/xml2doc/templates/opendoc/xsl.xsl,
+	* demo/xml2doc/templates/pdf/line.xsl,
+	* demo/xml2doc/templates/pdf/main.xsl,
+	* demo/xml2doc/templates/pdf/regions.xsl,
+	* demo/xml2doc/templates/svg/line.xsl,
+	* demo/xml2doc/templates/svg/main.xsl,
+	* demo/xml2doc/templates/svg/regions.xsl,
+	* demo/xml2doc/templates/xml_transform.sh,
+	* demo/xml2doc/xml_transform.cc,
+	* demo/xml2doc/xml_transform.hh,
+	* demo/xml2doc/xml_transform.pro: ... here.
+
 2010-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/toolchain/text_in_doc.hh: Set english as default
