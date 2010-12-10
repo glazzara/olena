@@ -60,6 +60,8 @@ int main(int argc, char* argv[])
 				"input.* output.pbm <enable fg/bg> <lambda>",
 				args_desc);
 
+  Magick::InitializeMagick(*argv);
+
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, argv[1]);
 

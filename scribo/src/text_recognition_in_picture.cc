@@ -223,6 +223,8 @@ int main(int argc, char* argv[])
 
   trace::entering("main");
 
+  Magick::InitializeMagick(*argv);
+
   image2d<value::rgb8> input_rgb;
   mln::io::magick::load(input_rgb, argv[1]);
 

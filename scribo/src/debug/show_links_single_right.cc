@@ -98,7 +98,7 @@ namespace scribo
       else
       {
 	P tmp = p;
-	++tmp.col();
+	--tmp.col();
 	mln::draw::line(output_, start_point, tmp, literal::red);
       }
 
@@ -109,7 +109,7 @@ namespace scribo
 
     void compute_next_site_(P& p)
     {
-      --p.col();
+      ++p.col();
     }
 
 

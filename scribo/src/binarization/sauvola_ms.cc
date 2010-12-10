@@ -82,6 +82,8 @@ int main(int argc, char *argv[])
 				"input.* output.pbm <w> <s> <k>",
 				args_desc);
 
+  Magick::InitializeMagick(*argv);
+
   trace::entering("main");
 
   // Window size

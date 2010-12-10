@@ -35,6 +35,8 @@ SUBDIRS =					\
 utilexec_PROGRAMS =
 
 
+if HAVE_MAGICKXX
+
 if HAVE_TESSERACT
 
     utilexec_PROGRAMS	    += pbm_text_in_doc
@@ -42,16 +44,15 @@ if HAVE_TESSERACT
     pbm_text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(TESSERACT_CPPFLAGS) \
 			       $(TIFF_CPPFLAGS) \
+			       $(MAGICKXX_CPPFLAGS) \
 			       -I$(top_builddir)
     pbm_text_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
 			       $(TESSERACT_LDFLAGS) \
 			       $(TIFF_LDFLAGS) \
+			       $(MAGICKXX_LDFLAGS) \
 			       -lpthread
 
 endif HAVE_TESSERACT
-
-
-if HAVE_MAGICKXX
 
     utilexec_PROGRAMS		   += text_in_doc_preprocess
     text_in_doc_preprocess_SOURCES  = text_in_doc_preprocess.cc

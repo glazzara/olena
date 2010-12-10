@@ -1,5 +1,21 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* scribo/text/recognition.hh: Add comments.
+
+	* src/debug/show_links_single_right.cc: Fix an invalid
+	incrementation.
+
+	* src/Makefile.am: Add Magickxx flags for pbm_text_in_doc.
+
+	* src/binarization/sauvola_ms.cc,
+	* src/text_in_doc_preprocess.cc,
+	* src/text_in_picture_neg.cc,
+	* src/text_recognition_in_picture.cc: Initialize LibMagick++.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new options to command lines tools.
 
 	* scribo/src/content_in_doc.cc,

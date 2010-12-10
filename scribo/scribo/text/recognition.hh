@@ -148,6 +148,7 @@ namespace scribo
 	const component_set<L>& comp_set = lines.components();
 	const L& lbl = comp_set.labeled_image();
 
+	// Extract each character components to create the line image.
 	const mln::util::array<component_id_t>& comps = lines(i).components();
 	for_all_elements(e, lines(i).components())
 	{
@@ -157,12 +158,16 @@ namespace scribo
 	}
 
 	/// Improve text quality.
-
-	/// text_ima_cleaned domain may be larger than text_ima's.
 	text::clean_inplace(lines(i), text_ima);
 
 	// Make sure characters are isolated from the borders.
 	// Help Tesseract.
+	//
+	// FIXME: can be improved! We need a morpher for a constant
+	// extension set to false (avoid data::fill), a morpher for
+	// translating the domain to (0,0) (avoid the creation of a
+	// new image), change the default border::thickness to 0 and a
+	// morpher to enlarge the domain to a part of the extension.
 	mln_domain(I) lbox = text_ima.domain();
 	lbox.enlarge(lines(i).char_space() + 2);
 	I line_image(lbox, 0); // Make sure there is no border!
