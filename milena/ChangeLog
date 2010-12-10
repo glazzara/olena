@@ -1,3 +1,13 @@
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle more global vars with MLN_WO_GLOBAL_VARS
+
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/debug/filename.hh,
+	* mln/debug/quiet.hh,
+	* mln/labeling/colorize.hh,
+	* mln/math/pi.hh: Add missing MLN_WO_GLOBAL_VARS guards.
+
 2010-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/io/magick/save.hh: Fix a crash when using GraphicsMagick

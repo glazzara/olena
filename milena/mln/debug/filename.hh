@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,7 +59,17 @@ namespace mln
     filename(const std::string& filename, int id);
 
 
+    namespace internal
+    {
+
+      extern std::string filename_prefix;
+
+    } // end of namespace mln::debug::internal
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+#  ifndef MLN_WO_GLOBAL_VARS
 
     namespace internal
     {
@@ -66,6 +77,8 @@ namespace mln
       std::string filename_prefix = "";
 
     } // end of namespace mln::debug::internal
+
+#  endif // ! MLN_WO_GLOBAL_VARS
 
 
     inline

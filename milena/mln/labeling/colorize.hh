@@ -94,16 +94,20 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     namespace colorize_
     {
       unsigned min_value = 20;
       unsigned max_value = 220;
     }
 
+#  endif // ! MLN_WO_GLOBAL_VARS
 
     namespace internal
     {
 
+      inline
       unsigned random_number()
       {
 	unsigned last = colorize_::min_value + (colorize_::max_value - colorize_::min_value + 1) * rand();
