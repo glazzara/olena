@@ -1,5 +1,24 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add configuration widgets in Scribo viewer.
+
+	* demo/viewer/config.cc,
+	* demo/viewer/config.hh,
+	* demo/viewer/defs.hh,
+	* demo/viewer/general_options.cc,
+	* demo/viewer/general_options.hh,
+	* demo/viewer/general_options.ui,
+	* demo/viewer/option_widget.cc,
+	* demo/viewer/option_widget.hh,
+	* demo/viewer/preferences_dialog.cc,
+	* demo/viewer/preferences_dialog.hh,
+	* demo/viewer/preferences_dialog.ui,
+	* demo/viewer/toolchain_options.cc,
+	* demo/viewer/toolchain_options.hh,
+	* demo/viewer/toolchain_options.ui: New.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/scribo-cli.in: Add a call to xml2doc.
 
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
