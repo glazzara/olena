@@ -315,6 +315,7 @@ AC_CONFIG_FILES([
     scribo/demo/Makefile
       scribo/demo/review/Makefile
       scribo/demo/viewer/Makefile
+      scribo/demo/xml2doc/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
       scribo/src/contest/Makefile
