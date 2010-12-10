@@ -17,7 +17,27 @@
 
 if HAVE_QT
 
-SUBDIRS = review viewer
+SUBDIRS  = review
+
+
+
+if HAVE_MAGICKXX
+
+SUBDIRS  = viewer
+
+endif HAVE_MAGICKXX
+
+
+
+
+# FIXME: Add more dependencies (fop, xsltproc)
+if HAVE_MAGICKXX
+
+SUBDIRS += xml2doc
+
+endif HAVE_MAGICKXX
+
+
 
 endif HAVE_QT
 

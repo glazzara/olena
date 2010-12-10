@@ -1,5 +1,18 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Include xml2doc in build system.
+
+	* demo/Makefile.am: Add xml2doc and libmagick++ dependency.
+
+	* demo/xml2doc/Makefile.am: New.
+
+	* demo/xml2doc/datarootdir.hh.in: New. Will store few useful
+	variables.
+
+	* demo/xml2doc/xml_transform.pro: Remove.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Import xml_transform from Arthur's sandbox to demo/xml2doc.
 
 	* sandbox/arthur/xml_transform/README,
