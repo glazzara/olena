@@ -1,5 +1,16 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix guards and license in xml2doc.
+
+	* demo/xml2doc/image_crop.cc,
+	* demo/xml2doc/image_crop.hh,
+	* demo/xml2doc/loader.cc,
+	* demo/xml2doc/loader.hh,
+	* demo/xml2doc/xml_transform.cc,
+	* demo/xml2doc/xml_transform.hh: Here.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Get rid of xml_transform.sh and handle xsl files location after
 	installation.
 
