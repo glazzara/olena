@@ -1,5 +1,19 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Get rid of xml_transform.sh and handle xsl files location after
+	installation.
+
+	* demo/xml2doc/main.cc: Implement the effective code of
+	xml_transform.sh. Guaranties that the xsl files will be always
+	accessible.
+
+	* demo/xml2doc/templates/ooconvert: Move...
+	* demo/xml2doc/templates/bin/ooconvert: ... here.
+
+	* demo/xml2doc/templates/xml_transform.sh: Remove.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Include xml2doc in build system.
 
 	* demo/Makefile.am: Add xml2doc and libmagick++ dependency.

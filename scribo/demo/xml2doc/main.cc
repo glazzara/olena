@@ -1,3 +1,19 @@
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <iostream>
 #include <string>
 #include <string>
@@ -6,15 +22,77 @@
 
 #undef MLN_WO_GLOBAL_VARS
 #include <mln/core/image/image2d.hh>
+#include <mln/trace/all.hh>
 
 #include "xml_transform.hh"
+
+#include "datarootdir.hh"
+
+
+void check_xsltproc()
+{
+  if (system("which xsltproc > /dev/null") == -1)
+  {
+    qDebug() << "FATAL ERROR: Conversion to HTML requires xsltproc to "
+      "be installed!";
+    exit(1);
+  }
+}
+
+
+QString get_datarootdir(const QString& file)
+{
+  QFile f(SCRIBO_LOCAL_DATAROOTDIR "/templates/" + file);
+  if (f.exists())
+    return SCRIBO_LOCAL_DATAROOTDIR "/templates/";
+
+  f.setFileName(SCRIBO_PREFIX_DATAROOTDIR "/templates/" + file);
+  if (f.exists())
+    return SCRIBO_PREFIX_DATAROOTDIR "/templates/";
+
+  qDebug() << "FATAL ERROR: Can't locate file: " + file;
+  exit (1);
+
+  return "";
+}
+
+
+
+int html_base64(const QString& xml, const QString& html)
+{
+  qDebug() << QString("HTML output : %1").arg(html);
+  QString datarootdir = get_datarootdir("html/main_base64.xsl");
+  return system(QString("xsltproc \"%1/html/main_base64.xsl\" \"%2\" > %3")
+		.arg(datarootdir).arg(xml).arg(html).toAscii().constData());
+}
+
+
+int pdf_base64(const QString& xml, const QString& pdf)
+{
+  qDebug() << QString("PDF output : %1").arg(pdf);
+  QString datarootdir = get_datarootdir("pdf/main.xsl");
+  return system(QString("fop -xsl %1/pdf/main.xsl -xml %2 -pdf %3")
+		.arg(datarootdir).arg(xml).arg(pdf).toAscii().constData());
+}
+
+
+int svg_base64(const QString& xml, const QString& svg)
+{
+  qDebug() << QString("SVG output : %1").arg(svg);
+  QString datarootdir = get_datarootdir("svg/main.xsl");
+  return system(QString("fop -xsl %1/svg/main.xsl -xml %2 -svg %3")
+		.arg(datarootdir).arg(xml).arg(svg).toAscii().constData());
+}
+
+
+
 
 int main(int argc, char **argv)
 {
   Magick::InitializeMagick(argv[0]);
 
-  std::string man;
-  man = "xml_transform\n"
+  QString man = \
+    "xml_transform\n"
     "OPTIONS:\n\n"
 
     "HTML output:\n"
@@ -59,114 +137,142 @@ int main(int argc, char **argv)
     "SVG : trunk version of fop\n"
     "OpenDocument : ooconvert (included) and OpenOffice >= 3.xx";
 
+  QString option(argv[1]);
+
+
   if (argc > 4)
+  {
+    if ("--html-full" == option)
     {
-      std::string html = "--html";
-      std::string html_full = "--html-full";
-      std::string open = "--oo-doc";
-      std::string pdf = "--pdf";
-      std::string svg = "--svg";
-      std::string to_base64 = "--to-base64";
-      std::string to_base64nocrop = "--to-base64-no-crop";
+      check_xsltproc();
 
-      if (html_full.compare(argv[1]) == 0)
-	{
-	  XmlTransform xmlt(argv[2], argv[3], argv[4]);
-	  xmlt.createHTML(false);
+      XmlTransform xmlt(argv[2], argv[3], argv[4]);
+      xmlt.createHTML(false);
 
-	  QString cmd = "sh templates/xml_transform.sh html " + xmlt.out() + "output.xml " +  xmlt.out() + "output.html";
-	  return system (cmd.toAscii().constData());
-	}
-      else if (html.compare(argv[1]) == 0)
-	{
-	  QTemporaryFile tmp;
-	  tmp.open();
-	  tmp.fileName();
 
-	  XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
-	  xmlt.toBase64(false);
+      QString output = xmlt.out() + "output.html";
+      qDebug() << QString("HTML output : %1").arg(output);
+      QString datarootdir = get_datarootdir("html/main.xsl");
+      int ret = system(QString("xsltproc \"%1/html/main.xsl\" \"%2/output.xml\" > %3")
+		       .arg(datarootdir)
+		       .arg(xmlt.out())
+		       .arg(output).toAscii().constData());
 
-	  QString cmd = "sh templates/xml_transform.sh html-base64 " + tmp.fileName() + " " + argv[4];
-	  return system (cmd.toAscii().constData());
-	}
-      else if (pdf.compare(argv[1]) == 0)
-	{
-	  QTemporaryFile tmp;
-	  tmp.open();
-	  tmp.fileName();
-
-	  XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
-	  xmlt.toBase64(false);
-
-	  QString cmd = "sh templates/xml_transform.sh pdf " + tmp.fileName() + " " + argv[4];
-	  return system (cmd.toAscii().constData());
-	}
-      else if (svg.compare(argv[1]) == 0)
-	{
-	  QTemporaryFile tmp;
-	  tmp.open();
-	  tmp.fileName();
-
-	  XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
-	  xmlt.toBase64(false);
-
-	  QString cmd = "sh templates/xml_transform.sh svg " + tmp.fileName() + " " + argv[4];
-	  return system (cmd.toAscii().constData());
-	}
-      else if (open.compare(argv[1]) == 0)
-	{
-	  QString dir = QDir::tempPath() + "/xml_transform." + argv[4];
-	  XmlTransform xmlt(argv[2], argv[3], dir);
-	  xmlt.createOpen();
-
-	  QString cmd = "sh templates/xml_transform.sh oo-doc " + dir + " " + argv[4];
-	  return system (cmd.toAscii().constData());
-	}
-      else if (to_base64.compare(argv[1]) == 0)
-	{
-	  XmlTransform xmlt(argv[2], argv[3], QString::Null(), argv[4]);
-	  xmlt.toBase64(false);
-	}
-      else if (to_base64nocrop.compare(argv[1]) == 0)
-	{
-	  XmlTransform xmlt(argv[2], argv[3], QString::Null(), argv[4]);
-	  xmlt.toBase64(true);
-	}
-      else
-	std::cout << man << std::endl;
+      QFile::remove(xmlt.out() + "output.xml");
+      return ret;
     }
+    else if ("--html" == option)
+    {
+      QTemporaryFile tmp;
+      tmp.open();
+      tmp.fileName();
+
+      XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
+      xmlt.toBase64(false);
+
+      return html_base64(tmp.fileName(), argv[4]);
+    }
+    else if ("--pdf" == option)
+    {
+      QTemporaryFile tmp;
+      tmp.open();
+      tmp.fileName();
+
+      XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
+      xmlt.toBase64(false);
+
+      return pdf_base64(tmp.fileName(), argv[4]);
+    }
+    else if ("--svg" == option)
+    {
+      QTemporaryFile tmp;
+      tmp.open();
+      tmp.fileName();
+
+      XmlTransform xmlt(argv[2], argv[3], QString::Null(), tmp.fileName());
+      xmlt.toBase64(false);
+
+      return svg_base64(tmp.fileName(), argv[4]);
+    }
+    else if ("--oo-doc" == option)
+    {
+      QString dir = QDir::tempPath() + "/xml_transform." + argv[4];
+      XmlTransform xmlt(argv[2], argv[3], dir);
+      xmlt.createOpen();
+
+      QString datarootdir = get_datarootdir("html/main.xsl");
+      system(QString("xsltproc \"%1/html/main.xsl\" \"%2/output.xml\" > %2/out.html")
+	     .arg(datarootdir).arg(dir).toAscii().constData());
+
+      qDebug() << QString("Open Document output : %1").arg(argv[4]);
+
+      datarootdir = get_datarootdir("bin/ooconvert");
+      system(QString(" \"%1/bin/ooconvert\" \"%2/out.html\" \"%2/out.odt\" > /dev/null")
+	     .arg(datarootdir).arg(dir).toAscii().constData());
+
+      QString cur_dir = QDir::currentPath();
+      QString tmp_dir = dir + "/oo_tmp";
+
+      QDir d;
+      d.mkdir(tmp_dir);
+      qDebug() << "unzip %1/out.odt -d %2 > /dev/null" << dir << tmp_dir;
+      system(QString("unzip %1/out.odt -d %2 > /dev/null")
+	     .arg(dir).arg(tmp_dir).toAscii().constData());
+
+      system(QString("cat %1/content.xml | sed -re 's!\\.\\./([a-zA-Z0-9])!Pictures/\\1!g' "
+		     ">> %1/tmp.xml").arg(tmp_dir).toAscii().constData());
+
+      d.mkdir(tmp_dir + "/Pictures");
+      d.rename(dir + "/*.png",  tmp_dir + "/Pictures/");
+      d.rename(tmp_dir + "/tmp.xml", tmp_dir + "/content.xml");
+
+      d.cd(tmp_dir);
+      qDebug() << "zip zip.odt -r * > /dev/null";
+      system("zip zip.odt -r * > /dev/null");
+
+      QFile::copy("zip.odt", argv[4]);
+      d.cd(cur_dir);
+
+      d.rmdir(dir);
+
+      return 0;
+    }
+    else if ("--to-base64" == option)
+    {
+      XmlTransform xmlt(argv[2], argv[3], QString::Null(), argv[4]);
+      xmlt.toBase64(false);
+      return 0;
+    }
+    else if ("--to-base64-no-crop" == option)
+    {
+      XmlTransform xmlt(argv[2], argv[3], QString::Null(), argv[4]);
+      xmlt.toBase64(true);
+      return 0;
+    }
+  }
   else if (argc > 3)
+  {
+    if ("--svg-base64" == option)
     {
-      std::string pdf_base64 = "--pdf-base64";
-      std::string svg_base64 = "--svg-base64";
-      std::string html_base64 = "--html-base64";
-      std::string from_base64 = "--from-base64";
-
-      if (svg_base64.compare(argv[1]) == 0)
-	{
-	  QString cmd = "sh templates/xml_transform.sh svg " + QString(argv[2]) + " " + QString(argv[3]);
-	  return system (cmd.toAscii().constData());
-	}
-      else if (pdf_base64.compare(argv[1]) == 0)
-	{
-	  QString cmd = "sh templates/xml_transform.sh pdf " + QString(argv[2]) + " " + QString(argv[3]);
-	  return system (cmd.toAscii().constData());
-	}
-      else if (html_base64.compare(argv[1]) == 0)
-	{
-	  QString cmd = "sh templates/xml_transform.sh html-base64 " + QString(argv[2]) + " " + QString(argv[3]);
-	  return system (cmd.toAscii().constData());
-	}
-      else if (from_base64.compare(argv[1]) == 0)
-	{
-	  XmlTransform xmlt(argv[2], QString::Null(), argv[3]);
-	  xmlt.fromBase64();
-	}
-      else
-	std::cout << man << std::endl;
+      return svg_base64(argv[2], argv[3]);
     }
-  else
-    std::cout << man << std::endl;
+    else if ("--pdf-base64" == option)
+    {
+      return pdf_base64(argv[2], argv[3]);
+    }
+    else if ("--html-base64" == option)
+    {
+      return html_base64(argv[2], argv[3]);
+    }
+    else if ("--from-base64" == option)
+    {
+      XmlTransform xmlt(argv[2], QString::Null(), argv[3]);
+      xmlt.fromBase64();
+      return 0;
+    }
+  }
+
+  qDebug() << man;
 
   return 0;
 }
