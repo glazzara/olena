@@ -1,72 +1,9 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Integrate the DIA toolchain in Scribo viewer.
+	Temporary fix PDF rendering.
 
-	* demo/viewer/Makefile.am: Add new files.
-
-	* demo/viewer/main.cc: Initialize libMagick++.
-
-	* demo/viewer/step_widget.cc,
-	* demo/viewer/step_widget.hh: Improve interface.
-
-	* demo/viewer/viewer.cc,
-	* demo/viewer/viewer.hh,
-	* demo/viewer/viewer.hxx: Handle calls to the DIA toolchain.
-
-	* demo/viewer/preprocess.cc,
-	* demo/viewer/preprocess.hh,
-	* demo/viewer/process.cc,
-	* demo/viewer/process.hh,
-	* demo/viewer/runner.cc,
-	* demo/viewer/runner.hh: New.
-
-2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Fix guards and license.
-
-	* demo/viewer/README,
-	* demo/viewer/browser_widget.cc,
-	* demo/viewer/browser_widget.hh,
-	* demo/viewer/common.hh,
-	* demo/viewer/help_dialog.cc,
-	* demo/viewer/help_dialog.hh,
-	* demo/viewer/image_region.cc,
-	* demo/viewer/image_region.hh,
-	* demo/viewer/image_region.hxx,
-	* demo/viewer/image_scene.cc,
-	* demo/viewer/image_scene.hh,
-	* demo/viewer/image_view.cc,
-	* demo/viewer/image_view.hh,
-	* demo/viewer/image_widget.cc,
-	* demo/viewer/image_widget.hh,
-	* demo/viewer/key_widget.cc,
-	* demo/viewer/key_widget.hh,
-	* demo/viewer/main.cc,
-	* demo/viewer/xml_widget.cc,
-	* demo/viewer/xml_widget.hh: Here.
-
-2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Add configuration widgets in Scribo viewer.
-
-	* demo/viewer/config.cc,
-	* demo/viewer/config.hh,
-	* demo/viewer/defs.hh,
-	* demo/viewer/general_options.cc,
-	* demo/viewer/general_options.hh,
-	* demo/viewer/general_options.ui,
-	* demo/viewer/option_widget.cc,
-	* demo/viewer/option_widget.hh,
-	* demo/viewer/preferences_dialog.cc,
-	* demo/viewer/preferences_dialog.hh,
-	* demo/viewer/preferences_dialog.ui,
-	* demo/viewer/toolchain_options.cc,
-	* demo/viewer/toolchain_options.hh,
-	* demo/viewer/toolchain_options.ui: New.
-
-2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	* src/scribo-cli.in: Add a call to xml2doc.
+	* demo/xml2doc/templates/pdf/line.xsl: Use temporary hack to
+	improve document rendering.
 
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 

@@ -70,6 +70,15 @@
       </xsl:for-each>
     </xsl:variable>
 
+    <xsl:variable name="ymax">
+      <xsl:for-each select="coords/point">
+	<xsl:sort select="@y" order="ascending" data-type="number"/>
+	<xsl:if test="position() = 3">
+	  <xsl:value-of select="@y" />
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
+
     <xsl:variable name="x1">
       <xsl:for-each select="coords/point">
 	<xsl:sort select="@x" order="ascending" data-type="number"/>
@@ -78,9 +87,19 @@
 	</xsl:if>
       </xsl:for-each>
     </xsl:variable>
+
+    <xsl:variable name="xmax">
+      <xsl:for-each select="coords/point">
+	<xsl:sort select="@x" order="ascending" data-type="number"/>
+	<xsl:if test="position() = 3">
+	  <xsl:value-of select="@x" />
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
      <!-- END OF lines coordinates -->
 
-     <!-- WTF !?, Necessary to do a lower-case ! -->
+     <!-- WTF !?, Necessary to do a lower-case !
+	  FIXME: take a look at text-transform attribute -->
      <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
      <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
 
@@ -97,13 +116,25 @@
      </xsl:variable>
 
 
-     <fo:block-container position="absolute">
+     <fo:block-container position="absolute" border-width="5mm">
 
        <xsl:attribute name="left">
 	 <xsl:value-of select="$x1" />px
        </xsl:attribute>
        <xsl:attribute name="top">
 	 <xsl:value-of select="$y1" />px
+       </xsl:attribute>
+
+       <xsl:attribute name="right">
+	 <xsl:value-of select="$xmax" />px
+       </xsl:attribute>
+       <xsl:attribute name="bottom">
+	 <xsl:value-of select="$ymax" />px
+       </xsl:attribute>
+
+
+       <xsl:attribute name="width">
+	 <xsl:value-of select="$xmax - $x1" />px
        </xsl:attribute>
 
        <xsl:attribute name="color">
@@ -113,14 +144,58 @@
        <!-- if necessary, put letter-spacing="-Npt"  ~ -3 <= N <= -1
 	    in fo:block-->
 
-       <fo:block font-family="Times">
+       <!-- text-align-last="justify" will help justifying and using a
+            uniform font size (it stretchs the text, at least for PDF)
+            but it relies on several lines... We need paragraph
+            information.
+            -->
 
-	 <xsl:attribute name="font-size">
-	   <xsl:value-of select="$a + $d" />px
+       <!-- FIXME: using a table allows to justify a single line of
+            text. This is an UGLY HACK. Font size is also tweaked for
+            now but it should not since we have font information.
+       -->
+       <fo:table table-layout="fixed">
+
+	 <xsl:attribute name="width">
+	   <xsl:value-of select="$xmax -$x1" />px
 	 </xsl:attribute>
 
-	 <xsl:value-of select="@text"/>
-       </fo:block>
+	 <fo:table-column  column-number="1">
+	   <xsl:attribute name="column-width">
+	     <xsl:value-of select="$xmax -$x1" />px
+	   </xsl:attribute>
+	 </fo:table-column>
+
+	 <fo:table-body start-indent="0pt" text-align="justify" text-align-last="justify">
+
+	   <fo:table-row>
+
+	     <fo:table-cell>
+
+	       <fo:block font-family="Times" wrap-option="no-wrap" white-space-collapse="true" text-align-last="justify" text-align="justify">
+
+		 <xsl:attribute name="font-size">
+		   <xsl:choose>
+		     <xsl:when test="($a + $d) > 50">
+		       <xsl:value-of select="0.82 * ($a + $d)" />px
+		     </xsl:when>
+		     <xsl:otherwise>
+		       <xsl:value-of select="0.95 * ($a + $d)" />px
+		     </xsl:otherwise>
+		   </xsl:choose>
+		 </xsl:attribute>
+
+		 <xsl:value-of select="@text"/>
+	       </fo:block>
+
+	     </fo:table-cell>
+
+	   </fo:table-row>
+
+	 </fo:table-body>
+
+       </fo:table>
+
 
      </fo:block-container>
 
