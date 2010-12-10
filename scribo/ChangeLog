@@ -1,5 +1,12 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new options to command lines tools.
+
+	* scribo/src/content_in_doc.cc,
+	* scribo/src/pbm_text_in_doc.cc: Here.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rewrite toolchains as functors.
 
 	* scribo/toolchain/internal/content_in_doc_functor.hh,

@@ -65,6 +65,8 @@ for the background." },
   { "pmin_col", "Col index of the top left corner of the Region of interest." },
   { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
   { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
+  { "find_lines", "Find vertical lines. (Default 1)" },
+  { "find_whitespaces", "Find whitespaces separators. (Default 1)" },
   { "debug_dir", "Output directory for debug image" },
   {0, 0}
 };
@@ -78,13 +80,13 @@ int main(int argc, char* argv[])
   if (argc != 3 && argc != 4 && argc != 5 && argc != 8 && argc != 9)
     return scribo::debug::usage(argv,
 				"Find text lines using left/right validation and display x-height in a binarized article.",
-				"input.pbm out.txt <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <debug_dir>",
+				"input.pbm out.txt <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <find_lines> <find_whitespaces> <debug_dir>",
 				args_desc);
 
   bool debug = false;
 
   // Enable debug output.
-  if (argc == 5 || argc == 9)
+  if (argc == 7 || argc == 11)
   {
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
     debug = true;
@@ -99,7 +101,7 @@ int main(int argc, char* argv[])
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
-  if (argc >= 8)
+  if (argc >= 11)
   {
     mln::def::coord
       minr = atoi(argv[4]),
@@ -118,10 +120,24 @@ int main(int argc, char* argv[])
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
 
+  bool find_line_seps = true;
+  if (argc >= 4 && argc < 11)
+    find_line_seps = (atoi(argv[3]) != 0);
+
+  bool find_whitespace_seps = true;
+  if (argc >= 5 && argc < 11)
+    find_line_seps = (atoi(argv[4]) != 0);
+
+  std::cout << "Running with the following options :"
+	    << "find_lines_seps = " << find_line_seps
+	    << " | find_whitespace_seps = " << find_whitespace_seps
+	    << " | debug = " << debug
+	    << std::endl;
 
   // Run document toolchain.
   line_set<L>
-    lines = scribo::toolchain::text_in_doc(input, denoise, debug);
+    lines = scribo::toolchain::text_in_doc(input, denoise, find_line_seps,
+					   find_whitespace_seps, debug);
 
   scribo::document<L> doc;
   doc.set_filename(argv[1]);
