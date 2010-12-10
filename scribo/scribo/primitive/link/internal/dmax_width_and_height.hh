@@ -66,12 +66,14 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+	inline
 	dmax_width_and_height::dmax_width_and_height(const float& dmax_factor)
 	  : super_(dmax_factor)
 	{
 	}
 
 
+	inline
 	float
 	dmax_width_and_height::operator()(const box2d& b) const
 	{

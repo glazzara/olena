@@ -70,6 +70,8 @@ namespace scribo
 
       namespace internal
       {
+
+	inline
 	std::string&
 	html_markups_replace(std::string& input,
 			     std::map<char, std::string>& map)
@@ -87,6 +89,7 @@ namespace scribo
 	}
 
 
+	inline
 	void print_box_coords(std::ofstream& ostr, const box2d& b,
 			      const char *space)
 	{

@@ -150,6 +150,7 @@ namespace scribo
 
 
 
+      inline
       unsigned my_find_root(mln::util::array<unsigned>& parent, unsigned x)
       {
 	if (parent[x] == x)
@@ -158,6 +159,7 @@ namespace scribo
       }
 
 
+      inline
       void swap_ordering(unsigned l1, unsigned l2)
       {
 	if (l2 > l1)
@@ -211,6 +213,7 @@ namespace scribo
 
 
 
+      inline
       box2d enlarge(const box2d& b, int delta)
       {
 	box2d b_(point2d(b.pmin().row(), b.pmin().col() - delta),

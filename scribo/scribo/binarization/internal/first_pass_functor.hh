@@ -27,6 +27,10 @@
 #ifndef SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
 # define SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
 
+/// \file
+///
+///
+
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/extension/fill.hh>
@@ -48,15 +52,6 @@ namespace scribo
       using namespace mln;
 
 
-      unsigned my_find_root(image2d<unsigned>& parent, unsigned x)
-      {
-	if (parent.element(x) == x)
-	  return x;
-	return parent.element(x) = my_find_root(parent,
-						parent.element(x));
-      }
-
-
       template <typename I>
       struct first_pass_functor
       {
@@ -73,74 +68,99 @@ namespace scribo
 
 	double K_;
 
-	first_pass_functor(const I& input, double K)
-	  : input(input),
-	    pxl(input),
-	    K_(K)
-	{
-	  res = 0;
-	  pxl.start();
+	first_pass_functor(const I& input, double K);
 
-	  initialize(t_sub, input);
-	  initialize(parent, input);
-	  initialize(msk, input);
-
-# ifdef SCRIBO_SAUVOLA_DEBUG
-	  initialize(debug_mean, input);
-	  initialize(debug_stddev, input);
-# endif // ! SCRIBO_SAUVOLA_DEBUG
-
-	  mln::extension::fill(msk, false);
-
-	  initialize(card, input);
-	  data::fill(card, 1);
-
-	  dp = negative_offsets_wrt(input, c4());
-	  n_nbhs = dp.nelements();
-	}
-
-	void exec(double mean, double stddev)
-	{
- 	  mln_precondition(pxl.is_valid());
-
-	  unsigned p = pxl.offset();
-
-          value::int_u8 t_p;
-	  mln::convert::from_to(sauvola_threshold_formula(mean, stddev,
-							  K_,
-							  SCRIBO_DEFAULT_SAUVOLA_R),
-			   t_p);
-
-	  msk.element(p) = input.element(p) < t_p;
-	  t_sub.element(p) = t_p;
-	  if (! msk.element(p))
-	  {
-	    pxl.next();
-	    return;
-	  }
-	  parent.element(p) = p;
-	  for (unsigned i = 0; i < n_nbhs; ++i)
-	  {
-	    unsigned n = p + dp[i];
-	    if (! msk.element(n))
-	      continue;
-	    unsigned r = my_find_root(parent, n);
-	    if (r != p)
-	    {
-	      parent.element(r) = p;
-	      card.element(p) += card.element(r);
-	    }
-	  }
-
- 	  pxl.next(); // next pixel
-	}
-
-	void finalize()
-	{
- 	  mln_assertion(! pxl.is_valid());
-	}
+	void exec(double mean, double stddev);
+	void finalize();
       };
 
+
+# ifndef MLN_INCLUDE_ONLY
+
+      inline
+      unsigned my_find_root(image2d<unsigned>& parent, unsigned x)
+      {
+	if (parent.element(x) == x)
+	  return x;
+	return parent.element(x) = my_find_root(parent,
+						parent.element(x));
+      }
+
+
+      template <typename I>
+      first_pass_functor<I>::first_pass_functor(const I& input, double K)
+	: input(input),
+	  pxl(input),
+	  K_(K)
+      {
+	res = 0;
+	pxl.start();
+
+	initialize(t_sub, input);
+	initialize(parent, input);
+	initialize(msk, input);
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+	initialize(debug_mean, input);
+	initialize(debug_stddev, input);
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
+	mln::extension::fill(msk, false);
+
+	initialize(card, input);
+	data::fill(card, 1);
+
+	dp = negative_offsets_wrt(input, c4());
+	n_nbhs = dp.nelements();
+      }
+
+
+      template <typename I>
+      void
+      first_pass_functor<I>::exec(double mean, double stddev)
+      {
+	mln_precondition(pxl.is_valid());
+
+	unsigned p = pxl.offset();
+
+	value::int_u8 t_p;
+	mln::convert::from_to(sauvola_threshold_formula(mean, stddev,
+							K_,
+							SCRIBO_DEFAULT_SAUVOLA_R),
+			      t_p);
+
+	msk.element(p) = input.element(p) < t_p;
+	t_sub.element(p) = t_p;
+	if (! msk.element(p))
+	{
+	  pxl.next();
+	  return;
+	}
+	parent.element(p) = p;
+	for (unsigned i = 0; i < n_nbhs; ++i)
+	{
+	  unsigned n = p + dp[i];
+	  if (! msk.element(n))
+	    continue;
+	  unsigned r = my_find_root(parent, n);
+	  if (r != p)
+	  {
+	    parent.element(r) = p;
+	    card.element(p) += card.element(r);
+	  }
+	}
+
+	pxl.next(); // next pixel
+      }
+
+
+      template <typename I>
+      void first_pass_functor<I>::finalize()
+      {
+	mln_assertion(! pxl.is_valid());
+      }
+
+#endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace scribo::binarization::internal
 

@@ -101,6 +101,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const Tag& tag)
     {
@@ -130,6 +131,7 @@ namespace scribo
 
 
 
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const ReadingDirection& direction)
     {
@@ -155,6 +157,7 @@ namespace scribo
     }
 
 
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const Type& type)
     {

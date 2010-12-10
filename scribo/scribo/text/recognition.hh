@@ -99,8 +99,6 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-    unsigned debug_id = 0;
-
 
     template <typename L>
     void

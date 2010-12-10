@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,6 +95,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+  inline
   component_info::component_info()
     : id_(0), tag_(component::Ignored)
   {
@@ -101,6 +103,7 @@ namespace scribo
   }
 
 
+  inline
   component_info::component_info(const component_id_t& id,
 				 const mln::box2d& bbox,
 				 const mln::point2d& mass_center,
@@ -112,6 +115,7 @@ namespace scribo
   }
 
 
+  inline
   component_info::component_id_t
   component_info::id() const
   {
@@ -119,6 +123,7 @@ namespace scribo
   }
 
 
+  inline
   const mln::box2d&
   component_info::bbox() const
   {
@@ -126,12 +131,14 @@ namespace scribo
   }
 
 
+  inline
   const mln::point2d&
   component_info::mass_center() const
   {
     return mass_center_;
   }
 
+  inline
   unsigned
   component_info::card() const
   {
@@ -139,6 +146,7 @@ namespace scribo
   }
 
 
+  inline
   component::Tag
   component_info::tag() const
   {
@@ -146,6 +154,7 @@ namespace scribo
   }
 
 
+  inline
   void
   component_info::update_tag(component::Tag tag)
   {
@@ -153,6 +162,7 @@ namespace scribo
   }
 
 
+  inline
   component::Type
   component_info::type() const
   {
@@ -160,6 +170,7 @@ namespace scribo
   }
 
 
+  inline
   void
   component_info::update_type(component::Type type)
   {
@@ -167,12 +178,15 @@ namespace scribo
   }
 
 
+  inline
   component_info::line_id_t
   component_info::line_id() const
   {
     return line_id_;
   }
 
+
+  inline
   bool
   component_info::is_valid() const
   {
@@ -180,6 +194,7 @@ namespace scribo
   }
 
 
+  inline
   std::ostream&
   operator<<(std::ostream& ostr, const component_info& info)
   {

@@ -189,7 +189,7 @@ namespace scribo
       }
 
 
-
+      inline
       image2d< value::rgb8 >
       diff_abs(const image2d< value::rgb8 >& input1,
 	       const image2d< value::rgb8 >& input2)
@@ -207,6 +207,7 @@ namespace scribo
       }
 
 
+      inline
       image2d< value::rgb8 >
       inverted_diff_abs(const image2d< value::rgb8 >& input1,
 			const image2d< value::rgb8 >& input2)
@@ -228,7 +229,7 @@ namespace scribo
       }
 
 
-
+      inline
       unsigned dist(const rgb8& c1, const rgb8& c2)
       {
 	unsigned d = 0;
@@ -239,6 +240,7 @@ namespace scribo
       }
 
 
+      inline
       image2d<rgb8>
       background_analyze(const image2d<rgb8>& input,
 			 unsigned lambda, unsigned delta)

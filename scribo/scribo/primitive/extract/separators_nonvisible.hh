@@ -128,10 +128,6 @@ namespace scribo
       namespace internal
       {
 
-	// Enable debug.
-	bool _debug_;
-
-
 	template <typename L>
 	void filter_bad_groups(object_groups<L>& top_groups,
 			       object_groups<L>& bot_groups)
@@ -223,13 +219,15 @@ namespace scribo
 	    unsigned dmax,
 	    float min_angle,
 	    float max_angle,
-	    anchor::Type anchor_)
+	    anchor::Type anchor_,
+	    bool debug)
 	    : super_(components,
 		     anchor::Horizontal,
 		     dmax_default(dmax)),
 	      anchor(anchor_),
 	      debug_(data::convert(value::rgb8(), input)),
-	      debug_angle_(data::convert(value::rgb8(), input))
+	      debug_angle_(data::convert(value::rgb8(), input)),
+	      _debug_(debug)
 	  {
 	    min_alpha_rad = (min_angle / 180.0f) * math::pi;
 	    max_alpha_rad = (max_angle / 180.0f) * math::pi;
@@ -372,6 +370,7 @@ namespace scribo
 
 	  mln_ch_value(L, value::rgb8) debug_;
 	  mln_ch_value(L, value::rgb8) debug_angle_;
+	  bool _debug_;
 	};
 
 
@@ -391,8 +390,9 @@ namespace scribo
 	    unsigned dmax,
 	    float min_angle,
 	    float max_angle,
-	    anchor::Type anchor)
-	    : super_(input, components, dmax, min_angle, max_angle, anchor)
+	    anchor::Type anchor,
+	    bool debug)
+	    : super_(input, components, dmax, min_angle, max_angle, anchor, debug)
 	  {
 	  }
 
@@ -425,8 +425,9 @@ namespace scribo
 	    unsigned dmax,
 	    float min_angle,
 	    float max_angle,
-	    anchor::Type anchor)
-	    : super_(input, components, dmax, min_angle, max_angle, anchor)
+	    anchor::Type anchor,
+	    bool debug)
+	    : super_(input, components, dmax, min_angle, max_angle, anchor, debug)
 	  {
 	  }
 
@@ -459,7 +460,7 @@ namespace scribo
 	typedef mln_value(I) Vi;
 	mlc_is(Vi,bool)::check();
 
-	internal::_debug_ = false;
+	bool _debug_ = false;
 	unsigned
 	  min_angle = 3,
 	  max_angle = 5,
@@ -497,7 +498,7 @@ namespace scribo
 	t_ = t;
 	std::cout << "closing_structural - " << t_ << std::endl;
 
-	if (internal::_debug_)
+	if (_debug_)
 	{
 	  // Restore input orientation.
 	  input = scribo::preprocessing::rotate_90(input, false);
@@ -525,7 +526,7 @@ namespace scribo
 	t_ = t;
 	std::cout << "extract::components - " << t_ << std::endl;
 
-	if (internal::_debug_)
+	if (_debug_)
 	  io::pgm::save(data::convert(value::int_u8(), components.labeled_image()),
 			"lbl.pgm");
 
@@ -542,14 +543,14 @@ namespace scribo
 	{
 	  // Right
 	  internal::single_right_dmax_ratio_aligned_functor<L>
-	    functor(input_clo, components, dmax, min_angle, max_angle, anchor::Top);
+	    functor(input_clo, components, dmax, min_angle, max_angle, anchor::Top, _debug_);
 //    top_right = primitive::link::impl::compute_fastest(functor, anchor::Top);
 	  top_right = primitive::link::compute(functor, anchor::Top);
 
 	  t.stop();
 
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    io::ppm::save(functor.debug_, "right_top.ppm");
 	    io::ppm::save(functor.debug_angle_, "right_top_angle.ppm");
@@ -559,13 +560,13 @@ namespace scribo
 
 	  // Left
 	  internal::single_left_dmax_ratio_aligned_functor<L>
-	    lfunctor(input_clo, components, dmax, min_angle, max_angle, anchor::Top);
+	    lfunctor(input_clo, components, dmax, min_angle, max_angle, anchor::Top, _debug_);
 	  top_left = primitive::link::compute(lfunctor, anchor::Top);
 
 
 	  t.stop();
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    io::ppm::save(lfunctor.debug_, "left_top.ppm");
 	    io::ppm::save(lfunctor.debug_angle_, "left_top_angle.ppm");
@@ -584,11 +585,11 @@ namespace scribo
 	{
 	  // Right
 	  internal::single_right_dmax_ratio_aligned_functor<L>
-	    functor(input_clo, components, dmax, min_angle, max_angle, anchor::Bottom);
+	    functor(input_clo, components, dmax, min_angle, max_angle, anchor::Bottom, _debug_);
 	  bot_right = primitive::link::compute(functor, anchor::Bottom);
 	  t.stop();
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    io::ppm::save(functor.debug_, "right_bot.ppm");
 	    io::ppm::save(functor.debug_angle_, "right_bot_angle.ppm");
@@ -598,17 +599,17 @@ namespace scribo
 
 	  // Left
 	  internal::single_left_dmax_ratio_aligned_functor<L>
-	    lfunctor(input_clo, components, dmax, min_angle, max_angle, anchor::Bottom);
+	    lfunctor(input_clo, components, dmax, min_angle, max_angle, anchor::Bottom, _debug_);
 	  bot_left = primitive::link::compute(lfunctor, anchor::Bottom);
 	  t.stop();
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    io::ppm::save(lfunctor.debug_, "left_bot.ppm");
 	    io::ppm::save(lfunctor.debug_angle_, "left_bot_angle.ppm");
 	  }
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    mln_ch_value(I, value::rgb8) output = duplicate(functor.debug_);
 	    data::paste((lfunctor.debug_ | (pw::value(lfunctor.debug_) != pw::cst(literal::black))) | (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
@@ -648,7 +649,7 @@ namespace scribo
 
 
 
-	if (internal::_debug_)
+	if (_debug_)
 	{
 
 	  mln_ch_value(I, value::rgb8)
@@ -721,7 +722,7 @@ namespace scribo
 
 	mln_ch_value(I, value::rgb8) both;
 
-	if (internal::_debug_)
+	if (_debug_)
 	  both = data::convert(value::rgb8(), input);
 
 
@@ -733,7 +734,7 @@ namespace scribo
 	  {
 	    if (top_accu(d).is_valid())
 	    {
-	      if (internal::_debug_)
+	      if (_debug_)
 		mln::draw::line(both,
 				top_accu(d).to_result().pmin(),
 				point2d(top_accu(d).to_result().pmin().row(),
@@ -747,7 +748,7 @@ namespace scribo
 			      true);
 	    }
 	    else
-	      if (internal::_debug_ && btop_accu(d).is_valid())
+	      if (_debug_ && btop_accu(d).is_valid())
 		mln::draw::line(both,
 				btop_accu(d).to_result().pmin(),
 				point2d(btop_accu(d).to_result().pmin().row(),
@@ -759,7 +760,7 @@ namespace scribo
 	  {
 	    if (bot_accu(d).is_valid())
 	    {
-	      if (internal::_debug_)
+	      if (_debug_)
 		mln::draw::line(both,
 				point2d(bot_accu(d).to_result().pmax().row(),
 					bot_accu(d).to_result().pmin().col()),
@@ -773,7 +774,7 @@ namespace scribo
 			      true);
 	    }
 	    else
-	      if (internal::_debug_ && bbot_accu(d).is_valid())
+	      if (_debug_ && bbot_accu(d).is_valid())
 		mln::draw::line(both,
 				point2d(bbot_accu(d).to_result().pmax().row(),
 					bbot_accu(d).to_result().pmin().col()),
@@ -786,7 +787,7 @@ namespace scribo
 	std::cout << "Drawing output image - " << t_ << std::endl;
 
 
-	if (internal::_debug_)
+	if (_debug_)
 	{
 	  io::ppm::save(both, "both.ppm");
 	  io::pbm::save(separators, "separators.pbm");
@@ -795,7 +796,7 @@ namespace scribo
 
 	// Hit or miss
 	{
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    mln_concrete(I) input_with_seps = duplicate(input_clo);
 	    data::paste(separators | pw::value(separators), input_with_seps);
@@ -821,7 +822,7 @@ namespace scribo
 	  t_ = t;
 	  std::cout << "* accu::transform_line - " << t_ << std::endl;
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	    io::pgm::save(data::convert(value::int_u8(), tmp), "tmp.pgm");
 
 
@@ -869,7 +870,7 @@ namespace scribo
 
 	  mln_concrete(I) output = data::convert(bool(), sep_lbl);
 
-	  if (internal::_debug_)
+	  if (_debug_)
 	  {
 	    io::pbm::save(output, "separators_hom.pbm");
 	    io::pbm::save(separators, "separators_filtered.pbm");

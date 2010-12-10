@@ -1,5 +1,26 @@
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix missing inlines and MLN_WO_GLOBALS_VARS guards in Scribo.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/core/component_info.hh,
+	* scribo/core/init_integral_image.hh,
+	* scribo/core/tag/component.hh,
+	* scribo/core/tag/line.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/make/debug_filename.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/preprocessing/split_bg_fg.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/link/internal/dmax_default.hh,
+	* scribo/primitive/link/internal/dmax_width_and_height.hh,
+	* scribo/primitive/link/internal/dmax_width_only.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/recognition.hh: Here.
+
+2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix guards and license in xml2doc.
 
 	* demo/xml2doc/image_crop.cc,

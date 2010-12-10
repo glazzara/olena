@@ -59,6 +59,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+#  ifndef MLN_WO_GLOBAL_VARS
 
     namespace internal
     {
@@ -66,6 +67,8 @@ namespace scribo
       std::string debug_filename_prefix = "";
 
     } // end of namespace scribo::make::internal
+
+#  endif // ! MLN_WO_GLOBAL_VARS
 
 
     inline

@@ -115,6 +115,7 @@ namespace scribo
     namespace internal
     {
 
+      inline
       bool
       QCompare::operator()(const s_angle& s1, const s_angle& s2)
       {
@@ -122,6 +123,7 @@ namespace scribo
       }
 
 
+      inline
       Hough::Hough(int	width, int height)
 	: width_(width / 2),
 	  height_(height / 2),
@@ -135,11 +137,13 @@ namespace scribo
       }
 
 
+      inline
       Hough::~Hough()
       {
 	delete[] this->cos_;
 	delete[] this->sin_;
       }
+
 
       inline
       void	Hough::look_up_table()
@@ -336,6 +340,7 @@ namespace scribo
       }
 
 
+      inline
       double
       perform_deskew(const image2d<value::int_u8>& gray)
       {

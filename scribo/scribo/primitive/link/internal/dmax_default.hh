@@ -62,6 +62,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+	inline
 	dmax_default::dmax_default(const float& dmax_factor)
 	  : super_(dmax_factor)
 	{

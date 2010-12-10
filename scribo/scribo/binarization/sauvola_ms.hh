@@ -132,6 +132,7 @@ namespace scribo
       }
 
 
+      inline
       image2d<int_u8>
       compute_t_n_and_e_2(const image2d<int_u8>& sub, image2d<int_u8>& e_2,
 			  unsigned lambda_min, unsigned lambda_max,
@@ -746,6 +747,7 @@ namespace scribo
 
 
 
+      inline
       unsigned sub(unsigned nbr, unsigned down_scaling)
       {
 	return (nbr + down_scaling - 1) / down_scaling;

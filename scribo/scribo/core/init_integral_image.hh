@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,15 +38,24 @@ namespace scribo
   using namespace mln;
 
 
+  template <typename I, typename F>
+  mln_ch_value(I,double)
+  init_integral_image(const Image<I>& input_, F& func);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
   namespace internal
   {
 
+    inline
     double square_(const double& val)
     {
       double v = static_cast<double>(val);
       return v * v;
     }
 
+    inline
     double identity_(const double& val)
     {
       return static_cast<double>(val);
@@ -53,6 +63,8 @@ namespace scribo
 
   } // end of namespace scribo::internal
 
+
+  // Facade
 
   template <typename I, typename F>
   mln_ch_value(I,double)
@@ -90,6 +102,8 @@ namespace scribo
     trace::exiting("scribo::init_integral_image");
     return output;
   }
+
+#endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace scribo
 
