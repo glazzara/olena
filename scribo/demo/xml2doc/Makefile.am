@@ -43,7 +43,8 @@ BUILT_SOURCES = common.moc.cc			\
 noinst_HEADERS = common.hh 			\
 		 image_crop.hh 			\
 		 loader.hh 			\
-		 xml_transform.hh
+		 xml_transform.hh 		\
+		 datarootdir.hh
 
 # Generated files
 noinst_gen_files = datarootdir.hh

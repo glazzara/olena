@@ -1,3 +1,7 @@
+2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/xml2doc/Makefile.am: Add a file dependency.
+
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Temporary fix PDF rendering.
