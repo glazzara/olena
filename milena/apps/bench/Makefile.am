@@ -16,7 +16,10 @@
 
 include $(top_srcdir)/milena/apps/apps.mk
 
+EXTRA_DIST = lena1024.pgm
+
 noinst_PROGRAMS =				\
+  dilation-lena					\
   gradient-lena					\
   gradient-spe-lena
 
@@ -25,6 +28,10 @@ noinst_HEADERS =				\
   minus.hh
 
 MOSTLYCLEANFILES =				\
+  dilation-lena-out-spe.pgm			\
+  dilation-lena-out-gen.pgm			\
+  dilation-lena-out-fast.pgm			\
+  dilation-lena-out-faster.pgm			\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\
   gradient-spe-lena-out-1.pgm			\
