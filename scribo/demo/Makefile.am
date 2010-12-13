@@ -15,15 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+SUBDIRS =
+
 if HAVE_QT
 
-SUBDIRS  = review
+SUBDIRS += review
 
 
 
 if HAVE_MAGICKXX
 
-SUBDIRS  = viewer
+SUBDIRS += viewer
 
 endif HAVE_MAGICKXX
 
