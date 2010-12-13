@@ -1,5 +1,15 @@
 2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix unit-tests in Scribo.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_functor.hh: Fix guards.
+
+	* scribo/toolchain/internal/toolchain_functor.hh: Add a missing
+	include.
+
+2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/Makefile.am (SUBDIRS): Fix invalid assignment.
 
 2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>

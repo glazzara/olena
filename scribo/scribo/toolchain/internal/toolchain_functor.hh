@@ -26,6 +26,8 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 
+# include <iostream>
+
 namespace scribo
 {
 

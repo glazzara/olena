@@ -23,7 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_PREPROCESS_FUNCTOR_HH
+#ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 
 # include <mln/io/ppm/save.hh>
