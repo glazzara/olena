@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -104,7 +105,7 @@ namespace mln
     const E& vs = exact(vs_);
     ostr << "{ ";
     for (unsigned i = 0; i < vs.nvalues(); ++i)
-      std::cout << vs[i] << ' ';
+      ostr << vs[i] << ' ';
     return ostr << '}';
   }
 

@@ -257,7 +257,7 @@ namespace mln
 
     template <typename S, typename I, typename E>
     inline
-    const typename S::graph_t&
+    const typename subject_impl< const p_graph_piter<S,I>&, E >::graph_t&
     subject_impl< const p_graph_piter<S,I>&, E >::graph() const
     {
       return exact_().get_subject().graph();

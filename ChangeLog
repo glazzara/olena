@@ -1,3 +1,13 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Honor `--without-qt' in configure.
+
+	* m4/autotroll.m4: Here.
+
+2010-11-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	* AUTHORS: Clean up whitespace.
+
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/demo/xml2doc directory.

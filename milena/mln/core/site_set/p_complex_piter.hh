@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,9 +42,6 @@ namespace mln
 
   // Forward declarations.
   template <unsigned D, typename G> class p_complex;
-
-  template <unsigned D> class complex_fwd_iter_;
-  template <unsigned D> class complex_bkd_iter_;
 
 
   /*-----------------------------.

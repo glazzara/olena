@@ -1,3 +1,63 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around g++ 4.5 deficiencies to compile Milena.
+
+	* mln/core/concept/proxy.hxx
+	(internal::helper_unproxy_rec< P, true >::P_)
+	(internal::helper_unproxy_rec< const P, true >::P_):
+	Remove these intermediate typedefs...
+	(internal::helper_unproxy_rec< P, true >::ret)
+	(internal::helper_unproxy_rec< const P, true >::ret):
+	...to inline these definitions.
+	* mln/util/array.hh
+	(internal::subject_impl<util::array<T>&, E>::operator())
+	(internal::subject_impl<util::array<T>&, E>::operator[])
+	(internal::subject_impl<const util::array<T>&, E>::operator() const)
+	(internal::subject_impl<const util::array<T>&, E>::operator[] const):
+	* mln/core/site_set/p_graph_piter.hh
+	(internal::subject_impl< const p_graph_piter<S,I>&, E >::graph):
+	Use the exact same return type as in the declaration.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix forward declarations in complex piters.
+
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_n_faces_piter.hh:
+	Here. 
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename parameter `P' as `G' (geometry) in p_n_faces_piters.
+
+	* mln/core/site_set/p_complex_piter.hh: Here.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the type of the underlying site of p_n_faces_piters.
+
+	* mln/core/site_set/p_n_faces_piter.hh
+	(mln::p_n_faces_fwd_piter, mln::p_n_faces_bkd_piter):
+	Change the third parameter of the base class from `P' to
+	`mln_site(P)'.
+
+2010-07-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix output streams uses.
+
+	* mln/core/concept/value_set.hh
+	(operator<<(std::ostream&, const Value_Set<E>&))
+	* mln/morpho/tree/data.hh
+	(operator<< (std::ostream&, const tree::data<I, S>&)):
+	Use the stream passed as argument instead of std::cout.
+	* mln/util/fibonacci_heap.hh
+	(mln::util::internal::fibonacci_heap_node::print_): Take an output
+	stream as argument instead of using the standard output.
+	(mln::util::fibonacci_heap::print_): Rename first argument from
+	`cout' to `ostr' prevent confusions with std::cout.
+	* mln/trace/warning.hh (mln::trace::warning): Print warnings on
+	the standard error instead of the standard ourput.
+
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle more global vars with MLN_WO_GLOBAL_VARS

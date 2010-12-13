@@ -846,7 +846,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    typename util::array<T>::mutable_result
+    typename subject_impl<util::array<T>&, E>::mutable_result
     subject_impl<util::array<T>&, E>::operator()(unsigned i)
     {
       return exact_().get_subject()(i);
@@ -854,7 +854,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    typename util::array<T>::mutable_result
+    typename subject_impl<util::array<T>&, E>::mutable_result
     subject_impl<util::array<T>&, E>::operator[](unsigned i)
     {
       return exact_().get_subject()[i];
@@ -919,7 +919,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    typename util::array<T>::ro_result
+    typename subject_impl<const util::array<T>&, E>::ro_result
     subject_impl<const util::array<T>&, E>::operator()(unsigned i) const
     {
       return exact_().get_subject()(i);
@@ -927,7 +927,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    typename util::array<T>::ro_result
+    typename subject_impl<const util::array<T>&, E>::ro_result
     subject_impl<const util::array<T>&, E>::operator[](unsigned i) const
     {
       return exact_().get_subject()[i];
