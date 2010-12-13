@@ -1,5 +1,10 @@
 2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/cond_tests_tesseract_tiff: Add conditional
+	unit-tests.
+
+2010-12-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix unit-tests in Scribo.
 
 	* scribo/toolchain/internal/content_in_doc_functor.hh,
