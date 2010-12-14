@@ -201,6 +201,10 @@ scribo/text/extract_lines.hh \
 scribo/text/look_like_text_lines.hh \
 scribo/text/merging.hh \
 scribo/text/recognition.hh \
+scribo/toolchain/internal/content_in_doc_functor.hh \
+scribo/toolchain/internal/text_in_doc_functor.hh \
+scribo/toolchain/internal/text_in_doc_preprocess_functor.hh \
+scribo/toolchain/internal/toolchain_functor.hh \
 scribo/toolchain/nepomuk/text_extraction.hh \
 scribo/toolchain/text_in_doc.hh \
 scribo/toolchain/text_in_doc_preprocess.hh \

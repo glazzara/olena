@@ -31,11 +31,19 @@ if HAVE_TESSERACT
 if HAVE_TIFF
 check_PROGRAMS +=  \
 scribo_text_recognition \
+scribo_toolchain_internal_content_in_doc_functor \
+scribo_toolchain_internal_text_in_doc_functor \
 scribo_toolchain_text_in_doc
 
 scribo_text_recognition_CPPFLAGS= ${TIFF_CPPFLAGS}  ${TESSERACT_CPPFLAGS}  ${AM_CPPFLAGS}
 scribo_text_recognition_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
 scribo_text_recognition_SOURCES = scribo_text_recognition.cc
+scribo_toolchain_internal_content_in_doc_functor_CPPFLAGS= ${TIFF_CPPFLAGS}  ${TESSERACT_CPPFLAGS}  ${AM_CPPFLAGS}
+scribo_toolchain_internal_content_in_doc_functor_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
+scribo_toolchain_internal_content_in_doc_functor_SOURCES = scribo_toolchain_internal_content_in_doc_functor.cc
+scribo_toolchain_internal_text_in_doc_functor_CPPFLAGS= ${TIFF_CPPFLAGS}  ${TESSERACT_CPPFLAGS}  ${AM_CPPFLAGS}
+scribo_toolchain_internal_text_in_doc_functor_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
+scribo_toolchain_internal_text_in_doc_functor_SOURCES = scribo_toolchain_internal_text_in_doc_functor.cc
 scribo_toolchain_text_in_doc_CPPFLAGS= ${TIFF_CPPFLAGS}  ${TESSERACT_CPPFLAGS}  ${AM_CPPFLAGS}
 scribo_toolchain_text_in_doc_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
 scribo_toolchain_text_in_doc_SOURCES = scribo_toolchain_text_in_doc.cc
@@ -238,6 +246,8 @@ scribo_text_clean_inplace \
 scribo_text_extract_lines \
 scribo_text_look_like_text_lines \
 scribo_text_merging \
+scribo_toolchain_internal_text_in_doc_preprocess_functor \
+scribo_toolchain_internal_toolchain_functor \
 scribo_toolchain_text_in_doc_preprocess \
 scribo_toolchain_text_in_picture \
 scribo_upsampling_bs2x \
@@ -437,6 +447,8 @@ scribo_text_clean_inplace_SOURCES = scribo_text_clean_inplace.cc
 scribo_text_extract_lines_SOURCES = scribo_text_extract_lines.cc
 scribo_text_look_like_text_lines_SOURCES = scribo_text_look_like_text_lines.cc
 scribo_text_merging_SOURCES = scribo_text_merging.cc
+scribo_toolchain_internal_text_in_doc_preprocess_functor_SOURCES = scribo_toolchain_internal_text_in_doc_preprocess_functor.cc
+scribo_toolchain_internal_toolchain_functor_SOURCES = scribo_toolchain_internal_toolchain_functor.cc
 scribo_toolchain_text_in_doc_preprocess_SOURCES = scribo_toolchain_text_in_doc_preprocess.cc
 scribo_toolchain_text_in_picture_SOURCES = scribo_toolchain_text_in_picture.cc
 scribo_upsampling_bs2x_SOURCES = scribo_upsampling_bs2x.cc
