@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <cstddef>
+
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
@@ -39,7 +41,10 @@
 
 #include "apps/bench/static_window.hh"
 #include "apps/bench/static_dpoints_pixter.hh"
+#include "apps/bench/trait.hh"
+
 #include "apps/data.hh"
+
 
 
 namespace nongen
@@ -59,6 +64,99 @@ namespace nongen
 	  if (c != input.ncols() - 1   && input.at_(r, c+1) > sup)   sup = input.at_(r, c+1);
 	  output.at_(r, c) = sup;
 	}
+    return output;
+  }
+}
+
+namespace nongen_2ptr
+{
+  typedef mln::image2d<mln::value::int_u8> image;
+
+  image dilation(const image& input)
+  {
+    typedef mln::value::int_u8 val_t;
+    // Offsets corresponding to a 4-c window on INPUT.
+    ptrdiff_t win_offset[4] = { &input.at_(-1,  0) - &input.at_(0, 0),
+				&input.at_(+1,  0) - &input.at_(0, 0),
+				&input.at_( 0, -1) - &input.at_(0, 0),
+				&input.at_( 0, +1) - &input.at_(0, 0) };
+
+    image output (input.nrows(), input.ncols());  // Initialize an output image.
+    for (unsigned int r = 0; r < input.nrows(); ++r)  // Iterate on rows.
+      {
+	const val_t* pi = &input.at_(r, 0);
+	val_t* po = &output.at_(r, 0);
+	for (; pi < &input.at_(r, 0) + input.ncols(); ++pi, ++po)
+	{
+	  unsigned char sup = *pi;
+	  // (-1, 0) neighbor.
+	  if (r  != 0
+	      && *(pi + win_offset[0]) > sup)
+	    sup = *(pi + win_offset[0]);
+	  // (+1, 0) neighbor.
+	  if (r  != input.nrows() - 1
+	      && *(pi + win_offset[1]) > sup)
+	    sup = *(pi + win_offset[1]);
+	  // (0, -1) neighbor.
+	  if (pi != &input.at_(r, 0)
+	      && *(pi + win_offset[2]) > sup)
+	    sup = *(pi + win_offset[2]);
+	  // (0, +1) neighbor.
+	  if (pi  != &input.at_(r, 0) + input.ncols() - 1
+	      && *(pi + win_offset[3]) > sup)
+	    sup = *(pi + win_offset[3]);
+	  *po = sup;
+	}
+      }
+    return output;
+  }
+}
+
+namespace nongen_1ptr
+{
+  typedef mln::image2d<mln::value::int_u8> image;
+
+  image dilation(const image& input)
+  {
+    typedef mln::value::int_u8 val_t;
+    // Offsets corresponding to a 4-c window on INPUT.
+    ptrdiff_t win_offset[4] = { &input.at_(-1,  0) - &input.at_(0, 0),
+				&input.at_(+1,  0) - &input.at_(0, 0),
+				&input.at_( 0, -1) - &input.at_(0, 0),
+				&input.at_( 0, +1) - &input.at_(0, 0) };
+
+    image output;
+    initialize(output, input);
+    // Offset between a the pixel located at the same position in
+    // INPUT and OUTPUT.
+    ptrdiff_t output_offset = &output.at_(0,  0) - &input.at_(0, 0);
+
+    for (unsigned int r = 0; r < input.nrows(); ++r)  // Iterate on rows.
+      {
+	for (const val_t* pi = &input.at_(r, 0);
+	     pi < &input.at_(r, 0) + input.ncols();
+	     ++pi)
+	{
+	  unsigned char sup = *pi;
+	  // (-1, 0) neighbor.
+	  if (r  != 0
+	      && *(pi + win_offset[0]) > sup)
+	    sup = *(pi + win_offset[0]);
+	  // (+1, 0) neighbor.
+	  if (r  != input.nrows() - 1
+	      && *(pi + win_offset[1]) > sup)
+	    sup = *(pi + win_offset[1]);
+	  // (0, -1) neighbor.
+	  if (pi != &input.at_(r, 0)
+	      && *(pi + win_offset[2]) > sup)
+	    sup = *(pi + win_offset[2]);
+	  // (0, +1) neighbor.
+	  if (pi  != &input.at_(r, 0) + input.ncols() - 1
+	      && *(pi + win_offset[3]) > sup)
+	    sup = *(pi + win_offset[3]);
+	  const_cast<val_t&>(*(pi + output_offset)) = sup;
+	}
+      }
     return output;
   }
 }
@@ -201,9 +299,8 @@ namespace fast_static
 
     mln_pixter(const I) pi(input);  // Iterator on the pixels of `input'.
     mln_pixter(O) po(output);  // Iterator on the pixels of `output'.
+    mln_static_qixter(const I, W) q(pi, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
 
-    typedef mln::static_dpoints_fwd_pixter<const I, W::Size> mln_static_qixter;
-    mln_static_qixter q(pi, win);
     for_all_2(pi, po)
     {
       // FIXME: Cheat: replace the accu::supremum by a maximum.
@@ -227,9 +324,8 @@ namespace faster_static
     O output; initialize(output, input);  // Initialize output.
 
     mln_pixter(const I) p(input);  // Iterator on the pixels of `input'.
+    mln_static_qixter(const I, W) q(p, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
 
-    typedef mln::static_dpoints_fwd_pixter<const I, W::Size> mln_static_qixter;
-    mln_static_qixter q(p, win);
     for_all(p)
     {
       // FIXME: Cheat: replace the accu::supremum by a maximum.
@@ -288,9 +384,13 @@ run(const std::string& filename, const std::string& length, unsigned niters)
   std::string prefix = "dilation-lena-out";
   std::cout << "== " << filename << std::endl;
 
-  DILATION_WITH_BUILTIN_WINDOW(nongen, "nongen", "nongen\t\t");
+  DILATION_WITH_BUILTIN_WINDOW(nongen,      "nongen",      "nongen\t\t");
+  DILATION_WITH_BUILTIN_WINDOW(nongen_2ptr, "nongen_2ptr", "nongen_2ptr\t");
+  DILATION_WITH_BUILTIN_WINDOW(nongen_1ptr, "nongen_1ptr", "nongen_1ptr\t");
 
   DILATION(gen,           win_c4p(), "gen",           "gen\t\t");
+  // FIXME: Introduce a new test case, gen_static, using a static window
+  // and static_qiters.
   DILATION(fast,          win_c4p(), "fast",          "fast\t\t");
   DILATION(fast_noaccu,   win_c4p(), "fast_noaccu",   "fast_noaccu\t");
   DILATION(faster,        win_c4p(), "faster",        "faster\t\t");
@@ -315,7 +415,8 @@ run(const std::string& filename, const std::string& length, unsigned niters)
 int
 main ()
 {
-  run(MLN_IMG_DIR "/lena.pgm",            "512",  10);
-  run(MLN_APPS_DIR "/bench/lena1024.pgm", "1024", 10);
-  run(MLN_APPS_DIR "/bench/lena2048.pgm", "2048", 10);
+  unsigned niters = 10;
+  run(MLN_IMG_DIR "/lena.pgm",            "512",  niters);
+  run(MLN_APPS_DIR "/bench/lena1024.pgm", "1024", niters);
+  run(MLN_APPS_DIR "/bench/lena2048.pgm", "2048", niters);
 }

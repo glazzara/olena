@@ -1,4 +1,4 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -28,10 +28,13 @@ noinst_HEADERS =				\
   minus.hh					\
   static_array.hh				\
   static_dpoints_pixter.hh			\
-  static_window.hh
+  static_window.hh				\
+  trait.hh
 
 MOSTLYCLEANFILES =				\
   dilation-lena-out-512-nongen.pgm		\
+  dilation-lena-out-512-nongen_2ptr.pgm		\
+  dilation-lena-out-512-nongen_1ptr.pgm		\
   dilation-lena-out-512-gen.pgm			\
   dilation-lena-out-512-fast.pgm		\
   dilation-lena-out-512-fast_noaccu.pgm		\
@@ -41,6 +44,8 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-512-faster_static.pgm	\
 						\
   dilation-lena-out-1024-nongen.pgm		\
+  dilation-lena-out-1024-nongen_2ptr.pgm	\
+  dilation-lena-out-1024-nongen_1ptr.pgm	\
   dilation-lena-out-1024-gen.pgm		\
   dilation-lena-out-1024-fast.pgm		\
   dilation-lena-out-1024-fast_noaccu.pgm	\
@@ -50,6 +55,8 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-1024-faster_static.pgm	\
 						\
   dilation-lena-out-2048-nongen.pgm		\
+  dilation-lena-out-2048-nongen_2ptr.pgm	\
+  dilation-lena-out-2048-nongen_1ptr.pgm	\
   dilation-lena-out-2048-gen.pgm		\
   dilation-lena-out-2048-fast.pgm		\
   dilation-lena-out-2048-fast_noaccu.pgm	\

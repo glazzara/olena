@@ -1,5 +1,33 @@
 2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: More comparisons (2- and 1-pointer based non-gen impl.).
+
+	* apps/bench/trait.hh: New.
+	Use it...
+	* apps/bench/dilation-lena.cc: ...here.
+	(nongen_2ptr::dilation, nongen_1ptr::dilation): New functions.
+	Exercise them...
+	(run): ...here.
+	(main): Store the number of iterations in a variable.
+	* apps/bench/static_dpoints_pixter.hh
+	(mln::static_dpoints_fwd_pixter<I, n>)
+	(mln::static_dpoints_bkd_pixter<I, n>):
+	Turn into...
+	(mln::static_dpoints_fwd_pixter<I, W>)
+	(mln::static_dpoints_bkd_pixter<I, W>):
+	...these, so that these pixters are built from a (static) window
+	instead of a length.
+	(mln::static_dpoints_fwd_pixter<I, W>::n)
+	(mln::static_dpoints_bkd_pixter<I, W>::n):
+	New attributes.
+	* apps/bench/static_window.hh
+	(mln::static_window<D, n>::Size): Rename as...
+	(mln::static_window<D, n>::length): ...this.
+	* apps/bench/Makefile.am (noinst_HEADERS): Add trait.hh.
+	(MOSTLYCLEANFILES): Update.
+
+2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Run more test cases, make comparisons more robust, factor.
 
 	* apps/bench/dilation-lena.cc

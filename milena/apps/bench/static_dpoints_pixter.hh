@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,19 +50,19 @@ namespace mln
 {
 
   /*----------------------------------.
-  | static_dpoints_fwd_pixter<I, n>.  |
+  | static_dpoints_fwd_pixter<I, W>.  |
   `----------------------------------*/
 
   /// \brief A generic forward iterator on the pixels of a
   /// dpoint-based window or neighborhood.
   /// 
   /// Parameter \c I is the image type.
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   class static_dpoints_fwd_pixter
-    : public Pixel_Iterator< static_dpoints_fwd_pixter<I, n> >,
-      public internal::pixel_impl_< I, static_dpoints_fwd_pixter<I, n> >
+    : public Pixel_Iterator< static_dpoints_fwd_pixter<I, W> >,
+      public internal::pixel_impl_< I, static_dpoints_fwd_pixter<I, W> >
   {
-    typedef typename internal::pixel_impl_< I, static_dpoints_fwd_pixter<I, n> > super_;
+    typedef typename internal::pixel_impl_< I, static_dpoints_fwd_pixter<I, W> > super_;
 
   public:
     /// \brief Constructor (using an image).
@@ -111,6 +111,8 @@ namespace mln
     void init_(const Dps& dps);
 
   private:
+    enum { n = W::length };
+
     /// \brief Offset of each delta-point.
     ///
     /// offset_[0] is absolute, while other offsets are relative
@@ -133,19 +135,19 @@ namespace mln
 
 
   /*----------------------------------.
-  | static_dpoints_bkd_pixter<I, n>.  |
+  | static_dpoints_bkd_pixter<I, W>.  |
   `----------------------------------*/
 
   /// \brief A generic backward iterator on the pixels of a
   /// dpoint-based window or neighborhood.
   /// 
   /// Parameter \c I is the image type.
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   class static_dpoints_bkd_pixter
-    : public Pixel_Iterator< static_dpoints_bkd_pixter<I, n> >,
-      public internal::pixel_impl_< I, static_dpoints_bkd_pixter<I, n> >
+    : public Pixel_Iterator< static_dpoints_bkd_pixter<I, W> >,
+      public internal::pixel_impl_< I, static_dpoints_bkd_pixter<I, W> >
   {
-    typedef typename internal::pixel_impl_< I, static_dpoints_bkd_pixter<I, n> > super_;
+    typedef typename internal::pixel_impl_< I, static_dpoints_bkd_pixter<I, W> > super_;
 
   public:
     /// \brief Constructor (using an image).
@@ -194,6 +196,8 @@ namespace mln
     void init_(const Dps& dps);
 
   private:
+    enum { n = W::length };
+
     /// \brief Offset of each delta-point.
     ///
     /// offset_[dps.size() - 1] is absolute, while other offsets
@@ -219,13 +223,13 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
   /*----------------------------------.
-  | static_dpoints_fwd_pixter<I, n>.  |
+  | static_dpoints_fwd_pixter<I, W>.  |
   `----------------------------------*/
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps, typename Pref>
   inline
-  static_dpoints_fwd_pixter<I, n>::static_dpoints_fwd_pixter(I& image,
+  static_dpoints_fwd_pixter<I, W>::static_dpoints_fwd_pixter(I& image,
 							     const Dps& dps,
 							     const Pref& p_ref)
     : super_(image)
@@ -239,10 +243,10 @@ namespace mln
     init_(dps);
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps, typename Pref>
   inline
-  static_dpoints_fwd_pixter<I, n>::static_dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
+  static_dpoints_fwd_pixter<I, W>::static_dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
 							     const Dps& dps)
     : super_(internal::force_exact<Pref>(pxl_ref_).ima())
   {
@@ -254,10 +258,10 @@ namespace mln
     init_(dps);
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   const mln_value(I)&
-  static_dpoints_fwd_pixter<I, n>::center_val() const
+  static_dpoints_fwd_pixter<I, W>::center_val() const
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)
@@ -266,11 +270,11 @@ namespace mln
       return **value_ref_;
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps>
   inline
   void
-  static_dpoints_fwd_pixter<I, n>::init_(const Dps& dps)
+  static_dpoints_fwd_pixter<I, W>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
       offset_[i] = this->image_.delta_offset(dps.dp(i));
@@ -282,10 +286,10 @@ namespace mln
     invalidate();
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_fwd_pixter<I, n>::update()
+  static_dpoints_fwd_pixter<I, W>::update()
   {
     if (is_valid())
       {
@@ -296,50 +300,50 @@ namespace mln
       }
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_fwd_pixter<I, n>::start()
+  static_dpoints_fwd_pixter<I, W>::start()
   {
     i_ = 0;
     update();
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_fwd_pixter<I, n>::next_()
+  static_dpoints_fwd_pixter<I, W>::next_()
   {
     ++i_;
     if (is_valid())
       this->value_ptr_ += offset_[i_];
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   bool
-  static_dpoints_fwd_pixter<I, n>::is_valid() const
+  static_dpoints_fwd_pixter<I, W>::is_valid() const
   {
     return i_ < n;
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_fwd_pixter<I, n>::invalidate()
+  static_dpoints_fwd_pixter<I, W>::invalidate()
   {
     i_ = n;
   }
 
 
   /*----------------------------------.
-  | static_dpoints_bkd_pixter<I, n>.  |
+  | static_dpoints_bkd_pixter<I, W>.  |
   `----------------------------------*/
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps, typename Pref>
   inline
-  static_dpoints_bkd_pixter<I, n>::static_dpoints_bkd_pixter(I& image,
+  static_dpoints_bkd_pixter<I, W>::static_dpoints_bkd_pixter(I& image,
 							     const Dps& dps,
 							     const Pref& p_ref)
     : super_(image)
@@ -350,10 +354,10 @@ namespace mln
     init_(dps);
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps, typename Pref>
   inline
-  static_dpoints_bkd_pixter<I, n>::static_dpoints_bkd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
+  static_dpoints_bkd_pixter<I, W>::static_dpoints_bkd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
 							     const Dps& dps)
     : super_(internal::force_exact<Pref>(pxl_ref_).ima())
   {
@@ -365,10 +369,10 @@ namespace mln
     init_(dps);
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   const mln_value(I)&
-  static_dpoints_bkd_pixter<I, n>::center_val() const
+  static_dpoints_bkd_pixter<I, W>::center_val() const
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)
@@ -377,11 +381,11 @@ namespace mln
       return **value_ref_;
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   template <typename Dps>
   inline
   void
-  static_dpoints_bkd_pixter<I, n>::init_(const Dps& dps)
+  static_dpoints_bkd_pixter<I, W>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
       offset_[i] = this->image_.delta_offset(dps.dp(i));
@@ -393,10 +397,10 @@ namespace mln
     invalidate();
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_bkd_pixter<I, n>::update()
+  static_dpoints_bkd_pixter<I, W>::update()
   {
     if (is_valid())
       {
@@ -407,37 +411,37 @@ namespace mln
       }
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_bkd_pixter<I, n>::start()
+  static_dpoints_bkd_pixter<I, W>::start()
   {
     i_ = 0;
     update();
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_bkd_pixter<I, n>::next_()
+  static_dpoints_bkd_pixter<I, W>::next_()
   {
     ++i_;
     if (is_valid())
       this->value_ptr_ += offset_[n - 1 - i_];
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   bool
-  static_dpoints_bkd_pixter<I, n>::is_valid() const
+  static_dpoints_bkd_pixter<I, W>::is_valid() const
   {
     return i_ < n;
   }
 
-  template <typename I, unsigned n>
+  template <typename I, typename W>
   inline
   void
-  static_dpoints_bkd_pixter<I, n>::invalidate()
+  static_dpoints_bkd_pixter<I, W>::invalidate()
   {
     i_ = n;
   }
