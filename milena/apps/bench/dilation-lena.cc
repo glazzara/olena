@@ -216,6 +216,32 @@ namespace fast_static
   }
 }
 
+namespace faster_static
+{
+  using namespace mln;
+
+  template <typename I, typename W>
+  mln_concrete(I) dilation(const I& input, const W& win)
+  {
+    typedef mln_concrete(I) O;
+    O output; initialize(output, input);  // Initialize output.
+
+    mln_pixter(const I) p(input);  // Iterator on the pixels of `input'.
+
+    typedef mln::static_dpoints_fwd_pixter<const I, W::Size> mln_static_qixter;
+    mln_static_qixter q(p, win);
+    for_all(p)
+    {
+      // FIXME: Cheat: replace the accu::supremum by a maximum.
+      mln::accu::stat::max<mln_value(I)> sup;  // Accumulator computing the supremum.
+      for_all(q)
+	sup.take(q.val());
+      *(output.buffer() + p.offset()) = sup.to_result();
+    }
+    return output;
+  }
+}
+
 
 int main()
 {
@@ -279,4 +305,10 @@ int main()
   t.stop();
   std::cout << t.read() << std::endl;
   io::pgm::save(d, "dilation-lena-out-fast_static.pgm");
+
+  t.start();
+  d = faster_static::dilation(lena, static_win_c4p);
+  t.stop();
+  std::cout << t.read() << std::endl;
+  io::pgm::save(d, "dilation-lena-out-faster_static.pgm");
 }
