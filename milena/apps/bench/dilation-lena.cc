@@ -37,6 +37,8 @@
 
 #include <mln/util/timer.hh>
 
+#include "apps/bench/static_window.hh"
+#include "apps/bench/static_dpoints_pixter.hh"
 #include "apps/data.hh"
 
 
@@ -134,6 +136,33 @@ namespace faster
   }
 }
 
+namespace fast_static
+{
+  using namespace mln;
+
+  template <typename I, typename W>
+  mln_concrete(I) dilation(const I& input, const W& win)
+  {
+    typedef mln_concrete(I) O;
+    O output; initialize(output, input);  // Initialize output.
+
+    mln_pixter(const I) pi(input);  // Iterator on the pixels of `input'.
+    mln_pixter(O) po(output);  // Iterator on the pixels of `output'.
+
+    typedef mln::static_dpoints_fwd_pixter<const I, W::Size> mln_static_qixter;
+    mln_static_qixter q(pi, win);
+    for_all_2(pi, po)
+    {
+      // FIXME: Cheat: replace the accu::supremum by a maximum.
+      mln::accu::stat::max<mln_value(I)> sup;  // Accumulator computing the supremum.
+      for_all(q)
+	sup.take(q.val());
+      po.val() = sup.to_result();
+    }
+    return output;
+  }
+}
+
 
 int main()
 {
@@ -170,4 +199,20 @@ int main()
   t.stop();
   std::cout << t.read() << std::endl;
   io::pgm::save(d, "dilation-lena-out-faster.pgm");
+
+
+  const unsigned n = 5;
+  mln::dpoint2d dps[n] = { mln::dpoint2d( 0, -1),
+			   mln::dpoint2d(-1,  0),
+			   mln::dpoint2d( 0,  0),
+			   mln::dpoint2d(+1,  0),
+			   mln::dpoint2d( 0, +1) };
+  mln::util::static_array<mln::dpoint2d, n> sa(dps, dps + n);
+  mln::static_window<mln::dpoint2d, n> static_win_c4p (sa);
+
+  t.start();
+  d = fast_static::dilation(lena, static_win_c4p);
+  t.stop();
+  std::cout << t.read() << std::endl;
+  io::pgm::save(d, "dilation-lena-out-fast_static.pgm");
 }

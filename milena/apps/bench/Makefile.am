@@ -25,13 +25,17 @@ noinst_PROGRAMS =				\
 
 noinst_HEADERS =				\
   and_not.hh					\
-  minus.hh
+  minus.hh					\
+  static_array.hh				\
+  static_dpoints_pixter.hh			\
+  static_window.hh
 
 MOSTLYCLEANFILES =				\
   dilation-lena-out-spe.pgm			\
   dilation-lena-out-gen.pgm			\
   dilation-lena-out-fast.pgm			\
   dilation-lena-out-faster.pgm			\
+  dilation-lena-out-fast_static.pgm		\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\
   gradient-spe-lena-out-1.pgm			\

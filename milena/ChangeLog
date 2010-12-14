@@ -1,3 +1,19 @@
+2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/bench: More comparisons on dilation (static windows and qixters).
+
+	* apps/bench/static_array.hh,
+	* apps/bench/static_dpoints_pixter.hh,
+	* apps/bench/static_window.hh:
+	New.
+	* apps/bench/dilation-lena.cc (fast_static::dilation):
+	New function.
+	Exercise it...
+	(main): ...here.
+	* apps/bench/Makefile.am (noinst_HEADERS): Add static_array.hh,
+	static_dpoints_pixter.hh and static_window.hh.
+	(MOSTLYCLEANFILES): Update.
+
 2010-12-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/bench: Comparison on dilation.
