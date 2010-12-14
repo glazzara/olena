@@ -34,7 +34,9 @@ MOSTLYCLEANFILES =				\
   dilation-lena-out-spe.pgm			\
   dilation-lena-out-gen.pgm			\
   dilation-lena-out-fast.pgm			\
+  dilation-lena-out-fast_noaccu.pgm		\
   dilation-lena-out-faster.pgm			\
+  dilation-lena-out-faster_noaccu.pgm		\
   dilation-lena-out-fast_static.pgm		\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\

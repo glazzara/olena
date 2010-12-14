@@ -1,5 +1,15 @@
 2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: More comparisons on dilation (variants without accu).
+
+	* apps/bench/dilation-lena.cc
+	(fast_noaccu::dilation, faster_noaccu::dilation): New functions.
+	Exercise them...
+	(main): ...here.
+	* apps/bench/Makefile.am (MOSTLYCLEANFILES): Update.
+
+2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: More comparisons on dilation (static windows and qixters).
 
 	* apps/bench/static_array.hh,

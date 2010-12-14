@@ -111,6 +111,33 @@ namespace fast
   }
 }
 
+namespace fast_noaccu
+{
+  using namespace mln;
+
+  template <typename I, typename W>
+  mln_concrete(I) dilation(const I& input, const W& win)
+  {
+    typedef mln_concrete(I) O;
+    O output; initialize(output, input);  // Initialize output.
+
+    mln_pixter(const I) pi(input);  // Iterator on the pixels of `input'.
+    mln_pixter(O) po(output);  // Iterator on the pixels of `output'.
+
+    mln_qixter(const I, W) q(pi, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
+    for_all_2(pi, po)
+    {
+      // FIXME: Cheat: replace the accu::supremum by a maximum.
+      mln_value(I) sup = mln_min(mln_value(I));
+      for_all(q)
+	if (q.val() > sup)
+	  sup = q.val();
+      po.val() = sup;
+    }
+    return output;
+  }
+}
+
 namespace faster
 {
   using namespace mln;
@@ -131,6 +158,32 @@ namespace faster
       for_all(q)
 	sup.take(q.val());
       *(output.buffer() + p.offset()) = sup.to_result();
+    }
+    return output;
+  }
+}
+
+namespace faster_noaccu
+{
+  using namespace mln;
+
+  template <typename I, typename W>
+  mln_concrete(I) dilation(const I& input, const W& win)
+  {
+    typedef mln_concrete(I) O;
+    O output; initialize(output, input);  // Initialize output.
+
+    mln_pixter(const I) p(input);  // Iterator on the pixels of `input'.
+
+    mln_qixter(const I, W) q(p, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
+    for_all(p)
+    {
+      // FIXME: Cheat: replace the accu::supremum by a maximum.
+      mln_value(I) sup = mln_min(mln_value(I));
+      for_all(q)
+	if (q.val() > sup)
+	  sup = q.val();
+      *(output.buffer() + p.offset()) = sup;
     }
     return output;
   }
@@ -195,11 +248,22 @@ int main()
   io::pgm::save(d, "dilation-lena-out-fast.pgm");
 
   t.start();
+  d = fast_noaccu::dilation(lena, win_c4p());
+  t.stop();
+  std::cout << t.read() << std::endl;
+  io::pgm::save(d, "dilation-lena-out-fast_noaccu.pgm");
+
+  t.start();
   d = faster::dilation(lena, win_c4p());
   t.stop();
   std::cout << t.read() << std::endl;
   io::pgm::save(d, "dilation-lena-out-faster.pgm");
 
+  t.start();
+  d = faster_noaccu::dilation(lena, win_c4p());
+  t.stop();
+  std::cout << t.read() << std::endl;
+  io::pgm::save(d, "dilation-lena-out-faster_noaccu.pgm");
 
   const unsigned n = 5;
   mln::dpoint2d dps[n] = { mln::dpoint2d( 0, -1),
