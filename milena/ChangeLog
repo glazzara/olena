@@ -1,5 +1,19 @@
 2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: Run more test cases, make comparisons more robust, factor.
+
+	* apps/bench/dilation-lena.cc
+	(DILATION_WITH_BUILTIN_WINDOW, DILATION): New macros.
+	Use them to factor repetitive code...
+	(run): ...here (new function).
+	Call it from...
+	(main): ...here, and adjust.
+	* apps/bench/lena2048.pgm: New.
+	* apps/bench/Makefile.am (EXTRA_DIST): Add lena2048.pgm.
+	(MOSTLYCLEANFILES): Update.
+
+2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: More comparisons on dilation (static win + single pixter).
 
 	* apps/bench/dilation-lena.cc (faster_static::dilation):

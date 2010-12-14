@@ -16,7 +16,7 @@
 
 include $(top_srcdir)/milena/apps/apps.mk
 
-EXTRA_DIST = lena1024.pgm
+EXTRA_DIST = lena1024.pgm lena2048.pgm
 
 noinst_PROGRAMS =				\
   dilation-lena					\
@@ -31,14 +31,33 @@ noinst_HEADERS =				\
   static_window.hh
 
 MOSTLYCLEANFILES =				\
-  dilation-lena-out-spe.pgm			\
-  dilation-lena-out-gen.pgm			\
-  dilation-lena-out-fast.pgm			\
-  dilation-lena-out-fast_noaccu.pgm		\
-  dilation-lena-out-faster.pgm			\
-  dilation-lena-out-faster_noaccu.pgm		\
-  dilation-lena-out-fast_static.pgm		\
-  dilation-lena-out-faster_static.pgm		\
+  dilation-lena-out-512-nongen.pgm		\
+  dilation-lena-out-512-gen.pgm			\
+  dilation-lena-out-512-fast.pgm		\
+  dilation-lena-out-512-fast_noaccu.pgm		\
+  dilation-lena-out-512-faster.pgm		\
+  dilation-lena-out-512-faster_noaccu.pgm	\
+  dilation-lena-out-512-fast_static.pgm		\
+  dilation-lena-out-512-faster_static.pgm	\
+						\
+  dilation-lena-out-1024-nongen.pgm		\
+  dilation-lena-out-1024-gen.pgm		\
+  dilation-lena-out-1024-fast.pgm		\
+  dilation-lena-out-1024-fast_noaccu.pgm	\
+  dilation-lena-out-1024-faster.pgm		\
+  dilation-lena-out-1024-faster_noaccu.pgm	\
+  dilation-lena-out-1024-fast_static.pgm	\
+  dilation-lena-out-1024-faster_static.pgm	\
+						\
+  dilation-lena-out-2048-nongen.pgm		\
+  dilation-lena-out-2048-gen.pgm		\
+  dilation-lena-out-2048-fast.pgm		\
+  dilation-lena-out-2048-fast_noaccu.pgm	\
+  dilation-lena-out-2048-faster.pgm		\
+  dilation-lena-out-2048-faster_noaccu.pgm	\
+  dilation-lena-out-2048-fast_static.pgm	\
+  dilation-lena-out-2048-faster_static.pgm	\
+						\
   gradient-lena-out.pgm				\
   gradient-spe-lena-out-0.pgm			\
   gradient-spe-lena-out-1.pgm			\

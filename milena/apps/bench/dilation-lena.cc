@@ -243,54 +243,60 @@ namespace faster_static
 }
 
 
-int main()
+// Shortcut macros for run.
+
+#define DILATION_WITH_BUILTIN_WINDOW(Namespace, Suffix, Headline)	\
+  do									\
+    {									\
+      d = lena;								\
+      t.start();							\
+      for (unsigned i = 0; i < niters; ++i)				\
+	d = Namespace::dilation(d);					\
+      t.stop();								\
+      std::cout << Headline << t.read() << " s" << std::endl;		\
+      io::pgm::save(d, prefix + '-' + length + '-' + Suffix + ".pgm");	\
+    }									\
+  while (0)
+
+#define DILATION(Namespace, Win, Suffix, Headline)			\
+  do									\
+    {									\
+      d = lena;								\
+      t.start();							\
+      for (unsigned i = 0; i < niters; ++i)				\
+	d = Namespace::dilation(d, Win);				\
+      t.stop();								\
+      std::cout << Headline << t.read() << " s" << std::endl;		\
+      io::pgm::save(d, prefix + '-' + length + '-' + Suffix + ".pgm");	\
+    }									\
+  while (0)
+
+
+void
+run(const std::string& filename, const std::string& length, unsigned niters)
 {
   using namespace mln;
   using value::int_u8;
 
   border::thickness = 1;
   image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_APPS_DIR "/bench/lena1024.pgm");
+  io::pgm::load(lena, filename);
 
   image2d<int_u8> d;
   util::timer t;
 
-  t.start();
-  d = nongen::dilation(lena);
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-spe.pgm");
+  std::string prefix = "dilation-lena-out";
+  std::cout << "== " << filename << std::endl;
 
-  t.start();
-  d = gen::dilation(lena, win_c4p());
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-gen.pgm");
+  DILATION_WITH_BUILTIN_WINDOW(nongen, "nongen", "nongen\t\t");
 
-  t.start();
-  d = fast::dilation(lena, win_c4p());
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-fast.pgm");
+  DILATION(gen,           win_c4p(), "gen",           "gen\t\t");
+  DILATION(fast,          win_c4p(), "fast",          "fast\t\t");
+  DILATION(fast_noaccu,   win_c4p(), "fast_noaccu",   "fast_noaccu\t");
+  DILATION(faster,        win_c4p(), "faster",        "faster\t\t");
+  DILATION(faster_noaccu, win_c4p(), "faster_noaccu", "faster_noaccu\t");
 
-  t.start();
-  d = fast_noaccu::dilation(lena, win_c4p());
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-fast_noaccu.pgm");
-
-  t.start();
-  d = faster::dilation(lena, win_c4p());
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-faster.pgm");
-
-  t.start();
-  d = faster_noaccu::dilation(lena, win_c4p());
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-faster_noaccu.pgm");
-
+  // Static windows and qixters.
   const unsigned n = 5;
   mln::dpoint2d dps[n] = { mln::dpoint2d( 0, -1),
 			   mln::dpoint2d(-1,  0),
@@ -300,15 +306,16 @@ int main()
   mln::util::static_array<mln::dpoint2d, n> sa(dps, dps + n);
   mln::static_window<mln::dpoint2d, n> static_win_c4p (sa);
 
-  t.start();
-  d = fast_static::dilation(lena, static_win_c4p);
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-fast_static.pgm");
+  DILATION(fast_static,   static_win_c4p, "fast_static",   "fast_static\t");
+  DILATION(faster_static, static_win_c4p, "faster_static", "faster_static\t");
 
-  t.start();
-  d = faster_static::dilation(lena, static_win_c4p);
-  t.stop();
-  std::cout << t.read() << std::endl;
-  io::pgm::save(d, "dilation-lena-out-faster_static.pgm");
+  std::cout << std::endl;
+}
+
+int
+main ()
+{
+  run(MLN_IMG_DIR "/lena.pgm",            "512",  10);
+  run(MLN_APPS_DIR "/bench/lena1024.pgm", "1024", 10);
+  run(MLN_APPS_DIR "/bench/lena2048.pgm", "2048", 10);
 }
