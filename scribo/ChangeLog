@@ -1,3 +1,7 @@
+2011-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/review/Makefile.am: Do not distribute generated files.
+
 2010-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* NEWS: First draft of Scribo NEWS file.

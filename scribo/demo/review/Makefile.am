@@ -18,9 +18,16 @@
 include $(top_srcdir)/build-aux/autotroll.mk
 
 bin_PROGRAMS = scribo-review
-scribo_review_SOURCES = $(BUILT_SOURCES)	\
-			src/main.cc		\
+
+scribo_review_SOURCES = src/main.cc		\
 		 	src/mainwindow.cc
+
+BUILT_SOURCES = src/mainwindow.moc.cc \
+		ui/mainwindow.ui.h
+
+# Make sure generated files are not distributed.
+nodist_scribo_review_SOURCES = $(BUILT_SOURCES)
+
 
 scribo_review_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS)	\
 		  	 -DNDEBUG 			\
@@ -30,12 +37,11 @@ scribo_review_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
 scribo_review_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS)
 scribo_review_LDADD    = $(QT_LIBS) $(LDADD)
 
-BUILT_SOURCES = src/mainwindow.moc.cc \
-		ui/mainwindow.ui.h
 
 noinst_HEADERS = src/mainwindow.hh
 
 
+CLEANFILES = $(BUILT_SOURCES)
 
 EXTRA_DIST = 	\
   review.qrc
