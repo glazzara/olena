@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -70,7 +70,8 @@ BUILT_SOURCES = viewer.moc.cc			\
 		preferences_dialog.moc.cc	\
 		preferences_dialog.ui.h		\
 		general_options.moc.cc		\
-		general_options.ui.h
+		general_options.ui.h		\
+		demodir.hh
 
 
 noinst_HEADERS = viewer.hh		\
@@ -95,6 +96,26 @@ noinst_HEADERS = viewer.hh		\
 		 option_widget.hh 	\
 		 config.hh
 
-EXTRA_DIST = README
+
+# Generated files
+do_subst = sed  					\
+	   -e 's|@bindir[@]|$(bindir)|g'	\
+	   -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'
+
+demodir.hh: $(srcdir)/demodir.hh.in Makefile
+	rm -f $@ $@.tmp
+	srcdir=''; \
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(do_subst) $${srcdir}$@.in >$@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
 
 CLEANFILES = $(BUILT_SOURCES)
+
+EXTRA_DIST =			\
+	general_options.ui	\
+	preferences_dialog.ui 	\
+	README			\
+	toolchain_options.ui	\
+	demodir.hh.in
+

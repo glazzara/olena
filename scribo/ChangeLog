@@ -1,5 +1,14 @@
 2011-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new files in EXTRA_DIST.
+
+	* demo/review/Makefile.am,
+	* demo/viewer/Makefile.am (EXTRA_DIST): Add new files.
+
+	* demo/viewer/demodir.hh.in: New.
+
+2011-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/review/Makefile.am: Do not distribute generated files.
 
 2010-12-14  Guillaume Lazzara  <z@lrde.epita.fr>

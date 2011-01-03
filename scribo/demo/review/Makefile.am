@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -43,5 +43,16 @@ noinst_HEADERS = src/mainwindow.hh
 
 CLEANFILES = $(BUILT_SOURCES)
 
-EXTRA_DIST = 	\
-  review.qrc
+EXTRA_DIST = 			\
+  icons/document-open.png	\
+  icons/edit-find.png		\
+  icons/format-indent-more.png	\
+  icons/go-next.png		\
+  icons/image-x-generic.png	\
+  icons/list-add.png		\
+  icons/ocr.png			\
+  icons/text-x-generic.png	\
+  icons/view-refresh.png	\
+  icons/x-office-spreadsheet.png\
+  review.qrc			\
+  ui/mainwindow.ui
