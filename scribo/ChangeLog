@@ -1,5 +1,9 @@
 2011-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* demo/review/Makefile.am: Add srcdir as include path.
+
+2011-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce "export as" functionality.
 
 	* demo/viewer/Makefile.am,
