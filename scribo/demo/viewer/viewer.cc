@@ -99,6 +99,16 @@ Viewer::Viewer(int &argc, char** argv)
 
   file_menu->addSeparator();
 
+  export_action_ = create_action("Export as...", file_menu,
+				 "Export as...", "Shift+Ctrl+S");
+  connect(export_action_, SIGNAL(triggered()),
+	  this, SLOT(export_as()));
+  file_menu->addAction(export_action_);
+  export_action_->setEnabled(false);
+
+  file_menu->addSeparator();
+
+
   QAction* quit_action = create_action("Quit", file_menu,
 				       "Exit the program.", "Ctrl+q");
   connect(quit_action, SIGNAL(triggered()),
@@ -210,15 +220,17 @@ Viewer::Viewer(int &argc, char** argv)
 
   step_widget_ = new StepWidget();
   XmlWidget* xml_wgt = new XmlWidget();
-  BrowserWidget* browser_wgt =
-    new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
+  browser_wgt_ = new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
   ImageWidget* image_wgt = new ImageWidget(scene_);
+
+  connect(step_widget_, SIGNAL(step_selected(bool)),
+	  export_action_, SLOT(setEnabled(bool)));
 
   scene_->setBackgroundBrush(scene_->palette().window());
 
   v_splitter->addWidget(step_widget_);
   v_splitter->addWidget(key_wgt_);
-  v_splitter->addWidget(browser_wgt);
+  v_splitter->addWidget(browser_wgt_);
 
   v_splitter2->addWidget(image_wgt);
   v_splitter2->addWidget(xml_wgt);
@@ -240,7 +252,7 @@ Viewer::Viewer(int &argc, char** argv)
   h_sizes << 200 << 900;
   h_splitter->setSizes(h_sizes);
 
-  connect(browser_wgt, SIGNAL(activated(QString, bool, bool)),
+  connect(browser_wgt_, SIGNAL(activated(QString, bool, bool)),
 	  step_widget_, SLOT(fill_steps(QString, bool, bool)));
 
   connect(step_widget_, SIGNAL(change_base(bool)),
@@ -753,10 +765,8 @@ Viewer::run_process()
 {
   if (!current_image_.isEmpty())
   {
-    pdialog_.setValue(0);
-    pdialog_.setLabelText("");
-    pdialog_.show();
-    runner_.start(current_image_);
+    reset_progress_dialog();
+    runner_.start_demat(current_image_);
   }
 }
 
@@ -778,4 +788,31 @@ Viewer::on_xml_saved(const QString& filename)
 
   QListWidgetItem *item = step_widget_->insert_new_entry(filename);
   step_widget_->activate(item);
+}
+
+
+void
+Viewer::export_as()
+{
+  QFileInfo f(browser_wgt_->current());
+  QString output_suggestion = f.baseName() + ".pdf";
+  QString output = QFileDialog::getSaveFileName(0, "Export document as...", output_suggestion, tr("PDF (*.pdf);; HTML (*.html *.htm)"));
+
+  if (!output.isEmpty())
+  {
+    reset_progress_dialog();
+    runner_.start_export(browser_wgt_->current(), step_widget_->current(), output);
+    qDebug() << "Saving to " << output << " - " << browser_wgt_->current() << " - " <<  step_widget_->current();
+  }
+
+  qDebug() << "Toggled";
+}
+
+
+void
+Viewer::reset_progress_dialog()
+{
+  pdialog_.setValue(0);
+  pdialog_.setLabelText("");
+  pdialog_.show();
 }

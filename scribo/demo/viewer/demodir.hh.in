@@ -29,7 +29,7 @@
 
 # define SCRIBO_PREFIX_BINDIR "@bindir@"
 
-# define SCRIBO_LOCAL_DEMODIR "@abs_srcdir@"
+# define SCRIBO_LOCAL_DEMODIR "@abs_demodir@"
 
 
 #endif // !SCRIBO_DEMO_DEMODIR_HH

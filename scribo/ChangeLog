@@ -1,3 +1,20 @@
+2011-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce "export as" functionality.
+
+	* demo/viewer/Makefile.am,
+	* demo/viewer/demodir.hh.in: Update demodir replacement.
+
+	* demo/viewer/browser_widget.cc,
+	* demo/viewer/browser_widget.hh: Add a new method.
+
+	* demo/viewer/runner.cc,
+	* demo/viewer/runner.hh,
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/step_widget.hh,
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Introduce "export as" functionality.
+
 2011-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new files in EXTRA_DIST.

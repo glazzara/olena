@@ -28,6 +28,8 @@ public:
   BrowserWidget(QDirModel* files, QString dir = QString());
   ~BrowserWidget();
 
+  QString current() const;
+
 public slots:
   void activate(const QModelIndex& index, bool b = false);
   void path_return_pressed();

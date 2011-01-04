@@ -99,8 +99,8 @@ noinst_HEADERS = viewer.hh		\
 
 # Generated files
 do_subst = sed  					\
-	   -e 's|@bindir[@]|$(bindir)|g'	\
-	   -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'
+	   -e 's|@bindir[@]|$(bindir)|g'		\
+	   -e 's|@abs_demodir[@]|$(abs_top_builddir)/scribo/demo|g'
 
 demodir.hh: $(srcdir)/demodir.hh.in Makefile
 	rm -f $@ $@.tmp

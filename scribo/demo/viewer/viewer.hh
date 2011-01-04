@@ -27,6 +27,8 @@ class DomModel;
 class KeyWidget;
 class ImageRegion;
 class StepWidget;
+class BrowserWidget;
+
 
 class Viewer
   : public QObject
@@ -58,6 +60,7 @@ private slots:
   void run_process();
   void run_progress();
   void on_xml_saved(const QString& filename);
+  void export_as();
 
 signals:
   void updated();
@@ -77,10 +80,12 @@ private:
   void add_region(QDomNode father, QString attr_id);
   void add_text(QDomNode line, QDomNode region);
   QAction *create_action(QString name, QMenu* menu, QString status, QString shortcut);
+  void reset_progress_dialog();
 
   QApplication* app_;
   QMainWindow* win_;
   StepWidget* step_widget_;
+  BrowserWidget* browser_wgt_;
 
   QGraphicsPixmapItem* image_;
 
@@ -91,6 +96,7 @@ private:
   QAction* outline_action_;
   QAction* fill_action_;
   QAction* precise_action_;
+  QAction *export_action_;
 
   KeyWidget* key_wgt_;
 

@@ -130,3 +130,9 @@ BrowserWidget::change_pos(bool next)
 BrowserWidget::~BrowserWidget()
 {
 }
+
+QString
+BrowserWidget::current() const
+{
+  return files_->filePath(view_->currentIndex());
+}

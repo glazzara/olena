@@ -24,6 +24,12 @@
 
 using namespace mln;
 
+enum RunMode
+{
+  Demat,
+  Export
+};
+
 class runner : public QThread
 {
   Q_OBJECT;
@@ -31,7 +37,9 @@ class runner : public QThread
 public:
   runner(QObject *parent = 0);
 
-  void start(const QString& filename);
+  void start_demat(const QString& filename);
+  void start_export(const QString& imgfile,
+		    const QString& xmlfile, const QString& outfile);
 
 public slots:
   void stop();
@@ -48,13 +56,17 @@ private: // members
   image2d<bool> preprocess(const image2d<value::rgb8>& ima);
   void process(const image2d<value::rgb8>& original_ima,
 	       const image2d<bool>& processed_ima);
+
+  void export_as();
+
   virtual void run();
 
   template <typename V>
   unsigned find_best_scale(const mln::image2d<V>& ima);
 
 private: // attributes
-  QString filename_;
+  QStringList args_;
+  RunMode mode_;
 };
 
 

@@ -38,6 +38,7 @@ StepWidget::StepWidget()
 
   connect(this, SIGNAL(activated(QListWidgetItem*)),
 	  this, SLOT(activate(QListWidgetItem*)));
+
 }
 
 StepWidget::~StepWidget()
@@ -62,6 +63,8 @@ void StepWidget::activate(QListWidgetItem* item)
   }
   else
     qDebug() << "Step not found!";
+
+  emit step_selected(view_->count());
 }
 
 
@@ -158,9 +161,10 @@ QListWidgetItem* StepWidget::add_element(const QString& element)
   return item;
 }
 
-
-
-
+QString StepWidget::current() const
+{
+  return map_.value(step_);
+}
 
 
 
