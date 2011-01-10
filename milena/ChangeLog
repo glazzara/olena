@@ -1,5 +1,16 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: Misc. changes.
+
+	* apps/bench/dilation-lena.hh,
+	* apps/bench/dilation-lena.cc,
+	* apps/bench/dilation-lena-table.cc:
+	Here.
+	* apps/bench/Makefile.am (AM_CXXFLAGS):
+	Set to $(APPS_CXXFLAGS_NODEBUG)
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Generate a LaTeX table from some results of	dilation-lena.
 
 	* apps/bench/dilation-lena-table.cc: New.

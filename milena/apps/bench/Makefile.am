@@ -14,7 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/milena/apps/apps.mk
+include $(top_srcdir)/milena/common.mk
+
+# Find apps/data.hh (generated header).
+AM_CPPFLAGS += -I$(top_builddir)/milena
+# Produce fast code with no debugging symbols.
+AM_CXXFLAGS = $(APPS_CXXFLAGS_NODEBUG)
 
 EXTRA_DIST = lena1024.pgm lena2048.pgm
 
