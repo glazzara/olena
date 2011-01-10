@@ -1,5 +1,13 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: Generate a LaTeX table from some results of	dilation-lena.
+
+	* apps/bench/dilation-lena-table.cc: New.
+	* apps/bench/Makefile.am (noinst_PROGRAMS):
+	Add dilation-lena-table.
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Split dilation-lena.cc.
 
 	* apps/bench/dilation-lena.cc
