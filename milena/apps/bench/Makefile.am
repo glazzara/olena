@@ -25,6 +25,7 @@ EXTRA_DIST = lena1024.pgm lena2048.pgm
 
 noinst_PROGRAMS =				\
   dilation-lena					\
+  dilation-lena-bench				\
   dilation-lena-table				\
   gradient-lena					\
   gradient-spe-lena

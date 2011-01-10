@@ -1,5 +1,13 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: New experiment: dilation-lena-bench.
+
+	* apps/bench/dilation-lena-bench.cc: New.
+	* apps/bench/Makefile.am (noinst_PROGRAMS):
+	Add dilation-lena-bench.
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Have dilation-lena-table behave more like dilation-lena.
 
 	* apps/bench/dilation-lena-table.cc: Here.
