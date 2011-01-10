@@ -19,5 +19,8 @@
 SUBDIRS = mesh-segm-skel generic-skel graph-morpho constrained-connectivity \
   morphers
 
+# Benchmarks.
+SUBDIRS += bench
+
 # Examples from papers.
 SUBDIRS += papers

@@ -1,5 +1,9 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* apps/Makefile.am (SUBDIRS): Add bench.
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start a micro benchmark about generic vs non-generic code.
 
 	* apps/bench/gradient-lena.cc,
