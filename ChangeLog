@@ -1,3 +1,7 @@
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/apps/bench/Makefile.
+
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Generate more uniform Makefile helpers for unit tests.
