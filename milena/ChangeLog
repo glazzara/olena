@@ -1,3 +1,11 @@
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start a micro benchmark about generic vs non-generic code.
+
+	* apps/bench/gradient-lena.cc,
+	* apps/bench/Makefile.am:
+	New.
+
 2013-10-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Exercise mln::interpolated, mln::tr_image and mln::compose.
