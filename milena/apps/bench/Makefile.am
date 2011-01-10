@@ -25,6 +25,7 @@ noinst_PROGRAMS =				\
 
 noinst_HEADERS =				\
   and_not.hh					\
+  dilation-lena.hh				\
   minus.hh					\
   static_array.hh				\
   static_dpoints_pixter.hh			\

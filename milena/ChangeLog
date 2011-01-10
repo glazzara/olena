@@ -1,3 +1,23 @@
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/bench: Split dilation-lena.cc.
+
+	* apps/bench/dilation-lena.cc
+	(nongen::dilation)
+	(nongen_2ptr::dilation)
+	(nongen_1ptr::dilation)
+	(gen::dilation)
+	(fast::dilation)
+	(fast_noaccu::dilation)
+	(faster::dilation)
+	(faster_noaccu::dilation)
+	(fast_static::dilation)
+	(faster_static::dilation):
+	Move functions...
+	* apps/bench/dilation-lena.hh: ...here (new file).
+	* apps/bench/dilation-lena.cc: Adjust.
+	* apps/bench/Makefile.am (noinst_HEADERS): Add dilation-lena.hh
+
 2010-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/bench: More comparisons (2- and 1-pointer based non-gen impl.).
