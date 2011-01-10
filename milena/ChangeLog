@@ -1,5 +1,12 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: Have dilation-lena-table behave more like dilation-lena.
+
+	* apps/bench/dilation-lena-table.cc: Here.
+	* apps/bench/Makefile.am (MOSTLYCLEANFILES): Update.
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Misc. changes.
 
 	* apps/bench/dilation-lena.hh,

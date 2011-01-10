@@ -40,6 +40,8 @@
       for (unsigned i = 0; i < niters; ++i)				\
 	d = Namespace::dilation(d);					\
       t.stop();								\
+      std::cerr << Headline << t.read() << " s" << std::endl;		\
+      io::pgm::save(d, prefix + '-' + length + '-' + Suffix + ".pgm");	\
       times.push_back(t.read());					\
     }									\
   while (0)
@@ -52,13 +54,15 @@
       for (unsigned i = 0; i < niters; ++i)				\
 	d = Namespace::dilation(d, Win);				\
       t.stop();								\
+      std::cerr << Headline << t.read() << " s" << std::endl;		\
+      io::pgm::save(d, prefix + '-' + length + '-' + Suffix + ".pgm");	\
       times.push_back(t.read());					\
     }									\
   while (0)
 
 
 std::vector<float>
-run(const std::string& filename, unsigned niters)
+run(const std::string& filename, const std::string& length, unsigned niters)
 {
   using namespace mln;
   using value::int_u8;
@@ -69,6 +73,10 @@ run(const std::string& filename, unsigned niters)
 
   image2d<int_u8> d;
   util::timer t;
+
+  std::string prefix = "dilation-lena-table-out";
+  std::cerr << "== " << filename << std::endl;
+
   std::vector<float> times;
   times.reserve(5);
 
@@ -106,6 +114,8 @@ run(const std::string& filename, unsigned niters)
   DILATION(faster_static, static_win_c4p, "faster_static", "faster_static\t");
 #endif
 
+  std::cerr << std::endl;
+
   return times;
 }
 
@@ -116,9 +126,9 @@ main (int /* argc */, char* argv[])
   typedef std::vector<float> times_t;
 
   // Compute times.
-  times_t times_512  = run(MLN_IMG_DIR "/lena.pgm",            niters);
-  times_t times_1024 = run(MLN_APPS_DIR "/bench/lena1024.pgm", niters);
-  times_t times_2048 = run(MLN_APPS_DIR "/bench/lena2048.pgm", niters);
+  times_t times_512  = run(MLN_IMG_DIR "/lena.pgm",            "512",  niters);
+  times_t times_1024 = run(MLN_APPS_DIR "/bench/lena1024.pgm", "1024", niters);
+  times_t times_2048 = run(MLN_APPS_DIR "/bench/lena2048.pgm", "2048", niters);
 
   // Display times.
   times_t::const_iterator i_512  = times_512.begin();
