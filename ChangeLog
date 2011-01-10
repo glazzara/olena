@@ -1,5 +1,9 @@
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac (APPS_CXXFLAGS_NODEBUG): New precious variable.
+
+2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure milena/apps/bench/Makefile.
 
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>

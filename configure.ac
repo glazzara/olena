@@ -636,6 +636,13 @@ if test -z "$APPS_CXXFLAGS"; then
     APPS_CXXFLAGS="-O3 -DNDEBUG -g $WARNINGS_CXXFLAGS"
   fi
 fi
+# Likewise, without debugging information.
+AC_ARG_VAR([APPS_CXXFLAGS_NODEBUG],
+           [C++ compiler flags for applications w/o debug symbols])
+if test -z "$APPS_CXXFLAGS_NODEBUG" && test "$GXX" = yes; then
+  APPS_CXXFLAGS_NODEBUG="-O3 -DNDEBUG $WARNINGS_CXXFLAGS"
+fi
+
 
 ## ------- ##
 ## Tools.  ##
