@@ -1,5 +1,11 @@
 2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: New (postprocessing) script: list2table.
+
+	* apps/bench/list2table: New.
+
+2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: Split dilation-lena-bench.
 
 	* apps/bench/dilation-lena-bench.cc: Remove and split into...

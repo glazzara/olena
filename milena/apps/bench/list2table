@@ -1,0 +1,48 @@
+#! /bin/sh
+
+set -e
+
+# Like read, but ignores empty values.
+readval()
+{
+  val=
+  while test -z "$val" && read val; do :; done
+  echo "$val"
+}
+
+for i in a1 b1 c1 d1 e1 \
+         a2 b2 c2 d2 e2 \
+         a3 b3 c3 d3 e3; \
+do
+  eval $i=$(readval)
+done
+
+cat <<EOF
+% Generated, do not modify.
+
+\begin{table}[tbp]
+  \centering
+  \begin{tabular}{lrrr}
+    \hline
+    Implementation & \multicolumn{3}{c}{Execution times (s)} \\\\
+                   & \$512^2\$ & \$1024^2\$ & \$2048^2\$ \\\\
+    \hline
+    \hline
+    Non generic (\algref{lst:non-gen-dilation}) & $a1 & $a2 & $a3 \\\\
+    \hline
+    Non generic, pointer-based\footnotemark[1] & $b1 & $b2 & $b3 \\\\
+    \hline
+    Generic (\algref{lst:gen-dilation}) & $c1 & $c2 & $c3 \\\\
+    \hline
+    Fast, partially generic (\algref{lst:fast-dilation}) & $d1 & $d2 & $d3 \\\\
+    \hline
+    Fast, partially generic with & $e1 & $e2 & $e3 \\\\
+    static window (\algref{lst:fast-static-dilation}) & & & \\\\
+    \hline
+  \end{tabular}
+  \caption{Execution times of various dilation implementations.}
+  \label{tab:results}
+\end{table}
+\footnotetext[1]{Implementation not shown in this paper for space
+  reasons.}
+EOF
