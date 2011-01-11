@@ -2,6 +2,9 @@
 
 set -e
 
+# Do not use locales.
+export LC_ALL=C
+
 # Like read, but ignores empty values.
 readval()
 {
@@ -14,7 +17,7 @@ for i in a1 b1 c1 d1 e1 \
          a2 b2 c2 d2 e2 \
          a3 b3 c3 d3 e3; \
 do
-  eval $i=$(readval)
+  eval $i=$(printf "%.2f" $(readval))
 done
 
 cat <<EOF
@@ -24,7 +27,7 @@ cat <<EOF
   \centering
   \begin{tabular}{lrrr}
     \hline
-    Implementation & \multicolumn{3}{c}{Execution times (s)} \\\\
+    Implementation & \multicolumn{3}{c}{Time (s) per image (px)} \\\\
                    & \$512^2\$ & \$1024^2\$ & \$2048^2\$ \\\\
     \hline
     \hline
@@ -34,9 +37,9 @@ cat <<EOF
     \hline
     Generic (\algref{lst:gen-dilation}) & $c1 & $c2 & $c3 \\\\
     \hline
-    Fast, partially generic (\algref{lst:fast-dilation}) & $d1 & $d2 & $d3 \\\\
+    Fast, partly generic (\algref{lst:fast-dilation}) & $d1 & $d2 & $d3 \\\\
     \hline
-    Fast, partially generic with & $e1 & $e2 & $e3 \\\\
+    Fast, partly generic with & $e1 & $e2 & $e3 \\\\
     static window (\algref{lst:fast-static-dilation}) & & & \\\\
     \hline
   \end{tabular}

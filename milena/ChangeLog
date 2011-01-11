@@ -1,5 +1,11 @@
 2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	apps/bench: Aesthetic changes in the output of list2table.
+
+	* apps/bench/list2table: Here.
+
+2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	apps/bench: New (postprocessing) script: list2table.
 
 	* apps/bench/list2table: New.
