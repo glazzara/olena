@@ -1,0 +1,23 @@
+#! /bin/sh
+
+./dilation-lena-bench-nongen      @top_srcdir@/milena/img/lena.pgm
+./dilation-lena-bench-nongen_2ptr @top_srcdir@/milena/img/lena.pgm
+./dilation-lena-bench-gen         @top_srcdir@/milena/img/lena.pgm
+./dilation-lena-bench-fast        @top_srcdir@/milena/img/lena.pgm
+./dilation-lena-bench-fast_static @top_srcdir@/milena/img/lena.pgm
+
+echo
+
+./dilation-lena-bench-nongen      @srcdir@/lena1024.pgm
+./dilation-lena-bench-nongen_2ptr @srcdir@/lena1024.pgm
+./dilation-lena-bench-gen         @srcdir@/lena1024.pgm
+./dilation-lena-bench-fast        @srcdir@/lena1024.pgm
+./dilation-lena-bench-fast_static @srcdir@/lena1024.pgm
+
+echo
+
+./dilation-lena-bench-nongen      @srcdir@/lena2048.pgm
+./dilation-lena-bench-nongen_2ptr @srcdir@/lena2048.pgm
+./dilation-lena-bench-gen         @srcdir@/lena2048.pgm
+./dilation-lena-bench-fast        @srcdir@/lena2048.pgm
+./dilation-lena-bench-fast_static @srcdir@/lena2048.pgm

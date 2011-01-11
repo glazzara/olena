@@ -1,3 +1,27 @@
+2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/bench: Split dilation-lena-bench.
+
+	* apps/bench/dilation-lena-bench.cc: Remove and split into...
+	* apps/bench/dilation-lena-bench-macros.hh,
+	* apps/bench/dilation-lena-bench-fast.cc,
+	* apps/bench/dilation-lena-bench-fast_static.cc,
+	* apps/bench/dilation-lena-bench-gen.cc,
+	* apps/bench/dilation-lena-bench-nongen.cc,
+	* apps/bench/dilation-lena-bench-nongen_2ptr.cc:
+	...these (new) files.
+	* apps/bench/test-dilation-lena-bench.in: New test.
+	* apps/bench/Makefile.am (noinst_PROGRAMS): Add
+	dilation-lena-bench-nongen, dilation-lena-bench-nongen_2ptr,
+	dilation-lena-bench-gen, dilation-lena-bench-fast and
+	dilation-lena-bench-fast_static.
+	Remove dilation-lena-bench.
+	(noinst_HEADERS): Add dilation-lena-bench-macros.hh.
+	(edit): New variable.
+	(EXTRA_DIST): Add test-dilation-lena-bench.in.
+	(test-dilation-lena-bench): New target.
+	(TESTS, CLEANFILES): Add test-dilation-lena-bench.
+
 2011-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/bench: New experiment: dilation-lena-bench.

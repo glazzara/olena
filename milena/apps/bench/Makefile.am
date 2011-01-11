@@ -25,7 +25,11 @@ EXTRA_DIST = lena1024.pgm lena2048.pgm
 
 noinst_PROGRAMS =				\
   dilation-lena					\
-  dilation-lena-bench				\
+  dilation-lena-bench-nongen			\
+  dilation-lena-bench-nongen_2ptr		\
+  dilation-lena-bench-gen			\
+  dilation-lena-bench-fast			\
+  dilation-lena-bench-fast_static		\
   dilation-lena-table				\
   gradient-lena					\
   gradient-spe-lena
@@ -33,6 +37,7 @@ noinst_PROGRAMS =				\
 noinst_HEADERS =				\
   and_not.hh					\
   dilation-lena.hh				\
+  dilation-lena-bench-macros.hh			\
   minus.hh					\
   static_array.hh				\
   static_dpoints_pixter.hh			\
@@ -93,3 +98,20 @@ MOSTLYCLEANFILES =				\
   gradient-spe-lena-out-2.pgm			\
   gradient-spe-lena-out-3.pgm			\
   gradient-spe-lena-out-4.pgm
+
+# Use Make to generate tests instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed -e 's|@top_srcdir[@]|$(top_srcdir)|g'	\
+           -e 's|@srcdir[@]|$(srcdir)|g'
+EXTRA_DIST += test-dilation-lena-bench.in
+test-dilation-lena-bench: test-dilation-lena-bench.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w,a+x $@.tmp
+	mv $@.tmp $@
+CLEANFILES = test-dilation-lena-bench
+
+TESTS = test-dilation-lena-bench
