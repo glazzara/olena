@@ -5,9 +5,10 @@
            of a set of functions and data structures and allows to
            build dedicated page segmentation toolchains.
 
-	 * New page segmentation toolchain. Process a document image
-           and produce an XML file (PAGE format) containing text and
-           other objects information.
+	 * New command line tool providing access document analysis
+           toolchains. It includes Page segmentation and text
+           extraction in document image, and text detection in
+           pictures.
 
 	 * New tool to rebuild a document from an XML file to PDF,
            HTML, SVG and Open Document. This tool preserves the layout
@@ -21,7 +22,10 @@
 	 * New graphical tool to compute and display page segmentation
            results.
 
-	 * Include support for PAGE XML outputs.
+	 * Include support for PAGE XML outputs. Page segmentation
+           results are stored in this format which includes text and
+           objects information.
+
 
 
 

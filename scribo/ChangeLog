@@ -1,5 +1,9 @@
 2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* NEWS: Add content.
+
+2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix examples.
 
 	* src/binarization/sauvola.cc: Initialize ImageMagick.
