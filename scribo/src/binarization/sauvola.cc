@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 				"Binarization based on Sauvola's algorithm.",
 				"input.* output.pbm <w> <k>",
 				args_desc);
+
+  Magick::InitializeMagick(*argv);
 
   trace::entering("main");
 

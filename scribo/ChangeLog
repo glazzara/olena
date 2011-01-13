@@ -1,5 +1,13 @@
 2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix examples.
+
+	* src/binarization/sauvola.cc: Initialize ImageMagick.
+
+	* src/binarization/sauvola_ms.cc: Fix maximum argument count.
+
+2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing distributed files.
 
 	* Makefile.am: Add EXTRA_DIST.

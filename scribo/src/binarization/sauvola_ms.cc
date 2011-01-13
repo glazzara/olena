@@ -38,7 +38,7 @@
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc < 3 || argc > 6)
+  if (argc < 3 || argc > 7)
     return false;
 
   if (argc >= 5)
