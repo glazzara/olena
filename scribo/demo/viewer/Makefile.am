@@ -94,7 +94,8 @@ noinst_HEADERS = viewer.hh		\
 		 general_options.hh 	\
 		 preferences_dialog.hh 	\
 		 option_widget.hh 	\
-		 config.hh
+		 config.hh	 	\
+		 defs.hh
 
 
 # Generated files

@@ -1,3 +1,11 @@
+2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing distributed files.
+
+	* Makefile.am: Add EXTRA_DIST.
+
+	* demo/viewer/Makefile.am: Add a missing distributed header.
+
 2011-01-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/review/Makefile.am: Add srcdir as include path.

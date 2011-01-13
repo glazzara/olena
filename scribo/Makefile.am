@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -41,3 +41,6 @@ $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	       scribo headers.mk nodist-headers
 
 include $(srcdir)/headers.mk
+
+
+EXTRA_DIST = nodist-headers
