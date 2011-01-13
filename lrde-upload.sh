@@ -71,14 +71,18 @@ mkdir -p $DEST
 find $DEST -maxdepth 1 -type f -mtime +1 -name 'olena-*-snapshot-*' \
   -exec rm -f {} \;
 
+# Delete old symbolic links.
+rm -f $DEST/olena-$VERSION-$suffix.tar.gz $DEST/olena-$VERSION-$suffix.tar.bz2
+
 # Upload the `.tar.gz' tarball.
 cp -f olena-$VERSION.tar.gz $DEST/olena-$REV.tar.gz.tmp
 mv -f $DEST/olena-$REV.tar.gz.tmp $DEST/olena-$REV.tar.gz
+ln -s $DEST/olena-$REV.tar.gz $DEST/olena-$VERSION-$suffix.tar.gz
 
 # Upload the `.tar.bz2' tarball.
 cp -f olena-$VERSION.tar.bz2 $DEST/olena-$REV.tar.bz2.tmp
 mv -f $DEST/olena-$REV.tar.bz2.tmp $DEST/olena-$REV.tar.bz2
-
+ln -s $DEST/olena-$REV.tar.bz2 $DEST/olena-$VERSION-$suffix.tar.bz2
 
 # Upload a copy of the reference manual and other documentation.
 mkdir -p $DEST_DOC
