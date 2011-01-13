@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,7 @@
 # include <QProcess>
 # include <QtGui/QWidget>
 # include <QProgressDialog>
-# include <mainwindow.ui.h>
+# include "mainwindow.ui.h"
 
 namespace scribo
 {

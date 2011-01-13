@@ -19,8 +19,7 @@ include $(top_srcdir)/build-aux/autotroll.mk
 
 
 bin_PROGRAMS = scribo-viewer
-scribo_viewer_SOURCES = $(BUILT_SOURCES)	\
-			viewer.cc		\
+scribo_viewer_SOURCES = viewer.cc		\
 			main.cc			\
 			image_widget.cc		\
 			xml_widget.cc		\
@@ -39,6 +38,8 @@ scribo_viewer_SOURCES = $(BUILT_SOURCES)	\
 			preferences_dialog.cc 	\
 			option_widget.cc 	\
 			config.cc
+
+nodist_scribo_viewer_SOURCES = $(BUILT_SOURCES)
 
 scribo_viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir) 	\
 			 -I$(top_srcdir)/milena				\

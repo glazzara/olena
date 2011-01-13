@@ -27,7 +27,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include <src/mainwindow.hh>
+#include "src/mainwindow.hh"
 
 
 const char * modes[][4] = {

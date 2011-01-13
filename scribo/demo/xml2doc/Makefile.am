@@ -1,4 +1,5 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -15,15 +16,16 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 include $(top_srcdir)/build-aux/autotroll.mk
+include $(top_srcdir)/scribo/scribo.mk
 
+utilexec_PROGRAMS = scribo-xml2doc
+scribo_xml2doc_SOURCES = common.cc 		\
+			 image_crop.cc 		\
+			 loader.cc		\
+			 main.cc 		\
+			 xml_transform.cc
 
-bin_PROGRAMS = scribo-xml2doc
-scribo_xml2doc_SOURCES = $(BUILT_SOURCES)	\
-			common.cc 		\
-			image_crop.cc 		\
-			loader.cc		\
-			main.cc 		\
-			xml_transform.cc
+nodist_scribo_xml2doc_SOURCES = $(BUILT_SOURCES)
 
 scribo_xml2doc_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) \
 			  $(MAGICKXX_CPPFLAGS) 		\
