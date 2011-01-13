@@ -29,18 +29,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/metal/none.hh>
 
+# include "apps/bench/static_window.hh"
 # include "apps/bench/static_dpoints_pixter.hh"
-
-
-// FIXME: Move this into mln/core/macro.hh.
-# define mln_static_fwd_qixter(I, W) typename mln::trait::static_fwd_qixter< I, W >::ret
-# define mln_static_fwd_qixter_(I, W)         mln::trait::static_fwd_qixter< I, W >::ret
-
-# define mln_static_bkd_qixter(I, W) typename mln::trait::static_bkd_qixter< I, W >::ret
-# define mln_static_bkd_qixter_(I, W)         mln::trait::static_bkd_qixter< I, W >::ret
-
-# define mln_static_qixter(I, W)  mln_static_fwd_qixter(I, W)
-# define mln_static_qixter_(I, W) mln_static_fwd_qixter_(I, W)
 
 
 // FIXME: Move this into mln/trait/ (and mln/core/image/?)
@@ -52,41 +42,28 @@ namespace mln
 
     // qixter
 
-    template <typename I, typename W>
-    struct static_fwd_qixter
+    template <typename T, typename D, unsigned n>
+    struct fwd_qixter< image2d<T>, static_window<D, n> >
     {
-      typedef metal::none ret;
+      typedef static_dpoints_fwd_pixter< image2d<T>, static_window<D, n> > ret;
     };
 
-    template <typename I, typename W>
-    struct static_bkd_qixter
+    template <typename T, typename D, unsigned n>
+    struct fwd_qixter< const image2d<T>, static_window<D, n> >
     {
-      typedef metal::none ret;
+      typedef static_dpoints_fwd_pixter< const image2d<T>, static_window<D, n> > ret;
     };
 
-
-    template <typename T, typename W>
-    struct static_fwd_qixter< image2d<T>, W >
+    template <typename T, typename D, unsigned n>
+    struct bkd_qixter< image2d<T>, static_window<D, n> >
     {
-      typedef static_dpoints_fwd_pixter< image2d<T>, W > ret;
+      typedef static_dpoints_bkd_pixter< image2d<T>, static_window<D, n> > ret;
     };
 
-    template <typename T, typename W>
-    struct static_fwd_qixter< const image2d<T>, W >
+    template <typename T, typename D, unsigned n>
+    struct bkd_qixter< const image2d<T>, static_window<D, n> >
     {
-      typedef static_dpoints_fwd_pixter< const image2d<T>, W > ret;
-    };
-
-    template <typename T, typename W>
-    struct static_bkd_qixter< image2d<T>, W >
-    {
-      typedef static_dpoints_bkd_pixter< image2d<T>, W > ret;
-    };
-
-    template <typename T, typename W>
-    struct static_bkd_qixter< const image2d<T>, W >
-    {
-      typedef static_dpoints_bkd_pixter< const image2d<T>, W > ret;
+      typedef static_dpoints_bkd_pixter< const image2d<T>, static_window<D, n> > ret;
     };
 
     // FIXME: Also handle mln::image1d<T> and mln::image3d<T>.

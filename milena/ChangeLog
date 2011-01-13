@@ -1,3 +1,22 @@
+2011-01-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/bench: Simplify `fast_static' and `faster_static' cases.
+
+	* apps/bench/trait.hh (mln_static_qixter, mln_static_qixter_)
+	(mln_static_fwd_qixter, mln_static_fwd_qixter_)
+	(mln_static_bkd_qixter, mln_static_bkd_qixter_):
+	Remove macros.
+	(mln::static_fwd_qixter, mln::static_bkd_qixter):
+	Remove traits.
+	(mln::fwd_qixter< image2d<T>, static_window<D, n> >)
+	(mln::fwd_qixter< const image2d<T>, static_window<D, n> >)
+	(mln::bkd_qixter< image2d<T>, static_window<D, n> >)
+	(mln::bkd_qixter< const image2d<T>, static_window<D, n> >):
+	New traits.
+	* apps/bench/dilation-lena.hh
+	(fast_static::dilation): Delegate to fast::dilation.
+	(faster_static::dilation): Delegate to faster::dilation.
+
 2011-01-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/bench: Aesthetic changes in the output of list2table.

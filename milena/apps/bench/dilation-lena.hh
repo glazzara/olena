@@ -293,22 +293,8 @@ namespace fast_static
   template <typename I, typename W>
   mln_concrete(I) dilation(const I& input, const W& win)
   {
-    typedef mln_concrete(I) O;
-    O output; initialize(output, input);  // Initialize output.
-
-    mln_pixter(const I) pi(input);  // Iterator on the pixels of `input'.
-    mln_pixter(O) po(output);  // Iterator on the pixels of `output'.
-    mln_static_qixter(const I, W) q(pi, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
-
-    for_all_2(pi, po)
-    {
-      // FIXME: Cheat: replace the accu::supremum by a maximum.
-      mln::accu::stat::max<mln_value(I)> sup;  // Accumulator computing the supremum.
-      for_all(q)
-	sup.take(q.val());
-      po.val() = sup.to_result();
-    }
-    return output;
+    // `fast_static' has the same implementation as `fast'.
+    return ::fast::dilation(input, win);
   }
 }
 
@@ -319,21 +305,8 @@ namespace faster_static
   template <typename I, typename W>
   mln_concrete(I) dilation(const I& input, const W& win)
   {
-    typedef mln_concrete(I) O;
-    O output; initialize(output, input);  // Initialize output.
-
-    mln_pixter(const I) p(input);  // Iterator on the pixels of `input'.
-    mln_static_qixter(const I, W) q(p, win);  // Iterator on the neighbors of `p' w.r.t. `win'.
-
-    for_all(p)
-    {
-      // FIXME: Cheat: replace the accu::supremum by a maximum.
-      mln::accu::stat::max<mln_value(I)> sup;  // Accumulator computing the supremum.
-      for_all(q)
-	sup.take(q.val());
-      *(output.buffer() + p.offset()) = sup.to_result();
-    }
-    return output;
+    // `faster_static' has the same implementation as `faster'.
+    return ::faster::dilation(input, win);
   }
 }
 
