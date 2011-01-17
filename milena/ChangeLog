@@ -1,3 +1,7 @@
+2011-01-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	* apps/bench/list2table: Generate a shorter table.
+
 2011-01-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/bench: Simplify `fast_static' and `faster_static' cases.

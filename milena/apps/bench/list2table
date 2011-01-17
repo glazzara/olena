@@ -39,8 +39,7 @@ cat <<EOF
     \hline
     Fast, partly generic (\algref{lst:fast-dilation}) & $d1 & $d2 & $d3 \\\\
     \hline
-    Fast, partly generic with & $e1 & $e2 & $e3 \\\\
-    static window (\algref{lst:fast-static-dilation}) & & & \\\\
+    \algref{lst:fast-dilation} with a static window & $e1 & $e2 & $e3 \\\\
     \hline
   \end{tabular}
   \caption{Execution times of various dilation implementations.}
