@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -192,6 +192,9 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 # Boost.  #
 # ------- #
 
+# Check if Boost is available, if not just print a warning, otherwise
+# look for boost:tuple.
+BOOST_REQUIRE(1.3, [AC_DEFINE([HAVE_BOOST], [0])])
 BOOST_TUPLE
 AM_CONDITIONAL([HAVE_BOOST_TUPLE],
                [test "x$ac_cv_header_boost_tuple_tuple_hpp" = xyes])
