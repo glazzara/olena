@@ -1,3 +1,7 @@
+2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Make Boost dependency optional.
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Honor `--without-qt' in configure.
