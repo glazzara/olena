@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,11 @@ int main()
   QSet<QString> words = scribo::toolchain::nepomuk::text_extraction(ima);
 
   mln_assertion(words.size() == 1);
+
+#ifndef HAVE_TESSERACT_3
   mln_assertion(words.contains("Wildly"));
+#else // HAVE_TESSERACT_2
+  mln_assertion(words.contains("wildly"));
+#endif // ! HAVE_TESSERACT_3
   return 0;
 }

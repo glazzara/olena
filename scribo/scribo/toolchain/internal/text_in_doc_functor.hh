@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -132,7 +133,10 @@ namespace scribo
       text_in_doc_functor<I>::operator()(const Image<I>& input)
       {
 	// Remove separators
-	mln_ch_value(I,bool) separators, input_cleaned;
+	mln_ch_value(I,bool)
+	  separators,
+	  input_cleaned = exact(input);
+
 	if (enable_line_seps)
 	{
 	  on_new_progress_label("Find vertical separators...");

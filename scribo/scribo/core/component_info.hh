@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -97,7 +97,7 @@ namespace scribo
 
   inline
   component_info::component_info()
-    : id_(0), tag_(component::Ignored)
+    : id_(0), tag_(component::Ignored), type_(component::Undefined)
   {
 
   }
@@ -109,7 +109,7 @@ namespace scribo
 				 const mln::point2d& mass_center,
 				 unsigned card)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
-      tag_(component::None), line_id_(0)
+      tag_(component::None), type_(component::Undefined), line_id_(0)
   {
 
   }

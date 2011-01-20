@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +68,7 @@ namespace scribo
 	  << std::endl;
 
       std::cout << "-----------" << std::endl;
-      std::cout << "EPITA/LRDE - Scribo 2008-2010" << std::endl;
+      std::cout << "EPITA/LRDE - Scribo 2008-2011" << std::endl;
       return 1;
     }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -801,8 +801,8 @@ namespace scribo
     typedef mln::value::int_u<12> median_data_t;
     typedef mln::accu::stat::median_h<median_data_t> median_t;
     median_t
-      absolute_meanline,
-      absolute_baseline,
+      meanline,
+      baseline,
       char_space,
       char_width;
 
@@ -871,13 +871,15 @@ namespace scribo
       if (bb.width() <= 1000)
 	char_width.take(bb.width());
 
-      // Meanline (compute an absolute value, from the top left
-      // corner of the image).
-      absolute_meanline.take(bb.pmin().row() - ref_line);
+      // Meanline (compute an absolute value, from the top left corner
+      // of the highest character bounding box, excluding
+      // punctuation).
+      meanline.take(bb.pmin().row() - ref_line);
 
-      // Baseline (compute an absolute value, from the top left
-      // corner of the image).
-      absolute_baseline.take(bb.pmax().row() - ref_line);
+      // Baseline (compute an absolute value, from the top left corner
+      // of the highest character bounding box, excluding
+      // punctuation).
+      baseline.take(bb.pmax().row() - ref_line);
     }
 
     // Finalization
@@ -899,8 +901,8 @@ namespace scribo
 	char_width_ = char_width.to_result();
 
       mln::def::coord
-	absolute_baseline_r = absolute_baseline.to_result() + ref_line,
-	absolute_meanline_r = absolute_meanline.to_result() + ref_line;
+	absolute_baseline_r = baseline.to_result() + ref_line,
+	absolute_meanline_r = meanline.to_result() + ref_line;
 
       baseline_ = absolute_baseline_r;
       meanline_ = absolute_meanline_r;

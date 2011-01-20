@@ -1,5 +1,21 @@
 2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various fixes in Scribo.
+
+	* scribo/core/component_info.hh: Initialize type_ attribute.
+
+	* scribo/core/line_info.hh: Rename accumulators.
+
+	* scribo/debug/usage.hh: Update copyright.
+
+	* scribo/toolchain/internal/text_in_doc_functor.hh: Initialize
+	input_cleaned local variable.
+
+	* tests/toolchain/nepomuk/text_extraction.cc: Support both
+	Tesseract 2 and 3.
+
+2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/viewer/Makefile.am: Explicitly link to libtiff.
 
 2011-01-13  Guillaume Lazzara  <z@lrde.epita.fr>
