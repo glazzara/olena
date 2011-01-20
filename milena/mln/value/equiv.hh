@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,10 @@
 /*! \file
  *
  * \brief The mln::equiv routine.
+ *
+ * Since g++ 4.5.x the returned value is returned by copy. If returned
+ * by reference the result was incorrect and the value lifetime was
+ * not extended correctly to other functions.
  */
 
 # include <mln/core/concept/value.hh>
@@ -78,13 +83,13 @@ namespace mln
 
       // Fwd decl.
       template <typename V>
-      const typename internal::equiv_<V>::ret&
+      typename internal::equiv_<V>::ret
       run_equiv_(const V& v);
 
 
       template <typename V, typename T>
       inline
-      const typename internal::equiv_<V>::ret&
+      typename internal::equiv_<V>::ret
       run_equiv_(const Value<V>* v, const T*)
       {
 	return run_equiv_(exact(v)->to_equiv()); // Rec.
@@ -92,7 +97,7 @@ namespace mln
 
       template <typename V>
       inline
-      const V&
+      V
       run_equiv_(const void*, const V* v)
       {
 	return *v; // Stop rec.
@@ -100,7 +105,7 @@ namespace mln
 
       template <typename V>
       inline
-      const typename internal::equiv_<V>::ret&
+      typename internal::equiv_<V>::ret
       run_equiv_(const V& v)
       {
 	return run_equiv_(&v, &v);

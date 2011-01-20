@@ -1,3 +1,9 @@
+2011-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a serious bug with gcc 4.5 and later.
+
+	* mln/value/equiv.hh: Return values by copy.
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Work around g++ 4.5 deficiencies to compile Milena.
@@ -24,7 +30,7 @@
 
 	* mln/core/site_set/p_complex_piter.hh,
 	* mln/core/site_set/p_n_faces_piter.hh:
-	Here. 
+	Here.
 
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
