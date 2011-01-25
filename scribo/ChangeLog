@@ -1,5 +1,13 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an option to choose the recognized language.
+
+	* scribo/toolchain/nepomuk/text_extraction.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* src/content_in_doc.cc: Here.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/recognition.hh: Make use of TessBaseAPI::setImage.
 
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -45,6 +45,7 @@ namespace scribo
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
     text_in_doc(const Image<I>& input, bool denoise,
+		const std::string& language = std::string("eng"),
 		bool find_line_seps = true,
 		bool find_whitespace_seps = true,
 		bool debug = false);
@@ -56,6 +57,7 @@ namespace scribo
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
     text_in_doc(const Image<I>& input, bool denoise,
+		const std::string& language = std::string("eng"),
 		bool find_line_seps = true,
 		bool find_whitespace_seps = true,
 		bool debug = false)
@@ -65,6 +67,7 @@ namespace scribo
       f.enable_line_seps = find_line_seps;
       f.enable_whitespace_seps = find_whitespace_seps;
       f.enable_debug = debug;
+      f.ocr_language = language;
 
       line_set<mln_ch_value(I, def::lbl_type)> lines = f(input);
 

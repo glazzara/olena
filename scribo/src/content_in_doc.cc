@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,6 +73,7 @@ const char *args_desc[][2] =
   { "pmin_col", "Col index of the top left corner of the Region of interest." },
   { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
   { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
+  { "language", "Language to be used for the text recognition. [eng|fra] (Default: eng)" },
   { "find_lines", "Find vertical lines. (Default 1)" },
   { "find_whitespaces", "Find whitespaces separators. (Default 1)" },
   { "K", "Sauvola's binarization threshold parameter. (Default: 0.34)" },
@@ -86,16 +88,16 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 3 || (argc > 8 &&  argc != 12))
+  if (argc < 3 || argc > 14)
     return scribo::debug::usage(argv,
 				"Find text lines and elements in a document",
-				"input.* out.xml <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <find_lines> <find_whitespaces> <K> <debug_dir>",
+				"input.* out.xml <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] [language] [find_lines] [find_whitespaces] [K] [debug_dir]",
 				args_desc);
 
   bool debug = false;
 
   // Enable debug output.
-  if (argc == 8 || argc == 12)
+  if (argc == 9 || argc == 13)
   {
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
     debug = true;
@@ -113,10 +115,10 @@ int main(int argc, char* argv[])
   image2d<bool> input;
   {
     double K = 0.34;
-    if (argc == 7  || argc == 8 || argc == 11)
+    if (argc == 8  || argc == 12 || argc >= 12)
     {
-      if (argc == 7)
-	K = atof(argv[6]);
+      if (argc == 8)
+	K = atof(argv[7]);
       else
 	K = atof(argv[argc - 2]);
       std::cout << "Using K = " << K << std::endl;
@@ -150,16 +152,21 @@ int main(int argc, char* argv[])
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
 
-  bool find_line_seps = true;
-  if (argc >= 5 && argc < 12)
-    find_line_seps = (atoi(argv[4]) != 0);
+  std::string language = "eng";
+  if (argc >= 5 && argc < 13)
+    language = argv[4];
 
-  bool find_whitespace_seps = true;
-  if (argc >= 6 && argc < 12)
+  bool find_line_seps = true;
+  if (argc >= 6 && argc < 13)
     find_line_seps = (atoi(argv[5]) != 0);
 
+  bool find_whitespace_seps = true;
+  if (argc >= 7 && argc < 13)
+    find_line_seps = (atoi(argv[6]) != 0);
+
   std::cout << "Running with the following options :"
-	    << "find_lines_seps = " << find_line_seps
+	    << " ocr_language = " << language
+	    << " | find_lines_seps = " << find_line_seps
 	    << " | find_whitespace_seps = " << find_whitespace_seps
 	    << " | debug = " << debug
 	    << std::endl;
@@ -169,8 +176,9 @@ int main(int argc, char* argv[])
   // Text
   std::cout << "Extracting text" << std::endl;
   line_set<L>
-    lines = scribo::toolchain::text_in_doc(input, denoise, find_line_seps,
-					   find_whitespace_seps, debug);
+    lines = scribo::toolchain::text_in_doc(input, denoise, language,
+					   find_line_seps, find_whitespace_seps,
+					   debug);
   doc.set_text(lines);
 
   // Elements

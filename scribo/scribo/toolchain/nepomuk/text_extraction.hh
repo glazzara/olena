@@ -24,8 +24,8 @@
 // executable file might be covered by the GNU General Public License.
 
 
-#ifndef SCRIBO_TOOLCHAIN_TEXT_EXTRACTION_HH
-# define SCRIBO_TOOLCHAIN_TEXT_EXTRACTION_HH
+#ifndef SCRIBO_TOOLCHAIN_NEPOMUK_TEXT_EXTRACTION_HH
+# define SCRIBO_TOOLCHAIN_NEPOMUK_TEXT_EXTRACTION_HH
 
 /// \file
 ///
@@ -77,13 +77,13 @@ namespace scribo
 
        */
       QSet<QString>
-      text_extraction(const QImage& input);
+      text_extraction(const QImage& input, const QString& language);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       QSet<QString>
-      text_extraction(const QImage& input)
+      text_extraction(const QImage& input, const QString& language = QString("eng"))
       {
 	trace::entering("scribo::toolchain::nepomuk::text_extraction");
 
@@ -119,13 +119,19 @@ namespace scribo
 	// Process
 	{
 	  // Run document toolchain.
-	  lines_bg = scribo::toolchain::text_in_doc(input_bin, true, false);
+	  lines_bg = scribo::toolchain::text_in_doc(input_bin,
+						    true,
+						    language.toUtf8().data(),
+						    false);
 
 	  // Negate document.
 	  logical::not_inplace(input_bin);
 
 	  // Run document toolchain.
-	  lines_fg = scribo::toolchain::text_in_doc(input_bin, true, false);
+	  lines_fg = scribo::toolchain::text_in_doc(input_bin,
+						    true,
+						    language.toUtf8().data(),
+						    false);
 	}
 
 
@@ -165,4 +171,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_TOOLCHAIN_TEXT_EXTRACTION_HH
+#endif // ! SCRIBO_TOOLCHAIN_NEPOMUK_TEXT_EXTRACTION_HH
