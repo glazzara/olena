@@ -1,5 +1,14 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Identify separators among non-text components.
+
+	* scribo/core/tag/component.hh: New Separator type.
+
+	* scribo/primitive/identify.hh: identify non-text components
+	type according criterions.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Handle paragraphs correctly in scribo-viewer.
 
 	* demo/viewer/common.hh,

@@ -57,7 +57,8 @@ namespace scribo
       Character,
       Separator,
       Noise,
-      Punctuation
+      Punctuation,
+      Image
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -105,6 +106,9 @@ namespace scribo
 	  break;
 	case Punctuation:
 	  str = "Punctuation";
+	  break;
+	case Image:
+	  str = "Image";
 	  break;
       }
 
