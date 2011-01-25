@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -118,15 +118,10 @@ namespace scribo
 	abort();
       }
       tess.SetPageSegMode(tesseract::PSM_SINGLE_LINE);
+
 #  endif // HAVE_TESSERACT_2
 
       typedef mln_ch_value(L,bool) I;
-      int vals[] = { 0, 9, 0, 9, 0,
-		     9, 6, 4, 6, 9,
-		     0, 4, 0, 4, 0,
-		     9, 6, 4, 6, 9,
-		     0, 9, 0, 9, 0 };
-      w_window2d_int dmap_win = mln::make::w_window2d_int(vals);
 
 
       /// Use text bboxes with Tesseract
@@ -203,7 +198,7 @@ namespace scribo
 	}
 
 	// The string has been allocated by Tesseract. It must be released.
-	free(s);
+	delete [] s;
       }
 
       trace::exiting("scribo::text::recognition");
@@ -289,7 +284,7 @@ namespace scribo
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
-	free(s);
+	delete [] s;
 
 	if (!output_file.empty())
 	  file.close();
