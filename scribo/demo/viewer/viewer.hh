@@ -78,7 +78,7 @@ private:
   void xml_to_layout();
   QPixmap  load_base64(QString xml);
   void add_region(QDomNode father, QString attr_id);
-  void add_text(QDomNode line, QDomNode region);
+  void add_text(QDomNode line);
   QAction *create_action(QString name, QMenu* menu, QString status, QString shortcut);
   void reset_progress_dialog();
 

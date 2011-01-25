@@ -1,5 +1,18 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle paragraphs correctly in scribo-viewer.
+
+	* demo/viewer/common.hh,
+	* demo/viewer/image_region.cc,
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh,
+	* demo/viewer/xml_widget.cc: Get rid of the paragraph node and
+	consider text_region as a paragraph.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add support for paragraphs.
 
 	* scribo/core/document.hh: Add support for paragraphs.

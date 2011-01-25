@@ -119,7 +119,11 @@ void StepWidget::fill_steps(QString file, bool step, bool container)
 	    emit activated(list.first());
 	}
       else
+      {
 	step_ = QString::Null();
+	if (view_->count())
+	  emit activated(view_->item(0));
+      }
     }
 }
 

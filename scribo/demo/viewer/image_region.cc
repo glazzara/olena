@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,9 +41,7 @@ ImageRegion::ImageRegion(region::RegionId id,
     alpha_(50)
 {
   setCursor(Qt::ArrowCursor);
-  if (id_ == region::Paragraph)
-    setZValue(2);
-  else if (id_ == region::Line)
+  if (id_ == region::Line)
     setZValue(3);
   else
     setZValue(1);
@@ -128,9 +127,7 @@ ImageRegion::deselect()
   if (selected_)
   {
     selected_ = false;
-    if (id_ == region::Paragraph)
-      setZValue(2);
-    else if (id_ == region::Line)
+    if (id_ == region::Line)
       setZValue(3);
     else
       setZValue(1);

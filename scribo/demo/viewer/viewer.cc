@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,7 @@ Viewer::Viewer(int &argc, char** argv)
     scene_(new ImageScene()),
     files_(new QDirModel()),
     doc_layout_(0),
-    key_map_(11),
+    key_map_(region::RegionIdCount),
     no_cache_(false),
     extended_mode_(false),
     xml_file_(QString::Null()),
@@ -52,7 +53,6 @@ Viewer::Viewer(int &argc, char** argv)
   // Key map
 
   key_map_[region::Text] = qMakePair(tr("Text Region"), QColor(0, 200, 0));
-  key_map_[region::Paragraph] = qMakePair(tr("Paragraph"), QColor(0, 0, 255));
   key_map_[region::Line] = qMakePair(tr("Text line"), QColor(255, 0, 0));
 
   key_map_[region::Image] = qMakePair(tr("Image"), QColor(255, 120, 0));
@@ -68,7 +68,6 @@ Viewer::Viewer(int &argc, char** argv)
   // Region ids
 
   region_ids_["text_region"] = region::Text;
-  region_ids_["paragraph"] = region::Paragraph;
   region_ids_["line"] = region::Line;
   region_ids_["image_region"] = region::Image;
   region_ids_["noise_region"] = region::Noise;
@@ -297,6 +296,8 @@ Viewer::Viewer(int &argc, char** argv)
 	  this, SLOT(run_progress()));
   connect(&runner_, SIGNAL(xml_saved(const QString&)),
 	  this, SLOT(on_xml_saved(const QString&)));
+
+  extended_action->setChecked(true);
 }
 
 
@@ -308,12 +309,12 @@ Viewer::~Viewer()
 }
 
 void
-Viewer::add_text(QDomNode line, QDomNode region)
+Viewer::add_text(QDomNode line)
 {
 
-  int a_height = region.toElement().attribute("a_height", "0").toInt();
-  int d_height = region.toElement().attribute("d_height", "0").toInt();
-  int x_height = region.toElement().attribute("x_height", "0").toInt();
+  int a_height = line.toElement().attribute("a_height", "0").toInt();
+  int d_height = line.toElement().attribute("d_height", "0").toInt();
+  int x_height = line.toElement().attribute("x_height", "0").toInt();
 
   if (d_height < 0)
     d_height = -d_height;
@@ -324,7 +325,7 @@ Viewer::add_text(QDomNode line, QDomNode region)
   if ( (a_height - x_height) > (d_height))
     d_height = a_height - x_height;
 
-  QDomNode coords = region.firstChild();
+  QDomNode coords = line.firstChild();
 
   while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
     coords = coords.nextSibling();
@@ -523,32 +524,25 @@ Viewer::load_xml(QString filename)
 		}
 	    }
 
-	  //	  if ((extended_mode_ || text_) &&
 	  if (region.toElement().tagName().contains("text_region"))
+	  {
+	    QDomNode line = region.firstChild();
+
+	    do
 	    {
-	      QDomNode para = region.firstChild();
-	      while (!para.isNull() && !para.toElement().tagName().contains("paragraph"))
-		para = para.nextSibling();
+	      while (!line.isNull() && !line.toElement().tagName().contains("line"))
+		line = line.nextSibling();
 
-	      if (!para.isNull())
-		{
-		  if (extended_mode_)
-		    add_region(para, attr_id);
-
-		  QDomNode line = para.firstChild();
-		  while (!line.isNull() && !line.toElement().tagName().contains("line"))
-		    line = line.nextSibling();
-
-		  if (!line.isNull())
-		    {
-		      if (extended_mode_)
-			add_region(line, attr_id);
-		      add_text(line, region);
-		    }
-		}
+	      if (!line.isNull())
+	      {
+		if (extended_mode_)
+		  add_region(line, attr_id);
+		add_text(line);
+	      }
 	    }
-
-        }
+	    while (!(line = line.nextSiblingElement("line")).isNull());
+	  }
+	}
 
       region = region.nextSibling();
     }
@@ -804,8 +798,6 @@ Viewer::export_as()
     runner_.start_export(browser_wgt_->current(), step_widget_->current(), output);
     qDebug() << "Saving to " << output << " - " << browser_wgt_->current() << " - " <<  step_widget_->current();
   }
-
-  qDebug() << "Toggled";
 }
 
 

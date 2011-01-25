@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,12 +36,11 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
   regions_->setCheckState(0, Qt::Checked);
   regions_->setExpanded(true);
 
-  for (int i = 0; i < 3; ++i)
+  for (int i = 0; i < 2; ++i)
     add_item_(key_map.at(i).first, key_map.at(i).second,
-	      i == region::Line ||
-	      i == region::Paragraph, text_);
+	      i == region::Line, text_);
 
-  for (int i = 3; i < key_map.size(); ++i)
+  for (int i = 2; i < key_map.size(); ++i)
     add_item_(key_map.at(i).first, key_map.at(i).second, false, regions_);
 
   QVBoxLayout* layout = new QVBoxLayout;
@@ -89,20 +89,17 @@ void KeyWidget::setAllCheck(QTreeWidgetItem* parent)
 void
 KeyWidget::change_mode(bool b)
 {
-  int id_region = region::Paragraph;
   int id_line = region::Line;
 
   if (b)
     {
       //text_->child(id_region)->setCheckState(0, Qt::Checked);
-      text_->child(id_region)->setHidden(false);
       //      text_->child(id_line)->setCheckState(0, Qt::Checked);
       text_->child(id_line)->setHidden(false);
     }
   else
     {
       //text_->child(id_region)->setCheckState(0, Qt::Unchecked);
-      text_->child(id_region)->setHidden(true);
       //      text_->child(id_line)->setCheckState(0, Qt::Unchecked);
       text_->child(id_line)->setHidden(true);
     }
@@ -140,20 +137,27 @@ KeyWidget::isChecked(region::RegionId id)
 void
 KeyWidget::update(QTreeWidgetItem* item)
 {
-  int id;
-  id = text_->indexOfChild(item);
-  if (id == -1)
-    id = regions_->indexOfChild(item) + 4;
-
-  emit updated(id, item->checkState(0) == Qt::Checked);
-
+  int id = -1;
   if (item == text_ || item == regions_)
+  {
+    setAllCheck(item);
+  }
+  else
+  {
+    id = text_->indexOfChild(item);
+    if (id == -1)
     {
-      setAllCheck(item);
-      return;
+      // +2 since image region id starts from 0 to the number of
+      // region type without considering categories.  There are 2
+      // elements in text category and the rest is in the region's
+      // one.
+      id = regions_->indexOfChild(item) + 2;
     }
+    emit updated(id, item->checkState(0) == Qt::Checked);
+  }
 }
 
 KeyWidget::~KeyWidget()
 {
 }
+

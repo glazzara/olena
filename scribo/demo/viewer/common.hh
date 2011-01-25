@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,7 +25,6 @@ namespace region
   enum RegionId
     {
       Text = 0,
-      Paragraph,
       Line,
       Image,
       Noise,
@@ -33,7 +33,8 @@ namespace region
       LineDrawing,
       Graphic,
       Chart,
-      Maths
+      Maths,
+      RegionIdCount
     };
 }
 

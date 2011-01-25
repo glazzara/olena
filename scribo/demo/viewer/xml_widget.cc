@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,26 +50,12 @@ XmlWidget::select(QString id, QString name)
 {
   QDomNode n = node_map_[item_map_[id]];
 
-  if (name.contains("Paragraph"))
-    {
-      n = n.firstChild();
-      while (!n.isNull() && !n.toElement().tagName().contains("paragraph"))
-	  n = n.nextSibling();
-    }
-
- if (name.contains("Text line"))
-    {
-      n = n.firstChild();
-      while (!n.isNull() && !n.toElement().tagName().contains("paragraph"))
-	  n = n.nextSibling();
-
-      if (!n.isNull())
-	{
-	  n = n.firstChild();
-	  while (!n.isNull() && !n.toElement().tagName().contains("line"))
-	    n = n.nextSibling();
-	}
-    }
+  if (name.contains("Text line"))
+  {
+    n = n.firstChild();
+    while (!n.isNull() && !n.toElement().tagName().contains("line"))
+      n = n.nextSibling();
+  }
 
   if (!n.isNull())
     {
