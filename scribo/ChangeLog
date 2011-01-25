@@ -1,5 +1,9 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/text/recognition.hh: Make use of TessBaseAPI::setImage.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/recognition.hh: Fix invalid free().
 
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>

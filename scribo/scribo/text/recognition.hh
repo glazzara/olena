@@ -180,14 +180,13 @@ namespace scribo
 	    line_image.ncols(),		         // n cols
 	    line_image.nrows());		 // n rows
 #  else // HAVE_TESSERACT_3
-	char* s = tess.TesseractRect(
+	tess.SetImage(
 	  (unsigned char*) line_image.buffer(),
-	  sizeof (bool),			 // Pixel size.
-	  line_image.ncols() * sizeof (bool),    // Row_offset
-	  0,					 // Left
-	  0,					 // Top
 	  line_image.ncols(),		         // n cols
-	  line_image.nrows());		         // n rows
+	  line_image.nrows(),		         // n rows
+	  sizeof (bool),			 // Pixel size.
+	  line_image.ncols() * sizeof (bool));    // Row_offset
+	char* s = tess.GetUTF8Text();
 #  endif // ! HAVE_TESSERACT_2
 
 	if (s != 0)
