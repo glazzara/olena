@@ -43,12 +43,9 @@ int main()
   QImage ima(SCRIBO_IMG_DIR "/wildly.pbm");
   QSet<QString> words = scribo::toolchain::nepomuk::text_extraction(ima);
 
+  words = words.toLower();
   mln_assertion(words.size() == 1);
-
-#ifndef HAVE_TESSERACT_3
-  mln_assertion(words.contains("Wildly"));
-#else // HAVE_TESSERACT_2
   mln_assertion(words.contains("wildly"));
-#endif // ! HAVE_TESSERACT_3
+
   return 0;
 }

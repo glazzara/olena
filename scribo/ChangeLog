@@ -1,3 +1,7 @@
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/toolchain/nepomuk/text_extraction.cc: Fix test.
+
 2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various fixes in Scribo.
