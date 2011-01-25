@@ -36,6 +36,7 @@
 
 # include <scribo/core/component_set.hh>
 # include <scribo/core/line_set.hh>
+# include <scribo/core/paragraph_set.hh>
 
 namespace scribo
 {
@@ -62,6 +63,9 @@ namespace scribo
     bool has_text() const;
     void set_text(const line_set<L>& line);
 
+    const paragraph_set<L>& paragraphs() const;
+    void set_paragraphs(const paragraph_set<L>& parset);
+
     const component_set<L>& elements() const;
     bool has_elements() const;
     void set_elements(const component_set<L>& elements);
@@ -74,6 +78,7 @@ namespace scribo
     mln::image2d<mln::value::rgb8> image_;
 
     line_set<L> lines_;
+    paragraph_set<L> parset_;
     component_set<L> elements_;
   };
 
@@ -165,6 +170,21 @@ namespace scribo
   document<L>::set_text(const line_set<L>& line)
   {
     lines_ = line;
+  }
+
+  template <typename L>
+  const paragraph_set<L>&
+  document<L>::paragraphs() const
+  {
+    return parset_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_paragraphs(const paragraph_set<L>& parset)
+  {
+    parset_ = parset;
   }
 
 

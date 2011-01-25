@@ -1,5 +1,20 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add support for paragraphs.
+
+	* scribo/core/document.hh: Add support for paragraphs.
+
+	* scribo/core/macros.hh: Add new macro for_all_paragraph_lines.
+
+	* scribo/core/line_links.hh,
+	* scribo/core/paragraph_info.hh,
+	* scribo/core/paragraph_set.hh: New. New structures.
+
+	* scribo/filter/line_links_x_height.hh,
+	* scribo/text/link_lines.hh: New. New routine.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/toolchain/nepomuk/text_extraction.cc: Fix test.
 
 2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
