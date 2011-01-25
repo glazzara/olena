@@ -1,5 +1,10 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/io/xml/save.hh: Handle paragraphs and separators correctly
+	in XML output.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Identify separators among non-text components.
 
 	* scribo/core/tag/component.hh: New Separator type.
