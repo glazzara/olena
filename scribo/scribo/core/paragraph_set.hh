@@ -53,9 +53,13 @@ namespace scribo
     paragraph_info<L>& operator()(unsigned i);
     const paragraph_info<L>& operator()(unsigned i) const;
 
+    bool is_valid() const;
+
+    const line_set<L>& lines() const;
 
   private:
     mln::util::array<paragraph_info<L> > pars_;
+    line_set<L> lines_;
   };
 
 
@@ -82,6 +86,7 @@ namespace scribo
   paragraph_set<L>::paragraph_set(const line_links<L>& llinks, unsigned npars)
     : pars_(npars + 1, paragraph_info<L>(llinks))
   {
+    lines_ = llinks.lines();
   }
 
   template <typename L>
@@ -105,6 +110,21 @@ namespace scribo
     return pars_[i];
   }
 
+
+  template <typename L>
+  bool
+  paragraph_set<L>::is_valid() const
+  {
+    return !pars_.is_empty();
+  }
+
+
+  template <typename L>
+  const line_set<L>&
+  paragraph_set<L>::lines() const
+  {
+    return lines_;
+  }
 
 
   namespace make

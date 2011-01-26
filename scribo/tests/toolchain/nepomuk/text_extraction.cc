@@ -43,9 +43,9 @@ int main()
   QImage ima(SCRIBO_IMG_DIR "/wildly.pbm");
   QSet<QString> words = scribo::toolchain::nepomuk::text_extraction(ima);
 
-  words = words.toLower();
   mln_assertion(words.size() == 1);
-  mln_assertion(words.contains("wildly"));
+  QString word = words.toList().at(0).toLower();
+  mln_assertion(word == "wildly");
 
   return 0;
 }

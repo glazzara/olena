@@ -1,5 +1,23 @@
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* scribo/core/paragraph_set.hh,
+	* scribo/core/document.hh: Add new methods.
+
+	* scribo/core/macros.hh: Add a missing macro.
+
+	* scribo/io/xml/save.hh,
+	* scribo/primitive/extract/elements.hh: Make use of the methods in
+	document class.
+
+	* src/pbm_text_in_doc.cc: Add recognized language as an option.
+
+	* tests/toolchain/nepomuk/text_extraction.cc: Make the test not
+	case dependent.
+
+2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an option to choose the recognized language.
 
 	* scribo/toolchain/nepomuk/text_extraction.hh,

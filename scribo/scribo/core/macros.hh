@@ -62,4 +62,7 @@
 # define for_all_anchors(E, S) \
   for_all_elements(E, S)
 
+# define for_all_paragraph_lines(E, S) \
+  for_all_elements(E, S)
+
 #endif // ! SCRIBO_CORE_MACROS_HH

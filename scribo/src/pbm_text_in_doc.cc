@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,6 @@
 
 #include <scribo/preprocessing/crop_without_localization.hh>
 
-#include <scribo/io/xml/save.hh>
 #include <scribo/io/text_boxes/save.hh>
 
 
@@ -65,6 +64,7 @@ for the background." },
   { "pmin_col", "Col index of the top left corner of the Region of interest." },
   { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
   { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
+  { "language", "Language to be used for the text recognition. [eng|fra] (Default: eng)" },
   { "find_lines", "Find vertical lines. (Default 1)" },
   { "find_whitespaces", "Find whitespaces separators. (Default 1)" },
   { "debug_dir", "Output directory for debug image" },
@@ -77,16 +77,16 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 3 && argc != 4 && argc != 5 && argc != 8 && argc != 9)
+  if (argc < 3 || argc > 12)
     return scribo::debug::usage(argv,
 				"Find text lines using left/right validation and display x-height in a binarized article.",
-				"input.pbm out.txt <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <find_lines> <find_whitespaces> <debug_dir>",
+				"input.pbm out.txt <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <language> <find_lines> <find_whitespaces> <debug_dir>",
 				args_desc);
 
   bool debug = false;
 
   // Enable debug output.
-  if (argc == 7 || argc == 11)
+  if (argc == 8 || argc == 12)
   {
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
     debug = true;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
-  if (argc >= 11)
+  if (argc >= 12)
   {
     mln::def::coord
       minr = atoi(argv[4]),
@@ -120,13 +120,24 @@ int main(int argc, char* argv[])
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
 
+  std::string language = "eng";
+  if (argc > 4 && argc < 12)
+    language = argv[4];
+  else if (argc == 12)
+    language = argv[8];
+
   bool find_line_seps = true;
-  if (argc >= 4 && argc < 11)
-    find_line_seps = (atoi(argv[3]) != 0);
+  if (argc > 5 && argc < 12)
+    find_line_seps = (atoi(argv[5]) != 0);
+  else if (argc == 12)
+    find_line_seps = (atoi(argv[9]) != 0);
 
   bool find_whitespace_seps = true;
-  if (argc >= 5 && argc < 11)
-    find_line_seps = (atoi(argv[4]) != 0);
+  if (argc > 6 && argc < 12)
+    find_whitespace_seps = (atoi(argv[6]) != 0);
+  else if (argc == 12)
+    find_whitespace_seps = (atoi(argv[10]) != 0);
+
 
   std::cout << "Running with the following options :"
 	    << "find_lines_seps = " << find_line_seps
@@ -136,15 +147,12 @@ int main(int argc, char* argv[])
 
   // Run document toolchain.
   line_set<L>
-    lines = scribo::toolchain::text_in_doc(input, denoise, find_line_seps,
+    lines = scribo::toolchain::text_in_doc(input, denoise,
+					   language, find_line_seps,
 					   find_whitespace_seps, debug);
 
   scribo::document<L> doc;
   doc.set_filename(argv[1]);
-  doc.set_text(lines);
-
-  // Saving results
-  scribo::io::xml::save(doc, "out.xml", true);
 
   // Specify shift due to potential previous crop.
   scribo::io::text_boxes::save(lines, argv[2], crop_shift);

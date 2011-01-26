@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,15 +60,24 @@ namespace scribo
 
     bool is_valid() const;
 
-    const line_set<L>& text() const;
+    /*! \brief Check whether this document contains text.
+
+      If it returns true, that document contains paragraphs, lines and
+      text components.
+
+     */
     bool has_text() const;
-    void set_text(const line_set<L>& line);
+
+    mln::def::coord height() const;
+    mln::def::coord width() const;
+
+    const line_set<L>& lines() const;
 
     const paragraph_set<L>& paragraphs() const;
     void set_paragraphs(const paragraph_set<L>& parset);
 
-    const component_set<L>& elements() const;
     bool has_elements() const;
+    const component_set<L>& elements() const;
     void set_elements(const component_set<L>& elements);
 
     const mln::image2d<value::rgb8>& image() const;
@@ -150,10 +160,18 @@ namespace scribo
 
 
   template <typename L>
-  const line_set<L>&
-  document<L>::text() const
+  mln::def::coord
+  document<L>::width() const
   {
-    return lines_;
+    return image_.ncols();
+  }
+
+
+  template <typename L>
+  mln::def::coord
+  document<L>::height() const
+  {
+    return image_.nrows();
   }
 
 
@@ -161,16 +179,17 @@ namespace scribo
   bool
   document<L>::has_text() const
   {
-    return lines_.is_valid();
+    return parset_.is_valid();
   }
 
 
   template <typename L>
-  void
-  document<L>::set_text(const line_set<L>& line)
+  const line_set<L>&
+  document<L>::lines() const
   {
-    lines_ = line;
+    return parset_.lines();
   }
+
 
   template <typename L>
   const paragraph_set<L>&

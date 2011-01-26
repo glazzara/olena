@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -114,7 +115,7 @@ namespace scribo
 	mln_precondition(doc.is_valid());
 	mln_precondition(input.is_valid());
 
-	const line_set<L>& lines = doc.text();
+	const line_set<L>& lines = doc.lines();
 
 	// Element extraction
 

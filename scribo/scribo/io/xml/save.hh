@@ -130,9 +130,6 @@ namespace scribo
 	    abort();
 	  }
 
-	  const line_set<L>& lines = doc.text();
-	  const paragraph_set<L>& parset = doc.paragraphs();
-
 	  std::map<char, std::string> html_map;
 	  html_map['\"'] = "&quot;";
 	  html_map['<'] = "&lt;";
@@ -150,13 +147,16 @@ namespace scribo
 	  file << "  </pcMetadata>" << std::endl;
 
 	  file << "  <page image_filename=\"" << doc.filename()
-	       << "\" image_width=\"" << lines.components().labeled_image().ncols()
-	       << "\" image_height=\"" << lines.components().labeled_image().nrows()
+	       << "\" image_width=\"" << doc.width()
+	       << "\" image_height=\"" << doc.height()
 	       << "\">" << std::endl;
 
 	  // Text
 	  if (doc.has_text())
 	  {
+	    const line_set<L>& lines = doc.lines();
+	    const paragraph_set<L>& parset = doc.paragraphs();
+
 	    for_all_paragraphs(p, parset)
 	    {
 	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
@@ -224,9 +224,6 @@ namespace scribo
 	    abort();
 	  }
 
-	  const line_set<L>& lines = doc.text();
-	  const paragraph_set<L>& parset = doc.paragraphs();
-
 	  std::map<char, std::string> html_map;
 	  html_map['\"'] = "&quot;";
 	  html_map['<'] = "&lt;";
@@ -244,13 +241,16 @@ namespace scribo
 	  file << "  </pcMetadata>" << std::endl;
 
 	  file << "  <page image_filename=\"" << doc.filename()
-	       << "\" image_width=\"" << lines.components().labeled_image().ncols()
-	       << "\" image_height=\"" << lines.components().labeled_image().nrows()
+	       << "\" image_width=\"" << doc.width()
+	       << "\" image_height=\"" << doc.height()
 	       << "\">" << std::endl;
 
 	  // Text
 	  if (doc.has_text())
 	  {
+	    const line_set<L>& lines = doc.lines();
+	    const paragraph_set<L>& parset = doc.paragraphs();
+
 	    for_all_paragraphs(p, parset)
 	    {
 	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
