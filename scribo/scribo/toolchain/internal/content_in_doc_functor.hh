@@ -30,14 +30,20 @@
 
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/core/document.hh>
+# include <scribo/core/line_set.hh>
+# include <scribo/core/paragraph_set.hh>
 
 # include <scribo/primitive/extract/elements.hh>
 # include <scribo/primitive/extract/components.hh>
 # include <scribo/primitive/extract/vertical_separators.hh>
 # include <scribo/primitive/extract/separators_nonvisible.hh>
+# include <scribo/primitive/extract/elements.hh>
+
+# include <scribo/primitive/identify.hh>
 
 # include <scribo/primitive/remove/separators.hh>
 
+# include <scribo/filter/line_links_x_height.hh>
 # include <scribo/filter/object_links_bbox_h_ratio.hh>
 # include <scribo/filter/objects_small.hh>
 
@@ -52,6 +58,7 @@
 
 # include <scribo/text/recognition.hh>
 # include <scribo/text/merging.hh>
+# include <scribo/text/link_lines.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -336,6 +343,7 @@ namespace scribo
 	lines = scribo::text::merging(lines);
 
 
+	//===== DEBUG =====
 	if (enable_debug)
 	{
 
@@ -353,23 +361,115 @@ namespace scribo
 
 
 	}
+	//===== END OF DEBUG =====
 
 	on_progress();
 
+
+	// Text recognition
 	on_new_progress_label("Recognizing text");
-
 	scribo::text::recognition(lines, ocr_language.c_str());
-	doc.set_text(lines);
 
 	on_progress();
+
+
+	// Link text lines
+	on_new_progress_label("Linking text lines");
+	line_links<L> llinks = scribo::text::link_lines(lines);
+
+
+	//===== DEBUG =====
+	if (enable_debug)
+	{
+	  image2d<value::rgb8> debug = data::convert(value::rgb8(), original_image);
+	  for_all_lines(l, lines)
+	  {
+	    if (! lines(l).is_valid() || lines(l).is_hidden() || lines(l).type() != line::Text)
+	      continue;
+
+	    mln::draw::box(debug, lines(l).bbox(), literal::blue);
+	    mln::draw::line(debug, lines(l).bbox().pcenter(), lines(llinks(l)).bbox().pcenter(), literal::green);
+	  }
+
+	  mln::io::ppm::save(debug, scribo::make::debug_filename("links_raw.ppm"));
+	}
+	//===== END OF DEBUG =====
+
+	on_progress();
+
+
+	// Filter line links.
+	on_new_progress_label("Filter line links");
+	llinks = scribo::filter::line_links_x_height(llinks);
+
+	//===== DEBUG =====
+	if (enable_debug)
+	{
+	  image2d<value::rgb8> debug = data::convert(value::rgb8(), original_image);
+	  for_all_links(i, llinks)
+	    if (llinks(i) && llinks(i) != i)
+	      mln::draw::line(debug, lines(i).bbox().pcenter(),
+			      lines(llinks(i)).bbox().pcenter(), literal::red);
+
+	  mln::io::ppm::save(debug, scribo::make::debug_filename("links.ppm"));
+
+
+	  for (unsigned i = 1; i < llinks.nelements(); ++i)
+	    llinks(i) = scribo::make::internal::find_root(llinks, i);
+
+	  debug = data::convert(value::rgb8(), original_image);
+	  mln::util::array<accu::shape::bbox<point2d> > nbbox(llinks.nelements());
+	  for_all_lines(i, lines)
+	  {
+	    if (! lines(i).is_valid() || lines(i).is_hidden() || lines(i).type() != line::Text)
+	      continue;
+
+	    mln::draw::box(debug, lines(i).bbox(), literal::red);
+	    nbbox(llinks(i)).take(lines(i).bbox());
+	  }
+
+	  for (unsigned i = 1; i < nbbox.nelements(); ++i)
+	    if (nbbox(i).is_valid())
+	    {
+	      box2d b = nbbox(i).to_result();
+	      mln::draw::box(debug, b, literal::green);
+	      b.enlarge(1);
+	      mln::draw::box(debug, b, literal::green);
+	      b.enlarge(1);
+	      mln::draw::box(debug, b, literal::green);
+	    }
+
+	  mln::io::ppm::save(debug, scribo::make::debug_filename("par.ppm"));
+	}
+	//===== END OF DEBUG =====
+
+	on_progress();
+
+
+	// Construct paragraphs
+	on_new_progress_label("Constructing paragraphs");
+	scribo::paragraph_set<L> parset = scribo::make::paragraph(llinks);
+	doc.set_paragraphs(parset);
+
+	on_progress();
+
 
 	// Extract other Elements
 	on_new_progress_label("Extracting Elements");
 	component_set<L>
 	  elements = scribo::primitive::extract::elements(doc, original_image);
+
+	on_progress();
+
+
+	// Identify other Elements
+	on_new_progress_label("Identifying Elements");
+	elements = scribo::primitive::identify(elements);
 	doc.set_elements(elements);
 
 	on_progress();
+
+
 
 	// Saving results
 	if (save_doc_as_xml)
@@ -391,7 +491,7 @@ namespace scribo
       int
       content_in_doc_functor<I>::nsteps() const
       {
-	return 7 + enable_denoising + enable_line_seps
+	return 11 + enable_denoising + enable_line_seps
 	  + enable_whitespace_seps + save_doc_as_xml;
       }
 

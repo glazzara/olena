@@ -1,3 +1,14 @@
+2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add paragraph processing in content_in_doc toolchain.
+
+	* scribo/toolchain/content_in_doc.hh: New.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Use
+	paragraph related routines.
+
+	* src/content_in_doc.cc: Update use of content_in_doc_functor.
+
 2011-01-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo.

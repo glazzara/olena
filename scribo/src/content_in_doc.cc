@@ -30,38 +30,23 @@
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/save.hh>
 #include <mln/io/magick/load.hh>
 
-#include <mln/value/label_8.hh>
-
-#include <mln/core/var.hh>
-
-#include <mln/accu/count_value.hh>
-
-#include <mln/draw/box_plain.hh>
-
-
-#include <scribo/toolchain/text_in_doc.hh>
+#include <scribo/toolchain/content_in_doc.hh>
 #include <scribo/toolchain/text_in_doc_preprocess.hh>
 
 #include <scribo/core/document.hh>
-#include <scribo/core/line_set.hh>
 
 #include <scribo/debug/usage.hh>
 
 #include <scribo/make/debug_filename.hh>
 
-#include <scribo/primitive/extract/elements.hh>
-
 #include <scribo/preprocessing/crop_without_localization.hh>
 #include <scribo/preprocessing/crop.hh>
 
 #include <scribo/io/xml/save.hh>
-#include <scribo/io/text_boxes/save.hh>
-
 
 
 const char *args_desc[][2] =
@@ -108,11 +93,11 @@ int main(int argc, char* argv[])
   Magick::InitializeMagick(*argv);
 
   typedef image2d<scribo::def::lbl_type> L;
-  scribo::document<L> doc(argv[1]);
-  doc.open();
+  image2d<value::rgb8> input;
+  mln::io::magick::load(input, argv[1]);
 
   // Preprocess document
-  image2d<bool> input;
+  image2d<bool> input_preproc;
   {
     double K = 0.34;
     if (argc == 8  || argc == 12 || argc >= 12)
@@ -125,7 +110,7 @@ int main(int argc, char* argv[])
     }
 
     image2d<bool> tmp_fg;
-    input = toolchain::text_in_doc_preprocess(doc.image(), false, K);
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, K);
   }
 
   // Optional Cropping
@@ -142,12 +127,12 @@ int main(int argc, char* argv[])
 	      << " to (" << maxr << "," << maxc << ")" << std::endl;
 
     box2d roi = mln::make::box2d(minr, minc, maxr, maxc);
-    input = preprocessing::crop_without_localization(input, roi);
+    input_preproc = preprocessing::crop_without_localization(input_preproc, roi);
     crop_shift = point2d(minr, minc);
 
     if (debug)
-      mln::io::pbm::save(input,
-			 scribo::make::debug_filename("input_cropped.pbm"));
+      mln::io::pbm::save(input_preproc,
+			 scribo::make::debug_filename("input_preproc_cropped.pbm"));
   }
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
@@ -174,18 +159,11 @@ int main(int argc, char* argv[])
   // Run document toolchain.
 
   // Text
-  std::cout << "Extracting text" << std::endl;
-  line_set<L>
-    lines = scribo::toolchain::text_in_doc(input, denoise, language,
-					   find_line_seps, find_whitespace_seps,
-					   debug);
-  doc.set_text(lines);
-
-  // Elements
-  std::cout << "Extracting Elements" << std::endl;
-  component_set<L> elements = scribo::primitive::extract::elements(doc, input);
-  doc.set_elements(elements);
-
+  std::cout << "Analysing document..." << std::endl;
+  document<L>
+    doc = scribo::toolchain::content_in_doc(input, input_preproc, denoise, language,
+					    find_line_seps, find_whitespace_seps,
+					    debug);
 
   // Saving results
   scribo::io::xml::save(doc, argv[2], true);
