@@ -1,5 +1,12 @@
 2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add paragraph processing in content_in_doc toolchain.
 
 	* scribo/toolchain/content_in_doc.hh: New.

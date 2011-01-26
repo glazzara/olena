@@ -26,10 +26,13 @@ scribo/core/document.hh \
 scribo/core/erase_objects.hh \
 scribo/core/init_integral_image.hh \
 scribo/core/line_info.hh \
+scribo/core/line_links.hh \
 scribo/core/line_set.hh \
 scribo/core/macros.hh \
 scribo/core/object_groups.hh \
 scribo/core/object_links.hh \
+scribo/core/paragraph_info.hh \
+scribo/core/paragraph_set.hh \
 scribo/core/tag/anchor.hh \
 scribo/core/tag/component.hh \
 scribo/core/tag/line.hh \
@@ -61,6 +64,7 @@ scribo/filter/common/objects_photo.hh \
 scribo/filter/internal/alignment_angle.hh \
 scribo/filter/internal/component_aligned.hh \
 scribo/filter/internal/compute.hh \
+scribo/filter/line_links_x_height.hh \
 scribo/filter/object_groups_size_ratio.hh \
 scribo/filter/object_groups_small.hh \
 scribo/filter/object_groups_v_thickness.hh \
@@ -135,6 +139,7 @@ scribo/primitive/group/from_double_link.hh \
 scribo/primitive/group/from_double_link_any.hh \
 scribo/primitive/group/from_graph.hh \
 scribo/primitive/group/from_single_link.hh \
+scribo/primitive/identify.hh \
 scribo/primitive/internal/all.hh \
 scribo/primitive/internal/find_graph_link.hh \
 scribo/primitive/internal/find_root.hh \
@@ -198,9 +203,11 @@ scribo/text/all.hh \
 scribo/text/clean.hh \
 scribo/text/clean_inplace.hh \
 scribo/text/extract_lines.hh \
+scribo/text/link_lines.hh \
 scribo/text/look_like_text_lines.hh \
 scribo/text/merging.hh \
 scribo/text/recognition.hh \
+scribo/toolchain/content_in_doc.hh \
 scribo/toolchain/internal/content_in_doc_functor.hh \
 scribo/toolchain/internal/text_in_doc_functor.hh \
 scribo/toolchain/internal/text_in_doc_preprocess_functor.hh \

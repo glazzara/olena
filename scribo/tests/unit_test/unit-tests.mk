@@ -76,10 +76,13 @@ scribo_core_document \
 scribo_core_erase_objects \
 scribo_core_init_integral_image \
 scribo_core_line_info \
+scribo_core_line_links \
 scribo_core_line_set \
 scribo_core_macros \
 scribo_core_object_groups \
 scribo_core_object_links \
+scribo_core_paragraph_info \
+scribo_core_paragraph_set \
 scribo_core_tag_anchor \
 scribo_core_tag_component \
 scribo_core_tag_line \
@@ -111,6 +114,7 @@ scribo_filter_common_objects_photo \
 scribo_filter_internal_alignment_angle \
 scribo_filter_internal_component_aligned \
 scribo_filter_internal_compute \
+scribo_filter_line_links_x_height \
 scribo_filter_object_groups_size_ratio \
 scribo_filter_object_groups_small \
 scribo_filter_object_groups_v_thickness \
@@ -185,6 +189,7 @@ scribo_primitive_group_from_double_link \
 scribo_primitive_group_from_double_link_any \
 scribo_primitive_group_from_graph \
 scribo_primitive_group_from_single_link \
+scribo_primitive_identify \
 scribo_primitive_internal_all \
 scribo_primitive_internal_find_graph_link \
 scribo_primitive_internal_find_root \
@@ -244,8 +249,10 @@ scribo_text_all \
 scribo_text_clean \
 scribo_text_clean_inplace \
 scribo_text_extract_lines \
+scribo_text_link_lines \
 scribo_text_look_like_text_lines \
 scribo_text_merging \
+scribo_toolchain_content_in_doc \
 scribo_toolchain_internal_text_in_doc_preprocess_functor \
 scribo_toolchain_internal_toolchain_functor \
 scribo_toolchain_text_in_doc_preprocess \
@@ -277,10 +284,13 @@ scribo_core_document_SOURCES = scribo_core_document.cc
 scribo_core_erase_objects_SOURCES = scribo_core_erase_objects.cc
 scribo_core_init_integral_image_SOURCES = scribo_core_init_integral_image.cc
 scribo_core_line_info_SOURCES = scribo_core_line_info.cc
+scribo_core_line_links_SOURCES = scribo_core_line_links.cc
 scribo_core_line_set_SOURCES = scribo_core_line_set.cc
 scribo_core_macros_SOURCES = scribo_core_macros.cc
 scribo_core_object_groups_SOURCES = scribo_core_object_groups.cc
 scribo_core_object_links_SOURCES = scribo_core_object_links.cc
+scribo_core_paragraph_info_SOURCES = scribo_core_paragraph_info.cc
+scribo_core_paragraph_set_SOURCES = scribo_core_paragraph_set.cc
 scribo_core_tag_anchor_SOURCES = scribo_core_tag_anchor.cc
 scribo_core_tag_component_SOURCES = scribo_core_tag_component.cc
 scribo_core_tag_line_SOURCES = scribo_core_tag_line.cc
@@ -312,6 +322,7 @@ scribo_filter_common_objects_photo_SOURCES = scribo_filter_common_objects_photo.
 scribo_filter_internal_alignment_angle_SOURCES = scribo_filter_internal_alignment_angle.cc
 scribo_filter_internal_component_aligned_SOURCES = scribo_filter_internal_component_aligned.cc
 scribo_filter_internal_compute_SOURCES = scribo_filter_internal_compute.cc
+scribo_filter_line_links_x_height_SOURCES = scribo_filter_line_links_x_height.cc
 scribo_filter_object_groups_size_ratio_SOURCES = scribo_filter_object_groups_size_ratio.cc
 scribo_filter_object_groups_small_SOURCES = scribo_filter_object_groups_small.cc
 scribo_filter_object_groups_v_thickness_SOURCES = scribo_filter_object_groups_v_thickness.cc
@@ -386,6 +397,7 @@ scribo_primitive_group_from_double_link_SOURCES = scribo_primitive_group_from_do
 scribo_primitive_group_from_double_link_any_SOURCES = scribo_primitive_group_from_double_link_any.cc
 scribo_primitive_group_from_graph_SOURCES = scribo_primitive_group_from_graph.cc
 scribo_primitive_group_from_single_link_SOURCES = scribo_primitive_group_from_single_link.cc
+scribo_primitive_identify_SOURCES = scribo_primitive_identify.cc
 scribo_primitive_internal_all_SOURCES = scribo_primitive_internal_all.cc
 scribo_primitive_internal_find_graph_link_SOURCES = scribo_primitive_internal_find_graph_link.cc
 scribo_primitive_internal_find_root_SOURCES = scribo_primitive_internal_find_root.cc
@@ -445,8 +457,10 @@ scribo_text_all_SOURCES = scribo_text_all.cc
 scribo_text_clean_SOURCES = scribo_text_clean.cc
 scribo_text_clean_inplace_SOURCES = scribo_text_clean_inplace.cc
 scribo_text_extract_lines_SOURCES = scribo_text_extract_lines.cc
+scribo_text_link_lines_SOURCES = scribo_text_link_lines.cc
 scribo_text_look_like_text_lines_SOURCES = scribo_text_look_like_text_lines.cc
 scribo_text_merging_SOURCES = scribo_text_merging.cc
+scribo_toolchain_content_in_doc_SOURCES = scribo_toolchain_content_in_doc.cc
 scribo_toolchain_internal_text_in_doc_preprocess_functor_SOURCES = scribo_toolchain_internal_text_in_doc_preprocess_functor.cc
 scribo_toolchain_internal_toolchain_functor_SOURCES = scribo_toolchain_internal_toolchain_functor.cc
 scribo_toolchain_text_in_doc_preprocess_SOURCES = scribo_toolchain_text_in_doc_preprocess.cc
