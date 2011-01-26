@@ -1,5 +1,12 @@
 2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of paragraph information in HTML output.
+
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl: Here.
+
+2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Regen generated files.
 
 	* headers.mk,
