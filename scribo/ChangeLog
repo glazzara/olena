@@ -1,5 +1,9 @@
 2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* demo/xml2doc/Makefile.am: Fix generated file dependency.
+
+2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix missing includes.
 
 	* scribo/filter/line_links_x_height.hh,

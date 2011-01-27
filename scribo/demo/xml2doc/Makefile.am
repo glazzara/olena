@@ -39,7 +39,8 @@ scribo_xml2doc_LDADD    = $(QT_LIBS) $(LDADD)
 BUILT_SOURCES = common.moc.cc			\
 		image_crop.moc.cc		\
 		loader.moc.cc			\
-		xml_transform.moc.cc
+		xml_transform.moc.cc 		\
+		datarootdir.hh
 
 
 noinst_HEADERS = common.hh 			\
