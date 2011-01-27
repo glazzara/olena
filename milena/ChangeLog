@@ -1,3 +1,7 @@
+2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/convert/to_qimage_nocopy.cc: Fix a warning.
+
 2011-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a serious bug with gcc 4.5 and later.
