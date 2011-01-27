@@ -32,6 +32,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/line_set.hh>
+# include <scribo/core/line_links.hh>
 
 
 namespace scribo

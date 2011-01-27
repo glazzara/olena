@@ -1,3 +1,10 @@
+2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix missing includes.
+
+	* scribo/filter/line_links_x_height.hh,
+	* scribo/primitive/identify.hh: Here.
+
 2011-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make use of paragraph information in HTML output.

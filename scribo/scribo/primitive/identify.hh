@@ -31,6 +31,9 @@
 \fixme Add support for more component type (graphic, images, ...)
  */
 
+# include <mln/trace/all.hh>
+# include <scribo/core/component_set.hh>
+
 namespace scribo
 {
 
@@ -41,7 +44,7 @@ namespace scribo
     component_set<L>
     identify(const component_set<L> comps)
     {
-      trace::entering("scribo::primitive::identify");
+      mln::trace::entering("scribo::primitive::identify");
 
       mln_assertion(comps.is_valid());
 
@@ -61,7 +64,7 @@ namespace scribo
 	    output(c).update_type(component::Separator);
 	}
 
-      trace::exiting("scribo::primitive::identify");
+      mln::trace::exiting("scribo::primitive::identify");
       return output;
     }
 
