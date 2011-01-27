@@ -2,30 +2,30 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="1.0">
 
   <!-- FILE: line.xsl
-       DESCRIPTION: match all pcGts/page/text_region/paragraph/line in order to display the "text" attributes
+       DESCRIPTION: match all pcGts/page/text_region/line in order to display the "text" attributes
     -->
 
-  <xsl:template match="pcGts/page/text_region/paragraph/line">
+  <xsl:template match="pcGts/page/text_region/line">
 
     <!-- x_height -->
     <xsl:variable name="x_height">
-      <xsl:value-of select="../../@x_height" />
+      <xsl:value-of select="@x_height" />
     </xsl:variable>
 
     <!-- a_height -->
     <xsl:variable name="a_height">
-      <xsl:value-of select="../../@a_height" />
+      <xsl:value-of select="@a_height" />
     </xsl:variable>
 
 
     <!-- ABS(d_height) -->
     <xsl:variable name="d_height_abs">
       <xsl:choose>
-	<xsl:when test="../../@d_height &lt; 0">
-	  <xsl:value-of select="-../../@d_height" />
+	<xsl:when test="@d_height &lt; 0">
+	  <xsl:value-of select="-@d_height" />
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="../../@d_height" />
+	  <xsl:value-of select="@d_height" />
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -106,8 +106,8 @@
      <!-- Text Colour -->
      <xsl:variable name="colour">
        <xsl:choose>
-	 <xsl:when test="../../@txt_colour != ''">
-	   <xsl:value-of select="translate(../../@txt_colour,  $smallcase, $uppercase)" />
+	 <xsl:when test="@txt_colour != ''">
+	   <xsl:value-of select="translate(@txt_colour,  $smallcase, $uppercase)" />
 	 </xsl:when>
 	 <xsl:otherwise>
 	   black
