@@ -44,7 +44,12 @@ List of available COMMAND argument:
 
      doc-ppc	       Common preprocessing before looking for text.
 
-     doc-ocr           Find and recognize text.
+     doc-ocr           Find and recognize text. Output: the actual text
+     		       and its location.
+
+     doc-dia           Analyse the document structure and extract the
+     		       text. Output: an XML file with region and text
+     		       information.
 
 
 
@@ -99,6 +104,10 @@ run_cmd()
 
 	doc-ocr)
 	    $bdir/pbm_text_in_doc $@
+	    ;;
+
+	doc-dia)
+	    $bdir/content_in_doc $@
 	    ;;
 
 	pic-loc)
