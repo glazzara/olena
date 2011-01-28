@@ -1,5 +1,9 @@
 2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes
 
 	* scribo/binarization/sauvola_ms.hh: Add comments.
