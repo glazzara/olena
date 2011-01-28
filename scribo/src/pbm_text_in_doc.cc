@@ -101,13 +101,16 @@ int main(int argc, char* argv[])
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
-  if (argc >= 12)
+  if (argc >= 9)
   {
     mln::def::coord
       minr = atoi(argv[4]),
       minc = atoi(argv[5]),
       maxr = atoi(argv[6]),
       maxc = atoi(argv[7]);
+
+    std::cout << "> Image cropped from (" << minr << "," << minc << ")"
+	      << " to (" << maxr << "," << maxc << ")" << std::endl;
 
     box2d roi = mln::make::box2d(minr, minc, maxr, maxc);
     input = preprocessing::crop_without_localization(input, roi);
@@ -121,26 +124,27 @@ int main(int argc, char* argv[])
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
 
   std::string language = "eng";
-  if (argc > 4 && argc < 12)
+  if (argc > 4 && argc < 10)
     language = argv[4];
-  else if (argc == 12)
+  else if (argc >= 9)
     language = argv[8];
 
   bool find_line_seps = true;
-  if (argc > 5 && argc < 12)
+  if (argc > 5 && argc < 10)
     find_line_seps = (atoi(argv[5]) != 0);
-  else if (argc == 12)
+  else if (argc >= 10)
     find_line_seps = (atoi(argv[9]) != 0);
 
   bool find_whitespace_seps = true;
-  if (argc > 6 && argc < 12)
+  if (argc > 6 && argc < 10)
     find_whitespace_seps = (atoi(argv[6]) != 0);
-  else if (argc == 12)
+  else if (argc >= 11)
     find_whitespace_seps = (atoi(argv[10]) != 0);
 
 
   std::cout << "Running with the following options :"
-	    << "find_lines_seps = " << find_line_seps
+	    << " ocr language = " << language
+	    << " | find_lines_seps = " << find_line_seps
 	    << " | find_whitespace_seps = " << find_whitespace_seps
 	    << " | debug = " << debug
 	    << std::endl;

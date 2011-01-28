@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +17,8 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-COND_TESTS = cond_tests_qt 			\
+COND_TESTS = cond_tests_magickxx_tesseract_tiff \
+	     cond_tests_qt 			\
 	     cond_tests_qt_tesseract_tiff	\
 	     cond_tests_tesseract_tiff
 

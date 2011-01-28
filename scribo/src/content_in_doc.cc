@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
   image2d<bool> input_preproc;
   {
     double K = 0.34;
-    if (argc == 8  || argc == 12 || argc >= 12)
+    if (argc == 8  || argc >= 12)
     {
       if (argc == 8)
 	K = atof(argv[7]);
@@ -140,14 +140,20 @@ int main(int argc, char* argv[])
   std::string language = "eng";
   if (argc >= 5 && argc < 13)
     language = argv[4];
+  else if (argc >= 12)
+    language = argv[8];
 
   bool find_line_seps = true;
   if (argc >= 6 && argc < 13)
     find_line_seps = (atoi(argv[5]) != 0);
+  else if (argc >= 12)
+    find_line_seps = (atoi(argv[9]) != 0);
 
   bool find_whitespace_seps = true;
   if (argc >= 7 && argc < 13)
-    find_line_seps = (atoi(argv[6]) != 0);
+    find_whitespace_seps = (atoi(argv[6]) != 0);
+  else if (argc >= 12)
+    find_whitespace_seps = (atoi(argv[10]) != 0);
 
   std::cout << "Running with the following options :"
 	    << " ocr_language = " << language

@@ -1,5 +1,22 @@
 2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes
+
+	* scribo/binarization/sauvola_ms.hh: Add comments.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Initialize
+	a local variable.
+
+	* src/content_in_doc.cc,
+	* src/pbm_text_in_doc.cc: Fix option processing.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/cond_tests_magickxx_tesseract_tiff,
+	* tests/unit_test/cond_tests_tesseract_tiff: Change test
+	condition.
+
+2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/scribo-cli.in: Add content_in_doc entry.
 
 2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>

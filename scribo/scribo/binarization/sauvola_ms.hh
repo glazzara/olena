@@ -280,6 +280,8 @@ namespace scribo
 
 	typedef const mln_value(K)* ptr_type;
 
+	// Warning: if there are pixels with value different from 2, 3
+	// or 4 in e2, it will crash because of that array...
 	ptr_type ptr_t[5];
 	ptr_t[2] = & t_ima[2].at_(0, 0);
 	ptr_t[3] = & t_ima[3].at_(0, 0);
@@ -301,8 +303,8 @@ namespace scribo
 	  more_offset = 0; // No offset needed.
 
 	const int
-	  nrows4 = t_ima[4].nrows(), ncols4 = t_ima[4].ncols(),
-
+	  nrows4 = t_ima[4].nrows(),
+	  ncols4 = t_ima[4].ncols(),
 
 	  delta1  = in.delta_index(dpoint2d(+1, -(s - 1))),
 	  delta1b = in.delta_index(dpoint2d(+1, -(s + s - 1))),
