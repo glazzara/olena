@@ -22,10 +22,10 @@
 #include "viewer.hh"
 #include "key_widget.hh"
 #include "browser_widget.hh"
-#include "image_widget.hh"
 #include "xml_widget.hh"
 #include "step_widget.hh"
 #include "image_scene.hh"
+#include "image_view.hh"
 #include "image_region.hh"
 #include "help_dialog.hh"
 #include "preferences_dialog.hh"
@@ -104,6 +104,23 @@ Viewer::Viewer(int &argc, char** argv)
 	  this, SLOT(export_as()));
   file_menu->addAction(export_action_);
   export_action_->setEnabled(false);
+
+  file_menu->addSeparator();
+
+  QAction *preview_print_action = create_action("Printing preview", file_menu,
+					"Printint preview", "Ctrl+P");
+  connect(preview_print_action, SIGNAL(triggered()),
+	  this, SLOT(preview_print()));
+  file_menu->addAction(preview_print_action);
+  preview_print_action->setEnabled(false);
+
+
+  QAction *print_action = create_action("Print", file_menu,
+					"Print", "Ctrl+P");
+  connect(print_action, SIGNAL(triggered()),
+	  this, SLOT(print()));
+  file_menu->addAction(print_action);
+  print_action->setEnabled(false);
 
   file_menu->addSeparator();
 
@@ -220,10 +237,14 @@ Viewer::Viewer(int &argc, char** argv)
   step_widget_ = new StepWidget();
   XmlWidget* xml_wgt = new XmlWidget();
   browser_wgt_ = new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
-  ImageWidget* image_wgt = new ImageWidget(scene_);
+  image_wgt_ = new ImageWidget(scene_);
 
   connect(step_widget_, SIGNAL(step_selected(bool)),
 	  export_action_, SLOT(setEnabled(bool)));
+  connect(step_widget_, SIGNAL(step_selected(bool)),
+	  print_action, SLOT(setEnabled(bool)));
+  connect(step_widget_, SIGNAL(step_selected(bool)),
+	  preview_print_action, SLOT(setEnabled(bool)));
 
   scene_->setBackgroundBrush(scene_->palette().window());
 
@@ -231,7 +252,7 @@ Viewer::Viewer(int &argc, char** argv)
   v_splitter->addWidget(key_wgt_);
   v_splitter->addWidget(browser_wgt_);
 
-  v_splitter2->addWidget(image_wgt);
+  v_splitter2->addWidget(image_wgt_);
   v_splitter2->addWidget(xml_wgt);
 
   h_splitter->addWidget(v_splitter);
@@ -264,7 +285,7 @@ Viewer::Viewer(int &argc, char** argv)
   connect(this, SIGNAL(mode_changed(bool)),
 	  key_wgt_, SLOT(change_mode(bool)));
   connect(this, SIGNAL(updated()),
-	  image_wgt, SLOT(update()));
+	  image_wgt_, SLOT(update()));
   connect(this, SIGNAL(fill_xml(QString)),
 	  xml_wgt, SLOT(fill_widget(QString)));
 
@@ -276,7 +297,7 @@ Viewer::Viewer(int &argc, char** argv)
     connect(scene_, SIGNAL(deselected()),
   	  xml_wgt, SLOT(deselect()));
 
-  connect(image_wgt, SIGNAL(scaleUpdated(qreal)),
+  connect(image_wgt_, SIGNAL(scaleUpdated(qreal)),
 	  this, SLOT(maybeChangeCacheMode(qreal)));
 
 
@@ -807,4 +828,68 @@ Viewer::reset_progress_dialog()
   pdialog_.setValue(0);
   pdialog_.setLabelText("");
   pdialog_.show();
+}
+
+
+void
+Viewer::print()
+{
+  QPrinter printer(QPrinter::HighResolution);
+  configure_printer(printer);
+
+  QPrintDialog dialog(&printer);
+  dialog.setWindowTitle(tr("Print Document"));
+  if (dialog.exec() != QDialog::Accepted)
+    return;
+
+  do_print(&printer);
+}
+
+void
+Viewer::preview_print()
+{
+  QPrinter printer(QPrinter::HighResolution);
+  configure_printer(printer);
+
+  QPrintPreviewDialog preview(&printer);
+  connect(&preview, SIGNAL(paintRequested(QPrinter *)),
+	  this, SLOT(do_print(QPrinter *)));
+
+  preview.exec();
+}
+
+void Viewer::do_print(QPrinter * printer)
+{
+  QList<QGraphicsItem *> items = image_wgt_->view()->items();
+
+  QPainter painter(printer);
+
+  QGraphicsItem *item;
+  QStyleOptionGraphicsItem options;
+
+  // Painting backward objects first.
+  for (int i = items.size() - 1; i >= 0; --i)
+  {
+    item = items.at(i);
+
+    if (item != image_)
+    {
+      QRect vport = image_->mapRectFromItem(item,
+					    item->boundingRect()).toRect();
+
+      painter.translate(std::abs(item->boundingRect().x() - vport.x()),
+			std::abs(item->boundingRect().y() - vport.y()));
+    }
+
+
+    item->paint(&painter, &options);
+    painter.resetTransform();
+  }
+}
+
+void
+Viewer::configure_printer(QPrinter& printer)
+{
+  printer.setPageSize(QPrinter::A4);
+  printer.setResolution(300);
 }

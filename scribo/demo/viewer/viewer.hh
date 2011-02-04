@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -21,6 +22,7 @@
 # include <QDomNode>
 # include "common.hh"
 # include "runner.hh"
+# include "image_widget.hh"
 
 class ImageScene;
 class DomModel;
@@ -61,6 +63,9 @@ private slots:
   void run_progress();
   void on_xml_saved(const QString& filename);
   void export_as();
+  void print();
+  void preview_print();
+  void do_print(QPrinter * printer);
 
 signals:
   void updated();
@@ -81,6 +86,7 @@ private:
   void add_text(QDomNode line);
   QAction *create_action(QString name, QMenu* menu, QString status, QString shortcut);
   void reset_progress_dialog();
+  void configure_printer(QPrinter& printer);
 
   QApplication* app_;
   QMainWindow* win_;
@@ -90,6 +96,7 @@ private:
   QGraphicsPixmapItem* image_;
 
   ImageScene* scene_;
+  ImageWidget* image_wgt_;
   QDirModel* files_;
   DomModel* doc_layout_;
 

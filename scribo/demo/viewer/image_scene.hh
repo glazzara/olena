@@ -27,7 +27,7 @@ class ImageScene
   Q_OBJECT
 
 public:
-  ImageScene();
+  ImageScene(QObject *parent = 0);
   ~ImageScene();
 
   void mousePressEvent(QGraphicsSceneMouseEvent* event);

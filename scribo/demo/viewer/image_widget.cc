@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -20,6 +21,8 @@
 ImageWidget::ImageWidget(QGraphicsScene* scene)
   : view_ (new ImageView(scene))
 {
+  scene->setParent(view_);
+
   QLabel* title = new QLabel(tr("Layout"));
   title->setAlignment(Qt::AlignHCenter);
 
@@ -38,6 +41,12 @@ ImageWidget::ImageWidget(QGraphicsScene* scene)
   setLayout(layout);
 }
 
+
+ImageWidget::~ImageWidget()
+{
+}
+
+
 void
 ImageWidget::update()
 {
@@ -45,6 +54,8 @@ ImageWidget::update()
   view_->scaleUpdate();
 }
 
-ImageWidget::~ImageWidget()
+ImageView *
+ImageWidget::view() const
 {
+  return view_;
 }

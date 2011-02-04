@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -18,8 +19,8 @@
 #include "image_scene.hh"
 #include "image_region.hh"
 
-ImageScene::ImageScene()
-  : selected_(0)
+ImageScene::ImageScene(QObject *parent)
+  : QGraphicsScene(parent), selected_(0)
 {
 }
 

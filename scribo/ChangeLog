@@ -1,3 +1,17 @@
+2011-02-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add printing support in Scribo viewer.
+
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh: Accept a parent widget.
+
+	* demo/viewer/image_widget.cc,
+	* demo/viewer/image_widget.hh: Add an accessor to the underlying
+	view.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Add print and print preview menu entries.
+
 2011-02-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve about dialog in scribo viewer.

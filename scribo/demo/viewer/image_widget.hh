@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -18,6 +19,7 @@
 # define SCRIBO_DEMO_VIEWER_IMAGE_WIDGET_HH
 
 # include <QtGui>
+# include "image_view.hh"
 
 class ImageView;
 
@@ -29,6 +31,8 @@ class ImageWidget
 public:
   ImageWidget(QGraphicsScene* scene);
   ~ImageWidget();
+
+  ImageView * view() const;
 
 public slots:
   void update();
