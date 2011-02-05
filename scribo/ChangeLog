@@ -1,5 +1,10 @@
 2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* demo/viewer/xml_widget.cc: Fix data tracking of selected
+	objects.
+
+2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Display baseline and meanline in Scribo viewer.
 
 	* demo/viewer/common.hh: Add new enums.
