@@ -1,3 +1,17 @@
+2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for whitespace separators visualization.
+
+	* demo/viewer/common.hh,
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/viewer.cc: Handle visualization.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* scribo/core/document.hh: Store separator information.
+
+	* scribo/io/xml/save.hh: Save whitespace separator data.
+
 2011-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/toolchain/nepomuk/text_extraction.hh: Remove useless

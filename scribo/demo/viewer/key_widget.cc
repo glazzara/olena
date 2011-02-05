@@ -22,8 +22,9 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
   : items_(new QTreeWidget())
 {
   item_list_.append(new QTreeWidgetItem(QStringList("Text")));
-  item_list_.append(new QTreeWidgetItem(QStringList("Regions")));
-  item_list_.append(new QTreeWidgetItem(QStringList("Typographical Lines")));
+  item_list_.append(new QTreeWidgetItem(QStringList("Separators")));
+  item_list_.append(new QTreeWidgetItem(QStringList("Misc. Regions")));
+  item_list_.append(new QTreeWidgetItem(QStringList("Typographical lines")));
 
   QLabel* title = new QLabel(tr("Key"));
   title->setAlignment(Qt::AlignHCenter);
@@ -38,6 +39,7 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
 
   base_id_.append(0);
   base_id_.append(region::EndOfTextRegion + 1);
+  base_id_.append(region::EndOfSepsRegion + 1);
   base_id_.append(region::EndOfMiscRegion + 1);
   base_id_.append(region::EndOfTypoRegion + 1);
 

@@ -51,8 +51,11 @@ Viewer::Viewer(int &argc, char** argv)
     pdialog_(win_)
 {
   // Key map
+  // --------
 
   key_map_[region::Text] = qMakePair(tr("Text Region"), QColor(0, 200, 0));
+
+ // Extension
   key_map_[region::Line] = qMakePair(tr("Text line"), QColor(255, 0, 0));
 
   key_map_[region::Image] = qMakePair(tr("Image"), QColor(255, 120, 0));
@@ -65,13 +68,23 @@ Viewer::Viewer(int &argc, char** argv)
   key_map_[region::Chart] = qMakePair(tr("Chart"), QColor(0, 204, 255));
   key_map_[region::Maths] = qMakePair(tr("Maths"), QColor(170, 0, 255));
 
+  // Extension
+  key_map_[region::WhitespaceSeparator] = qMakePair(tr("Whitespace Separator"), QColor(0, 0, 128));
+
+  // Extension
   key_map_[region::Baseline] = qMakePair(tr("Baseline"), QColor(128, 0, 255));
   key_map_[region::Meanline] = qMakePair(tr("Meanline"), QColor(128, 0, 255));
 
+
+
   // Region ids
+  // ----------
 
   region_ids_["text_region"] = region::Text;
+
+  // Extension
   region_ids_["line"] = region::Line;
+
   region_ids_["image_region"] = region::Image;
   region_ids_["noise_region"] = region::Noise;
   region_ids_["separator_region"] = region::Separator;
@@ -80,6 +93,11 @@ Viewer::Viewer(int &argc, char** argv)
   region_ids_["graphic_region"] = region::Graphic;
   region_ids_["chart_region"] = region::Chart;
   region_ids_["maths_region"] = region::Maths;
+
+  // Extension
+  region_ids_["whitespace_separator_region"] = region::WhitespaceSeparator;
+
+
 
   win_->resize(1152, 864);
   win_->statusBar();
@@ -572,7 +590,7 @@ Viewer::load_xml(QString filename)
 
   while (!region.isNull())
     {
-      if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table|text)_region")))
+      if (region.toElement().tagName().contains(QRegExp("(whitespace_separator|image|graphic|chart|separator|table|text)_region")))
         {
 	  QString attr_id = region.toElement().attribute("id", "none");
 	  add_region(region, attr_id);

@@ -59,6 +59,7 @@ void StepWidget::activate(QListWidgetItem* item)
     key = iter.key();
     value = iter.value();
 
+    qDebug() << "Loading " << value;
     emit load_xml(value);
   }
   else

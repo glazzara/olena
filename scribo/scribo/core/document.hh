@@ -32,12 +32,15 @@
 /// \brief Describes document content.
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/io/magick/load.hh>
 
 # include <scribo/core/component_set.hh>
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_set.hh>
+
+# include <scribo/primitive/extract/components.hh>
 
 namespace scribo
 {
@@ -83,6 +86,11 @@ namespace scribo
     const mln::image2d<value::rgb8>& image() const;
     void set_image(const mln::image2d<value::rgb8>& image);
 
+    bool has_whitespace_seps() const;
+    const mln::image2d<bool>& whitespace_seps() const;
+    const component_set<L>& whitespace_seps_comps() const;
+    void set_whitespace_separators(const image2d<bool>& whitespace_seps);
+
   private:
     const char *filename_;
     mln::image2d<mln::value::rgb8> image_;
@@ -90,6 +98,9 @@ namespace scribo
     line_set<L> lines_;
     paragraph_set<L> parset_;
     component_set<L> elements_;
+
+    mln::image2d<bool> whitespace_seps_;
+    component_set<L> whitespace_seps_comps_;
   };
 
 
@@ -244,6 +255,42 @@ namespace scribo
   document<L>::set_image(const mln::image2d<value::rgb8>& image)
   {
     image_ = image;
+  }
+
+
+  template <typename L>
+  bool
+  document<L>::has_whitespace_seps() const
+  {
+    return whitespace_seps_.is_valid();
+  }
+
+
+  template <typename L>
+  const mln::image2d<bool>&
+  document<L>::whitespace_seps() const
+  {
+    return whitespace_seps_;
+  }
+
+
+  template <typename L>
+  const component_set<L>&
+  document<L>::whitespace_seps_comps() const
+  {
+    return whitespace_seps_comps_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_whitespace_separators(const image2d<bool>& whitespace_seps)
+  {
+    whitespace_seps_ = whitespace_seps;
+
+    mln_value(L) ncomps;
+    whitespace_seps_comps_ = primitive::extract::components(whitespace_seps,
+							    mln::c8(), ncomps);
   }
 
 

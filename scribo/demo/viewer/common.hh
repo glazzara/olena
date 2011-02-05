@@ -24,14 +24,30 @@ namespace region
 
   enum RegionId
     {
+      // Text regions
+      // -------------
+
       Text = 0,
+
+      // Extension
       Line,
 
       EndOfTextRegion,
 
+      // Separators
+      // ----------
+
+      Separator,
+
+      // Extension
+      WhitespaceSeparator,
+
+      EndOfSepsRegion,
+
+      // Misc regions.
+      // -------------
       Image,
       Noise,
-      Separator,
       Table,
       LineDrawing,
       Graphic,
@@ -40,6 +56,10 @@ namespace region
 
       EndOfMiscRegion,
 
+      // Typographical lines
+      // -------------------
+
+      // Extension
       Baseline,
       Meanline,
 

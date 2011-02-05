@@ -237,7 +237,10 @@ namespace scribo
 	if (enable_line_seps)
 	  components.add_separators(separators);
 	if (enable_whitespace_seps)
+	{
 	  components.add_separators(whitespaces);
+	  doc.set_whitespace_separators(whitespaces);
+	}
 
 	if (enable_debug)
 	  mln::io::pbm::save(components.separators(),
@@ -251,7 +254,7 @@ namespace scribo
 	on_progress();
 
 
-	/// Linking potential objects
+	/// Linking objects
 	on_new_progress_label("Linking objects...");
 
 	object_links<L> left_link

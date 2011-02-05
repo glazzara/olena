@@ -364,6 +364,24 @@ namespace scribo
 	  }
 
 
+	  // Whitespace seraparators
+	  if (doc.has_whitespace_seps())
+	  {
+	    const component_set<L>&
+	      whitespace_seps_comps = doc.whitespace_seps_comps();
+
+	    for_all_comps(c, whitespace_seps_comps)
+	    {
+	      file << "    <whitespace_separator_region id=\"wss"
+		   << whitespace_seps_comps(c).id()
+		   << "\">" << std::endl;
+
+	      internal::print_box_coords(file, whitespace_seps_comps(c).bbox(), "      ");
+
+	      file << "    </whitespace_separator_region>" << std::endl;
+	    }
+	  }
+
 	  file << "  </page>" << std::endl;
 	  file << "</pcGts>" << std::endl;
 
