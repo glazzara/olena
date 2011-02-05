@@ -65,6 +65,9 @@ Viewer::Viewer(int &argc, char** argv)
   key_map_[region::Chart] = qMakePair(tr("Chart"), QColor(0, 204, 255));
   key_map_[region::Maths] = qMakePair(tr("Maths"), QColor(170, 0, 255));
 
+  key_map_[region::Baseline] = qMakePair(tr("Baseline"), QColor(128, 0, 255));
+  key_map_[region::Meanline] = qMakePair(tr("Meanline"), QColor(128, 0, 255));
+
   // Region ids
 
   region_ids_["text_region"] = region::Text;
@@ -77,7 +80,6 @@ Viewer::Viewer(int &argc, char** argv)
   region_ids_["graphic_region"] = region::Graphic;
   region_ids_["chart_region"] = region::Chart;
   region_ids_["maths_region"] = region::Maths;
-
 
   win_->resize(1152, 864);
   win_->statusBar();
@@ -154,7 +156,7 @@ Viewer::Viewer(int &argc, char** argv)
   precise_action_ = create_action("Precise outline", view_menu,
 				  "1px outline relative to the image "
 				  "(1px relative to the view if off).",
-				  "Ctrl+p");
+				  "Shift+Ctrl+p");
   precise_action_->setCheckable(true);
   precise_action_->setChecked(false);
   connect(precise_action_, SIGNAL(toggled(bool)),
@@ -432,6 +434,100 @@ Viewer::add_region(QDomNode father, QString attr_id)
   scene_->addItem(r);
 }
 
+
+void
+Viewer::add_typo_lines(QDomNode father, QString attr_id)
+{
+  // Retrieve typographical information
+  int baseline = father.toElement().attribute("baseline").toInt();
+  int meanline = father.toElement().attribute("meanline").toInt();
+
+  QRect bbox;
+
+  // Looking for bbox coordinates.
+  {
+    QDomNode coords = father.firstChild();
+    while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+      coords = coords.nextSibling();
+
+    if (coords.isNull())
+      return;
+
+
+    QDomNode point = coords.firstChild();
+    QVector<QPoint> points;
+
+    while (!point.isNull())
+    {
+      int x = point.toElement().attribute("x", "0").toInt();
+      int y = point.toElement().attribute("y", "0").toInt();
+
+      points << QPoint(x, y);
+      point = point.nextSibling();
+    }
+
+    QPolygon polygon(points);
+    bbox = polygon.boundingRect();
+  }
+
+  // Creating blocks
+
+  // Baseline
+  {
+    QVector<QPoint> points;
+    points.append(QPoint(bbox.topLeft().x(), baseline));
+    points.append(QPoint(bbox.topRight().x(), baseline));
+
+    ImageRegion* r = new ImageRegion(region::Baseline,
+				     key_map_[region::Baseline].first,
+				     key_map_[region::Baseline].second,
+				     attr_id, points,
+				     outline_action_->isChecked(),
+				     fill_action_->isChecked(),
+				     precise_action_->isChecked(),
+				     key_wgt_->isChecked(region::Baseline));
+
+    connect(this, SIGNAL(key_updated(int, bool)),
+	    r, SLOT(setDrawIfSameId(int, bool)));
+    connect(this, SIGNAL(setOutline(bool)),
+	    r, SLOT(setOutline(bool)));
+    connect(this, SIGNAL(setPrecise(bool)),
+	    r, SLOT(setPrecise(bool)));
+    connect(this, SIGNAL(setFill(bool)),
+	    r, SLOT(setFill(bool)));
+
+    scene_->addItem(r);
+  }
+
+  // Meanline
+  {
+    QVector<QPoint> points;
+    points.append(QPoint(bbox.topLeft().x(), meanline));
+    points.append(QPoint(bbox.topRight().x(), meanline));
+
+    ImageRegion* r = new ImageRegion(region::Meanline,
+				     key_map_[region::Meanline].first,
+				     key_map_[region::Meanline].second,
+				     attr_id, points,
+				     outline_action_->isChecked(),
+				     fill_action_->isChecked(),
+				     precise_action_->isChecked(),
+				     key_wgt_->isChecked(region::Meanline));
+
+    connect(this, SIGNAL(key_updated(int, bool)),
+	    r, SLOT(setDrawIfSameId(int, bool)));
+    connect(this, SIGNAL(setOutline(bool)),
+	    r, SLOT(setOutline(bool)));
+    connect(this, SIGNAL(setPrecise(bool)),
+	    r, SLOT(setPrecise(bool)));
+    connect(this, SIGNAL(setFill(bool)),
+	    r, SLOT(setFill(bool)));
+
+    scene_->addItem(r);
+  }
+}
+
+
 void
 Viewer::load_xml(QString filename)
 {
@@ -557,7 +653,11 @@ Viewer::load_xml(QString filename)
 	      if (!line.isNull())
 	      {
 		if (extended_mode_)
-		  add_region(line, attr_id);
+		{
+		  QString line_id = line.toElement().attribute("id", "none");
+		  add_region(line, line_id);
+		  add_typo_lines(line, line_id);
+		}
 		add_text(line);
 	      }
 	    }

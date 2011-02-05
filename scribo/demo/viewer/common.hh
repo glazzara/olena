@@ -26,6 +26,9 @@ namespace region
     {
       Text = 0,
       Line,
+
+      EndOfTextRegion,
+
       Image,
       Noise,
       Separator,
@@ -34,6 +37,14 @@ namespace region
       Graphic,
       Chart,
       Maths,
+
+      EndOfMiscRegion,
+
+      Baseline,
+      Meanline,
+
+      EndOfTypoRegion,
+
       RegionIdCount
     };
 }

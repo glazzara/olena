@@ -1,3 +1,16 @@
+2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Display baseline and meanline in Scribo viewer.
+
+	* demo/viewer/common.hh: Add new enums.
+
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Revamp code and add support for more
+	region types.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Insert line blocks.
+
 2011-02-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add printing support in Scribo viewer.

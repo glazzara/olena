@@ -48,8 +48,8 @@ private:
   void add_item_(QString text, QColor color, bool b, QTreeWidgetItem* parent);
 
   QTreeWidget* items_;
-  QTreeWidgetItem* text_;
-  QTreeWidgetItem* regions_;
+  QVector<QTreeWidgetItem*> item_list_;
+  QVector<int> base_id_;
 };
 
 #endif // ! SCRIBO_DEMO_VIEWER_KEY_WIDGET_HH

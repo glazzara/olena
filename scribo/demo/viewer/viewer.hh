@@ -84,6 +84,7 @@ private:
   QPixmap  load_base64(QString xml);
   void add_region(QDomNode father, QString attr_id);
   void add_text(QDomNode line);
+  void add_typo_lines(QDomNode father, QString attr_id);
   QAction *create_action(QString name, QMenu* menu, QString status, QString shortcut);
   void reset_progress_dialog();
   void configure_printer(QPrinter& printer);

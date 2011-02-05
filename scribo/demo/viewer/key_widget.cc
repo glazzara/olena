@@ -19,29 +19,31 @@
 #include "common.hh"
 
 KeyWidget::KeyWidget(const region::KeyMap& key_map)
-  : items_(new QTreeWidget()),
-    text_(new QTreeWidgetItem(QStringList("Text"))),
-    regions_(new QTreeWidgetItem(QStringList("Regions")))
+  : items_(new QTreeWidget())
 {
+  item_list_.append(new QTreeWidgetItem(QStringList("Text")));
+  item_list_.append(new QTreeWidgetItem(QStringList("Regions")));
+  item_list_.append(new QTreeWidgetItem(QStringList("Typographical Lines")));
+
   QLabel* title = new QLabel(tr("Key"));
   title->setAlignment(Qt::AlignHCenter);
 
-  items_->addTopLevelItem(text_);
-  items_->addTopLevelItem(regions_);
+  foreach(QTreeWidgetItem* item, item_list_)
+  {
+    items_->addTopLevelItem(item);
+    item->setCheckState(0, Qt::Checked);
+    item->setExpanded(true);
+  }
   items_->setHeaderHidden(true);
 
-  text_->setCheckState(0, Qt::Checked);
-  text_->setExpanded(true);
+  base_id_.append(0);
+  base_id_.append(region::EndOfTextRegion + 1);
+  base_id_.append(region::EndOfMiscRegion + 1);
+  base_id_.append(region::EndOfTypoRegion + 1);
 
-  regions_->setCheckState(0, Qt::Checked);
-  regions_->setExpanded(true);
-
-  for (int i = 0; i < 2; ++i)
-    add_item_(key_map.at(i).first, key_map.at(i).second,
-	      i == region::Line, text_);
-
-  for (int i = 2; i < key_map.size(); ++i)
-    add_item_(key_map.at(i).first, key_map.at(i).second, false, regions_);
+  for (int j = 0; j < base_id_.size() - 1; ++j)
+    for (int i = base_id_.at(j); i < base_id_.at(j + 1) - 1; ++i)
+      add_item_(key_map.at(i).first, key_map.at(i).second, false, item_list_.at(j));
 
   QVBoxLayout* layout = new QVBoxLayout;
   layout->addWidget(title);
@@ -55,11 +57,9 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
 
 void KeyWidget::update_all()
 {
-  for (int i = 0; i < text_->childCount(); ++i)
-      update(text_->child(i));
-
-  for (int i = 0; i < regions_->childCount(); ++i)
-      update(regions_->child(i));
+  foreach(QTreeWidgetItem* item, item_list_)
+    for (int i = 0; i < item->childCount(); ++i)
+      update(item->child(i));
 }
 
 void KeyWidget::setAll(bool b)
@@ -70,8 +70,8 @@ void KeyWidget::setAll(bool b)
   else
     state = Qt::Unchecked;
 
-  text_->setCheckState(0, state);
-  regions_->setCheckState(0, state);
+  foreach(QTreeWidgetItem* item, item_list_)
+    item->setCheckState(0, state);
 }
 
 void KeyWidget::setAllCheck(QTreeWidgetItem* parent)
@@ -89,20 +89,8 @@ void KeyWidget::setAllCheck(QTreeWidgetItem* parent)
 void
 KeyWidget::change_mode(bool b)
 {
-  int id_line = region::Line;
-
-  if (b)
-    {
-      //text_->child(id_region)->setCheckState(0, Qt::Checked);
-      //      text_->child(id_line)->setCheckState(0, Qt::Checked);
-      text_->child(id_line)->setHidden(false);
-    }
-  else
-    {
-      //text_->child(id_region)->setCheckState(0, Qt::Unchecked);
-      //      text_->child(id_line)->setCheckState(0, Qt::Unchecked);
-      text_->child(id_line)->setHidden(true);
-    }
+  item_list_.at(0)->child(region::Line)->setHidden(!b);
+  // FIXME: we may like to hide also typographical objects.
 }
 
 void
@@ -118,43 +106,52 @@ KeyWidget::add_item_(QString text, QColor color, bool b, QTreeWidgetItem* parent
   item->setHidden(b);
 }
 
-  bool
+bool
 KeyWidget::isChecked(region::RegionId id)
 {
-  QTreeWidgetItem* item = text_->child(id);
-  if (item)
-    return item->checkState(0) == Qt::Checked;
-  else
-    {
-      item = regions_->child(id);
-      if(item)
-	return item->checkState(0) == Qt::Checked;
-      else
-	return false;
-    }
+  QTreeWidgetItem* current_item = 0;
+
+  foreach(QTreeWidgetItem* item, item_list_)
+  {
+    current_item = item->child(id);
+    if (item)
+      break;
+    else
+      current_item = 0;
+  }
+
+  if (!current_item)
+    return false;
+
+  return current_item->checkState(0) == Qt::Checked;
 }
 
 void
-KeyWidget::update(QTreeWidgetItem* item)
+KeyWidget::update(QTreeWidgetItem* item_up)
 {
   int id = -1;
-  if (item == text_ || item == regions_)
-  {
-    setAllCheck(item);
-  }
-  else
-  {
-    id = text_->indexOfChild(item);
-    if (id == -1)
+
+  foreach(QTreeWidgetItem* item, item_list_)
+    if (item_up == item)
     {
-      // +2 since image region id starts from 0 to the number of
-      // region type without considering categories.  There are 2
-      // elements in text category and the rest is in the region's
-      // one.
-      id = regions_->indexOfChild(item) + 2;
+      setAllCheck(item);
+      return;
     }
-    emit updated(id, item->checkState(0) == Qt::Checked);
+
+
+  int i = 0;
+  foreach(QTreeWidgetItem* item, item_list_)
+  {
+    id = item->indexOfChild(item_up);
+    if (id != -1)
+    {
+      id += base_id_.at(i);
+      break;
+    }
+    ++i;
   }
+
+  emit updated(id, item_up->checkState(0) == Qt::Checked);
 }
 
 KeyWidget::~KeyWidget()
