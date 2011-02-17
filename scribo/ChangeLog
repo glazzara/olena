@@ -1,5 +1,15 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new tools in Scribo.
+
+	* src/primitive/extract/Makefile.am,
+	* src/primitive/remove/Makefile.am: Add new targets.
+
+	* src/primitive/extract/separators_nonvisible.cc,
+	* src/primitive/remove/separators.cc: New.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* scribo/core/macros.hh: Update comments.
