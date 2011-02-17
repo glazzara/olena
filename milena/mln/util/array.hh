@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -187,6 +187,11 @@ namespace mln
       /// \pre i < nelements()
       mutable_result operator[](unsigned i);
 
+      /// \brief Return the last element.
+      ro_result last() const;
+
+      /// \brief Return the last element.
+      mutable_result last();
 
       /// Empty the array.  All elements contained in the array are
       /// destroyed.  \post is_empty() == true
@@ -549,6 +554,22 @@ namespace mln
     {
       mln_precondition(i < nelements());
       return v_[i];
+    }
+
+    template <typename T>
+    inline
+    typename array<T>::ro_result
+    array<T>::last() const
+    {
+      return v_[nelements() - 1];
+    }
+
+    template <typename T>
+    inline
+    typename array<T>::mutable_result
+    array<T>::last()
+    {
+      return v_[nelements() - 1];
     }
 
     template <typename T>

@@ -1,5 +1,9 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/util/array.hh: Add last() method.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an optional base index for debug::iota.
 
 	* mln/debug/iota.hh,
