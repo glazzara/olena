@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -73,76 +73,98 @@ namespace scribo
 		      unsigned current_object, unsigned nbh_object,
 		      anchor::Type anchor)
       {
-	trace::entering("scribo::filter::internal::alignment_angle_rad");
+	trace::entering("scribo::filter::internal::alignment_angle");
 
 	mln_precondition(comps.is_valid());
 
-	float dr, dc;
+	float dr, dc, result = 0;
 
 	if (nbh_object == current_object)
 	  return 0;
 
-	// Center
-	if (anchor == anchor::Center)
+	switch(anchor)
 	{
-	  dr = math::abs(comps(current_object).bbox().pcenter().row()
-			 - comps(nbh_object).bbox().pcenter().row());
-	  dc = math::abs(comps(current_object).bbox().pcenter().col()
-			 - comps(nbh_object).bbox().pcenter().col());
+	  // Center
+	  case anchor::Center:
+	  {
+	    dr = math::abs(comps(current_object).bbox().pcenter().row()
+			   - comps(nbh_object).bbox().pcenter().row());
+	    dc = math::abs(comps(current_object).bbox().pcenter().col()
+			   - comps(nbh_object).bbox().pcenter().col());
 
-	  return std::atan(dr / dc);
+	    result = std::atan(dr / dc);
+	  }
+	  break;
+
+	  // Mass Center
+	  case anchor::MassCenter:
+	  {
+	    dr = math::abs(comps(current_object).mass_center().row()
+			   - comps(nbh_object).mass_center().row());
+	    dc = math::abs(comps(current_object).mass_center().col()
+			   - comps(nbh_object).mass_center().col());
+
+	    result = std::atan(dr / dc);
+	  }
+	  break;
+
+	  // Top
+	  case anchor::TopStrictLeft:
+	  case anchor::Top:
+	  {
+	    dr = math::abs(comps(current_object).bbox().pmin().row()
+			   - comps(nbh_object).bbox().pmin().row());
+	    dc = math::abs(comps(current_object).bbox().pcenter().col()
+			   - comps(nbh_object).bbox().pcenter().col());
+
+	    result = std::atan(dr / dc);
+	  }
+	  break;
+
+	  // Bottom
+	  case anchor::BottomStrictRight:
+	  case anchor::Bottom:
+	  {
+	    dr = math::abs(comps(current_object).bbox().pmax().row()
+			   - comps(nbh_object).bbox().pmax().row());
+	    dc = math::abs(comps(current_object).bbox().pcenter().col()
+			   - comps(nbh_object).bbox().pcenter().col());
+
+	    result = std::atan(dr / dc);
+	  }
+	  break;
+
+	  // Left
+	  case anchor::Left:
+	  {
+	    dr = math::abs(comps(current_object).bbox().pcenter().row()
+			   - comps(nbh_object).bbox().pcenter().row());
+	    dc = math::abs(comps(current_object).bbox().pmin().col()
+			   - comps(nbh_object).bbox().pmin().col());
+
+	    result = std::atan(dc / dr);
+	  }
+	  break;
+
+	  // Right
+	  case anchor::Right:
+	  {
+	    dr = math::abs(comps(current_object).bbox().pcenter().row()
+			   - comps(nbh_object).bbox().pcenter().row());
+	    dc = math::abs(comps(current_object).bbox().pmax().col()
+			   - comps(nbh_object).bbox().pmax().col());
+
+	    result = std::atan(dc / dr);
+	  }
+	  break;
+
+	  default:
+	    trace::warning("scribo::filter::internal::alignment_angle,"
+			   " Invalid anchor value... Aborting computation.");
 	}
 
-	// Top
-	else if (anchor == anchor::Top)
-	{
-	  dr = math::abs(comps(current_object).bbox().pmin().row()
-			 - comps(nbh_object).bbox().pmin().row());
-	  dc = math::abs(comps(current_object).bbox().pcenter().col()
-			 - comps(nbh_object).bbox().pcenter().col());
-
-	  return std::atan(dr / dc);
-	}
-
-	// Bottom
-	else if (anchor == anchor::Bottom)
-	{
-	  dr = math::abs(comps(current_object).bbox().pmax().row()
-			 - comps(nbh_object).bbox().pmax().row());
-	  dc = math::abs(comps(current_object).bbox().pcenter().col()
-			 - comps(nbh_object).bbox().pcenter().col());
-
-	  return std::atan(dr / dc);
-	}
-
-	// Left
-	else if (anchor == anchor::Left)
-	{
-	  dr = math::abs(comps(current_object).bbox().pcenter().row()
-			 - comps(nbh_object).bbox().pcenter().row());
-	  dc = math::abs(comps(current_object).bbox().pmin().col()
-			 - comps(nbh_object).bbox().pmin().col());
-
-	  return std::atan(dc / dr);
-	}
-
-	// Right
-	else if (anchor == anchor::Right)
-	{
-	  dr = math::abs(comps(current_object).bbox().pcenter().row()
-			 - comps(nbh_object).bbox().pcenter().row());
-	  dc = math::abs(comps(current_object).bbox().pmax().col()
-			 - comps(nbh_object).bbox().pmax().col());
-
-	  return std::atan(dc / dr);
-	}
-
-	else
-	  trace::warning("Invalid anchor value... Aborting computation.");
-
-	trace::exiting("scribo::filter::internal::alignment_angle_rad");
-	return 0;
-
+	trace::exiting("scribo::filter::internal::alignment_angle");
+	return result;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -88,10 +88,8 @@ namespace scribo
 	{
 	  typedef mln_site(L) P;
 
-	  unsigned h = components(current_object).bbox().pmax().row()
-	               - components(current_object).bbox().pmin().row();
-	  unsigned w = components(current_object).bbox().pmax().col()
-	               - components(current_object).bbox().pmin().col();
+	  unsigned h = components(current_object).bbox().height();
+	  unsigned w = components(current_object).bbox().width();
 
 	  mln_site(L) sp = components(current_object).bbox().pcenter();
 
@@ -110,6 +108,22 @@ namespace scribo
 	      else
 		sp.row() = components(current_object).bbox().pmin().row()
 		  + math::min(10u, h /10);
+	      break;
+
+
+	      // Bounding box top left
+	    case anchor::TopStrictLeft:
+	      sp.col() = components(current_object).bbox().pmin().col();
+	      sp.row() = components(current_object).bbox().pmin().row()
+		+ math::min(2u, (h + 1) / 2 - 1);
+	      break;
+
+
+	      // Bounding box bottom right
+	    case anchor::BottomStrictRight:
+	      sp.col() = components(current_object).bbox().pmax().col();
+	      sp.row() = components(current_object).bbox().pmax().row()
+		- math::min(2u, (h + 1) / 2 - 1);
 	      break;
 
 

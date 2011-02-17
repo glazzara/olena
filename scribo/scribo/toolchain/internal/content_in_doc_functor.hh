@@ -34,11 +34,11 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_set.hh>
 
-# include <scribo/primitive/extract/elements.hh>
+# include <scribo/primitive/extract/non_text.hh>
 # include <scribo/primitive/extract/components.hh>
-# include <scribo/primitive/extract/vertical_separators.hh>
+//# include <scribo/primitive/extract/vertical_separators.hh>
+# include <scribo/primitive/extract/separators.hh>
 # include <scribo/primitive/extract/separators_nonvisible.hh>
-# include <scribo/primitive/extract/elements.hh>
 
 # include <scribo/primitive/identify.hh>
 
@@ -168,16 +168,17 @@ namespace scribo
 	  input_cleaned = exact(processed_image);
 	if (enable_line_seps)
 	{
-	  on_new_progress_label("Find vertical separators...");
+	  on_new_progress_label("Find vertical and horizontal separators...");
 
-	  // Vertical separators
-	  separators = primitive::extract::vertical_separators(processed_image, 81);
+	  // Vertical and horizontal separators
+	  separators = primitive::extract::separators(processed_image, 81);
 
 	  on_progress();
 
 	  on_new_progress_label("Remove separators...");
 
 	  input_cleaned = primitive::remove::separators(processed_image, separators);
+	  doc.set_line_separators(separators);
 
 	  on_progress();
 	}
