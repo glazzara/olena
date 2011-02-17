@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,6 +55,8 @@
 
 # include <mln/core/routine/duplicate.hh>
 
+# include <mln/value/next.hh>
+
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_info.hh>
 
@@ -95,6 +97,8 @@ namespace scribo
 
       void fill_infos(const mln::util::array<pair_data_t>& attribs);
 
+      // Useful while constructing incrementaly (XML loading).
+      void soft_init(const mln_value(L) ncomps);
 
       L ima_;
       mln_value(L) ncomps_;
@@ -127,6 +131,9 @@ namespace scribo
     /// @{
     /// Constructor without argument.
     component_set();
+
+    // Constructor from internal data.
+    component_set(const mln::util::tracked_ptr<data_t>& data);
 
     /// Constructor from an image \p ima and the number of labels \p ncomps.
     component_set(const L& ima, const mln_value(L)& ncomps);
@@ -348,6 +355,19 @@ namespace scribo
     }
 
 
+    template <typename L>
+    inline
+    void
+    component_set_data<L>::soft_init(const mln_value(L) ncomps)
+    {
+      mln_precondition(infos_.nelements() == 0);
+
+      ncomps_ = ncomps;
+      infos_.reserve(ncomps_);
+      infos_.append(component_info()); // Component 0, i.e. the background.
+    }
+
+
   } // end of namespace mln::internal
 
 
@@ -357,6 +377,13 @@ namespace scribo
   inline
   component_set<L>::component_set()
   {
+  }
+
+  template <typename L>
+  inline
+  component_set<L>::component_set(const mln::util::tracked_ptr<data_t>& data)
+  {
+    data_ = data;
   }
 
   template <typename L>
@@ -400,7 +427,7 @@ namespace scribo
   const component_info&
   component_set<L>::info(const mln_value(L)& id) const
   {
-    return this->data_->infos_[id];
+    return data_->infos_[id];
   }
 
   template <typename L>
@@ -408,7 +435,7 @@ namespace scribo
   component_info&
   component_set<L>::info(const mln_value(L)& id)
   {
-    return this->data_->infos_[id];
+    return data_->infos_[id];
   }
 
 //   template <typename L>
@@ -416,7 +443,7 @@ namespace scribo
 //   const component_info&
 //   component_set<L>::operator()(const mln_value(L)& id) const
 //   {
-//     return this->data_->infos_[id];
+//     return data_->infos_[id];
 //   }
 
 //   template <typename L>
@@ -424,7 +451,7 @@ namespace scribo
 //   component_info&
 //   component_set<L>::operator()(const mln_value(L)& id)
 //   {
-//     return this->data_->infos_[id];
+//     return data_->infos_[id];
 //   }
 
   template <typename L>
@@ -432,7 +459,7 @@ namespace scribo
   const component_info&
   component_set<L>::operator()(const component_id_t& id) const
   {
-    return this->data_->infos_[id];
+    return data_->infos_[id];
   }
 
   template <typename L>
@@ -440,7 +467,7 @@ namespace scribo
   component_info&
   component_set<L>::operator()(const component_id_t& id)
   {
-    return this->data_->infos_[id];
+    return data_->infos_[id];
   }
 
 
@@ -476,7 +503,7 @@ namespace scribo
   const L&
   component_set<L>::labeled_image() const
   {
-    return this->data_->ima_;
+    return data_->ima_;
   }
 
 
@@ -485,7 +512,7 @@ namespace scribo
   bool
   component_set<L>::is_valid() const
   {
-    return this->data_->ima_.is_valid();
+    return data_ != 0 && data_->ima_.is_valid();
   }
 
 
@@ -503,7 +530,7 @@ namespace scribo
   L&
   component_set<L>::labeled_image_()
   {
-    return this->data_->ima_;
+    return data_->ima_;
   }
 
 
@@ -512,7 +539,7 @@ namespace scribo
   mln_concrete(L)
   component_set<L>::valid_comps_image_() const
   {
-    mln::util::array<bool> f(mln::value::next(this->data_->ncomps_));
+    mln::util::array<bool> f(mln::value::next(data_->ncomps_));
     f(0) = true;
 
     for_all_comps(c, (*this))
@@ -520,8 +547,8 @@ namespace scribo
 
     mln_value(L) new_ncomps;
     mln_concrete(L)
-      output = mln::labeling::relabel(this->data_->ima_,
-				      this->data_->ncomps_,
+      output = mln::labeling::relabel(data_->ima_,
+				      data_->ncomps_,
 				      new_ncomps,
 				      f);
 
@@ -534,7 +561,7 @@ namespace scribo
   bool
   component_set<L>::has_separators() const
   {
-    return this->data_->separators_.is_valid();
+    return data_->separators_.is_valid();
   }
 
 
@@ -544,9 +571,9 @@ namespace scribo
   component_set<L>::add_separators(const mln_ch_value(L, bool)& ima)
   {
     if (! has_separators())
-      this->data_->separators_ = ima;
+      data_->separators_ = ima;
     else
-      mln::logical::or_inplace(this->data_->separators_, ima);
+      mln::logical::or_inplace(data_->separators_, ima);
   }
 
 
@@ -555,7 +582,7 @@ namespace scribo
   const mln_ch_value(L, bool)&
   component_set<L>::separators() const
   {
-    return this->data_->separators_;
+    return data_->separators_;
   }
 
 
@@ -564,7 +591,7 @@ namespace scribo
   void
   component_set<L>::clear_separators()
   {
-    this->data_->separators_.destroy();
+    data_->separators_.destroy();
   }
 
 

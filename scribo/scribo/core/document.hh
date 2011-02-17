@@ -91,16 +91,24 @@ namespace scribo
     const component_set<L>& whitespace_seps_comps() const;
     void set_whitespace_separators(const image2d<bool>& whitespace_seps);
 
+    bool has_line_seps() const;
+    const mln::image2d<bool>& line_seps() const;
+    const component_set<L>& line_seps_comps() const;
+    void set_line_separators(const image2d<bool>& line_seps);
+
+
   private:
     const char *filename_;
     mln::image2d<mln::value::rgb8> image_;
 
-    line_set<L> lines_;
     paragraph_set<L> parset_;
     component_set<L> elements_;
 
     mln::image2d<bool> whitespace_seps_;
     component_set<L> whitespace_seps_comps_;
+
+    mln::image2d<bool> line_seps_;
+    component_set<L> line_seps_comps_;
   };
 
 
@@ -201,7 +209,6 @@ namespace scribo
     return parset_.lines();
   }
 
-
   template <typename L>
   const paragraph_set<L>&
   document<L>::paragraphs() const
@@ -292,6 +299,43 @@ namespace scribo
     whitespace_seps_comps_ = primitive::extract::components(whitespace_seps,
 							    mln::c8(), ncomps);
   }
+
+
+  template <typename L>
+  bool
+  document<L>::has_line_seps() const
+  {
+    return line_seps_.is_valid();
+  }
+
+
+  template <typename L>
+  const mln::image2d<bool>&
+  document<L>::line_seps() const
+  {
+    return line_seps_;
+  }
+
+
+  template <typename L>
+  const component_set<L>&
+  document<L>::line_seps_comps() const
+  {
+    return line_seps_comps_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_line_separators(const image2d<bool>& line_seps)
+  {
+    line_seps_ = line_seps;
+
+    mln_value(L) ncomps;
+    line_seps_comps_ = primitive::extract::components(line_seps,
+						      mln::c8(), ncomps);
+  }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY

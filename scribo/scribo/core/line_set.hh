@@ -99,6 +99,10 @@ namespace scribo
 
     /// Constructor from object groups.
     line_set(const object_groups<L>& groups);
+
+    /// Constructor useful for delayed construction (loading from file).
+    line_set(const object_groups<L>& groups,
+	     const mln::util::array<line_info<L> >& line_data);
     /// @}
 
     /// Compute line stats and fill the underlying information.
@@ -155,7 +159,13 @@ namespace scribo
     /// @}
 
 
+    /// Return false if it is not initialized (built with the default
+    /// constructor).
     bool is_valid() const;
+
+
+    void update_line_data_(const mln::util::array<line_info<L> >& line_data);
+
 
   private:
     /// Duplicate the underlying image and create a new line_set.
@@ -229,6 +239,15 @@ namespace scribo
   line_set<L>::line_set(const object_groups<L>& groups)
   {
     compute_lines(groups);
+  }
+
+
+  template <typename L>
+  inline
+  line_set<L>::line_set(const object_groups<L>& groups,
+			const mln::util::array<line_info<L> >& line_data)
+  {
+    data_ = new internal::line_set_data<L>(line_data, groups);
   }
 
 
@@ -396,7 +415,15 @@ namespace scribo
   bool
   line_set<L>::is_valid() const
   {
-    return data_->links_.is_valid() && data_->groups_.is_valid();
+    return data_ && data_->groups_.is_valid();
+  }
+
+  template <typename L>
+  inline
+  void
+  line_set<L>::update_line_data_(const mln::util::array<line_info<L> >& line_data)
+  {
+    data_->infos_ = line_data;
   }
 
   template <typename L>

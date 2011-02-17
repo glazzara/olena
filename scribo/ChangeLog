@@ -1,5 +1,27 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various changes in scribo core structures.
+
+	* scribo/scribo/core/component_info.hh: Remove useless line_id.
+
+	* scribo/scribo/core/line_set.hh,
+	* scribo/scribo/core/component_set.hh: Add new constructors.
+
+	* scribo/scribo/core/document.hh: Store line separators.
+
+	* scribo/scribo/core/line_info.hh: Share attributes and add new
+	constructors.
+	(is_textline): New method.
+
+	* scribo/scribo/core/line_links.hh: Do not allocate useless data.
+
+	* scribo/scribo/core/paragraph_info.hh (operator<<): New.
+
+	* scribo/scribo/core/paragraph_set.hh: Share attributes and add new
+	constructors.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename files in Scribo.
 
 	* scribo/primitive/extract/elements.hh,

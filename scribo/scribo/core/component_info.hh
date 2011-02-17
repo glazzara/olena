@@ -47,7 +47,6 @@ namespace scribo
   class component_info
   {
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
-    typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
 
   public:
     component_info();
@@ -69,9 +68,6 @@ namespace scribo
     component::Type type() const;
     void update_type(component::Type type);
 
-    // The line it is rattached to. 0 means an invalid line.
-    line_id_t line_id() const;
-
     bool is_valid() const;
 
   private:
@@ -82,8 +78,6 @@ namespace scribo
 
     component::Tag tag_;
     component::Type type_;
-
-    line_id_t line_id_;
   };
 
 
@@ -109,7 +103,7 @@ namespace scribo
 				 const mln::point2d& mass_center,
 				 unsigned card)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
-      tag_(component::None), type_(component::Undefined), line_id_(0)
+      tag_(component::None), type_(component::Undefined)
   {
 
   }
@@ -179,14 +173,6 @@ namespace scribo
 
 
   inline
-  component_info::line_id_t
-  component_info::line_id() const
-  {
-    return line_id_;
-  }
-
-
-  inline
   bool
   component_info::is_valid() const
   {
@@ -204,7 +190,6 @@ namespace scribo
 		<< ", mass_center=" << info.mass_center()
 		<< ", card=" << info.card()
 		<< ", tag=" << info.tag()
-		<< ", line_id=" << info.line_id()
 		<< ")" << std::endl;
   }
 

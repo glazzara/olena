@@ -36,6 +36,25 @@
 namespace scribo
 {
 
+  namespace internal
+  {
+
+    /// Data structure for \c scribo::paragraph_set<I>.
+    template <typename L>
+    struct paragraph_set_data
+    {
+      paragraph_set_data();
+      paragraph_set_data(const line_links<L>& llines, unsigned npars);
+
+      mln::util::array<paragraph_info<L> > pars_;
+      line_set<L> lines_;
+      line_links<L> links_;
+    };
+
+  } // end of namespace scribo::internal
+
+
+
   /*! \brief Paragraph container.
 
     Paragraph ids start from 1.
@@ -46,6 +65,7 @@ namespace scribo
   {
   public:
     paragraph_set();
+    paragraph_set(internal::paragraph_set_data<L>* data);
     paragraph_set(const line_links<L>& llinks, unsigned npars);
 
     unsigned nelements() const;
@@ -57,9 +77,10 @@ namespace scribo
 
     const line_set<L>& lines() const;
 
+    const line_links<L>& links() const;
+
   private:
-    mln::util::array<paragraph_info<L> > pars_;
-    line_set<L> lines_;
+    mln::util::tracked_ptr< internal::paragraph_set_data<L> > data_;
   };
 
 
@@ -77,37 +98,72 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // paragraph_set_data<L> >
+
+  namespace internal
+  {
+
+    // data< paragraph_set<L> >
+
+
+    template <typename L>
+    inline
+    paragraph_set_data<L>::paragraph_set_data()
+    {
+    }
+
+
+    template <typename L>
+    inline
+    paragraph_set_data<L>::paragraph_set_data(const line_links<L>& llinks, unsigned npars)
+      : pars_(npars + 1, paragraph_info<L>(llinks)), links_(llinks)
+    {
+      lines_ = llinks.lines();
+    }
+
+  } // end of namespace mln::internal
+
+
   template <typename L>
   paragraph_set<L>::paragraph_set()
+    : data_(0)
   {
   }
 
   template <typename L>
-  paragraph_set<L>::paragraph_set(const line_links<L>& llinks, unsigned npars)
-    : pars_(npars + 1, paragraph_info<L>(llinks))
+  paragraph_set<L>::paragraph_set(internal::paragraph_set_data<L>* data)
   {
-    lines_ = llinks.lines();
+    data_ = data;
+  }
+
+  template <typename L>
+  paragraph_set<L>::paragraph_set(const line_links<L>& llinks, unsigned npars)
+  {
+    data_ = new internal::paragraph_set_data<L>(llinks, npars);
   }
 
   template <typename L>
   unsigned
   paragraph_set<L>::nelements() const
   {
-    return pars_.nelements() - 1;
+    mln_precondition(data_ != 0);
+    return data_->pars_.nelements() - 1;
   }
 
   template <typename L>
   paragraph_info<L>&
   paragraph_set<L>::operator()(unsigned i)
   {
-    return pars_[i];
+    mln_precondition(data_ != 0);
+    return data_->pars_[i];
   }
 
   template <typename L>
   const paragraph_info<L>&
   paragraph_set<L>::operator()(unsigned i) const
   {
-    return pars_[i];
+    mln_precondition(data_ != 0);
+    return data_->pars_[i];
   }
 
 
@@ -115,7 +171,7 @@ namespace scribo
   bool
   paragraph_set<L>::is_valid() const
   {
-    return !pars_.is_empty();
+    return data_ && !data_->pars_.is_empty();
   }
 
 
@@ -123,7 +179,17 @@ namespace scribo
   const line_set<L>&
   paragraph_set<L>::lines() const
   {
-    return lines_;
+    mln_precondition(data_ != 0);
+    return data_->lines_;
+  }
+
+
+  template <typename L>
+  const line_links<L>&
+  paragraph_set<L>::links() const
+  {
+    mln_precondition(data_ != 0);
+    return data_->links_;
   }
 
 

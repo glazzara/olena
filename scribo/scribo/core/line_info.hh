@@ -58,12 +58,76 @@ namespace scribo
 
   // Forward declarations.
   template <typename L> class line_set;
+  template <typename L> class line_info;
 
   typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
+
+
+  namespace internal
+  {
+    /// Data structure for \c scribo::line_info<I>.
+    template <typename L>
+    struct line_info_data
+    {
+      line_info_data();
+      line_info_data(const line_set<L>& holder,
+		      const mln::util::array<component_id_t>& comps);
+
+
+      bool hidden_;
+      line::Tag tag_;
+      mln::box2d bbox_;
+      mln::box2d ebbox_;
+      mln::util::array<component_id_t> components_;
+
+      // Values relative to the line bbox.
+      int baseline_;
+      int meanline_;
+
+      // Values relative to the baseline.
+      unsigned x_height_;
+      int d_height_;
+      int a_height_;
+
+      // Character related stats.
+      unsigned char_space_;
+      unsigned char_width_;
+
+      // Words related stats.
+      unsigned word_space_;
+
+      // Reading direction
+      line::ReadingDirection reading_direction_;
+
+      // Line type
+      line::Type type_;
+
+      // Is this line in reverse video?
+      bool reverse_video_;
+
+      // Text orientation
+      float orientation_;
+
+      // Text reading orientation
+      float reading_orientation_;
+
+      bool indented_;
+
+      std::string text_;
+
+      // Line set holding this element.
+      line_set<L> holder_;
+
+    };
+
+  } // end of namespace scribo::internal
+
+
 
   template <typename L>
   class line_info
   {
+    typedef internal::line_info_data<L> data_t;
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
     typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
 
@@ -73,6 +137,8 @@ namespace scribo
     /// @{
 
     line_info();
+
+    line_info(const line_id_t& id, data_t* data);
 
     line_info(const line_set<L>& holder,
 	      const line_id_t& id,
@@ -134,8 +200,9 @@ namespace scribo
     const std::string& text() const;
     void update_text(const std::string& str);
 
-
     bool is_valid() const;
+
+    bool is_textline() const;
 
     /// Hidden status.
     ///
@@ -180,6 +247,9 @@ namespace scribo
     /// Returns the delta used to compute the extended bbox.
     int delta_of_line() const;
 
+    /// Update the extended bbox.
+    void update_ebbox();
+
   private: // Members
     void copy_data(const line_info<L>& other);
 
@@ -189,65 +259,14 @@ namespace scribo
     /// Update bbox and ebbox_ attributes.
     void update_bbox_and_ebox(line_info<L>& other);
 
-    /// Update the extended bbox.
-    void update_ebbox();
-
     mln::box2d merged_ebbox(const scribo::line_info<L>& info_l,
 			    const scribo::line_info<L>& info);
 
     void update_components_type(component::Type type);
 
   private: // Attributes
-    // WARNING: NEVER FORGET TO UPDATE COPY CONSTRUCTOR REDEFINITION!!!!
-
     line_id_t id_;
-    bool hidden_;
-    line::Tag tag_;
-    mln::box2d bbox_;
-    mln::box2d ebbox_;
-    mln::util::array<component_id_t> components_;
-
-    // Values relative to the line bbox.
-    int baseline_;
-    int meanline_;
-
-    // Values relative to the baseline.
-    unsigned x_height_;
-    int d_height_;
-    int a_height_;
-
-    // WARNING: NEVER FORGET TO UPDATE COPY CONSTRUCTOR REDEFINITION!!!!
-
-    // Character related stats.
-    unsigned char_space_;
-    unsigned char_width_;
-
-    // Words related stats.
-    unsigned word_space_;
-
-    // Reading direction
-    line::ReadingDirection reading_direction_;
-
-    // Line type
-    line::Type type_;
-
-    // Is this line in reverse video?
-    bool reverse_video_;
-
-    // Text orientation
-    float orientation_;
-
-    // Text reading orientation
-    float reading_orientation_;
-
-    bool indented_;
-
-    std::string text_;
-
-    // Line set holding this element.
-    line_set<L> holder_;
-
-    // WARNING: NEVER FORGET TO UPDATE COPY CONSTRUCTOR REDEFINITION!!!!
+    mln::util::tracked_ptr<data_t> data_;
   };
 
 
@@ -258,12 +277,41 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    template <typename L>
+    line_info_data<L>::line_info_data()
+    {
+      hidden_ = false;
+    }
+
+
+    template <typename L>
+    line_info_data<L>::line_info_data(const line_set<L>& holder,
+				      const mln::util::array<component_id_t>& comps)
+      : hidden_(false), tag_(line::None), components_(comps),
+	type_(line::Undefined), holder_(holder)
+    {
+      // FIXME: set valid information for these attributes in
+      // force_stats_update.
+      word_space_ = 0;
+      reading_direction_ = line::LeftToRight;
+      reverse_video_ = false;
+
+      orientation_ = 0.;
+      reading_orientation_ = 0.;
+
+      indented_ = false;
+    }
+
+  } // end of namespace scribo::internal
+
 
   template <typename L>
   line_info<L>::line_info()
-    : id_(0), hidden_(false)
+    : id_(0)
   {
-
   }
 
   template <typename L>
@@ -275,47 +323,24 @@ namespace scribo
     if (! is_valid())
       id_ = other.id();
 
-    hidden_ = other.hidden_;
-
-    tag_ = other.tag();
-    bbox_ = other.bbox();
-    ebbox_ = other.ebbox();
-    components_ = other.components();
-
-    baseline_ = other.baseline();
-    meanline_ = other.meanline();
-
-    x_height_ = other.x_height();
-    d_height_ = other.d_height();
-    a_height_ = other.a_height();
-
-    char_space_ = other.char_space();
-    char_width_ = other.char_width();
-
-    word_space_ = other.word_space();
-
-    reading_direction_ = other.reading_direction();
-
-    type_ = other.type();
-
-    reverse_video_ = other.reverse_video();
-
-    orientation_ = other.orientation();
-
-    reading_orientation_ = other.reading_orientation();
-
-    indented_ = other.indented();
-
-    text_ = other.text();
-
-    holder_ = other.holder();
+    data_ = other.data_;
   }
+
+
+  template <typename L>
+  inline
+  line_info<L>::line_info(const line_id_t& id, data_t *data)
+    : id_(id), data_(data)
+  {
+  }
+
 
   template <typename L>
   inline
   line_info<L>::line_info(const line_info<L>& other)
-    : id_(0), hidden_(false)
+    : id_(0)
   {
+    //data_->hidden_ = false;
     copy_data(other);
   }
 
@@ -357,22 +382,10 @@ namespace scribo
   line_info<L>::line_info(const line_set<L>& holder,
 			  const line_id_t& id,
 			  const mln::util::array<component_id_t>& comps)
-    : id_(id), hidden_(false), tag_(line::None), components_(comps),
-      type_(line::Undefined), holder_(holder)
+    : id_(id)
   {
-
+    data_ = new data_t(holder, comps);
     force_stats_update();
-
-    // FIXME: set valid information for these attributes in
-    // force_stats_update.
-    word_space_ = 0;
-    reading_direction_ = line::LeftToRight;
-    reverse_video_ = false;
-
-    orientation_ = 0.;
-    reading_orientation_ = 0.;
-
-    indented_ = false;
   }
 
 
@@ -397,7 +410,7 @@ namespace scribo
   line::Tag
   line_info<L>::tag() const
   {
-    return tag_;
+    return data_->tag_;
   }
 
 
@@ -405,7 +418,7 @@ namespace scribo
   void
   line_info<L>::update_tag(line::Tag tag)
   {
-    tag_ = tag;
+    data_->tag_ = tag;
   }
 
 
@@ -413,14 +426,14 @@ namespace scribo
   const mln::box2d&
   line_info<L>::bbox() const
   {
-    return bbox_;
+    return data_->bbox_;
   }
 
   template <typename L>
   const mln::box2d&
   line_info<L>::ebbox() const
   {
-    return ebbox_;
+    return data_->ebbox_;
   }
 
 
@@ -428,14 +441,14 @@ namespace scribo
   const mln::util::array<typename line_info<L>::component_id_t>&
   line_info<L>::components() const
   {
-    return components_;
+    return data_->components_;
   }
 
   template <typename L>
   unsigned
   line_info<L>::card() const
   {
-    return components_.size();
+    return data_->components_.size();
   }
 
 
@@ -443,7 +456,7 @@ namespace scribo
   int
   line_info<L>::baseline() const
   {
-    return baseline_;
+    return data_->baseline_;
   }
 
 
@@ -451,7 +464,7 @@ namespace scribo
   int
   line_info<L>::meanline() const
   {
-    return meanline_;
+    return data_->meanline_;
   }
 
 
@@ -459,7 +472,7 @@ namespace scribo
   int
   line_info<L>::ascent() const
   {
-    return baseline_ - a_height() + 1;
+    return data_->baseline_ - a_height() + 1;
   }
 
 
@@ -467,7 +480,7 @@ namespace scribo
   int
   line_info<L>::descent() const
   {
-    return baseline_ - d_height();
+    return data_->baseline_ - d_height();
   }
 
 
@@ -475,7 +488,7 @@ namespace scribo
   unsigned
   line_info<L>::x_height() const
   {
-    return x_height_;
+    return data_->x_height_;
   }
 
 
@@ -483,7 +496,7 @@ namespace scribo
   int
   line_info<L>::d_height() const
   {
-    return d_height_;
+    return data_->d_height_;
   }
 
 
@@ -491,7 +504,7 @@ namespace scribo
   int
   line_info<L>::a_height() const
   {
-    return a_height_;
+    return data_->a_height_;
   }
 
 
@@ -499,7 +512,7 @@ namespace scribo
   unsigned
   line_info<L>::char_space() const
   {
-    return char_space_;
+    return data_->char_space_;
   }
 
 
@@ -507,7 +520,7 @@ namespace scribo
   unsigned
   line_info<L>::char_width() const
   {
-    return char_width_;
+    return data_->char_width_;
   }
 
 
@@ -515,7 +528,7 @@ namespace scribo
   unsigned
   line_info<L>::word_space() const
   {
-    return word_space_;
+    return data_->word_space_;
   }
 
 
@@ -523,14 +536,14 @@ namespace scribo
   line::ReadingDirection
   line_info<L>::reading_direction() const
   {
-    return reading_direction_;
+    return data_->reading_direction_;
   }
 
   template <typename L>
   line::Type
   line_info<L>::type() const
   {
-    return type_;
+    return data_->type_;
   }
 
 
@@ -538,10 +551,10 @@ namespace scribo
   void
   line_info<L>::update_components_type(component::Type type)
   {
-    for_all_elements(i, components_)
+    for_all_elements(i, data_->components_)
     {
-      unsigned c = components_[i];
-      holder_.components_()(c).update_type(type);
+      unsigned c = data_->components_[i];
+      data_->holder_.components_()(c).update_type(type);
     }
   }
 
@@ -550,7 +563,7 @@ namespace scribo
   void
   line_info<L>::update_type(line::Type type)
   {
-    type_ = type;
+    data_->type_ = type;
 
     // Some line types may involve updating components type as well.
     if (type == line::Punctuation)
@@ -564,7 +577,7 @@ namespace scribo
   bool
   line_info<L>::reverse_video() const
   {
-    return reverse_video_;
+    return data_->reverse_video_;
   }
 
 
@@ -572,7 +585,7 @@ namespace scribo
   float
   line_info<L>::orientation() const
   {
-    return orientation_;
+    return data_->orientation_;
   }
 
 
@@ -580,7 +593,7 @@ namespace scribo
   float
   line_info<L>::reading_orientation() const
   {
-    return reading_orientation_;
+    return data_->reading_orientation_;
   }
 
 
@@ -588,21 +601,21 @@ namespace scribo
   bool
   line_info<L>::indented() const
   {
-    return indented_;
+    return data_->indented_;
   }
 
   template <typename L>
   bool
   line_info<L>::has_text() const
   {
-    return !text_.empty();
+    return !data_->text_.empty();
   }
 
   template <typename L>
   const std::string&
   line_info<L>::text() const
   {
-    return text_;
+    return data_->text_;
   }
 
 
@@ -610,7 +623,7 @@ namespace scribo
   void
   line_info<L>::update_text(const std::string& str)
   {
-    text_ = str;
+    data_->text_ = str;
   }
 
 
@@ -624,9 +637,19 @@ namespace scribo
 
   template <typename L>
   bool
+  line_info<L>::is_textline() const
+  {
+    return is_valid()
+      && !is_hidden()
+      && type() == line::Text;
+  }
+
+
+  template <typename L>
+  bool
   line_info<L>::is_hidden() const
   {
-    return hidden_;
+    return data_->hidden_;
   }
 
 
@@ -634,7 +657,7 @@ namespace scribo
   void
   line_info<L>::set_hidden(bool b)
   {
-    hidden_ = b;
+    data_->hidden_ = b;
   }
 
 
@@ -665,8 +688,8 @@ namespace scribo
   void
   line_info<L>::update_ebbox()
   {
-    int A = a_height_ - x_height_;
-    int D = - d_height_;
+    int A = data_->a_height_ - data_->x_height_;
+    int D = - data_->d_height_;
     if (A <= 2 && D > 2)
       A = D;
     if (D <= 2 && A > 2)
@@ -674,10 +697,12 @@ namespace scribo
 
     int delta = delta_of_line();
 
-    ebbox_ = mln::make::box2d(meanline_ - A, bbox().pmin().col() - delta,
-			      baseline_ + D, bbox().pmax().col() + delta);
+    data_->ebbox_ = mln::make::box2d(data_->meanline_ - A,
+				     bbox().pmin().col() - delta,
+				     data_->baseline_ + D,
+				     bbox().pmax().col() + delta);
 
-    ebbox_.crop_wrt(holder_.components().labeled_image().domain());
+    data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
   }
 
 
@@ -729,20 +754,20 @@ namespace scribo
 	// Adjusting ebboxes with the highest delta and merging ebboxes.
 	int d_delta = other.delta_of_line() - this->delta_of_line();
 	if (d_delta < 0) // other.delta_of_line() < this->delta_of_line()
-	  ebbox_.merge(enlarge(other.ebbox(), - d_delta));
+	  data_->ebbox_.merge(enlarge(other.ebbox(), - d_delta));
 	else
 	{
-	  mln::box2d b = ebbox_;
-	  ebbox_ = other.bbox();
-	  ebbox_.merge(enlarge(b, d_delta));
+	  mln::box2d b = data_->ebbox_;
+	  data_->ebbox_ = other.bbox();
+	  data_->ebbox_.merge(enlarge(b, d_delta));
 	}
 
-	ebbox_.crop_wrt(holder_.components().labeled_image().domain());
+	data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
       }
       else // /other/ IS NOT a text line.
       {
-	ebbox_.merge(other.ebbox());
-	ebbox_.merge(merged_ebbox(*this, other));
+	data_->ebbox_.merge(other.ebbox());
+	data_->ebbox_.merge(merged_ebbox(*this, other));
       }
     }
     else // /this/ is NOT a text line
@@ -755,15 +780,15 @@ namespace scribo
       }
 
       update_type(line::Text);
-      ebbox_.merge(other.ebbox());
-      ebbox_.merge(merged_ebbox(other, *this));
+      data_->ebbox_.merge(other.ebbox());
+      data_->ebbox_.merge(merged_ebbox(other, *this));
     }
 
     // Merging bboxes.
-    bbox_.merge(other.bbox());
+    data_->bbox_.merge(other.bbox());
 
     // Make sure the ebbox is included in the image domain.
-    ebbox_.crop_wrt(holder_.components().labeled_image().domain());
+    data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
   }
 
 
@@ -771,14 +796,14 @@ namespace scribo
   void
   line_info<L>::fast_merge(line_info<L>& other, bool hide)
   {
-    tag_ = line::Needs_Precise_Stats_Update;
+    data_->tag_ = line::Needs_Precise_Stats_Update;
     other.update_tag(line::Merged);
     other.set_hidden(hide);
 
     // Update bbox and ebbox
     update_bbox_and_ebox(other);
 
-    components_.append(other.components());
+    data_->components_.append(other.components());
   }
 
 
@@ -795,7 +820,7 @@ namespace scribo
   line_info<L>::force_stats_update()
   {
     typedef mln_site(L) P;
-    const component_set<L>& comp_set = holder_.components();
+    const component_set<L>& comp_set = data_->holder_.components();
 
     // Init.
     typedef mln::value::int_u<12> median_data_t;
@@ -814,21 +839,21 @@ namespace scribo
     // Workaround to avoid overflow with int_u<12> in median accumulators.
     //
     // FIXME: not optimal...
-    for_all_elements(i, components_)
+    for_all_elements(i, data_->components_)
     {
-      unsigned c = components_(i);
+      unsigned c = data_->components_(i);
 
       // Ignore punctuation for stats computation but not for bbox
       // computation.
-      if (holder_.components()(c).type() == component::Punctuation)
+      if (data_->holder_.components()(c).type() == component::Punctuation)
 	continue;
 
       ref_line = mln::math::min(comp_set(c).bbox().pmin().row(), ref_line);
     }
 
-    for_all_elements(i, components_)
+    for_all_elements(i, data_->components_)
     {
-      unsigned c = components_(i);
+      unsigned c = data_->components_(i);
 
       const mln::box2d& bb = comp_set(c).bbox();
 
@@ -837,7 +862,7 @@ namespace scribo
 
       // Ignore punctuation for stats computation but not for bbox
       // computation.
-      if (holder_.components()(c).type() == component::Punctuation)
+      if (data_->holder_.components()(c).type() == component::Punctuation)
 	continue;
 
 
@@ -853,11 +878,11 @@ namespace scribo
       //  (right link)            (left link)
 
       // Space between characters.
-      if (holder_.links()(c) != c)
+      if (data_->holder_.links()(c) != c)
       {
 	int
 	  space = bb.pmin().col()
-	  - comp_set(holder_.links()(c)).bbox().pmax().col() - 1;
+	  - comp_set(data_->holder_.links()(c)).bbox().pmax().col() - 1;
 
 	// -- Ignore overlapped characters.
 	if (space > 0)
@@ -884,31 +909,31 @@ namespace scribo
 
     // Finalization
     {
-      tag_ = line::None;
-      bbox_ = bbox.to_result();
+      data_->tag_ = line::None;
+      data_->bbox_ = bbox.to_result();
 
       // Char space
       if (char_space.card() < 2)
-	char_space_ = 0;
+	data_->char_space_ = 0;
       else
-	char_space_ = char_space.to_result();
+	data_->char_space_ = char_space.to_result();
 
       // Char width
       if (card() == 2)
-	char_width_ = (comp_set(components_[0]).bbox().width()
-		       + comp_set(components_[1]).bbox().width()) / 2;
+	data_->char_width_ = (comp_set(data_->components_[0]).bbox().width()
+			      + comp_set(data_->components_[1]).bbox().width()) / 2;
       else
-	char_width_ = char_width.to_result();
+	data_->char_width_ = char_width.to_result();
 
       mln::def::coord
 	absolute_baseline_r = baseline.to_result() + ref_line,
 	absolute_meanline_r = meanline.to_result() + ref_line;
 
-      baseline_ = absolute_baseline_r;
-      meanline_ = absolute_meanline_r;
-      x_height_ = baseline_ - meanline_ + 1;
-      d_height_ = baseline_ - bbox.to_result().pmax().row();
-      a_height_ = baseline_ - bbox.to_result().pmin().row() + 1;
+      data_->baseline_ = absolute_baseline_r;
+      data_->meanline_ = absolute_meanline_r;
+      data_->x_height_ = data_->baseline_ - data_->meanline_ + 1;
+      data_->d_height_ = data_->baseline_ - bbox.to_result().pmax().row();
+      data_->a_height_ = data_->baseline_ - bbox.to_result().pmin().row() + 1;
 
       //FIXME
       //
@@ -929,7 +954,7 @@ namespace scribo
   const line_set<L>&
   line_info<L>::holder() const
   {
-    return holder_;
+    return data_->holder_;
   }
 
 

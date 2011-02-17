@@ -113,6 +113,16 @@ namespace scribo
   }
 
 
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const paragraph_info<L>& info)
+  {
+    return ostr << "paragraph_info("
+		<< "line_ids=" << info.line_ids()
+		<< ", bbox=" << info.bbox()
+		<< ")" << std::endl;
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace scribo

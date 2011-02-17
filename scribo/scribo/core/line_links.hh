@@ -139,8 +139,8 @@ namespace scribo
 
   template <typename L>
   line_links<L>::line_links()
+    : data_(0)
   {
-    data_ = new data_t();
   }
 
 
