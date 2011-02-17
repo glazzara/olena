@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,17 +18,17 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 
-noinst_PROGRAMS = 		\
-  extract_discontinued_lines  	\
-  extract_discontinued_vlines   \
-  extract_discontinued_hlines  	\
-  extract_thick_vlines  	\
-  extract_thick_hlines  	\
+noinst_PROGRAMS = 	\
+  discontinued_lines  	\
+  discontinued_vlines   \
+  discontinued_hlines  	\
+  thick_vlines  	\
+  thick_hlines  	\
   lines_pattern
 
-extract_discontinued_lines_SOURCES = extract_discontinued_lines.cc
-extract_discontinued_vlines_SOURCES = extract_discontinued_vlines.cc
-extract_discontinued_hlines_SOURCES = extract_discontinued_hlines.cc
-extract_thick_vlines_SOURCES = extract_thick_vlines.cc
-extract_thick_hlines_SOURCES = extract_thick_hlines.cc
+discontinued_lines_SOURCES = discontinued_lines.cc
+discontinued_vlines_SOURCES = discontinued_vlines.cc
+discontinued_hlines_SOURCES = discontinued_hlines.cc
+thick_vlines_SOURCES = thick_vlines.cc
+thick_hlines_SOURCES = thick_hlines.cc
 lines_pattern_SOURCES = lines_pattern.cc

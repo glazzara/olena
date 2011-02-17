@@ -463,7 +463,7 @@ namespace scribo
 	// Extract other Elements
 	on_new_progress_label("Extracting Elements");
 	component_set<L>
-	  elements = scribo::primitive::extract::elements(doc, original_image);
+	  elements = scribo::primitive::extract::non_text(doc, original_image);
 
 	on_progress();
 

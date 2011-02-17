@@ -26,12 +26,12 @@
 
 /// \file
 ///
-/// \brief Find in a document elements which are not text.
+/// \brief Find in a document non text which are not text.
 ///
 /// \fixme To be optimized!
 
-#ifndef SCRIBO_PRIMITIVE_EXTRACT_ELEMENTS_HH
-# define SCRIBO_PRIMITIVE_EXTRACT_ELEMENTS_HH
+#ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
+# define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
@@ -58,6 +58,10 @@
 # include <mln/clustering/kmean_rgb.hh>
 # include <mln/fun/v2v/rgb8_to_rgbn.hh>
 
+# include <mln/util/timer.hh>
+
+# include <mln/io/pbm/save.hh>
+
 namespace scribo
 {
 
@@ -72,7 +76,7 @@ namespace scribo
 
       template <typename L, typename I>
       component_set<L>
-      elements(const document<L>& doc, const Image<I>& input);
+      non_text(const document<L>& doc, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -107,9 +111,9 @@ namespace scribo
 
       template <typename L, typename I>
       component_set<L>
-      elements(const document<L>& doc, const Image<I>& input_)
+      non_text(const document<L>& doc, const Image<I>& input_)
       {
-	trace::entering("scribo::primitive::extract::elements");
+	trace::entering("scribo::primitive::extract::non_text");
 
 	const I& input = exact(input_);
 	mln_precondition(doc.is_valid());
@@ -135,9 +139,16 @@ namespace scribo
 	  image2d<t_rgb5>
 	    img_rgb5 = mln::data::transform(doc.image(), t_rgb8_to_rgb5());
 
+	  // DEBUG
+	  io::pbm::save(content, "text_area.pbm");
+
+	  mln::util::timer t;
+	  t.start();
 	  img_lbl8 =
 	    mln::clustering::kmean_rgb<double,5>((img_rgb5 | pw::value(content)), 3, 10, 10).unmorph_();
 	  data::fill((img_lbl8 | !pw::value(content)).rw(), 0u);
+	  t.stop();
+	  std::cout << t << std::endl;
 
 	  mln::util::array<unsigned>
 	    card = mln::labeling::compute(accu::math::count<value::label_8>(),
@@ -162,15 +173,25 @@ namespace scribo
 
 	std::cout << "Removing small elements" << std::endl;
 	{
-	image2d<bool> elts;
-	initialize(elts, img_lbl8);
-	data::fill(elts, false);
-	data::fill((elts | (pw::value(img_lbl8) != pw::cst(0))).rw(), true);
+	  image2d<bool> elts;
+	  initialize(elts, img_lbl8);
+	  data::fill(elts, false);
+	  data::fill((elts | (pw::value(img_lbl8) != pw::cst(0))).rw(), true);
 
-	scribo::def::lbl_type nlabels;
-	elts = filter::components_small(elts, c8(), nlabels, 40);
+	  // DEBUG
+	  data::fill((elts | (pw::value(doc.line_seps()) != pw::cst(0))).rw(),
+		     false);
+	  // END OF DEBUG
 
-	output = primitive::extract::components(elts, c8(), nlabels);
+
+	  scribo::def::lbl_type nlabels;
+	  elts = filter::components_small(elts, c8(), nlabels, 40);
+
+	  // DEBUG
+	  io::pbm::save(elts, "elements.pbm");
+	  // END OF DEBUG
+
+	  output = primitive::extract::components(elts, c8(), nlabels);
 	}
 
 
@@ -207,20 +228,7 @@ namespace scribo
 	  }
 	}
 
-// 	mln::io::pbm::save(merged_elts, "merged_elts.pbm");
-
-// 	mln::util::array<image2d<value::rgb8> > elt_ima;
-// 	unsigned i = 0;
-// 	for_all_comps(c, elt_comp)
-// 	  if (elt_comp(c).is_valid())
-// 	  {
-// 	    elt_ima.append(preprocessing::crop(doc.image(), elt_comp(c).bbox()));
-// 	    mln::io::ppm::save(elt_ima(i), mln::debug::filename("elt.ppm", i));
-// 	    ++i;
-// 	  }
-
-
-	trace::exiting("scribo::primitive::extract::elements");
+	trace::exiting("scribo::primitive::extract::non_text");
 	return output;
       }
 
@@ -233,4 +241,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_EXTRACT_ELEMENTS_HH
+#endif // ! SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH

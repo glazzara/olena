@@ -1,5 +1,28 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename files in Scribo.
+
+	* scribo/primitive/extract/elements.hh,
+	* src/primitive/extract/extract_discontinued_hlines.cc,
+	* src/primitive/extract/extract_discontinued_lines.cc,
+	* src/primitive/extract/extract_discontinued_vlines.cc,
+	* src/primitive/extract/extract_thick_hlines.cc,
+	* src/primitive/extract/extract_thick_vlines.cc: Rename to...
+
+	* scribo/primitive/extract/non_text.hh,
+	* src/primitive/extract/discontinued_hlines.cc,
+	* src/primitive/extract/discontinued_lines.cc,
+	* src/primitive/extract/discontinued_vlines.cc,
+	* src/primitive/extract/thick_hlines.cc,
+	* src/primitive/extract/thick_vlines.cc: ... this.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Rename
+	function call from extract::elements to extract_non_text.
+
+	* src/primitive/extract/Makefile.am: Update target names.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Base64 conversion routines.
 
 	* scribo/scribo/convert/from_base64.hh,
