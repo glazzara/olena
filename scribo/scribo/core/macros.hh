@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,8 +33,6 @@
 # define for_all_elements(E, S) \
   for (unsigned E = 0; E < S.nelements(); ++E)
 
-
-// FIXME: we want to replace previous macros by these ones.
 # define for_all_comps(C, S) \
   for (unsigned C = 1; C <= S.nelements(); ++C)
 
@@ -56,6 +54,7 @@
 # define for_all_line_comps(E, S) \
   for_all_elements(E, S)
 
+// Internal use only.
 # define for_all_lines_info(E, S) \
   for_all_comp_data(E, S)
 

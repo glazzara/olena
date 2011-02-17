@@ -1,5 +1,17 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* scribo/core/macros.hh: Update comments.
+
+	* scribo/text/merging.hh: Add comments and fix line data swap.
+
+	* scribo/text/recognition.hh: Make use of is_textline.
+
+	* src/text_in_picture.cc: Initialize ImageMagick.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve and cleanup whitespace separator detection.
 
 	* scribo/core/tag/anchor.hh: Add new anchors.

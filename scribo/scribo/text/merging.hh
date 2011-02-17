@@ -192,7 +192,7 @@ namespace scribo
 	{
           // we transfer data from the largest item to the root one.
 	  scribo::line_info<L> tmp = lines(l1);
-	  lines(l1) = lines(l2);
+	  std::swap(lines(l1), lines(l2));
 	  lines(l1).fast_merge(tmp);
 
 	  // We must set manually the tag for lines(l2) since it is
@@ -504,8 +504,8 @@ namespace scribo
       void
       one_merge_pass(unsigned ith_pass,
 		     const box2d& domain,
-		     std::vector<scribo::line_id_t>& v,
-		     scribo::line_set<L>& lines,
+		     std::vector<scribo::line_id_t>& v, // Ids sorted by bbox size.
+		     scribo::line_set<L>& lines, // Tagged Lines (looks_like_a_text_line?)
 		     mln::util::array<unsigned>& parent)
       {
 	image2d<unsigned> billboard(domain);
