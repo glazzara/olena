@@ -29,6 +29,7 @@ EXTRA_DIST = 				\
 
 SUBDIRS = 		\
   binarization 		\
+  convert 		\
   core 			\
   filter 		\
   preprocessing 	\

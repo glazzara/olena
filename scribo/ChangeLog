@@ -1,3 +1,14 @@
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Base64 conversion routines.
+
+	* scribo/scribo/convert/from_base64.hh,
+	* scribo/scribo/convert/to_base64.hh: New routines.
+
+	* scribo/tests/Makefile.am,
+	* scribo/tests/convert/Makefile.am,
+	* scribo/tests/convert/base64.cc: New associated test.
+
 2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for whitespace separators visualization.
