@@ -1,5 +1,12 @@
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new conversion routines from string to tag.
+
+	* scribo/core/tag/component.hh,
+	* scribo/core/tag/line.hh: Here.
+
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various changes in scribo core structures.
 
 	* scribo/scribo/core/component_info.hh: Remove useless line_id.

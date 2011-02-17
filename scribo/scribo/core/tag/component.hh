@@ -61,6 +61,14 @@ namespace scribo
       Image
     };
 
+
+    std::ostream& operator<<(std::ostream& ostr, const Tag& tag);
+    Tag str2tag(const std::string& str);
+
+    std::ostream& operator<<(std::ostream& ostr, const Type& type);
+    Type str2type(const std::string& str);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -81,6 +89,16 @@ namespace scribo
       }
 
       return ostr << str;
+    }
+
+
+    inline
+    Tag str2tag(const std::string& str)
+    {
+      if (str == "Ignored")
+	return Ignored;
+
+      return None;
     }
 
 
@@ -115,6 +133,23 @@ namespace scribo
       return ostr << str;
     }
 
+
+    inline
+    Type str2type(const std::string& str)
+    {
+      if (str == "Character")
+	return Character;
+      else if (str == "Separator")
+	return Separator;
+      else if (str == "Noise")
+	return Noise;
+      else if (str == "Punctuation")
+	return Punctuation;
+      else if (str == "Image")
+	return Image;
+
+      return Undefined;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
