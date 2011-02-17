@@ -1,3 +1,10 @@
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add an optional base index for debug::iota.
+
+	* mln/debug/iota.hh,
+	* mln/debug/iota.spe.hh: Here.
+
 2011-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/convert/to_qimage_nocopy.cc: Fix a warning.

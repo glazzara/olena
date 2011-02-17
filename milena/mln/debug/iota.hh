@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +50,7 @@ namespace mln
      * assigned.
      */
     template <typename I>
-    void iota(Image<I>& input);
+    void iota(Image<I>& input, unsigned base_index);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,9 +61,9 @@ namespace mln
       template <typename I>
       inline
       void
-      iota(trait::image::speed::any, I& input)
+      iota(trait::image::speed::any, I& input, unsigned base_index)
       {
-	unsigned i = 0;
+	unsigned i = base_index;
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  input(p) = ++i % mln_max(mln_value(I));
@@ -71,16 +72,27 @@ namespace mln
     } // end of namespace mln::debug::impl
 
 
+
     template <typename I>
     inline
     void
     iota(Image<I>& input)
     {
+      iota(input, 0);
+    }
+
+
+    template <typename I>
+    inline
+    void
+    iota(Image<I>& input, unsigned base_index)
+    {
       trace::entering("debug::iota");
       mln_precondition(exact(input).is_valid());
-      impl::iota(mln_trait_image_speed(I)(), exact(input));
+      impl::iota(mln_trait_image_speed(I)(), exact(input), base_index);
       trace::exiting("debug::iota");
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

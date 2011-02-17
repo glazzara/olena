@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,16 +49,16 @@ namespace mln
     {
 
       template <typename I>
-      void iota(trait::image::speed::fastest, I& input);
+      void iota(trait::image::speed::fastest, I& input, unsigned base_index);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
       void
-      iota(trait::image::speed::fastest, I& input)
+      iota(trait::image::speed::fastest, I& input, unsigned base_index)
       {
-	unsigned i = 0;
+	unsigned i = base_index;
 	mln_pixter(I) p(input);
 	for_all(p)
 	  p.val() = static_cast<mln_value(I)>(++i % mln_max(mln_value(I)));
