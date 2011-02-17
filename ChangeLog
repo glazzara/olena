@@ -1,3 +1,7 @@
+2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: configure scribo/tests/convert.
+
 2011-03-14  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
 	* milena/mln/labeling/regional_maxima.hh
