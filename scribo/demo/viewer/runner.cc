@@ -94,6 +94,7 @@ void runner::stop()
 
 void runner::start_demat(const QString& filename)
 {
+  args_.clear();
   args_ << filename;
   mode_ = Demat;
 
@@ -191,6 +192,7 @@ void runner::process(const image2d<value::rgb8>& original_ima,
 void runner::start_export(const QString& imgfile,
 			  const QString& xmlfile, const QString& outfile)
 {
+  args_.clear();
   args_ << imgfile << xmlfile << outfile;
   mode_ = Export;
 

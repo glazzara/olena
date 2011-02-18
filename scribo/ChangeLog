@@ -1,3 +1,7 @@
+2011-02-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/viewer/runner.cc: Clear arguments on new process.
+
 2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Regen.
