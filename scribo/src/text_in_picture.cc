@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
   if (argc < 3 || argc > 11)
     return scribo::debug::usage(argv,
 				"Find text in a photo.\n\n"
-				"Common usage: ./text_in_photo_fast input.*"
+				"Common usage: ./text_in_picture input.*"
 				" output.ppm 1 1 1 1 1",
 				"input.ppm output.ppm <bg/fg enabled>"
 				" <sauvola_ms enabled> "
@@ -196,6 +196,8 @@ int main(int argc, char* argv[])
   }
 
   trace::entering("main");
+
+  Magick::InitializeMagick(*argv);
 
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, argv[1]);
