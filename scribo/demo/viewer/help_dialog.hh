@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -18,17 +19,13 @@
 # define SCRIBO_DEMO_VIEWER_HELP_DIALOG_HH
 
 # include <QtGui>
+# include <help_dialog.ui.h>
 
-class HelpDialog
-  : public QDialog
+class HelpDialog : public QDialog, private Ui::HelpDialog
 {
-  Q_OBJECT
-
 public:
   HelpDialog();
 
-public slots:
-  void done();
 };
 
 #endif // ! SCRIBO_DEMO_VIEWER_HELP_DIALOG_HH

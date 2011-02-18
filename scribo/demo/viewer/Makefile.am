@@ -63,7 +63,7 @@ BUILT_SOURCES = viewer.moc.cc			\
 		image_scene.moc.cc		\
 		image_view.moc.cc		\
 		image_region.moc.cc		\
-		help_dialog.moc.cc		\
+		help_dialog.ui.h		\
 		step_widget.moc.cc 		\
 		toolchain_options.moc.cc	\
 		toolchain_options.ui.h		\
@@ -74,7 +74,8 @@ BUILT_SOURCES = viewer.moc.cc			\
 		preferences_dialog.ui.h		\
 		general_options.moc.cc		\
 		general_options.ui.h		\
-		demodir.hh
+		demodir.hh 			\
+		viewer.qrc.cc
 
 
 noinst_HEADERS = viewer.hh		\
@@ -121,5 +122,6 @@ EXTRA_DIST =			\
 	preferences_dialog.ui 	\
 	README			\
 	toolchain_options.ui	\
+	help_dialog.ui 		\
 	demodir.hh.in
 

@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>../shared/icons/olena_smaller.jpg</file>
+  </qresource>
+</RCC>

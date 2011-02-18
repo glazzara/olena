@@ -1,5 +1,22 @@
 2011-02-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve about dialog in scribo viewer.
+
+	* demo/shared/icons/olena_smaller.jpg: New.
+
+	* demo/shared/shared.qrc: Add new image in resources.
+
+	* demo/viewer/Makefile.am: Build qrc file.
+
+	* demo/viewer/help_dialog.cc,
+	* demo/viewer/help_dialog.hh: Make use of the new dialog.
+
+	* demo/viewer/help_dialog.ui: New.
+
+	* demo/viewer/viewer.qrc: New.
+
+2011-02-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/viewer/runner.cc: Clear arguments on new process.
 
 2011-01-28  Guillaume Lazzara  <z@lrde.epita.fr>

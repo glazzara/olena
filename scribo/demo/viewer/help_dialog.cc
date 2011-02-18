@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -18,43 +19,5 @@
 
 HelpDialog::HelpDialog()
 {
-  QPushButton *closeButton = new QPushButton(tr("Close"));
-  connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-
-  QHBoxLayout *buttonsLayout = new QHBoxLayout;
-  buttonsLayout->addStretch(1);
-  buttonsLayout->addWidget(closeButton);
-
-  QVBoxLayout *mainLayout = new QVBoxLayout;
-
-  QString help = tr(
-		    "Document layout viewer:\n"
-		    "\n"
-		    "Usage:\n"
-		    " - Choose an image file in the file browser,\n"
-	 	    "if XML file(s) whose prefix name is the same as\n"
-		    "the image name (i.e.image _name(_ .*)?.xml) is present\n"
-		    "then you can choose the one you want in the step\n"
-		    "chooser to display it on the scene.\n"
-		    "- To load a base 64 encoded XML file,\n"
-		    "its extension has to be .xmlc otherwise \n"
-		    "the program won't recognize it !\n"
-		    " - Select regions to display their properties.\n"
-		    " - Use the mouse or keyboard to move and zoom\n"
-		    "   (Arrows, PageUp, PageDown, Home, End).\n"
-		    "\n");
-
-
-  QLabel* label = new QLabel(help);
-
-  mainLayout->addWidget(label);
-  mainLayout->addLayout(buttonsLayout);
-
-  setLayout(mainLayout);
-  setWindowTitle(tr("About"));
-}
-
-void HelpDialog::done()
-{
-  emit close();
+  setupUi(this);
 }

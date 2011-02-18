@@ -1,5 +1,6 @@
 <RCC>
-  <qresource prefix="icons" >
+  <qresource prefix="icons">
+    <file>icons/olena_smaller.jpg</file>
     <file>icons/close.gif</file>
     <file>icons/image-next-icon.png</file>
     <file>icons/page-down-icon.png</file>
