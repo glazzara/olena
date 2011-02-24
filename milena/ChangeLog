@@ -1,5 +1,21 @@
 2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise topology-related routines.
+
+	* tests/core/image/complex_image.hh
+	(make_test_bin_2complex_image2d): New function.
+	* tests/topo/is_facet.cc,
+	* tests/make/detachment.cc,
+	* tests/make/attachment.cc:
+	New.
+	* tests/topo/Makefile.am (check_PROGRAMS): Add is_facet.
+	(is_facet_SOURCES): New.
+	* tests/make/Makefile.am (check_PROGRAMS): Add attachment and
+	detachment.
+	(attachment_SOURCES, detachment_SOURCES): New.
+
+2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	New complex image alias: mln::bin_2complex_image2d.
 
 	* mln/core/alias/complex_image.hh (mln::bin_2complex_image2d):

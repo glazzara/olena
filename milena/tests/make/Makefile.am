@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -18,6 +18,8 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  attachment					\
+  detachment					\
   dual_neighb					\
   dummy_p_edges 				\
   dummy_p_vertices 				\

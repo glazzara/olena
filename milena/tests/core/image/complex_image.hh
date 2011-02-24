@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -33,6 +33,8 @@
 # include <mln/core/image/complex_image.hh>
 # include <mln/core/alias/complex_image.hh>
 # include <mln/value/int_u8.hh>
+
+# include <mln/data/fill.hh>
 
 // FIXME: Keep this?  (See below.)
 # include <mln/core/site_set/p_faces.hh>
@@ -149,7 +151,7 @@ make_test_complex_image()
   mln::metal::vec<D + 1, std::vector< int_u8 > > values;
   // Assign 0 to 0-faces, 1 to 1-faces and 2 to 2-faces.
   for (unsigned d = 0; d <= D; ++d)
-    for (unsigned n = 0; n < pc.cplx().nfaces(d); ++n)
+    for (unsigned n = 0; n < pc.cplx().nfaces_of_dim(d); ++n)
       values[d].push_back(d);
 
   // Create and init an image based on PC.
@@ -158,6 +160,20 @@ make_test_complex_image()
   // Check the value associated to edge E0 (through complex psite CS).
   mln_postcondition(ima(cs) == 1u);
 
+  return ima;
+}
+
+
+/* FIXME: Quick and dirty implementation, based on
+   `make_test_complex_image'.  Factor and revamp.  */
+inline
+mln::bin_2complex_image2d
+make_test_bin_2complex_image2d()
+{
+  mln::int_u8_2complex_image2d model = make_test_complex_image();
+  mln::bin_2complex_image2d ima;
+  mln::initialize(ima, model);
+  mln::data::fill(ima, true);
   return ima;
 }
 

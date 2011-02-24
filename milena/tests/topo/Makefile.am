@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -20,7 +20,8 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS = skeleton
 
 check_PROGRAMS =				\
-  complex
+  complex					\
+  is_facet
 
 
 TESTS = $(check_PROGRAMS)
