@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -83,6 +83,22 @@ namespace mln
   /*------------------------------.
   | 2-d plane 2-complex aliases.  |
   `------------------------------*/
+
+  /*!
+    \class bin_2complex_image2d
+    \headerfile <>
+
+    \brief Type alias for a binary image based on a
+    2-complex, where 0-faces are located at discrete (integer)
+    2-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
+  typedef
+  mln::complex_image<2, mln::discrete_plane_2complex_geometry, bool>
+  bin_2complex_image2d;
+  /// \endcond
 
   /*!
     \class int_u8_2complex_image2d
