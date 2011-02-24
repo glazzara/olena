@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,8 +29,7 @@
 /// \file
 /// \brief Detaching a point from a binary image.
 
-// FIXME: Not generic.  Swap arguments and use Image<I> and
-// mln_psite(I) as types.
+# include <mln/metal/equal.hh>
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/point2d.hh>
@@ -41,19 +40,68 @@ namespace mln
   namespace topo
   {
     
-    /// \brief Detach a point from a binary image.
-    inline
-    void
-    detach_point(const mln::point2d& p, mln::image2d<bool>& ima);
+    /// \brief Functor detaching a point from a binary image.
+    template <typename I>
+    class detach_point
+    {
+    public:
+      /// Build a functor.
+      detach_point();
+
+      /// Build a functor, and assign an image to it.
+      ///
+      /// \param  ima     The image.
+      detach_point(Image<I>& ima);
+
+      /// Set the underlying image.
+      void set_image(Image<I>& ima);
+
+      /// \brief Detach point \a p from the image.
+      void operator()(const mln_psite(I)& p) const;
+
+    private:
+      /// The image.
+      I* ima_;
+    };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    template <typename I>
+    inline
+    detach_point<I>::detach_point()
+      : ima_(0)
+    {
+      // Ensure I is a binary image type.
+      /* FIXME: Not compatible with proxy/morphers on values.  */
+      mlc_equal(mln_value(I), bool)::check();
+    }
+
+    template <typename I>
+    inline
+    detach_point<I>::detach_point(Image<I>& ima)
+      : ima_(exact(&ima))
+    {
+      // Ensure I is a binary image type.
+      /* FIXME: Not compatible with proxy/morphers on values.  */
+      mlc_equal(mln_value(I), bool)::check();
+    }
+
+    template <typename I>
     inline
     void
-    detach_point(const mln::point2d& p, mln::image2d<bool>& ima)
+    detach_point<I>::set_image(Image<I>& ima)
     {
-      ima(p) = false;
+      ima_ = exact(&ima);
+    }
+
+    template <typename I>
+    inline
+    void
+    detach_point<I>::operator()(const mln_psite(I)& p) const
+    {
+      (*ima_)(p) = false;
     }
 
 # endif // MLN_INCLUDE_ONLY

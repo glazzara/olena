@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,6 +69,8 @@ int main()
 
   // Simplicity criterion functor.
   topo::is_simple_point2d<I, N> is_simple(nbh_fg, nbh_bg);
+  // Simple point detach procedure.
+  topo::detach_point<I> detach;
   // Constraint: do not collapse end points.
   topo::is_not_end_point<I, N> constraint(nbh_fg, input);
 
@@ -87,7 +89,7 @@ int main()
 
   I output = topo::skeleton::priority_driven_thinning(input, nbh_fg,
 						      is_simple,
-						      topo::detach_point,
+						      detach,
 						      priority,
 						      constraint);
   io::pbm::save(output, "priority_driven_thinning_constrained-small.pbm");

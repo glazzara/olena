@@ -1,5 +1,20 @@
 2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make the interface of thinning algorithms uniform w.r.t. functors.
+
+	* mln/topo/skeleton/priority_driven_thinning.hh
+	(mln::topo::skeleton::priority_driven_thinning): Catch up
+	with mln::topo::skeleton::breadth_first_thinning.
+	* mln/topo/detach_point.hh: Turn into a functor to match the new
+	interface of thinning algorithms.
+	* tests/topo/skeleton/breadth_first_thinning.cc
+	* tests/topo/skeleton/breadth_first_thinning_constrained.cc
+	* tests/topo/skeleton/priority_driven_thinning.cc
+	* tests/topo/skeleton/priority_driven_thinning_constrained.cc:
+	Adjust.
+
+2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	State a cell is not simple if it does not correspond to a facet.
 
 	* mln/topo/is_simple_cell.hh
