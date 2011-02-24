@@ -1,5 +1,13 @@
 2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have is_facet take into account the values of a (complex) image.
+
+	* mln/topo/is_facet.hh (mln::topo::is_facet): Take a binary image
+	and a neighborhood as arguments and take the image's values into
+	account.
+
+2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp topology-related routines.
 
 	* mln/make/attachment.hh,

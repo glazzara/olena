@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +29,8 @@
 /// \file
 /// \brief Testing whether an mln::complex_psite is a facet.
 
+# include <mln/metal/equal.hh>
+
 # include <mln/core/site_set/complex_psite.hh>
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
@@ -43,29 +45,55 @@ namespace mln
     /* FIXME: Make this routine a method of mln::complex_psite?  Or
        better, a method of mln::topo::face?  */
 
-    /// Is \a f a facet, i.e., a face not ``included in'' (adjacent
-    /// to) a face of higher dimension?
-    template <unsigned D, typename G>
+    /* FIXME: Use a pix<I> object as input of is_facet instead of a
+       (psite, image) pair?  */
+
+    /** \brief Is \a f a facet in \a image, i.e., a face not
+        ``included in'' (adjacent to) a face of higher dimension?
+
+	\tparam I   The type of the image.
+	\tparam NH  The neighborhood type returning the set of
+		    (n+1)-faces adjacent to a an n-face.
+
+	\param ima             The complex image.
+	\param f               A psite pointing to the face to examine.
+	\param higher_adj_nbh  Relationship between an n-facet and its
+                               adjacent (n+1)-facets.
+    */
+    template <typename I, typename NH>
     bool
-    is_facet(const complex_psite<D, G>& f);
+    is_facet(const Image<I>& ima, const mln_psite(I)& f,
+	     const Neighborhood<NH>& higher_adj_nbh);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // FIXME: Too naive: this code does not take the values of the
-    // image into account.
-    template <unsigned D, typename G>
+    template <typename I, typename NH>
     inline
     bool
-    is_facet(const complex_psite<D, G>& f)
+    is_facet(const Image<I>& ima_, const mln_psite(I)& f,
+	     const Neighborhood<NH>& higher_adj_nbh_)
     {
-      typedef complex_higher_neighborhood<D, G> higher_adj_nbh_t;
-      higher_adj_nbh_t higher_adj_nbh;
-      mln_niter(higher_adj_nbh_t) n(higher_adj_nbh, f);
+      // Ensure I is a binary image type.
+      /* FIXME: Not compatible with proxy/morphers on values.  */
+      mlc_equal(mln_value(I), bool)::check();
+
+      const I& ima = exact(ima_);
+      const NH& higher_adj_nbh = exact(higher_adj_nbh_);
+
+      // F cannot be a facet if it does not belong to the complex.
+      if (!ima(f))
+	return false;
+
+      // This routine considers that looking for faces of dimension
+      // n+1 is enough (which is the case if the image is a complex).
+      mln_niter(NH) n(higher_adj_nbh, f);
       for_all(n)
 	// If the neighborhood is not empty, then F is included in a face
 	// of higher dimension.
-	return false;
+	if (ima.has(n) && ima(n))
+	  return false;
       // Otherwise, F is a facet.
       return true;
     }
