@@ -1,5 +1,13 @@
 2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Revamp mln::topo::is_simple_cell.
+
+	* mln/topo/is_simple_cell.hh
+	(mln::topo::is_simple_cell<I, N, NL, NH>::operator()):
+	Replace ad hoc code by a call to is_facet.
+
+2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have is_facet take into account the values of a (complex) image.
 
 	* mln/topo/is_facet.hh (mln::topo::is_facet): Take a binary image

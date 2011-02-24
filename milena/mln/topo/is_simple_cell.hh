@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +39,7 @@
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
+# include <mln/topo/is_facet.hh>
 # include <mln/make/attachment.hh>
 
 
@@ -132,21 +134,12 @@ namespace mln
       // FIXME: Introduce `const I& ima = *ima_;' and use it instead of
       // `ima_'.  Or introduce an `ima()' accessor?
 
-      // FIXME: We should be using topo::is_facet, but this routine is
-      // too naive, and does not take the values of the image into
-      // account.
+      // The cell corresponding to P cannot be simple unless P is
+      // facet.
       {
-	// This (part of) ``algorithm'' considers that looking for
-	// faces of dimension n+1 is enough (which is the case
-	// if the image is a complex).
 	NH higher_adj_nbh;
-	mln_niter(NH) n(higher_adj_nbh, p);
-	for_all(n)
-	  // If the higher-dim-faces neighborhood is not empty, then P
-	  // is included in a face of higher dimension.
-	  if (ima_->has(n) && (*ima_)(n))
-	    return false;
-	// Otherwise, F is a facet; continue.
+	if (!is_facet(*ima_, p, higher_adj_nbh))
+	  return false;
       }
 
       typedef p_set<mln_psite(I)> faces_t;
