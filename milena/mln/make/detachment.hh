@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,6 @@
 
 # include <mln/core/image/complex_image.hh>
 # include <mln/make/cell.hh>
-# include <mln/topo/is_facet.hh>
 
 namespace mln
 {
@@ -41,19 +41,17 @@ namespace mln
   {
 
     /** \brief Compute the detachment of the cell corresponding to the
-	facet \a f from the image \a ima.
+	face \a f from the image \a ima.
 
-	\param ima  The input image from which the facet is to be
+	\param ima  The input image from which the face is to be
 		    detached.
-	\param f    The psite corresponding to the facet to detach.
+	\param f    The psite corresponding to the face to detach.
 	\param nbh  An adjacency relationship between faces
 		    (should return the set of (n-1)- and (n+1)-faces
 		    adjacent to an n-face).
 
 	\return     A set of faces containing the detachment.
 
-	\pre \a f is a facet (it does not belong to any face of higher
-	     dimension).
 	\pre \a ima is an image of Boolean values.
 
 	We do not use the fomal definition of the detachment here (see
@@ -66,7 +64,7 @@ namespace mln
 	complex resulting from the collapsing of CELL onto IMA, but
 	the part that is removed, i.e., the detached part CELL -
 	ATTACHMENT.  It would be wise to rename this routine to
-	something else.  */
+	something else, e.g., `detached'.  */
     template <typename I, typename N>
     p_set<mln_psite(I)>
     detachment(const Image<I>& ima, const mln_psite(I)& f,
@@ -81,9 +79,6 @@ namespace mln
     detachment(const Image<I>& ima_, const mln_psite(I)& f,
 	       const Neighborhood<N>& nbh_)
     {
-      // FIXME: The current implementation of topo::is_facet is too
-      // naive: it does not take the values of the image into account.
-      mln_precondition(topo::is_facet(f));
       mlc_equal(mln_value(I), bool)::check();
 
       I ima = exact(ima_);

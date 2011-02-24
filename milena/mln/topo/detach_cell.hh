@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,6 @@
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/image/complex_image.hh>
 # include <mln/make/detachment.hh>
-# include <mln/topo/is_facet.hh>
 
 namespace mln
 {
@@ -65,7 +65,7 @@ namespace mln
 
 	  \pre \a ima is an image of Boolean values.
 
-	  \param ima  The input image from which the facet is to be
+	  \param ima  The input image from which the cell is to be
 		    detached.
 	  \param nbh  An adjacency relationship between faces
 		      (should return the set of (n-1)- and (n+1)-faces
@@ -82,10 +82,7 @@ namespace mln
 
       /** Detach the cell corresponding to \a f from \a ima.
 
-	  \pre \a f is a facet (it does not belong to any face of
-	       higher dimension).
-
-	  \param f    The psite corresponding to the facet to detach.
+	  \param f    The psite corresponding to the cell to detach.
 	  \param nbh  An adjacency relationship between faces
 		      (should return the set of (n-1)- and (n+1)-faces
 		      adjacent to an n-face).  */
@@ -131,9 +128,6 @@ namespace mln
     detach_cell<I, N>::operator()(const mln_psite(I)& f)
     {
       mln_precondition(ima_);
-      // FIXME: The current implementation of topo::is_facet is too
-      // naive: it does not take the values of the image into account.
-      mln_precondition(topo::is_facet(f));
 
       typedef p_set<mln_psite(I)> faces_t;
 

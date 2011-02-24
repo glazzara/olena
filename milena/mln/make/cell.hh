@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,8 +34,6 @@
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
-# include <mln/topo/is_facet.hh>
-
 namespace mln
 {
 
@@ -43,10 +41,7 @@ namespace mln
   {
 
     /** Compute the set of faces of the cell corresponding to the
-	facet \a f.
-
-	\pre \a f is a facet (it does not belong to any face of higher
-	     dimension).
+	face \a f.
 
 	\return An mln::p_set of sites (faces) containing the
 	attachment.  */
@@ -62,8 +57,6 @@ namespace mln
     p_set< complex_psite<D, G> >
     cell(const complex_psite<D, G>& f)
     {
-      mln_precondition(topo::is_facet(f));
-
       typedef complex_psite<D, G> psite;
       typedef p_set<psite> faces_t;
 

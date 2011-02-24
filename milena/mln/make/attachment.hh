@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,6 @@
 
 # include <mln/core/image/complex_image.hh>
 # include <mln/make/cell.hh>
-# include <mln/topo/is_facet.hh>
 
 namespace mln
 {
@@ -41,10 +41,10 @@ namespace mln
   {
 
     /** \brief Compute the attachment of the cell corresponding to the
-	facet \a f to the image \a ima.
+	face \a f to the image \a ima.
 
-	\param ima  The input image to which the facet is attached.
-	\param f    The psite corresponding to the attached facet.
+	\param ima  The input image to which the face is attached.
+	\param f    The psite corresponding to the attached face.
 	\param nbh  An adjacency relationship between faces
 		    (should return the set of (n-1)- and (n+1)-faces
 		    adjacent to an n-face).
@@ -52,8 +52,6 @@ namespace mln
 	\return     A set of faces containing the attachment.
 
 	\pre ima is an image of Boolean values.
-	\pre \a f is a facet (it does not belong to any face of higher
-	     dimension).
 
 	We do not use the fomal definition of the attachment here (see
 	couprie.08.pami).  We use the following (equivalent) definition:
@@ -74,9 +72,6 @@ namespace mln
     attachment(const Image<I>& ima_, const mln_psite(I)& f,
 	       const Neighborhood<N>& nbh_)
     {
-      // FIXME: The current implementation of topo::is_facet is too
-      // naive: it does not take the values of the image into account.
-      mln_precondition(topo::is_facet(f));
       mlc_equal(mln_value(I), bool)::check();
 
       I ima = exact(ima_);
