@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,6 +34,8 @@
 # include <mln/labeling/background.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/data/transform.hh>
+
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/accu/math/count.hh>
 
@@ -57,7 +60,7 @@ namespace mln
     /// \see mln::labeling::background
     ///
     template <typename I, typename N, typename L>
-    I
+    mln_concrete(I)
     fill_holes(const Image<I>& input, const Neighborhood<N>& nbh,
 	       L& nlabels);
 
@@ -66,7 +69,7 @@ namespace mln
 
     template <typename I, typename N, typename L>
     inline
-    I
+    mln_concrete(I)
     fill_holes(const Image<I>& input, const Neighborhood<N>& nbh,
 	       L& nlabels)
     {
@@ -76,10 +79,6 @@ namespace mln
 		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
-
-      mln_ch_value(I, bool) output;
-      initialize(output, input);
-      data::fill(output, false);
 
       mln_ch_value(I, L) lbls = labeling::background(input, nbh, nlabels);
 
@@ -99,7 +98,9 @@ namespace mln
 	}
       }
 
-      data::fill((output | (pw::value(lbls) != bg_lbl)).rw(), true);
+      util::array<bool> bg_relbl(arr.nelements(), true);
+      bg_relbl(bg_lbl) = false;
+      mln_ch_value(I, bool) output = data::transform(lbls, bg_relbl);
 
       trace::exiting("labeling::fill_holes");
       return output;
