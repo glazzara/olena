@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,7 +44,7 @@
 
 
 /* FIXME: Also provide functors where the locations are computed using
-   a function (useful for a complex on a regular grid/support.  */
+   a function (useful for a complex on a regular grid/support).  */
 
 /* FIXME: This class could probably be turned into something more
    generic, usable for other other purpose, e.g. attaching sites to
@@ -106,6 +106,9 @@ namespace mln
 
       /// Retrieve the site associated to \a f.
       site operator()(const mln::topo::face<D>& f) const;
+
+      /// Pre-allocate memory.
+      void reserve(size_t n);
 
     private:
       mln::util::tracked_ptr< internal::complex_geometry_data<P> > data_;
@@ -172,6 +175,15 @@ namespace mln
 	    s.push_back(data_->zero_faces_geom[g.subject().face_id()]);
 	}
       return s;
+    }
+
+    template <unsigned D, typename P>
+    inline
+    void
+    complex_geometry<D, P>::reserve(size_t n)
+    {
+      mln_precondition(data_);
+      data_->zero_faces_geom.reserve(n);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

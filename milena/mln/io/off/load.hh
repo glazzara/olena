@@ -307,17 +307,17 @@ namespace mln
 	  /* ``The vertices are listed with x, y, z coordinates, written
 	     one per line.''  */
 
-	  /* FIXME: We should have a faster way to create a bunch of
-	     0-faces (vertices).  */
-	  for (unsigned v = 0; v < nvertices; ++v)
-	    c.add_face();
-
 	  typedef point3df P;
 	  typedef mln_coord_(P) C;
 	  typedef geom::complex_geometry<D, P> G;
 	  G geom;
+	  geom.reserve(nvertices);
 	  for (unsigned v = 0; v < nvertices; ++v)
 	    {
+	      // Create a 0-face.
+	      c.add_face();
+
+	      // Record the geometry (point) associated to this vertex.
 	      C x, y, z;
 	      istr >> &self::eat_comment >> x
 		   >> &self::eat_comment >> y
@@ -357,10 +357,10 @@ namespace mln
 	      topo::n_faces_set<1, D> face_edges_set;
 	      face_edges_set.reserve(nface_vertices);
 
-	      // The first vertex id of the face.
+	      // Remember the first vertex id of the face.
 	      unsigned first_vertex_id;
 	      istr >> &self::eat_comment >> first_vertex_id;
-	      // The current vertex id initialized with the first id.
+	      // The current vertex id, initialized with the first id.
 	      unsigned vertex_id = first_vertex_id;
 	      if (first_vertex_id >= nvertices)
 		{
@@ -377,7 +377,7 @@ namespace mln
 		     mesh/complex.  */
 		  unsigned next_vertex_id;
 		  /* When V is the id of the last vertex of the face F,
-		     set next_vertex_id to first_vertex_id; otherwise,
+		     set NEXT_VERTEX_ID to FIRST_VERTEX_ID; otherwise,
 		     read it from the input.  */
 		  if (v == nface_vertices - 1)
 		    next_vertex_id = first_vertex_id;
@@ -387,7 +387,7 @@ namespace mln
 		      if (next_vertex_id >= nvertices)
 			{
 			  std::cerr << me << ": `" << filename
-				    << "': invalid vertex id "
+				    << "': invalid vertex id: "
 				    << next_vertex_id << std::endl;
 			  std::exit(1);
 			}
@@ -397,15 +397,14 @@ namespace mln
 		  topo::n_face<0, D> next_vertex(c, next_vertex_id);
 		  // The current edge.
 		  topo::algebraic_n_face<1, D> edge;
-		  // If the edge has been constructed yet, create it;
-		  // otherwise, retrieve its id from the complex.
+		  // If the edge has not been constructed yet, create
+		  // it; otherwise, retrieve its id from the complex.
 		  if (!complex_edges[vertex_id][next_vertex_id])
 		    {
 		      complex_edges[vertex_id][next_vertex_id] = true;
 		      complex_edges[next_vertex_id][vertex_id] = true;
 		      edge =
-			make_algebraic_n_face(c.add_face(vertex -
-							 next_vertex),
+			make_algebraic_n_face(c.add_face(vertex - next_vertex),
 					      true);
 		    }
 		  else
@@ -433,7 +432,7 @@ namespace mln
 	  // Site set.
 	  domain s(c, geom);
 
-	  // Values
+	  // Values.
 	  values vs;
 	  exact(this)->assign(vs, s);
 

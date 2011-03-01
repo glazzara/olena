@@ -1,3 +1,13 @@
+2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a pre-allocation routine to mln::geom::complex_geometry.
+
+	* mln/geom/complex_geometry.hh
+	(mln::geom::complex_geometry<D, P>::reserve): New.
+	Use it...
+	* mln/io/off/load.hh: ...here.
+	Aesthetic changes.
+
 2011-02-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Small corrections in apps/mesh-segm-skel.
