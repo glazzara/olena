@@ -58,10 +58,6 @@
 # include <mln/clustering/kmean_rgb.hh>
 # include <mln/fun/v2v/rgb8_to_rgbn.hh>
 
-# include <mln/util/timer.hh>
-
-# include <mln/io/pbm/save.hh>
-
 namespace scribo
 {
 
@@ -139,16 +135,9 @@ namespace scribo
 	  image2d<t_rgb5>
 	    img_rgb5 = mln::data::transform(doc.image(), t_rgb8_to_rgb5());
 
-	  // DEBUG
-	  io::pbm::save(content, "text_area.pbm");
-
-	  mln::util::timer t;
-	  t.start();
 	  img_lbl8 =
 	    mln::clustering::kmean_rgb<double,5>((img_rgb5 | pw::value(content)), 3, 10, 10).unmorph_();
 	  data::fill((img_lbl8 | !pw::value(content)).rw(), 0u);
-	  t.stop();
-	  std::cout << t << std::endl;
 
 	  mln::util::array<unsigned>
 	    card = mln::labeling::compute(accu::math::count<value::label_8>(),
@@ -178,18 +167,8 @@ namespace scribo
 	  data::fill(elts, false);
 	  data::fill((elts | (pw::value(img_lbl8) != pw::cst(0))).rw(), true);
 
-	  // DEBUG
-	  data::fill((elts | (pw::value(doc.line_seps()) != pw::cst(0))).rw(),
-		     false);
-	  // END OF DEBUG
-
-
 	  scribo::def::lbl_type nlabels;
 	  elts = filter::components_small(elts, c8(), nlabels, 40);
-
-	  // DEBUG
-	  io::pbm::save(elts, "elements.pbm");
-	  // END OF DEBUG
 
 	  output = primitive::extract::components(elts, c8(), nlabels);
 	}

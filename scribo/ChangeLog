@@ -1,5 +1,9 @@
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/non_text.hh: Remove debug.
+
+2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new debug tools.
 
 	* scribo/src/debug/Makefile.am: New targets.
