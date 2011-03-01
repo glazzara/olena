@@ -1,3 +1,8 @@
+2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/fun/v2v/rgb_to_luma.hh: New function for grayscale
+	conversion.
+
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/util/array.hh: Add last() method.
