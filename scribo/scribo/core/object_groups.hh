@@ -36,6 +36,8 @@
 # include <scribo/core/object_links.hh>
 # include <scribo/core/component_set.hh>
 
+# include <scribo/core/concept/serializable.hh>
+
 namespace scribo
 {
 
@@ -69,7 +71,7 @@ namespace scribo
   /// \brief Object group representation.
   //
   template <typename L>
-  class object_groups
+  class object_groups : public Serializable<object_groups<L> >
   {
     typedef internal::object_groups_data<L> data_t;
 

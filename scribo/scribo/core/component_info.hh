@@ -36,6 +36,7 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/util/object_id.hh>
 
+# include <scribo/core/concept/serializable.hh>
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
 
@@ -44,7 +45,7 @@ namespace scribo
 
   typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
 
-  class component_info
+  class component_info : public Serializable<component_info>
   {
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
 

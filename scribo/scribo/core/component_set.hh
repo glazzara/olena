@@ -30,6 +30,10 @@
 /// \file
 ///
 /// \brief Definition of a component set.
+///
+/// \fixme component_set should always set a component type in order
+/// to be fully supported by visitors.
+
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/function.hh>
@@ -59,6 +63,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_info.hh>
+# include <scribo/core/concept/serializable.hh>
 
 
 namespace scribo
@@ -115,7 +120,7 @@ namespace scribo
 
 
   template <typename L>
-  class component_set
+  class component_set : public Serializable<component_set<L> >
   {
     typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
     typedef mln::accu::center<mln_site(L)> center_accu_t;

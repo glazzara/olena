@@ -33,6 +33,8 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_info.hh>
 
+# include <scribo/core/concept/serializable.hh>
+
 namespace scribo
 {
 
@@ -61,7 +63,7 @@ namespace scribo
 
    */
   template <typename L>
-  class paragraph_set
+  class paragraph_set : public Serializable<paragraph_set<L> >
   {
   public:
     paragraph_set();

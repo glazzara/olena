@@ -36,7 +36,6 @@
 
 # include <scribo/primitive/extract/non_text.hh>
 # include <scribo/primitive/extract/components.hh>
-//# include <scribo/primitive/extract/vertical_separators.hh>
 # include <scribo/primitive/extract/separators.hh>
 # include <scribo/primitive/extract/separators_nonvisible.hh>
 
@@ -114,7 +113,7 @@ namespace scribo
 	bool enable_whitespace_seps;
 	bool enable_debug;
 	bool save_doc_as_xml;
-	bool allow_xml_extensions;
+	scribo::io::xml::Format xml_format;
 
 	//============
 	// Parameters
@@ -139,7 +138,7 @@ namespace scribo
 	  enable_whitespace_seps(true),
 	  enable_debug(false),
 	  save_doc_as_xml(false),
-	  allow_xml_extensions(true),
+	  xml_format(scribo::io::xml::PageExtended),
 	  ocr_language("eng"),
 	  output_file("/tmp/foo.xml"),
 	  doc(doc_filename)
@@ -189,7 +188,7 @@ namespace scribo
 	  // Whitespace separators
 	  on_new_progress_label("Find whitespace separators...");
 
-	  whitespaces = primitive::extract::separators_nonvisible(processed_image);
+	  whitespaces = primitive::extract::separators_nonvisible(input_cleaned);
 
 	  on_progress();
 	}
@@ -483,7 +482,7 @@ namespace scribo
 	{
 	  on_new_progress_label("Saving results");
 
-	  scribo::io::xml::save(doc, output_file, allow_xml_extensions);
+	  scribo::io::xml::save(doc, output_file, xml_format);
 	  on_xml_saved();
 
 	  on_progress();

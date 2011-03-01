@@ -172,7 +172,9 @@ int main(int argc, char* argv[])
 					    debug);
 
   // Saving results
-  scribo::io::xml::save(doc, argv[2], true);
+  scribo::io::xml::save(doc, argv[2], scribo::io::xml::PageExtended);
+  scribo::io::xml::save(doc, "page.xml", scribo::io::xml::Page);
+  scribo::io::xml::save(doc, "full.xml", scribo::io::xml::Full);
 
   trace::exiting("main");
 }

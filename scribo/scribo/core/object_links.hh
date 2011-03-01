@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +37,8 @@
 
 # include <scribo/core/component_set.hh>
 
+# include <scribo/core/concept/serializable.hh>
+
 
 namespace scribo
 {
@@ -70,7 +72,7 @@ namespace scribo
   /// \brief Object group representation.
   //
   template <typename L>
-  class object_links
+  class object_links : public Serializable<object_links<L> >
   {
     typedef internal::object_links_data<L> data_t;
 

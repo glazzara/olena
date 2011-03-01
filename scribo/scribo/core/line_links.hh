@@ -34,6 +34,7 @@
 # include <mln/util/array.hh>
 # include <mln/util/tracked_ptr.hh>
 
+# include <scribo/core/concept/serializable.hh>
 # include <scribo/core/line_set.hh>
 
 
@@ -69,7 +70,7 @@ namespace scribo
   /// \brief Line group representation.
   //
   template <typename L>
-  class line_links
+  class line_links : public Serializable<line_links<L> >
   {
     typedef internal::line_links_data<L> data_t;
 

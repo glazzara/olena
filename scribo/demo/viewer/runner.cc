@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -156,7 +157,7 @@ void runner::process(const image2d<value::rgb8>& original_ima,
   f.enable_whitespace_seps = (find_seps == defs::Whitespaces
 			      || find_seps == defs::LinesAndWhitespaces);
 
-  f.allow_xml_extensions = true;
+  f.xml_format = scribo::io::xml::PageExtended;
 
 
   f.save_doc_as_xml = true;

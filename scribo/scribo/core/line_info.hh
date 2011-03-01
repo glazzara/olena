@@ -53,6 +53,11 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/component_set.hh>
 
+# include <scribo/io/xml/internal/html_markups_replace.hh>
+
+# include <scribo/core/concept/serializable.hh>
+
+
 namespace scribo
 {
 
@@ -114,6 +119,7 @@ namespace scribo
       bool indented_;
 
       std::string text_;
+      std::string html_text_;
 
       // Line set holding this element.
       line_set<L> holder_;
@@ -125,7 +131,7 @@ namespace scribo
 
 
   template <typename L>
-  class line_info
+  class line_info : public Serializable<line_info<L> >
   {
     typedef internal::line_info_data<L> data_t;
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
@@ -198,6 +204,7 @@ namespace scribo
 
     bool has_text() const;
     const std::string& text() const;
+    const std::string& html_text() const;
     void update_text(const std::string& str);
 
     bool is_valid() const;
@@ -604,12 +611,14 @@ namespace scribo
     return data_->indented_;
   }
 
+
   template <typename L>
   bool
   line_info<L>::has_text() const
   {
     return !data_->text_.empty();
   }
+
 
   template <typename L>
   const std::string&
@@ -620,10 +629,19 @@ namespace scribo
 
 
   template <typename L>
+  const std::string&
+  line_info<L>::html_text() const
+  {
+    return data_->html_text_;
+  }
+
+
+  template <typename L>
   void
   line_info<L>::update_text(const std::string& str)
   {
     data_->text_ = str;
+    data_->html_text_ = scribo::io::xml::internal::html_markups_replace(str);
   }
 
 
@@ -987,6 +1005,7 @@ namespace scribo
 		<< ", indented=" << info.indented()
 		<< ", hidden=" << info.is_hidden()
 		<< ", text=" << info.text()
+		<< ", html_text=" << info.html_text()
 		<< ")" << std::endl;
   }
 

@@ -40,13 +40,15 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_set.hh>
 
+# include <scribo/core/concept/serializable.hh>
+
 # include <scribo/primitive/extract/components.hh>
 
 namespace scribo
 {
 
   template <typename L>
-  struct document
+  struct document : public Serializable<document<L> >
   {
   public:
 
@@ -98,7 +100,7 @@ namespace scribo
 
 
   private:
-    const char *filename_;
+    std::string filename_;
     mln::image2d<mln::value::rgb8> image_;
 
     paragraph_set<L> parset_;
@@ -142,7 +144,7 @@ namespace scribo
   const char *
   document<L>::filename() const
   {
-    return filename_;
+    return filename_.c_str();
   }
 
 
