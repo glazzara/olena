@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,25 +23,26 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_IO_VTK_ALL_HH
-# define MLN_IO_VTK_ALL_HH
-
 /// \file
-/// \brief Inclusion of all VTK I/O routines.
+/// \brief Exercise mln::io::vtk::load and mln::io::vtk::save on
+/// binary mesh images.
+
+#include <algorithm>
+#include <iterator>
+#include <iostream>
+
+#include <mln/io/vtk/load.hh>
+#include <mln/io/vtk/save.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace io
-  {
-    /// Namespace of vtk input/output handling.
-    namespace vtk {}
-  }
-
+  typedef bin_2complex_image3df ima_t;
+  ima_t ima;
+  io::vtk::load(ima, MLN_MESH_DIR "/tetrahedron.vtk");
+  io::vtk::save(ima, "load_save_bin-out.vtk");
 }
-
-# include <mln/io/vtk/load.hh>
-# include <mln/io/vtk/save.hh>
-
-#endif // ! MLN_IO_VTK_ALL_HH

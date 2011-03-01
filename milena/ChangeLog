@@ -1,5 +1,20 @@
 2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add preliminary VTK input for binary images.
+
+	* mln/io/vtk/load.hh: New file.
+	Include it...
+	* mln/io/vtk/all.hh: ...here.
+	* tests/io/vtk/load_bin.cc,
+	* tests/io/vtk/load_save_bin.cc:
+	New.
+	* tests/io/vtk/Makefile.am (check_PROGRAMS): Add load_bin and
+	load_save_bin.
+	(load_bin_SOURCES, load_save_bin_SOURCES): New.
+	(MOSTLYCLEANFILES): Add load_save_bin-out.vtk.
+
+2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add VTK-format meshes.
 
 	* mesh/tetrahedron.vtk,
