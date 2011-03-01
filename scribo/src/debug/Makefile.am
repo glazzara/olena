@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,6 +20,7 @@ include $(top_srcdir)/scribo/scribo.mk
 noinst_PROGRAMS = 				\
   show_info_x_height 				\
   show_info_median_inter_characters		\
+  show_separators				\
   show_links_left_right_links_validation 	\
   show_links_bbox_h_ratio 			\
   show_links_bbox_overlap 			\
@@ -43,11 +44,14 @@ noinst_PROGRAMS = 				\
   show_objects_large_small			\
   show_objects_small 				\
   show_objects_thick 				\
-  show_objects_thin
+  show_objects_thin 				\
+  show_stoppers	 				\
+  show_text_lines
 
 
 show_info_x_height_SOURCES = show_info_x_height.cc
 show_info_median_inter_characters_SOURCES = show_info_median_inter_characters.cc
+show_separators_SOURCES = show_separators.cc
 show_links_left_right_links_validation_SOURCES = show_links_left_right_links_validation.cc
 show_links_bbox_h_ratio_SOURCES = show_links_bbox_h_ratio.cc
 show_links_bbox_overlap_SOURCES = show_links_bbox_overlap.cc
@@ -72,6 +76,8 @@ show_objects_large_small_SOURCES = show_objects_large_small.cc
 show_objects_small_SOURCES = show_objects_small.cc
 show_objects_thick_SOURCES = show_objects_thick.cc
 show_objects_thin_SOURCES = show_objects_thin.cc
+show_stoppers_SOURCES = show_stoppers.cc
+show_text_lines_SOURCES = show_text_lines.cc
 
 if HAVE_MAGICKXX
 

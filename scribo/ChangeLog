@@ -1,5 +1,15 @@
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new debug tools.
+
+	* scribo/src/debug/Makefile.am: New targets.
+
+	* scribo/src/debug/show_separators.cc,
+	* scribo/src/debug/show_stoppers.cc,
+	* scribo/src/debug/show_text_lines.cc: New.
+
+2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/extract_lines.hh: Update code.
 
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
