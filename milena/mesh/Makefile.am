@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,9 +22,9 @@
 meshdir = $(pkgdatadir)/meshes
 dist_mesh_DATA =
 
-## -------- ##
-## Meshes.  ##
-## -------- ##
+## ------------ ##
+## OFF Meshes.  ##
+## ------------ ##
 
 # The `$(srcdir)/' prefixes are mandatory, to force `$(pinv_curv)' and
 # `$(max_curv)' to reference files living in the *source* directory,
@@ -85,3 +86,14 @@ dist_mesh_DATA += $(max_curv)
 debug:
 	@echo $(pinv_curv)
 	@echo $(max_curv)
+
+
+## ------------ ##
+## VTK Meshes.  ##
+## ------------ ##
+
+# A VTK-format version of tetrahedron.off.
+dist_mesh_DATA += tetrahedron.vtk
+
+# The pseudo-manifold of figure 2a in cousty.09.iwcia.
+dist_mesh_DATA += pseudo-manifold.vtk

@@ -1,5 +1,15 @@
 2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add VTK-format meshes.
+
+	* mesh/tetrahedron.vtk,
+	* mesh/pseudo-manifold.vtk:
+	New.
+	* mesh/Makefile.am (dist_mesh_DATA): Add tetrahedron.vtk and
+	pseudo-manifold.vtk.
+
+2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a pre-allocation routine to mln::geom::complex_geometry.
 
 	* mln/geom/complex_geometry.hh
