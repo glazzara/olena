@@ -53,7 +53,8 @@ namespace scribo
     component_info(const component_id_t& id,
 		   const mln::box2d& bbox,
 		   const mln::point2d& mass_center,
-		   unsigned card);
+		   unsigned card,
+		   component::Type type = component::Undefined);
 
     component_id_t id() const;
     const mln::box2d& bbox() const;
@@ -101,9 +102,10 @@ namespace scribo
   component_info::component_info(const component_id_t& id,
 				 const mln::box2d& bbox,
 				 const mln::point2d& mass_center,
-				 unsigned card)
+				 unsigned card,
+				 component::Type type)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
-      tag_(component::None), type_(component::Undefined)
+      tag_(component::None), type_(type)
   {
 
   }

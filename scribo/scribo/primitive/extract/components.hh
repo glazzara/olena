@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,6 +69,7 @@ namespace scribo
       ///			  and background to 'false'.
       /// \param[in]	 nbh	  A neighborhood to be used for labeling.
       /// \param[in,out] ncomponents Will store the numbers of components found.
+      /// \param[in]     type     The default component type set to components.
       ///
       /// \return An image of labeled components.
       //
@@ -75,7 +77,8 @@ namespace scribo
       inline
       component_set<mln_ch_value(I,V)>
       components(const Image<I>& input,
-		 const Neighborhood<N>& nbh, V& ncomponents);
+		 const Neighborhood<N>& nbh, V& ncomponents,
+		 component::Type type = component::Undefined);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -88,7 +91,8 @@ namespace scribo
         inline
 	void
         components_tests(const Image<I>& input,
-		      const Neighborhood<N>& nbh, V& ncomponents)
+			 const Neighborhood<N>& nbh, V& ncomponents,
+			 component::Type type)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
 //	  mlc_is_a(V, mln::value::Symbolic)::check();
@@ -97,6 +101,7 @@ namespace scribo
 	  (void) input;
 	  (void) nbh;
 	  (void) ncomponents;
+	  (void) type;
 	}
 
 
@@ -107,11 +112,12 @@ namespace scribo
       inline
       component_set<mln_ch_value(I,V)>
       components(const Image<I>& input,
-		 const Neighborhood<N>& nbh, V& ncomponents)
+		 const Neighborhood<N>& nbh, V& ncomponents,
+		 component::Type type = component::Undefined)
       {
 	trace::entering("scribo::components");
 
-	internal::components_tests(input, nbh, ncomponents);
+	internal::components_tests(input, nbh, ncomponents, type);
 
 	typedef mln_ch_value(I,V) L;
 	typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
@@ -129,7 +135,7 @@ namespace scribo
 						pair_accu_t());
 
 	component_set<L>
-	output(results.first(), ncomponents, results.second().second());
+	  output(results.first(), ncomponents, results.second().second(), type);
 
 	trace::exiting("scribo::components");
 	return output;

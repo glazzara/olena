@@ -1,3 +1,15 @@
+2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Set component type during component extraction.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/document.hh,
+	* scribo/core/tag/component.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/identify.hh: Explicitly set component type to
+	Separator when extracting separator components.
+
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new tools in Scribo.

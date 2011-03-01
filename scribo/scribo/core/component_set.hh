@@ -86,16 +86,20 @@ namespace scribo
       component_set_data();
       component_set_data(const L& ima, const mln_value(L)& ncomps);
       component_set_data(const L& ima, const mln_value(L)& ncomps,
-			 const mln::util::array<pair_accu_t>& attribs);
+			 const mln::util::array<pair_accu_t>& attribs,
+			 component::Type type = component::Undefined);
       component_set_data(const L& ima, const mln_value(L)& ncomps,
-			 const mln::util::array<pair_data_t>& attribs);
+			 const mln::util::array<pair_data_t>& attribs,
+			 component::Type type = component::Undefined);
 
       component_set_data(const L& ima, const mln_value(L)& ncomps,
 			 const mln::util::array<scribo::component_info>& infos);
 
-      void fill_infos(const mln::util::array<pair_accu_t>& attribs);
+      void fill_infos(const mln::util::array<pair_accu_t>& attribs,
+		      component::Type type = component::Undefined);
 
-      void fill_infos(const mln::util::array<pair_data_t>& attribs);
+      void fill_infos(const mln::util::array<pair_data_t>& attribs,
+		      component::Type type = component::Undefined);
 
       // Useful while constructing incrementaly (XML loading).
       void soft_init(const mln_value(L) ncomps);
@@ -141,10 +145,12 @@ namespace scribo
     /// Constructor from an image \p ima, the number of labels \p ncomps and
     /// attributes values (bounding box and mass center).
     component_set(const L& ima, const mln_value(L)& ncomps,
-		  const mln::util::array<pair_accu_t>& attribs);
+		  const mln::util::array<pair_accu_t>& attribs,
+		  component::Type type = component::Undefined);
 
     component_set(const L& ima, const mln_value(L)& ncomps,
-		  const mln::util::array<pair_data_t>& attribs);
+		  const mln::util::array<pair_data_t>& attribs,
+		  component::Type type = component::Undefined);
     /// @}
 
     /// Return the component count.
@@ -284,26 +290,28 @@ namespace scribo
     inline
     component_set_data<L>::component_set_data(const L& ima,
 					      const mln_value(L)& ncomps,
-					      const mln::util::array<pair_accu_t>& attribs)
+					      const mln::util::array<pair_accu_t>& attribs,
+					      component::Type type)
       : ima_(ima), ncomps_(ncomps)
     {
       initialize(separators_, ima);  // FIXME: do we really want that?
       mln::data::fill(separators_, false);
 
-      fill_infos(attribs);
+      fill_infos(attribs, type);
     }
 
     template <typename L>
     inline
     component_set_data<L>::component_set_data(const L& ima,
 					      const mln_value(L)& ncomps,
-					      const mln::util::array<pair_data_t>& attribs)
+					      const mln::util::array<pair_data_t>& attribs,
+					      component::Type type)
       : ima_(ima), ncomps_(ncomps)
     {
       initialize(separators_, ima);  // FIXME: do we really want that?
       mln::data::fill(separators_, false);
 
-      fill_infos(attribs);
+      fill_infos(attribs, type);
     }
 
     template <typename L>
@@ -321,7 +329,8 @@ namespace scribo
     template <typename L>
     inline
     void
-    component_set_data<L>::fill_infos(const mln::util::array<pair_accu_t>& attribs)
+    component_set_data<L>::fill_infos(const mln::util::array<pair_accu_t>& attribs,
+				      component::Type type)
     {
       typedef mln_site(L) P;
 
@@ -331,7 +340,8 @@ namespace scribo
       for_all_comp_data(i, attribs)
       {
  	component_info info(i, attribs[i].first(),
-			    attribs[i].second(), attribs[i].second_accu().nsites());
+			    attribs[i].second(), attribs[i].second_accu().nsites(),
+			    type);
  	infos_.append(info);
       }
     }
@@ -339,7 +349,8 @@ namespace scribo
     template <typename L>
     inline
     void
-    component_set_data<L>::fill_infos(const mln::util::array<pair_data_t>& attribs)
+    component_set_data<L>::fill_infos(const mln::util::array<pair_data_t>& attribs,
+				      component::Type type)
     {
       typedef mln_site(L) P;
 
@@ -349,7 +360,8 @@ namespace scribo
       for_all_comp_data(i, attribs)
       {
  	component_info info(i, attribs[i].first,
-			    attribs[i].second.first, attribs[i].second.second);
+			    attribs[i].second.first, attribs[i].second.second,
+			    type);
  	infos_.append(info);
       }
     }
@@ -397,9 +409,10 @@ namespace scribo
   template <typename L>
   inline
   component_set<L>::component_set(const L& ima, const mln_value(L)& ncomps,
-				  const mln::util::array<pair_accu_t>& attribs)
+				  const mln::util::array<pair_accu_t>& attribs,
+				  component::Type type)
   {
-    data_ = new internal::component_set_data<L>(ima, ncomps, attribs);
+    data_ = new internal::component_set_data<L>(ima, ncomps, attribs, type);
   }
 
 
@@ -407,9 +420,10 @@ namespace scribo
   inline
 
   component_set<L>::component_set(const L& ima, const mln_value(L)& ncomps,
-				  const mln::util::array<pair_data_t>& attribs)
+				  const mln::util::array<pair_data_t>& attribs,
+				  component::Type type)
   {
-    data_ = new internal::component_set_data<L>(ima, ncomps, attribs);
+    data_ = new internal::component_set_data<L>(ima, ncomps, attribs, type);
   }
 
 

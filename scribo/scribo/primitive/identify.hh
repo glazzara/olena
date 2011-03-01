@@ -61,7 +61,7 @@ namespace scribo
 	    std::swap(min, max);
 
 	  if (max/min > 10)
-	    output(c).update_type(component::Separator);
+	    output(c).update_type(component::LineSeparator);
 	}
 
       mln::trace::exiting("scribo::primitive::identify");

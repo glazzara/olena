@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,7 +55,8 @@ namespace scribo
     {
       Undefined = 0,
       Character,
-      Separator,
+      LineSeparator,
+      WhitespaceSeparator,
       Noise,
       Punctuation,
       Image
@@ -116,8 +117,11 @@ namespace scribo
 	case Character:
 	  str = "Character";
 	  break;
-	case Separator:
-	  str = "Separator";
+	case LineSeparator:
+	  str = "LineSeparator";
+	  break;
+	case WhitespaceSeparator:
+	  str = "WhitespaceSeparator";
 	  break;
 	case Noise:
 	  str = "Noise";
@@ -139,8 +143,10 @@ namespace scribo
     {
       if (str == "Character")
 	return Character;
-      else if (str == "Separator")
-	return Separator;
+      else if (str == "LineSeparator")
+	return LineSeparator;
+      else if (str == "WhitespaceSeparator")
+	return WhitespaceSeparator;
       else if (str == "Noise")
 	return Noise;
       else if (str == "Punctuation")
