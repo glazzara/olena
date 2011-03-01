@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,13 +33,14 @@
 
 
 # include <mln/core/concept/image.hh>
-# include <mln/value/label_16.hh>
+# include <mln/value/int_u16.hh>
 
 # include <scribo/core/line_set.hh>
 
 # include <scribo/primitive/extract/components.hh>
 
 # include <scribo/primitive/link/merge_double_link.hh>
+# include <scribo/primitive/link/internal/dmax_width_and_height.hh>
 # include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
 # include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
 
@@ -65,11 +66,18 @@ namespace scribo
     /*!
     ** \param[in]     input  A binary image.
     ** \param[in]     nbh    A neighborhood used for labeling.
+    ** \param[in]     seps   A binary image with separator information.
     **
     ** \return A set of lines.
     */
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::label_16)>
+    line_set<mln_ch_value(I,value::int_u16)>
+    extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		  const mln_ch_value(I,bool)& separators);
+
+    /// \overload
+    template <typename I, typename N>
+    line_set<mln_ch_value(I,value::int_u16)>
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
@@ -77,8 +85,18 @@ namespace scribo
 
 
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::label_16)>
-    extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_)
+    line_set<mln_ch_value(I,value::int_u16)>
+    extract_lines(const Image<I>& input, const Neighborhood<N>& nbh)
+    {
+      mln_ch_value(I,bool) seps;
+      return extract_lines(input, nbh, seps);
+    }
+
+
+    template <typename I, typename N>
+    line_set<mln_ch_value(I,value::int_u16)>
+    extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		  const mln_ch_value(I,bool)& separators)
     {
       trace::entering("scribo::text::extract_lines");
 
@@ -88,44 +106,46 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      typedef mln_ch_value(I,value::label_16) L;
-
       /// Finding comps.
-      value::label_16 ncomps;
+      typedef mln_ch_value(I,value::int_u16) L;
+      value::int_u16 ncomps;
       component_set<L>
-	comps = scribo::primitive::extract::components(input, nbh, ncomps);
+	comps = scribo::primitive::extract::components(input, c8(), ncomps);
 
       /// First filtering.
-      component_set<L> filtered_comps
-	= scribo::filter::components_small(comps, 6);
+      comps = scribo::filter::components_small(comps, 3);
+
+      /// Use separators.
+      if (exact(separators).is_valid())
+	comps.add_separators(separators);
 
       /// Linking potential comps
       object_links<L> left_link
-	= primitive::link::with_single_left_link_dmax_ratio(filtered_comps);
+	= primitive::link::with_single_left_link_dmax_ratio(comps,
+							    primitive::link::internal::dmax_width_and_height(1),
+							    anchor::MassCenter);
       object_links<L> right_link
-	= primitive::link::with_single_right_link_dmax_ratio(filtered_comps);
-
+	= primitive::link::with_single_right_link_dmax_ratio(comps,
+							     primitive::link::internal::dmax_width_and_height(1),
+							     anchor::MassCenter);
 
       // Validating left and right links.
       object_links<L>
 	merged_links = primitive::link::merge_double_link(left_link,
-							  right_link);
+						      right_link);
 
-      // Remove links if bboxes have too different sizes.
+
       object_links<L> hratio_filtered_links
-	= filter::object_links_bbox_h_ratio(merged_links, 2.0f);
-
+	= filter::object_links_bbox_h_ratio(merged_links, 2.5f);
 
       object_groups<L>
 	groups = primitive::group::from_single_link(hratio_filtered_links);
 
-
-      line_set<L> line = scribo::make::line_set(groups);
-      line = text::merging(line);
-
+      line_set<L> lines(groups);
+      lines = text::merging(lines);
 
       trace::exiting("scribo::text::extract_lines");
-      return line;
+      return lines;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
