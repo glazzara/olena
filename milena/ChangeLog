@@ -2684,12 +2684,12 @@
 
 	Merge doc/ Makefile helpers into doc/Makefile.am.
 
-	* milena/doc/doc.mk,
-	* milena/doc/examples/make.mk,
-	* milena/doc/ref_guide/ref_guide.mk,
-	* milena/doc/technical/technical.mk,
-	* milena/doc/tutorial/tutorial.mk,
-	* milena/doc/white_paper/white_paper.mk:
+	* doc/doc.mk,
+	* doc/examples/make.mk,
+	* doc/ref_guide/ref_guide.mk,
+	* doc/technical/technical.mk,
+	* doc/tutorial/tutorial.mk,
+	* doc/white_paper/white_paper.mk:
 	Remove and inline these files...
 	* doc/Makefile.am: ...here.
 	Do not include $(top_srcdir)/milena/tests/tests.mk.
@@ -2800,7 +2800,7 @@
 	Adjust targets' dependencies.
 	(fig-convert): Remove (phony) target.
 	Clean up.
-	* milena/doc/examples-outputs.mk: New (generated file).
+	* doc/examples-outputs.mk: New (generated file).
 
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -2978,7 +2978,7 @@
 	* doc/examples/ima-save.cc,
 	* doc/tools/sample_utils.hh:
 	Adjust as well.
-	* milena/doc/examples/split/ima-save-1.cc.raw: Regen.
+	* doc/examples/split/ima-save-1.cc.raw: Regen.
 
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
