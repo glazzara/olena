@@ -1,5 +1,9 @@
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/io/xml/load.hh: New XML loader.
+
+2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make XML output more flexible.
 
 	* scribo/core/component_info.hh,
