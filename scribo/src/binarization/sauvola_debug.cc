@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +32,7 @@
 #include <mln/data/convert.hh>
 #include <mln/data/saturate.hh>
 
-#include <mln/fun/v2v/rgb_to_int_u.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <scribo/binarization/local_threshold.hh>
 #include <scribo/binarization/sauvola.hh>
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
   image2d<value::int_u8>
     gima = data::transform(input,
-			   mln::fun::v2v::rgb_to_int_u<8>());
+			   mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
 
   image2d<bool>

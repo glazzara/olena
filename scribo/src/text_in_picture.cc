@@ -40,7 +40,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/fun/v2v/rgb_to_int_u.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <mln/subsampling/antialiased.hh>
 
@@ -236,7 +236,8 @@ int main(int argc, char* argv[])
     std::cout << "** Using split_bg_fg" << std::endl;
     image2d<value::rgb8>
       fg = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
-    intensity_ima = data::transform(fg, mln::fun::v2v::rgb_to_int_u<8>());
+    intensity_ima = data::transform(fg,
+				    mln::fun::v2v::rgb_to_luma<value::int_u8>());
     t_ = timer_;
     std::cout << "Foreground extracted. " << t_ << std::endl;
 
@@ -253,7 +254,7 @@ int main(int argc, char* argv[])
     timer_.start();
     std::cout << "** Using data::transform(intensity)" << std::endl;
     intensity_ima = data::transform(input_rgb,
-				    mln::fun::v2v::rgb_to_int_u<8>());
+				    mln::fun::v2v::rgb_to_luma<value::int_u8>());
     t_ = timer_;
     std::cout << "Intensity image " << t_ << std::endl;
   }

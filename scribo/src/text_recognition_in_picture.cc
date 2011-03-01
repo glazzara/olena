@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +51,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/fun/v2v/rgb_to_int_u.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <mln/data/wrap.hh>
 
@@ -253,7 +253,8 @@ int main(int argc, char* argv[])
   // Extract foreground
   image2d<value::rgb8>
     fg = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
-  intensity_ima = data::transform(fg, mln::fun::v2v::rgb_to_int_u<8>());
+  intensity_ima = data::transform(fg,
+				  mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
 //   // Perform an initial rotation if needed.
 // //   input_rgb = geom::rotate(input_rgb, -45, literal::black);

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +30,7 @@
 #include <mln/core/concept/image.hh>
 #include <mln/data/transform.hh>
 #include <mln/data/convert.hh>
-#include <mln/fun/v2v/rgb_to_int_u.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <mln/subsampling/antialiased.hh>
 #include <scribo/binarization/sauvola.hh>
@@ -208,7 +209,7 @@ namespace scribo
 	on_new_progress_label("Convert to gray-scale image");
 	image2d<value::int_u8>
 	  intensity_ima = mln::data::transform(input_rgb,
-					  mln::fun::v2v::rgb_to_int_u<8>());
+					       mln::fun::v2v::rgb_to_luma<value::int_u8>());
 	on_progress();
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,8 +48,6 @@
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
-
-#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 #include <mln/data/wrap.hh>
 

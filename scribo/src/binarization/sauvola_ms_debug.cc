@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 #include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/data/transform.hh>
-#include <mln/fun/v2v/rgb_to_int_u.hh>
+#include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/usage.hh>
@@ -124,7 +124,8 @@ int main(int argc, char *argv[])
 
   // Convert to Gray level image.
   image2d<value::int_u8>
-    input_1_gl = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
+    input_1_gl = data::transform(input_1,
+				 mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
 
   // Binarize.
