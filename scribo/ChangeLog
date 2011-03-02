@@ -1,3 +1,12 @@
+2011-03-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen mk files.
+
+	* scribo/headers.mk,
+	* scribo/tests/unit_test/unit-tests.mk: Regen.
+
+	* scribo/tests/unit_test/cond_tests_qt: Add scribo/io/xml/load.hh.
+
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/primitive/extract/non_text.hh: Remove debug.

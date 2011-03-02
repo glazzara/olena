@@ -19,11 +19,15 @@ endif HAVE_MAGICKXX
 # Starting a conditional unit test list.
 if HAVE_QT
 check_PROGRAMS +=  \
-scribo_convert_from_qimage
+scribo_convert_from_qimage \
+scribo_io_xml_load
 
 scribo_convert_from_qimage_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
 scribo_convert_from_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
 scribo_convert_from_qimage_SOURCES = scribo_convert_from_qimage.cc
+scribo_io_xml_load_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
+scribo_io_xml_load_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
+scribo_io_xml_load_SOURCES = scribo_io_xml_load.cc
 endif HAVE_QT
 
 # Starting a conditional unit test list.
@@ -79,16 +83,21 @@ scribo_binarization_sauvola_ms \
 scribo_binarization_sauvola_ms_split \
 scribo_binarization_sauvola_threshold_image \
 scribo_canvas_integral_browsing \
+scribo_convert_from_base64 \
+scribo_convert_to_base64 \
 scribo_core_all \
 scribo_core_central_sites \
 scribo_core_component_info \
 scribo_core_component_set \
 scribo_core_concept_dmax_functor \
 scribo_core_concept_link_functor \
+scribo_core_concept_serializable \
+scribo_core_concept_serialize_visitor \
 scribo_core_def_lbl_type \
 scribo_core_document \
 scribo_core_erase_objects \
 scribo_core_init_integral_image \
+scribo_core_internal_doc_xml_serializer \
 scribo_core_line_info \
 scribo_core_line_links \
 scribo_core_line_set \
@@ -157,6 +166,11 @@ scribo_fun_v2b_label_to_bool \
 scribo_fun_v2b_objects_large_filter \
 scribo_fun_v2b_objects_small_filter \
 scribo_io_text_boxes_save \
+scribo_io_xml_internal_extended_page_xml_visitor \
+scribo_io_xml_internal_full_xml_visitor \
+scribo_io_xml_internal_page_xml_visitor \
+scribo_io_xml_internal_print_box_coords \
+scribo_io_xml_internal_print_page_preambule \
 scribo_io_xml_save \
 scribo_make_all \
 scribo_make_debug_filename \
@@ -179,7 +193,6 @@ scribo_primitive_extract_all \
 scribo_primitive_extract_canvas \
 scribo_primitive_extract_cells \
 scribo_primitive_extract_components \
-scribo_primitive_extract_elements \
 scribo_primitive_extract_horizontal_separators \
 scribo_primitive_extract_lines_discontinued \
 scribo_primitive_extract_lines_h_discontinued \
@@ -194,6 +207,7 @@ scribo_primitive_extract_lines_v_pattern \
 scribo_primitive_extract_lines_v_single \
 scribo_primitive_extract_lines_v_thick \
 scribo_primitive_extract_lines_v_thick_and_single \
+scribo_primitive_extract_non_text \
 scribo_primitive_extract_separators \
 scribo_primitive_extract_separators_nonvisible \
 scribo_primitive_extract_vertical_separators \
@@ -286,16 +300,21 @@ scribo_binarization_sauvola_ms_SOURCES = scribo_binarization_sauvola_ms.cc
 scribo_binarization_sauvola_ms_split_SOURCES = scribo_binarization_sauvola_ms_split.cc
 scribo_binarization_sauvola_threshold_image_SOURCES = scribo_binarization_sauvola_threshold_image.cc
 scribo_canvas_integral_browsing_SOURCES = scribo_canvas_integral_browsing.cc
+scribo_convert_from_base64_SOURCES = scribo_convert_from_base64.cc
+scribo_convert_to_base64_SOURCES = scribo_convert_to_base64.cc
 scribo_core_all_SOURCES = scribo_core_all.cc
 scribo_core_central_sites_SOURCES = scribo_core_central_sites.cc
 scribo_core_component_info_SOURCES = scribo_core_component_info.cc
 scribo_core_component_set_SOURCES = scribo_core_component_set.cc
 scribo_core_concept_dmax_functor_SOURCES = scribo_core_concept_dmax_functor.cc
 scribo_core_concept_link_functor_SOURCES = scribo_core_concept_link_functor.cc
+scribo_core_concept_serializable_SOURCES = scribo_core_concept_serializable.cc
+scribo_core_concept_serialize_visitor_SOURCES = scribo_core_concept_serialize_visitor.cc
 scribo_core_def_lbl_type_SOURCES = scribo_core_def_lbl_type.cc
 scribo_core_document_SOURCES = scribo_core_document.cc
 scribo_core_erase_objects_SOURCES = scribo_core_erase_objects.cc
 scribo_core_init_integral_image_SOURCES = scribo_core_init_integral_image.cc
+scribo_core_internal_doc_xml_serializer_SOURCES = scribo_core_internal_doc_xml_serializer.cc
 scribo_core_line_info_SOURCES = scribo_core_line_info.cc
 scribo_core_line_links_SOURCES = scribo_core_line_links.cc
 scribo_core_line_set_SOURCES = scribo_core_line_set.cc
@@ -364,6 +383,11 @@ scribo_fun_v2b_label_to_bool_SOURCES = scribo_fun_v2b_label_to_bool.cc
 scribo_fun_v2b_objects_large_filter_SOURCES = scribo_fun_v2b_objects_large_filter.cc
 scribo_fun_v2b_objects_small_filter_SOURCES = scribo_fun_v2b_objects_small_filter.cc
 scribo_io_text_boxes_save_SOURCES = scribo_io_text_boxes_save.cc
+scribo_io_xml_internal_extended_page_xml_visitor_SOURCES = scribo_io_xml_internal_extended_page_xml_visitor.cc
+scribo_io_xml_internal_full_xml_visitor_SOURCES = scribo_io_xml_internal_full_xml_visitor.cc
+scribo_io_xml_internal_page_xml_visitor_SOURCES = scribo_io_xml_internal_page_xml_visitor.cc
+scribo_io_xml_internal_print_box_coords_SOURCES = scribo_io_xml_internal_print_box_coords.cc
+scribo_io_xml_internal_print_page_preambule_SOURCES = scribo_io_xml_internal_print_page_preambule.cc
 scribo_io_xml_save_SOURCES = scribo_io_xml_save.cc
 scribo_make_all_SOURCES = scribo_make_all.cc
 scribo_make_debug_filename_SOURCES = scribo_make_debug_filename.cc
@@ -386,7 +410,6 @@ scribo_primitive_extract_all_SOURCES = scribo_primitive_extract_all.cc
 scribo_primitive_extract_canvas_SOURCES = scribo_primitive_extract_canvas.cc
 scribo_primitive_extract_cells_SOURCES = scribo_primitive_extract_cells.cc
 scribo_primitive_extract_components_SOURCES = scribo_primitive_extract_components.cc
-scribo_primitive_extract_elements_SOURCES = scribo_primitive_extract_elements.cc
 scribo_primitive_extract_horizontal_separators_SOURCES = scribo_primitive_extract_horizontal_separators.cc
 scribo_primitive_extract_lines_discontinued_SOURCES = scribo_primitive_extract_lines_discontinued.cc
 scribo_primitive_extract_lines_h_discontinued_SOURCES = scribo_primitive_extract_lines_h_discontinued.cc
@@ -401,6 +424,7 @@ scribo_primitive_extract_lines_v_pattern_SOURCES = scribo_primitive_extract_line
 scribo_primitive_extract_lines_v_single_SOURCES = scribo_primitive_extract_lines_v_single.cc
 scribo_primitive_extract_lines_v_thick_SOURCES = scribo_primitive_extract_lines_v_thick.cc
 scribo_primitive_extract_lines_v_thick_and_single_SOURCES = scribo_primitive_extract_lines_v_thick_and_single.cc
+scribo_primitive_extract_non_text_SOURCES = scribo_primitive_extract_non_text.cc
 scribo_primitive_extract_separators_SOURCES = scribo_primitive_extract_separators.cc
 scribo_primitive_extract_separators_nonvisible_SOURCES = scribo_primitive_extract_separators_nonvisible.cc
 scribo_primitive_extract_vertical_separators_SOURCES = scribo_primitive_extract_vertical_separators.cc
