@@ -1,5 +1,12 @@
 2011-03-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Compress image data in XML output.
+
+	* scribo/scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/scribo/io/xml/load.hh: Here.
+
+2011-03-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* scribo/convert/from_base64.hh: Remove guards HAVE_QT.

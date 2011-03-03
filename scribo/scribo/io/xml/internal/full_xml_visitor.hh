@@ -31,6 +31,9 @@
 /// XML serializer Visitor.
 
 # include <fstream>
+
+# include <QByteArray>
+
 # include <scribo/core/internal/doc_xml_serializer.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/component_set.hh>
@@ -40,11 +43,12 @@
 # include <scribo/core/line_links.hh>
 # include <scribo/core/line_info.hh>
 
-# include <scribo/convert/to_base64.hh>
-
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 
+// Compression level 0-9. 9 is the best but is slow.
+// 5 seems to be a good compromise.
+# define COMPRESSION_LEVEL 5
 
 namespace scribo
 {
@@ -273,15 +277,20 @@ namespace scribo
 		   << "\" width=\"" << lbl.domain().width() << "\">"
 		   << "<![CDATA[";
 
-	    util::array<unsigned char> lbl64;
-	    convert::to_base64(lbl, lbl64);
-	    output.write((const char *)lbl64.std_vector().data(),
-			 lbl64.nelements());
+	    // FIXME: Try to avoid that!
+	    border::resize(lbl, 0);
+	    QByteArray lbl64((const char *)lbl.buffer(),
+	    		     lbl.nelements() * sizeof(mln_value(L)));
+	    lbl64 = qCompress(lbl64, COMPRESSION_LEVEL);
+	    lbl64 = lbl64.toBase64();
+
+	    output.write(lbl64.data(), lbl64.size());
 
 	    output <<  "]]></labeled_image>" << std::endl;
 	  }
 
 	  // Save separators image
+	  if (comp_set.has_separators())
 	  {
 	    const mln_ch_value(L,bool)& seps = comp_set.separators();
 	    output << "<separators_image "
@@ -289,10 +298,13 @@ namespace scribo
 		   << "\" width=\"" << seps.domain().width() << "\">"
 		   << "<![CDATA[";
 
-	    util::array<unsigned char> seps64;
-	    convert::to_base64(seps, seps64);
-	    output.write((const char *)seps64.std_vector().data(),
-			 seps64.nelements());
+	    border::resize(seps, 0);
+	    QByteArray seps64((const char *)seps.buffer(),
+			      seps.nelements() * sizeof(bool));
+	    seps64 = qCompress(seps64, COMPRESSION_LEVEL);
+	    seps64 = seps64.toBase64();
+
+	    output.write(seps64.data(), seps64.size());
 
 	    output <<  "]]></separators_image>" << std::endl;
 	  }
@@ -452,5 +464,7 @@ namespace scribo
   } // end of namespace scribo::io
 
 } // end of namespace scribo
+
+# undef COMPRESSION_LEVEL
 
 #endif // SCRIBO_IO_XML_INTERNAL_FULL_XML_VISITOR_HH

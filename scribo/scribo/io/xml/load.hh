@@ -50,8 +50,6 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/line_info.hh>
 
-# include <scribo/convert/from_base64.hh>
-
 namespace scribo
 {
 
@@ -405,13 +403,19 @@ namespace scribo
 	    {
 	      case LabeledImage:
 	      {
-		scribo::convert::from_base64(ch, comp_set_data->ima_);
+		QByteArray data = ch.toAscii();
+		data = QByteArray::fromBase64(data);
+		data = qUncompress(data);
+		memcpy((char *) comp_set_data->ima_.buffer(), data.data(), data.size());
 	      }
 	      break;
 
 	      case SeparatorsImage:
 	      {
-		scribo::convert::from_base64(ch, comp_set_data->separators_);
+		QByteArray data = ch.toAscii();
+		data = QByteArray::fromBase64(data);
+		data = qUncompress(data);
+		memcpy((char *) comp_set_data->separators_.buffer(), data.data(), data.size());
 	      }
 	      break;
 
