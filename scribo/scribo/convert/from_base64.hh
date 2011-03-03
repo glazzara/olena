@@ -82,12 +82,8 @@ namespace scribo
 		     Image<I>& output);
 
 
-# if defined HAVE_QT
-
     template <typename I>
     void from_base64(const QString& data64, Image<I>& output_);
-
-# endif // ! HAVE_QT
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -191,8 +187,6 @@ namespace scribo
     }
 
 
-# if defined HAVE_QT
-
     template <typename I>
     void
     from_base64(const QString& data64, Image<I>& output_)
@@ -204,8 +198,6 @@ namespace scribo
 
       trace::exiting("scribo::convert::to_base64");
     }
-
-# endif // ! HAVE_QT
 
 
 # endif // ! MLN_INCLUDE_ONLY

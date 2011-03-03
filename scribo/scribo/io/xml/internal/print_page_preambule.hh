@@ -30,7 +30,9 @@
 ///
 /// \brief Print PAGE XML format preambule.
 
+# include <fstream>
 # include <mln/core/alias/box2d.hh>
+# include <scribo/core/document.hh>
 
 namespace scribo
 {
@@ -43,6 +45,9 @@ namespace scribo
 
       namespace internal
       {
+
+	using namespace mln;
+
 
         /// \brief Print PAGE XML format preambule.
 	template <typename L>

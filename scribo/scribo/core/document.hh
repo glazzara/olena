@@ -160,6 +160,7 @@ namespace scribo
   void
   document<L>::open()
   {
+    Magick::InitializeMagick(0);
     mln::io::magick::load(image_, filename_);
   }
 

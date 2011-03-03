@@ -215,9 +215,8 @@ namespace scribo
   line_links<L>::init()
   {
     for (unsigned i = 0; i < nelements(); ++i)
-      if (! data_->lines_(i).is_valid()
-	  || data_->lines_(i).is_hidden()
-	  || data_->lines_(i).type() != line::Text)
+      if (!data_->lines_(i).is_valid()
+	  || !data_->lines_(i).is_textline())
       {
 	data_->line_to_link_(i) = 0;
       }

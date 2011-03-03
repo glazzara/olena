@@ -40,8 +40,6 @@
 # include <scribo/core/line_links.hh>
 # include <scribo/core/line_info.hh>
 
-# include <scribo/convert/to_base64.hh>
-
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 

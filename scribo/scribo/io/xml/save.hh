@@ -121,6 +121,8 @@ namespace scribo
       {
 	trace::entering("scribo::io::xml::save");
 
+	mln_precondition(doc.is_open());
+
 	// Open file
 	std::ofstream output(output_name.c_str());
 	if (! output)

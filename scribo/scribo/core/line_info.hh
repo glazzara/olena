@@ -35,9 +35,10 @@
 /// from the x_height and the baseline.
 ///
 /// \fixme The way the meanline and the baseline are computed is not
-/// optimal and does not work is the components are too high (because
+/// optimal and does not work if the components are too high (because
 /// of the median accumulator and int_u12 overflows).
 
+# include <map>
 
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/point2d.hh>
@@ -52,8 +53,6 @@
 
 # include <scribo/core/line_set.hh>
 # include <scribo/core/component_set.hh>
-
-# include <scribo/io/xml/internal/html_markups_replace.hh>
 
 # include <scribo/core/concept/serializable.hh>
 
@@ -286,6 +285,42 @@ namespace scribo
 
   namespace internal
   {
+
+    // INTERNAL TOOLS
+
+    static inline std::map<char, std::string> init_map()
+    {
+      std::map<char, std::string> html_map;
+      html_map['\"'] = "&quot;";
+      html_map['<'] = "&lt;";
+      html_map['>'] = "&gt;";
+      html_map['&'] = "&amp;";
+      return html_map;
+    }
+
+
+    inline
+    std::string
+    html_markups_replace(const std::string& input)
+    {
+      static std::map<char, std::string> map = init_map();
+
+      std::string output = input;
+      for (unsigned i = 0; i < input.size(); ++i)
+      {
+	std::map<char, std::string>::iterator it = map.find(output.at(i));
+	if (it != map.end())
+	{
+	  output.replace(i, 1, it->second);
+	  i += it->second.size() - 1;
+	}
+      }
+      return output;
+    }
+
+
+
+    // LINE INFO DATA
 
     template <typename L>
     line_info_data<L>::line_info_data()
@@ -641,7 +676,7 @@ namespace scribo
   line_info<L>::update_text(const std::string& str)
   {
     data_->text_ = str;
-    data_->html_text_ = scribo::io::xml::internal::html_markups_replace(str);
+    data_->html_text_ = scribo::internal::html_markups_replace(str);
   }
 
 
@@ -868,6 +903,8 @@ namespace scribo
 
       ref_line = mln::math::min(comp_set(c).bbox().pmin().row(), ref_line);
     }
+
+    // FIXME: compute font color!
 
     for_all_elements(i, data_->components_)
     {

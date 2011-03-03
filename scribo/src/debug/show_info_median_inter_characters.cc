@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +35,7 @@
 #include <mln/io/ppm/save.hh>
 
 #include <mln/value/rgb8.hh>
-#include <mln/value/label_16.hh>
+#include <mln/value/int_u16.hh>
 
 #include <mln/draw/box.hh>
 #include <mln/draw/line.hh>
@@ -71,14 +71,14 @@ int main(int argc, char* argv[])
 
 
   image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+  mln::io::pbm::load(input, argv[1]);
 
-  typedef image2d<value::label_16> L;
+  typedef image2d<scribo::def::lbl_type> L;
 
   line_set<L> line = scribo::text::extract_lines(input, c8());
 
   image2d<value::rgb8> output = scribo::debug::char_space_image(input, line);
-  io::ppm::save(output, argv[2]);
+  mln::io::ppm::save(output, argv[2]);
 
   trace::exiting("main");
 }

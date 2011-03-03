@@ -33,8 +33,8 @@
 
 
 # include <mln/core/concept/image.hh>
-# include <mln/value/int_u16.hh>
 
+# include <scribo/core/def/lbl_type.hh>
 # include <scribo/core/line_set.hh>
 
 # include <scribo/primitive/extract/components.hh>
@@ -71,13 +71,13 @@ namespace scribo
     ** \return A set of lines.
     */
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::int_u16)>
+    line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		  const mln_ch_value(I,bool)& separators);
 
     /// \overload
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::int_u16)>
+    line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
@@ -85,7 +85,7 @@ namespace scribo
 
 
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::int_u16)>
+    line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh)
     {
       mln_ch_value(I,bool) seps;
@@ -94,7 +94,7 @@ namespace scribo
 
 
     template <typename I, typename N>
-    line_set<mln_ch_value(I,value::int_u16)>
+    line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		  const mln_ch_value(I,bool)& separators)
     {
@@ -107,10 +107,10 @@ namespace scribo
       mln_precondition(nbh.is_valid());
 
       /// Finding comps.
-      typedef mln_ch_value(I,value::int_u16) L;
-      value::int_u16 ncomps;
+      typedef mln_ch_value(I,scribo::def::lbl_type) L;
+      scribo::def::lbl_type ncomps;
       component_set<L>
-	comps = scribo::primitive::extract::components(input, c8(), ncomps);
+	comps = scribo::primitive::extract::components(input, nbh, ncomps);
 
       /// First filtering.
       comps = scribo::filter::components_small(comps, 3);

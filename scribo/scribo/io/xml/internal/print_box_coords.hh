@@ -30,6 +30,7 @@
 ///
 /// \brief Prints box2d coordinates to XML data.
 
+# include <fstream>
 # include <mln/core/alias/box2d.hh>
 
 namespace scribo
@@ -43,6 +44,8 @@ namespace scribo
 
       namespace internal
       {
+
+	using namespace mln;
 
         /*! \brief Prints box2d coordinates to XML data.
 	 */

@@ -52,6 +52,8 @@ namespace scribo
 
     const mln::util::array<line_id_t>& line_ids() const;
 
+    unsigned nlines() const;
+
     bool is_valid() const;
 
   private:
@@ -103,6 +105,13 @@ namespace scribo
   paragraph_info<L>::line_ids() const
   {
     return line_ids_;
+  }
+
+  template <typename L>
+  unsigned
+  paragraph_info<L>::nlines() const
+  {
+    return line_ids_.nelements();
   }
 
   template <typename L>

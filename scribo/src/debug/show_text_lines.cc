@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
   util::timer t;
   t.start();
 
-  typedef image2d<value::int_u16> L;
+  typedef image2d<scribo::def::lbl_type> L;
   line_set<L> lines = text::extract_lines(input, c8(), input_seps);
 
   t.stop();

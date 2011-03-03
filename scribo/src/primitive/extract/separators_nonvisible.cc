@@ -27,7 +27,7 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/data/convert.hh>
 
-#include <scribo/primitive/extract/separators_nonvisible2.hh>
+#include <scribo/primitive/extract/separators_nonvisible.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
