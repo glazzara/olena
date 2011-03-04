@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,6 +48,14 @@ public:
   // Segmentation
   int segmentation_find_seps();
   void set_segmentation_find_seps(int seps);
+
+
+  // OCR
+  bool ocr_enabled();
+  void set_ocr_enabled(bool b);
+
+  QString ocr_language();
+  void set_ocr_language(const QString& lang);
 
 
   // General options

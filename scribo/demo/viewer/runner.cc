@@ -156,7 +156,8 @@ void runner::process(const image2d<value::rgb8>& original_ima,
 			|| find_seps == defs::LinesAndWhitespaces);
   f.enable_whitespace_seps = (find_seps == defs::Whitespaces
 			      || find_seps == defs::LinesAndWhitespaces);
-
+  f.enable_ocr = conf->ocr_enabled();
+  f.ocr_language = conf->ocr_language().toAscii().data();
   f.xml_format = scribo::io::xml::PageExtended;
 
 

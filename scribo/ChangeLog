@@ -1,6 +1,34 @@
 2011-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* scribo/toolchain/internal/content_in_doc_functor.hh: Make OCR step optional.
+	Make OCR step optional in viewer.
+
+	* demo/viewer/Makefile.am: Add new files.
+
+	* demo/viewer/config.cc,
+	* demo/viewer/config.hh: Add OCR settings.
+
+	* demo/viewer/toolchain_options.cc,
+	* demo/viewer/toolchain_options.hh,
+	* demo/viewer/toolchain_options.ui: Remove.
+
+	* demo/viewer/ocr_options.cc,
+	* demo/viewer/ocr_options.hh,
+	* demo/viewer/ocr_options.ui,
+	* demo/viewer/preprocessing_options.cc,
+	* demo/viewer/preprocessing_options.hh,
+	* demo/viewer/preprocessing_options.ui,
+	* demo/viewer/segmentation_options.cc,
+	* demo/viewer/segmentation_options.hh,
+	* demo/viewer/segmentation_options.ui: New option widgets.
+
+	* demo/viewer/preferences_dialog.cc: Insert new widgets.
+
+	* demo/viewer/runner.cc: Take OCR settings into account.
+
+2011-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Make OCR
+	step optional.
 
 2011-03-03  Guillaume Lazzara  <z@lrde.epita.fr>
 

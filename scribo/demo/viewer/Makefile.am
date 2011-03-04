@@ -30,7 +30,9 @@ scribo_viewer_SOURCES = viewer.cc		\
 			image_region.cc		\
 			help_dialog.cc		\
 			step_widget.cc 		\
-			toolchain_options.cc 	\
+			preprocessing_options.cc\
+			segmentation_options.cc \
+			ocr_options.cc 		\
 			runner.cc		\
 			preprocess.cc		\
 			process.cc		\
@@ -65,8 +67,12 @@ BUILT_SOURCES = viewer.moc.cc			\
 		image_region.moc.cc		\
 		help_dialog.ui.h		\
 		step_widget.moc.cc 		\
-		toolchain_options.moc.cc	\
-		toolchain_options.ui.h		\
+		preprocessing_options.moc.cc	\
+		preprocessing_options.ui.h	\
+		segmentation_options.moc.cc	\
+		segmentation_options.ui.h	\
+		ocr_options.moc.cc		\
+		ocr_options.ui.h		\
 		runner.moc.cc 			\
 		preprocess.moc.cc		\
 		process.moc.cc			\
@@ -91,7 +97,9 @@ noinst_HEADERS = viewer.hh		\
 	 	 common.hh		\
 	 	 help_dialog.hh		\
 	 	 step_widget.hh		\
-		 toolchain_options.hh	\
+		 preprocessing_options.hh\
+		 segmentation_options.hh\
+		 ocr_options.hh		\
 		 runner.hh 		\
 		 preprocess.hh		\
 		 process.hh 		\
@@ -121,7 +129,9 @@ EXTRA_DIST =			\
 	general_options.ui	\
 	preferences_dialog.ui 	\
 	README			\
-	toolchain_options.ui	\
+	preprocessing_options.ui\
+	segmentation_options.ui	\
+	ocr_options.ui		\
 	help_dialog.ui 		\
 	demodir.hh.in
 

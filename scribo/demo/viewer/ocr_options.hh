@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -14,24 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SCRIBO_DEMO_VIEWER_TOOLCHAIN_OPTIONS_HH
-# define SCRIBO_DEMO_VIEWER_TOOLCHAIN_OPTIONS_HH
+#ifndef SCRIBO_DEMO_VIEWER_OCR_OPTIONS_HH
+# define SCRIBO_DEMO_VIEWER_OCR_OPTIONS_HH
 
 # include <QtGui>
-# include <toolchain_options.ui.h>
+# include <ocr_options.ui.h>
 # include "option_widget.hh"
 
-class toolchain_options : public OptionWidget, private Ui::ToolchainOptions
+class ocr_options : public OptionWidget, private Ui::OcrOptions
 {
   Q_OBJECT;
 
 public:
-  toolchain_options(QWidget *parent = 0);
-  ~toolchain_options();
+  ocr_options(QWidget *parent = 0);
+  ~ocr_options();
 
   void load_config();
   void save_config();
 
+private:
+  int find_index(const QString& lang);
+
 };
 
-#endif // ! SCRIBO_DEMO_VIEWER_TOOLCHAIN_OPTIONS_HH
+#endif // ! SCRIBO_DEMO_VIEWER_OCR_OPTIONS_HH

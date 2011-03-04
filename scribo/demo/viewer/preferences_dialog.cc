@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -15,8 +16,10 @@
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "preferences_dialog.hh"
-#include "toolchain_options.hh"
 #include "general_options.hh"
+#include "ocr_options.hh"
+#include "preprocessing_options.hh"
+#include "segmentation_options.hh"
 
 
 
@@ -41,7 +44,7 @@ preferences_dialog::~preferences_dialog()
 
 void preferences_dialog::load_option_list()
 {
-  static const char *options[] = { "General", "Toolchain", 0 };
+  static const char *options[] = { "General", "Preprocessing", "Segmentation", "OCR", 0 };
 
   int i;
   for (i = 0; options[i]; ++i)
@@ -66,19 +69,32 @@ void preferences_dialog::select_option_widget(int row)
 
   if (!widgets_[row])
   {
+    QWidget *widget = 0;
+
     switch (row)
     {
       case 0:
-	widgets_[0] = new general_options(this);
+	widget = new general_options(this);
 	break;
 
       case 1:
-	widgets_[1] = new toolchain_options(this);
+	widget = new preprocessing_options(this);
+	break;
+
+      case 2:
+	widget = new segmentation_options(this);
+	break;
+
+      case 3:
+	widget = new ocr_options(this);
 	break;
 
       default:
 	qDebug() << "select_option_widget - Hu? Something wrong...";
     }
+
+    if (widget)
+      widgets_[row] = widget;
   }
 
   if (horizontalLayout_2->count() == 2)
