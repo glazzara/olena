@@ -279,8 +279,9 @@ namespace scribo
 
 	    // FIXME: Try to avoid that!
 	    border::resize(lbl, 0);
-	    QByteArray lbl64((const char *)lbl.buffer(),
-	    		     lbl.nelements() * sizeof(mln_value(L)));
+	    QByteArray
+	      lbl64 = QByteArray::fromRawData((const char *)lbl.buffer(),
+					      lbl.nelements() * sizeof(mln_value(L)));
 	    lbl64 = qCompress(lbl64, COMPRESSION_LEVEL);
 	    lbl64 = lbl64.toBase64();
 
@@ -299,8 +300,9 @@ namespace scribo
 		   << "<![CDATA[";
 
 	    border::resize(seps, 0);
-	    QByteArray seps64((const char *)seps.buffer(),
-			      seps.nelements() * sizeof(bool));
+	    QByteArray
+	      seps64 = QByteArray::fromRawData((const char *)seps.buffer(),
+					       seps.nelements() * sizeof(bool));
 	    seps64 = qCompress(seps64, COMPRESSION_LEVEL);
 	    seps64 = seps64.toBase64();
 
@@ -345,7 +347,6 @@ namespace scribo
 	      output << "    </separator_region>" << std::endl;
 	      break;
 	    }
-
 
 	    default:
 	    case component::Image:
