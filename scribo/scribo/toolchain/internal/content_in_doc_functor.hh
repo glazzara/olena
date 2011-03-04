@@ -111,6 +111,7 @@ namespace scribo
 	bool enable_denoising;
 	bool enable_line_seps;
 	bool enable_whitespace_seps;
+	bool enable_ocr;
 	bool enable_debug;
 	bool save_doc_as_xml;
 	scribo::io::xml::Format xml_format;
@@ -136,6 +137,7 @@ namespace scribo
 	: enable_denoising(true),
 	  enable_line_seps(true),
 	  enable_whitespace_seps(true),
+	  enable_ocr(true),
 	  enable_debug(false),
 	  save_doc_as_xml(false),
 	  xml_format(scribo::io::xml::PageExtended),
@@ -373,11 +375,14 @@ namespace scribo
 
 
 	// Text recognition
-	on_new_progress_label("Recognizing text");
-	scribo::text::recognition(lines, ocr_language.c_str());
+	if (enable_ocr)
+	{
+	  on_new_progress_label("Recognizing text");
 
-	on_progress();
+	  scribo::text::recognition(lines, ocr_language.c_str());
 
+	  on_progress();
+	}
 
 	// Link text lines
 	on_new_progress_label("Linking text lines");
@@ -390,7 +395,7 @@ namespace scribo
 	  image2d<value::rgb8> debug = data::convert(value::rgb8(), original_image);
 	  for_all_lines(l, lines)
 	  {
-	    if (! lines(l).is_valid() || lines(l).is_hidden() || lines(l).type() != line::Text)
+	    if (! lines(l).is_textline())
 	      continue;
 
 	    mln::draw::box(debug, lines(l).bbox(), literal::blue);
@@ -427,7 +432,7 @@ namespace scribo
 	  mln::util::array<accu::shape::bbox<point2d> > nbbox(llinks.nelements());
 	  for_all_lines(i, lines)
 	  {
-	    if (! lines(i).is_valid() || lines(i).is_hidden() || lines(i).type() != line::Text)
+	    if (! lines(i).is_textline())
 	      continue;
 
 	    mln::draw::box(debug, lines(i).bbox(), literal::red);
@@ -497,8 +502,8 @@ namespace scribo
       int
       content_in_doc_functor<I>::nsteps() const
       {
-	return 11 + enable_denoising + enable_line_seps
-	  + enable_whitespace_seps + save_doc_as_xml;
+	return 10 + enable_denoising + enable_line_seps
+	  + enable_whitespace_seps + enable_ocr + save_doc_as_xml;
       }
 
 
