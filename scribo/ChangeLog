@@ -1,5 +1,10 @@
 2011-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Save
+	separators data.
+
+2011-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/io/xml/internal/full_xml_visitor.hh: Do not copy image
 	data.
 

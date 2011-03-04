@@ -113,6 +113,10 @@ namespace scribo
 	  if (doc.has_elements())
 	    doc.elements().accept(*this);
 
+	  // line seraparators
+	  if (doc.has_line_seps())
+	    doc.line_seps_comps().accept(*this);
+
 	  // Whitespace seraparators
 	  if (doc.has_whitespace_seps())
 	    doc.whitespace_seps_comps().accept(*this);
