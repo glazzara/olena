@@ -1,5 +1,12 @@
 2011-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add HAVE_QT guards.
+
+	* scribo/convert/from_base64.hh,
+	* scribo/io/xml/save.hh: Here.
+
+2011-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in viewer.
 
 	* demo/viewer/main.cc: Add more includes.

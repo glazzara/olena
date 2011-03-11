@@ -63,6 +63,10 @@
 #include <cstdio>
 #include <cstdlib>
 
+# ifdef HAVE_QT
+#  include <QString>
+# endif // ! HAVE_QT
+
 # include <mln/border/resize.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/util/array.hh>
@@ -82,8 +86,12 @@ namespace scribo
 		     Image<I>& output);
 
 
+# ifdef HAVE_QT
+
     template <typename I>
     void from_base64(const QString& data64, Image<I>& output_);
+
+# endif // ! HAVE_QT
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -187,6 +195,8 @@ namespace scribo
     }
 
 
+#  ifdef HAVE_QT
+
     template <typename I>
     void
     from_base64(const QString& data64, Image<I>& output_)
@@ -198,6 +208,8 @@ namespace scribo
 
       trace::exiting("scribo::convert::to_base64");
     }
+
+#  endif // ! HAVE_QT
 
 
 # endif // ! MLN_INCLUDE_ONLY

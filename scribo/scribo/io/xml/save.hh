@@ -39,7 +39,10 @@
 
 # include <scribo/core/document.hh>
 
-# include <scribo/io/xml/internal/full_xml_visitor.hh>
+# ifdef HAVE_QT
+#  include <scribo/io/xml/internal/full_xml_visitor.hh>
+# endif // ! HAVE_QT
+
 # include <scribo/io/xml/internal/extended_page_xml_visitor.hh>
 # include <scribo/io/xml/internal/page_xml_visitor.hh>
 
@@ -66,7 +69,11 @@ namespace scribo
       {
 	Page,
 	PageExtended,
+
+# ifdef HAVE_QT
 	Full
+# endif // ! HAVE_QT
+
 	//Hocr
       };
 
@@ -100,12 +107,14 @@ namespace scribo
 	  doc.accept(f);
 	}
 
+# ifdef HAVE_QT
 	template <typename L>
 	void save_full(const document<L>& doc, std::ofstream& output)
 	{
 	  scribo::io::xml::internal::full_xml_visitor f(output);
 	  doc.accept(f);
 	}
+# endif // ! HAVE_QT
 
       } // end of namespace scribo::io::xml::internal
 
@@ -143,9 +152,11 @@ namespace scribo
 	    internal::save_page_extended(doc, output);
 	    break;
 
+# ifdef HAVE_QT
 	  case Full:
 	    internal::save_full(doc, output);
 	    break;
+# endif // ! HAVE_QT
 
 	  default:
 	    trace::warning("scribo::io::xml::save - Invalid XML format! Skip saving...");
