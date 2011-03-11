@@ -1,3 +1,11 @@
+2011-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in viewer.
+
+	* demo/viewer/main.cc: Add more includes.
+
+	* demo/viewer/viewer.cc: Add debug output.
+
 2011-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Save

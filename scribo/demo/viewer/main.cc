@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +24,8 @@
 #include <mln/math/pi.hh>
 #include <mln/io/magick/load.hh>
 #include <scribo/make/debug_filename.hh>
+#include <mln/debug/filename.hh>
+#include <mln/literal/white.hh>
 
 int main(int argc, char** argv)
 {

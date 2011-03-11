@@ -372,7 +372,10 @@ Viewer::add_text(QDomNode line)
     coords = coords.nextSibling();
 
   if (coords.isNull())
+  {
+    qDebug() << "Warning : textline without coordinates...";
     return;
+  }
 
   QDomNode point = coords.firstChild();
 
@@ -393,7 +396,7 @@ Viewer::add_text(QDomNode line)
       point = point.nextSibling();
     }
 
-  QString text = line.toElement().attribute("text", "none");
+  QString text = line.toElement().attribute("text", "");
   QFont font("Times");
   font.setPixelSize(a_height + d_height);
   QGraphicsTextItem* text_item  = scene_->addText(text, font);
@@ -417,7 +420,10 @@ Viewer::add_region(QDomNode father, QString attr_id)
     coords = coords.nextSibling();
 
   if (coords.isNull())
+  {
+    qDebug() << "Warning : add_region - region without coordinates";
     return;
+  }
 
   QDomNode point = coords.firstChild();
   QVector<QPoint> points;
