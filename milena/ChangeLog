@@ -1,5 +1,14 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New app: binary OFF to VTK mesh conversion.
+
+	* apps/mesh-segm-skel/off-to-vtk-bin.cc: New.
+	* apps/mesh-segm-skel/Makefile.am
+	(bin_PROGRAMS): Add off-to-vtk-bin.
+	(off_to_vtk_bin_SOURCES): New.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	New app performing a 2-collapse on a mesh.
 
 	* apps/mesh-segm-skel/mesh-complex-2-collapse.cc: New.

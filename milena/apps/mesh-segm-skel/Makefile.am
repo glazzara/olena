@@ -167,3 +167,12 @@ TESTS += test-mesh-complex-pinv-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-skel.off		\
   teapot-complex-pinv-curv-skel.off
+
+## ------------------------- ##
+## Conversion applications.  ##
+## ------------------------- ##
+
+# Convert a binary OFF file (e.g. no value attached to faces) into a
+# VTK file.
+bin_PROGRAMS += off-to-vtk-bin
+off_to_vtk_bin_SOURCES = off-to-vtk-bin.cc
