@@ -1,5 +1,12 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/toolchain/nepomuk/Makefile.am: Add MAGICKXX flags.
 
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
