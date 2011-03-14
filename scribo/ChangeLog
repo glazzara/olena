@@ -1,5 +1,11 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce a logger class.
+
+	* scribo/debug/logger.hh: New.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce new anchors.
 
 	* scribo/core/tag/anchor.hh: New anchors.
