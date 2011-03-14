@@ -104,7 +104,7 @@ if HAVE_QT
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \
 			      $(MAGICKXX_CPPFLAGS) \
-			      $(QT_CPPFLAGS)
+			      $(QT_CPPFLAGS) -DHAVE_QT
     content_in_doc_CXXFLAGS = $(AM_CXXFLAGS) \
 		  	      $(QT_CXXFLAGS)
     content_in_doc_LDFLAGS  = $(AM_LDFLAGS) \

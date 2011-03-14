@@ -1,5 +1,9 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/Makefile.am: define HAVE_QT for content_in_doc.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing anchor argument.
 
 	* scribo/primitive/link/internal/find_several_links.hh,
