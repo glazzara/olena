@@ -17,9 +17,10 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-COND_TESTS = cond_tests_magickxx_tesseract_tiff \
-	     cond_tests_qt 			\
-	     cond_tests_qt_tesseract_tiff	\
+COND_TESTS = cond_tests_magickxx_tesseract_tiff 	\
+	     cond_tests_magickxx_qt_tesseract_tiff 	\
+	     cond_tests_qt 				\
+	     cond_tests_qt_tesseract_tiff		\
 	     cond_tests_tesseract_tiff
 
 EXTRA_DIST = disabled_tests \

@@ -1,2 +1,4 @@
+scribo/convert/from_base64.hh
 scribo/convert/from_qimage.hh
+scribo/io/xml/internal/full_xml_visitor.hh
 scribo/io/xml/load.hh

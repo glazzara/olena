@@ -1,5 +1,17 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Set unit tests dependencies.
+
+	* tests/unit_test/Makefile.am: Add new conditional test file.
+
+	* tests/unit_test/cond_tests_magickxx_qt_tesseract_tiff,
+	* tests/unit_test/cond_tests_qt,
+	* tests/unit_test/cond_tests_qt_tesseract_tiff: Update list of files.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New debug tools.
 
 	* src/Makefile.am,
