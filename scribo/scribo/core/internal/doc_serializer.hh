@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_CORE_INTERNAL_DOC_XML_SERIALIZER_HH
-# define SCRIBO_CORE_INTERNAL_DOC_XML_SERIALIZER_HH
+#ifndef SCRIBO_CORE_INTERNAL_DOC_SERIALIZER_HH
+# define SCRIBO_CORE_INTERNAL_DOC_SERIALIZER_HH
 
 /// \file
 ///
@@ -46,7 +46,7 @@ namespace scribo
 
   /// \brief Link functor concept.
   template <typename E>
-  class doc_xml_serializer : public SerializeVisitor<E>
+  class doc_serializer : public SerializeVisitor<E>
   {
   public:
     // Visit overloads
@@ -80,55 +80,55 @@ namespace scribo
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const document<L>& doc) const
+  doc_serializer<E>::visit(const document<L>& doc) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const line_links<L>& llinks) const
+  doc_serializer<E>::visit(const line_links<L>& llinks) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const object_groups<L>& groups) const
+  doc_serializer<E>::visit(const object_groups<L>& groups) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const object_links<L>& links) const
+  doc_serializer<E>::visit(const object_links<L>& links) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const component_set<L>& comp_set) const
+  doc_serializer<E>::visit(const component_set<L>& comp_set) const
   {
   }
 
   template <typename E>
   void
-  doc_xml_serializer<E>::visit(const component_info& info) const
-  {
-  }
-
-  template <typename E>
-  template <typename L>
-  void
-  doc_xml_serializer<E>::visit(const paragraph_set<L>& parset) const
+  doc_serializer<E>::visit(const component_info& info) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_xml_serializer<E>::visit(const line_info<L>& line) const
+  doc_serializer<E>::visit(const paragraph_set<L>& parset) const
+  {
+  }
+
+  template <typename E>
+  template <typename L>
+  void
+  doc_serializer<E>::visit(const line_info<L>& line) const
   {
   }
 
@@ -137,4 +137,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // SCRIBO_CORE_INTERNAL_DOC_XML_SERIALIZER_HH
+#endif // SCRIBO_CORE_INTERNAL_DOC_SERIALIZER_HH

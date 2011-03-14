@@ -32,7 +32,7 @@
 
 # include <fstream>
 
-# include <scribo/core/internal/doc_xml_serializer.hh>
+# include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/convert/to_base64.hh>
 
 # include <scribo/io/xml/internal/print_box_coords.hh>
@@ -63,7 +63,7 @@ namespace scribo
 	  http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd
 
 	*/
-	class page_xml_visitor : public doc_xml_serializer<page_xml_visitor>
+	class page_xml_visitor : public doc_serializer<page_xml_visitor>
 	{
 	public:
 	  // Constructor

@@ -1,5 +1,16 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename document serializer base class.
+
+	* scribo/core/internal/doc_xml_serializer.hh: Rename as...
+	* scribo/core/internal/doc_serializer.hh: ... this.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Update inheritance.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Store more information in scribo::document.
 
 	* scribo/core/document.hh: Make a distinction between horizontal

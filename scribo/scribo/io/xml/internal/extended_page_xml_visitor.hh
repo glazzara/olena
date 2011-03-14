@@ -32,6 +32,7 @@
 
 # include <fstream>
 # include <scribo/core/internal/doc_xml_serializer.hh>
+# include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/paragraph_set.hh>
@@ -57,7 +58,7 @@ namespace scribo
       {
 
 
-	class extended_page_xml_visitor : public doc_xml_serializer<extended_page_xml_visitor>
+	class extended_page_xml_visitor : public doc_serializer<extended_page_xml_visitor>
 	{
 	public:
 	  // Constructor
