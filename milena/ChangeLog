@@ -1,5 +1,12 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Here.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/labeling/colorize.hh: Add a missing inline.
 
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>

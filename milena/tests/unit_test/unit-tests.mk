@@ -7,7 +7,7 @@ if HAVE_BOOST_TUPLE
 check_PROGRAMS +=  \
 mln_accu_tuple
 
-mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS} -DHAVE_BOOST_TUPLE ${AM_CPPFLAGS}
 mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${AM_LDFLAGS}
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 endif HAVE_BOOST_TUPLE
@@ -18,10 +18,10 @@ check_PROGRAMS +=  \
 mln_io_fits_all \
 mln_io_fits_load
 
-mln_io_fits_all_CPPFLAGS= ${CFITSIO_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_fits_all_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
 mln_io_fits_all_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_fits_all_SOURCES = mln_io_fits_all.cc
-mln_io_fits_load_CPPFLAGS= ${CFITSIO_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_fits_load_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
 mln_io_fits_load_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_fits_load_SOURCES = mln_io_fits_load.cc
 endif HAVE_CFITSIO
@@ -33,13 +33,13 @@ mln_io_dicom_all \
 mln_io_dicom_load \
 mln_io_dicom_get_header
 
-mln_io_dicom_all_CPPFLAGS= ${GDCM_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_dicom_all_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_all_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_dicom_all_SOURCES = mln_io_dicom_all.cc
-mln_io_dicom_load_CPPFLAGS= ${GDCM_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_dicom_load_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_load_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_dicom_load_SOURCES = mln_io_dicom_load.cc
-mln_io_dicom_get_header_CPPFLAGS= ${GDCM_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_dicom_get_header_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_get_header_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_dicom_get_header_SOURCES = mln_io_dicom_get_header.cc
 endif HAVE_GDCM
@@ -51,13 +51,13 @@ mln_io_magick_all \
 mln_io_magick_load \
 mln_io_magick_save
 
-mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_all_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_magick_all_SOURCES = mln_io_magick_all.cc
-mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_load_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_magick_load_SOURCES = mln_io_magick_load.cc
-mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_magick_save_SOURCES = mln_io_magick_save.cc
 endif HAVE_MAGICKXX
@@ -68,10 +68,10 @@ check_PROGRAMS +=  \
 mln_convert_to_qimage \
 mln_convert_to_qimage_nocopy
 
-mln_convert_to_qimage_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_convert_to_qimage_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 mln_convert_to_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
 mln_convert_to_qimage_SOURCES = mln_convert_to_qimage.cc
-mln_convert_to_qimage_nocopy_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_convert_to_qimage_nocopy_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 mln_convert_to_qimage_nocopy_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
 mln_convert_to_qimage_nocopy_SOURCES = mln_convert_to_qimage_nocopy.cc
 endif HAVE_QT
@@ -82,10 +82,10 @@ check_PROGRAMS +=  \
 mln_io_tiff_all \
 mln_io_tiff_load
 
-mln_io_tiff_all_CPPFLAGS= ${TIFF_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_tiff_all_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
 mln_io_tiff_all_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
-mln_io_tiff_load_CPPFLAGS= ${TIFF_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_io_tiff_load_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
 mln_io_tiff_load_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
 endif HAVE_TIFF
@@ -135,6 +135,7 @@ mln_accu_shape_all \
 mln_accu_shape_bbox \
 mln_accu_shape_essential \
 mln_accu_shape_height \
+mln_accu_shape_site_list \
 mln_accu_shape_volume \
 mln_accu_site_set_all \
 mln_accu_site_set_essential \
@@ -674,6 +675,7 @@ mln_fun_v2v_rgb8_to_rgbn \
 mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_rgb_to_int_u \
+mln_fun_v2v_rgb_to_luma \
 mln_fun_v2v_saturate \
 mln_fun_v2v_wrap \
 mln_fun_v2w2v_all \
@@ -1459,6 +1461,7 @@ mln_accu_shape_all_SOURCES = mln_accu_shape_all.cc
 mln_accu_shape_bbox_SOURCES = mln_accu_shape_bbox.cc
 mln_accu_shape_essential_SOURCES = mln_accu_shape_essential.cc
 mln_accu_shape_height_SOURCES = mln_accu_shape_height.cc
+mln_accu_shape_site_list_SOURCES = mln_accu_shape_site_list.cc
 mln_accu_shape_volume_SOURCES = mln_accu_shape_volume.cc
 mln_accu_site_set_all_SOURCES = mln_accu_site_set_all.cc
 mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc
@@ -1998,6 +2001,7 @@ mln_fun_v2v_rgb8_to_rgbn_SOURCES = mln_fun_v2v_rgb8_to_rgbn.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_rgb_to_int_u_SOURCES = mln_fun_v2v_rgb_to_int_u.cc
+mln_fun_v2v_rgb_to_luma_SOURCES = mln_fun_v2v_rgb_to_luma.cc
 mln_fun_v2v_saturate_SOURCES = mln_fun_v2v_saturate.cc
 mln_fun_v2v_wrap_SOURCES = mln_fun_v2v_wrap.cc
 mln_fun_v2w2v_all_SOURCES = mln_fun_v2w2v_all.cc

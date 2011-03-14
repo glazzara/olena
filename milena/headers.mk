@@ -42,6 +42,7 @@ mln/accu/shape/all.hh \
 mln/accu/shape/bbox.hh \
 mln/accu/shape/essential.hh \
 mln/accu/shape/height.hh \
+mln/accu/shape/site_list.hh \
 mln/accu/shape/volume.hh \
 mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
@@ -560,6 +561,7 @@ mln/fun/v2v/projection.hh \
 mln/fun/v2v/qt_rgb_to_int_u.hh \
 mln/fun/v2v/rgb8_to_rgbn.hh \
 mln/fun/v2v/rgb_to_int_u.hh \
+mln/fun/v2v/rgb_to_luma.hh \
 mln/fun/v2v/saturate.hh \
 mln/fun/v2v/wrap.hh \
 mln/fun/v2w2v/all.hh \
