@@ -115,7 +115,7 @@ EOF
 	    cppflags="${NAME}_CPPFLAGS="
 	    ldflags="${NAME}_LDFLAGS="
 	    for i in $IFDEF; do
-		cppflags="${cppflags} \${${i}_CPPFLAGS} "
+		cppflags="${cppflags} \${${i}_CPPFLAGS} -DHAVE_${i}"
 		ldflags="${ldflags} \${${i}_LDFLAGS} "
 	    done
 	    echo "$cppflags \${AM_CPPFLAGS}" >>"$output"
