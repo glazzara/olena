@@ -1,5 +1,13 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prevent a site from being introduced twice in thinning's queues.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh,
+	* mln/topo/skeleton/priority_driven_thinning.hh:
+	Use an image `in_queue' to tag sites inserted in the queue.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add routines to identify and detach (collapse) simple pairs.
 
 	* mln/topo/is_simple_pair.hh,

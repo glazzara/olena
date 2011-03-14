@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +41,9 @@
 # include <mln/core/site_set/p_queue_fast.hh>
 
 # include <mln/fun/p2b/tautology.hh>
+
+# include <mln/data/fill.hh>
+
 
 namespace mln
 {
@@ -123,20 +127,30 @@ namespace mln
 	is_simple.set_image(output);
 	detach.set_image(output);
 
+	// FIFO queue.
 	typedef mln_psite(I) psite;
 	typedef p_queue_fast<psite> queue_t;
 	queue_t queue;
+	// Image showing whether a site has been inserted into the queue.
+	mln_ch_value(I, bool) in_queue;
+	initialize(in_queue, input);
+	data::fill(in_queue, false);
+
 	// Populate QUEUE with candidate simple points.
 	mln_piter(I) p(output.domain());
 	for_all(p)
 	{
 	  if (output(p) && constraint(p) && is_simple(p))
-	    queue.push(p);
+	    {
+	      queue.push(p);
+	      in_queue(p) = true;
+	    }
 	}
 
 	while (!queue.is_empty())
 	  {
 	    psite p = queue.pop_front();
+ 	    in_queue(p) = false;
 	    if (output(p) && constraint(p) && is_simple(p))
 	      {
 		detach(p);
@@ -144,8 +158,12 @@ namespace mln
 		for_all(n)
 		{
 		  if (output.domain().has(n)
-		      && output(n) && constraint(n) && is_simple(n))
-		    queue.push(n);
+		      && output(n) && constraint(n) && is_simple(n)
+		      && !in_queue(n))
+		    {
+		      queue.push(n);
+		      in_queue(n) = true;
+		    }
 		}
 	      }
 	  }
