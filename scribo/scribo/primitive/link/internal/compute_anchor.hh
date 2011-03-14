@@ -111,6 +111,12 @@ namespace scribo
 	      break;
 
 
+	      // Bounding box Strict top center
+	    case anchor::StrictTopCenter:
+	      sp.row() = components(current_object).bbox().pmin().row();
+	      break;
+
+
 	      // Bounding box top left
 	    case anchor::TopStrictLeft:
 	      sp.col() = components(current_object).bbox().pmin().col();
@@ -138,13 +144,19 @@ namespace scribo
 	      break;
 
 
+	      // Bounding box strict bottom center.
+	    case anchor::StrictBottomCenter:
+	      sp.row() = components(current_object).bbox().pmax().row();
+	      break;
+
+
 	    // Bounding box center
 	    case anchor::Center:
 	      return components(current_object).bbox().pcenter();
 
 
 	    // Bounding box actual left center
-	    case anchor::ActualLeft:
+	    case anchor::StrictLeft:
 	      return P(components(current_object).bbox().pcenter().row(),
 		       components(current_object).bbox().pmin().col());
 
@@ -161,7 +173,7 @@ namespace scribo
 
 
 	    // Bounding box actual right center
-	    case anchor::ActualRight:
+	    case anchor::StrictRight:
 	      return P(components(current_object).bbox().pcenter().row(),
 		       components(current_object).bbox().pmax().col());
 

@@ -1,5 +1,15 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce new anchors.
+
+	* scribo/core/tag/anchor.hh: New anchors.
+
+	* scribo/filter/internal/alignment_angle.hh,
+	* scribo/primitive/link/internal/compute_anchor.hh: Make use of
+	that new anchors.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename document serializer base class.
 
 	* scribo/core/internal/doc_xml_serializer.hh: Rename as...

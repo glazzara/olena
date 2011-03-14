@@ -109,6 +109,7 @@ namespace scribo
 	  break;
 
 	  // Top
+	  case anchor::StrictTopCenter:
 	  case anchor::TopStrictLeft:
 	  case anchor::Top:
 	  {
@@ -122,6 +123,7 @@ namespace scribo
 	  break;
 
 	  // Bottom
+	  case anchor::StrictBottomCenter:
 	  case anchor::BottomStrictRight:
 	  case anchor::Bottom:
 	  {
