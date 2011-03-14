@@ -32,20 +32,20 @@
 #include <mln/pw/all.hh>
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/data/convert.hh>
+#include <mln/literal/colors.hh>
 
 #include <scribo/text/recognition.hh>
 
 #include <scribo/debug/usage.hh>
 
+#include <scribo/core/document.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/core/object_links.hh>
 #include <scribo/core/object_groups.hh>
 
 #include <scribo/text/extract_lines.hh>
 
-#include <scribo/io/text_boxes/save.hh>
-
-#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/io/xml/save.hh>
 
 
 const char *args_desc[][2] =
@@ -60,10 +60,10 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 6)
+  if (argc != 7)
     return scribo::debug::usage(argv,
 				"Show text lines",
-				"input.pbm input_seps.pbm out.ppm out.pbm comps.pbm",
+				"input.pbm input_seps.pbm out_text_boxes.ppm out_text_boxes.pbm out_text_comps.pbm out_lines.xml",
 				args_desc);
 
   trace::entering("main");
@@ -118,6 +118,13 @@ int main(int argc, char* argv[])
       }
     mln::io::pbm::save(output, argv[5]);
   }
+
+  // Saving stoppers data to XML
+  document<L> doc(argv[1]);
+  doc.open();
+  doc.set_paragraphs(scribo::make::paragraph(lines));
+  scribo::io::xml::save(doc, argv[6], scribo::io::xml::Full);
+
 
   trace::exiting("main");
 }

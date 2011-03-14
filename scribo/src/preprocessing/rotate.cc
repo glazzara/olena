@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 
   typedef image2d<value::rgb8> I;
   I ima;
+  Magick::InitializeMagick(0);
   io::magick::load(ima, argv[1]);
 
   image2d<value::rgb8>

@@ -28,7 +28,8 @@
 
 /*! \brief try to determine the type of a component.
 
-\fixme Add support for more component type (graphic, images, ...)
+\fixme Write it and add support for component type (graphic, images,
+...)
  */
 
 # include <mln/trace/all.hh>
@@ -48,24 +49,25 @@ namespace scribo
 
       mln_assertion(comps.is_valid());
 
-      component_set<L> output = comps.duplicate();
+      // component_set<L> output = comps.duplicate();
 
-      for_all_comps(c, comps)
-	if (comps(c).is_valid())
-	{
-	  float
-	    min = comps(c).bbox().height(),
-	    max = comps(c).bbox().width();
+      // for_all_comps(c, comps)
+      // 	if (comps(c).is_valid())
+      // 	{
+      // 	  float
+      // 	    min = comps(c).bbox().height(),
+      // 	    max = comps(c).bbox().width();
 
-	  if (comps(c).bbox().width() < comps(c).bbox().height())
-	    std::swap(min, max);
+      // 	  if (comps(c).bbox().width() < comps(c).bbox().height())
+      // 	    std::swap(min, max);
 
-	  if (max/min > 10)
-	    output(c).update_type(component::LineSeparator);
-	}
+      // 	  if (max/min > 10)
+      // 	    output(c).update_type(component::LineSeparator);
+      // 	}
 
       mln::trace::exiting("scribo::primitive::identify");
-      return output;
+      //return output;
+      return comps;
     }
 
 # ifndef MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,17 +24,17 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_EXTRACT_VERTICAL_SEPARATORS_HH
-# define SCRIBO_PRIMITIVE_EXTRACT_VERTICAL_SEPARATORS_HH
+#ifndef SCRIBO_PRIMITIVE_EXTRACT_HORIZONTAL_SEPARATORS_HH
+# define SCRIBO_PRIMITIVE_EXTRACT_HORIZONTAL_SEPARATORS_HH
 
 /// \file
 ///
-/// Extract vertical separators.
+/// Extract horizontal separators.
 
 # include <mln/core/concept/image.hh>
 # include <mln/arith/plus.hh>
 
-# include <scribo/primitive/extract/lines_v_pattern.hh>
+# include <scribo/primitive/extract/lines_h_pattern.hh>
 
 
 namespace scribo
@@ -47,7 +48,7 @@ namespace scribo
 
       using namespace mln;
 
-      /// \brief Extract vertical separators.
+      /// \brief Extract horizontal separators.
       /*!
        *
        * \param[in]     input       A binary image.
@@ -59,7 +60,7 @@ namespace scribo
        */
       template <typename I>
       mln_concrete(I)
-      vertical_separators(const Image<I>& input, unsigned line_length);
+      horizontal_separators(const Image<I>& input, unsigned line_length);
 
 
 
@@ -68,19 +69,19 @@ namespace scribo
 
       template <typename I>
       mln_concrete(I)
-      vertical_separators(const Image<I>& input_, unsigned line_length)
+      horizontal_separators(const Image<I>& input_, unsigned line_length)
       {
-	trace::entering("scribo::primitive::extract::vertical_separators");
+	trace::entering("scribo::primitive::extract::horizontal_separators");
 
 	const I& input = exact(input_);
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(input.is_valid());
 
 	mln_concrete(I)
-	  vlines = extract::lines_v_pattern(input, line_length, 3);
+	  hlines = extract::lines_h_pattern(input, line_length, 3);
 
-	trace::exiting("scribo::primitive::extract::vertical_separators");
-	return vlines;
+	trace::exiting("scribo::primitive::extract::horizontal_separators");
+	return hlines;
       }
 
 
@@ -92,4 +93,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_EXTRACT_VERTICAL_SEPARATORS_HH
+#endif // ! SCRIBO_PRIMITIVE_EXTRACT_HORIZONTAL_SEPARATORS_HH

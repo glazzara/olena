@@ -57,7 +57,8 @@ const char *args_desc[][2] =
   { "pmin_col", "Col index of the top left corner of the Region of interest." },
   { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
   { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
-  { "language", "Language to be used for the text recognition. [eng|fra] (Default: eng)" },
+  { "language", "Language to be used for the text recognition. [eng|fra] (Default: eng)."
+    "An empty language will disable OCR." },
   { "find_lines", "Find vertical lines. (Default 1)" },
   { "find_whitespaces", "Find whitespaces separators. (Default 1)" },
   { "K", "Sauvola's binarization threshold parameter. (Default: 0.34)" },

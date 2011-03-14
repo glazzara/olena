@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
 				"input.* output.ppm <positive>",
 				args_desc);
 
+  Magick::InitializeMagick(0);
 
   typedef image2d<value::rgb8> I;
   I ima;

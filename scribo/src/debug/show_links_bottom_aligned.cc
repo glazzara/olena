@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,8 @@
 #include <scribo/core/component_set.hh>
 
 #include <scribo/primitive/extract/components.hh>
-#include <scribo/primitive/link/with_single_right_link_bottom.hh>
-#include <scribo/filter/object_links_bottom_aligned.hh>
+#include <scribo/primitive/link/with_single_right_link.hh>
+#include <scribo/filter/object_links_aligned.hh>
 
 #include <scribo/debug/alignment_decision_image.hh>
 #include <scribo/debug/usage.hh>
@@ -82,19 +83,20 @@ int main(int argc, char* argv[])
 
   // Finding right links.
   object_links<L> right_links
-    = primitive::link::with_single_right_link_bottom(components, atoi(argv[2]));
+    = primitive::link::with_single_right_link(components, atoi(argv[2]));
 
   // Filtering.
   object_links<L> filtered_links
-    = filter::object_links_bottom_aligned(right_links, atof(argv[3]));
+    = filter::object_links_aligned(right_links, atof(argv[3]),
+				   anchor::StrictBottomCenter);
 
   // Debug image.
   image2d<value::rgb8> decision_image
     = scribo::debug::alignment_decision_image(input,
 					      right_links,
 					      filtered_links,
-					      scribo::debug::bottom,
-					      atoi(argv[2]));
+					      anchor::StrictBottomCenter);
+
   io::ppm::save(decision_image, argv[4]);
 
 }

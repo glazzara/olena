@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Link text objects with their right neighbor.
+/// Link components with their right neighbor.
 
 
 # include <mln/core/concept/image.hh>
@@ -71,7 +72,8 @@ namespace scribo
       inline
       object_links<L>
       with_single_right_link(const component_set<L>& components,
-			     unsigned neighb_max_distance);
+			     unsigned neighb_max_distance,
+			     anchor::Type anchor = anchor::MassCenter);
 
 
       /// \overload
@@ -123,7 +125,8 @@ namespace scribo
       inline
       object_links<L>
       with_single_right_link(const component_set<L>& components,
-			     unsigned neighb_max_distance)
+			     unsigned neighb_max_distance,
+			     anchor::Type anchor = anchor::MassCenter)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link");
 
@@ -132,7 +135,7 @@ namespace scribo
 	internal::single_right_functor<L>
 	  functor(components, neighb_max_distance);
 
-	object_links<L> output = compute(functor, anchor::MassCenter);
+	object_links<L> output = compute(functor, anchor);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link");
 	return output;
@@ -144,7 +147,8 @@ namespace scribo
       object_links<L>
       with_single_right_link(const component_set<L>& components)
       {
-	return with_single_right_link(components, mln_max(unsigned));
+	return with_single_right_link(components, mln_max(unsigned),
+				      anchor::MassCenter);
       }
 
 

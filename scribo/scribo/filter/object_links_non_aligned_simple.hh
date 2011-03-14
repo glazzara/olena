@@ -103,8 +103,7 @@ namespace scribo
 
       const component_set<L>& comps = links.components();
 
-      object_links<L> output(links);
-
+      object_links<L> output = links.duplicate();
 
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 

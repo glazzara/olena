@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     = scribo::debug::alignment_decision_image(input,
 					      right_links,
 					      filtered_links,
-      					      scribo::debug::center);
+      					      anchor::Center);
 
   io::ppm::save(decision_image, argv[3]);
 

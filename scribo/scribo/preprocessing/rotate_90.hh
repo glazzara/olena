@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -98,11 +99,13 @@ namespace scribo
 
       const mln_value(I)* in_ptr = input.buffer();
 
-      unsigned in_ncols = geom::ncols(input) + 2 * input.border();
-      unsigned in_nrows = geom::nrows(input) + 2 * input.border();
+      unsigned
+	in_ncols = geom::ncols(input) + 2 * input.border(),
+	in_nrows = geom::nrows(input) + 2 * input.border();
 
-      unsigned out_ncols = geom::ncols(output);
-      unsigned out_nrows = geom::nrows(output);
+      unsigned
+	out_ncols = geom::ncols(output) + 2 * input.border(),
+	out_nrows = geom::nrows(output) + 2 * input.border();
 
       int
 	out_next_offset,
@@ -112,21 +115,21 @@ namespace scribo
 
       if (positive) // +90 deg
       {
-	dpoint2d dp(- out_nrows - 2 * output.border(), - 1);
-	out_next_offset = output.delta_index(dp);
-
-	out_next_p_offset = output.delta_index(dpoint2d(+1, 0));
-
-	out_ptr += 2 * output.border() + out_ncols - 1;
-      }
-      else // -90 deg
-      {
-	dpoint2d dp(out_nrows + 2 * output.border(), + 1);
+	dpoint2d dp(out_nrows, + 1);
 	out_next_offset = output.delta_index(dp);
 
 	out_next_p_offset = output.delta_index(dpoint2d(-1, 0));
 
-	out_ptr += output.delta_index(dpoint2d(out_nrows + 2 * output.border() - 1, 0));
+	out_ptr += output.delta_index(dpoint2d(out_nrows - 1, 0));
+      }
+      else // -90 deg
+      {
+	dpoint2d dp(- out_nrows, - 1);
+	out_next_offset = output.delta_index(dp);
+
+	out_next_p_offset = output.delta_index(dpoint2d(+1, 0));
+
+	out_ptr += out_ncols - 1;
       }
 
       for (unsigned row = 0; row < in_nrows; ++row)

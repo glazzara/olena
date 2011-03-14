@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,7 +38,7 @@
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
 
-# include <scribo/filter/object_links_non_aligned_simple.hh>
+# include <scribo/filter/object_links_aligned.hh>
 
 namespace scribo
 {
@@ -97,7 +97,7 @@ namespace scribo
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(links, anchor::Bottom, max_alpha);
+	output = object_links_aligned(links, max_alpha, anchor::Bottom);
 
       trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;

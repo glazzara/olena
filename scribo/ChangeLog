@@ -1,5 +1,41 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* scribo/filter/object_links_bottom_aligned.hh,
+	* scribo/filter/object_links_top_aligned.hh,
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_top_aligned.cc: Update call to
+	linking routine.
+
+	* scribo/filter/object_links_non_aligned_simple.hh: Copy data.
+
+	* scribo/preprocessing/rotate_90.hh,
+	* scribo/text/extract_lines.hh,
+	* src/debug/show_stoppers.cc: Revamp.
+
+	* scribo/primitive/extract/horizontal_separators.hh: Actually use
+	horizontal routine.
+
+	* scribo/primitive/extract/separators.hh: Adjust borders.
+
+	* scribo/primitive/identify.hh: Disable for now.
+
+	* scribo/primitive/link/with_single_right_link.hh: Add anchor argument.
+
+	* scribo/primitive/link/with_single_right_link_top.hh: Rename arguments.
+
+	* src/content_in_doc.cc: Add more usage information.
+
+	* src/debug/show_links_center_aligned.cc: Update anchor value.
+
+	* src/debug/show_text_lines.cc: Add XML output.
+
+	* src/preprocessing/rotate.cc,
+	* src/preprocessing/rotate_90.cc: Initialize ImageMagick.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce a new component linking method.
 
 	* scribo/primitive/link/internal/link_single_dmax_ratio_aligned_base.hh,

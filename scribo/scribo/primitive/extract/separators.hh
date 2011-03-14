@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,6 +82,12 @@ namespace scribo
 	  hlines = extract::lines_h_pattern(input, line_length, 3),
 	  vlines = extract::lines_v_pattern(input, line_length, 3);
 	hlines += vlines;
+
+	// FIXME: UGLY! We should not do that!
+	// Restore border size.
+	// Previous treatments may have changed it.
+	border::resize(hlines, border::thickness);
+	border::resize(input, border::thickness);
 
 	trace::exiting("scribo::primitive::extract::separators");
 	return hlines;
