@@ -1,5 +1,13 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Save image edge coordinates in XML output.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Here.
+
+	* scribo/io/xml/internal/print_image_coords.hh: New.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/filter/object_links_aligned.hh: New.
 
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>

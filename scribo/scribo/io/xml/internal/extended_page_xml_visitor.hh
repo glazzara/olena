@@ -31,7 +31,13 @@
 /// Extended XML PAGE format serializer Visitor.
 
 # include <fstream>
-# include <scribo/core/internal/doc_xml_serializer.hh>
+
+# include <mln/morpho/elementary/gradient_external.hh>
+# include <mln/pw/all.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+
+# include <scribo/core/def/lbl_type.hh>
+
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/component_set.hh>
@@ -42,6 +48,7 @@
 # include <scribo/core/line_info.hh>
 
 # include <scribo/io/xml/internal/print_box_coords.hh>
+# include <scribo/io/xml/internal/print_image_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 
 
@@ -81,6 +88,7 @@ namespace scribo
 
 	private: // Attributes
 	  std::ofstream& output;
+	  mutable image2d<scribo::def::lbl_type> elt_edge;
 	};
 
 
@@ -112,7 +120,12 @@ namespace scribo
 
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
+	  {
+	    // Prepare element edges
+	    elt_edge = morpho::elementary::gradient_external(doc.elements().labeled_image(), c4());
+
 	    doc.elements().accept(*this);
+	  }
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
@@ -184,7 +197,10 @@ namespace scribo
 		     << " img_emb_text=\"No\" "
 		     << " img_bgcolour=\"White\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output,
+					   ((elt_edge | info.bbox())
+					    | (pw::value(elt_edge) == pw::cst((scribo::def::lbl_type)info.id().to_equiv()))).domain(),
+					   "      ");
 
 	      output << "    </image_region>" << std::endl;
 	      break;
@@ -252,7 +268,7 @@ namespace scribo
 	    output << "        <line text=\"" << line.html_text() << "\" ";
 	  }
 	  else
-	    output << "        <line " << std::endl;
+	    output << "        <line ";
 
 	  output << "id=\"" << line.id()
 		 << "\" txt_orientation=\"" << line.orientation()
