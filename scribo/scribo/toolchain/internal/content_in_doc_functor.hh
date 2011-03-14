@@ -162,6 +162,7 @@ namespace scribo
 	mln_precondition(exact(processed_image).is_valid());
 
 	doc.set_image(exact(original_image));
+	doc.set_binary_image(exact(processed_image));
 
 	// Remove separators
 	mln_ch_value(I,bool)
@@ -169,17 +170,30 @@ namespace scribo
 	  input_cleaned = exact(processed_image);
 	if (enable_line_seps)
 	{
+	  // FIXME: SLOW
 	  on_new_progress_label("Find vertical and horizontal separators...");
 
 	  // Vertical and horizontal separators
-	  separators = primitive::extract::separators(processed_image, 81);
+	  {
+	    mln_ch_value(I,bool)
+	      vseparators = primitive::extract::vertical_separators(processed_image, 81),
+	      hseparators = primitive::extract::horizontal_separators(processed_image, 81);
+
+	    doc.set_vline_separators(vseparators);
+	    doc.set_hline_separators(hseparators);
+
+	    separators = vseparators;
+	    separators += hseparators;
+
+	    border::resize(processed_image, border::thickness);
+	  }
 
 	  on_progress();
 
 	  on_new_progress_label("Remove separators...");
 
-	  input_cleaned = primitive::remove::separators(processed_image, separators);
-	  doc.set_line_separators(separators);
+	  input_cleaned = primitive::remove::separators(processed_image,
+							separators);
 
 	  on_progress();
 	}

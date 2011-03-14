@@ -116,8 +116,10 @@ namespace scribo
 	    doc.elements().accept(*this);
 
 	  // line seraparators
-	  if (doc.has_line_seps())
-	    doc.line_seps_comps().accept(*this);
+	  if (doc.has_vline_seps())
+	    doc.vline_seps_comps().accept(*this);
+	  if (doc.has_hline_seps())
+	    doc.hline_seps_comps().accept(*this);
 
 	  output << "  </page>" << std::endl;
 	  output << "</pcGts>" << std::endl;

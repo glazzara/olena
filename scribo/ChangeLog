@@ -1,5 +1,18 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Store more information in scribo::document.
+
+	* scribo/core/document.hh: Make a distinction between horizontal
+	and vertical lines. Store the binary image.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Make use of
+	that new methods and information.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename line_info::components() to line_info::component_ids.
 
 	* scribo/core/line_info.hh: Here.

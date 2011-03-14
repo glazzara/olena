@@ -85,23 +85,34 @@ namespace scribo
     const component_set<L>& elements() const;
     void set_elements(const component_set<L>& elements);
 
-    const mln::image2d<value::rgb8>& image() const;
-    void set_image(const mln::image2d<value::rgb8>& image);
-
     bool has_whitespace_seps() const;
     const mln::image2d<bool>& whitespace_seps() const;
     const component_set<L>& whitespace_seps_comps() const;
     void set_whitespace_separators(const image2d<bool>& whitespace_seps);
 
-    bool has_line_seps() const;
-    const mln::image2d<bool>& line_seps() const;
-    const component_set<L>& line_seps_comps() const;
-    void set_line_separators(const image2d<bool>& line_seps);
+    // Horizontal separators
+    bool has_hline_seps() const;
+    const mln::image2d<bool>& hline_seps() const;
+    const component_set<L>& hline_seps_comps() const;
+    void set_hline_separators(const image2d<bool>& line_seps);
+
+    // Vertical separators
+    bool has_vline_seps() const;
+    const mln::image2d<bool>& vline_seps() const;
+    const component_set<L>& vline_seps_comps() const;
+    void set_vline_separators(const image2d<bool>& line_seps);
+
+    const mln::image2d<value::rgb8>& image() const;
+    void set_image(const mln::image2d<value::rgb8>& image);
+
+    const mln::image2d<bool>& binary_image() const;
+    void set_binary_image(const mln::image2d<bool>& binary_image);
 
 
   private:
     std::string filename_;
     mln::image2d<mln::value::rgb8> image_;
+    mln::image2d<bool> binary_image_;
 
     paragraph_set<L> parset_;
     component_set<L> elements_;
@@ -109,8 +120,11 @@ namespace scribo
     mln::image2d<bool> whitespace_seps_;
     component_set<L> whitespace_seps_comps_;
 
-    mln::image2d<bool> line_seps_;
-    component_set<L> line_seps_comps_;
+    mln::image2d<bool> hline_seps_;
+    component_set<L> hline_seps_comps_;
+
+    mln::image2d<bool> vline_seps_;
+    component_set<L> vline_seps_comps_;
   };
 
 
@@ -251,23 +265,6 @@ namespace scribo
     elements_ = elements;
   }
 
-
-  template <typename L>
-  const mln::image2d<value::rgb8>&
-  document<L>::image() const
-  {
-    return image_;
-  }
-
-
-  template <typename L>
-  void
-  document<L>::set_image(const mln::image2d<value::rgb8>& image)
-  {
-    image_ = image;
-  }
-
-
   template <typename L>
   bool
   document<L>::has_whitespace_seps() const
@@ -307,40 +304,108 @@ namespace scribo
 
   template <typename L>
   bool
-  document<L>::has_line_seps() const
+  document<L>::has_hline_seps() const
   {
-    return line_seps_.is_valid();
+    return hline_seps_.is_valid();
   }
 
 
   template <typename L>
   const mln::image2d<bool>&
-  document<L>::line_seps() const
+  document<L>::hline_seps() const
   {
-    return line_seps_;
+    return hline_seps_;
   }
 
 
   template <typename L>
   const component_set<L>&
-  document<L>::line_seps_comps() const
+  document<L>::hline_seps_comps() const
   {
-    return line_seps_comps_;
+    return hline_seps_comps_;
   }
 
 
   template <typename L>
   void
-  document<L>::set_line_separators(const image2d<bool>& line_seps)
+  document<L>::set_hline_separators(const image2d<bool>& hline_seps)
   {
-    line_seps_ = line_seps;
+    hline_seps_ = hline_seps;
 
     mln_value(L) ncomps;
-    line_seps_comps_ = primitive::extract::components(line_seps,
-						      mln::c8(), ncomps,
-						      component::LineSeparator);
+    hline_seps_comps_ = primitive::extract::components(hline_seps,
+						       mln::c8(), ncomps,
+						       component::LineSeparator);
   }
 
+
+  template <typename L>
+  bool
+  document<L>::has_vline_seps() const
+  {
+    return vline_seps_.is_valid();
+  }
+
+
+  template <typename L>
+  const mln::image2d<bool>&
+  document<L>::vline_seps() const
+  {
+    return vline_seps_;
+  }
+
+
+  template <typename L>
+  const component_set<L>&
+  document<L>::vline_seps_comps() const
+  {
+    return vline_seps_comps_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_vline_separators(const image2d<bool>& vline_seps)
+  {
+    vline_seps_ = vline_seps;
+
+    mln_value(L) ncomps;
+    vline_seps_comps_ = primitive::extract::components(vline_seps,
+						       mln::c8(), ncomps,
+						       component::LineSeparator);
+  }
+
+
+  template <typename L>
+  const mln::image2d<value::rgb8>&
+  document<L>::image() const
+  {
+    return image_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_image(const mln::image2d<value::rgb8>& image)
+  {
+    image_ = image;
+  }
+
+
+  template <typename L>
+  const mln::image2d<bool>&
+  document<L>::binary_image() const
+  {
+    return binary_image_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_binary_image(const mln::image2d<bool>& binary_image)
+  {
+    binary_image_ = binary_image;
+  }
 
 
 # endif // ! MLN_INCLUDE_ONLY

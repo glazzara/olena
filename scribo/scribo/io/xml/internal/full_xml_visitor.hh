@@ -164,14 +164,12 @@ namespace scribo
 
 
 	  // line seraparators
-	  if (doc.has_line_seps())
-	  {
-	    const component_set<L>&
-	      line_seps_comps = doc.line_seps_comps();
-
-	    for_all_comps(c, line_seps_comps)
-	      line_seps_comps(c).accept(*this);
-	  }
+	  if (doc.has_hline_seps())
+	    for_all_comps(c, doc.hline_seps_comps())
+	      doc.hline_seps_comps()(c).accept(*this);
+	  if (doc.has_vline_seps())
+	    for_all_comps(c, doc.vline_seps_comps())
+	      doc.vline_seps_comps()(c).accept(*this);
 
 
 	  // Whitespace seraparators
