@@ -97,3 +97,9 @@ dist_mesh_DATA += tetrahedron.vtk
 
 # The pseudo-manifold of figure 2a in cousty.09.iwcia.
 dist_mesh_DATA += pseudo-manifold.vtk
+
+# A VTK-format versions of OFF meshes produced with
+# apps/mesh-segm-skel/off-to-vtk-bin.
+dist_mesh_DATA +=				\
+  bunny-holefilled.vtk				\
+  teapot.vtk

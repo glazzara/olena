@@ -1,5 +1,17 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add VTK versions of some OFF meshes.
+
+	* mesh/bunny-holefilled.vtk,
+	* mesh/teapot.vtk:
+	New.
+	Generated from mesh/bunny-holefilled.off and mesh/teapot.off using
+	apps/mesh-segm-skel/off-to-vtk-bin.
+	* mesh/Makefile.am (dist_mesh_DATA): Add bunny-holefilled.vtk and
+	teapot.vtk.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	New app: binary OFF to VTK mesh conversion.
 
 	* apps/mesh-segm-skel/off-to-vtk-bin.cc: New.
