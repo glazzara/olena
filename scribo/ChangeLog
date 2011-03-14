@@ -1,5 +1,10 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/separators_nonvisible.hh: Cleanup and
+	improve debug support.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
 	* scribo/filter/object_links_bottom_aligned.hh,

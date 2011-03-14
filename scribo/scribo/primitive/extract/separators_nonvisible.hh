@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,6 +77,7 @@
 
 #include <mln/norm/l1.hh>
 
+#include <scribo/debug/logger.hh>
 #include <scribo/core/object_groups.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/primitive/extract/components.hh>
@@ -90,19 +92,19 @@
 
 #include <scribo/primitive/link/internal/dmax_default.hh>
 
-#include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
 #include <scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh>
+#include <scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh>
 
 #include <scribo/primitive/group/from_double_link_any.hh>
 
 #include <scribo/filter/object_links_top_aligned.hh>
 #include <scribo/filter/object_groups_small.hh>
 #include <scribo/filter/object_links_bottom_aligned.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
-#include <scribo/debug/decision_image.hh>
 
-
-
+#include <scribo/core/def/lbl_type.hh>
+#include <scribo/core/line_set.hh>
+#include <scribo/text/extract_lines.hh>
+#include <mln/draw/box.hh>
 
 
 namespace scribo
@@ -115,6 +117,7 @@ namespace scribo
     {
 
       using namespace mln;
+      using namespace scribo::debug;
 
 
       /// \brief Find non visible separators (whitespaces)
@@ -126,269 +129,6 @@ namespace scribo
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-      namespace internal
-      {
-
-	using namespace primitive::link::internal;
-
-	template <typename L, typename E>
-	class single_dmax_ratio_aligned_functor_base
-	  : public link_single_dmax_ratio_base<L, dmax_default, E>
-	{
-	  typedef link_single_dmax_ratio_base<L, dmax_default, E> super_;
-
-	public:
-	  typedef mln_site(L) P;
-
-	  single_dmax_ratio_aligned_functor_base(
-	    const mln_ch_value(L,bool)& input,
-	    const component_set<L>& components,
-	    unsigned dmax,
-	    float min_angle,
-	    float max_angle,
-	    anchor::Type anchor_,
-	    bool debug)
-	    : super_(components,
-		     anchor::Horizontal,
-		     dmax_default(dmax)),
-	      anchor(anchor_),
-	      _debug_(debug)
-	  {
-	    (void) input; // FIXME : remove this argument
-	    min_alpha_rad = (min_angle / 180.0f) * math::pi;
-	    max_alpha_rad = (max_angle / 180.0f) * math::pi;
-
-	    // if (_debug_)
-	    // {
-	    //   debug_ = data::convert(value::rgb8(), input);
-	    //   debug_angle_ = data::convert(value::rgb8(), input);
-	    // }
-	  }
-
-	  void compute_next_site_(P& p)
-	  {
-	    ++p.col();
-	  }
-
-	  void compute_next_site_f_(unsigned& p)
-	  {
-	    ++p;
-	  }
-
-
-	  mln_site(L)
-	  start_point_(unsigned current_object, anchor::Type anchor)
-	  {
-	    return link::internal::compute_anchor(this->components_,
-						  current_object, anchor);
-	  }
-
-
-	  inline
-	  bool
-	  valid_link_(unsigned current_object,
-		      const P& start_point,
-		      const P& p)
-	  {
-	    if (!super_::valid_link_(current_object, start_point, p))
-	      return false;
-
-	    box<P> b = this->components_(current_object).bbox();
-
-	    // Distance between the two components.
-	    float dist;
-
-	    // current object is on the left.
-	    if (p[this->direction_] > b.pmax()[this->direction_])
-	      dist = math::abs(p[this->direction_] - b.pmax()[this->direction_]);
-	    // current object is on the right.
-	    else
-	      dist = math::abs(p[this->direction_] - b.pmin()[this->direction_]);
-
-
-	    int ldist = this->components_(current_object).bbox().width();
-
-	    // Components are really close, so the angle is more permissive.
-	    if (dist < 3 * ldist)
-	    {
-	      return
-		filter::internal::component_aligned_rad(this->components_,
-							current_object,
-							this->labeled_image_(p),
-							anchor,
-							max_alpha_rad);
-	    }
-
-
-	    // Components are really far, so the angle is less permissive.
-	    return
-	      filter::internal::component_aligned_rad(this->components_,
-						      current_object,
-						      this->labeled_image_(p),
-						      anchor,
-						      min_alpha_rad);
-	  }
-
-	  void validate_link_(unsigned current_object,
-			      const P& start_point,
-			      const P& p,
-			      anchor::Type anchor)
-	  {
-	    super_::validate_link_(current_object, start_point, p, anchor);
-
-	    // if (_debug_)
-	    // {
-	    //   mln_site(L)
-	    // 	p1 = link::internal::compute_anchor(this->components_,
-	    // 					    current_object, anchor),
-	    // 	p2 = link::internal::compute_anchor(this->components_,
-	    // 					    this->labeled_image_(p),
-	    // 			     anchor);
-	    //   mln::draw::line(debug_, p1, p2, literal::green);
-
-
-	    //   float
-	    // 	angle = filter::internal::alignment_angle(this->components_,
-	    // 						  current_object,
-	    // 						  this->labeled_image_(p),
-	    // 						  anchor);
-	    //   angle = (angle * 180.0f) / math::pi;
-	    //   angle = angle * 20.0f + 1.0f;
-	    //   mln::draw::line(debug_angle_, p1, p2,
-	    // 		      value::rgb8(unsigned(angle),
-	    // 				  unsigned(angle),
-	    // 				  unsigned(angle)));
-	    // }
-	  }
-
-	  void invalidate_link_(unsigned current_object,
-				const P& start_point,
-				const P& p,
-				anchor::Type anchor)
-	  {
-	    super_::invalidate_link_(current_object, start_point, p, anchor);
-
-	    // if (_debug_)
-	    // {
-	    //   if (this->labeled_image_.domain().has(p) && this->labeled_image_(p) != 0)
-	    //   {
-	    // 	mln_site(L)
-	    // 	  p1 = link::internal::compute_anchor(this->components_,
-	    // 					      current_object, anchor),
-	    // 	  p2 = link::internal::compute_anchor(this->components_,
-	    // 					      this->labeled_image_(p),
-	    // 			       anchor);
-	    // 	if (this->labeled_image_.domain().has(p2)
-	    // 	    && norm::l1_distance(p1.to_vec(), p2.to_vec()) < 300)
-	    // 	{
-	    // 	  mln::draw::line(debug_, p1, p2, literal::red);
-	    // 	}
-
-
-	    // 	float
-	    // 	  angle = filter::internal::alignment_angle(this->components_,
-	    // 						    current_object,
-	    // 						    this->labeled_image_(p),
-	    // 						    anchor);
-	    // 	angle = (angle * 180.0f) / math::pi;
-	    // 	angle = angle * 20.0f + 1.0f;
-	    // 	mln::draw::line(debug_angle_, p1, p2,
-	    // 			value::rgb8(unsigned(angle),
-	    // 				    unsigned(angle),
-	    // 				    unsigned(angle)));
-	    //   }
-	    // }
-	  }
-
-
-	  float min_alpha_rad;
-	  float max_alpha_rad;
-	  anchor::Type anchor;
-
-
-	  // mln_ch_value(L, value::rgb8) debug_;
-	  // mln_ch_value(L, value::rgb8) debug_angle_;
-	  bool _debug_;
-	};
-
-
-	template <typename L>
-	class single_right_dmax_ratio_aligned_functor
-	  : public single_dmax_ratio_aligned_functor_base<L, single_right_dmax_ratio_aligned_functor<L> >
-	{
-	  typedef single_right_dmax_ratio_aligned_functor<L> self_t;
-	  typedef single_dmax_ratio_aligned_functor_base<L, self_t> super_;
-
-	public:
-	  typedef mln_site(L) P;
-
-	  single_right_dmax_ratio_aligned_functor(
-	    const mln_ch_value(L, bool)& input,
-	    const component_set<L>& components,
-	    unsigned dmax,
-	    float min_angle,
-	    float max_angle,
-	    anchor::Type anchor,
-	    bool debug)
-	    : super_(input, components, dmax, min_angle,
-		     max_angle, anchor, debug)
-	  {
-	  }
-
-	  void compute_next_site_(P& p)
-	  {
-	    ++p.col();
-	  }
-
-	  void compute_next_site_f_(unsigned& p)
-	  {
-	    ++p;
-	  }
-
-	};
-
-
-	template <typename L>
-	class single_left_dmax_ratio_aligned_functor
-	  : public single_dmax_ratio_aligned_functor_base<L, single_left_dmax_ratio_aligned_functor<L> >
-	{
-	  typedef single_left_dmax_ratio_aligned_functor<L> self_t;
-	  typedef single_dmax_ratio_aligned_functor_base<L, self_t> super_;
-
-	public:
-	  typedef mln_site(L) P;
-
-	  single_left_dmax_ratio_aligned_functor(
-	    const mln_ch_value(L, bool)& input,
-	    const component_set<L>& components,
-	    unsigned dmax,
-	    float min_angle,
-	    float max_angle,
-	    anchor::Type anchor,
-	    bool debug)
-	    : super_(input, components, dmax, min_angle,
-		     max_angle, anchor, debug)
-	  {
-	  }
-
-	  void compute_next_site_(P& p)
-	  {
-	    --p.col();
-	  }
-
-	  void compute_next_site_f_(unsigned& p)
-	  {
-	    --p;
-	  }
-
-
-	};
-
-      } // end of namespace scribo::primitive::extract::internal
-
-
-
 
       // FACADE
 
@@ -403,7 +143,9 @@ namespace scribo
 	typedef mln_value(I) Vi;
 	mlc_is(Vi,bool)::check();
 
-	bool _debug_ = false;
+	typedef scribo::def::lbl_type V;
+	typedef mln_ch_value(I,V) L;
+
 	unsigned
 	  min_angle = 3,
 	  max_angle = 5,
@@ -414,33 +156,30 @@ namespace scribo
 
 	gt.start();
 
-
-	// // Remove horizontal lines.
-	// t.restart();
-
-	// mln_concrete(I) hlines = primitive::extract::lines_h_pattern(in, 50, 3);
-	// mln_concrete(I) input = primitive::remove::separators(in, hlines);
-
-	// t_ = t;
-	// std::cout << "Horizontal lines removed - " << t_ << std::endl;
-
+	bool _debug_ = logger().is_at_level(AuxiliaryResults);
 
 	// Closing structural - Connect characters.
 	t.start();
 
+	// line_set<L> lines = text::extract_lines(in, c8());
+
+	// mln_concrete(I) input_clo;
+	// initialize(input_clo, in);
+	// data::fill(input_clo, false);
+
+	// for_all_lines(l, lines)
+	//   draw::box(input_clo, lines(l).bbox(), true);
+
 	win::hline2d vl(17);
 	mln_concrete(I) input_clo = morpho::closing::structural(in, vl);
+
+
 
 	float t_ = t;
 	std::cout << "closing_structural - " << t_ << std::endl;
 
-	// if (_debug_)
-	// {
-	//   // Restore input orientation.
-	//   input = scribo::preprocessing::rotate_90(input, false);
-
-	//   io::pbm::save(input_clo, "input_clo.pbm");
-	// }
+	// Debug
+	logger().log_image(AuxiliaryResults, input_clo, "input_clo");
 
 	// Rotate (OK)
 	t.restart();
@@ -451,8 +190,6 @@ namespace scribo
 
 
 	/// Finding components.
-	typedef value::int_u16 V;
-	typedef mln_ch_value(I,V) L;
 
 	t.restart();
 	V ncomponents;
@@ -462,11 +199,11 @@ namespace scribo
 	t_ = t;
 	std::cout << "extract::components - " << t_ << std::endl;
 
-	// if (_debug_)
-	//   io::pgm::save(data::convert(value::int_u8(), components.labeled_image()),
-	// 		"lbl.pgm");
-
-
+	// Debug
+	logger().log_image(AuxiliaryResults,
+			   data::convert(value::int_u8(),
+					 components.labeled_image()),
+			   "lbl");
 	unsigned dmax = 5;
 
 	t.restart();
@@ -475,46 +212,47 @@ namespace scribo
 	object_links<L> top_left, bot_left;
 
 
+	typedef link::internal::dmax_default Dmax_F;
 	// Top
 	{
 	  // Right
-	  internal::single_right_dmax_ratio_aligned_functor<L>
-	    functor(input_clo, components, dmax, min_angle, max_angle,
-		    anchor::TopStrictLeft, _debug_);
-//    top_right = primitive::link::impl::compute_fastest(functor, anchor::TopStrictLeft);
+	  link::internal::single_right_dmax_ratio_aligned_functor<L,Dmax_F>
+	    functor(components, Dmax_F(dmax), min_angle, max_angle,
+		    anchor::TopStrictLeft);
 	  top_right = primitive::link::compute(functor, anchor::TopStrictLeft);
 
 	  t.stop();
 
-
-	  // if (_debug_)
-	  // {
-	  //   io::ppm::save(functor.debug_, "right_top.ppm");
-	  //   io::ppm::save(functor.debug_angle_, "right_top_angle.ppm");
-	  // }
+	  // Debug
+	  logger().log_image(AuxiliaryResults, functor.debug_, "right_top");
+	  logger().log_image(AuxiliaryResults, functor.debug_angle_,
+			     "right_top_angle");
 
 	  t.resume();
 
 	  // Left
-	  internal::single_left_dmax_ratio_aligned_functor<L>
-	    lfunctor(input_clo, components, dmax, min_angle, max_angle,
-		     anchor::TopStrictLeft, _debug_);
+	  link::internal::single_left_dmax_ratio_aligned_functor<L,Dmax_F>
+	    lfunctor(components, Dmax_F(dmax), min_angle, max_angle,
+		     anchor::TopStrictLeft);
 	  top_left = primitive::link::compute(lfunctor, anchor::TopStrictLeft);
 
 
 	  t.stop();
 
-	  // if (_debug_)
-	  // {
-	  //   io::ppm::save(lfunctor.debug_, "left_top.ppm");
-	  //   io::ppm::save(lfunctor.debug_angle_, "left_top_angle.ppm");
+	  // Debug
+	  if (_debug_)
+	  {
+	    logger().log_image(AuxiliaryResults, functor.debug_, "left_top");
+	    logger().log_image(AuxiliaryResults, functor.debug_angle_,
+			       "left_top_angle");
 
-	  //   mln_ch_value(I, value::rgb8) output = duplicate(functor.debug_);
-	  //   data::paste((lfunctor.debug_ | (pw::value(lfunctor.debug_) != pw::cst(literal::black)))
-	  // 		| (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
+	    mln_ch_value(I, value::rgb8) output = duplicate(functor.debug_);
+	    data::paste((lfunctor.debug_
+			 | (pw::value(lfunctor.debug_) != pw::cst(literal::black)))
+	    		| (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
 
-	  //   io::ppm::save(output, "left_right_top.ppm");
-	  // }
+	    logger().log_image(AuxiliaryResults, output, "left_right_top");
+	  }
 
 	  t.resume();
 	}
@@ -523,38 +261,43 @@ namespace scribo
 	// Bottom
 	{
 	  // Right
-	  internal::single_right_dmax_ratio_aligned_functor<L>
-	    functor(input_clo, components, dmax, min_angle, max_angle,
-		    anchor::BottomStrictRight, _debug_);
+	  link::internal::single_right_dmax_ratio_aligned_functor<L,Dmax_F>
+	    functor(components, Dmax_F(dmax), min_angle, max_angle,
+		    anchor::BottomStrictRight);
 	  bot_right = primitive::link::compute(functor, anchor::BottomStrictRight);
 	  t.stop();
 
-	  // if (_debug_)
-	  // {
-	  //   io::ppm::save(functor.debug_, "right_bot.ppm");
-	  //   io::ppm::save(functor.debug_angle_, "right_bot_angle.ppm");
-	  // }
+	  // Debug
+	  if (_debug_)
+	  {
+	    logger().log_image(AuxiliaryResults, functor.debug_, "right_bot");
+	    logger().log_image(AuxiliaryResults, functor.debug_angle_,
+			       "right_bot_angle");
+	  }
 
 	  t.resume();
 
 	  // Left
-	  internal::single_left_dmax_ratio_aligned_functor<L>
-	    lfunctor(input_clo, components, dmax, min_angle, max_angle,
-		     anchor::BottomStrictRight, _debug_);
+	  link::internal::single_left_dmax_ratio_aligned_functor<L,Dmax_F>
+	    lfunctor(components, Dmax_F(dmax), min_angle, max_angle,
+		     anchor::BottomStrictRight);
 	  bot_left = primitive::link::compute(lfunctor, anchor::BottomStrictRight);
 	  t.stop();
 
-	  // if (_debug_)
-	  // {
-	  //   io::ppm::save(lfunctor.debug_, "left_bot.ppm");
-	  //   io::ppm::save(lfunctor.debug_angle_, "left_bot_angle.ppm");
+	  // Debug
+	  if (_debug_)
+	  {
+	    logger().log_image(AuxiliaryResults, functor.debug_, "left_bot");
+	    logger().log_image(AuxiliaryResults, functor.debug_angle_,
+			       "left_bot_angle");
 
-	  //   mln_ch_value(I, value::rgb8) output = duplicate(functor.debug_);
-	  //   data::paste((lfunctor.debug_ | (pw::value(lfunctor.debug_) != pw::cst(literal::black)))
-	  // 		| (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
+	    mln_ch_value(I, value::rgb8) output = duplicate(functor.debug_);
+	    data::paste((lfunctor.debug_
+	    		 | (pw::value(lfunctor.debug_) != pw::cst(literal::black)))
+	    		| (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
 
-	  //   io::ppm::save(output, "left_right_bot.ppm");
-	  // }
+	    logger().log_image(AuxiliaryResults, output, "left_right_bot");
+	  }
 	}
 
 
@@ -631,112 +374,112 @@ namespace scribo
 	std::cout << "Drawing output image - " << t_ << std::endl;
 
 
-	// if (_debug_)
-	// {
-	//   // Restore input orientation.
-	//   mln_concrete(I) input = scribo::preprocessing::rotate_90(in, false);
+	if (_debug_)
+	{
+	  // Restore input orientation.
+	  mln_concrete(I) input = scribo::preprocessing::rotate_90(in, false);
 
 
-	//   // Debug group bboxes (includes all bboxes before filtering)
-	//   util::array<accu::shape::bbox<point2d> >
-	//     btop_accu(top_groups.nelements()),
-	//     bbot_accu(bot_groups.nelements());
+	  // Debug group bboxes (includes all bboxes before filtering)
+	  util::array<accu::shape::bbox<point2d> >
+	    btop_accu(top_groups.nelements()),
+	    bbot_accu(bot_groups.nelements());
 
 
-	//   for_all_groups(c, top_groups)
-	//   {
-	//     btop_accu(top_groups(c)).take(components(c).bbox());
-	//     bbot_accu(bot_groups(c)).take(components(c).bbox());
-	//   }
+	  for_all_groups(c, top_groups)
+	  {
+	    btop_accu(top_groups(c)).take(components(c).bbox());
+	    bbot_accu(bot_groups(c)).take(components(c).bbox());
+	  }
 
-	//   mln_ch_value(I, value::rgb8)
-	//     wo_filtering = data::convert(value::rgb8(), input);
+	  mln_ch_value(I, value::rgb8)
+	    wo_filtering = data::convert(value::rgb8(), input);
 
-	//   for_all_comp_data(d, btop_accu)
-	//   {
-	//     if (btop_accu(d).is_valid())
-	//     {
-	//       mln::draw::line(wo_filtering,
-	// 		      btop_accu(d).to_result().pmin(),
-	// 		      point2d(btop_accu(d).to_result().pmin().row(),
-	// 			      btop_accu(d).to_result().pmax().col()),
-	// 		      literal::green);
+	  for_all_comp_data(d, btop_accu)
+	  {
+	    if (btop_accu(d).is_valid())
+	    {
+	      mln::draw::line(wo_filtering,
+			      btop_accu(d).to_result().pmin(),
+			      point2d(btop_accu(d).to_result().pmin().row(),
+				      btop_accu(d).to_result().pmax().col()),
+			      literal::green);
 
-	//     }
-	//   }
+	    }
+	  }
 
-	//   for_all_comp_data(d, bbot_accu)
-	//   {
-	//     if (bbot_accu(d).is_valid())
-	//     {
-	//       mln::draw::line(wo_filtering,
-	// 		      point2d(bbot_accu(d).to_result().pmax().row(),
-	// 			      bbot_accu(d).to_result().pmin().col()),
-	// 		      bbot_accu(d).to_result().pmax(),
-	// 		      literal::green);
-	//     }
+	  for_all_comp_data(d, bbot_accu)
+	  {
+	    if (bbot_accu(d).is_valid())
+	    {
+	      mln::draw::line(wo_filtering,
+			      point2d(bbot_accu(d).to_result().pmax().row(),
+				      bbot_accu(d).to_result().pmin().col()),
+			      bbot_accu(d).to_result().pmax(),
+			      literal::green);
+	    }
+	  }
+	  logger().log_image(AuxiliaryResults, wo_filtering, "wo_filtering");
 
-	//   }
-	//   io::ppm::save(wo_filtering, "wo_filtering.ppm");
+	  // mln_ch_value(I, value::rgb8) both = data::convert(value::rgb8(), input);
 
-	//   mln_ch_value(I, value::rgb8) both = data::convert(value::rgb8(), input);
+	  // for_all_comp_data(d, top_accu)
+	  // {
+	  //   if (top_accu(d).is_valid()  ||  btop_accu(d).is_valid())
+	  //   {
+	  //     if (top_accu(d).is_valid())
+	  //     {
+	  // 	  mln::draw::line(both,
+	  // 			  top_accu(d).to_result().pmin(),
+	  // 			  point2d(top_accu(d).to_result().pmin().row(),
+	  // 				  top_accu(d).to_result().pmax().col()),
+	  // 			  literal::green);
+	  //     }
+	  //     else
+	  // 	if (btop_accu(d).is_valid())
+	  // 	  mln::draw::line(both,
+	  // 			  btop_accu(d).to_result().pmin(),
+	  // 			  point2d(btop_accu(d).to_result().pmin().row(),
+	  // 				  btop_accu(d).to_result().pmax().col()),
+	  // 			  literal::yellow);
 
-	//   for_all_comp_data(d, top_accu)
-	//   {
-	//     if (top_accu(d).is_valid()  ||  btop_accu(d).is_valid())
-	//     {
-	//       if (top_accu(d).is_valid())
-	//       {
-	// 	  mln::draw::line(both,
-	// 			  top_accu(d).to_result().pmin(),
-	// 			  point2d(top_accu(d).to_result().pmin().row(),
-	// 				  top_accu(d).to_result().pmax().col()),
-	// 			  literal::green);
-	//       }
-	//       else
-	// 	if (btop_accu(d).is_valid())
-	// 	  mln::draw::line(both,
-	// 			  btop_accu(d).to_result().pmin(),
-	// 			  point2d(btop_accu(d).to_result().pmin().row(),
-	// 				  btop_accu(d).to_result().pmax().col()),
-	// 			  literal::yellow);
+	  //   }
+	  //   if (bot_accu(d).is_valid() ||  bbot_accu(d).is_valid())
+	  //   {
+	  //     if (bot_accu(d).is_valid())
+	  //     {
+	  // 	  mln::draw::line(both,
+	  // 			  point2d(bot_accu(d).to_result().pmax().row(),
+	  // 				  bot_accu(d).to_result().pmin().col()),
+	  // 			  bot_accu(d).to_result().pmax(),
+	  // 			  literal::green);
+	  //     }
+	  //     else
+	  // 	if (bbot_accu(d).is_valid())
+	  // 	  mln::draw::line(both,
+	  // 			  point2d(bbot_accu(d).to_result().pmax().row(),
+	  // 				  bbot_accu(d).to_result().pmin().col()),
+	  // 			  bbot_accu(d).to_result().pmax(),
+	  // 			  literal::yellow);
+	  //   }
 
-	//     }
-	//     if (bot_accu(d).is_valid() ||  bbot_accu(d).is_valid())
-	//     {
-	//       if (bot_accu(d).is_valid())
-	//       {
-	// 	  mln::draw::line(both,
-	// 			  point2d(bot_accu(d).to_result().pmax().row(),
-	// 				  bot_accu(d).to_result().pmin().col()),
-	// 			  bot_accu(d).to_result().pmax(),
-	// 			  literal::green);
-	//       }
-	//       else
-	// 	if (bbot_accu(d).is_valid())
-	// 	  mln::draw::line(both,
-	// 			  point2d(bbot_accu(d).to_result().pmax().row(),
-	// 				  bbot_accu(d).to_result().pmin().col()),
-	// 			  bbot_accu(d).to_result().pmax(),
-	// 			  literal::yellow);
-	//     }
+	  // }
 
-	//   }
-
-	//   io::ppm::save(both, "both.ppm");
-	//   io::pbm::save(separators, "separators.pbm");
-	// }
+	  // logger().log_image(AuxiliaryResults,
+	  // 				    both, "both");
+	  logger().log_image(AuxiliaryResults, separators, "separators");
+	}
 
 
 	// Hit or miss
 	{
-	  // if (_debug_)
-	  // {
-	  //   mln_concrete(I) input_with_seps = duplicate(input_clo);
-	  //   data::paste(separators | pw::value(separators), input_with_seps);
+	  if (_debug_)
+	  {
+	    mln_concrete(I) input_with_seps = duplicate(input_clo);
+	    data::paste(separators | pw::value(separators), input_with_seps);
 
-	  //   io::pbm::save(input_with_seps, "input_with_seps.pbm");
-	  // }
+	    logger().log_image(AuxiliaryResults, input_with_seps, "input_with_seps");
+	  }
 
 	  t.restart();
 	  unsigned length = 25;
@@ -778,18 +521,22 @@ namespace scribo
 
 	  extension::adjust_fill(tmp, 21, 0);
 
-	  value::int_u8 *sep_lbl_ptr = sep_lbl.buffer() + sep_lbl.index_of_point(sep_lbl.domain().pmin());
-	  bool *separators_ptr = separators.buffer() + separators.index_of_point(separators.domain().pmin());
+	  value::int_u8 *sep_lbl_ptr = sep_lbl.buffer()
+	    + sep_lbl.index_of_point(sep_lbl.domain().pmin());
+	  bool *separators_ptr = separators.buffer()
+	    + separators.index_of_point(separators.domain().pmin());
 	  unsigned *tmp_ptr = tmp.buffer() + tmp.index_of_point(tmp.domain().pmin());;
 	  int idx1 = tmp.delta_index(dp1);
 	  int idx2 = tmp.delta_index(dp2);
 
-	  unsigned nrows = separators.nrows();
-	  unsigned ncols = separators.ncols();
+	  unsigned
+	    nrows = separators.nrows(),
+	    ncols = separators.ncols();
 
-	  unsigned row_idx_sep_lbl = sep_lbl.delta_index(dpoint2d(+1, - ncols));
-	  unsigned row_idx_separators = separators.delta_index(dpoint2d(+1, - ncols));
-	  unsigned row_idx_tmp = tmp.delta_index(dpoint2d(+1, - ncols));
+	  unsigned
+	    row_idx_sep_lbl = sep_lbl.delta_index(dpoint2d(+1, - ncols)),
+	    row_idx_separators = separators.delta_index(dpoint2d(+1, - ncols)),
+	    row_idx_tmp = tmp.delta_index(dpoint2d(+1, - ncols));
 
 	  for (unsigned row = 0; row < nrows; ++row)
 	  {
@@ -833,29 +580,11 @@ namespace scribo
 
 	  mln_concrete(I) output = data::convert(bool(), sep_lbl);
 
-	  // if (_debug_)
-	  // {
-	  //   io::pbm::save(output, "separators_hom.pbm");
-	  //   io::pbm::save(separators, "separators_filtered.pbm");
-
-	  //   // value::int_u16 ncomps;
-	  //   // component_set<L> comps = primitive::extract::components(output, c8(), ncomps);
-	  //   // mln_ch_value(I, value::rgb8) both;
-
-	  //   // both = data::convert(value::rgb8(), input);
-
-	  //   // // Needed since the rotated image origin is (0,0).
-	  //   // dpoint2d dp(input.domain().pcenter() - input_clo.domain().pcenter());
-
-	  //   // for_all_comps(c, comps)
-	  //   // {
-	  //   //   box2d b = geom::rotate(comps(c).bbox(), -90, input_clo.domain().pcenter());
-	  //   //   mln::draw::line(both,
-	  //   // 		      b.pmin() + dp,
-	  //   // 		      b.pmax() + dp,
-	  //   // 		      literal::green);
-	  //   // }
-	  // }
+	  if (_debug_)
+	  {
+	    logger().log_image(AuxiliaryResults, output,
+			       "separators_filtered");
+	  }
 
 	  gt.stop();
 	  t_ = gt;
