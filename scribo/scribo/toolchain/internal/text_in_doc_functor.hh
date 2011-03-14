@@ -27,8 +27,6 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_FUNCTOR_HH
 
-# include <mln/io/ppm/save.hh>
-
 # include <scribo/core/def/lbl_type.hh>
 
 # include <scribo/primitive/extract/components.hh>
@@ -54,8 +52,10 @@
 
 # include <scribo/make/debug_filename.hh>
 
-# include <scribo/debug/save_bboxes_image.hh>
-# include <scribo/debug/save_linked_bboxes_image.hh>
+# include <scribo/debug/logger.hh>
+# include <scribo/debug/decision_image.hh>
+# include <scribo/debug/bboxes_image.hh>
+# include <scribo/debug/linked_bboxes_image.hh>
 # include <scribo/debug/bboxes_enlarged_image.hh>
 # include <scribo/debug/mean_and_base_lines_image.hh>
 # include <scribo/debug/looks_like_a_text_line_image.hh>
@@ -77,7 +77,7 @@ namespace scribo
       struct text_in_doc_functor
 	: public Toolchain_Functor
       {
-	typedef value::label<30> V;
+	typedef scribo::def::lbl_type V;
 	typedef mln_ch_value(I,V) L;
 
 	text_in_doc_functor();
@@ -97,7 +97,6 @@ namespace scribo
 	bool enable_denoising;
 	bool enable_line_seps;
 	bool enable_whitespace_seps;
-	bool enable_debug;
 
 	//============
 	// Parameters
@@ -118,7 +117,6 @@ namespace scribo
 	: enable_denoising(true),
 	  enable_line_seps(true),
 	  enable_whitespace_seps(true),
-	  enable_debug(false),
 	  ocr_language("eng")
       {
       }
@@ -164,19 +162,19 @@ namespace scribo
 	  on_progress();
 	}
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
 	  if (enable_whitespace_seps)
-	    mln::io::pbm::save(whitespaces,
-			       scribo::make::debug_filename("whitespaces.pbm"));
+	    debug::logger().log_image(debug::AuxiliaryResults,
+				      whitespaces, "whitespaces");
 
 	  if (enable_line_seps)
 	  {
-	    mln::io::pbm::save(separators,
-			       scribo::make::debug_filename("vseparators.pbm"));
+	    debug::logger().log_image(debug::AuxiliaryResults,
+				      separators, "vseparators");
 
-	    mln::io::pbm::save(input_cleaned,
-			       scribo::make::debug_filename("input_wo_vseparators.pbm"));
+	    debug::logger().log_image(debug::AuxiliaryResults,
+				      input_cleaned, "input_wo_vseparators");
 	  }
 	}
 
@@ -187,9 +185,9 @@ namespace scribo
 
 	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 3);
 
-	  if (enable_debug)
-	    mln::io::pbm::save(input_cleaned,
-			       scribo::make::debug_filename("denoised.pbm"));
+	  if (debug::logger().is_enabled())
+	    debug::logger().log_image(debug::AuxiliaryResults,
+				      input_cleaned, "denoised");
 
 	  on_progress();
 	}
@@ -210,9 +208,9 @@ namespace scribo
 	if (enable_whitespace_seps)
 	  components.add_separators(whitespaces);
 
-	if (enable_debug)
-	  mln::io::pbm::save(components.separators(),
-			     scribo::make::debug_filename("all_separators.pbm"));
+	if (debug::logger().is_enabled())
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    components.separators(), "all_separators");
 
 
 	on_new_progress_label("Filtering components");
@@ -234,15 +232,19 @@ namespace scribo
 							       primitive::link::internal::dmax_width_and_height(1),
 							       anchor::MassCenter);
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
-	  debug::save_linked_bboxes_image(input, left_link, right_link,
-					  literal::blue,
-					  literal::cyan,
-					  literal::yellow,
-					  literal::green,
-					  anchor::MassCenter,
-					  scribo::make::debug_filename("object_links.ppm"));
+	  debug::logger().log_image(
+	    debug::AuxiliaryResults,
+	    debug::linked_bboxes_image(input,
+				       left_link,
+				       right_link,
+				       literal::blue,
+				       literal::cyan,
+				       literal::yellow,
+				       literal::green,
+				       anchor::MassCenter),
+	    "object_links");
 	}
 
 
@@ -261,15 +263,16 @@ namespace scribo
 	  = filter::object_links_bbox_h_ratio(merged_links, 2.5f);
 
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
 	  mln_ch_value(I,value::rgb8)
 	    hratio_decision_image = scribo::debug::decision_image(input,
 								  merged_links,
 								  hratio_filtered_links,
 								  anchor::MassCenter);
-	  io::ppm::save(hratio_decision_image,
-			scribo::make::debug_filename("hratio_links_decision_image.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    hratio_decision_image,
+				    "hratio_links_decision_image");
 	}
 
 	on_progress();
@@ -289,25 +292,29 @@ namespace scribo
 
 	//===== DEBUG =====
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
 
 	  // Bboxes image.
-	  scribo::debug::save_bboxes_image(input, lines,
-					   scribo::make::debug_filename("step1_bboxes.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::bboxes_image(input, lines),
+				    "step1_bboxes");
 
 	  // Bboxes enlarged
-	  mln::io::ppm::save(scribo::debug::bboxes_enlarged_image(input, lines),
-			     scribo::make::debug_filename("step1_bboxes_enlarged.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::bboxes_enlarged_image(input, lines),
+				    "step1_bboxes_enlarged");
 
 	  // Looks like a text line
-	  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
-			     scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::looks_like_a_text_line_image(input, lines),
+				    "step1_looks_like_a_text_line");
 
 
 	  // mean and base lines.
-	  mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
-			     scribo::make::debug_filename("step1_x_height.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::mean_and_base_lines_image(input, lines),
+				    "step1_x_height");
 
 	}
 	//===== END OF DEBUG =====
@@ -320,27 +327,29 @@ namespace scribo
 
 	//===== DEBUG =====
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
 
 	  // mean and base lines.
-	  mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
-			     scribo::make::debug_filename("step2_x_height.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::mean_and_base_lines_image(input, lines),
+				    "step2_x_height");
 
 	  // Looks like a text line
-	  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
-			     scribo::make::debug_filename("step2_looks_like_a_text_line.ppm"));
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::looks_like_a_text_line_image(input, lines),
+				    "step2_looks_like_a_text_line");
 
 	  // Bboxes image.
-	  scribo::debug::save_bboxes_image(input, lines,
-					   scribo::make::debug_filename("step2_bboxes.ppm"));
-
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    scribo::debug::bboxes_image(input, lines),
+				    "step2_bboxes");
 
 	}
 
 
 
-	if (enable_debug)
+	if (debug::logger().is_enabled())
 	{
 	  std::ofstream file(scribo::make::debug_filename("step2_bboxes_100p.txt").c_str());
 

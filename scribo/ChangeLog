@@ -4,6 +4,21 @@
 
 	* scribo/debug/logger.hh: New.
 
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_functor.hh,
+	* scribo/toolchain/nepomuk/text_extraction.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* src/content_in_doc.cc,
+	* src/pbm_text_in_doc.cc,
+	* src/primitive/extract/separators_nonvisible.cc Make use of that
+	class for saving debug images.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce a logger class.
+
+	* scribo/debug/logger.hh: New.
+
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Introduce new anchors.

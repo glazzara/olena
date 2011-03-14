@@ -45,10 +45,10 @@ namespace scribo
     document<mln_ch_value(I, def::lbl_type)>
     content_in_doc(const Image<I>& input, const Image<J>& input_preproc,
 		   bool denoise,
-		   const std::string& language = std::string("eng"),
 		   bool find_line_seps = true,
 		   bool find_whitespace_seps = true,
-		   bool debug = false);
+		   bool enable_ocr = true,
+		   const std::string& language = std::string("eng"));
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,10 +58,10 @@ namespace scribo
     document<mln_ch_value(I, def::lbl_type)>
     content_in_doc(const Image<I>& input, const Image<J>& input_preproc,
 		   bool denoise,
-		   const std::string& language = std::string("eng"),
 		   bool find_line_seps = true,
 		   bool find_whitespace_seps = true,
-		   bool debug = false)
+		   bool enable_ocr = true,
+		   const std::string& language = std::string("eng"))
     {
       mln_precondition(input.is_valid());
       mln_precondition(input_preproc.is_valid());
@@ -70,8 +70,8 @@ namespace scribo
       f.enable_denoising = denoise;
       f.enable_line_seps = find_line_seps;
       f.enable_whitespace_seps = find_whitespace_seps;
-      f.enable_debug = debug;
       f.ocr_language = language;
+      f.enable_ocr = enable_ocr;
 
       document<mln_ch_value(I, def::lbl_type)> doc = f(input, input_preproc);
 

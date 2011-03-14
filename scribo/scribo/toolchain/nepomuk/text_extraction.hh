@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -121,8 +122,7 @@ namespace scribo
 	  // Run document toolchain.
 	  lines_bg = scribo::toolchain::text_in_doc(input_bin,
 						    true,
-						    language.toUtf8().data(),
-						    false);
+						    language.toUtf8().data());
 
 	  // Negate document.
 	  logical::not_inplace(input_bin);
@@ -130,8 +130,7 @@ namespace scribo
 	  // Run document toolchain.
 	  lines_fg = scribo::toolchain::text_in_doc(input_bin,
 						    true,
-						    language.toUtf8().data(),
-						    false);
+						    language.toUtf8().data());
 	}
 
 

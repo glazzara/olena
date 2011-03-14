@@ -34,6 +34,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image." },
   { "output.pbm", "Output image." },
+  { "enable_debug", "0 or 1 (default 0)" },
   {0, 0}
 };
 
@@ -43,16 +44,19 @@ int main(int argc, char *argv[])
   using namespace mln;
   using namespace scribo;
 
-  if (argc != 3)
+  if (argc != 3 && argc != 4)
     return scribo::debug::usage(argv,
 				"Extract non visible separators (whitespaces)",
-				"input.pbm output.pbm",
+				"input.pbm output.pbm [enable_debug]",
 				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
+
+  if (argc > 3 && atoi(argv[3]))
+    scribo::debug::logger().set_level(scribo::debug::All);
 
   io::pbm::save(primitive::extract::separators_nonvisible(input), argv[2]);
 

@@ -40,8 +40,7 @@
 #include <scribo/core/document.hh>
 
 #include <scribo/debug/usage.hh>
-
-#include <scribo/make/debug_filename.hh>
+#include <scribo/debug/logger.hh>
 
 #include <scribo/preprocessing/crop_without_localization.hh>
 #include <scribo/preprocessing/crop.hh>
@@ -79,13 +78,12 @@ int main(int argc, char* argv[])
 				"input.* out.xml <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] [language] [find_lines] [find_whitespaces] [K] [debug_dir]",
 				args_desc);
 
-  bool debug = false;
-
   // Enable debug output.
   if (argc == 9 || argc == 13)
   {
+    scribo::debug::logger().set_filename_prefix(argv[argc - 1]);
+    scribo::debug::logger().set_level(scribo::debug::All);
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
-    debug = true;
   }
 
   trace::entering("main");
@@ -109,7 +107,6 @@ int main(int argc, char* argv[])
       std::cout << "Using K = " << K << std::endl;
     }
 
-    image2d<bool> tmp_fg;
     input_preproc = toolchain::text_in_doc_preprocess(input, false, K);
   }
 
@@ -130,9 +127,8 @@ int main(int argc, char* argv[])
     input_preproc = preprocessing::crop_without_localization(input_preproc, roi);
     crop_shift = point2d(minr, minc);
 
-    if (debug)
-      mln::io::pbm::save(input_preproc,
-			 scribo::make::debug_filename("input_preproc_cropped.pbm"));
+    scribo::debug::logger().log_image(scribo::debug::Results, input_preproc,
+				      "input_preproc_cropped.pbm");
   }
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
@@ -159,7 +155,7 @@ int main(int argc, char* argv[])
 	    << " ocr_language = " << language
 	    << " | find_lines_seps = " << find_line_seps
 	    << " | find_whitespace_seps = " << find_whitespace_seps
-	    << " | debug = " << debug
+	    << " | debug = " << scribo::debug::logger().is_enabled()
 	    << std::endl;
 
   // Run document toolchain.
@@ -167,11 +163,12 @@ int main(int argc, char* argv[])
   // Text
   std::cout << "Analysing document..." << std::endl;
   document<L>
-    doc = scribo::toolchain::content_in_doc(input, input_preproc, denoise, language,
+    doc = scribo::toolchain::content_in_doc(input, input_preproc, denoise,
 					    find_line_seps, find_whitespace_seps,
-					    debug);
+					    !language.empty(), language);
 
   // Saving results
+  std::cout << "Saving results..." << std::endl;
   scribo::io::xml::save(doc, argv[2], scribo::io::xml::PageExtended);
   scribo::io::xml::save(doc, "page.xml", scribo::io::xml::Page);
   scribo::io::xml::save(doc, "full.xml", scribo::io::xml::Full);

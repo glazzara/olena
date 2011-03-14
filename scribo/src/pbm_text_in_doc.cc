@@ -45,8 +45,6 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/make/debug_filename.hh>
-
 #include <scribo/preprocessing/crop_without_localization.hh>
 
 #include <scribo/io/text_boxes/save.hh>
@@ -83,13 +81,12 @@ int main(int argc, char* argv[])
 				"input.pbm out.txt <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <language> <find_lines> <find_whitespaces> <debug_dir>",
 				args_desc);
 
-  bool debug = false;
-
   // Enable debug output.
   if (argc == 8 || argc == 12)
   {
+    scribo::debug::logger().set_filename_prefix(argv[argc - 1]);
+    scribo::debug::logger().set_level(scribo::debug::All);
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
-    debug = true;
   }
 
   trace::entering("main");
@@ -116,9 +113,8 @@ int main(int argc, char* argv[])
     input = preprocessing::crop_without_localization(input, roi);
     crop_shift = point2d(minr, minc);
 
-    if (debug)
-      mln::io::pbm::save(input,
-			 scribo::make::debug_filename("input_cropped.pbm"));
+    scribo::debug::logger().log_image(scribo::debug::Results, input,
+				      "input_cropped.pbm");
   }
 
   bool denoise = (argc > 3 && atoi(argv[3]) != 0);
@@ -146,14 +142,14 @@ int main(int argc, char* argv[])
 	    << " ocr language = " << language
 	    << " | find_lines_seps = " << find_line_seps
 	    << " | find_whitespace_seps = " << find_whitespace_seps
-	    << " | debug = " << debug
+	    << " | debug = " << scribo::debug::logger().is_enabled()
 	    << std::endl;
 
   // Run document toolchain.
   line_set<L>
     lines = scribo::toolchain::text_in_doc(input, denoise,
 					   language, find_line_seps,
-					   find_whitespace_seps, debug);
+					   find_whitespace_seps);
 
   scribo::document<L> doc;
   doc.set_filename(argv[1]);
