@@ -84,7 +84,8 @@ namespace scribo
 
 	  bool verify_link_criterion_(unsigned current_object,
 				      const P& start_point,
-				      const P& p) const;
+				      const P& p,
+				      anchor::Type anchor) const;
 
 	  void start_processing_object_(unsigned current_object);
 
@@ -133,9 +134,11 @@ namespace scribo
 	link_several_dmax_base<L, E>::verify_link_criterion_(
 	  unsigned current_object,
 	  const P& start_point,
-	  const P& p) const
+	  const P& p,
+	  anchor::Type anchor) const
 	{
 	  (void) current_object;
+	  (void) anchor;
 
 	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far

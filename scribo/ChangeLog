@@ -1,5 +1,13 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing anchor argument.
+
+	* scribo/primitive/link/internal/find_several_links.hh,
+	* scribo/primitive/link/internal/link_several_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_base.hh: Here.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Regen generated files.
 
 	* headers.mk,

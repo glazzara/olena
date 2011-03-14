@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -106,10 +106,10 @@ namespace scribo
 		   && ! functor.is_potential_link(current_object,
 						  start_point, p) // <-- is_potential_link
 		   && functor.verify_link_criterion(current_object,
-						    start_point, p)) // <-- verify_link_criterion
+						    start_point, p, anchor)) // <-- verify_link_criterion
 	      functor.compute_next_site(p); // <-- compute_next_site
 
-	    if (functor.valid_link(current_object, start_point, p)) // <-- valid_link
+	    if (functor.valid_link(current_object, start_point, p, anchor)) // <-- valid_link
 	      functor.validate_link(current_object, start_point, p, anchor); // <-- validate_link
 	    else
 	      functor.invalidate_link(current_object, start_point, p, anchor); // <-- invalidate_link
