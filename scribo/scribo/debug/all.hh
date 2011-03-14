@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,9 +42,9 @@ namespace scribo
 
 } // end of namespace scribo
 
-# include <scribo/debug/save_bboxes_image.hh>
+# include <scribo/debug/bboxes_image.hh>
 # include <scribo/debug/save_label_image.hh>
-# include <scribo/debug/save_linked_bboxes_image.hh>
+# include <scribo/debug/linked_bboxes_image.hh>
 # include <scribo/debug/save_table_image.hh>
 
 #endif // ! SCRIBO_DEBUG_ALL_HH

@@ -49,7 +49,7 @@
 
 #include <scribo/draw/bounding_boxes.hh>
 
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/debug/usage.hh>
 
 
@@ -94,8 +94,9 @@ int main(int argc, char* argv[])
   down_links = filter::object_links_left_aligned(down_links, 5);
 
 
-  scribo::debug::save_linked_bboxes_image(input, down_links,
-					  literal::blue, literal::green,
-					  anchor::ActualLeft,
-					  argv[3]);
+  io::ppm::save(scribo::debug::linked_bboxes_image(input, down_links,
+						   literal::blue,
+						   literal::green,
+						   anchor::StrictLeft),
+		argv[3]);
 }

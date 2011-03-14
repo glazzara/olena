@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +44,8 @@
 #include <scribo/primitive/group/from_single_link.hh>
 #include <scribo/primitive/group/apply.hh>
 
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 
@@ -80,10 +80,11 @@ int main(int argc, char* argv[])
 	= primitive::link::with_single_left_link(comps, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-    scribo::debug::save_linked_bboxes_image(input,
-					    left_link,
-					    literal::red, literal::cyan,
-					    scribo::make::debug_filename("left_links.ppm"));
+    io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						     left_link,
+						     literal::red,
+						     literal::cyan),
+		  scribo::make::debug_filename("left_links.ppm"));
 //    io::ppm::save(mln::labeling::colorize(value::rgb8(),
 //				       comps,
 //				       comps.nlabels()),
@@ -99,8 +100,9 @@ int main(int argc, char* argv[])
 					  grouped_comps.labeled_image(),
 					  grouped_comps.nelements()),
 		  scribo::make::debug_filename("left_label_color.ppm"));
-    scribo::debug::save_bboxes_image(input, grouped_comps,
-				     scribo::make::debug_filename("left_bboxes.ppm"), literal::red);
+    io::ppm::save(scribo::debug::bboxes_image(input, grouped_comps,
+					      literal::red),
+		  scribo::make::debug_filename("left_bboxes.ppm"));
   }
 
   {
@@ -109,10 +111,10 @@ int main(int argc, char* argv[])
 	= primitive::link::with_single_right_link(comps, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-    scribo::debug::save_linked_bboxes_image(input,
-					    right_link,
-					    literal::red, literal::cyan,
-					    scribo::make::debug_filename("right_links.ppm"));
+    io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						     right_link,
+						     literal::red, literal::cyan),
+		  scribo::make::debug_filename("right_links.ppm"));
 //    io::ppm::save(mln::labeling::colorize(value::rgb8(),
 //				       comps,
 //				       comps.nlabels()),
@@ -129,9 +131,9 @@ int main(int argc, char* argv[])
 		  scribo::make::debug_filename("right_label_color.ppm"));
     std::cout << "AFTER - nbboxes = " << grouped_comps.nelements() << std::endl;
 
-    scribo::debug::save_bboxes_image(input, grouped_comps,
-				     scribo::make::debug_filename("right_bboxes.ppm"),
-				     literal::red);
+    io::ppm::save(scribo::debug::bboxes_image(input, grouped_comps,
+					      literal::red),
+		  scribo::make::debug_filename("right_bboxes.ppm"));
   }
 
 

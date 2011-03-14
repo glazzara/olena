@@ -41,11 +41,11 @@
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_several_left_links.hh>
 #include <scribo/primitive/link/with_several_right_links.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/filter/objects_small.hh>
 
-#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -89,12 +89,15 @@ int main(int argc, char* argv[])
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
-  scribo::debug::save_linked_bboxes_image(input,
-					  left_link, right_link,
-					  literal::red, literal::cyan, literal::yellow,
-					  literal::green,
-					  anchor::Center,
-					  scribo::make::debug_filename("links.ppm"));
+  io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						   left_link,
+						   right_link,
+						   literal::red,
+						   literal::cyan,
+						   literal::yellow,
+						   literal::green,
+						   anchor::Center),
+		scribo::make::debug_filename("links.ppm"));
 
   // With validation.
   std::cout << "Group from double link" << std::endl;
@@ -111,8 +114,8 @@ int main(int argc, char* argv[])
 
   std::cout << "AFTER double grouping - nbboxes = " << grouped_comps.nelements() << std::endl;
 
-  scribo::debug::save_bboxes_image(input, grouped_comps,
-				   scribo::make::debug_filename("bboxes.ppm"),
-				   literal::red);
+  io::ppm::save(scribo::debug::bboxes_image(input, grouped_comps,
+					    literal::red),
+		scribo::make::debug_filename("bboxes.ppm"));
 
 }

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,8 +46,8 @@
 #include <scribo/primitive/link/with_several_left_links.hh>
 #include <scribo/primitive/group/from_single_link.hh>
 
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -80,10 +80,11 @@ int main(int argc, char* argv[])
 	= primitive::link::with_several_left_links(comps, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-    scribo::debug::save_linked_bboxes_image(input,
-					    left_link,
-					    literal::red, literal::cyan,
-					    scribo::make::debug_filename("left_links.ppm"));
+    io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						     left_link,
+						     literal::red,
+						     literal::cyan),
+		  scribo::make::debug_filename("left_links.ppm"));
 
 
     object_groups<L>
@@ -96,9 +97,9 @@ int main(int argc, char* argv[])
 					  grouped_comps.labeled_image(),
 					  grouped_comps.nelements()),
 		  scribo::make::debug_filename("left_label_color.ppm"));
-    scribo::debug::save_bboxes_image(input, grouped_comps,
-				     scribo::make::debug_filename("left_bboxes.ppm"),
-				     literal::red);
+    io::ppm::save(scribo::debug::bboxes_image(input, grouped_comps,
+					      literal::red),
+		  scribo::make::debug_filename("left_bboxes.ppm"));
   }
 
 }

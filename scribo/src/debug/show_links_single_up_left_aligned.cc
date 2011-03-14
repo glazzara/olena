@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,7 @@
 
 #include <scribo/draw/bounding_boxes.hh>
 
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/debug/usage.hh>
 
 
@@ -96,8 +96,9 @@ int main(int argc, char* argv[])
   up_links = filter::object_links_left_aligned(up_links, 5);
 
 
-  scribo::debug::save_linked_bboxes_image(input, up_links,
-					  literal::blue, literal::green,
-					  anchor::ActualLeft,
-					  argv[3]);
+  io::ppm::save(scribo::debug::linked_bboxes_image(input, up_links,
+						   literal::blue,
+						   literal::green,
+						   anchor::StrictLeft),
+		argv[3]);
 }

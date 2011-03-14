@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,10 +39,6 @@
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
 #include <scribo/filter/objects_large.hh>
-
-#include <scribo/make/debug_filename.hh>
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
 
 #include "tests/data.hh"
 

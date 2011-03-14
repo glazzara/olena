@@ -18,13 +18,15 @@
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/io/pbm/all.hh>
+#include <mln/io/ppm/save.hh>
 #include <mln/arith/plus.hh>
 #include <mln/labeling/foreground.hh>
+#include <mln/labeling/compute.hh>
 
 #include <scribo/primitive/extract/lines_h_pattern.hh>
 #include <scribo/primitive/extract/lines_v_pattern.hh>
 #include <scribo/debug/usage.hh>
-#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
 
 
 const char *args_desc[][2] =
@@ -90,7 +92,7 @@ int main(int argc, char *argv[])
   image2d<value::int_u8> lbl = labeling::foreground(v_lines, c4(), nlabels);
   mln::util::array<box2d>
     bbox = labeling::compute(accu::shape::bbox<point2d>(), lbl, nlabels);
-  scribo::debug::save_bboxes_image(input, bbox, argv[4], literal::red);
+  io::ppm::save(scribo::debug::bboxes_image(input, bbox, literal::red), argv[4]);
 
   trace::exiting("main");
 }

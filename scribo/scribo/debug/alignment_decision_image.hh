@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,12 +37,12 @@
 # include <mln/literal/colors.hh>
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
-# include <mln/norm/l1.hh>
 
 # include <scribo/core/component_set.hh>
 # include <scribo/core/object_groups.hh>
 # include <scribo/draw/bounding_boxes.hh>
 
+# include <scribo/primitive/link/internal/compute_anchor.hh>
 
 namespace scribo
 {
@@ -50,8 +51,6 @@ namespace scribo
   {
 
     using namespace mln;
-
-    enum Alignment { top, center, bottom };
 
     /*! \brief Save a color image showing the difference between to
         object links.
@@ -70,54 +69,17 @@ namespace scribo
     alignment_decision_image(const Image<I>& input_,
 			     const object_links<L>& links,
 			     const object_links<L>& filtered_links,
-			     const Alignment& alignment);
+			     const anchor::Type& anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    namespace internal
-    {
-
-      template <typename L>
-      mln::util::couple<mln_site(L),mln_site(L)>
-      find_anchors(const component_set<L>& components,
-		   unsigned i,
-		   unsigned link_i,
-		   const Alignment& alignment)
-      {
-	mln_site(L)
-	  a1 = components(i).bbox().pcenter(),
-	  a2 = components(link_i).bbox().pcenter();
-
-	switch (alignment)
-	{
-	  case top:
-	    a1.row() = components(i).bbox().pmin().row();
-	    a2.row() = components(link_i).bbox().pmin().row();
-	    break;
-
-	  case center:
-	    break;
-
-	  case bottom:
-	    a1.row() = components(i).bbox().pmax().row();
-	    a2.row() = components(link_i).bbox().pmax().row();
-	    break;
-
-	}
-	return make::couple(a1, a2);
-      }
-
-    }
-
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
-    alignment_decision_image(const Image<I>& input_,
-			     const object_links<L>& links,
-			     const object_links<L>& filtered_links,
-			     const Alignment& alignment,
-			     unsigned max_link_length)
+      alignment_decision_image(const Image<I>& input_,
+			       const object_links<L>& links,
+			       const object_links<L>& filtered_links,
+			       const anchor::Type& anchor)
     {
       trace::entering("scribo::debug::alignment_decision_image");
       const I& input = exact(input_);
@@ -138,42 +100,25 @@ namespace scribo
       typedef mln_site(L) P;
 
       for_all_links(i, links)
-      {
 	if (links(i) != i)
 	{
 	  value::rgb8 value = literal::green;
+	  P
+	    anchor_i = primitive::link::internal::compute_anchor(components,
+								 i, anchor),
+	    anchor_li = primitive::link::internal::compute_anchor(components,
+								  links(i),
+								  anchor);
+
 	  if (links(i) != filtered_links(i))
 	    value = literal::red;
 
-	  mln::util::couple<P,P>
-	    anchors = internal::find_anchors(components, i, links(i), alignment);
-	  if (mln::norm::l1_distance(anchors.first().to_vec(), anchors.second().to_vec()) < max_link_length)
-	    mln::draw::line(decision_image,
-			    anchors.first(),
-			    anchors.second(),
-			    value);
+	  mln::draw::line(decision_image, anchor_i, anchor_li, value);
 	}
-      }
 
       trace::exiting("scribo::debug::alignment_decision_image");
       return decision_image;
     }
-
-
-    template <typename I, typename L>
-    mln_ch_value(I,value::rgb8)
-    alignment_decision_image(const Image<I>& input_,
-			     const object_links<L>& links,
-			     const object_links<L>& filtered_links,
-			     const Alignment& alignment)
-    {
-      return alignment_decision_image(input_,
-				      links,
-				      filtered_links,
-				      alignment,
-				      mln_max(unsigned));
-    }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

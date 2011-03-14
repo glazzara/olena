@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,11 +41,11 @@
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/filter/objects_small.hh>
 
-#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 
@@ -95,12 +95,14 @@ int main(int argc, char *argv[])
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
-  scribo::debug::save_linked_bboxes_image(input,
-					  left_link, right_link,
-					  literal::red, literal::cyan, literal::yellow,
-					  literal::green,
-					  anchor::MassCenter,
-					  scribo::make::debug_filename("links.ppm"));
+  io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						   left_link, right_link,
+						   literal::red,
+						   literal::cyan,
+						   literal::yellow,
+						   literal::green,
+						   anchor::MassCenter),
+		scribo::make::debug_filename("links.ppm"));
 
   // With validation.
   object_groups<L> groups
@@ -116,8 +118,8 @@ int main(int argc, char *argv[])
   std::cout << "AFTER double grouping - nbboxes = "
 	    << grouped_text.nelements() << std::endl;
 
-  scribo::debug::save_bboxes_image(input, grouped_text,
-				   scribo::make::debug_filename("bboxes.ppm"),
-				   literal::red);
+  io::ppm::save(scribo::debug::bboxes_image(input, grouped_text,
+					    literal::red),
+		scribo::make::debug_filename("bboxes.ppm"));
 
 }

@@ -75,8 +75,7 @@
 #include <scribo/debug/text_areas_image.hh>
 
 #include <scribo/debug/decision_image.hh>
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 
 #include <scribo/debug/usage.hh>
 
@@ -342,13 +341,13 @@ int main(int argc, char* argv[])
   if (debug)
   {
     std::cerr << "BEFORE - ncomponents = " << filtered_components.nelements() << std::endl;
-    scribo::debug::save_linked_bboxes_image(input,
-					    left_link, right_link,
-					    literal::red, literal::cyan,
-					    literal::yellow,
-					    literal::green,
-					    anchor::MassCenter,
-					    scribo::make::debug_filename("links.ppm"));
+    io::ppm::save(scribo::debug::linked_bboxes_image(input,
+						     left_link, right_link,
+						     literal::red, literal::cyan,
+						     literal::yellow,
+						     literal::green,
+						     anchor::MassCenter),
+		  scribo::make::debug_filename("links.ppm"));
   }
 #endif
 

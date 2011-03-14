@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -74,7 +74,7 @@
 # include <scribo/filter/object_groups_v_thickness.hh>
 
 # include <scribo/debug/decision_image.hh>
-# include <scribo/debug/save_linked_bboxes_image.hh>
+# include <scribo/debug/linked_bboxes_image.hh>
 
 # include <scribo/debug/usage.hh>
 
@@ -321,13 +321,13 @@ namespace scribo
       if (debug)
       {
 	std::cerr << "BEFORE - ncomponents = " << filtered_components.nelements() << std::endl;
-	scribo::debug::save_linked_bboxes_image(input,
-						left_link, right_link,
-						literal::red, literal::cyan,
-						literal::yellow,
-						literal::green,
-						anchor::MassCenter,
-						scribo::make::debug_filename("links.ppm"));
+	io::ppm::save(scribo::debug::linked_bboxes_image(input,
+							 left_link, right_link,
+							 literal::red, literal::cyan,
+							 literal::yellow,
+							 literal::green,
+							 anchor::MassCenter),
+		      scribo::make::debug_filename("links.ppm"));
       }
 #endif
 

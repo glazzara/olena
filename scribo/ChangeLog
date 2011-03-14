@@ -1,3 +1,37 @@
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename debug routines.
+
+	* scribo/debug/save_bboxes_image.hh,
+	* scribo/debug/save_linked_bboxes_image.hh: Rename as...
+	* scribo/debug/bboxes_image.hh,
+	* scribo/debug/linked_bboxes_image.hh: ... this.
+
+	* scribo/debug/all.hh,
+	* scribo/table/extract.hh,
+	* scribo/toolchain/text_in_picture.hh,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc,
+	* src/debug/show_separators.cc,
+	* src/primitive/group/group_from_double_link.cc,
+	* src/primitive/group/group_from_double_several_links.cc,
+	* src/primitive/group/group_from_several_left_links.cc,
+	* src/primitive/group/group_from_single_link.cc,
+	* src/text_in_picture.cc,
+	* src/text_in_picture_neg.cc,
+	* src/text_recognition_in_picture.cc,
+	* tests/filter/components_large.cc,
+	* tests/filter/components_small.cc: Update includes.
+
 2011-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add HAVE_QT guards.

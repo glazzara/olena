@@ -92,8 +92,6 @@
 #include <scribo/debug/text_areas_image.hh>
 
 #include <scribo/debug/decision_image.hh>
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
 
 #include <scribo/debug/usage.hh>
 

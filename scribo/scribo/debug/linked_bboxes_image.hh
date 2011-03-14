@@ -24,12 +24,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_DEBUG_SAVE_LINKED_BBOXES_IMAGE_HH
-# define SCRIBO_DEBUG_SAVE_LINKED_BBOXES_IMAGE_HH
+#ifndef SCRIBO_DEBUG_LINKED_BBOXES_IMAGE_HH
+# define SCRIBO_DEBUG_LINKED_BBOXES_IMAGE_HH
 
 /// \file
 ///
-/// Save the bounding box links image.
+/// Compute the bounding box links image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
@@ -56,54 +56,50 @@ namespace scribo
     using namespace mln;
 
 
-    /// Save the line of components links image.
+    /// Compute the line of components links image.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
     /// \param[in] link_array Lines of components links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
-    /// \param[in] filename The target file name.
     /// \param[in] anchor Anchor from where the links are drawn.
     //
     template <typename I, typename L>
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& array,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     anchor::Type anchor,
-			     const std::string& filename);
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& array,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value,
+			anchor::Type anchor);
 
     /// \overload
     /// The default anchor type is set to anchor::Center.
     //
     template <typename I, typename L>
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& array,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     const std::string& filename);
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& array,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value);
 
-    /// Save the line of components left and right links image.
+    /// Compute the line of components left and right links image.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
     /// \param[in] left_link Lines of components left links.
     /// \param[in] right_link Lines of components right links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
-    /// \param[in] filename The target file name.
+    //
     template <typename I, typename L>
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& left_link,
-			     const object_links<L>& right_link,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     anchor::Type anchor,
-			     const std::string& filename);
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& left_link,
+			const object_links<L>& right_link,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value,
+			anchor::Type anchor);
 
-    /// Save the line of components left and right links image.
+    /// Compute the line of components left and right links image.
     /// Draw also validated links.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
@@ -113,36 +109,34 @@ namespace scribo
     /// \param[in] left_link_value Value used to draw line left links.
     /// \param[in] right_link_value Value used to draw line left links.
     /// \param[in] validated_link_value Value used to draw line validated links.
-    /// \param[in] filename The target file name.
+    //
     template <typename I, typename L>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& left_link,
-			     const object_links<L>& right_link,
-			     const value::rgb8& box_value,
-			     const value::rgb8& left_link_value,
-			     const value::rgb8& right_link_value,
-			     const value::rgb8& validated_link_value,
-			     anchor::Type anchor,
-			     const std::string& filename);
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& left_link,
+			const object_links<L>& right_link,
+			const value::rgb8& box_value,
+			const value::rgb8& left_link_value,
+			const value::rgb8& right_link_value,
+			const value::rgb8& validated_link_value,
+			anchor::Type anchor);
 
 
-    /// Save the line link graph image.
+    /// Compute the line link graph image.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
     /// \param[in] g The link graph.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
-    /// \param[in] filename The target file name.
+    //
     template <typename I, typename L, typename G>
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const Graph<G>& g,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     anchor::Type anchor,
-			     const std::string& filename);
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const Graph<G>& g,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value,
+			anchor::Type anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -150,15 +144,14 @@ namespace scribo
 
     template <typename I, typename L>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& links,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     anchor::Type anchor,
-			     const std::string& filename)
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& links,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value,
+			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::save_linked_bboxes_image");
+      trace::entering("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
@@ -166,63 +159,58 @@ namespace scribo
       draw::bounding_boxes(tmp, links.components(), box_value);
       draw::bounding_box_links(tmp, links, link_value, anchor);
 
-      mln::io::ppm::save(tmp, filename);
-
-      trace::exiting("scribo::debug::save_linked_bboxes_image");
+      trace::exiting("scribo::debug::linked_bboxes_image");
+      return tmp;
     }
 
 
     template <typename I, typename L>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& links,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     const std::string& filename)
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& links,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value)
     {
-      save_linked_bboxes_image(input, links, box_value,
-			       link_value, anchor::Center, filename);
+      return linked_bboxes_image(input, links, box_value,
+				 link_value, anchor::Center);
     }
 
 
 
     template <typename I, typename L>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& left_link,
-			     const object_links<L>& right_link,
-			     const value::rgb8& box_value,
-			     const value::rgb8& value,
-			     const std::string& filename)
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& left_link,
+			const object_links<L>& right_link,
+			const value::rgb8& box_value,
+			const value::rgb8& value)
     {
-      save_linked_bboxes_image(input,
-			       left_link,
-			       right_link,
-			       box_value,
-			       literal::yellow,
-			       literal::cyan,
-			       value,
-			       anchor::Center,
-			       filename);
+      return linked_bboxes_image(input,
+				 left_link,
+				 right_link,
+				 box_value,
+				 literal::yellow,
+				 literal::cyan,
+				 value,
+				 anchor::Center);
     }
 
 
     template <typename I, typename L>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const object_links<L>& left_link,
-			     const object_links<L>& right_link,
-			     const value::rgb8& box_value,
-			     const value::rgb8& left_link_value,
-			     const value::rgb8& right_link_value,
-			     const value::rgb8& validated_link_value,
-			     anchor::Type anchor,
-			     const std::string& filename)
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const object_links<L>& left_link,
+			const object_links<L>& right_link,
+			const value::rgb8& box_value,
+			const value::rgb8& left_link_value,
+			const value::rgb8& right_link_value,
+			const value::rgb8& validated_link_value,
+			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::save_linked_bboxes_image");
+      trace::entering("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
@@ -234,24 +222,22 @@ namespace scribo
 			       validated_link_value,
 			       anchor);
 
-      mln::io::ppm::save(tmp, filename);
-
-      trace::exiting("scribo::debug::save_linked_bboxes_image");
+      trace::exiting("scribo::debug::linked_bboxes_image");
+      return tmp;
     }
 
 
 
     template <typename I, typename L, typename G>
     inline
-    void
-    save_linked_bboxes_image(const Image<I>& input,
-			     const Graph<G>& g,
-			     const value::rgb8& box_value,
-			     const value::rgb8& link_value,
-			     anchor::Type anchor,
-			     const std::string& filename)
+    mln_ch_value(I,value::rgb8)
+    linked_bboxes_image(const Image<I>& input,
+			const Graph<G>& g,
+			const value::rgb8& box_value,
+			const value::rgb8& link_value,
+			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::save_linked_bboxes_image");
+      trace::entering("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(g).is_valid());
       mln_precondition(exact(input).is_valid());
 
@@ -261,9 +247,8 @@ namespace scribo
       draw::bounding_box_links(tmp, exact(g).components(), g, link_value,
 			       anchor);
 
-      mln::io::ppm::save(tmp, filename);
-
-      trace::exiting("scribo::debug::save_linked_bboxes_image");
+      trace::exiting("scribo::debug::linked_bboxes_image");
+      return tmp;
     }
 
 
@@ -274,4 +259,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_DEBUG_SAVE_LINKED_BBOXES_IMAGE_HH
+#endif // ! SCRIBO_DEBUG_LINKED_BBOXES_IMAGE_HH
