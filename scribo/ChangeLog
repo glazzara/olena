@@ -1,5 +1,22 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New debug tools.
+
+	* src/Makefile.am,
+	* src/debug/Makefile.am: Update targets.
+
+	* src/debug/non_text_mask.cc,
+	* src/debug/show_components_bboxes.cc,
+	* src/debug/show_groups_bboxes.cc,
+	* src/debug/show_links_bottom_aligned_2angles.cc,
+	* src/debug/show_links_top_aligned_2angles.cc,
+	* src/debug/show_paragraph_blocks.cc,
+	* src/non_text_components.cc: New.
+
+	* src/debug/show_links_several_right.cc: Removed. Deprecated.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New non-text components extraction routine.
 
 	* scribo/make/text_blocks_image.hh,

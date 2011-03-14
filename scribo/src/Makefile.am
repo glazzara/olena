@@ -96,18 +96,48 @@ if HAVE_TESSERACT
 			       		   $(TIFF_LDFLAGS) \
 					   $(MAGICKXX_LDFLAGS)
 
+if HAVE_QT
 
     utilexec_PROGRAMS	   += content_in_doc
     content_in_doc_SOURCES  = content_in_doc.cc
     content_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \
-			      $(MAGICKXX_CPPFLAGS)
+			      $(MAGICKXX_CPPFLAGS) \
+			      $(QT_CPPFLAGS)
+    content_in_doc_CXXFLAGS = $(AM_CXXFLAGS) \
+		  	      $(QT_CXXFLAGS)
     content_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
 			      $(TESSERACT_LDFLAGS) \
 			      $(TIFF_LDFLAGS) \
 			      $(MAGICKXX_LDFLAGS) \
+			      $(QT_LDFLAGS) \
 			      -lpthread
+    content_in_doc_LDADD    = $(LDADD) \
+			      $(QT_LIBS)
+
+
+    utilexec_PROGRAMS	   += non_text_components
+    non_text_components_SOURCES  = non_text_components.cc
+    non_text_components_CPPFLAGS = $(AM_CPPFLAGS) \
+			      $(TESSERACT_CPPFLAGS) \
+			      $(TIFF_CPPFLAGS) \
+			      $(MAGICKXX_CPPFLAGS) \
+			      $(QT_CPPFLAGS)
+    non_text_components_CXXFLAGS = $(AM_CXXFLAGS) \
+		  	      $(QT_CXXFLAGS)
+    non_text_components_LDFLAGS  = $(AM_LDFLAGS) \
+			      $(TESSERACT_LDFLAGS) \
+			      $(TIFF_LDFLAGS) \
+			      $(MAGICKXX_LDFLAGS) \
+			      $(QT_LDFLAGS) \
+			      -lpthread
+    non_text_components_LDADD    = $(LDADD) \
+			      $(QT_LIBS)
+
+
+endif HAVE_QT
+
 
 endif HAVE_TESSERACT
 

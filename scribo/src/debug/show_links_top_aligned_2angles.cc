@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +28,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
+#include <mln/data/convert.hh>
+
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 #include <mln/literal/colors.hh>
@@ -36,22 +37,22 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
+#include <scribo/core/def/lbl_type.hh>
+#include <scribo/debug/logger.hh>
 #include <scribo/primitive/extract/components.hh>
-#include <scribo/primitive/link/with_several_right_links.hh>
+#include <scribo/filter/object_links_aligned.hh>
+#include <scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh>
 
-#include <scribo/draw/bounding_boxes.hh>
-
-#include <scribo/debug/several_links_decision_image.hh>
 #include <scribo/debug/usage.hh>
 
 
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the "
-    "background." },
-  { "max_nbh_dist", " Maximum distance for neighborhood search."
-    "(common value : 30)" },
+  { "input.pbm", "A binary image" },
+  { "dmax_ratio", "Maximum distance lookup (common value 5)" },
+  { "min_alpha", "First angle used for close objects. (common value : 3)" },
+  { "max_alpha", "Second angle used for further objects. (common value : 5)" },
   {0, 0}
 };
 
@@ -59,32 +60,41 @@ const char *args_desc[][2] =
 int main(int argc, char* argv[])
 {
   using namespace scribo;
-  using namespace scribo::primitive::internal;
+  using namespace scribo::primitive;
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 6)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful right links between components.",
-				"input.pbm max_nbh_dist output.ppm",
+				"Show valid or invalid links according the "
+				"horizontal alignment (based on top line).",
+				"input.pbm dmax_ratio min_angle max_angle "
+				" output.ppm",
 				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  // Finding objects.
-  value::label_16 nbboxes;
-  typedef image2d<value::label_16> L;
-  component_set<L> comps
-    = scribo::primitive::extract::components(input, c8(), nbboxes);
+  // Finding components.
+  typedef scribo::def::lbl_type V;
+  V nbboxes;
+  typedef image2d<V> L;
+  component_set<L> components
+    = extract::components(input, c8(), nbboxes);
 
   // Finding right links.
-  object_links<L> right_link
-    = primitive::link::with_several_right_links(comps, atoi(argv[2]));
+  // object_links<L>
+  //   right_links = primitive::link::with_single_right_link_dmax_ratio_aligned(
+  //     components, atof(argv[2]), atof(argv[3]), atof(argv[4]));
 
-  image2d<value::rgb8> decision_image
-    = scribo::debug::several_links_decision_image(input,
-						  right_link,
-						  right_link);
+  scribo::debug::logger().set_level(scribo::debug::All);
 
-  io::ppm::save(decision_image, argv[3]);
+  link::internal::single_right_dmax_ratio_aligned_functor<L,link::internal::dmax_default>
+    functor(components, link::internal::dmax_default(atof(argv[2])),
+	    atof(argv[3]), atof(argv[4]), anchor::StrictTopCenter);
+
+  object_links<L> output = link::compute(functor, anchor::Top);
+
+  scribo::debug::logger().set_level(scribo::debug::None);
+
+  io::ppm::save(functor.debug_, argv[5]);
 }
