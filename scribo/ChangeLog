@@ -1,5 +1,17 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce result image output.
+
+	* scribo/fun/v2v/highlight.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/draw_edges.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/internal/non_text_img_visitor.hh,
+	* scribo/io/img/internal/text_img_visitor.hh,
+	* scribo/io/img/save.hh: New.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Save image edge coordinates in XML output.
 
 	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Here.
