@@ -1,3 +1,18 @@
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add routines to identify and detach (collapse) simple pairs.
+
+	* mln/topo/is_simple_pair.hh,
+	* mln/topo/detach_pair.hh:
+	New.
+	* tests/topo/is_simple_pair.cc,
+	* tests/topo/detach_pair.cc:
+	New tests.
+	* tests/topo/Makefile.am (check_PROGRAMS): Add is_simple_pair and
+	detach_pair.
+	(detach_pair_SOURCES, is_simple_pair_SOURCES): New.
+	(MOSTLYCLEANFILES): New.  Add detach_pair-out.vtk.
+
 2011-03-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add preliminary VTK input for binary images.

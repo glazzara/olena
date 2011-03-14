@@ -21,7 +21,11 @@ SUBDIRS = skeleton
 
 check_PROGRAMS =				\
   complex					\
-  is_facet
+  detach_pair					\
+  is_facet					\
+  is_simple_pair
 
 
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES = detach_pair-out.vtk
