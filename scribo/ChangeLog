@@ -1,5 +1,13 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Spread anchor value to more methods in link functors.
+
+	* scribo/primitive/link/internal/find_link.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh: Here.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce a logger class.
 
 	* scribo/debug/logger.hh: New.

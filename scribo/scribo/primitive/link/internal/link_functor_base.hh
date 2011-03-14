@@ -88,13 +88,15 @@ namespace scribo
 
 
 	  bool verify_link_criterion(unsigned current_object,
-				     const P& start_point, const P& p) const;
+				     const P& start_point, const P& p,
+				     anchor::Type anchor) const;
 
 	  bool is_potential_link(unsigned current_object,
 				 const P& start_point, const P& p) const;
 
 	  bool valid_link(unsigned current_object,
-			  const P& start_point, const P& p);
+			  const P& start_point, const P& p,
+			  anchor::Type anchor);
 
 
 
@@ -147,10 +149,12 @@ namespace scribo
 				  const P& start_point, const P& p) const;
 
 	  bool verify_link_criterion_(unsigned current_object,
-				      const P& start_point, const P& p) const;
+				      const P& start_point, const P& p,
+				      anchor::Type anchor) const;
 
 	  bool valid_link_(unsigned current_object,
-			   const P& start_point, const P& p);
+			   const P& start_point, const P& p,
+			   anchor::Type anchor);
 
 	  void validate_link_(unsigned current_object,
 			      const P& start_point, const P& p,
@@ -263,14 +267,15 @@ namespace scribo
 	bool
 	link_functor_base<L,E>::verify_link_criterion(unsigned current_object,
 						      const P& start_point,
-						      const P& p) const
+						      const P& p,
+						      anchor::Type anchor) const
 	{
 	  return
 	    // Do not link with separators...
 	    ! this->components_.separators()(p)
 	    // ... and perform custom checks.
 	    && exact(this)->verify_link_criterion_(current_object,
-						   start_point, p);
+						   start_point, p, anchor);
 	}
 
 	template <typename L, typename E>
@@ -278,10 +283,11 @@ namespace scribo
 	bool
 	link_functor_base<L,E>::valid_link(unsigned current_object,
 					   const P& start_point,
-					   const P& p)
+					   const P& p,
+					   anchor::Type anchor)
 	{
 	  return this->labeled_image_.domain().has(p)
-	    && exact(this)->valid_link_(current_object, start_point, p);
+	    && exact(this)->valid_link_(current_object, start_point, p, anchor);
 	}
 
 
@@ -428,11 +434,13 @@ namespace scribo
 	bool
 	link_functor_base<L,E>::verify_link_criterion_(unsigned current_object,
 						       const P& start_point,
-						       const P& p) const
+						       const P& p,
+						       anchor::Type anchor) const
 	{
 	  (void) current_object;
 	  (void) start_point;
 	  (void) p;
+	  (void) anchor;
 	  // No-Op
 	  return true;
 	}
@@ -443,10 +451,11 @@ namespace scribo
 	bool
 	link_functor_base<L,E>::valid_link_(unsigned current_object,
 					    const P& start_point,
-					    const P& p)
+					    const P& p,
+					    anchor::Type anchor)
 	{
 	  return is_potential_link(current_object, start_point, p)
-	    && verify_link_criterion(current_object, start_point, p);
+	    && verify_link_criterion(current_object, start_point, p, anchor);
 	}
 
 

@@ -87,10 +87,11 @@ namespace scribo
 	while (functor.components().labeled_image().domain().has(p)
 	       && ! functor.is_potential_link(current_object,
 					      start_point, p)
-	       && functor.verify_link_criterion(current_object, start_point, p))
+	       && functor.verify_link_criterion(current_object, start_point,
+						p, anchor))
 	  functor.compute_next_site(p); // <-- compute_next_site
 
-	if (functor.valid_link(current_object, start_point, p)) // <-- valid_link
+	if (functor.valid_link(current_object, start_point, p, anchor)) // <-- valid_link
 	  functor.validate_link(current_object, start_point, p, anchor); // <-- validate_link
 	else
 	  functor.invalidate_link(current_object, start_point, p, anchor); // <-- invalidate_link
