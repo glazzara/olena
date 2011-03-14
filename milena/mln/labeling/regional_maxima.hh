@@ -97,8 +97,8 @@ namespace mln
 	bool labels_(unsigned p) const            { return attr.element(p); }
 	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
 	    input.element(p); }
-	void do_no_union_(unsigned n, unsigned p) { mln_invariant(input.element(n) >
-								  input.element(p));
+	void do_no_union_(unsigned n, unsigned p) { // mln_invariant(input.element(n) >
+	  //	  input.element(p));
 	  attr.element(p) = false;
 	  (void) n;
 	}

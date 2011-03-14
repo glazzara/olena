@@ -1,3 +1,9 @@
+2011-03-14  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
+
+	* milena/mln/labeling/regional_maxima.hh
+	(do_no_union_): Deactivate assertion since it is
+	not verified for all cases.
+
 2011-01-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Make Boost dependency optional.
