@@ -144,8 +144,8 @@ namespace scribo
 	const L& lbl = comp_set.labeled_image();
 
 	// Extract each character components to create the line image.
-	const mln::util::array<component_id_t>& comps = lines(i).components();
-	for_all_elements(e, lines(i).components())
+	const mln::util::array<component_id_t>& comps = lines(i).component_ids();
+	for_all_elements(e, lines(i).component_ids())
 	{
 	  unsigned comp_id = comps(e);
 	  data::fill(((text_ima | comp_set(comp_id).bbox()).rw() | (pw::value(lbl) == pw::cst(comp_id))).rw(),

@@ -1,11 +1,31 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Rename debug routines.
+	Rename line_info::components() to line_info::component_ids.
+
+	* scribo/core/line_info.hh: Here.
+
+	* scribo/debug/char_space_image.hh,
+	* scribo/text/recognition.hh,
+	* src/debug/show_text_lines.cc,
+	* scribo/io/xml/internal/full_xml_visitor.hh: Update calls to that
+	method.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Some changes in debug routines.
 
 	* scribo/debug/save_bboxes_image.hh,
 	* scribo/debug/save_linked_bboxes_image.hh: Rename as...
 	* scribo/debug/bboxes_image.hh,
 	* scribo/debug/linked_bboxes_image.hh: ... this.
+
+	* scribo/debug/links_image.hh: New.
+
+	* scribo/debug/several_links_decision_image.hh:
+	Remove. Deprecated.
+
+	* scribo/debug/alignment_decision_image.hh: Make use of
+	compute_anchor routine.
 
 	* scribo/debug/all.hh,
 	* scribo/table/extract.hh,

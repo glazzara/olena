@@ -447,9 +447,9 @@ namespace scribo
 
 	  output << "          <compid_list>" << std::endl;
 
-	  for_all_line_comps(c, line.components())
+	  for_all_line_comps(c, line.component_ids())
 	    output << "            <compid value=\""
-		   << line.components()(c) << "\" />" << std::endl;
+		   << line.component_ids()(c) << "\" />" << std::endl;
 
 	  output << "          </compid_list>" << std::endl;
 

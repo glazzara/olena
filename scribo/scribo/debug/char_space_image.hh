@@ -76,16 +76,16 @@ namespace scribo
       for_all_lines(l, line)
       {
 	if (! line(l).is_valid() || line(l).is_hidden()
-	    || line(l).components().size() < 2)
+	    || line(l).component_ids().size() < 2)
 	  continue;
 
 
-	for_all_elements(i, line(l).components())
+	for_all_elements(i, line(l).component_ids())
 	{
-	  if (i == line(l).components().nelements() - 1)
+	  if (i == line(l).component_ids().nelements() - 1)
 	    continue;
 
-	  unsigned c = line(l).components()[i];
+	  unsigned c = line(l).component_ids()[i];
 
 	  point2d
 	    beg = comps(c).bbox().pmax(),

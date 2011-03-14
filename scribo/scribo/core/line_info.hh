@@ -172,7 +172,7 @@ namespace scribo
     //
     const mln::box2d& ebbox() const;
 
-    const mln::util::array<component_id_t>& components() const;
+    const mln::util::array<component_id_t>& component_ids() const;
     unsigned card() const;
 
     int baseline() const;
@@ -481,7 +481,7 @@ namespace scribo
 
   template <typename L>
   const mln::util::array<typename line_info<L>::component_id_t>&
-  line_info<L>::components() const
+  line_info<L>::component_ids() const
   {
     return data_->components_;
   }
@@ -856,7 +856,7 @@ namespace scribo
     // Update bbox and ebbox
     update_bbox_and_ebox(other);
 
-    data_->components_.append(other.components());
+    data_->components_.append(other.component_ids());
   }
 
 
@@ -1023,7 +1023,7 @@ namespace scribo
 		<< ", type=" << info.type()
 		<< ", bbox=" << info.bbox()
 		<< ", ebbox=" << info.ebbox()
-		<< ", components=" << info.components()
+		<< ", components=" << info.component_ids()
 		<< ", baseline=" << info.baseline()
 		<< ", meanline=" << info.meanline()
 		<< ", ascent=" << info.ascent()
