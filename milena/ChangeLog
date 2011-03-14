@@ -1,5 +1,32 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New apps: max curvature-based thinnings using 2- and 1-collapses.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-1-collapse.cc:
+	New.
+	* apps/mesh-segm-skel/test-mesh-complex-max-curv-2-collapse.in,
+	* apps/mesh-segm-skel/test-mesh-complex-max-curv-1-collapse.in:
+	New.
+	* apps/mesh-segm-skel/Makefile.am (bin_PROGRAMS):
+	Add mesh-complex-max-curv-2-collapse.
+	And mesh-complex-max-curv-1-collapse
+	(mesh_complex_max_curve_2_collapse_SOURCES)
+	(mesh_complex_max_curve_1_collapse_SOURCES):
+	New.
+	(edit): New.
+	(test-mesh-complex-max-curv-2-collapse)
+	(test-mesh-complex-max-curv-1-collapse):
+	New target.
+	(TESTS, CLEANFILES): Add test-mesh-complex-max-curv-2-collapse
+	and test-mesh-complex-max-curv-1-collapse.
+	(MOSTLYCLEANFILES): Add teapot-max-curv-2-collapse.vtk,
+	bunny-holefilled-max-curv-2-collapse.vtk,
+	teapot-max-curv-1-collapse.vtk and
+	bunny-holefilled-max-curv-1-collapse.vtk.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add VTK versions of some OFF meshes.
 
 	* mesh/bunny-holefilled.vtk,

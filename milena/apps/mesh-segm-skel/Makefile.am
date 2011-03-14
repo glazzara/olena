@@ -140,6 +140,46 @@ TESTS += test-mesh-complex-2-collapse
 CLEANFILES = test-mesh-complex-2-collapse
 MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 
+# Program computing the max curvature from a mesh, then performing a
+# 2-collapse on it.
+bin_PROGRAMS += mesh-complex-max-curv-2-collapse
+mesh_complex_max_curv_2_collapse_SOURCES = mesh-complex-max-curv-2-collapse.cc
+
+# FIXME: Factor action with test-mesh-complex-2-collapse's.
+test-mesh-complex-max-curv-2-collapse: test-mesh-complex-max-curv-2-collapse.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w,a+x $@.tmp
+	mv $@.tmp $@
+
+TESTS += test-mesh-complex-max-curv-2-collapse
+CLEANFILES += test-mesh-complex-max-curv-2-collapse
+MOSTLYCLEANFILES +=				\
+  teapot-max-curv-2-collapse.vtk		\
+  bunny-holefilled-max-curv-2-collapse.vtk
+
+# Program computing the max curvature from a mesh, then performing a
+# 1-collapse on it.
+bin_PROGRAMS += mesh-complex-max-curv-1-collapse
+mesh_complex_max_curv_1_collapse_SOURCES = mesh-complex-max-curv-1-collapse.cc
+
+# FIXME: Factor action with test-mesh-complex-1-collapse's.
+test-mesh-complex-max-curv-1-collapse: test-mesh-complex-max-curv-1-collapse.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w,a+x $@.tmp
+	mv $@.tmp $@
+
+TESTS += test-mesh-complex-max-curv-1-collapse
+CLEANFILES += test-mesh-complex-max-curv-1-collapse
+MOSTLYCLEANFILES +=				\
+  teapot-max-curv-1-collapse.vtk		\
+  bunny-holefilled-max-curv-1-collapse.vtk
+
 ## More complex skeletonization chains.
 ## ------------------------------------
 
