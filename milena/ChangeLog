@@ -1,5 +1,19 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New app performing a 2-collapse on a mesh.
+
+	* apps/mesh-segm-skel/mesh-complex-2-collapse.cc: New.
+	* apps/mesh-segm-skel/test-mesh-complex-2-collapse.in: New.
+	* apps/mesh-segm-skel/Makefile.am (bin_PROGRAMS):
+	Add mesh-complex-2-collapse.
+	(mesh_complex_2_collapse_SOURCES): New.
+	(edit): New.
+	(test-mesh-complex-2-collapse): New target.
+	(TESTS, CLEANFILES): Add test-mesh-complex-2-collapse.
+	(MOSTLYCLEANFILES): Add pseudo-manifold-2-collapse.vtk.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prevent a site from being introduced twice in thinning's queues.
 
 	* mln/topo/skeleton/breadth_first_thinning.hh,

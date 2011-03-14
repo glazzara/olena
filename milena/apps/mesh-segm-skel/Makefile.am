@@ -110,8 +110,38 @@ MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-segm.off		\
   teapot-complex-pinv-curv-segm.off
 
-## Skeletonization.
-## ----------------
+## Collapses.
+## ----------
+
+## FIXME: Generalize the generation of tests by make instead of
+## configure.
+# Use Make to generate tests instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'
+
+# Performing a 2-collapse on a pseudo-manifold.
+bin_PROGRAMS += mesh-complex-2-collapse
+mesh_complex_2_collapse_SOURCES = mesh-complex-2-collapse.cc
+
+test-mesh-complex-2-collapse: test-mesh-complex-2-collapse.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w,a+x $@.tmp
+	mv $@.tmp $@
+
+TESTS += test-mesh-complex-2-collapse
+CLEANFILES = test-mesh-complex-2-collapse
+MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
+
+## More complex skeletonization chains.
+## ------------------------------------
 
 # Skeletonization program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-skel
