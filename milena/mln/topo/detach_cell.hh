@@ -30,9 +30,14 @@
 /// \file
 /// \brief Detaching a cell from a binary (probably complex-based) image.
 
+# include <mln/core/concept/function.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/image/complex_image.hh>
+
 # include <mln/make/detachment.hh>
+
 
 namespace mln
 {
@@ -66,7 +71,7 @@ namespace mln
 	  \pre \a ima is an image of Boolean values.
 
 	  \param ima  The input image from which the cell is to be
-		    detached.
+		      detached.
 	  \param nbh  An adjacency relationship between faces
 		      (should return the set of (n-1)- and (n+1)-faces
 		      adjacent to an n-face).  */
@@ -80,19 +85,16 @@ namespace mln
 	  \pre \a ima is an image of Boolean values.  */
       void set_image(mln::Image<I>& ima);
 
-      /** Detach the cell corresponding to \a f from \a ima.
+      /** Detach the cell corresponding to \a f from \a ima_.
 
-	  \param f    The psite corresponding to the cell to detach.
-	  \param nbh  An adjacency relationship between faces
-		      (should return the set of (n-1)- and (n+1)-faces
-		      adjacent to an n-face).  */
-      void
-      operator()(const mln_psite(I)& f);
+	  \param f    The psite corresponding to the cell to detach.  */
+      void operator()(const mln_psite(I)& f);
 
     private:
       I* ima_;
       const N& nbh_;
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -102,6 +104,7 @@ namespace mln
     detach_cell<I, N>::detach_cell(const Neighborhood<N>& nbh)
       : ima_(0), nbh_(exact(nbh))
     {
+      mlc_equal(mln_value(I), bool)::check();
     }
 
     template <typename I, typename N>
@@ -118,7 +121,6 @@ namespace mln
     void
     detach_cell<I, N>::set_image(mln::Image<I>& ima)
     {
-      mlc_equal(mln_value(I), bool)::check();
       ima_ = exact(&ima);
     }
 

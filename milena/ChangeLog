@@ -1,5 +1,16 @@
 2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Miscellaneous changes in mesh-related operations.
+
+	* mln/topo/is_simple_cell.hh: Add static preconditions.
+	Reduce the number of pointer manipulations.
+	Aesthetic changes.
+	* mln/topo/detach_cell.hh: Move a static precondition.
+	Aesthetic changes.
+	* mln/io/vtk/save.hh: Cosmetic changes.
+
+2011-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	New apps: max curvature-based thinnings using 2- and 1-collapses.
 
 	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -269,7 +269,7 @@ namespace mln
 	  /* ``1. The first part is the file version and
 		  identifier.  This part contains the single line:
 
-		    # vtk  DataFile Version x.x.
+		    # vtk DataFile Version x.x.
 
 		  This line must be exactly as shown with the
 		  exception of the version number x.x, which will vary
@@ -491,6 +491,10 @@ namespace mln
 	      }
 	      ostr << std::endl;
 	    }
+
+	  // -------------------- //
+	  // Dataset attributes.  //
+	  // -------------------- //
 
 	  /* ``5. The final part describes the dataset attributes.
 		  This part begins with the keywords POINT_DATA or

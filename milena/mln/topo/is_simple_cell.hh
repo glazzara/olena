@@ -34,14 +34,14 @@
 # include <mln/core/concept/image.hh>
 
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/site_set/complex_psite.hh>
-# include <mln/core/site_set/p_complex_piter.hh>
-# include <mln/core/image/complex_neighborhoods.hh>
-# include <mln/core/image/complex_neighborhood_piter.hh>
 
 # include <mln/topo/is_facet.hh>
 # include <mln/make/attachment.hh>
 
+
+// FIXME: Have the functor take N, NL and NH neighborhood objects at
+// the construction (instead of building them in operator()), as in
+// does is_simple_pair.
 
 namespace mln
 {
@@ -69,7 +69,8 @@ namespace mln
 	\tparam NH  The neighborhood type returning the set of
 		    (n+1)-faces adjacent to a an n-face.  */
     template <typename I, typename N, typename NL, typename NH>
-    class is_simple_cell : public mln::Function_v2b< is_simple_cell<I, N, NL, NH> >
+    class is_simple_cell
+      : public mln::Function_v2b< is_simple_cell<I, N, NL, NH> >
     {
     public:
       /// Result type of the functor.
@@ -108,6 +109,7 @@ namespace mln
     is_simple_cell<I, N, NL, NH>::is_simple_cell()
       : ima_(0)
     {
+      mlc_equal(mln_value(I), bool)::check();
     }
 
     template <typename I, typename N, typename NL, typename NH>
@@ -115,6 +117,7 @@ namespace mln
     is_simple_cell<I, N, NL, NH>::is_simple_cell(const mln::Image<I>& ima)
       : ima_(exact(&ima))
     {
+      mlc_equal(mln_value(I), bool)::check();
     }
 
     template <typename I, typename N, typename NL, typename NH>
@@ -131,23 +134,24 @@ namespace mln
     is_simple_cell<I, N, NL, NH>::operator()(const mln_psite(I)& p) const
     {
       mln_precondition(ima_);
-      // FIXME: Introduce `const I& ima = *ima_;' and use it instead of
-      // `ima_'.  Or introduce an `ima()' accessor?
+      // Shortcut.
+      // FIXME: Introduce an `ima()' accessor instead?
+      const I& ima = *ima_;
 
       // The cell corresponding to P cannot be simple unless P is
       // facet.
       {
 	NH higher_adj_nbh;
-	if (!is_facet(*ima_, p, higher_adj_nbh))
+	if (!is_facet(ima, p, higher_adj_nbh))
 	  return false;
       }
 
       typedef p_set<mln_psite(I)> faces_t;
 
       // Compute the attachment of the cell corresponding to P to the
-      // domain of *IMA_.
+      // domain of IMA.
       N adj_nbh;
-      faces_t att = make::attachment(*ima_, p, adj_nbh);
+      faces_t att = make::attachment(ima, p, adj_nbh);
 
       // A cell with an empty attachment is not simple.
       /* FIXME: Why p_set does not provide an empty() predicate?  */
