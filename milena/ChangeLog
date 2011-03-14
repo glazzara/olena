@@ -1,5 +1,9 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/labeling/colorize.hh: Add a missing inline.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more from_to overloards.
 
 	* mln/convert/impl/from_unsigned_to_value.hh,

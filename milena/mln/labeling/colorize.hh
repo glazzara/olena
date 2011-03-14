@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -173,6 +173,7 @@ namespace mln
 
 # ifdef MLN_VALUE_QT_RGB32_HH
 
+      inline
       mln::value::qt::rgb32
       random_color(const mln::value::qt::rgb32& v)
       {
