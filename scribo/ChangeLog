@@ -1,5 +1,16 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce a new component linking method.
+
+	* scribo/primitive/link/internal/link_single_dmax_ratio_aligned_base.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh:
+	New.
+
+	* scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh:
+	Cleanup.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Spread anchor value to more methods in link functors.
 
 	* scribo/primitive/link/internal/find_link.hh,

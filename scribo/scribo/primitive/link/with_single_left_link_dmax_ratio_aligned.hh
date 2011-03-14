@@ -24,12 +24,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_DMAX_RATIO_ALIGNED_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_DMAX_RATIO_ALIGNED_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_ALIGNED_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_ALIGNED_HH
 
 /// \file
 ///
-/// Link text objects with their right neighbor according to a maximum
+/// Link text objects with their left neighbor according to a maximum
 /// distance.
 
 # include <mln/core/concept/image.hh>
@@ -62,7 +62,7 @@ namespace scribo
     namespace link
     {
 
-      /*! \brief Link objects with their right neighbor if exists.
+      /*! \brief Link objects with their left neighbor if exists.
 
 	  \param[in] components A component set.
 	  \param[in] dmax_ratio Size ratio defining the maximum lookup
@@ -82,7 +82,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
 	float dmax_ratio,
 	float min_angle, float max_angle,
@@ -93,7 +93,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
 	float dmax_ratio,
 	float min_angle, float max_angle);
@@ -105,7 +105,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components);
 
 
@@ -120,16 +120,16 @@ namespace scribo
 
 
 	template <typename L, typename F>
-	class single_right_dmax_ratio_aligned_functor
-	  : public link_single_dmax_ratio_aligned_base<L, F, single_right_dmax_ratio_aligned_functor<L,F> >
+	class single_left_dmax_ratio_aligned_functor
+	  : public link_single_dmax_ratio_aligned_base<L, F, single_left_dmax_ratio_aligned_functor<L,F> >
 	{
-	  typedef single_right_dmax_ratio_aligned_functor<L,F> self_t;
+	  typedef single_left_dmax_ratio_aligned_functor<L,F> self_t;
 	  typedef link_single_dmax_ratio_aligned_base<L, F, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_dmax_ratio_aligned_functor(
+	  single_left_dmax_ratio_aligned_functor(
 	    const component_set<L>& components,
 	    const DMax_Functor<F>& dmax_f,
 	    float min_angle,
@@ -142,7 +142,7 @@ namespace scribo
 
 	  void compute_next_site_(P& p)
 	  {
-	    ++p.col();
+	    --p.col();
 	  }
 
 	};
@@ -157,22 +157,22 @@ namespace scribo
       template <typename L, typename F>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
 	const DMax_Functor<F>& dmax_f,
 	float min_angle, float max_angle,
 	anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio_aligned");
+	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 
 	mln_precondition(components.is_valid());
 
-	internal::single_right_dmax_ratio_aligned_functor<L,F>
+	internal::single_left_dmax_ratio_aligned_functor<L,F>
 	  functor(components, dmax_f, min_angle, max_angle, anchor);
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio_aligned");
+	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 	return output;
       }
 
@@ -181,13 +181,13 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
 	float dmax_ratio,
 	float min_angle, float max_angle)
       {
 	return
-	  with_single_right_link_dmax_ratio_aligned(components,
+	  with_single_left_link_dmax_ratio_aligned(components,
 						    internal::dmax_default(dmax_ratio),
 						    min_angle,
 						    max_angle,
@@ -198,11 +198,11 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio_aligned(
+      with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components)
       {
 	return
-	  with_single_right_link_dmax_ratio_aligned(components, 3, 3, 10);
+	  with_single_left_link_dmax_ratio_aligned(components, 3, 3, 10);
       }
 
 
@@ -214,4 +214,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_DMAX_RATIO_ALIGNED_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_ALIGNED_HH
