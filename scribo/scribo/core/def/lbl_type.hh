@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +31,8 @@
 ///
 /// Global type definition for labels.
 
-# include <mln/value/label.hh>
+# include <mln/value/int_u.hh>
+//# include <mln/value/label.hh>
 
 
 namespace scribo
@@ -39,7 +41,11 @@ namespace scribo
   namespace def
   {
 
-    typedef mln::value::label<30u> lbl_type;
+    // FIXME: we would like to use label type.  We have got problems
+    // with types conversions and data computation (no arithmetic
+    // operators on labels!)
+    typedef mln::value::int_u<30u> lbl_type;
+//    typedef mln::value::label<30u> lbl_type;
 
   } // end of namespace scribo::def
 

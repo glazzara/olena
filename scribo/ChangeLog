@@ -1,5 +1,9 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/def/lbl_type.hh: Use int_u<n> as label type.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Set unit tests dependencies.
 
 	* tests/unit_test/Makefile.am: Add new conditional test file.
