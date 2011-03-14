@@ -1,4 +1,5 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -32,10 +33,12 @@ text_extraction_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS)
 text_extraction_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) \
 			   $(TESSERACT_CPPFLAGS) \
 			   $(TIFF_CPPFLAGS) \
+			   $(MAGICKXX_CPPFLAGS) \
 			   -I$(top_builddir)
 text_extraction_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
+			   $(MAGICKXX_LDFLAGS) \
 			   -lpthread
 text_extraction_LDADD    = $(QT_LIBS) $(LDADD)
 
