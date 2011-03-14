@@ -1,5 +1,14 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix namespace ambiguities.
+
+	* src/debug/show_groups_bboxes.cc,
+	* src/debug/show_links_bottom_aligned_2angles.cc,
+	* src/debug/show_links_top_aligned_2angles.cc: Add primitive::
+	prefix.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/Makefile.am: define HAVE_QT for content_in_doc.
 
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>

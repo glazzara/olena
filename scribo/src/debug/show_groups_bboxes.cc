@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 
   object_links<L>
-    left_link = link::with_single_left_link_dmax_ratio(
+    left_link = primitive::link::with_single_left_link_dmax_ratio(
       components,
 //      primitive::link::internal::dmax_width_and_height(1),
       link::internal::dmax_default(1),

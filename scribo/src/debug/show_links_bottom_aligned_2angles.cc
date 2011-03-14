@@ -88,11 +88,13 @@ int main(int argc, char* argv[])
 
   scribo::debug::logger().set_level(scribo::debug::All);
 
-  link::internal::single_right_dmax_ratio_aligned_functor<L,link::internal::dmax_default>
-    functor(components, link::internal::dmax_default(atof(argv[2])),
+  primitive::link::internal::single_right_dmax_ratio_aligned_functor<
+    L,primitive::link::internal::dmax_default>
+
+    functor(components, primitive::link::internal::dmax_default(atof(argv[2])),
 	    atof(argv[3]), atof(argv[4]), anchor::StrictBottomCenter);
 
-  object_links<L> output = link::compute(functor, anchor::Bottom);
+  object_links<L> output = primitive::link::compute(functor, anchor::Bottom);
 
   scribo::debug::logger().set_level(scribo::debug::None);
 
