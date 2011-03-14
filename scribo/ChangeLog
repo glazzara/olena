@@ -1,5 +1,9 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/filter/object_links_aligned.hh: New.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/extract/separators_nonvisible.hh: Cleanup and
 	improve debug support.
 
