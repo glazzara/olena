@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,11 +48,15 @@ namespace mln
   namespace convert
   {
 
-      /// Conversion of an unsigned \p from towards a value \p to.
-      template <typename V>
-      void
-      from_to(const unsigned& from, Value<V>& to);
+    /// Conversion of an unsigned \p from towards a value \p to.
+    template <typename V>
+    void
+    from_to(const unsigned& from, Value<V>& to);
 
+      /// Conversion of an unsigned \p from towards a bool \p to.
+    inline
+    void
+    from_to_(const unsigned& from, bool& to);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -117,6 +121,16 @@ namespace mln
 	from_to_(const unsigned& from, Value<V>& to)
 	{
 	  internal::from_unsigned_to_value_dispatch(from, to);
+	}
+
+
+	// Facades.
+	// unsigned-> bool
+	inline
+	void
+	from_to_(const unsigned& from, bool& to)
+	{
+	  to = (from != 0u);
 	}
 
 

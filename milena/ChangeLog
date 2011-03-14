@@ -1,3 +1,10 @@
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more from_to overloards.
+
+	* mln/convert/impl/from_unsigned_to_value.hh,
+	* mln/value/label.hh: Here.
+
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/labeling/fill_holes.hh: Improve speed.
