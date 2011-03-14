@@ -1,5 +1,18 @@
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New non-text components extraction routine.
+
+	* scribo/make/text_blocks_image.hh,
+	* scribo/make/text_components_image.hh,
+	* scribo/primitive/extract/internal/union.hh: New.
+
+	* scribo/primitive/extract/non_text.hh: New implementation.
+
+	* scribo/primitive/extract/non_text_kmean.hh: New. Old
+	implementatino is saved here.
+
+2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce result image output.
 
 	* scribo/fun/v2v/highlight.hh,

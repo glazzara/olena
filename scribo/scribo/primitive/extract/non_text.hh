@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2011 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -33,30 +33,19 @@
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
 
-# include <mln/core/image/image2d.hh>
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/data/fill.hh>
-# include <mln/util/array.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/labeling/relabel.hh>
-# include <mln/accu/math/count.hh>
-# include <mln/pw/all.hh>
+# include <mln/morpho/elementary/dilation.hh>
 
-# include <mln/draw/box_plain.hh>
 
-# include <mln/value/label_8.hh>
-# include <mln/value/rgb.hh>
-# include <mln/value/rgb8.hh>
+# include <scribo/make/text_components_image.hh>
+# include <scribo/make/text_blocks_image.hh>
 
-# include <scribo/core/macros.hh>
-# include <scribo/core/component_set.hh>
-# include <scribo/core/document.hh>
-# include <scribo/core/line_set.hh>
-# include <scribo/core/def/lbl_type.hh>
-# include <scribo/filter/objects_small.hh>
+# include <scribo/primitive/extract/internal/union.hh>
+# include <scribo/debug/logger.hh>
 
-# include <mln/clustering/kmean_rgb.hh>
-# include <mln/fun/v2v/rgb8_to_rgbn.hh>
+//DEBUG
+#include <mln/util/timer.hh>
+#include <mln/io/pbm/save.hh>
+
 
 namespace scribo
 {
@@ -69,10 +58,24 @@ namespace scribo
 
       using namespace mln;
 
+      /*! \brief Extract non text components.
 
-      template <typename L, typename I>
+	This method takes text localization into account and tries to
+	learn the background colors to deduce the relevant non text
+	components.
+
+	\param[in] doc A document structure. Its must have paragraph
+	information.
+
+	\param[in] nlines The number of lines needed in a paragraph to
+	consider the latter during the background color learning.
+
+
+	\return A component set of non text components.
+       */
+      template <typename L>
       component_set<L>
-      non_text(const document<L>& doc, const Image<I>& input);
+      non_text(const document<L>& doc, unsigned nlines);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -82,22 +85,211 @@ namespace scribo
       {
 
 	template <typename L>
-	struct order_bbox
+	image2d<bool>
+	learn(const document<L>& doc,
+	      const image2d<bool>& txt,
+	      const image2d<bool>& txtblocks,
+	      unsigned nbits,
+	      float p_cover)
 	{
-	  order_bbox(const scribo::component_set<L>& comps)
-	    : comps_(comps)
+	  const image2d<value::rgb8>& input = doc.image();
+	  const image2d<bool>&
+	    seps = doc.paragraphs().lines().components().separators();
+
+	  if (txt.border() != input.border()
+	      || txtblocks.border() != input.border()
+	      || seps.border() != input.border())
 	  {
+	    std::cerr << " txt.border() = " << txt.border()
+		      << " - txtblocks.border() = " << txtblocks.border()
+		      << " - input.border() = " << input.border()
+		      << " - seps.border() = " << seps.border()
+		      << std::endl;
+	    std::cerr << "different sizes for borders! Resizing..." << std::endl;
+
+
+	    border::resize(txt, border::thickness);
+	    border::resize(input, border::thickness);
+	    border::resize(txtblocks, border::thickness);
+	    border::resize(seps, border::thickness);
+	    // std::abort();
 	  }
 
-	  bool operator()(const unsigned& c1, const unsigned& c2) const
+
+	  const unsigned q_div = std::pow(2, 8 - nbits);
+	  const unsigned q = unsigned(std::pow(2, nbits));
+	  const unsigned nelements = input.nelements();
+
+
+	  image3d<unsigned> h_bg(q, q, q);
+	  data::fill(h_bg, 0);
+
+	  border::fill(txtblocks, false); // so h_bg is not updated by border pixels!
+
+	  unsigned n_bg = 0;
 	  {
-	    if (comps_(c1).bbox().nsites() == comps_(c2).bbox().nsites())
-	      return c1 > c2;
-	    return comps_(c1).bbox().nsites() > comps_(c2).bbox().nsites();
+	    // compute h_bg
+	    for (unsigned i = 0; i < nelements; ++i)
+	      if (txtblocks.element(i) == true)
+	      {
+		++n_bg;
+		const value::rgb8& c = input.element(i);
+		++h_bg.at_(c.red() / q_div, c.green() / q_div, c.blue() / q_div);
+	      }
 	  }
 
-	  scribo::component_set<L> comps_;
-	};
+	  typedef std::map<unsigned, unsigned> map_t;
+	  map_t ncells_with_nitems;
+	  {
+	    mln_piter_(box3d) c(h_bg.domain());
+	    for_all(c)
+	    {
+	      unsigned nitems_in_c = h_bg(c);
+	      ++ncells_with_nitems[ nitems_in_c ];
+	    }
+	  }
+
+
+	  unsigned n_items_min = 0;
+	  {
+	    map_t::const_reverse_iterator i;
+	    unsigned N = 0;
+	    for (i = ncells_with_nitems.rbegin(); i != ncells_with_nitems.rend(); ++i)
+	    {
+	      unsigned nitems = i->first, ncells = i->second;
+	      N += nitems * ncells;
+	      if (float(N) > p_cover * float(n_bg))
+	      {
+		n_items_min = nitems;
+		break;
+	      }
+	    }
+	  }
+	  if (n_items_min == 0)
+	    n_items_min = 1;  // safety
+
+
+	  image3d<bool> bg(q, q, q);
+	  {
+	    mln_piter_(box3d) c(h_bg.domain());
+	    for_all(c)
+	      bg(c) = (h_bg(c) >= n_items_min);
+	  }
+
+
+	  // outputing
+
+	  image2d<bool> output;
+	  initialize(output, input);
+	  {
+	    for (unsigned i = 0; i < nelements; ++i)
+	      if (txt.element(i) == true || seps.element(i) == true)
+		output.element(i) = false;
+	      else
+	      {
+		const value::rgb8& c = input.element(i);
+		output.element(i) = ! bg.at_(c.red() / q_div, c.green() / q_div, c.blue() / q_div);
+	      }
+	  }
+
+	  return output;
+	}
+
+
+
+
+
+	inline
+	image2d<bool>
+	cleaning(const image2d<bool>& input, unsigned lambda)
+	{
+	  const box2d& dom = input.domain();
+
+	  image2d<unsigned> area(dom);
+	  image2d<unsigned> parent(dom);
+	  image2d<bool> output(dom);
+
+	  unsigned max_area = 0;
+
+
+	  // 1st pass = bg union-find
+
+	  {
+	    union_find(input, false, // in
+		       parent, area, max_area // out
+	      );
+	  }
+
+
+	  // echo
+	  // std::cout << "max_area = " << max_area << std::endl;
+
+
+	  // 2nd pass = bg biggest component selection
+
+	  {
+	    const unsigned nelements = input.nelements();
+	    const bool* p_i = input.buffer();
+	    bool* p_o = output.buffer();
+	    const unsigned* p_a = area.buffer();
+	    const unsigned* p_par = parent.buffer();
+
+	    for (unsigned i = 0; i < nelements; ++i)
+	    {
+	      if (*p_i == true)
+		*p_o = true;
+	      else
+	      {
+		if (*p_par == i)
+		  *p_o = (*p_a != max_area);
+		else
+		  *p_o = output.element(*p_par);
+	      }
+	      ++p_i;
+	      ++p_o;
+	      ++p_a;
+	      ++p_par;
+	    }
+	  }
+
+
+
+	  // 3rd pass = fg union-find
+
+	  {
+	    union_find(output, true, // in
+		       parent, area, max_area // out
+	      );
+	  }
+
+
+
+	  // 4th pass = cleaning fg
+
+	  {
+	    const unsigned nelements = input.nelements();
+	    bool* p_o = output.buffer();
+	    const unsigned* p_a = area.buffer();
+	    const unsigned* p_par = parent.buffer();
+
+	    for (unsigned i = 0; i < nelements; ++i)
+	    {
+	      if (*p_o == true)
+	      {
+		if (*p_par == i)
+		  *p_o = (*p_a > lambda);
+		else
+		  *p_o = output.element(*p_par);
+	      }
+	      ++p_o;
+	      ++p_a;
+	      ++p_par;
+	    }
+	  }
+
+
+	  return output;
+	}
 
       } // end of namespace scribo::primitive::extract::internal
 
@@ -105,110 +297,64 @@ namespace scribo
 
       // FACADE
 
-      template <typename L, typename I>
+      template <typename L>
       component_set<L>
-      non_text(const document<L>& doc, const Image<I>& input_)
+      non_text(const document<L>& doc, unsigned nlines)
       {
 	trace::entering("scribo::primitive::extract::non_text");
 
-	const I& input = exact(input_);
+
+	util::timer t;
+	t.start();
+
 	mln_precondition(doc.is_valid());
-	mln_precondition(input.is_valid());
 
-	const line_set<L>& lines = doc.lines();
+	mln_precondition(doc.has_line_seps());
+	mln_precondition(doc.has_text());
 
-	// Element extraction
+	// FIXME: Do these images exist elsewhere?
+	image2d<bool>
+	  txt = make::text_components_image(doc),
+	  txtblocks = make::text_blocks_image(doc, nlines);
 
-	image2d<value::label_8> img_lbl8;
+	unsigned nbits = 5;
+	float p = 0.9998; // 0.80 <= x < 1.0
+	unsigned lambda = 1000;
+
+	// enlarge the text mask so that "not txt" does not include
+	// any text pixel
+	txt = morpho::elementary::dilation(txt, c8());
+	txt = morpho::elementary::dilation(txt, c4());
+
+	// FIXME: Make it faster?
+	data::fill((txtblocks | pw::value(txt)).rw(), false);
+
+	// Debug
 	{
-	  image2d<bool> content;
-	  initialize(content, input);
-	  data::fill(content, true);
-
-	  for_all_lines(l, lines)
-	    if (lines(l).type() == line::Text)
-	      data::fill((content | lines(l).bbox()).rw(), false);
-
-	  typedef mln::value::rgb<5>                 t_rgb5;
-	  typedef mln::fun::v2v::rgb8_to_rgbn<5>     t_rgb8_to_rgb5;
-
-	  image2d<t_rgb5>
-	    img_rgb5 = mln::data::transform(doc.image(), t_rgb8_to_rgb5());
-
-	  img_lbl8 =
-	    mln::clustering::kmean_rgb<double,5>((img_rgb5 | pw::value(content)), 3, 10, 10).unmorph_();
-	  data::fill((img_lbl8 | !pw::value(content)).rw(), 0u);
-
-	  mln::util::array<unsigned>
-	    card = mln::labeling::compute(accu::math::count<value::label_8>(),
-					  img_lbl8, img_lbl8, 3);
-
-	  unsigned max = 0, bg_id = 0;
-	  for_all_ncomponents(c, 3)
-	    if (card(c) > max)
-	    {
-	      max = card(c);
-	      bg_id = c;
-	    }
-
-	  mln::fun::i2v::array<bool> f(4, true);
-	  f(0) = false;
-	  f(bg_id) = false;
-	  labeling::relabel_inplace(img_lbl8, 4, f);
+	  debug::logger().log_image(debug::Special,//debug::AuxiliaryResults,
+				    txt, "txt_components");
+	  debug::logger().log_image(debug::Special,//debug::AuxiliaryResults,
+				    txtblocks, "txt_blocks");
 	}
 
+	image2d<bool>
+	  element_image = internal::learn(doc, txt, txtblocks, nbits, p);
+	element_image = internal::cleaning(element_image, lambda);
 
-	component_set<L> output;
+	mln_value(L) ncomps;
+	component_set<L>
+	  elements = primitive::extract::components(element_image,
+						    c8(), ncomps);
 
-	std::cout << "Removing small elements" << std::endl;
+	// Debug
 	{
-	  image2d<bool> elts;
-	  initialize(elts, img_lbl8);
-	  data::fill(elts, false);
-	  data::fill((elts | (pw::value(img_lbl8) != pw::cst(0))).rw(), true);
-
-	  scribo::def::lbl_type nlabels;
-	  elts = filter::components_small(elts, c8(), nlabels, 40);
-
-	  output = primitive::extract::components(elts, c8(), nlabels);
-	}
-
-
-	std::cout << "Ignoring inner elements" << std::endl;
-
-	{
-	  // FIXME: We would like to use the convex hull instead of the bbox.
-	  internal::order_bbox<L> func(output);
-	  util::array<unsigned> box_ordered_comps;
-	  for (unsigned i = 1; i < output.nelements(); ++i)
-	    box_ordered_comps.append(i);
-	  std::sort(box_ordered_comps.hook_std_vector_().begin(),
-		    box_ordered_comps.hook_std_vector_().end(), func);
-
-	  image2d<bool> merged_elts;
-	  initialize(merged_elts, img_lbl8);
-	  data::fill(merged_elts, false);
-	  for (unsigned i = 0; i < box_ordered_comps.nelements(); ++i)
-	  {
-	    unsigned c = box_ordered_comps(i);
-	    point2d
-	      pminright = output(c).bbox().pmin(),
-	      pmaxleft = output(c).bbox().pmax();
-	    pminright.col() = output(c).bbox().pmax().col();
-	    pmaxleft.col() = output(c).bbox().pmin().col();
-
-	    if (merged_elts(output(c).bbox().pmin())
-		&& merged_elts(output(c).bbox().pmax())
-		&& merged_elts(pminright)
-		&& merged_elts(pmaxleft))
-	      output(c).update_tag(component::Ignored);
-	    else
-	      mln::draw::box_plain(merged_elts, output(c).bbox(), true);
-	  }
+	  debug::logger().log_image(debug::Results,
+				    elements.labeled_image(),
+				    "non_text_components");
 	}
 
 	trace::exiting("scribo::primitive::extract::non_text");
-	return output;
+	return elements;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
