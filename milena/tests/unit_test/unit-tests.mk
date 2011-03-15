@@ -135,7 +135,6 @@ mln_accu_shape_all \
 mln_accu_shape_bbox \
 mln_accu_shape_essential \
 mln_accu_shape_height \
-mln_accu_shape_site_list \
 mln_accu_shape_volume \
 mln_accu_site_set_all \
 mln_accu_site_set_essential \
@@ -1461,7 +1460,6 @@ mln_accu_shape_all_SOURCES = mln_accu_shape_all.cc
 mln_accu_shape_bbox_SOURCES = mln_accu_shape_bbox.cc
 mln_accu_shape_essential_SOURCES = mln_accu_shape_essential.cc
 mln_accu_shape_height_SOURCES = mln_accu_shape_height.cc
-mln_accu_shape_site_list_SOURCES = mln_accu_shape_site_list.cc
 mln_accu_shape_volume_SOURCES = mln_accu_shape_volume.cc
 mln_accu_site_set_all_SOURCES = mln_accu_site_set_all.cc
 mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc

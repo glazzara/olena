@@ -42,7 +42,6 @@ mln/accu/shape/all.hh \
 mln/accu/shape/bbox.hh \
 mln/accu/shape/essential.hh \
 mln/accu/shape/height.hh \
-mln/accu/shape/site_list.hh \
 mln/accu/shape/volume.hh \
 mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
