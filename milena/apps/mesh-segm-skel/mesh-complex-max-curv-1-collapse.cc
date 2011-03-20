@@ -41,7 +41,7 @@
 
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/image/dmorph/sub_image.hh>
-#include <mln/core/image/dmorph/mutable_extension_ima.hh>
+#include <mln/core/routine/extend.hh>
 #include <mln/core/routine/mutable_extend.hh>
 #include <mln/data/paste.hh>
 
@@ -49,6 +49,7 @@
 
 #include <mln/labeling/regional_minima.hh>
 #include <mln/morpho/closing/area.hh>
+#include <mln/morpho/dilation.hh>
 
 #include <mln/topo/is_n_face.hh>
 #include <mln/topo/is_simple_pair.hh>
@@ -101,19 +102,21 @@ main(int argc, char* argv[])
 				    mln::math::sqr(curv.second(v)));
     }
 
-  // Values on triangles.
-  mln::p_n_faces_fwd_piter<D, G> t(float_ima.domain(), 2);
-  // For each triangle (2-face) T, iterate on the the set of vertices
-  // (0-faces) transitively adjacent to T.
-  typedef mln::complex_m_face_neighborhood<D, G> adj_vertices_nbh_t;
-  adj_vertices_nbh_t adj_vertices_nbh;
-  mln_niter_(adj_vertices_nbh_t) adj_v(adj_vertices_nbh, t);
-  /* FIXME: We should be able to pass this value (m) either at the
-     construction of the neighborhood or at the construction of the
-     iterator.  */
-  adj_v.iter().set_m(0);
-  // Iterate on triangles (2-faces).
-  for_all(t)
+  // Neighborhood type returning the set of (n-1)-faces adjacent to a
+  // an n-face.
+  typedef mln::complex_lower_neighborhood<D, G> lower_adj_nbh_t;
+  lower_adj_nbh_t lower_adj_nbh;
+
+  // Values on edges.
+  /* FIXME: We could probably simplify this by using a
+     convolution-like operator and morphers (see
+     apps/graph-morpho).  */
+  mln::p_n_faces_fwd_piter<D, G> e(float_ima.domain(), 1);
+  // For each edge (1-face) E, iterate on the the set of vertices
+  // (0-faces) adjacent to E.
+  mln_niter_(lower_adj_nbh_t) adj_v(lower_adj_nbh, e);
+  // Iterate on edges (1-faces).
+  for_all(e)
   {
     float s = 0.0f;
     unsigned n = 0;
@@ -123,9 +126,33 @@ main(int argc, char* argv[])
       s += float_ima(adj_v);
       ++n;
     }
+    float_ima(e) = s / n;
+    // An edge should be adjacent to exactly two vertices.
+    mln_invariant(n == 2);
+  }
+
+  // Values on triangles.
+  /* FIXME: We could probably simplify this by using a
+     convolution-like operator and morphers (see
+     apps/graph-morpho).  */
+  mln::p_n_faces_fwd_piter<D, G> t(float_ima.domain(), 2);
+  // For each triangle (2-face) T, iterate on the the set of edges
+  // (1-faces) adjacent to T.
+  mln_niter_(lower_adj_nbh_t) adj_e(lower_adj_nbh, t);
+  // Iterate on triangles (2-faces).
+  for_all(t)
+  {
+    float s = 0.0f;
+    unsigned n = 0;
+    // Iterate on edges (1-faces).
+    for_all(adj_e)
+    {
+      s += float_ima(adj_e);
+      ++n;
+    }
     float_ima(t) = s / n;
-    // A triangle should be adjacent to exactly two vertices.
-    mln_invariant(n <= 3);
+    // A triangle should be adjacent to exactly three edges.
+    mln_invariant(n == 3);
   }
 
   // Convert the float image into an unsigned image because some
@@ -141,14 +168,6 @@ main(int argc, char* argv[])
   for_all(t)
     ima(t) = 1000 * float_ima(t);
 
-  /* FIXME: Workaround: Set maximal values on vertices and edges to
-     exclude them from the set of minimal values.  */
-  for_all(v)
-    ima(v) = mln_max(mln_value_(ima_t));
-  mln::p_n_faces_fwd_piter<D, G> e(float_ima.domain(), 1);
-  for_all(e)
-    ima(e) = mln_max(mln_value_(ima_t));
-
   /*-----------------.
   | Simplification.  |
   `-----------------*/
@@ -157,7 +176,15 @@ main(int argc, char* argv[])
   typedef mln::complex_lower_dim_connected_n_face_neighborhood<D, G> nbh_t;
   nbh_t nbh;
 
-  ima_t closed_ima = mln::morpho::closing::area(ima, nbh, lambda);
+  // Predicate type: is a face a triangle (2-face)?
+  typedef mln::topo::is_n_face<mln_psite_(ima_t), 2> is_a_triangle_t;
+  is_a_triangle_t is_a_triangle;
+
+  // Consider only triangles.
+  ima_t closed_ima = mln::duplicate(ima);
+  mln::data::paste(mln::morpho::closing::area(ima | is_a_triangle,
+					      nbh, lambda),
+		   closed_ima);
 
   /*---------------.
   | Local minima.  |
@@ -166,68 +193,13 @@ main(int argc, char* argv[])
   typedef mln::value::label_16 label_t;
   label_t nminima;
 
-  /* FIXME: We should use something like `ima_t | p_n_faces(2)' instead
-     of `ima_t' here.  Or better: `input' should only associate data
-     to 2-faces.  */
+  // Consider only triangles.
   typedef mln_ch_value_(ima_t, label_t) label_ima_t;
-  label_ima_t minima =
-    mln::labeling::regional_minima(closed_ima, nbh, nminima);
-
-  typedef mln::complex_higher_neighborhood<D, G> higher_nbh_t;
-  higher_nbh_t higher_nbh;
-
-  // Propagate minima values from triangles to edges.
-  // FIXME: Factor this inside a function.
-  mln_niter_(higher_nbh_t) adj_t(higher_nbh, e);
-  for_all(e)
-  {
-    label_t ref_adj_minimum = mln::literal::zero;
-    for_all(adj_t)
-      if (minima(adj_t) == mln::literal::zero)
-	{
-	  // If E is adjacent to a non-minimal triangle, then it must
-	  // not belong to a minima.
-	  ref_adj_minimum = mln::literal::zero;
-	  break;
-	}
-      else
-	{
-	  if (ref_adj_minimum == mln::literal::zero)
-	    // If this is the first minimum seen, use it as a reference.
-	    ref_adj_minimum = minima(adj_t);
-	  else
-	    // If this is not the first time a minimum is encountered,
-	    // ensure it is REF_ADJ_MINIMUM.
-	    mln_assertion(minima(adj_t) == ref_adj_minimum);
-	}
-    minima(e) = ref_adj_minimum;
-  }
-
-  // Likewise from edges to edges to vertices.
-  mln_niter_(higher_nbh_t) adj_e(higher_nbh, v);
-  for_all(v)
-  {
-    label_t ref_adj_minimum = mln::literal::zero;
-    for_all(adj_e)
-      if (minima(adj_e) == mln::literal::zero)
-	{
-	  // If V is adjacent to a non-minimal triangle, then it must
-	  // not belong to a minima.
-	  ref_adj_minimum = mln::literal::zero;
-	  break;
-	}
-      else
-	{
-	  if (ref_adj_minimum == mln::literal::zero)
-	    // If this is the first minimum seen, use it as a reference.
-	    ref_adj_minimum = minima(adj_e);
-	  else
-	    // If this is not the first time a minimum is encountered,
-	    // ensure it is REF_ADJ_MINIMUM.
-	    mln_assertion(minima(adj_e) == ref_adj_minimum);
-	}
-    minima(v) = ref_adj_minimum;
-  }
+  label_ima_t minima;
+  mln::initialize(minima, closed_ima);
+  mln::data::paste(mln::labeling::regional_minima(closed_ima | is_a_triangle,
+						  nbh, nminima),
+	     minima);
 
   /*-----------------------.
   | Initial binary image.  |
@@ -242,13 +214,39 @@ main(int argc, char* argv[])
 
   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
   bin_ima_t surface(minima.domain());
-  mln::data::fill(surface, true);
-  // Dig ``holes'' in the surface surface by setting minima faces to false.
-  // FIXME: Use fill with an image_if instead, when available/working.
-  mln_piter_(bin_ima_t) f(minima.domain());
-  for_all(f)
-    if (minima(f) != mln::literal::zero)
-      surface(f) = false;
+
+  // Predicate type: is a face an edge (1-face)?
+  typedef mln::topo::is_n_face<mln_psite_(ima_t), 1> is_an_edge_t;
+  is_an_edge_t is_an_edge;
+  // Predicate type: is a face a vertex (0-face)?
+  typedef mln::topo::is_n_face<mln_psite_(ima_t), 0> is_a_vertex_t;
+  is_a_vertex_t is_a_vertex;
+
+  // Neighborhood type returning the set of (n+1)-faces adjacent to a
+  // an n-face.
+  typedef mln::complex_higher_neighborhood<D, G> higher_adj_nbh_t;
+  higher_adj_nbh_t higher_adj_nbh;
+
+  mln::data::fill(surface, false);
+  // Set non minima triangles to true;
+  mln::data::fill
+    ((surface |
+      mln::pw::value(minima) == mln::pw::cst(mln::literal::zero)).rw(),
+     true);
+  // Extend non minima values from triangles to edges.
+  mln::data::paste (mln::morpho::dilation(mln::extend(surface | is_an_edge,
+						      surface),
+					  /* Dilations require windows,
+					     not neighborhoods.  */
+					  higher_adj_nbh.win()),
+		    surface);
+  // Extend non minima values from edges to vertices.
+  mln::data::paste(mln::morpho::dilation(mln::extend(surface | is_a_vertex,
+						     surface),
+					  /* Dilations require windows,
+					     not neighborhoods.  */
+					 higher_adj_nbh.win()),
+		   surface);
 
   /*-------------.
   | 2-collapse.  |
@@ -258,9 +256,6 @@ main(int argc, char* argv[])
   // Image restricted to triangles.  //
   // ------------------------------- //
 
-  // Predicate type: is a face a triangle (2-face)?
-  typedef mln::topo::is_n_face<mln_psite_(bin_ima_t), D> is_a_triangle_t;
-  is_a_triangle_t is_a_triangle;
   // Surface image type, of which domain is restricted to triangles.
   typedef mln::image_if<bin_ima_t, is_a_triangle_t> bin_triangle_only_ima_t;
   // Surface image type, of which iteration (not domain) is restricted
@@ -272,14 +267,6 @@ main(int argc, char* argv[])
   // Simple point predicate.  //
   // ------------------------ //
 
-  // Neighborhood type returning the set of (n-1)-faces adjacent to a
-  // an n-face.
-  typedef mln::complex_lower_neighborhood<D, G> lower_adj_nbh_t;
-  lower_adj_nbh_t lower_adj_nbh;
-  // Neighborhood type returning the set of (n+1)-faces adjacent to a
-  // an n-face.
-  typedef mln::complex_higher_neighborhood<D, G> higher_adj_nbh_t;
-  higher_adj_nbh_t higher_adj_nbh;
   // Predicate type: is a triangle (2-face) simple?
   typedef mln::topo::is_simple_pair< bin_triangle_ima_t,
                                      lower_adj_nbh_t,
@@ -325,9 +312,6 @@ main(int argc, char* argv[])
   // Image restricted to edges.  //
   // --------------------------- //
 
-  // Predicate type: is a face an edge (1-face)?
-  typedef mln::topo::is_n_face<mln_psite_(bin_ima_t), D - 1> is_an_edge_t;
-  is_an_edge_t is_an_edge;
   // Surface image type, of which domain is restricted to edges.
   typedef mln::image_if<bin_ima_t, is_an_edge_t> bin_edge_only_ima_t;
   // Surface image type, of which iteration (not domain) is restricted
