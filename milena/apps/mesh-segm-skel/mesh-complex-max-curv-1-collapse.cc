@@ -54,7 +54,9 @@
 #include <mln/topo/is_n_face.hh>
 #include <mln/topo/is_simple_pair.hh>
 #include <mln/topo/detach_pair.hh>
-#include <mln/topo/skeleton/breadth_first_thinning.hh>
+#include <mln/topo/skeleton/priority_driven_thinning.hh>
+
+#include <mln/arith/revert.hh>
 
 #include <mln/io/vtk/load.hh>
 #include <mln/io/vtk/save.hh>
@@ -288,14 +290,19 @@ main(int argc, char* argv[])
   // Thinning by 2-collapse.  //
   // ------------------------ //
 
+  // Create a priority function (actually, an image) using the inverse
+  // of the curvature image.
+  ima_t priority = mln::arith::revert(closed_ima);
+
   mln_concrete_(bin_ima_t) surface_2_collapse;
   mln::initialize(surface_2_collapse, surface);
   mln::data::paste
-    (mln::topo::skeleton::breadth_first_thinning
+    (mln::topo::skeleton::priority_driven_thinning
      (mln::mutable_extend((surface | is_a_triangle).rw(), surface),
       nbh,
       is_simple_triangle,
-      detach_triangle)
+      detach_triangle,
+      priority)
      /* Before pasting the result of the computation into
         SURFACE_2_COLLAPSE, re-expand its domain to the initial site
         set, to ensure data from all faces (i.e., both the 2-faces,
@@ -347,12 +354,13 @@ main(int argc, char* argv[])
   mln_concrete_(bin_ima_t) surface_1_collapse;
   mln::initialize(surface_1_collapse, surface_2_collapse);
   mln::data::paste
-    (mln::topo::skeleton::breadth_first_thinning
+    (mln::topo::skeleton::priority_driven_thinning
      (mln::mutable_extend((surface_2_collapse | is_an_edge).rw(),
 			  surface_2_collapse),
       nbh,
       is_simple_edge,
-      detach_edge)
+      detach_edge,
+      priority)
      /* Likewise, before pasting the result of the computation into
         SURFACE_1_COLLAPSE, re-expand its domain to the initial site
         set, to ensure data from all faces (i.e., both the 1-faces,

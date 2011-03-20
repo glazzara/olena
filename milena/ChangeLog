@@ -1,5 +1,13 @@
 2011-03-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use priority-driven thinning in collapse-based thinnings apps.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-1-collapse.cc:
+	Here.
+
+2011-03-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify curvature-based thinnings using 2- and 1-collapses apps.
 
 	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,
