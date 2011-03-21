@@ -1,3 +1,8 @@
+2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/primitive/link/internal/link_functor_base.hh: Stop
+	neighbor lookup when a separator is found.
+
 2011-03-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix namespace ambiguities.

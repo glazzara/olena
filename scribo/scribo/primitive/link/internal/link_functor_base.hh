@@ -232,9 +232,14 @@ namespace scribo
 	{
 	  (void) start_point;
 	  mln_value(L) v = this->labeled_image_(p);
-	  bool is_separator = this->components_.separators()(p);
 
-	  if (is_separator)
+	  // We found that we are passing through a separator. We stop
+	  // looking up for a neighbor by returning true.
+	  //
+	  // Since we don't want to link with a separator,
+	  // verify_link_criterion will invalidate this link.
+	  //
+	  if (this->components_.has_separators() && this->components_.separators()(p))
 	    return true;
 
 	  return v != literal::zero  // Not the background
