@@ -226,6 +226,9 @@ namespace scribo
       bool between_separators(const scribo::line_info<L>& l1,
 			      const scribo::line_info<L>& l2)
       {
+	// No separators found in image.
+	mln_precondition(l1.holder().components().has_separators());
+
 	unsigned
 	  col1 = l1.bbox().pcenter().col(),
 	  col2 = l2.bbox().pcenter().col();
@@ -648,6 +651,13 @@ namespace scribo
 		  //
  		  //if (!non_text_and_text_can_merge(lines(l), lines(mc)))
  		  //  continue;
+
+		  // Avoid the case when a large title ebbox overlap
+		  // with a text column. In that case, the title may
+		  // merge with punctuation from the text.
+		  if (lines(l).holder().components().has_separators()
+		      && between_separators(lines(l), lines(mc)))
+		    continue;
 
 		  // Mark current line as punctuation.
 		  lines(l).update_type(line::Punctuation);
