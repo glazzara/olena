@@ -83,7 +83,7 @@ namespace scribo
 	    w = b.width(),
 	    h = b.height();
 
-	  return (w / 2.0f) + (dmax_factor_ * math::max(w, h));
+	  return (w / 2.0f) + (dmax_factor_ * h);//math::max(w, h));
 	}
 
 

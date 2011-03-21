@@ -1,5 +1,10 @@
 2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/link/internal/dmax_functor_base.hh: Make the
+	dmax ratio safer.
+
+2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/merging: Add a precondition. Fix merging policy.
 
 2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
