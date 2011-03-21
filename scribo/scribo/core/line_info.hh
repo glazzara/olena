@@ -132,6 +132,7 @@ namespace scribo
   template <typename L>
   class line_info : public Serializable<line_info<L> >
   {
+    typedef Serializable<line_info<L> > parent_t;
     typedef internal::line_info_data<L> data_t;
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
     typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
@@ -352,7 +353,7 @@ namespace scribo
 
   template <typename L>
   line_info<L>::line_info()
-    : id_(0)
+    : parent_t(), id_(0)
   {
   }
 

@@ -1,5 +1,15 @@
 2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation issues on MAC.
+
+	* scribo/core/line_info.hh: Explicitly call parent constructor.
+	* scribo/primitive/extract/non_text.hh: Fix ambiguities on
+	std::pow overloads.
+
+	* src/debug/show_group_bboxes.cc: Fix namespace ambiguity.
+
+2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/link/internal/dmax_functor_base.hh: Make the
 	dmax ratio safer.
 

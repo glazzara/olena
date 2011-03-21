@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
   if (argc != 3)
   {
-    std::cerr << "Usage : " << argv[0] << " input.* out.pbm" << std::endl;
+    std::cerr << "Usage : " << argv[0] << " input.pbm out.pbm" << std::endl;
     return 1;
   }
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     left_link = primitive::link::with_single_left_link_dmax_ratio(
       components,
 //      primitive::link::internal::dmax_width_and_height(1),
-      link::internal::dmax_default(1),
+      primitive::link::internal::dmax_default(1),
       anchor::MassCenter);
 
   object_links<L>

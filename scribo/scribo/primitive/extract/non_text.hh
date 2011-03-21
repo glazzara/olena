@@ -116,8 +116,8 @@ namespace scribo
 	  }
 
 
-	  const unsigned q_div = std::pow(2, 8 - nbits);
-	  const unsigned q = unsigned(std::pow(2, nbits));
+	  const unsigned q_div = std::pow(2.f, (int)(8 - nbits));
+	  const unsigned q = unsigned(std::pow(2.f, (int)nbits));
 	  const unsigned nelements = input.nelements();
 
 
