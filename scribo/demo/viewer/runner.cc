@@ -222,13 +222,19 @@ void runner::export_as()
 
   int rvalue = 0;
   if (f.suffix() == "pdf")
+  {
+    emit new_step("Exporting as PDF...");
     rvalue = system(QString("%1/scribo-xml2doc --pdf %2 %3 %4")
 		    .arg(pathto_xml2doc).arg(args_.at(1)).arg(args_.at(0))
 		    .arg(args_.at(2)).toAscii().constData());
+  }
   else if (f.suffix() == "html" || f.suffix() == "htm")
+  {
+    emit new_step("Exporting as HTML...");
     rvalue = system(QString("%1/scribo-xml2doc --html %2 %3 %4")
 		    .arg(pathto_xml2doc).arg(args_.at(1)).arg(args_.at(0))
 		    .arg(args_.at(2)).toAscii().constData());
+  }
   else
     QMessageBox::critical(0, "Fatal error", "Cannot export! Invalid output format!");
 

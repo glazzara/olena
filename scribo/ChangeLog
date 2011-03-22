@@ -1,3 +1,7 @@
+2011-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/viewer/runner.cc: Improve progress notification.
+
 2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation issues on MAC.
