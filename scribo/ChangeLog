@@ -1,5 +1,9 @@
 2011-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* demo/viewer/xml_widget.cc: Fix a warning.
+
+2011-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/viewer/runner.cc: Improve progress notification.
 
 2011-03-21  Guillaume Lazzara  <z@lrde.epita.fr>

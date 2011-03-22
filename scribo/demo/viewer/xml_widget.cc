@@ -46,7 +46,7 @@ XmlWidget::XmlWidget()
 }
 
 void
-XmlWidget::select(QString id, QString name)
+XmlWidget::select(QString id, QString /*name*/)
 {
   QDomNode n = node_map_[item_map_[id]];
 
