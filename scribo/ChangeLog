@@ -1,3 +1,8 @@
+2011-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/toolchain/nepomuk/text_extraction.hh: Remove useless
+	punctuation in text output.
+
 2011-02-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/text_in_picture.cc: Initialize ImageMagick and fix usage

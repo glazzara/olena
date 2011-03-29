@@ -151,7 +151,8 @@ namespace scribo
 
 	  for_all_lines(l, lines_fg)
 	    if (lines_fg(l).has_text())
-	      stream << " " << codec->toUnicode(lines_fg(l).text().c_str());
+	      stream << " " << codec->toUnicode(lines_fg(l).text().c_str())
+		.remove(QRegExp("[\\?!()\\[\\]\\{\\}\\.,;\\\"\\\'`_]")); // Remove useless punctuation.
 
 	  QStringList list = tmp_out.split(' ', QString::SkipEmptyParts);
 
