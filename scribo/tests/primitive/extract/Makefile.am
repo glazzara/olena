@@ -1,5 +1,4 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +16,18 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-SUBDIRS = 		\
- extract 		\
- link
+check_PROGRAMS =
 
+if HAVE_MAGICKXX
+
+check_PROGRAMS = alignments
+alignments_SOURCES = alignments.cc
+alignments_CPPFLAGS = $(AM_CPPFLAGS) \
+		      $(MAGICKXX_CPPFLAGS) \
+		      -DSCRIBO_NDEBUG
+alignments_LDFLAGS = $(LDFLAGS) \
+		     $(MAGICKXX_LDFLAGS)
+
+endif HAVE_MAGICKXX
+
+TESTS = $(check_PROGRAMS)

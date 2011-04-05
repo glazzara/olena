@@ -1,5 +1,34 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new alignments extraction routine.
+
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/link/internal/dmax_hrules.hh,
+	* scribo/primitive/link/internal/link_single_dmax_ratio_aligned_delta_base.hh,
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh: New.
+
+	* src/primitive/extract/alignments.cc: New example.
+
+	* tests/data.hh.in: Add a new macro.
+
+	* tests/img/alignment_1.png,
+	* tests/img/alignment_2.png,
+	* tests/img/alignment_3.png,
+	* tests/img/alignment_4.png,
+	* tests/primitive/extract/alignment_1.ref.pbm,
+	* tests/primitive/extract/alignment_2.ref.pbm,
+	* tests/primitive/extract/alignment_3.ref.pbm,
+	* tests/primitive/extract/alignment_4.ref.pbm: New auxiliary data
+	for tests.
+
+	* src/primitive/extract/Makefile.am,
+	* tests/primitive/Makefile.am,
+	* tests/primitive/extract/Makefile.am: Add new targets.
+
+	* tests/primitive/extract/alignments.cc: New test.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update dmax functors interface.
 
 	* scribo/primitive/link/internal/dmax_default.hh,

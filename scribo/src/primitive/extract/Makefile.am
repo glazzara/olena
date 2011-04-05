@@ -34,3 +34,14 @@ separators_nonvisible_SOURCES = separators_nonvisible.cc
 thick_vlines_SOURCES = thick_vlines.cc
 thick_hlines_SOURCES = thick_hlines.cc
 lines_pattern_SOURCES = lines_pattern.cc
+
+
+if HAVE_MAGICKXX
+
+    noinst_PROGRAMS    += alignments
+    alignments_SOURCES  = alignments.cc
+    alignments_CPPFLAGS = $(AM_CPPFLAGS) \
+			  $(MAGICKXX_CPPFLAGS)
+    alignments_LDFLAGS  = $(AM_LDFLAGS) \
+			  $(MAGICKXX_LDFLAGS)
+endif HAVE_MAGICKXX
