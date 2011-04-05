@@ -1,3 +1,8 @@
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/extract_lines_wo_merge.hh: New line extraction
+	routine.
+
 2011-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/viewer/xml_widget.cc: Fix a warning.
