@@ -1,6 +1,10 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* configure.ac: configure scribo/tests/primitive/extract.
+	* configure.ac: Configure scribo/tests/estim.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/tests/primitive/extract.
 
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -8,11 +12,11 @@
 
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* configure.ac: scribo/src/primitive/remove.
+	* configure.ac: Configure scribo/src/primitive/remove.
 
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* configure.ac: configure scribo/tests/convert.
+	* configure.ac: Configure scribo/tests/convert.
 
 2011-03-14  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
