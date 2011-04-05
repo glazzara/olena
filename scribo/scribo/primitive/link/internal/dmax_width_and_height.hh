@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,8 +56,8 @@ namespace scribo
 
 
 	public:
-	  dmax_width_and_height(const float& dmax_factor);
-	  float operator()(const box2d&) const;
+	  dmax_width_and_height(float dmax_factor);
+	  float compute_(const box2d&) const;
 
 	protected:
 	  using super_::dmax_factor_;
@@ -67,7 +68,7 @@ namespace scribo
 
 
 	inline
-	dmax_width_and_height::dmax_width_and_height(const float& dmax_factor)
+	dmax_width_and_height::dmax_width_and_height(float dmax_factor)
 	  : super_(dmax_factor)
 	{
 	}
@@ -75,7 +76,7 @@ namespace scribo
 
 	inline
 	float
-	dmax_width_and_height::operator()(const box2d& b) const
+	dmax_width_and_height::compute_(const box2d& b) const
 	{
 	  float
 	    w = b.width(),

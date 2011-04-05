@@ -52,7 +52,8 @@ namespace scribo
 	  typedef dmax_functor_base<dmax_default> super_;
 
 	public:
-	  dmax_default(const float& dmax_factor);
+	  dmax_default(float dmax_factor);
+	  float compute_(const box2d& b) const;
 
 	protected:
 	  using super_::dmax_factor_;
@@ -63,11 +64,22 @@ namespace scribo
 
 
 	inline
-	dmax_default::dmax_default(const float& dmax_factor)
+	dmax_default::dmax_default(float dmax_factor)
 	  : super_(dmax_factor)
 	{
 	}
 
+
+	inline
+	float
+	dmax_default::compute_(const box2d& b) const
+	{
+	  float
+	    w = b.width(),
+	    h = b.height();
+
+	  return (w / 2.0f) + (dmax_factor_ * h);//math::max(w, h));
+	}
 
 # endif // ! MLN_INCLUDE_ONLY
 

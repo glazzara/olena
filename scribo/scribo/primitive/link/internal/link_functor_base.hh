@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +30,9 @@
 /// \file
 ///
 /// Base class for link functors.
+///
+/// \fixme type used for 'current_object' argument should be of type
+/// mln_value(L)
 
 # include <mln/core/concept/image.hh>
 

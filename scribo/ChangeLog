@@ -1,5 +1,18 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update dmax functors interface.
+
+	* scribo/primitive/link/internal/dmax_default.hh,
+	* scribo/primitive/link/internal/dmax_width_and_height.hh,
+	* scribo/primitive/link/internal/dmax_width_only.hh: Rename
+	operator() as compute_().
+
+	* scribo/primitive/link/internal/dmax_functor_base.hh: Make use of compute_().
+
+	* scribo/primitive/link/internal/link_functor_base.hh: Add a fixme.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various fixes in Scribo.
 
 	* scribo/core/component_set.hh: Update FIXMEs.
