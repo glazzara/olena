@@ -1,3 +1,7 @@
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: configure scribo/tests/primitive/extract.
+
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* build-aux/build_unit_test.sh: Define HAVE_* for unit-tests.
