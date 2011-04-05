@@ -1,5 +1,12 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Compute font and boldness data.
 
 	* scribo/core/component_features_data.hh,

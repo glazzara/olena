@@ -19,12 +19,14 @@ scribo/convert/from_qimage.hh \
 scribo/convert/to_base64.hh \
 scribo/core/all.hh \
 scribo/core/central_sites.hh \
+scribo/core/component_features_data.hh \
 scribo/core/component_info.hh \
 scribo/core/component_set.hh \
 scribo/core/concept/dmax_functor.hh \
 scribo/core/concept/link_functor.hh \
 scribo/core/concept/serializable.hh \
 scribo/core/concept/serialize_visitor.hh \
+scribo/core/def/color_type.hh \
 scribo/core/def/lbl_type.hh \
 scribo/core/document.hh \
 scribo/core/erase_objects.hh \
@@ -59,11 +61,16 @@ scribo/debug/save_comp_diff.hh \
 scribo/debug/save_label_image.hh \
 scribo/debug/save_table_image.hh \
 scribo/debug/text_areas_image.hh \
+scribo/debug/text_color_image.hh \
 scribo/debug/usage.hh \
 scribo/draw/all.hh \
 scribo/draw/bounding_box_links.hh \
 scribo/draw/bounding_boxes.hh \
 scribo/draw/groups_bboxes.hh \
+scribo/estim/components_features.hh \
+scribo/estim/font_boldness.hh \
+scribo/estim/font_color.hh \
+scribo/estim/internal/compute_skeleton.hh \
 scribo/estim/object_groups_v_thickness.hh \
 scribo/filter/all.hh \
 scribo/filter/common/objects_photo.hh \
@@ -134,6 +141,7 @@ scribo/preprocessing/homogeneous_contrast.hh \
 scribo/preprocessing/rotate_90.hh \
 scribo/preprocessing/split_bg_fg.hh \
 scribo/primitive/all.hh \
+scribo/primitive/extract/alignments.hh \
 scribo/primitive/extract/all.hh \
 scribo/primitive/extract/canvas.hh \
 scribo/primitive/extract/cells.hh \
@@ -178,6 +186,7 @@ scribo/primitive/link/compute_several.hh \
 scribo/primitive/link/internal/compute_anchor.hh \
 scribo/primitive/link/internal/dmax_default.hh \
 scribo/primitive/link/internal/dmax_functor_base.hh \
+scribo/primitive/link/internal/dmax_hrules.hh \
 scribo/primitive/link/internal/dmax_width_and_height.hh \
 scribo/primitive/link/internal/dmax_width_only.hh \
 scribo/primitive/link/internal/find_link.hh \
@@ -186,8 +195,10 @@ scribo/primitive/link/internal/link_functor_base.hh \
 scribo/primitive/link/internal/link_several_dmax_base.hh \
 scribo/primitive/link/internal/link_single_dmax_base.hh \
 scribo/primitive/link/internal/link_single_dmax_ratio_aligned_base.hh \
+scribo/primitive/link/internal/link_single_dmax_ratio_aligned_delta_base.hh \
 scribo/primitive/link/internal/link_single_dmax_ratio_base.hh \
 scribo/primitive/link/merge_double_link.hh \
+scribo/primitive/link/merge_double_link_closest_aligned.hh \
 scribo/primitive/link/with_graph.hh \
 scribo/primitive/link/with_rag.hh \
 scribo/primitive/link/with_several_graphes.hh \
@@ -230,6 +241,8 @@ scribo/text/all.hh \
 scribo/text/clean.hh \
 scribo/text/clean_inplace.hh \
 scribo/text/extract_lines.hh \
+scribo/text/extract_lines_with_features.hh \
+scribo/text/extract_lines_wo_merge.hh \
 scribo/text/link_lines.hh \
 scribo/text/look_like_text_lines.hh \
 scribo/text/merging.hh \
