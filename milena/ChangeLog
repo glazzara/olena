@@ -1,3 +1,7 @@
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/accu/stat/median_h.hh: Add missing operator=().
+
 2011-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen generated files.

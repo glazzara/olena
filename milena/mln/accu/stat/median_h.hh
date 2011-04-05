@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,6 +84,7 @@ namespace mln
 	typedef V argument;
 
 	median_h();
+	median_h& operator=(const median_h& rhs);
 
 	/// Manipulators.
 	/// \{
@@ -129,6 +131,21 @@ namespace mln
 	  s_(h_.vset())
       {
 	init();
+      }
+
+      template <typename V>
+      inline
+      median_h<V>&
+      median_h<V>::operator=(const median_h<V>& rhs)
+      {
+	h_ = rhs.h_;
+	sum_minus_ = rhs.sum_minus_;
+	sum_plus_ = rhs.sum_plus_;
+	valid_ = rhs.valid_;
+	i_ = rhs.i_;
+	t_ = rhs.t_;
+
+	return *this;
       }
 
       template <typename V>
