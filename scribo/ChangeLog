@@ -1,5 +1,52 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various fixes in Scribo.
+
+	* scribo/core/component_set.hh: Update FIXMEs.
+	(update_labeled_image_()): New method.
+
+	* scribo/core/def/color_type.hh: Introduce a new global type.
+
+	* scribo/core/line_info.hh: Compute line pixels area and order
+	component list by localization.
+
+	* scribo/core/line_set.hh: Add operator<<.
+
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh (is_valid(unsigned)): new method.
+
+	* scribo/debug/links_image.hh: Make bounding box drawing optional.
+
+	* scribo/filter/object_groups_small.hh: Return a temporary result.
+
+	* scribo/filter/objects_h_thick.hh,
+	* scribo/filter/objects_h_thin.hh,
+	* scribo/filter/objects_v_thick.hh,
+	* scribo/filter/objects_v_thin.hh: Fix variable names and make
+	these routines work properly.
+
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/preprocessing/rotate_90.hh: Fix preconditions.
+
+	* scribo/primitive/extract/non_text.hh: Remove useless precondition.
+
+	* scribo/primitive/link/internal/link_single_dmax_ratio_aligned_base.hh:
+	Remove a useless method.
+
+	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh:
+	Remove a useless (void).
+
+	* scribo/text/extract_lines.hh: Use dmax_default functor.
+
+	* src/debug/show_groups_bboxes.cc: Check hratio while linking.
+
+	* src/preprocessing/denoise_fg.cc: Fix usage.
+
+	* scribo/tests/toolchain/nepomuk/Makefile.am: Check if Magick++ is
+	available.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/extract_lines_wo_merge.hh: New line extraction
 	routine.
 

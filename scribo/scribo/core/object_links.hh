@@ -84,6 +84,7 @@ namespace scribo
     const component_set<L>& components() const;
 
     bool is_valid() const;
+    bool is_valid(unsigned comp_id) const;
 
     unsigned nelements() const;
 
@@ -177,6 +178,16 @@ namespace scribo
   {
     return data_->components_.is_valid()
       && data_->components_.nelements() == (this->nelements() - 1);
+  }
+
+
+  template <typename L>
+  bool
+  object_links<L>::is_valid(unsigned comp_id) const
+  {
+    mln_precondition(is_valid());
+    mln_precondition(comp_id < data_->comp_to_link_.nelements());
+    return data_->comp_to_link_(comp_id) != 0;
   }
 
 

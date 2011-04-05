@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -86,6 +86,7 @@ namespace scribo
     void init_(const object_links<L>& links);
 
     bool is_valid() const;
+    bool is_valid(unsigned comp_id) const;
 
     unsigned nelements() const;
 
@@ -187,6 +188,15 @@ namespace scribo
   {
     mln_assertion(data_->components_.nelements() == (nelements() - 1));
     return data_->links_.is_valid();
+  }
+
+  template <typename L>
+  bool
+  object_groups<L>::is_valid(unsigned comp_id) const
+  {
+    mln_assertion(is_valid());
+    mln_assertion(comp_id < data_->links_.nelements());
+    return data_->links_(comp_id) != 0;
   }
 
   template <typename L>

@@ -139,9 +139,8 @@ namespace scribo
 	inline
 	mln_site(L)
 	link_single_dmax_ratio_base<L, F, E>::start_point_(unsigned current_object,
-							anchor::Type anchor)
+							   anchor::Type anchor)
 	{
-	  (void) anchor;
 	  return internal::compute_anchor(this->components_,
 					  current_object, anchor);
 	}

@@ -30,15 +30,18 @@
 #include <scribo/primitive/link/merge_double_link.hh>
 #include <scribo/primitive/link/internal/dmax_width_and_height.hh>
 
+#include <scribo/filter/object_links_bbox_h_ratio.hh>
+
 int main(int argc, char *argv[])
 {
   using namespace mln;
   using namespace scribo;
   using namespace scribo::primitive;
 
-  if (argc != 3)
+  if (argc != 3 && argc != 4)
   {
-    std::cerr << "Usage : " << argv[0] << " input.pbm out.pbm" << std::endl;
+    std::cerr << "Usage : " << argv[0] << " input.pbm out.pbm [hratio = 2.5]" << std::endl;
+    std::cerr << "Group components and makes sure size ratio is correct." << std::endl;
     return 1;
   }
 
@@ -73,9 +76,16 @@ int main(int argc, char *argv[])
     merged_links = primitive::link::merge_double_link(left_link,
 						      right_link);
 
+  float hratio = 2.5f;
+  if (argc == 4)
+    hratio = atof(argv[3]);
+
+  object_links<L> hratio_filtered_links
+    = filter::object_links_bbox_h_ratio(merged_links, hratio);
+
 
   object_groups<L>
-    groups = group::from_single_link(merged_links);
+    groups = group::from_single_link(hratio_filtered_links);
 
   line_set<L> lines(groups);
 

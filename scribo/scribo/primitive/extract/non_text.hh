@@ -308,8 +308,6 @@ namespace scribo
 	t.start();
 
 	mln_precondition(doc.is_valid());
-
-	mln_precondition(doc.has_line_seps());
 	mln_precondition(doc.has_text());
 
 	// FIXME: Do these images exist elsewhere?

@@ -1,5 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,45 +23,26 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/all.hh>
+#ifndef SCRIBO_CORE_COLOR_TYPE_HH
+# define SCRIBO_CORE_COLOR_TYPE_HH
 
-#include <scribo/debug/usage.hh>
-#include <scribo/preprocessing/denoise.hh>
+/// \file
+///
+/// Global type definition for labels.
+
+# include <mln/value/rgb8.hh>
 
 
-
-const char *args_desc[][2] =
+namespace scribo
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
-  { "fg_min_card", "The minimum neighbor count to be set to false."
-    " (common value : 3 or 4)" },
-  {0, 0}
-};
 
+  namespace def
+  {
 
-int main(int argc, char *argv[])
-{
-  using namespace mln;
+    typedef mln::value::rgb8 color_type;
 
-  if (argc != 4)
-    return scribo::debug::usage(argv,
-				"Remove noisy objects using c8 neighbors.",
-				"input.pbm fg_min_card output.pbm",
-				args_desc);
+  } // end of namespace scribo::def
 
-  trace::entering("main");
+} // end of namespace scribo
 
-  typedef image2d<bool> I;
-  I input;
-  io::pbm::load(input, argv[1]);
-
-  unsigned fg_min_card = atoi(argv[2]);
-
-  I output = scribo::preprocessing::denoise_fg(input, c8(), fg_min_card);
-
-  io::pbm::save(output, argv[3]);
-
-  trace::exiting("main");
-}
+#endif // ! SCRIBO_CORE_DEF_HH

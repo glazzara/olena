@@ -102,11 +102,6 @@ namespace scribo
 #  endif // ! SCRIBO_NDEBUG
 	  }
 
-	  void compute_next_site_(P& p)
-	  {
-	    ++p.col();
-	  }
-
 
 	  mln_site(L)
 	  start_point_(unsigned current_object, anchor::Type anchor)

@@ -174,6 +174,9 @@ namespace scribo
     mln::util::tracked_ptr< internal::line_set_data<L> > data_;
   };
 
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const line_set<L>& lines);
 
   namespace make
   {
@@ -432,6 +435,20 @@ namespace scribo
   line_set<L>::init_(const line_set<L>& set)
   {
     data_ = new internal::line_set_data<L>(set.infos_(), set.groups());
+  }
+
+
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const line_set<L>& lines)
+  {
+    ostr << "line_set[" << std::endl;
+    for_all_lines(i, lines)
+      ostr << lines(i);
+    ostr << "]" << std::endl;
+
+    return ostr;
   }
 
 

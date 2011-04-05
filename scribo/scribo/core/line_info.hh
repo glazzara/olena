@@ -84,6 +84,9 @@ namespace scribo
       mln::box2d ebbox_;
       mln::util::array<component_id_t> components_;
 
+      // The number of pixels used for line characters.
+      unsigned pixel_area_;
+
       // Values relative to the line bbox.
       int baseline_;
       int meanline_;
@@ -175,6 +178,8 @@ namespace scribo
 
     const mln::util::array<component_id_t>& component_ids() const;
     unsigned card() const;
+
+    unsigned pixel_area() const;
 
     int baseline() const;
     int meanline() const;
@@ -348,6 +353,26 @@ namespace scribo
       indented_ = false;
     }
 
+
+
+    // sort_comp_ids functor
+
+    template <typename L>
+    sort_comp_ids<L>::sort_comp_ids(const component_set<L>& comp_set)
+      : comps_(comp_set)
+    {
+    }
+
+
+    template <typename L>
+    bool
+    sort_comp_ids<L>::operator()(const component_id_t& l,
+				 const component_id_t& r) const
+    {
+      return comps_(l).bbox().pmin().col() < comps_(r).bbox().pmin().col()
+	&& comps_(l).bbox().pmax().col() < comps_(r).bbox().pmax().col();
+    }
+
   } // end of namespace scribo::internal
 
 
@@ -381,7 +406,7 @@ namespace scribo
   template <typename L>
   inline
   line_info<L>::line_info(const line_info<L>& other)
-    : id_(0)
+    : parent_t(other), id_(0)
   {
     //data_->hidden_ = false;
     copy_data(other);
@@ -487,11 +512,20 @@ namespace scribo
     return data_->components_;
   }
 
+
   template <typename L>
   unsigned
   line_info<L>::card() const
   {
     return data_->components_.size();
+  }
+
+
+  template <typename L>
+  unsigned
+  line_info<L>::pixel_area() const
+  {
+    return data_->pixel_area_;
   }
 
 
@@ -885,6 +919,8 @@ namespace scribo
       char_space,
       char_width;
 
+    unsigned pixel_area = 0;
+
     mln::accu::shape::bbox<P> bbox;
 
     mln::def::coord ref_line = mln_max(mln::def::coord);
@@ -899,7 +935,7 @@ namespace scribo
 
       // Ignore punctuation for stats computation but not for bbox
       // computation.
-      if (data_->holder_.components()(c).type() == component::Punctuation)
+      if (comp_set(c).type() == component::Punctuation)
 	continue;
 
       ref_line = mln::math::min(comp_set(c).bbox().pmin().row(), ref_line);
@@ -911,6 +947,8 @@ namespace scribo
     {
       unsigned c = data_->components_(i);
 
+      pixel_area += comp_set(c).card();
+
       const mln::box2d& bb = comp_set(c).bbox();
 
       // Bounding box.
@@ -918,7 +956,7 @@ namespace scribo
 
       // Ignore punctuation for stats computation but not for bbox
       // computation.
-      if (data_->holder_.components()(c).type() == component::Punctuation)
+      if (comp_set(c).type() == component::Punctuation)
 	continue;
 
 
@@ -965,8 +1003,20 @@ namespace scribo
 
     // Finalization
     {
+      // Tag
       data_->tag_ = line::None;
+
+      // Bbox
       data_->bbox_ = bbox.to_result();
+
+      // Pixel area
+      data_->pixel_area_ = pixel_area;
+
+      // Order component ids according to component localization (left
+      // to right).
+      std::sort(data_->components_.hook_std_vector_().begin(),
+		data_->components_.hook_std_vector_().end(),
+		internal::sort_comp_ids<L>(comp_set));
 
       // Char space
       if (char_space.card() < 2)

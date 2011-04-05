@@ -55,7 +55,8 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_image(const Image<I>& input_,
 		const object_links<L>& links,
-		anchor::Type anchor);
+		anchor::Type anchor,
+		bool draw_bboxes = true);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -65,7 +66,8 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_image(const Image<I>& input_,
 		const object_links<L>& links,
-		anchor::Type anchor)
+		anchor::Type anchor,
+		bool draw_bboxes)
     {
       trace::entering("scribo::debug::links_image");
       const I& input = exact(input_);
@@ -78,7 +80,8 @@ namespace scribo
       image2d<value::rgb8>
 	links_image = data::convert(value::rgb8(), input);
 
-      scribo::draw::bounding_boxes(links_image, comps, literal::blue);
+      if (draw_bboxes)
+	scribo::draw::bounding_boxes(links_image, comps, literal::blue);
 
       for_all_links(l, links)
 	if (links(l) != l)

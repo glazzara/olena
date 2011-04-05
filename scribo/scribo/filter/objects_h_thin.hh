@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -129,7 +129,7 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return false;
-	  return comps_(l).bbox().ncols() > min_thinness_;
+	  return comps_(l).bbox().width() > min_thinness_;
 	}
 
 	/// Component bounding boxes.

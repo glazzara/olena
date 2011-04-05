@@ -26,6 +26,7 @@ check_PROGRAMS =
 
 if HAVE_QT
 if HAVE_TESSERACT
+if HAVE_MAGICKXX
 
 check_PROGRAMS += text_extraction
 text_extraction_SOURCES = text_extraction.cc
@@ -42,6 +43,7 @@ text_extraction_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) \
 			   -lpthread
 text_extraction_LDADD    = $(QT_LIBS) $(LDADD)
 
+endif HAVE_MAGICKXX
 endif HAVE_TESSERACT
 endif HAVE_QT
 

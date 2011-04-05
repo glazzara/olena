@@ -63,8 +63,8 @@ namespace scribo
 		   bool enable_ocr = true,
 		   const std::string& language = std::string("eng"))
     {
-      mln_precondition(input.is_valid());
-      mln_precondition(input_preproc.is_valid());
+      mln_precondition(exact(input).is_valid());
+      mln_precondition(exact(input_preproc).is_valid());
 
       internal::content_in_doc_functor<J> f("noname");
       f.enable_denoising = denoise;

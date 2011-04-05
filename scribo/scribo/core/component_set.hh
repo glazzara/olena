@@ -223,6 +223,8 @@ namespace scribo
     //
     L& labeled_image_();
 
+    void update_labeled_image_(const L& lbl);
+
     /// Return the underlying labeled image where invalid components
     /// have been erased.
     ///
@@ -232,7 +234,7 @@ namespace scribo
 
     /// @}
 
-  private:
+  protected:
     /// Duplicate the underlying image and create a new component_set.
     void init_(const component_set<L>& model);
 
@@ -276,7 +278,7 @@ namespace scribo
 					      const mln_value(L)& ncomps)
       : ima_(ima), ncomps_(ncomps)
     {
-      initialize(separators_, ima); // FIXME: do we really want that?
+      initialize(separators_, ima);  // FIXME: to be removed
       mln::data::fill(separators_, false);
 
       typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
@@ -299,7 +301,7 @@ namespace scribo
 					      component::Type type)
       : ima_(ima), ncomps_(ncomps)
     {
-      initialize(separators_, ima);  // FIXME: do we really want that?
+      initialize(separators_, ima);  // FIXME: to be removed
       mln::data::fill(separators_, false);
 
       fill_infos(attribs, type);
@@ -313,7 +315,7 @@ namespace scribo
 					      component::Type type)
       : ima_(ima), ncomps_(ncomps)
     {
-      initialize(separators_, ima);  // FIXME: do we really want that?
+      initialize(separators_, ima);  // FIXME: to be removed
       mln::data::fill(separators_, false);
 
       fill_infos(attribs, type);
@@ -326,7 +328,7 @@ namespace scribo
 					      const mln::util::array<scribo::component_info>& infos)
       : ima_(ima), ncomps_(ncomps), infos_(infos)
     {
-      initialize(separators_, ima); // FIXME: do we really want that?
+      initialize(separators_, ima);  // FIXME: to be removed
       mln::data::fill(separators_, false);
     }
 
@@ -523,6 +525,15 @@ namespace scribo
   component_set<L>::labeled_image() const
   {
     return data_->ima_;
+  }
+
+
+  template <typename L>
+  inline
+  void
+  component_set<L>::update_labeled_image_(const L& lbl)
+  {
+    data_->ima_ = lbl;
   }
 
 

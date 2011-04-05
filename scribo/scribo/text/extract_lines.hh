@@ -123,15 +123,15 @@ namespace scribo
       object_links<L>
 	left_link = primitive::link::with_single_left_link_dmax_ratio(
 	  comps,
-	  primitive::link::internal::dmax_width_and_height(1),
-//	  primitive::link::internal::dmax_default(1),
+//	  primitive::link::internal::dmax_width_and_height(1),
+	  primitive::link::internal::dmax_default(1),
 	  anchor::MassCenter);
 
       object_links<L>
 	right_link = primitive::link::with_single_right_link_dmax_ratio(
 	  comps,
-	  primitive::link::internal::dmax_width_and_height(1),
-//	  primitive::link::internal::dmax_default(1),
+//	  primitive::link::internal::dmax_width_and_height(1),
+	  primitive::link::internal::dmax_default(1),
 	  anchor::MassCenter);
 
       // Validating left and right links.
