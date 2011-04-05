@@ -95,6 +95,11 @@ namespace scribo
     scribo::paragraph_set<L>
     paragraph(const line_links<L>& llinks);
 
+    /// \brief Construct a paragraph set from line set information.
+    template <typename L>
+    scribo::paragraph_set<L>
+    paragraph(const scribo::line_set<L>& lines);
+
   } // end of namespace scribo::make
 
 
@@ -239,6 +244,9 @@ namespace scribo
 	  parset(par_id).add_line(lines(l));
 	}
 
+      for_all_paragraphs(p, parset)
+	parset(p).force_stats_update();
+
       return parset;
     }
 
@@ -263,6 +271,9 @@ namespace scribo
 	  value::int_u16 par_id = par_ids(l);
 	  parset(par_id).add_line(lines(l));
 	}
+
+      for_all_paragraphs(p, parset)
+	parset(p).force_stats_update();
 
       return parset;
     }

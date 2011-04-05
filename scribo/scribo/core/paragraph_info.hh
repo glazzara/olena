@@ -44,6 +44,13 @@ namespace scribo
     paragraph_info();
     paragraph_info(const line_links<L>& llinks);
 
+    /*! \brief Add a new line to this paragraph
+
+      This method is provided for an incremental construction.
+
+      Once this method has been called, needs_stats_update() will
+      return true until force_stats_update() is called.
+     */
     void add_line(const line_info<L>& line);
 
     const mln::box2d& bbox() const;
@@ -54,12 +61,25 @@ namespace scribo
 
     unsigned nlines() const;
 
+    // FIXME: add boldness?
+
+    const mln::value::rgb8& color() const;
+    float color_reliability() const;
+
     bool is_valid() const;
+
+    bool needs_stats_update() const;
+    void force_stats_update();
 
   private:
     mln::util::array<line_id_t> line_ids_;
     mln::accu::shape::bbox<mln_site(L)> bbox_;
     line_links<L> llinks_;
+
+    mln::value::rgb8 color_;
+    float color_reliability_;
+
+    bool needs_stats_update_;
   };
 
 
@@ -68,12 +88,13 @@ namespace scribo
 
   template <typename L>
   paragraph_info<L>::paragraph_info()
+    : needs_stats_update_(false)
   {
   }
 
   template <typename L>
   paragraph_info<L>::paragraph_info(const line_links<L>& llinks)
-    : llinks_(llinks)
+    : llinks_(llinks), needs_stats_update_(false)
   {
   }
 
@@ -83,6 +104,9 @@ namespace scribo
   {
     line_ids_.append(line.id());
     bbox_.take(line.bbox());
+
+    // More data may need to be updated!
+    needs_stats_update_ = true;
   }
 
   template <typename L>
@@ -115,12 +139,86 @@ namespace scribo
   }
 
   template <typename L>
+  const mln::value::rgb8&
+  paragraph_info<L>::color() const
+  {
+    return color_;
+  }
+
+
+  template <typename L>
+  float
+  paragraph_info<L>::color_reliability() const
+  {
+    return color_reliability_;
+  }
+
+  template <typename L>
   bool
   paragraph_info<L>::is_valid() const
   {
     return llinks_.is_valid();
   }
 
+  template <typename L>
+  bool
+  paragraph_info<L>::needs_stats_update() const
+  {
+    return needs_stats_update_;
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::force_stats_update()
+  {
+    if (!needs_stats_update_)
+      return;
+
+    const line_set<L>& lines = llinks_.lines();
+
+    mln::accu::stat::mean<mln::value::int_u<8> >
+      color_red,
+      color_green,
+      color_blue;
+
+    float
+      sum2_red = 0,
+      sum2_green = 0,
+      sum2_blue = 0;
+
+    for_all_elements(e, line_ids_)
+    {
+      unsigned lid = line_ids_(e);
+
+      color_red.take(lines(lid).color().red());
+      color_green.take(lines(lid).color().green());
+      color_blue.take(lines(lid).color().blue());
+      sum2_red += mln::math::sqr<unsigned>(lines(lid).color().red());
+      sum2_green += mln::math::sqr<unsigned>(lines(lid).color().green());
+      sum2_blue += mln::math::sqr<unsigned>(lines(lid).color().blue());
+    }
+
+    color_ = mln::value::rgb8(color_red.to_result(),
+			      color_green.to_result(),
+			      color_blue.to_result());
+
+    float
+      var_red = sum2_red / (float)line_ids_.nelements()
+      - mln::math::sqr<float>(color_red.to_result()),
+      var_green = sum2_green / (float)line_ids_.nelements()
+      - mln::math::sqr<float>(color_green.to_result()),
+      var_blue = sum2_blue / (float)line_ids_.nelements()
+      - mln::math::sqr<float>(color_blue.to_result());
+
+    color_reliability_ = std::sqrt(std::max(var_red,
+					    std::max(var_green, var_blue)));
+
+    // Update color
+
+    // FIXME: Update paragraph stats
+
+    needs_stats_update_ = false;
+  }
 
   template <typename L>
   std::ostream&
@@ -129,6 +227,8 @@ namespace scribo
     return ostr << "paragraph_info("
 		<< "line_ids=" << info.line_ids()
 		<< ", bbox=" << info.bbox()
+		<< ", color=" << info.color()
+		<< ", color_reliability=" << info.color_reliability()
 		<< ")" << std::endl;
   }
 

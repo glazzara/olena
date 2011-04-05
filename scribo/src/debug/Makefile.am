@@ -22,6 +22,7 @@ noinst_PROGRAMS = 				\
   show_groups_bboxes 				\
   show_info_x_height 				\
   show_info_median_inter_characters		\
+  show_lines_boldness 				\
   show_separators				\
   show_links_left_right_links_validation 	\
   show_links_bbox_h_ratio 			\
@@ -54,6 +55,7 @@ show_components_bboxes_SOURCES = show_components_bboxes.cc
 show_groups_bboxes_SOURCES = show_groups_bboxes.cc
 show_info_x_height_SOURCES = show_info_x_height.cc
 show_info_median_inter_characters_SOURCES = show_info_median_inter_characters.cc
+show_lines_boldness_SOURCES = show_lines_boldness.cc
 show_separators_SOURCES = show_separators.cc
 show_links_left_right_links_validation_SOURCES = show_links_left_right_links_validation.cc
 show_links_bbox_h_ratio_SOURCES = show_links_bbox_h_ratio.cc
@@ -82,6 +84,20 @@ show_objects_thick_SOURCES = show_objects_thick.cc
 show_objects_thin_SOURCES = show_objects_thin.cc
 
 if HAVE_MAGICKXX
+
+  noinst_PROGRAMS +=  show_components_color
+  show_components_color_SOURCES  = show_components_color.cc
+  show_components_color_CPPFLAGS = $(AM_CPPFLAGS) \
+				   $(MAGICKXX_CPPFLAGS)
+  show_components_color_LDFLAGS  = $(AM_LDFLAGS) \
+				   $(MAGICKXX_LDFLAGS)
+
+  noinst_PROGRAMS +=  show_components_boldness
+  show_components_boldness_SOURCES  = show_components_boldness.cc
+  show_components_boldness_CPPFLAGS = $(AM_CPPFLAGS) \
+				      $(MAGICKXX_CPPFLAGS)
+  show_components_boldness_LDFLAGS  = $(AM_LDFLAGS) \
+				      $(MAGICKXX_LDFLAGS)
 
 if HAVE_QT
 

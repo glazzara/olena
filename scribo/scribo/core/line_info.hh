@@ -43,10 +43,13 @@
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/accu/stat/median_h.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/accu/shape/bbox.hh>
 # include <mln/math/min.hh>
 # include <mln/util/object_id.hh>
 # include <mln/value/int_u.hh>
+# include <mln/math/sqr.hh>
+# include <mln/value/rgb8.hh>
 
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
@@ -69,6 +72,7 @@ namespace scribo
 
   namespace internal
   {
+
     /// Data structure for \c scribo::line_info<I>.
     template <typename L>
     struct line_info_data
@@ -120,6 +124,14 @@ namespace scribo
 
       bool indented_;
 
+      float boldness_;
+      float boldness_reliability_;
+
+      mln::value::rgb8 color_;
+
+      // sqrt(Max(VAR(R), VAR(G), VAR(B)))
+      float color_reliability_;
+
       std::string text_;
       std::string html_text_;
 
@@ -127,6 +139,19 @@ namespace scribo
       line_set<L> holder_;
 
     };
+
+
+    // Functor used to sort components ids.
+    // Order by location from left to right.
+    template <typename L>
+    struct sort_comp_ids
+    {
+      sort_comp_ids(const component_set<L>& comp_set);
+      bool operator()(const component_id_t& l, const component_id_t& r) const;
+
+      component_set<L> comps_;
+    };
+
 
   } // end of namespace scribo::internal
 
@@ -180,6 +205,12 @@ namespace scribo
     unsigned card() const;
 
     unsigned pixel_area() const;
+
+    float boldness() const;
+    float boldness_reliability() const;
+
+    const mln::value::rgb8& color() const;
+    float color_reliability() const;
 
     int baseline() const;
     int meanline() const;
@@ -526,6 +557,38 @@ namespace scribo
   line_info<L>::pixel_area() const
   {
     return data_->pixel_area_;
+  }
+
+
+  template <typename L>
+  float
+  line_info<L>::boldness() const
+  {
+    return data_->boldness_;
+  }
+
+
+  template <typename L>
+  float
+  line_info<L>::boldness_reliability() const
+  {
+    return data_->boldness_reliability_;
+  }
+
+
+  template <typename L>
+  const mln::value::rgb8&
+  line_info<L>::color() const
+  {
+    return data_->color_;
+  }
+
+
+  template <typename L>
+  float
+  line_info<L>::color_reliability() const
+  {
+    return data_->color_reliability_;
   }
 
 
@@ -919,6 +982,20 @@ namespace scribo
       char_space,
       char_width;
 
+    // FIXME: we should use the median for computing the line
+    // color. Means should be kept for variance computation.
+    mln::accu::stat::mean<mln::value::int_u<8> >
+      color_red,
+      color_green,
+      color_blue,
+      boldness;
+
+    float
+      sum2_red = 0,
+      sum2_green = 0,
+      sum2_blue = 0,
+      sum2_boldness = 0;
+
     unsigned pixel_area = 0;
 
     mln::accu::shape::bbox<P> bbox;
@@ -941,8 +1018,8 @@ namespace scribo
       ref_line = mln::math::min(comp_set(c).bbox().pmin().row(), ref_line);
     }
 
-    // FIXME: compute font color!
 
+    unsigned used_comps = 0;
     for_all_elements(i, data_->components_)
     {
       unsigned c = data_->components_(i);
@@ -959,6 +1036,22 @@ namespace scribo
       if (comp_set(c).type() == component::Punctuation)
 	continue;
 
+      // This component will be used for stats, the counter is
+      // incremented.
+      ++used_comps;
+
+      // Compute boldness
+      boldness.take(comp_set(c).features().boldness);
+      sum2_boldness += mln::math::sqr<float>(comp_set(c).features().boldness);
+
+      // Compute color
+      color_red.take(comp_set(c).features().color.red());
+      color_green.take(comp_set(c).features().color.green());
+      color_blue.take(comp_set(c).features().color.blue());
+
+      sum2_red += mln::math::sqr<unsigned>(comp_set(c).features().color.red());
+      sum2_green += mln::math::sqr<unsigned>(comp_set(c).features().color.green());
+      sum2_blue += mln::math::sqr<unsigned>(comp_set(c).features().color.blue());
 
 
       // FIXME: we must guaranty here that the relationship is from
@@ -1018,6 +1111,25 @@ namespace scribo
 		data_->components_.hook_std_vector_().end(),
 		internal::sort_comp_ids<L>(comp_set));
 
+      // Boldness
+      data_->boldness_ = boldness.to_result();
+      data_->boldness_reliability_ = std::sqrt(sum2_boldness);
+
+      // Color
+      data_->color_ = mln::value::rgb8(color_red, color_green, color_blue);
+
+      // FIXME: we may prefer using the non-biased variance.
+      float
+	var_red = sum2_red / (float)(used_comps)
+	- mln::math::sqr<float>(color_red.to_result()),
+	var_green = sum2_green / (float)(used_comps)
+	- mln::math::sqr<float>(color_green.to_result()),
+	var_blue = sum2_blue / (float)(used_comps)
+	- mln::math::sqr<float>(color_blue.to_result());
+
+      data_->color_reliability_ = std::sqrt(std::max(var_red,
+						     std::max(var_green, var_blue)));
+
       // Char space
       if (char_space.card() < 2)
 	data_->char_space_ = 0;
@@ -1074,6 +1186,10 @@ namespace scribo
 		<< ", type=" << info.type()
 		<< ", bbox=" << info.bbox()
 		<< ", ebbox=" << info.ebbox()
+		<< ", boldness=" << info.boldness()
+		<< ", boldness_reliability=" << info.boldness_reliability()
+		<< ", color=" << info.color()
+		<< ", color_reliability=" << info.color_reliability()
 		<< ", components=" << info.component_ids()
 		<< ", baseline=" << info.baseline()
 		<< ", meanline=" << info.meanline()

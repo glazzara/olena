@@ -81,6 +81,12 @@ namespace scribo
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
+    /// \overload
+    template <typename L>
+    line_set<mln_ch_value(L,scribo::def::lbl_type)>
+    extract_lines(const component_set<L>& input);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -118,6 +124,22 @@ namespace scribo
       /// Use separators.
       if (exact(separators).is_valid())
 	comps.add_separators(separators);
+
+      line_set<mln_ch_value(I,scribo::def::lbl_type)>
+	lines = extract_lines(comps);
+
+      trace::exiting("scribo::text::extract_lines");
+      return lines;
+    }
+
+
+    template <typename L>
+    line_set<mln_ch_value(L,scribo::def::lbl_type)>
+    extract_lines(const component_set<L>& comps)
+    {
+      trace::entering("scribo::text::extract_lines");
+
+      mln_precondition(comps.is_valid());
 
       /// Linking potential comps
       object_links<L>

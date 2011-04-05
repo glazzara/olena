@@ -234,7 +234,10 @@ namespace scribo
 		   << "\" kerning=\"" << lines(fid).char_space();
 
 	    // EXTENSIONS - Not officially supported
-	    output << "\" baseline=\"" << lines(fid).baseline()
+	    // FIXME: add boldness?
+	    output << "\" color=\"" << parset(p).color()
+		   << "\" color_reliability=\"" << parset(p).color_reliability()
+		   << "\" baseline=\"" << lines(fid).baseline()
 		   << "\" meanline=\"" << lines(fid).meanline()
 		   << "\" x_height=\"" << lines(fid).x_height()
 		   << "\" d_height=\"" << lines(fid).d_height()
@@ -271,6 +274,10 @@ namespace scribo
 	    output << "        <line ";
 
 	  output << "id=\"" << line.id()
+		 << "\" boldness=\"" << line.boldness()
+		 << "\" boldness_reliability=\"" << line.boldness_reliability()
+		 << "\" color=\"" << line.color()
+		 << "\" color_reliability=\"" << line.color_reliability()
 		 << "\" txt_orientation=\"" << line.orientation()
 		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
 		 << "\" txt_reading_direction=\"" << line.reading_direction()

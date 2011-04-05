@@ -36,6 +36,7 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/util/object_id.hh>
 
+# include <scribo/core/component_features_data.hh>
 # include <scribo/core/concept/serializable.hh>
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
@@ -64,6 +65,13 @@ namespace scribo
     // The number of pixels in this component.
     unsigned card() const;
 
+
+    bool has_features() const;
+    void update_features(const component_features_data& features);
+
+    const component_features_data& features() const;
+
+
     component::Tag tag() const;
     void update_tag(component::Tag tag);
 
@@ -72,11 +80,13 @@ namespace scribo
 
     bool is_valid() const;
 
-  private:
+  protected:
     component_id_t id_;
     mln::box2d bbox_;
     mln::point2d mass_center_;
     unsigned card_;
+
+    component_features_data features_;
 
     component::Tag tag_;
     component::Type type_;
@@ -106,9 +116,12 @@ namespace scribo
 				 unsigned card,
 				 component::Type type)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
-      tag_(component::None), type_(type)
+      type_(type)
   {
-
+    if (!bbox.is_valid())
+      tag_ = component::Ignored;
+    else
+      tag_ = component::None;
   }
 
 
@@ -142,6 +155,26 @@ namespace scribo
     return card_;
   }
 
+  inline
+  bool
+  component_info::has_features() const
+  {
+    return features_.valid;
+  }
+
+  inline
+  void
+  component_info::update_features(const component_features_data& features)
+  {
+    features_ = features;
+  }
+
+  inline
+  const component_features_data&
+  component_info::features() const
+  {
+    return features_;
+  }
 
   inline
   component::Tag
@@ -193,6 +226,7 @@ namespace scribo
 		<< ", mass_center=" << info.mass_center()
 		<< ", card=" << info.card()
 		<< ", tag=" << info.tag()
+		<< ", features=" << info.features()
 		<< ")" << std::endl;
   }
 

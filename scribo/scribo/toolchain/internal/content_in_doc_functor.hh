@@ -254,7 +254,8 @@ namespace scribo
 
 	V ncomponents;
 	component_set<L>
-	  components = scribo::primitive::extract::components(input_cleaned,
+	  components = scribo::primitive::extract::components(original_image,
+							      input_cleaned,
 							      c8(),
 							      ncomponents);
 

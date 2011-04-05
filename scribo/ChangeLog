@@ -1,5 +1,48 @@
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Compute font and boldness data.
+
+	* scribo/core/component_features_data.hh,
+	* scribo/core/component_info.hh,
+	* scribo/core/line_info.hh,
+	* scribo/core/paragraph_info.hh,
+	* scribo/core/paragraph_set.hh: Add support for text features in
+	core structures.
+
+	* scribo/debug/text_color_image.hh: New debug routine.
+
+	* scribo/estim/components_features.hh:
+	* scribo/estim/font_boldness.hh,
+	* scribo/estim/font_color.hh,
+	* scribo/estim/internal/compute_skeleton.hh: New.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh: Use text features in
+	XML.
+
+	* scribo/primitive/extract/components.hh,
+	* scribo/text/extract_lines.hh: Add new overloads
+
+	* scribo/text/extract_lines_with_features.hh: New.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Update call
+	to extract::components.
+
+	* src/debug/Makefile.am,
+	* src/debug/show_components_boldness.cc,
+	* src/debug/show_components_color.cc,
+	* src/debug/show_lines_boldness.cc: New debug examples.
+
+	* tests/Makefile.am,
+	* tests/estim/Makefile.am,
+	* tests/estim/font_boldness.cc,
+	* tests/estim/font_color.cc: New tests.
+
+	* tests/img/phillip.pbm,
+	* tests/img/phillip.ppm: New test data.
+
+2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new alignments extraction routine.
 
 	* scribo/primitive/extract/alignments.hh,

@@ -251,20 +251,21 @@ namespace scribo
 	  output << "    <component_set nelements=\"" << comp_set.nelements()
 		 << "\">" << std::endl;
 	  for_all_comps(c, comp_set)
-	  {
-	    output << "      <component_info"
-		   << " id=\"" << comp_set(c).id()
-		   << "\" mass_center_x=\"" << comp_set(c).mass_center().col()
-		   << "\" mass_center_y=\"" << comp_set(c).mass_center().row()
-		   << "\" card=\"" <<  comp_set(c).card()
-		   << "\" tag=\"" <<  comp_set(c).tag()
-		   << "\" type=\"" <<  comp_set(c).type()
-		   << "\" pmin_x=\"" << comp_set(c).bbox().pmin().col()
-		   << "\" pmin_y=\"" << comp_set(c).bbox().pmin().row()
-		   << "\" pmax_x=\"" << comp_set(c).bbox().pmax().col()
-		   << "\" pmax_y=\"" << comp_set(c).bbox().pmax().row()
-		   << "\"/>" << std::endl;
-	  }
+	    if (comp_set(c).is_valid())
+	    {
+	      output << "      <component_info"
+		     << " id=\"" << comp_set(c).id()
+		     << "\" mass_center_x=\"" << comp_set(c).mass_center().col()
+		     << "\" mass_center_y=\"" << comp_set(c).mass_center().row()
+		     << "\" card=\"" <<  comp_set(c).card()
+		     << "\" tag=\"" <<  comp_set(c).tag()
+		     << "\" type=\"" <<  comp_set(c).type()
+		     << "\" pmin_x=\"" << comp_set(c).bbox().pmin().col()
+		     << "\" pmin_y=\"" << comp_set(c).bbox().pmin().row()
+		     << "\" pmax_x=\"" << comp_set(c).bbox().pmax().col()
+		     << "\" pmax_y=\"" << comp_set(c).bbox().pmax().row()
+		     << "\"/>" << std::endl;
+	    }
 
 
 	  // Save labeled image
@@ -426,6 +427,10 @@ namespace scribo
 	    output << "        <line " << std::endl;
 
 	  output << "id=\"" << line.id()
+		 << "\" boldness=\"" << line.boldness()
+		 << "\" boldness_reliability=\"" << line.boldness_reliability()
+		 << "\" color=\"" << line.color()
+		 << "\" color_reliability=\"" << line.color_reliability()
 		 << "\" txt_orientation=\"" << line.orientation()
 		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
 		 << "\" txt_reading_direction=\"" << line.reading_direction()

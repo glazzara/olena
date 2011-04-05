@@ -48,6 +48,7 @@
 # include <mln/extension/fill.hh>
 
 # include <scribo/core/component_set.hh>
+# include <scribo/estim/components_features.hh>
 
 
 
@@ -73,51 +74,64 @@ namespace scribo
       ///
       /// \return An image of labeled components.
       //
+      template <typename I, typename J, typename N, typename V>
+      inline
+      component_set<mln_ch_value(I,V)>
+      components(const Image<I>& input, const Image<J>& binary_input,
+		 const Neighborhood<N>& nbh, V& ncomponents,
+		 component::Type type = component::Undefined);
+
+
       template <typename I, typename N, typename V>
       inline
       component_set<mln_ch_value(I,V)>
-      components(const Image<I>& input,
+      components(const Image<I>& binary_input,
 		 const Neighborhood<N>& nbh, V& ncomponents,
 		 component::Type type = component::Undefined);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-      namespace internal
-      {
-
-        template <typename I, typename N, typename V>
-        inline
-	void
-        components_tests(const Image<I>& input,
-			 const Neighborhood<N>& nbh, V& ncomponents,
-			 component::Type type)
-	{
-	  mlc_equal(mln_value(I),bool)::check();
-//	  mlc_is_a(V, mln::value::Symbolic)::check();
-	  mln_precondition(exact(input).is_valid());
-	  mln_precondition(exact(nbh).is_valid());
-	  (void) input;
-	  (void) nbh;
-	  (void) ncomponents;
-	  (void) type;
-	}
-
-
-      } // end of namespace scribo::primitive::extract::internal
-
-
-      template <typename I, typename N, typename V>
+      template <typename I, typename J, typename N, typename V>
       inline
       component_set<mln_ch_value(I,V)>
-      components(const Image<I>& input,
+      components(const Image<I>& input, const Image<J>& binary_input,
 		 const Neighborhood<N>& nbh, V& ncomponents,
 		 component::Type type = component::Undefined)
       {
 	trace::entering("scribo::components");
 
-	internal::components_tests(input, nbh, ncomponents, type);
+	mlc_equal(mln_value(J),bool)::check();
+//	  mlc_is_a(V, mln::value::Symbolic)::check();
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(binary_input).is_valid());
+	mln_precondition(exact(nbh).is_valid());
+
+	typedef mln_ch_value(I,V) L;
+	component_set<L>
+	  output = extract::components(binary_input, nbh, ncomponents, type);
+
+	output = estim::components_features(input, binary_input, output);
+
+	trace::exiting("scribo::components");
+	return output;
+      }
+
+
+      template <typename I, typename N, typename V>
+      inline
+      component_set<mln_ch_value(I,V)>
+      components(const Image<I>& binary_input,
+		 const Neighborhood<N>& nbh, V& ncomponents,
+		 component::Type type = component::Undefined)
+      {
+	trace::entering("scribo::components");
+
+	mlc_equal(mln_value(I),bool)::check();
+//	  mlc_is_a(V, mln::value::Symbolic)::check();
+	mln_precondition(exact(binary_input).is_valid());
+	mln_precondition(exact(nbh).is_valid());
+
 
 	typedef mln_ch_value(I,V) L;
 	typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
@@ -125,14 +139,15 @@ namespace scribo
 	typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
 
 	// Setting extension value.
-	extension::fill(input, 0);
+	extension::fill(binary_input, false);
 
 	mln::util::couple<L,
-	  mln::util::couple<mln::util::array<mln_result(pair_accu_t)>,
-	  mln::util::array<pair_accu_t> > >
-
-	  results = labeling::value_and_compute(input, true, nbh, ncomponents,
-						pair_accu_t());
+			  mln::util::couple<
+			    mln::util::array<mln_result(pair_accu_t)>,
+			    mln::util::array<pair_accu_t> > >
+	results = labeling::value_and_compute(binary_input, true, nbh,
+					      ncomponents,
+					      pair_accu_t());
 
 	component_set<L>
 	  output(results.first(), ncomponents, results.second().second(), type);
@@ -140,6 +155,7 @@ namespace scribo
 	trace::exiting("scribo::components");
 	return output;
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
