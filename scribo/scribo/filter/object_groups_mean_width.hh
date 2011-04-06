@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,18 +24,18 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_OBJECT_GROUPS_V_THICKNESS_HH
-# define SCRIBO_FILTER_OBJECT_GROUPS_V_THICKNESS_HH
+#ifndef SCRIBO_FILTER_OBJECT_GROUPS_MEAN_WIDTH_HH
+# define SCRIBO_FILTER_OBJECT_GROUPS_MEAN_WIDTH_HH
 
 /// \file
 ///
-/// \brief Filter groups having their object mean thickness too low.
+/// \brief Filter groups having their object mean width too low.
 
 
 # include <mln/util/array.hh>
 
 # include <scribo/core/object_groups.hh>
-# include <scribo/estim/object_groups_v_thickness.hh>
+# include <scribo/estim/object_groups_mean_width.hh>
 
 
 namespace scribo
@@ -47,10 +47,10 @@ namespace scribo
     using namespace mln;
 
 
-    /*! \brief Filter groups having their object mean thickness too low.
+    /*! \brief Filter groups having their object mean width too low.
 
       \param[in] groups    Object group information.
-      \param[in] thickness Object group mean thickness must be greater
+      \param[in] width Object group mean width must be greater
       or equal to this value.
 
       \return Filtered object group information.
@@ -58,7 +58,7 @@ namespace scribo
      */
     template <typename L>
     object_groups<L>
-    object_groups_v_thickness(const object_groups<L>& groups, float thickness);
+    object_groups_mean_width(const object_groups<L>& groups, float width);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,24 +66,24 @@ namespace scribo
 
     template <typename L>
     object_groups<L>
-    object_groups_v_thickness(const object_groups<L>& groups, float thickness)
+    object_groups_mean_width(const object_groups<L>& groups, float width)
     {
-      trace::entering("scribo::filter::object_groups_v_thickness");
+      trace::entering("scribo::filter::object_groups_mean_width");
 
       mln_precondition(groups.is_valid());
-      mln_precondition(thickness >= 0);
+      mln_precondition(width >= 0);
 
       mln::util::array<float>
-	group_thickness = estim::object_groups_v_thickness(groups);
+	group_width = estim::object_groups_mean_width(groups);
 
       object_groups<L> output = groups.duplicate();
       output(0) = 0;
       for (unsigned i = 1; i < output.nelements(); ++i)
 	if (groups.components()(i).is_valid()
-	    && group_thickness[groups(i)] < thickness)
+	    && group_width[groups(i)] < width)
 	  output(i) = 0;
 
-      trace::exiting("scribo::filter::object_groups_v_thickness");
+      trace::exiting("scribo::filter::object_groups_mean_width");
       return output;
     }
 
@@ -96,4 +96,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_OBJECT_GROUPS_V_THICKNESS_HH
+#endif // ! SCRIBO_FILTER_OBJECT_GROUPS_MEAN_WIDTH_HH

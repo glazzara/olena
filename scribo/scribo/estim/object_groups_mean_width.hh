@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,13 +24,13 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_ESTIM_OBJECT_GROUPS_V_THICKNESS_HH
-# define SCRIBO_ESTIM_OBJECT_GROUPS_V_THICKNESS_HH
+#ifndef SCRIBO_ESTIM_OBJECT_GROUPS_MEAN_WIDTH_HH
+# define SCRIBO_ESTIM_OBJECT_GROUPS_MEAN_WIDTH_HH
 
 
 /// \file
 ///
-/// \brief Estimate the mean object thickness for each group.
+/// \brief Estimate the mean object width for each group.
 
 
 # include <mln/util/array.hh>
@@ -45,16 +46,16 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Estimate the mean object thickness for each group.
+    /*! \brief Estimate the mean object width for each group.
 
       \param[in] groups Object groups information.
 
-      \return An array of mean object thickness.
+      \return An array of mean object width.
 
      */
     template <typename L>
     mln::util::array<float>
-    object_groups_v_thickness(const object_groups<L>& groups);
+    object_groups_mean_width(const object_groups<L>& groups);
 
 
 
@@ -63,9 +64,9 @@ namespace scribo
 
     template <typename L>
     util::array<float>
-    object_groups_v_thickness(const object_groups<L>& groups)
+    object_groups_mean_width(const object_groups<L>& groups)
     {
-      trace::entering("scribo::estim::object_groups_v_thickness");
+      trace::entering("scribo::estim::object_groups_mean_width");
 
       mln_precondition(groups.is_valid());
 
@@ -79,8 +80,7 @@ namespace scribo
       for_all_comps(i, components)
 	if (components(i).is_valid())
 	{
-	  output(groups(i)) += components(i).bbox().pmax().row()
-	    - components(i).bbox().pmin().row();
+	  output(groups(i)) += components(i).bbox().width();
 	  ++group_card(groups(i));
 	}
 
@@ -91,7 +91,7 @@ namespace scribo
 	else
 	  output(i) = 0;
 
-      trace::exiting("scribo::estim::object_groups_v_thickness");
+      trace::exiting("scribo::estim::object_groups_mean_width");
       return output;
     }
 
@@ -103,4 +103,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_ESTIM_OBJECT_GROUPS_V_THICKNESS_HH
+#endif // ! SCRIBO_ESTIM_OBJECT_GROUPS_MEAN_WIDTH_HH

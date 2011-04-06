@@ -1,5 +1,15 @@
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename few routines.
+
+	* scribo/estim/object_groups_v_thickness.hh,
+	* scribo/filter/object_groups_v_thickness.hh: Rename as...
+
+	* scribo/estim/object_groups_mean_width.hh,
+	* scribo/filter/object_groups_mean_width.hh: ... this.
+
+2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more tests.
 
 	* tests/filter/Makefile.am: Add new targets.
