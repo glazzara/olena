@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,11 +19,35 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
   objects_with_holes 				\
+  object_links_bbox_h_ratio			\
+  object_links_bbox_w_ratio			\
+  object_links_bbox_overlap			\
+  object_links_bottom_aligned			\
+  object_links_center_aligned			\
+  object_links_left_aligned			\
+  object_links_right_aligned			\
+  object_links_top_aligned			\
+  object_groups_mean_width 			\
+  object_groups_size_ratio 			\
+  object_groups_small	 			\
+  object_groups_with_holes 			\
   components_small 				\
   components_large
 
 
 objects_with_holes_SOURCES = objects_with_holes.cc
+object_links_bbox_h_ratio_SOURCES = object_links_bbox_h_ratio.cc
+object_links_bbox_w_ratio_SOURCES = object_links_bbox_w_ratio.cc
+object_links_bbox_overlap_SOURCES = object_links_bbox_overlap.cc
+object_links_bottom_aligned_SOURCES = object_links_bottom_aligned.cc
+object_links_center_aligned_SOURCES = object_links_center_aligned.cc
+object_links_left_aligned_SOURCES = object_links_left_aligned.cc
+object_links_right_aligned_SOURCES = object_links_right_aligned.cc
+object_links_top_aligned_SOURCES = object_links_top_aligned.cc
+object_groups_mean_width_SOURCES = object_groups_mean_width.cc
+object_groups_size_ratio_SOURCES = object_groups_size_ratio.cc
+object_groups_small_SOURCES = object_groups_small.cc
+object_groups_with_holes_SOURCES = object_groups_with_holes.cc
 components_small_SOURCES = components_small.cc
 components_large_SOURCES = components_large.cc
 

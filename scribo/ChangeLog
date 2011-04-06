@@ -1,5 +1,26 @@
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add more tests.
+
+	* tests/filter/Makefile.am: Add new targets.
+
+	* tests/filter/object_groups_mean_width.cc,
+	* tests/filter/object_groups_size_ratio.cc,
+	* tests/filter/object_groups_small.cc,
+	* tests/filter/object_groups_with_holes.cc,
+	* tests/filter/object_links_bbox_h_ratio.cc,
+	* tests/filter/object_links_bbox_overlap.cc,
+	* tests/filter/object_links_bbox_w_ratio.cc,
+	* tests/filter/object_links_bottom_aligned.cc,
+	* tests/filter/object_links_center_aligned.cc,
+	* tests/filter/object_links_left_aligned.cc,
+	* tests/filter/object_links_right_aligned.cc,
+	* tests/filter/object_links_top_aligned.cc: New.
+
+	* scribo/tests/img/the_valleys.pbm: New test data.
+
+2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* scribo/core/component_features_data.hh: Fix default
