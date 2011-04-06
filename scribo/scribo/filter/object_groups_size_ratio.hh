@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,22 +70,22 @@ namespace scribo
       // Counting the number of objects per group with a size ratio >
       // max_ratio.
       mln::util::array<unsigned>
-	group_size(groups.size(), 0),
-	invalid_object_in_group(groups.size(), 0);
+	group_size(groups.nelements(), 0),
+	invalid_object_in_group(groups.nelements(), 0);
 
       for_all_comps(i, comps)
       {
-	if ((comps(i).bbox().nrows() / comps(i).bbox().ncols())
+	if ((comps(i).bbox().height() / comps(i).bbox().width())
 	    >= max_size_ratio)
-	  ++invalid_object_in_group[groups[i]];
+	  ++invalid_object_in_group(groups(i));
 
-	++group_size[groups[i]];
+	++group_size(groups(i));
       }
 
       object_groups<L> output(groups);
       output(0) = 0;
-      for (unsigned i = 1; i < output.size(); ++i)
-	if ((invalid_object_in_group[groups[i]] / static_cast<float>(group_size[groups[i]])) >= max_invalid_ratio_per_group
+      for (unsigned i = 1; i < output.nelements(); ++i)
+	if ((invalid_object_in_group(groups(i)) / static_cast<float>(group_size(groups(i)))) >= max_invalid_ratio_per_group
 	    || !comps(i).is_valid())
 	  output(i) = 0;
 

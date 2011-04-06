@@ -1,5 +1,9 @@
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/filter/object_groups_size_ratio.hh: Fix compilation.
+
+2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename few routines.
 
 	* scribo/estim/object_groups_v_thickness.hh,
