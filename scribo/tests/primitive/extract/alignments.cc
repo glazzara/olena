@@ -47,7 +47,7 @@ int main()
   for (unsigned i = 1; i < 5; ++i)
   {
     std::ostringstream os;
-    os << SCRIBO_IMG_DIR << "/alignment_" << i << ".png";
+    os << SCRIBO_IMG_DIR << "/alignment_" << i << ".pbm";
 
     document<L> doc(os.str().c_str());
     doc.open();
@@ -67,7 +67,6 @@ int main()
     os_out << SCRIBO_TESTS_DIR << "/primitive/extract/alignment_"
 	   << i << ".ref.pbm";
 
-    io::pbm::save(res.second(), "res.pbm");
     io::pbm::load(ref, os_out.str().c_str());
 
     mln_assertion(ref == res.second());

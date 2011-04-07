@@ -1,3 +1,19 @@
+2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Change test image format to pnm.
+
+	* tests/img/alignment_1.png,
+	* tests/img/alignment_2.png,
+	* tests/img/alignment_3.png,
+	* tests/img/alignment_4.png: Rename and convert as...
+
+	* tests/img/alignment_1.pbm,
+	* tests/img/alignment_2.pbm,
+	* tests/img/alignment_3.pbm,
+	* tests/img/alignment_4.pbm: ... this.
+
+	* tests/primitive/extract/alignments.cc: Update loaded image.
+
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen generated files.
