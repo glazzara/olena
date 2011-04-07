@@ -18,6 +18,11 @@
 include $(srcdir)/tests.mk
 
 EXTRA_DIST = 				\
+  img/alignment_1.pbm 			\
+  img/alignment_2.pbm			\
+  img/alignment_3.pbm			\
+  img/alignment_4.pbm			\
+  img/phillip.ppm 			\
   img/pixels.pbm 			\
   img/table_to_be_repaired.pbm		\
   img/table_to_be_repaired2.pbm		\

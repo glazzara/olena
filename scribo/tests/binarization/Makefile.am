@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,6 +19,10 @@
 ## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/tests/tests.mk
+
+EXTRA_DIST = 					\
+  sauvola_ms.ref.pbm				\
+  sauvola.ref.pbm
 
 check_PROGRAMS =				\
   global_threshold 				\

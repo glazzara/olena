@@ -1,5 +1,13 @@
 2011-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add test data in EXTRA_DIST.
+
+	scribo/tests/Makefile.am,
+	scribo/tests/binarization/Makefile.am,
+	scribo/tests/primitive/extract/Makefile.am: Here.
+
+2011-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new tests for Sauvola algorithms.
 
 	* tests/binarization/Makefile.am: Add new targets.
