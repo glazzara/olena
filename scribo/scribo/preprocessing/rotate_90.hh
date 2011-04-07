@@ -80,8 +80,12 @@ namespace scribo
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
-      mln_precondition(input.domain().pmin().row() > 0);
-      mln_precondition(input.domain().pmin().col() > 0);
+
+      // FIXME: Does this routine accept images with an origin
+      // different from (0,0) and with negative coordinates?
+      //
+      // mln_precondition(input.domain().pmin().row() > 0);
+      // mln_precondition(input.domain().pmin().col() > 0);
 
       // Works only on one block images.
       mlc_is(mln_trait_image_value_access(I),

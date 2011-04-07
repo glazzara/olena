@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
 {
   mln::trace::entering("main");
   using namespace mln;
+
+  Magick::InitializeMagick(0);
 
   if (argc != 6)
     return scribo::debug::usage(argv,

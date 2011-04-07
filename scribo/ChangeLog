@@ -1,5 +1,24 @@
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* scribo/core/component_features_data.hh: Fix default
+	attributes initialization.
+
+	* scribo/core/line_info.hh: Compute color and boldness if
+	available in components data.
+
+	* scribo/filter/object_links_left_aligned.hh,
+	* scribo/filter/object_links_right_aligned.hh: Fix doc.
+
+	* scribo/preprocessing/rotate_90.hh: Disable preconditions.
+
+	* scribo/primitive/extract/alignments.hh: Avoid a warning.
+
+	* src/preprocessing/split_bg_fg.cc: Initialize Magick++.
+
+2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Change test image format to pnm.
 
 	* tests/img/alignment_1.png,

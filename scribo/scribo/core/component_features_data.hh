@@ -38,6 +38,8 @@ namespace scribo
 
   struct component_features_data
   {
+    component_features_data();
+
     bool valid;
     scribo::def::color_type color;
     float boldness;
@@ -49,6 +51,12 @@ namespace scribo
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  component_features_data::component_features_data()
+    : valid(false)
+  {
+  }
+
 
   inline
   std::ostream&

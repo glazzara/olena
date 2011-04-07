@@ -559,6 +559,7 @@ namespace scribo
 	const object_groups<L>& groups = doc.paragraphs().lines().groups();
 	const line_set<L>& lines = doc.lines();
 
+	(void) groups; // Avoid warnings when debug is disabled.
 
 	// 1. Construct an image of group bounding boxes.
 	//
