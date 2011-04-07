@@ -40,4 +40,7 @@
 /// \brief The absolute path to the test directory of Scribo.
 # define SCRIBO_TESTS_DIR "@abs_top_srcdir@/scribo/tests/"
 
+/// \brief The absolute path to the img directory of Milena.
+# define MILENA_IMG_DIR "@abs_top_srcdir@/milena/img"
+
 #endif // ! SCRIBO_TESTS_DATA_HH

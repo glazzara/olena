@@ -21,10 +21,14 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
   global_threshold 				\
-  local_threshold
+  local_threshold	 			\
+  sauvola 					\
+  sauvola_ms
 
 
 global_threshold_SOURCES = global_threshold.cc
 local_threshold_SOURCES = local_threshold.cc
+sauvola_SOURCES = sauvola.cc
+sauvola_ms_SOURCES = sauvola_ms.cc
 
 TESTS = $(check_PROGRAMS)

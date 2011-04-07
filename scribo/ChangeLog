@@ -1,3 +1,17 @@
+2011-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new tests for Sauvola algorithms.
+
+	* tests/binarization/Makefile.am: Add new targets.
+
+	* tests/binarization/sauvola.cc,
+	* tests/binarization/sauvola_ms.cc: New.
+
+	* tests/binarization/sauvola.ref.pbm,
+	* tests/binarization/sauvola_ms.ref.pbm: New test data.
+
+	* tests/data.hh.in: Add a new path.
+
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/filter/object_groups_size_ratio.hh: Fix compilation.
