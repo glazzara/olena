@@ -1,3 +1,12 @@
+2011-04-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	apps/graph-morpho: Catch up with current mln::topo::is_n_face.
+
+	* apps/graph-morpho/morpho.hh
+	(trait::graph< mln::complex_image<1, G, V> >::is_vertex)
+	(trait::graph< mln::complex_image<1, G, V> >::is_edge):
+	Fix the return type.
+
 2011-03-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use priority-driven thinning in collapse-based thinnings apps.

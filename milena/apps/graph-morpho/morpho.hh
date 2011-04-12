@@ -144,17 +144,17 @@ namespace trait
   {
     // Return a functor saying whether a psite is a vertex or not.
     static
-    const mln::topo::is_n_face<0>& is_vertex()
+    const mln::topo::is_n_face<mln::complex_psite<1, G>, 0>& is_vertex()
     {
-      static mln::topo::is_n_face<0> is_vertex_fun;
+      static mln::topo::is_n_face<mln::complex_psite<1, G>, 0> is_vertex_fun;
       return is_vertex_fun;
     }
 
     // Return a functor saying whether a psite is a vertex or not.
     static
-    const mln::topo::is_n_face<1>& is_edge()
+    const mln::topo::is_n_face<mln::complex_psite<1, G>, 1>& is_edge()
     {
-      static mln::topo::is_n_face<1> is_edge_fun;
+      static mln::topo::is_n_face<mln::complex_psite<1, G>, 1> is_edge_fun;
       return is_edge_fun;
     }
 
