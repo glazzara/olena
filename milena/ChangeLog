@@ -1,3 +1,11 @@
+2011-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import the computation of (2D) connectivity numbers from sandbox.
+
+	* tools/compute_local_configurations.cc: New.
+	Imported from
+	sandbox/inim/2009/ocr/compute_local_configurations.cc.
+
 2010-08-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	New apps on generic skeletonization.
