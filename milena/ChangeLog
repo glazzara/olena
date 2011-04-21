@@ -1,5 +1,15 @@
 2011-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have tools/compute_local_configurations compile.
+
+	* tools/compute_local_configurations.cc: Add missing header
+	inclusion (mln/value/int_u8.hh).
+	Add copyright notice.
+	* tools/Makefile.am (noinst_PROGRAMS): Add
+	compute_local_configurations.
+
+2011-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Import the computation of (2D) connectivity numbers from sandbox.
 
 	* tools/compute_local_configurations.cc: New.
