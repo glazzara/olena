@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +47,7 @@ namespace mln
 
 
   // Forward declaration.
-  template <typename I, typename S> class sub_image_if;
+  template <typename I, typename S> struct sub_image_if;
 
 
   namespace internal
@@ -168,7 +169,7 @@ namespace mln
     {
       typedef fun::p2b::has<I> F;
       F f(ima);
-      s_ = p_if<S,F>(s, f); 
+      s_ = p_if<S,F>(s, f);
     }
 
   } // end of namespace mln::internal

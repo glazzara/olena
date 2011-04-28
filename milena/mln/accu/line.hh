@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,8 +64,8 @@ namespace mln
 	      typename I, typename O>
     void
     line(const Image<I>& input,
-	 const mln_site(I)& p_start, unsigned len,
-	 unsigned half_length,
+	 const mln_site(I)& p_start, def::coord len,
+	 def::coord half_length,
 	 Image<O>& output);
 
 
@@ -98,7 +99,7 @@ namespace mln
 	mln_precondition(input.is_valid());
 	mln_precondition(output.is_valid());
       }
-      
+
     } // end of namespace mln::accu::internal
 
 
@@ -107,7 +108,7 @@ namespace mln
 
       namespace generic
       {
-	
+
 	template <typename Meta_Accu, unsigned Dir,
 		  typename I, typename O>
 	void
@@ -212,8 +213,8 @@ namespace mln
 		typename I, typename O>
       void
       line_fastest(const Image<I>& input_,
-		   const mln_site(I)& p_start, unsigned len,
-		   unsigned half_length,
+		   const mln_site(I)& p_start, def::coord len,
+		   def::coord half_length,
 		   Image<O>& output_)
       {
 	typedef mln_site(I)  P;
@@ -371,7 +372,7 @@ namespace mln
 				      half_length,
 				      output);
       }
-      
+
     } // end of namespace mln::accu::internal
 
 

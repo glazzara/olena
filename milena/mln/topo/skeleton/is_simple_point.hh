@@ -209,7 +209,6 @@ namespace mln
 	    return internal::nb_connexity_c8[res];
 	  default:
 	    mln_assertion(0);
-
 	}
 	return 0;
       }

@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +51,7 @@ namespace mln
 {
 
   // Forward declarations.
-  template <typename I> struct labeled_image;
+  template <typename I> class labeled_image;
   namespace accu
   {
     template <typename T> struct nil;

@@ -74,9 +74,11 @@ namespace mln
 	template <typename V>
 	inline
 	void
-	from_int_to_value(const int&		    /* from */,
-			  Value<V>&		    /* to */)
+	from_int_to_value(const int&		    from,
+			  Value<V>&		    to)
 	{
+	  (void) from;
+	  (void) to;
 	  mlc_abort(V)::check();
 	}
 

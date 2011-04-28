@@ -677,8 +677,9 @@ namespace mln
   template <typename C>
   inline
   const util::yes&
-  cut_(const point<grid::tick,C>& /* p */)
+  cut_(const point<grid::tick,C>& p)
   {
+    (void) p;
     util::yes* the_;
     return *the_;
   }

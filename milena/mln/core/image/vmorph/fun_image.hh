@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -46,7 +46,7 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename F, typename I> class fun_image;
+  template <typename F, typename I> struct fun_image;
 
   namespace internal
   {

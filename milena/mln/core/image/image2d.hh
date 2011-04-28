@@ -59,7 +59,7 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename T> struct image2d;
+  template <typename T> class image2d;
 
 
   namespace internal

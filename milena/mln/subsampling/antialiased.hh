@@ -118,6 +118,11 @@ namespace mln
 		    const mln_domain(I)& output_domain,
 		    unsigned border_thickness)
 	{
+	  (void) input_;
+	  (void) factor;
+	  (void) output_domain;
+	  (void) border_thickness;
+
 	  // To be written...
 	  mlc_abort(I)::check();
 
@@ -314,6 +319,11 @@ namespace mln
 			   const mln_domain(I)& output_domain,
 			   unsigned border_thickness)
       {
+	(void) input;
+	(void) factor;
+	(void) output_domain;
+	(void) border_thickness;
+
 	// Not implemented yet.
 	mlc_abort(I)::check();
       }

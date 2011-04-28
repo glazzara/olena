@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,7 +58,7 @@ namespace mln
   namespace value
   {
     /// \{ Forward declarations.
-    namespace internal {class gray_f; }
+    namespace internal { struct gray_f; }
     struct graylevel_f;
     template <unsigned n> struct graylevel;
     struct float01_f;

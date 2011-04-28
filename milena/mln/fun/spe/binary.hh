@@ -71,6 +71,7 @@ namespace mln
 	  template <typename U>
 	  void init(const U& value)
 	  {
+	    (void) value;
 	  }
 
 	};

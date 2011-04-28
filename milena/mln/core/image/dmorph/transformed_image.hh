@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ namespace mln
 
 
   // Forward declaration.
-  template <typename I, typename F> class transformed_image;
+  template <typename I, typename F> struct transformed_image;
 
 
   namespace internal
@@ -221,7 +222,7 @@ namespace mln
     mln_precondition(this->delegatee_()->has(this->data_->f_(p)));
     return this->delegatee_()->operator()(this->data_->f_(p));
   }
-  
+
   template <typename I, typename F>
   inline
   mln_morpher_lvalue(I)

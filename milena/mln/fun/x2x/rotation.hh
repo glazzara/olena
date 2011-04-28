@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,6 +66,9 @@ namespace mln
 	algebra::h_mat<n, C>
 	get_rot_h_mat(const C alpha_, const algebra::vec<n,C>& axis_)
 	{
+	  (void) alpha_;
+	  (void) axis_;
+
 	  std::cerr
 	    << __FILE__ << ":" << __LINE__ << ": error:"
 	    << " generic mln::fun::x2x::internal::get_rot_h_mat<n, C>"

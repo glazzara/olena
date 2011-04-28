@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -82,9 +82,9 @@ namespace mln
 	void do_no_union(const P&, const P&) {}
 	void init_attr(const P&)             {}
 	void merge_attr(const P&, const P&)  {}
-	void set_new_label(const P& p, const L& l){}
-	void set_label(const P& p, const L& l)    {}
-	void finalize()                           {}
+	void set_new_label(const P&, const L&){}
+	void set_label(const P&, const L&)    {}
+	void finalize()                       {}
 
 
 	// Fastest implementation.

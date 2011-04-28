@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,6 +66,8 @@ namespace mln
     {
       trace::entering("subsampling::gaussian_subsampling");
       mln_precondition(exact(input).is_valid());
+
+      (void) sigma;
 
       mln_concrete(I) temp(exact(input).domain());
       mln_concrete(I) output(geom::nrows(input) / gap,

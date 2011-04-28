@@ -42,8 +42,8 @@ namespace mln
 
   /// Forward declaration
   template <typename G, typename S> class  graph_elt_window;
-  template <typename G, typename F> struct p_edges;
-  template <typename G, typename F> struct p_vertices;
+  template <typename G, typename F> class p_edges;
+  template <typename G, typename F> class p_vertices;
   namespace util
   {
     template <typename G> class edge;

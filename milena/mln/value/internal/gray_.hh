@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,8 +58,8 @@ namespace mln
     /// \{ Forward declarations.
     template <unsigned n>
     struct graylevel;
-    template <unsigned N> class graylevel;
-    class graylevel_f;
+    template <unsigned N> struct graylevel;
+    struct graylevel_f;
     namespace internal
     {
       template <unsigned n> class gray_;
@@ -488,6 +489,8 @@ namespace mln
     void
     operator+(const graylevel<n>& lhs, const I& i)
     {
+      (void) lhs;
+      (void) i;
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
@@ -498,6 +501,8 @@ namespace mln
     void
     operator+(const I& i, const graylevel<n>& rhs)
     {
+      (void) i;
+      (void) rhs;
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
@@ -516,6 +521,8 @@ namespace mln
     void
     operator-(const graylevel<n>& lhs, const I& i)
     {
+      (void) lhs;
+      (void) i;
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
@@ -526,6 +533,8 @@ namespace mln
     void
     operator-(const I& i, const graylevel<n>& rhs)
     {
+      (void) i;
+      (void) rhs;
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
@@ -592,7 +601,7 @@ namespace mln
     /// \{ Forward declarations.
     namespace internal
     {
-      class gray_f;
+      struct gray_f;
     }
     /// \}
 

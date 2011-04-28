@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,7 @@ namespace mln
 {
 
   // Forward declarations.
-  template <typename S, typename F> struct p_transformed;
+  template <typename S, typename F> class p_transformed;
   template <typename Pi, typename S, typename F> struct p_transformed_piter;
 
 

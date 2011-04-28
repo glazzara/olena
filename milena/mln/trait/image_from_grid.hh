@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,7 @@ namespace mln
 
   // Fwd decls.
   template <typename T> struct image1d;
-  template <typename T> struct image2d;
+  template <typename T> class image2d;
   template <typename T> struct image3d;
 
 

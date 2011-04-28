@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ namespace mln
 {
 
   // Fwd decl.
-  template <typename T, typename I> class cast_image_;
+  template <typename T, typename I> struct cast_image_;
 
 
   namespace internal

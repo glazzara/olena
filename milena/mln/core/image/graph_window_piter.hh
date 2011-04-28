@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -209,8 +209,8 @@ namespace mln
 
     using super_impl_::do_start_;
 
-    friend class internal::impl_selector<typename W::center_t, mln_psite(W),
-					 graph_window_piter<S,W,I> > ;
+    friend struct internal::impl_selector<typename W::center_t, mln_psite(W),
+					  graph_window_piter<S,W,I> > ;
 
   private:
     I iter_;

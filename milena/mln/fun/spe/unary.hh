@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -175,6 +176,7 @@ namespace mln
 	  template <typename U>
 	  void init(const U& value)
 	  {
+	    (void) value;
 	  };
 
 	};

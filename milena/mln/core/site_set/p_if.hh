@@ -41,7 +41,7 @@ namespace mln
 {
 
   // Forward declarations.
-  template <typename S, typename F> struct p_if;
+  template <typename S, typename F> class p_if;
   template <typename Pi, typename S, typename F> struct p_if_piter_;
 
 
@@ -114,7 +114,7 @@ namespace mln
     bool is_valid() const;
 
 
-    /// Test if \p p belongs to the subset. 
+    /// Test if \p p belongs to the subset.
     bool has(const psite& p) const;
 
     /// Give the primary overset.
@@ -184,7 +184,7 @@ namespace mln
   {
     return f_(p);
   }
-  
+
   template <typename S, typename F>
   inline
   p_if<S,F>::p_if(const S& s, const F& f)

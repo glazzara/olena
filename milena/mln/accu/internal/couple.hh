@@ -53,10 +53,11 @@ namespace mln
       ///
       /// \todo Check that, when T is not provided, A1 and A2 have the same value.
       template <typename A1, typename A2, typename R, typename E>
-      struct couple
-        : base<R,E>,
-	  mlc_equal(mln_argument(A1), mln_argument(A2))::check_t
+      class couple
+        : public base<R,E>,
+	  public mlc_equal(mln_argument(A1), mln_argument(A2))::check_t
       {
+	public:
         typedef mln_argument(A1) argument;
 
 	/// Manipulators.

@@ -199,7 +199,8 @@ namespace mln
       {
 	trace::warning("border::mirror for 3D image is not implemented,"
 		       " so image borders have not been mirrored!");
-	mln::internal::fixme();
+	(void) ima;
+	// FIXME write it!
       }
 
 

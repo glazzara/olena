@@ -63,13 +63,13 @@ namespace mln
 
   template <typename D> class neighb;
   template <typename D> class window;
-  template <typename D, typename W> class w_window;
+  template <typename D, typename W> struct w_window;
 
   template <typename T> struct image1d;
 
   namespace algebra {
     template <unsigned n, typename T> class vec;
-    template <unsigned d, typename C> class h_vec;
+    template <unsigned d, typename C> struct h_vec;
   }
 
   namespace fun {

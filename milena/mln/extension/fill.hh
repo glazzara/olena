@@ -104,6 +104,8 @@ namespace mln
 		   mln::trait::image::ext_domain::any,
 		   I& ima, const mln_value(I)& val)
       {
+	(void) ima;
+	(void) val;
 	// Oops...
       }
 

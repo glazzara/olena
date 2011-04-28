@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -87,9 +87,11 @@ namespace mln
 	template <typename V>
 	inline
 	void
-	from_float_to_value(const float&	      /* from */,
-			    Value<V>&		      /* to */)
+	from_float_to_value(const float&	      from,
+			    Value<V>&		      to)
 	{
+	  (void) from;
+	  (void) to;
 	  mlc_abort(V)::check();
 	}
 

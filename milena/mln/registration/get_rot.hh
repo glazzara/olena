@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,12 @@ namespace mln
             const algebra::vec<2u,float>& mu_xk)
     {
       assert(0 && "TODO");
+
+      (void) c;
+      (void) mu_c;
+      (void) ck;
+      (void) map;
+      (void) mu_xk;
 
       //////SLOW VERSION
 

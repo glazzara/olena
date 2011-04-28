@@ -132,7 +132,8 @@ namespace mln
   {
     return
       exact(this)->is_valid()
-      ? 1 + exact(this)->pmax()[i] - exact(this)->pmin()[i]
+      ? static_cast<unsigned>(1 + exact(this)->pmax()[i]
+			      - exact(this)->pmin()[i])
       : 0u;
   }
 

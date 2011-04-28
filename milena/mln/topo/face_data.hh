@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -51,7 +51,7 @@ namespace mln
     {
       template <unsigned N, unsigned D> struct lower_dim_faces_set_mixin;
       template <unsigned N, unsigned D> struct higher_dim_faces_set_mixin;
-      
+
       template <unsigned N, unsigned D>
       struct lower_dim_adj_faces_if_dim_matches_;
       template <unsigned N, unsigned D>

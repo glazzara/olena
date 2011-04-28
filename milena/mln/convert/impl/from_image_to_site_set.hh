@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -107,7 +108,6 @@ namespace mln
 			       const std::pair< mln_value(I), p_run<P> >&)
 	{
 	  s.clear();
-	  mln_value(I) O = literal::zero;
 	  mln_fwd_piter(I) p(input.domain());
 	  p.start();
 	  for (;;)
