@@ -45,9 +45,9 @@ int main()
 
   std::string img = SCRIBO_IMG_DIR "/the_valleys.pbm";
 
-  const unsigned ref[] = { 0, 1, 7, 3, 4, 3, 3, 7, 7, 3, 3, 3, 3 };
-  const unsigned filtered_ref[] = { 0, 0, 0, 3, 0, 3, 3, 0, 0, 3, 3, 3, 3 };
-  const unsigned size_ref[] = { 0, 1, 0, 7, 1, 0, 0, 3, 0, 0, 0, 0, 0 };
+  const bool ref[] = { false, true, true, true, true };
+  const bool filtered_ref[] = { false, false, true, false, false };
+  const unsigned size_ref[] = { 0, 1, 7, 1, 3 };
 
 
   image2d<bool> input;
@@ -63,25 +63,17 @@ int main()
 
   object_groups<L> groups = primitive::group::from_single_link(links);
 
+  mln_assertion(groups.nelements() == 5);
   for_all_groups(g, groups)
-    mln_assertion(groups(g) == ref[g]);
+    mln_assertion(groups(g).is_valid() == ref[g]);
 
+  object_groups<L> groups2 = filter::object_groups_small(groups, 4);
+
+  for_all_groups(g, groups2)
   {
-    object_groups<L> groups2 = filter::object_groups_small(groups, 4);
-
-    for_all_groups(g, groups2)
-      mln_assertion(groups2(g) == filtered_ref[g]);
+    mln_assertion(groups2(g).is_valid() == filtered_ref[g]);
+    mln_assertion(groups2(g).card() == size_ref[g]);
   }
 
-  {
-    mln::util::array<unsigned> group_size;
-    object_groups<L> groups2 = filter::object_groups_small(groups, 4, group_size);
-
-    for_all_groups(g, groups2)
-    {
-      mln_assertion(groups2(g) == filtered_ref[g]);
-      mln_assertion(group_size(g) == size_ref[g]);
-    }
-  }
 
 }

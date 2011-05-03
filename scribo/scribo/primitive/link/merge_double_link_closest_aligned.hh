@@ -129,14 +129,12 @@ namespace scribo
 
 	    if (right(left(l)) == left(l))
 	    {
-	      output(left(l)) = l;
-	      //output.update_link(left(l), l);
+	      output.update(left(l), l);
 	    }
 	    else if ((dh < align_data(left(l)).first() * 0.66f)
 		     || (alpha < align_data(left(l)).second()))
 	    {
-	      output(left(l)) = l;
-	      //output.update_link(left(l), l);
+	      output.update(left(l), l);
 	      align_data(left(l)).first() = dh;
 	      align_data(left(l)).second() = alpha;
 	    }

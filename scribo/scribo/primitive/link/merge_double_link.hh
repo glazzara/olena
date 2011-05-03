@@ -93,19 +93,20 @@ namespace scribo
 
 	const component_set<L>& components = left_link.components();
 
-	object_links<L> merge = left_link.duplicate();
+	object_links<L> merge(components);
+	merge.init();
 
-	for_all_ncomponents(i, components.nelements())
+	for_all_comps(i, components)
 	{
 	  if (components(i).tag() == component::Ignored)
-	    merge(i) = 0;
+	    merge.disable_linking(i);
 	  else
 	  {
-	    mln::util::couple<bool, unsigned>
-	      nbh = primitive::internal::is_link_valid(left_link,
-						       right_link, i);
-	    if (!nbh.first())
-	      merge(i) = i;
+	    if (primitive::internal::is_link_valid(left_link,
+						   right_link, i))
+	      merge.update(i, left_link(i));
+	    else
+	      merge.clear(i);
 	  }
 	}
 

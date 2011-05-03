@@ -72,24 +72,17 @@ namespace scribo
 
       const component_set<L>& components = groups.components();
 
-      //FIXME: remove when object_groups will store the number of
-      //elements per group.
-      mln::util::array<unsigned> group_card(groups.nelements(), 0.0);
-
       mln::util::array<float> output(groups.nelements(), 0.0);
-      for_all_comps(i, components)
-	if (components(i).is_valid())
-	{
-	  output(groups(i)) += components(i).bbox().width();
-	  ++group_card(groups(i));
-	}
+      for_all_groups(g, groups)
+	for_all_elements(e, groups(g).component_ids())
+	  output(g) += components(groups(g).component_ids()(e)).bbox().width();
 
       output(0) = 0;
-      for_all_groups(i, output)
-	if (components(i).is_valid())
-	  output(i) /= static_cast<float>(group_card(i));
+      for_all_groups(g, groups)
+	if (groups(g).is_valid())
+	  output(g) /= groups(g).card();
 	else
-	  output(i) = 0;
+	  output(g) = 0;
 
       trace::exiting("scribo::estim::object_groups_mean_width");
       return output;

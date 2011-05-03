@@ -1,3 +1,37 @@
+2011-05-03  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Improve object_groups and object_links API.
+
+	* scribo/core/group_info.hh,
+	* scribo/core/internal/sort_comp_ids.hh: New.
+
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh: Improve API.
+
+	* scribo/core/line_info.hh,
+	* scribo/core/line_set.hh,
+	* scribo/debug/decision_image.hh,
+	* scribo/estim/object_groups_mean_width.hh,
+	* scribo/filter/object_groups_mean_width.hh,
+	* scribo/filter/object_groups_size_ratio.hh,
+	* scribo/filter/object_groups_small.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/object_links_bbox_overlap.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/object_links_non_aligned_simple.hh,
+	* scribo/primitive/group/from_double_link_any.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/internal/is_link_valid.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/internal/link_several_dmax_base.hh,
+	* scribo/primitive/link/merge_double_link.hh,
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh,
+	* tests/filter/object_groups_mean_width.cc,
+	* tests/filter/object_groups_size_ratio.cc,
+	* tests/filter/object_groups_small.cc,
+	* tests/filter/object_groups_with_holes.cc: Update code to take
+	API changes into account.
+
 2011-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add test data in EXTRA_DIST.

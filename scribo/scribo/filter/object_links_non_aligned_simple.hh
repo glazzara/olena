@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -112,7 +112,7 @@ namespace scribo
 	  if (!::scribo::filter::internal::component_aligned_rad(comps, i, links(i),
 								 anchor,
 								 max_alpha_rad))
-	    output(i) = i;
+	    output.clear(i);
 
 
       trace::exiting("scribo::filter::object_links_non_aligned_simple");

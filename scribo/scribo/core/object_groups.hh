@@ -36,7 +36,12 @@
 # include <scribo/core/object_links.hh>
 # include <scribo/core/component_set.hh>
 
+# include <scribo/core/group_info.hh>
+# include <scribo/core/internal/sort_comp_ids.hh>
 # include <scribo/core/concept/serializable.hh>
+
+// Not to include.
+//#include <scribo/core/line_info.hh>
 
 namespace scribo
 {
@@ -47,7 +52,6 @@ namespace scribo
   // Forward declaration.
   template <typename L> class object_groups;
 
-
   namespace internal
   {
     /// Data structure for \c scribo::object_groups<I>.
@@ -56,9 +60,12 @@ namespace scribo
     {
       object_groups_data();
       object_groups_data(const object_links<L>& links);
-      object_groups_data(const object_links<L>& links, unsigned value);
+      object_groups_data(const object_links<L>& links,
+			 const mln::util::array<group_info>& info);
 
       mln::util::array<unsigned> comp_to_group_;
+      mln::util::array<group_info> group_info_;
+
       component_set<L> components_;
       object_links<L> links_;
     };
@@ -78,26 +85,34 @@ namespace scribo
   public:
     object_groups();
     object_groups(const object_links<L>& links);
-    object_groups(const object_links<L>& links, unsigned value);
+    // Used for incremental construction (xml loading)
+    object_groups(const object_links<L>& links,
+		  const mln::util::array<group_info>& info);
 
     const component_set<L>& components() const;
     const object_links<L>& links() const;
 
-    void init_(const object_links<L>& links);
-
     bool is_valid() const;
-    bool is_valid(unsigned comp_id) const;
 
+
+    // Return the number of groups
     unsigned nelements() const;
 
-    unsigned& operator()(unsigned comp_id);
-    const unsigned& operator()(unsigned comp_id) const;
 
+    /// Return the group id of the component \p comp_id.
+    const group_info& group_of(unsigned comp_id) const;
+    group_info& group_of(unsigned comp_id);
+
+    /// Return group info data for group with id \p group_id.
+    /// Valid id starts from 1.
+    const group_info& operator()(unsigned group_id) const;
+    group_info& operator()(unsigned group_id);
+
+    // Map component ids to group ids.
     const mln::util::array<unsigned>& comp_to_group() const;
 
     object_groups<L> duplicate() const;
 
-    void init();
 
   private: // attributes
     mln::util::tracked_ptr<data_t> data_;
@@ -107,6 +122,10 @@ namespace scribo
   template <typename L>
   std::ostream&
   operator<<(std::ostream& ostr, const object_groups<L>& groups);
+
+  template <typename L>
+  bool
+  operator==(const object_groups<L>& lhs, const object_groups<L>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -127,17 +146,93 @@ namespace scribo
       : comp_to_group_(unsigned(links.nelements())),
 	components_(links.components()), links_(links)
     {
-    };
+      comp_to_group_ = links.comp_to_link();
 
+      unsigned ngroups = 0;
+      util::array<unsigned> new_id(comp_to_group_.nelements(), 0);
+      mln::util::array<mln::util::array<component_id_t> > comp_ids(1);
+      mln::util::array<accu::shape::bbox<mln_site(L)> > bboxes(1);
+      mln::util::array<unsigned> pixel_areas(1);
+
+      // Remove potential loops in linking
+      // FIXME: we may try to avoid loops while linking...
+      {
+      	util::array<bool> deja_vu(comp_to_group_.nelements());
+      	for_all_elements(e, comp_to_group_)
+      	  if (comp_to_group_(e) != e && comp_to_group_(e) != 0)
+      	  {
+	    deja_vu.fill(false); // FIXME: ugly!
+      	    unsigned cur = e;
+	    deja_vu(cur) = true;
+      	    while (comp_to_group_(cur) != cur && !deja_vu(comp_to_group_(cur)))
+      	    {
+      	      cur = comp_to_group_(cur);
+      	      deja_vu(cur) = true;
+      	    }
+      	    // Break the loop!
+      	    if (comp_to_group_(cur) != cur && deja_vu(comp_to_group_(cur)))
+      	      comp_to_group_(cur) = cur;
+      	  }
+      }
+
+      for_all_elements(e, comp_to_group_)
+	if (comp_to_group_(e) != 0)
+	{
+	  // Make sure there is no intermediate ids to reach the root.
+	  // FIXME: useful?
+	  unsigned e_root = internal::find_root(comp_to_group_, e);
+
+	  if (! new_id(e_root))
+	  {
+	    new_id(e_root) = ++ngroups;
+	    comp_ids.resize(comp_ids.size() + 1);
+	    bboxes.resize(bboxes.size() + 1);
+	    pixel_areas.resize(pixel_areas.size() + 1, 0);
+	  }
+
+	  unsigned nid = new_id(e_root);
+	  comp_ids(nid).append(e);
+
+	  bboxes(nid).take(components_(e).bbox());
+	  pixel_areas(nid) += components_(e).card();
+	}
+
+      group_info_.resize(1);
+      group_info_.reserve(ngroups);
+      util::array<unsigned> group_idx(ngroups + 1, 0);
+
+      for (unsigned i = 1; i < new_id.nelements(); ++i)
+	if (new_id(i))
+	{
+	  unsigned id = new_id(i);
+
+	  // Order component ids according to component localization (left
+	  // to right).
+	  std::sort(comp_ids(id).hook_std_vector_().begin(),
+		    comp_ids(id).hook_std_vector_().end(),
+		    internal::sort_comp_ids<L>(components_));
+
+	  group_idx(id) = group_info_.size();
+	  group_info_.append(group_info(group_info_.size(), comp_ids(id), pixel_areas(id), bboxes(id)));
+	}
+
+      // Update mapping comp/group with new ids.  Note: group id is
+      // different from its location in group_info array during
+      // construction.
+      for (unsigned i = 0; i < comp_to_group_.nelements(); ++i)
+	comp_to_group_(i) = group_idx(new_id(comp_to_group_(i)));
+    }
 
     template <typename L>
     object_groups_data<L>::object_groups_data(const object_links<L>& links,
-					      unsigned value)
-      : comp_to_group_(unsigned(links.nelements()), value),
+					      const mln::util::array<group_info>& info)
+      : comp_to_group_(unsigned(links.nelements())), group_info_(info),
 	components_(links.components()), links_(links)
     {
-    };
-
+      for_all_groups(g, group_info_)
+	for_all_elements(e, group_info_(g).component_ids())
+	  comp_to_group_(group_info_(g).component_ids()(e)) = group_info_(g).id();
+    }
 
   } // end of namespace scribo::internal
 
@@ -154,9 +249,10 @@ namespace scribo
   }
 
   template <typename L>
-  object_groups<L>::object_groups(const object_links<L>& links, unsigned value)
+  object_groups<L>::object_groups(const object_links<L>& links,
+				  const mln::util::array<group_info>& info)
   {
-    data_ = new data_t(links, value);
+    data_ = new data_t(links, info);
   }
 
   template <typename L>
@@ -175,59 +271,65 @@ namespace scribo
   }
 
   template <typename L>
-  void
-  object_groups<L>::init_(const object_links<L>& links)
-  {
-    mln_assertion(data_ != 0);
-    data_->comp_to_group_ = links.comp_to_link();
-  }
-
-  template <typename L>
   bool
   object_groups<L>::is_valid() const
   {
-    mln_assertion(data_->components_.nelements() == (nelements() - 1));
+    mln_assertion(data_->components_.nelements() == data_->comp_to_group_.nelements() - 1);
     return data_->links_.is_valid();
-  }
-
-  template <typename L>
-  bool
-  object_groups<L>::is_valid(unsigned comp_id) const
-  {
-    mln_assertion(is_valid());
-    mln_assertion(comp_id < data_->links_.nelements());
-    return data_->links_(comp_id) != 0;
   }
 
   template <typename L>
   unsigned
   object_groups<L>::nelements() const
   {
-    return data_->comp_to_group_.nelements();
+    return data_->group_info_.nelements();
   }
 
-
   template <typename L>
-  unsigned&
-  object_groups<L>::operator()(unsigned comp_id)
+  const group_info&
+  object_groups<L>::group_of(unsigned comp_id) const
   {
-    return data_->comp_to_group_(comp_id);
+    mln_precondition(comp_id < data_->comp_to_group_.nelements());
+    mln_assertion(data_->group_info_(data_->comp_to_group_(comp_id)).id()
+		  == data_->comp_to_group_(comp_id));
+    return data_->group_info_(data_->comp_to_group_(comp_id));
   }
 
-
   template <typename L>
-  const unsigned&
-  object_groups<L>::operator()(unsigned comp_id) const
+  group_info&
+  object_groups<L>::group_of(unsigned comp_id)
   {
-    return data_->comp_to_group_(comp_id);
+    mln_precondition(comp_id < data_->comp_to_group_.nelements());
+    mln_assertion(data_->group_info_(data_->comp_to_group_(comp_id)).id()
+		  == data_->comp_to_group_(comp_id));
+    return data_->group_info_(data_->comp_to_group_(comp_id));
   }
 
   template <typename L>
-  const mln::util::array<unsigned>&
+  const util::array<unsigned>&
   object_groups<L>::comp_to_group() const
   {
     return data_->comp_to_group_;
   }
+
+
+  template <typename L>
+  const group_info&
+  object_groups<L>::operator()(unsigned group_id) const
+  {
+    mln_precondition(group_id < data_->group_info_.nelements());
+    return data_->group_info_(group_id);
+  }
+
+
+  template <typename L>
+  group_info&
+  object_groups<L>::operator()(unsigned group_id)
+  {
+    mln_precondition(group_id < data_->group_info_.nelements());
+    return data_->group_info_(group_id);
+  }
+
 
   template <typename L>
   inline
@@ -242,28 +344,48 @@ namespace scribo
   }
 
   template <typename L>
-  void
-  object_groups<L>::init()
-  {
-    for (unsigned i = 0; i < nelements(); ++i)
-      data_->comp_to_group_(i) = i;
-  }
-
-
-  template <typename L>
   std::ostream&
   operator<<(std::ostream& ostr, const object_groups<L>& groups)
   {
     ostr << "object_groups[";
 
     for_all_groups(g, groups)
-      ostr << g << "->" << groups.comp_to_group()[g] << ", ";
+      ostr << groups(g) << ", ";
+
+    ostr << " | comp_to_group=" << groups.comp_to_group();
 
     ostr << "]";
 
     return ostr;
   }
 
+
+  template <typename L>
+  bool
+  operator==(const object_groups<L>& lhs, const object_groups<L>& rhs)
+  {
+    if (! (lhs.components() == rhs.components()))
+    {
+      std::cout << "group.comp" << std::endl;
+      return false;
+    }
+
+    if (!( lhs.comp_to_group() == rhs.comp_to_group() && lhs.nelements() == rhs.nelements()))
+    {
+      std::cout << "group.comp_to_group" << std::endl;
+      return false;
+    }
+
+
+    for_all_groups(g, lhs)
+      if (! (lhs(g) == rhs(g)))
+      {
+	std::cout << "group.info" << std::endl;
+	return false;
+      }
+
+    return true;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

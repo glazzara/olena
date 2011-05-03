@@ -123,6 +123,9 @@ namespace scribo
     /// Return line information for a given line id \p id.
     const line_info<L>& operator()(const line_id_t& id) const;
 
+    /// Return all the line information.
+    const mln::util::array<line_info<L> >& infos() const;
+
     /// Update tag of lines set to 'false' in \p f with \p tag.
     template <typename F>
     void update_tags(const mln::Function_v2b<F>& f, line::Tag tag);
@@ -166,13 +169,17 @@ namespace scribo
 
     void update_line_data_(const mln::util::array<line_info<L> >& line_data);
 
-
   private:
     /// Duplicate the underlying image and create a new line_set.
     void init_(const line_set<L>& model);
 
     mln::util::tracked_ptr< internal::line_set_data<L> > data_;
   };
+
+
+  template <typename L>
+  bool
+  operator==(const line_set<L>& lhs, const line_set<L>& rhs);
 
   template <typename L>
   std::ostream&
@@ -260,38 +267,14 @@ namespace scribo
   {
     data_ = new internal::line_set_data<L>(groups);
 
-    typedef mln_site(L) P;
-
-    mln_value(L) n_groups = groups.nelements() - 1;
-    mln::fun::i2v::array<mln_value(L)>
-      packed_groups = mln::make::relabelfun(groups.comp_to_group(),
-					    n_groups, n_groups);
-
-    // FIXME: object_groups should store the relation 'group -> comp'.
-    mln::util::array< mln::util::array<component_id_t> >
-      group_to_comps(value::next(n_groups));
-
-
-    // 1st pass - Compute data.
-    for_all_comps(i, data_->components_)
-      if (data_->components_(i).is_valid())
-      {
-	unsigned group_id = packed_groups(i);
-	if (group_id != 0) // Is this component part of a group?
-	{
-	  // Component id.
-	  group_to_comps(group_id).append(i);
-	}
-      }
-
     // 2nd pass - Store data.
-    data_->infos_.reserve(group_to_comps.size());
+    data_->infos_.reserve(groups.nelements());
     data_->infos_.append(line_info<L>()); // line with id 0 is invalid.
 
-    for_all_groups(i, group_to_comps)
+    for_all_groups(i, groups)
     {
       // Add line info.
-      line_info<L> info(*this, i, group_to_comps(i));
+      line_info<L> info(*this, i, groups(i));
       data_->infos_.append(info);
     }
   }
@@ -336,6 +319,13 @@ namespace scribo
   line_set<L>::operator()(const line_id_t& id)
   {
     return this->data_->infos_[id];
+  }
+
+  template <typename L>
+  const mln::util::array<line_info<L> >&
+  line_set<L>::infos() const
+  {
+    return this->data_->infos_;
   }
 
   template <typename L>
@@ -435,6 +425,26 @@ namespace scribo
   line_set<L>::init_(const line_set<L>& set)
   {
     data_ = new internal::line_set_data<L>(set.infos_(), set.groups());
+  }
+
+  template <typename L>
+  bool
+  operator==(const line_set<L>& lhs, const line_set<L>& rhs)
+  {
+    if (! (lhs.groups() == rhs.groups() && lhs.nelements() == rhs.nelements()))
+    {
+      std::cout << "line.group" << std::endl;
+      return false;
+    }
+
+    for_all_lines(l, lhs)
+      if ( ! (lhs(l) != rhs(l)))
+      {
+	std::cout << "line.info" << std::endl;
+	return false;
+      }
+
+    return true;
   }
 
 

@@ -50,18 +50,10 @@ namespace scribo
 
       \param[in] groups Information about object groups.
       \param[in] n_links The minimum number of links per group.
-      \param[out] group_size Return the group sizes _before_ filtering.
 
       \return A copy of object group in which small groups have been
       removed.
     */
-    template <typename L>
-    object_groups<L>
-    object_groups_small(const object_groups<L>& groups,
-			unsigned n_links,
-			mln::util::array<unsigned>& group_size);
-
-    // \overload
     template <typename L>
     object_groups<L>
     object_groups_small(const object_groups<L>& groups,
@@ -76,41 +68,21 @@ namespace scribo
     inline
     object_groups<L>
     object_groups_small(const object_groups<L>& groups,
-			unsigned n_links,
-			mln::util::array<unsigned>& group_size)
+			unsigned n_links)
     {
       trace::entering("scribo::filter::object_groups_small");
 
       mln_precondition(groups.is_valid());
 
-      // Counting the number of objects per group.
-      group_size = mln::util::array<unsigned>(groups.nelements(), 0);
-      for_all_groups(i, group_size)
-	++group_size[groups(i)];
-
       object_groups<L> output = groups.duplicate();
-      output(0) = 0;
+
       for_all_groups(i, output)
-	if (group_size[groups(i)] < n_links
-	    || !groups.components()(i).is_valid())
-	  output(i) = 0;
+	if (output(i).is_valid() && output(i).card() < n_links)
+	  output(i).invalidate();
 
       trace::exiting("scribo::filter::object_groups_small");
       return output;
     }
-
-
-    template <typename L>
-    inline
-    object_groups<L>
-    object_groups_small(const object_groups<L>& groups,
-			unsigned n_links)
-    {
-      mln::util::array<unsigned> group_size;
-      return object_groups_small(groups, n_links, group_size);
-    }
-
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

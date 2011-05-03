@@ -45,8 +45,8 @@ int main()
 
   std::string img = SCRIBO_IMG_DIR "/the_valleys.pbm";
 
-  const unsigned ref[] = { 0, 1, 7, 3, 4, 3, 3, 7, 7, 3, 3, 3, 3 };
-  const unsigned filtered_ref[] = { 0, 0, 7, 3, 0, 3, 3, 7, 7, 3, 3, 3, 3 };
+  const bool ref[] = { false, true, true, true, true };
+  const bool filtered_ref[] = { 0, false, true, true, false };
 
   image2d<bool> input;
   io::pbm::load(input, img.c_str());
@@ -61,11 +61,13 @@ int main()
 
   object_groups<L> groups = primitive::group::from_single_link(links);
 
+  mln_assertion(groups.nelements() == 5);
   for_all_groups(g, groups)
-    mln_assertion(groups(g) == ref[g]);
+    mln_assertion(groups(g).is_valid() == ref[g]);
 
   groups = filter::object_groups_with_holes(groups, 3);
 
+  mln_assertion(groups.nelements() == 5);
   for_all_groups(g, groups)
-    mln_assertion(groups(g) == filtered_ref[g]);
+    mln_assertion(groups(g).is_valid() == filtered_ref[g]);
 }

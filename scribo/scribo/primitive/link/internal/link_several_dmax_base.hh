@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -248,15 +248,15 @@ namespace scribo
 
 	    if (nratio == 1)
 	    {
-	      this->links_(current_object)
-		= labeled_image_(potential_links_(id_max_ratio).second());
+	      this->links_.update(current_object,
+				  labeled_image_(potential_links_(id_max_ratio).second()));
 
 	      return potential_links_(id_max_ratio);
 	    }
 
 	  }
 
-	  this->links_(current_object) = current_object;
+	  this->links_.clear(current_object);
 	  return mln::make::couple(anchor::Invalid, P());
 	}
 

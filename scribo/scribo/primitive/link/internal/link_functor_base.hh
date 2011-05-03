@@ -477,7 +477,7 @@ namespace scribo
 	{
 	  (void) start_point;
 	  (void) anchor;
-	  this->links_(current_object) = this->labeled_image_(p);
+	  this->links_.update(current_object, this->labeled_image_(p));
 	}
 
 

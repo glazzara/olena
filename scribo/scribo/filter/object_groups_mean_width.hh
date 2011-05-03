@@ -77,11 +77,11 @@ namespace scribo
 	group_width = estim::object_groups_mean_width(groups);
 
       object_groups<L> output = groups.duplicate();
-      output(0) = 0;
-      for (unsigned i = 1; i < output.nelements(); ++i)
-	if (groups.components()(i).is_valid()
-	    && group_width[groups(i)] < width)
-	  output(i) = 0;
+
+      for_all_groups(g, groups)
+	if (groups(g).is_valid()
+	    && group_width[g] < width)
+	  output(g).invalidate();
 
       trace::exiting("scribo::filter::object_groups_mean_width");
       return output;

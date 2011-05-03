@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,6 +43,7 @@
 
 # include <scribo/core/macros.hh>
 
+# include <scribo/core/object_links.hh>
 # include <scribo/core/object_groups.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_root.hh>
@@ -73,6 +75,21 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+      namespace internal
+      {
+
+	template <typename L>
+	util::array<unsigned> make_parent(const object_links<L>& link)
+	{
+	  mln::util::array<unsigned> parent = link.comp_to_link();
+	  for_all_links(l, link)
+	    parent(l) = scribo::internal::find_root(parent, l);
+
+	  return parent;
+	}
+
+      } // end of namespace scribo::primitive::group::internal
+
 
       template <typename L>
       inline
@@ -82,40 +99,46 @@ namespace scribo
       {
 	trace::entering("scribo::primitive::group::from_double_link_any");
 
-	object_groups<L> parent(left_link);
-	parent.init();
+	object_links<L> merged_link(left_link.components());
+	merged_link.init();
 
-	for_all_comps(i, left_link.components())
+	util::array<unsigned> lparent = internal::make_parent(left_link);
+	util::array<unsigned> rparent = internal::make_parent(right_link);
+
+	for_all_links(i, merged_link)
 	{
+	  // Looking for new left link
 	  unsigned
-	    pi = internal::find_root(parent, i),
-	    pli = internal::find_root(parent, left_link(i));
+	    pi = scribo::internal::find_root(lparent, i),
+	    pli = scribo::internal::find_root(lparent, left_link(i));
 
 	  if (pi != pli)
 	  {
-	    if (pli < pi)
-	      parent(pli) = pi;
+	    merged_link.update(i, left_link(i));
+	    if (pi < pli)
+	      lparent(pli) = pi;
 	    else
-	      parent(pi) = pli;
+	      lparent(pi) = pli;
 	  }
 
-	  pi = internal::find_root(parent, i);
-	  unsigned pri = internal::find_root(parent, right_link(i));
+	  // Looking for new right link
+	  pi = scribo::internal::find_root(lparent, i);
+	  unsigned pri = scribo::internal::find_root(rparent, right_link(i));
 
 	  if (pi != pri)
 	  {
-	    if (pri < pi)
-	      parent(pri) = pi;
+	    merged_link.update(i, right_link(i));
+	    if (pi < pli)
+	      lparent(pli) = pi;
 	    else
-	      parent(pi) = pri;
+	      lparent(pi) = pli;
 	  }
 	}
 
-	for_all_groups(g, parent)
-	  internal::find_root(parent, g);
+	object_groups<L> output(merged_link);
 
 	trace::exiting("scribo::primitive::group::from_double_link_any");
-	return parent;
+	return output;
       }
 
 

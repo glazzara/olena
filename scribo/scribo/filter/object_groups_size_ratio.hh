@@ -65,29 +65,23 @@ namespace scribo
 
       const component_set<L>& comps = groups.components();
 
-      // FIXME: estimating the group size should be removed once
-      // available in the object_group structure.
       // Counting the number of objects per group with a size ratio >
       // max_ratio.
       mln::util::array<unsigned>
-	group_size(groups.nelements(), 0),
 	invalid_object_in_group(groups.nelements(), 0);
 
       for_all_comps(i, comps)
       {
 	if ((comps(i).bbox().height() / comps(i).bbox().width())
 	    >= max_size_ratio)
-	  ++invalid_object_in_group(groups(i));
-
-	++group_size(groups(i));
+	  ++invalid_object_in_group(groups.group_of(i).id());
       }
 
       object_groups<L> output(groups);
-      output(0) = 0;
-      for (unsigned i = 1; i < output.nelements(); ++i)
-	if ((invalid_object_in_group(groups(i)) / static_cast<float>(group_size(groups(i)))) >= max_invalid_ratio_per_group
-	    || !comps(i).is_valid())
-	  output(i) = 0;
+      for_all_groups(g, groups)
+	if ((invalid_object_in_group(g) / static_cast<float>(groups(g).card())) >= max_invalid_ratio_per_group
+	    || !groups(g).is_valid())
+	  output(g).invalidate();
 
       trace::exiting("scribo::filter::object_groups_size_ratio");
       return output;

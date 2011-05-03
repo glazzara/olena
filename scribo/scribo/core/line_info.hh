@@ -54,9 +54,11 @@
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
 
+# include <scribo/core/object_groups.hh>
 # include <scribo/core/line_set.hh>
 # include <scribo/core/component_set.hh>
 
+# include <scribo/core/internal/sort_comp_ids.hh>
 # include <scribo/core/concept/serializable.hh>
 
 
@@ -79,14 +81,16 @@ namespace scribo
     {
       line_info_data();
       line_info_data(const line_set<L>& holder,
-		      const mln::util::array<component_id_t>& comps);
-
+		     const group_info& group);
+      // Used for incremental construction (xml loading)
+      line_info_data(const line_set<L>& holder,
+		     const mln::util::array<component_id_t>& component_ids);
 
       bool hidden_;
       line::Tag tag_;
       mln::box2d bbox_;
       mln::box2d ebbox_;
-      mln::util::array<component_id_t> components_;
+      mln::util::array<component_id_t> component_ids_;
 
       // The number of pixels used for line characters.
       unsigned pixel_area_;
@@ -138,20 +142,10 @@ namespace scribo
       // Line set holding this element.
       line_set<L> holder_;
 
+    private:
+      void init_();
+
     };
-
-
-    // Functor used to sort components ids.
-    // Order by location from left to right.
-    template <typename L>
-    struct sort_comp_ids
-    {
-      sort_comp_ids(const component_set<L>& comp_set);
-      bool operator()(const component_id_t& l, const component_id_t& r) const;
-
-      component_set<L> comps_;
-    };
-
 
   } // end of namespace scribo::internal
 
@@ -176,7 +170,7 @@ namespace scribo
 
     line_info(const line_set<L>& holder,
 	      const line_id_t& id,
-	      const mln::util::array<component_id_t>& comps);
+	      const group_info& group);
 
     /// The line id of the target instance is preserved if it is valid.
     line_info(const line_info<L>& other);
@@ -317,6 +311,10 @@ namespace scribo
   std::ostream&
   operator<<(std::ostream& ostr, const line_info<L>& info);
 
+  template <typename L>
+  bool
+  operator==(const line_info<L>& lhs, const line_info<L>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -365,12 +363,27 @@ namespace scribo
       hidden_ = false;
     }
 
+    template <typename L>
+    line_info_data<L>::line_info_data(const line_set<L>& holder,
+				      const group_info& group)
+      : hidden_(false), tag_(line::None), component_ids_(group.component_ids()),
+	type_(line::Undefined), holder_(holder)
+    {
+      init_();
+    }
 
     template <typename L>
     line_info_data<L>::line_info_data(const line_set<L>& holder,
-				      const mln::util::array<component_id_t>& comps)
-      : hidden_(false), tag_(line::None), components_(comps),
+				      const mln::util::array<component_id_t>& component_ids)
+      : hidden_(false), tag_(line::None), component_ids_(component_ids),
 	type_(line::Undefined), holder_(holder)
+    {
+      init_();
+    }
+
+    template <typename L>
+    void
+    line_info_data<L>::init_()
     {
       // FIXME: set valid information for these attributes in
       // force_stats_update.
@@ -382,26 +395,6 @@ namespace scribo
       reading_orientation_ = 0.;
 
       indented_ = false;
-    }
-
-
-
-    // sort_comp_ids functor
-
-    template <typename L>
-    sort_comp_ids<L>::sort_comp_ids(const component_set<L>& comp_set)
-      : comps_(comp_set)
-    {
-    }
-
-
-    template <typename L>
-    bool
-    sort_comp_ids<L>::operator()(const component_id_t& l,
-				 const component_id_t& r) const
-    {
-      return comps_(l).bbox().pmin().col() < comps_(r).bbox().pmin().col()
-	&& comps_(l).bbox().pmax().col() < comps_(r).bbox().pmax().col();
     }
 
   } // end of namespace scribo::internal
@@ -480,10 +473,10 @@ namespace scribo
   template <typename L>
   line_info<L>::line_info(const line_set<L>& holder,
 			  const line_id_t& id,
-			  const mln::util::array<component_id_t>& comps)
+			  const group_info& group)
     : id_(id)
   {
-    data_ = new data_t(holder, comps);
+    data_ = new data_t(holder, group);
     force_stats_update();
   }
 
@@ -540,7 +533,7 @@ namespace scribo
   const mln::util::array<typename line_info<L>::component_id_t>&
   line_info<L>::component_ids() const
   {
-    return data_->components_;
+    return data_->component_ids_;
   }
 
 
@@ -548,7 +541,7 @@ namespace scribo
   unsigned
   line_info<L>::card() const
   {
-    return data_->components_.size();
+    return data_->component_ids_.size();
   }
 
 
@@ -691,9 +684,9 @@ namespace scribo
   void
   line_info<L>::update_components_type(component::Type type)
   {
-    for_all_elements(i, data_->components_)
+    for_all_elements(i, data_->component_ids_)
     {
-      unsigned c = data_->components_[i];
+      unsigned c = data_->component_ids_[i];
       data_->holder_.components_()(c).update_type(type);
     }
   }
@@ -954,7 +947,7 @@ namespace scribo
     // Update bbox and ebbox
     update_bbox_and_ebox(other);
 
-    data_->components_.append(other.component_ids());
+    data_->component_ids_.append(other.component_ids());
   }
 
 
@@ -1006,9 +999,9 @@ namespace scribo
     // Workaround to avoid overflow with int_u<12> in median accumulators.
     //
     // FIXME: not optimal...
-    for_all_elements(i, data_->components_)
+    for_all_elements(i, data_->component_ids_)
     {
-      unsigned c = data_->components_(i);
+      unsigned c = data_->component_ids_(i);
 
       // Ignore punctuation for stats computation but not for bbox
       // computation.
@@ -1020,9 +1013,9 @@ namespace scribo
 
 
     unsigned used_comps = 0;
-    for_all_elements(i, data_->components_)
+    for_all_elements(i, data_->component_ids_)
     {
-      unsigned c = data_->components_(i);
+      unsigned c = data_->component_ids_(i);
 
       pixel_area += comp_set(c).card();
 
@@ -1111,8 +1104,8 @@ namespace scribo
 
       // Order component ids according to component localization (left
       // to right).
-      std::sort(data_->components_.hook_std_vector_().begin(),
-		data_->components_.hook_std_vector_().end(),
+      std::sort(data_->component_ids_.hook_std_vector_().begin(),
+		data_->component_ids_.hook_std_vector_().end(),
 		internal::sort_comp_ids<L>(comp_set));
 
       // Boldness
@@ -1142,8 +1135,8 @@ namespace scribo
 
       // Char width
       if (card() == 2)
-	data_->char_width_ = (comp_set(data_->components_[0]).bbox().width()
-			      + comp_set(data_->components_[1]).bbox().width()) / 2;
+	data_->char_width_ = (comp_set(data_->component_ids_[0]).bbox().width()
+			      + comp_set(data_->component_ids_[1]).bbox().width()) / 2;
       else
 	data_->char_width_ = char_width.to_result();
 
@@ -1217,6 +1210,47 @@ namespace scribo
 		<< ")" << std::endl;
   }
 
+
+  template <typename L>
+  bool
+  operator==(const line_info<L>& lhs, const line_info<L>& rhs)
+  {
+    if (! lhs.is_valid() && ! rhs.is_valid())
+      return true;
+
+    return
+      lhs.is_valid() == rhs.is_valid()
+      && lhs.id() == rhs.id()
+      && lhs.pixel_area() == rhs.pixel_area()
+      && lhs.tag() == rhs.tag()
+      && lhs.type() == rhs.type()
+      && lhs.bbox() == rhs.bbox()
+      && lhs.ebbox() == rhs.ebbox()
+      && lhs.boldness() == rhs.boldness()
+      && lhs.boldness_reliability() == rhs.boldness_reliability()
+      && lhs.color() == rhs.color()
+      && lhs.color_reliability() == rhs.color_reliability()
+      && lhs.component_ids() == rhs.component_ids()
+      && lhs.baseline() == rhs.baseline()
+      && lhs.meanline() == rhs.meanline()
+      && lhs.ascent() == rhs.ascent()
+      && lhs.descent() == rhs.descent()
+      && lhs.x_height() == rhs.x_height()
+      && lhs.d_height() == rhs.d_height()
+      && lhs.a_height() == rhs.a_height()
+      && lhs.char_space() == rhs.char_space()
+      && lhs.char_width() == rhs.char_width()
+      && lhs.word_space() == rhs.word_space()
+      && lhs.reading_orientation() == rhs.reading_orientation()
+      && lhs.type() == rhs.type()
+      && lhs.reverse_video() == rhs.reverse_video()
+      && lhs.orientation() == rhs.orientation()
+      && lhs.reading_orientation() == rhs.reading_orientation()
+      && lhs.indented() == rhs.indented()
+      && lhs.is_hidden() == rhs.is_hidden()
+      && lhs.text() == rhs.text()
+      && lhs.html_text() == rhs.html_text();
+  }
 
 # endif// ! MLN_INCLUDE_ONLY
 

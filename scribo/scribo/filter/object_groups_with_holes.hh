@@ -298,7 +298,7 @@ namespace scribo
 	  object_groups<L> output = groups.duplicate();
 	  for_all_groups(c, groups)
 	    if (! to_keep(group_2_comp(c)))
-	      output(c) = 0;
+	      output(c).invalidate();
 
 	  trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	  return output;

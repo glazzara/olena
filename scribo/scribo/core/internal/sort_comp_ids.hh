@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,56 +23,55 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_IS_LINK_VALID_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_IS_LINK_VALID_HH
+#ifndef SCRIBO_CORE_INTERNAL_SORT_COMP_IDS_HH
+# define SCRIBO_CORE_INTERNAL_SORT_COMP_IDS_HH
 
 /// \file
 ///
-/// Validate a link from two different links.
+/// Functor ordering Components by location, from left to right.
 
-# include <mln/util/couple.hh>
 
-# include <scribo/core/object_links.hh>
+# include <scribo/core/component_set.hh>
+
 
 namespace scribo
 {
 
-  namespace primitive
+  namespace internal
   {
 
-    namespace internal
+    template <typename L>
+    struct sort_comp_ids
     {
+      sort_comp_ids(const component_set<L>& comp_set);
+      bool operator()(const component_id_t& l, const component_id_t& r) const;
 
-      /// Validate a link from two different links.
-      ///
-      /// \param[in] left_link Left link of components.
-      /// \param[in] right_link Right link of components.
-      /// \param[in] i The component id.
-      ///
-      /// \return True if the link is between the \p i-th component
-      template <typename L>
-      bool
-      is_link_valid(const object_links<L>& left_link,
-		    const object_links<L>& right_link,
-		    unsigned i);
+      component_set<L> comps_;
+    };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename L>
-      bool
-      is_link_valid(const object_links<L>& left_link,
-		    const object_links<L>& right_link,
-		    unsigned i)
-      {
-	return left_link.is_linked(i) && right_link(left_link(i)) == i;
-      }
+    template <typename L>
+    sort_comp_ids<L>::sort_comp_ids(const component_set<L>& comp_set)
+      : comps_(comp_set)
+    {
+    }
+
+
+    template <typename L>
+    bool
+    sort_comp_ids<L>::operator()(const component_id_t& l,
+				 const component_id_t& r) const
+    {
+      return comps_(l).bbox().pmin().col() < comps_(r).bbox().pmin().col()
+	&& comps_(l).bbox().pmax().col() < comps_(r).bbox().pmax().col();
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace scribo::primitive::internal
-
-  } // end of namespace scribo::primitive
+  } // end of namespace scribo::internal
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_IS_LINK_VALID_HH
+#endif // ! SCRIBO_CORE_INTERNAL_SORT_COMP_IDS_HH

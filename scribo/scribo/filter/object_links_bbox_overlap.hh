@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -109,7 +109,7 @@ namespace scribo
 
 	  if (ratio_i >= max_overlap_ratio
 	      || ratio_link_i >= max_overlap_ratio)
-	    output(i) = i;
+	    output.clear(i);
 	}
 
       trace::exiting("scribo::filter::object_links_bbox_overlap");

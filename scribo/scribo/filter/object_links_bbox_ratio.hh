@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,10 +78,10 @@ namespace scribo
       mln_precondition(links.is_valid());
 
       const component_set<L>& components = links.components();
-
       object_links<L> output = links.duplicate();
+
       for_all_links(i, links)
-	if (links(i) && links(i) != i)
+	if (links.is_linked(i))
 	{
 	  float
 	    lmin = components(i).bbox().pmax()[dim]
@@ -93,7 +93,7 @@ namespace scribo
 	    std::swap(lmin, lmax);
 
 	  if ((lmax/ lmin) > max_ratio)
-	    output(i) = i;
+	    output.clear(i);
 	}
 
       trace::exiting("scribo::filter::object_links_bbox_ratio");

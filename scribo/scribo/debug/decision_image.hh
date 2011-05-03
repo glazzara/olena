@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -150,10 +150,10 @@ namespace scribo
       for_all_comps(i, comps)
 	mln::draw::box(decision_image, comps(i).bbox(), literal::blue);
 
-      for (unsigned i = 1; i < links.nelements(); ++i)
+      for_all_links(i, links)
       {
 
-	if (links(i) != i)
+	if (links.is_linked(i))
 	{
 	  mln_site(L)
 	    p1 = primitive::link::internal::compute_anchor(comps, i, anchor),

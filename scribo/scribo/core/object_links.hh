@@ -39,7 +39,6 @@
 
 # include <scribo/core/concept/serializable.hh>
 
-
 namespace scribo
 {
 
@@ -51,6 +50,18 @@ namespace scribo
 
   namespace internal
   {
+
+    inline
+    unsigned
+    find_root(mln::util::array<unsigned>& parent, unsigned x)
+    {
+      if (parent(x) == x)
+    	return x;
+      else
+	return parent(x) = find_root(parent, parent(x));
+    }
+
+
     /// Data structure for \c scribo::object_links<I>.
     template <typename L>
     struct object_links_data
@@ -83,13 +94,36 @@ namespace scribo
 
     const component_set<L>& components() const;
 
+    /// Return True if this object_links structure is correctly
+    /// constructed.
     bool is_valid() const;
-    bool is_valid(unsigned comp_id) const;
+
+    /// Return True if component \p comp_id can be linked to another
+    /// component.
+    bool has_linking_enabled(unsigned comp_id) const;
+
+    /// Return True if component \p comp_id has a link starting from
+    /// itself to another one.
+    bool is_linked(unsigned comp_id) const;
 
     unsigned nelements() const;
 
-    unsigned& operator()(unsigned comp_id);
+    /// Link related methods.
+    /// \{
+    /// Set link between component \p from_id and \p to_id.
+    void update(unsigned from_id, unsigned to_id);
+
+    /// Reset link for component with id \p id. This component can be
+    /// linked later.
+    void clear(unsigned id);
+
+    /// Do not allow component with id \p id to be linked to anyother
+    /// ones.
+    void disable_linking(unsigned id);
+
+    /// Get link id for component \p comp_id.
     const unsigned& operator()(unsigned comp_id) const;
+    /// \}
 
     const mln::util::array<unsigned>& comp_to_link() const;
 
@@ -183,11 +217,23 @@ namespace scribo
 
   template <typename L>
   bool
-  object_links<L>::is_valid(unsigned comp_id) const
+  object_links<L>::has_linking_enabled(unsigned comp_id) const
   {
     mln_precondition(is_valid());
     mln_precondition(comp_id < data_->comp_to_link_.nelements());
+
     return data_->comp_to_link_(comp_id) != 0;
+  }
+
+  template <typename L>
+  bool
+  object_links<L>::is_linked(unsigned comp_id) const
+  {
+    mln_precondition(is_valid());
+    mln_precondition(comp_id < data_->comp_to_link_.nelements());
+
+    return has_linking_enabled(comp_id)
+      && data_->comp_to_link_(comp_id) != comp_id;
   }
 
 
@@ -200,20 +246,32 @@ namespace scribo
 
 
   template <typename L>
-  unsigned&
-  object_links<L>::operator()(unsigned comp_id)
-  {
-    return data_->comp_to_link_(comp_id);
-  }
-
-
-  template <typename L>
   const unsigned&
   object_links<L>::operator()(unsigned comp_id) const
   {
     return data_->comp_to_link_(comp_id);
   }
 
+  template <typename L>
+  void
+  object_links<L>::update(unsigned from_id, unsigned to_id)
+  {
+    data_->comp_to_link_(from_id) = to_id;
+  }
+
+  template <typename L>
+  void
+  object_links<L>::clear(unsigned id)
+  {
+    data_->comp_to_link_(id) = id;
+  }
+
+  template <typename L>
+  void
+  object_links<L>::disable_linking(unsigned id)
+  {
+    data_->comp_to_link_(id) = 0;
+  }
 
   template <typename L>
   const mln::util::array<unsigned>&
@@ -222,16 +280,15 @@ namespace scribo
     return data_->comp_to_link_;
   }
 
-
   template <typename L>
   void
   object_links<L>::init()
   {
     for (unsigned i = 0; i < nelements(); ++i)
       if (data_->components_(i).tag() == component::Ignored)
-	data_->comp_to_link_(i) = 0;
+	disable_linking(i);
       else
-	data_->comp_to_link_(i) = i;
+	clear(i);
   }
 
   template <typename L>
