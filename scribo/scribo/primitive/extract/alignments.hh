@@ -26,57 +26,54 @@
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
 
-#include <iostream>
+# include <iostream>
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 
-#include <mln/data/convert.hh>
+# include <mln/data/convert.hh>
 
-#include <mln/value/rgb8.hh>
-#include <mln/value/label_16.hh>
-#include <mln/value/int_u.hh>
-#include <mln/literal/colors.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/label_16.hh>
+# include <mln/value/int_u.hh>
+# include <mln/literal/colors.hh>
 
-#include <mln/util/array.hh>
-#include <mln/util/couple.hh>
+# include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
+# include <mln/io/pbm/load.hh>
 
-#include <mln/labeling/colorize.hh>
+# include <mln/labeling/colorize.hh>
 
-#include <mln/util/couple.hh>
+# include <mln/util/couple.hh>
 
-#include <scribo/core/def/lbl_type.hh>
-#include <scribo/primitive/extract/components.hh>
-#include <scribo/filter/object_links_aligned.hh>
-#include <scribo/filter/object_groups_small.hh>
-#include <scribo/preprocessing/denoise_fg.hh>
-// #include <scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh>
-// #include <scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh>
-#include <scribo/primitive/link/internal/link_single_dmax_ratio_aligned_delta_base.hh>
-#include <scribo/primitive/link/internal/dmax_default.hh>
-#include <scribo/primitive/link/internal/dmax_hrules.hh>
-#include <scribo/primitive/link/merge_double_link_closest_aligned.hh>
+# include <scribo/core/def/lbl_type.hh>
+# include <scribo/primitive/extract/components.hh>
+# include <scribo/filter/object_links_aligned.hh>
+# include <scribo/filter/object_groups_small.hh>
+# include <scribo/preprocessing/denoise_fg.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_ratio_aligned_delta_base.hh>
+# include <scribo/primitive/link/internal/dmax_default.hh>
+# include <scribo/primitive/link/internal/dmax_hrules.hh>
+# include <scribo/primitive/link/merge_double_link_closest_aligned.hh>
 
-#include <scribo/debug/usage.hh>
-#include <scribo/debug/links_image.hh>
+# include <scribo/debug/usage.hh>
+# include <scribo/debug/links_image.hh>
 
 
-#include <scribo/core/document.hh>
-#include <scribo/core/component_set.hh>
-#include <scribo/core/line_set.hh>
-#include <scribo/primitive/extract/components.hh>
-#include <scribo/primitive/group/from_single_link.hh>
-#include <scribo/primitive/group/apply.hh>
-#include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
-#include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
-#include <scribo/primitive/link/merge_double_link.hh>
-#include <scribo/primitive/link/internal/dmax_width_and_height.hh>
+# include <scribo/core/document.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/core/line_set.hh>
+# include <scribo/primitive/extract/components.hh>
+# include <scribo/primitive/group/from_single_link.hh>
+# include <scribo/primitive/group/apply.hh>
+# include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
+# include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
+# include <scribo/primitive/link/merge_double_link.hh>
+# include <scribo/primitive/link/internal/dmax_width_and_height.hh>
 
-#include <scribo/preprocessing/rotate_90.hh>
-#include <scribo/filter/object_links_bbox_h_ratio.hh>
+# include <scribo/preprocessing/rotate_90.hh>
+# include <scribo/filter/object_links_bbox_h_ratio.hh>
 
 # include <scribo/primitive/extract/separators.hh>
 # include <scribo/primitive/extract/vertical_separators.hh>
@@ -442,7 +439,7 @@ namespace scribo
 	}
 
 
-
+	inline
 	bool
 	is_valid_left_right_skewed_delimitor(const box2d& brot,
 					     const image2d<bool> input,
@@ -469,6 +466,8 @@ namespace scribo
 	  return false;
 	}
 
+
+	inline
 	bool
 	is_valid_right_left_skewed_delimitor(const box2d& brot,
 					     const image2d<bool> input,
@@ -496,6 +495,7 @@ namespace scribo
 	}
 
 
+	inline
 	box2d fast_rotate_positive(const box2d& box, const box2d& rbox)
 	{
 	  box2d b(point2d(box.pmin().col(),
@@ -505,25 +505,12 @@ namespace scribo
 	  return b;
 	}
 
+
+	inline
 	box2d fast_rotate_negative(const box2d& box, const box2d& rbox)
 	{
-	  // std::cout << point2d(rbox.ncols() - box.pmin().col() - 1,
-	  // 		       box.pmin().row())
-	  // 	    << " - "
-	  // 	    << point2d(rbox.ncols() - box.pmax().col() - 1,
-	  // 		       box.pmax().row()) << std::endl;
-
-	  // std::cout << box << " - " << rbox << std::endl;
-
-	  // box2d b(point2d(rbox.ncols() - box.pmin().col() - 1,
-	  // 		  box.pmin().row()),
-	  // 	  point2d(rbox.ncols() - box.pmax().col() - 1,
-	  // 		  box.pmax().row()));
-
 	  mln::def::coord max_row = rbox.ncols() - box.pmin().col() - 1;
 	  mln::def::coord min_row = rbox.ncols() - box.pmax().col() - 1;
-//	  if (min_row > max_row)
-	  //std::swap(min_row, max_row);
 
 	  box2d b(point2d(min_row,
 			  box.pmin().row()),
@@ -532,6 +519,26 @@ namespace scribo
 
 	  return b;
 	}
+
+
+	inline
+	unsigned
+	compute_reliable_ldelta(const value::int_u12& char_width,
+				const value::int_u12& char_space)
+	{
+	  return 1.2 * char_width + char_space;
+	}
+
+
+	inline
+	unsigned
+	compute_unreliable_ldelta(const value::int_u12& max_char_width)
+	{
+	  return max_char_width * 2; // FIXME: reduce to 1.5 ? Problem
+				     // with 2 or 3 lines besides an
+				     // image.
+	}
+
 
       } // end of namespace scribo::primitive::extract
 
@@ -579,8 +586,7 @@ namespace scribo
 	    mln::draw::box(bbox_ima,
 			   internal::fast_rotate_positive(lines(l).bbox(),
 							  rbbox),
-			   lines(l).id().value());
-
+			   l);
 
 	// Compute component information
 	//
@@ -613,12 +619,7 @@ namespace scribo
 	// 2.1. BEGIN OF TOP LINKS PROCESSING
 	{
 	  object_links<L> top_links;
-
-	  object_groups<L>
-	    top_groups,
-	    old_top_groups;
-
-	  util::array<unsigned> top_group_size;
+	  object_groups<L> top_groups;
 
 	  typedef mln::accu::stat::median_h<value::int_u<12u> > median_t;
 	  mln::util::array<median_t>
@@ -656,9 +657,8 @@ namespace scribo
 									   anchor::StrictTopCenter);
 
 	    // Remove groups with not enough links.
-	    old_top_groups = primitive::group::from_single_link(top_links);
-	    top_groups = filter::object_groups_small(old_top_groups, min_card,
-						     top_group_size);
+	    top_groups = primitive::group::from_single_link(top_links);
+	    top_groups = filter::object_groups_small(top_groups, min_card);
 
 
 	    // Compute char_width and char_space statistics.
@@ -674,17 +674,18 @@ namespace scribo
 	    top_max_char_width.resize(top_groups.nelements());
 
 	    for_all_groups(g, top_groups)
-	      if (top_groups.is_valid(g))
-	      {
-		if (lines(g).card() > 1)
+	      if (top_groups(g).is_valid())
+		for_all_elements(e, top_groups(g).component_ids())
 		{
-		  top_median_char_space(top_groups(g)).take(lines(g).char_space());
-		  top_median_char_width(top_groups(g)).take(lines(g).char_width());
+		  unsigned l = top_groups(g).component_ids()(e);
+		  if (lines(l).card() > 1)
+		  {
+		    top_median_char_space(g).take(lines(l).char_space());
+		    top_median_char_width(g).take(lines(l).char_width());
+		  }
+		  else if (top_max_char_width(g) < lines(l).char_width())
+		    top_max_char_width(g) = lines(l).char_width();
 		}
-		else if (top_max_char_width(top_groups(g)) < lines(g).char_width())
-		  top_max_char_width(top_groups(g)) = lines(g).char_width();
-	      }
-
 	  }
 
 
@@ -694,103 +695,104 @@ namespace scribo
 	      group_bbox(top_groups.nelements());
 
 	    // Compute group bboxes
-	    for_all_links(l, top_links)
-	      if (top_links.is_valid(l))
-	      {
-		point2d p = components(top_links(l)).bbox().pmax();
-		p.row() = components(top_links(l)).bbox().pmin().row();
+	    for_all_groups(g, top_groups)
+		for_all_elements(e, top_groups(g).component_ids())
+ 		{
+		  unsigned l = top_groups(g).component_ids()(e);
+		  point2d p = components(top_links(l)).bbox().pmax();
+		  p.row() = components(top_links(l)).bbox().pmin().row();
 
-		if (top_groups.is_valid(l)
-		    && top_group_size(old_top_groups(l)) > 2)
-		{
-		  group_bbox(top_groups(l)).take(p);
-		  group_bbox(top_groups(l)).take(components(l).bbox().pmin());
-
-# ifndef SCRIBO_NDEBUG
-		  // Draw first component bbox.
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(l).component_ids()[0]).bbox(),
-				   rbbox),
-				 literal::cyan);
-
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(top_links(l)).component_ids()[0]).bbox(),
-				   rbbox),
-				 literal::cyan);
-# endif // ! SCRIBO_NDEBUG
-		}
+		  if (top_groups(g).is_valid())// && top_links.is_linked(l))
+		  {
+		    group_bbox(g).take(p);
+		    group_bbox(g).take(components(l).bbox().pmin());
 
 # ifndef SCRIBO_NDEBUG
-		else if (top_group_size(old_top_groups(l)) > 1)
-		{
-		  mln::draw::line(debug,
-				  components(l).bbox().pmin(),
-				  p,
-				  literal::orange);
+		    // Draw first component bbox.
+		    mln::draw::box(debug,
+				   internal::fast_rotate_positive(
+				     groups.components()(lines(l).component_ids()[0]).bbox(),
+				     rbbox),
+				   literal::cyan);
 
-		  // Draw first component bbox.
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(l).component_ids()[0]).bbox(),
-				   rbbox),
-				 literal::cyan);
-
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(top_links(l)).component_ids()[0]).bbox(),
-				   rbbox),
-				 literal::cyan);
-
-		}
+		    mln::draw::box(debug,
+				   internal::fast_rotate_positive(
+				     groups.components()(lines(top_links(l)).component_ids()[0]).bbox(),
+				     rbbox),
+				   literal::cyan);
 # endif // ! SCRIBO_NDEBUG
-	      }
+		  }
+# ifndef SCRIBO_NDEBUG
+		  else if (top_groups(g).card() > 1)
+		  {
+		    mln::draw::line(debug,
+				    components(l).bbox().pmin(),
+				    p,
+				    literal::orange);
 
+		    // Draw first component bbox.
+		    mln::draw::box(debug,
+				   internal::fast_rotate_positive(
+				     groups.components()(lines(l).component_ids()[0]).bbox(),
+				     rbbox),
+				   literal::cyan);
+
+		    mln::draw::box(debug,
+				   internal::fast_rotate_positive(
+				     groups.components()(lines(top_links(l)).component_ids()[0]).bbox(),
+				     rbbox),
+				   literal::cyan);
+		  }
+# endif // ! SCRIBO_NDEBUG
+		}
 
 	    // Looking for whitespaces (if needed)
-	    for_all_elements(c, group_bbox)
-	      if (group_bbox(c).to_result().is_valid())
+	    for_all_groups(g, top_groups)
+	      if (top_groups(g).is_valid())
 	      {
 		unsigned ldelta = delta;
-		// Handle low connection groups.
-		if (top_group_size(c) >= 3 && top_group_size(c) < 5)
+
+		// Special case : handle low connected groups.
+		if (top_groups(g).card() >= 3 && top_groups(g).card() < 5)
 		{
 		  // Stats are not reliable, prefer using max char width.
-		  if (top_median_char_width(c).card() == 0)
-		    ldelta = top_max_char_width(c) * 2;
+		  if (top_median_char_width(g).card() == 0)
+		    ldelta = internal::compute_unreliable_ldelta(top_max_char_width(g));
 		  else
-		    ldelta = 1.2 * top_median_char_width(c) + top_median_char_space(c);
+		    ldelta = internal::compute_reliable_ldelta(top_median_char_width(g),
+							       top_median_char_space(g));
 
-		  point2d p(group_bbox(c).to_result().pmin().row() - ldelta,
-			    group_bbox(c).to_result().pmin().col());
+		  point2d p(group_bbox(g).to_result().pmin().row() - ldelta,
+			    group_bbox(g).to_result().pmin().col());
+
 		  p = scribo::internal::point_row_adjust(p, bbox_ima);
 
 		  // Checking whitespace area
-		  for (; p.col() <= group_bbox(c).to_result().pmax().col()
+		  for (; p.col() <= group_bbox(g).to_result().pmax().col()
 			 && (bbox_ima(p) == 0);)
 		    ++p.col();
 
 		  if (bbox_ima(p) != 0)
 		  {
+		    top_groups(g).invalidate();
+
 # ifndef SCRIBO_NDEBUG
 		    mln::draw::line(debug,
 				    scribo::internal::point_row_adjust(
-				      point2d(group_bbox(c).to_result().pmin().row() - ldelta,
-					      group_bbox(c).to_result().pmin().col()), debug),
+				      point2d(group_bbox(g).to_result().pmin().row() - ldelta,
+					      group_bbox(g).to_result().pmin().col()), debug),
 				    scribo::internal::point_row_adjust(
-				      point2d(group_bbox(c).to_result().pmin().row() - ldelta,
-					      group_bbox(c).to_result().pmax().col()), debug),
+				      point2d(group_bbox(g).to_result().pmin().row() - ldelta,
+					      group_bbox(g).to_result().pmax().col()), debug),
 				    literal::red);
 # endif // ! SCRIBO_NDEBUG
-
 		    continue;
 		  }
 		}
 
 
 		box2d
-		  brot = internal::fast_rotate_negative(group_bbox(c).to_result(),
+		  brot = internal::fast_rotate_negative(group_bbox(g).to_result(),
 							rbbox);
 
 		// Checking if the delimitor is skewed.
@@ -821,24 +823,25 @@ namespace scribo
 		else
 		{
 		  mln::draw::line(delimitors,
-				  scribo::internal::point_col_adjust(point2d(brot.pmin().row(),
-							   brot.pmin().col() - delta), delimitors),
-				  scribo::internal::point_col_adjust(point2d(brot.pmax().row(),
-							   brot.pmin().col() - delta), delimitors),
+				  scribo::internal::point_col_adjust(
+				    point2d(brot.pmin().row(),
+					    brot.pmin().col() - delta), delimitors),
+				  scribo::internal::point_col_adjust(
+				    point2d(brot.pmax().row(),
+					    brot.pmin().col() - delta), delimitors),
 				  true);
 		}
 
 # ifndef SCRIBO_NDEBUG
 		mln::draw::line(debug,
 				scribo::internal::point_row_adjust(
-				  point2d(group_bbox(c).to_result().pmin().row() - ldelta,
-					  group_bbox(c).to_result().pmin().col()), debug),
+				  point2d(group_bbox(g).to_result().pmin().row() - ldelta,
+					  group_bbox(g).to_result().pmin().col()), debug),
 				scribo::internal::point_row_adjust(
-				  point2d(group_bbox(c).to_result().pmin().row() - ldelta,
-					  group_bbox(c).to_result().pmax().col()), debug),
+				  point2d(group_bbox(g).to_result().pmin().row() - ldelta,
+					  group_bbox(g).to_result().pmax().col()), debug),
 				literal::green);
 # endif // ! SCRIBO_NDEBUG
-
 	      }
 	  }
 
@@ -849,12 +852,7 @@ namespace scribo
 	// 2.2. BEGIN OF BOTTOM LINKS PROCESSING
 	{
 	  object_links<L> bot_links;
-
-	  object_groups<L>
-	    bot_groups,
-	    old_bot_groups;
-
-	  util::array<unsigned> bot_group_size;
+	  object_groups<L> bot_groups;
 
 	  typedef mln::accu::stat::median_h<value::int_u<12u> > median_t;
 	  mln::util::array<median_t>
@@ -892,27 +890,30 @@ namespace scribo
 									   anchor::StrictBottomCenter);
 
 	    // Remove groups with not enough links.
-	    old_bot_groups = primitive::group::from_single_link(bot_links);
-	    bot_groups = filter::object_groups_small(old_bot_groups, min_card,
-						     bot_group_size);
+	    bot_groups = primitive::group::from_single_link(bot_links);
+
+	    bot_groups = filter::object_groups_small(bot_groups, min_card);
 
 	    bot_median_char_space.resize(bot_groups.nelements());
 	    bot_median_char_width.resize(bot_groups.nelements());
 	    bot_max_char_width.resize(bot_groups.nelements());
 
 	    for_all_groups(g, bot_groups)
-	      if (bot_groups.is_valid(g))
-	      {
-		if (lines(g).card() > 1)
+	      if (bot_groups(g).is_valid())
+		for_all_elements(e, bot_groups(g).component_ids())
 		{
-		  bot_median_char_space(bot_groups(g)).take(lines(g).char_space());
-		  bot_median_char_width(bot_groups(g)).take(lines(g).char_width());
+		  unsigned l = bot_groups(g).component_ids()(e);
+
+		  if (lines(l).card() > 1)
+		  {
+		    bot_median_char_space(g).take(lines(l).char_space());
+		    bot_median_char_width(g).take(lines(l).char_width());
+		  }
+		  // This data will be used if alignments are made with single
+		  // components only.
+		  else if (bot_max_char_width(g) < lines(l).char_width())
+		    bot_max_char_width(g) = lines(l).char_width();
 		}
-		// This data will be used if alignments are made with single
-		// components only.
-		else if (bot_max_char_width(bot_groups(g)) < lines(g).char_width())
-		  bot_max_char_width(bot_groups(g)) = lines(g).char_width();
-	      }
 	  }
 
 
@@ -921,19 +922,20 @@ namespace scribo
 	    util::array<accu::shape::bbox<point2d> >
 	      group_bbox(bot_groups.nelements());
 
-	    // Compute group bboxes
-	    for_all_links(l, bot_links)
-	      if (bot_links.is_valid(l))
+            // Compute group bboxes
+	    for_all_groups(g, bot_groups)
+	      for_all_elements(e, bot_groups(g).component_ids())
+	    {
+	      unsigned l = bot_groups(g).component_ids()(e);
+	      point2d p = components(l).bbox().pmin();
+	      p.row() = components(l).bbox().pmax().row();
+
+	      if (bot_groups(g).is_valid())// && bot_links.is_linked(l))
 	      {
-		point2d p = components(l).bbox().pmin();
-		p.row() = components(l).bbox().pmax().row();
-
-		if (bot_groups.is_valid(l)
-		    && bot_group_size(old_bot_groups(l)) > 2)
+		if (bot_groups.group_of(l).is_valid())
 		{
-		  group_bbox(bot_groups(l)).take(p);
-		  group_bbox(bot_groups(l)).take(
-		    components(bot_links(l)).bbox().pmax());
+		  group_bbox(g).take(p);
+		  group_bbox(g).take(components(bot_links(l)).bbox().pmax());
 
 # ifndef SCRIBO_NDEBUG
 		  // Draw first component box
@@ -950,76 +952,78 @@ namespace scribo
 				 literal::cyan);
 # endif // ! SCRIBO_NDEBUG
 		}
-
-# ifndef SCRIBO_NDEBUG
-		else if (bot_group_size(old_bot_groups(l)) > 1)
-		{
-		  mln::draw::line(debug,
-				  p,
-				  components(bot_links(l)).bbox().pmax(),
-				  literal::orange);
-
-		  // Draw first component box
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(l).component_ids()[lines(l).card() - 1]).bbox(),
-				   rbbox),
-				 literal::cyan);
-
-		  mln::draw::box(debug,
-				 internal::fast_rotate_positive(
-				   groups.components()(lines(bot_links(l)).component_ids()[lines(bot_links(l)).card() - 1]).bbox(),
-				   rbbox),
-				 literal::cyan);
-		}
-# endif // ! SCRIBO_NDEBUG
 	      }
+# ifndef SCRIBO_NDEBUG
+	      else if (bot_groups(g).card() > 1)
+	      {
+		mln::draw::line(debug,
+				p,
+				components(bot_links(l)).bbox().pmax(),
+				literal::orange);
 
+		// Draw first component box
+		mln::draw::box(debug,
+			       internal::fast_rotate_positive(
+				 groups.components()(lines(l).component_ids()[lines(l).card() - 1]).bbox(),
+				 rbbox),
+			       literal::cyan);
+
+		mln::draw::box(debug,
+			       internal::fast_rotate_positive(
+				 groups.components()(lines(bot_links(l)).component_ids()[lines(bot_links(l)).card() - 1]).bbox(),
+				 rbbox),
+			       literal::cyan);
+	      }
+# endif // ! SCRIBO_NDEBUG
+	    }
 
 	    // Looking for whitespaces
-	    for_all_elements(c, group_bbox)
-	      if (group_bbox(c).is_valid())
+	    for_all_groups(g, bot_groups)
+	      if (bot_groups(g).is_valid())
 	      {
 		unsigned ldelta = delta;
-		if (bot_group_size(c) >= 3 && bot_group_size(c) < 5)
+		// Special case : handle low connected groups.
+		if (bot_groups(g).card() >= 3 && bot_groups(g).card() < 5)
 		{
 		  // Stats are not reliable, prefer using max char width.
-		  if (bot_median_char_width(c).card() == 0)
-		    ldelta = bot_max_char_width(c) * 2;
+		  if (bot_median_char_width(g).card() == 0)
+		    ldelta = internal::compute_unreliable_ldelta(bot_max_char_width(g));
 		  else
-		    ldelta = 1.2 * bot_median_char_width(c)
-		      + bot_median_char_space(c);
+		    ldelta = internal::compute_reliable_ldelta(bot_median_char_width(g),
+							       bot_median_char_space(g));
 
-		  point2d p(group_bbox(c).to_result().pmax().row() + ldelta,
-			    group_bbox(c).to_result().pmin().col());
+		  point2d p(bot_groups(g).bbox().pmax().row() + ldelta,
+			    bot_groups(g).bbox().pmin().col());
 		  p = scribo::internal::point_row_adjust(p, bbox_ima);
 
 		  // Checking whitespace area
-		  for (; p.col() <= group_bbox(c).to_result().pmax().col()
+		  for (; p.col() <= group_bbox(g).to_result().pmax().col()
 			 && (bbox_ima(p) == 0);)
 		    ++p.col();
 
 		  if (bbox_ima(p) != 0)
 		  {
+		    bot_groups(g).invalidate();
+
 # ifndef SCRIBO_NDEBUG
 		    mln::draw::line(debug,
 				    scribo::internal::point_row_adjust(
-				      point2d(group_bbox(c).to_result().pmax().row() + ldelta,
-					      group_bbox(c).to_result().pmin().col()), debug),
+				      point2d(group_bbox(g).to_result().pmax().row() + ldelta,
+					      group_bbox(g).to_result().pmin().col()), debug),
 				    scribo::internal::point_row_adjust(
-				      point2d(group_bbox(c).to_result().pmax().row() + ldelta,
-					      group_bbox(c).to_result().pmax().col()), debug),
+				      point2d(group_bbox(g).to_result().pmax().row() + ldelta,
+					      group_bbox(g).to_result().pmax().col()), debug),
 				    literal::red);
 # endif // ! SCRIBO_NDEBUG
-
 		    continue;
 		  }
 		}
 
 		box2d
-		  brot = internal::fast_rotate_negative(group_bbox(c).to_result(),
+		  brot = internal::fast_rotate_negative(group_bbox(g).to_result(),
 							rbbox);
 
+		// Checking if delimitor is skewed.
 		if (internal::is_valid_left_right_skewed_delimitor(brot, input,
 								   - delta))
 		{
@@ -1066,11 +1070,11 @@ namespace scribo
 # ifndef SCRIBO_NDEBUG
 		mln::draw::line(debug,
 				scribo::internal::point_row_adjust(
-				  point2d(group_bbox(c).to_result().pmax().row() + ldelta,
-					  group_bbox(c).to_result().pmin().col()), debug),
+				  point2d(group_bbox(g).to_result().pmax().row() + ldelta,
+					  group_bbox(g).to_result().pmin().col()), debug),
 				scribo::internal::point_row_adjust(
-				  point2d(group_bbox(c).to_result().pmax().row() + ldelta,
-					  group_bbox(c).to_result().pmax().col()), debug),
+				  point2d(group_bbox(g).to_result().pmax().row() + ldelta,
+					  group_bbox(g).to_result().pmax().col()), debug),
 				literal::green);
 # endif // ! SCRIBO_NDEBUG
 	      }
