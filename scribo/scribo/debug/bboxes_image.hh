@@ -55,15 +55,15 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
-		      const mln::util::array< box<mln_site(I)> >& bboxes,
-		      const value::rgb8& value);
+		 const mln::util::array< box<mln_site(I)> >& bboxes,
+		 const value::rgb8& value);
 
 
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
-		      const line_set<L>& lines,
-      		      const value::rgb8& value);
+		 const line_set<L>& lines,
+		 const value::rgb8& value);
 
     /// \overload
     /// value is set to literal::red.
@@ -72,15 +72,15 @@ namespace scribo
     inline
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
-		      const line_set<L>& lines);
+		 const line_set<L>& lines);
 
     /// \overload.
     template <typename I, typename L>
     inline
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
-		      const component_set<L>& comps,
-      		      const value::rgb8& value);
+		 const component_set<L>& comps,
+		 const value::rgb8& value);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -106,8 +106,8 @@ namespace scribo
     inline
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
-		      const line_set<L>& lines,
-      		      const value::rgb8& value)
+		 const line_set<L>& lines,
+		 const value::rgb8& value)
     {
       trace::entering("scribo::debug::bboxes_image");
       mln_precondition(exact(input).is_valid());

@@ -61,10 +61,14 @@ namespace scribo
 
     unsigned nlines() const;
 
+    const line_links<L>& llinks() const;
+
     // FIXME: add boldness?
 
     const mln::value::rgb8& color() const;
+    void set_color_(const mln::value::rgb8& v);
     float color_reliability() const;
+    void set_color_reliability_(float v);
 
     bool is_valid() const;
 
@@ -81,6 +85,9 @@ namespace scribo
 
     bool needs_stats_update_;
   };
+
+  template <typename L>
+  std::ostream& operator<<(std::ostream& ostr, const paragraph_info<L>& info);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -139,18 +146,38 @@ namespace scribo
   }
 
   template <typename L>
+  const line_links<L>&
+  paragraph_info<L>::llinks() const
+  {
+    return llinks_;
+  }
+
+  template <typename L>
   const mln::value::rgb8&
   paragraph_info<L>::color() const
   {
     return color_;
   }
 
+  template <typename L>
+  void
+  paragraph_info<L>::set_color_(const mln::value::rgb8& v)
+  {
+    color_ = v;
+  }
 
   template <typename L>
   float
   paragraph_info<L>::color_reliability() const
   {
     return color_reliability_;
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::set_color_reliability_(float v)
+  {
+    color_reliability_ = v;
   }
 
   template <typename L>

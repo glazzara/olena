@@ -71,7 +71,7 @@
 # include <scribo/filter/object_links_bbox_overlap.hh>
 
 # include <scribo/filter/object_groups_small.hh>
-# include <scribo/filter/object_groups_v_thickness.hh>
+# include <scribo/filter/object_groups_mean_width.hh>
 
 # include <scribo/debug/decision_image.hh>
 # include <scribo/debug/linked_bboxes_image.hh>
@@ -138,7 +138,7 @@ namespace scribo
 	  bbox_h_ratio = 1.60f;
 	  bbox_overlap = 0.80f;
 	  small_groups = 3;
-	  v_thickness = 8;
+	  mean_width = 8;
 	  regroup_dmax = 30;
 	  group_min_holes = 3;
 	}
@@ -154,7 +154,7 @@ namespace scribo
 	float bbox_h_ratio;
 	float bbox_overlap;
 	unsigned small_groups;
-	unsigned v_thickness;
+	unsigned mean_width;
 	unsigned regroup_dmax;
 	unsigned group_min_holes;
       };
@@ -469,8 +469,8 @@ namespace scribo
       object_groups<L> filtered_thin_groups;
       std::cout << "** Using group too thin" << std::endl;
       filtered_thin_groups
-	= filter::object_groups_v_thickness(filtered_small_groups,
-					    conf.v_thickness);
+	= filter::object_groups_mean_width(filtered_small_groups,
+					   conf.mean_width);
       t_ = g_timer;
       std::cout << "Groups too thin " << t_ << std::endl;
 

@@ -80,9 +80,11 @@ namespace scribo
 	      comp_ids = lines(l).component_ids();
 	    const L& lbl = lines.components().labeled_image();
 	    for_all_elements(c, comp_ids)
-	      data::fill((output | lines.components()(comp_ids(c)).bbox()).rw(),
-			 ((doc.binary_image() | lines.components()(comp_ids(c)).bbox())
-			  | (pw::value(lbl) == comp_ids(c))));
+	    {
+	      data::fill(((output | lines.components()(comp_ids(c)).bbox()).rw()
+			  | (pw::value(lbl) == comp_ids(c))).rw(),
+			 (doc.binary_image() | lines.components()(comp_ids(c)).bbox()));
+	    }
 	  }
       }
 

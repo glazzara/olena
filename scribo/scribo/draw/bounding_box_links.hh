@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -294,15 +294,11 @@ namespace scribo
 			right_link_value);
 
 
-	mln::util::couple<bool, unsigned>
-	  nbh = primitive::internal::is_link_valid(left_link,
-						   right_link,
-						   i);
-
-	if (nbh.first())
+	if (primitive::internal::is_link_valid(left_link,
+					       right_link, i))
 	  mln::draw::line(input,
-			  primitive::link::internal::compute_anchor(comps, right_link(i), anchor),
-			  primitive::link::internal::compute_anchor(comps, nbh.second(), anchor),
+			  primitive::link::internal::compute_anchor(comps, i, anchor),
+			  primitive::link::internal::compute_anchor(comps, left_link(i), anchor),
 			  validated_link_value);
 
       }

@@ -109,6 +109,7 @@ int main(int argc, char* argv[])
 	const line_info<L>& line = parset.lines()(parset(p).line_ids()(l));
 
 	if (last_box.is_valid())
+	{
 	  if (last_box.pmax().row() < line.bbox().pmin().row())
 	  {
 	    last_tbox = last_box;
@@ -167,6 +168,7 @@ int main(int argc, char* argv[])
 	      // mln::io::pgm::save(log, mln::debug::filename("log.pgm", i++));
 	    }
 	  }
+	}
 
 	mln::draw::box_plain(blocks, line.bbox(), true);
 	// mln::draw::box_plain(log, line.bbox(), 255);

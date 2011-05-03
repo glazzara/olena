@@ -1,5 +1,20 @@
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* scribo/core/paragraph_info.hh: Add color information.
+
+	* scribo/debug/bboxes_image.hh: Reindent.
+
+	* scribo/draw/bounding_box_links.hh: Update use of is_link_valid.
+
+	* scribo/make/text_components_image.hh: Fix wrong domain inclusions.
+
+	* scribo/toolchain/text_in_picture.hh: Make use of
+	component::extract::alignments.
+
+2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* scribo/primitive/extract/alignments.hh: Fix several bugs.
 
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
