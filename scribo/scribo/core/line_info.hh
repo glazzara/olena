@@ -1188,22 +1188,23 @@ namespace scribo
       // incremented.
       ++used_comps;
 
+
       // COMPUTE FEATURES DATA
-      // if (comp_set(c).has_features())
-      // {
-      // 	// Compute boldness
-      // 	boldness.take(comp_set(c).features().boldness);
-      // 	sum2_boldness += mln::math::sqr<float>(comp_set(c).features().boldness);
+      if (comp_set(c).has_features())
+      {
+	// Compute boldness
+	boldness.take(comp_set(c).features().boldness);
+	sum2_boldness += mln::math::sqr<float>(comp_set(c).features().boldness);
 
-      // 	// Compute color
-      // 	color_red.take(comp_set(c).features().color.red());
-      // 	color_green.take(comp_set(c).features().color.green());
-      // 	color_blue.take(comp_set(c).features().color.blue());
+	// Compute color
+	color_red.take(comp_set(c).features().color.red());
+	color_green.take(comp_set(c).features().color.green());
+	color_blue.take(comp_set(c).features().color.blue());
 
-      // 	sum2_red += mln::math::sqr<unsigned>(comp_set(c).features().color.red());
-      // 	sum2_green += mln::math::sqr<unsigned>(comp_set(c).features().color.green());
-      // 	sum2_blue += mln::math::sqr<unsigned>(comp_set(c).features().color.blue());
-      // }
+	sum2_red += mln::math::sqr<unsigned>(comp_set(c).features().color.red());
+	sum2_green += mln::math::sqr<unsigned>(comp_set(c).features().color.green());
+	sum2_blue += mln::math::sqr<unsigned>(comp_set(c).features().color.blue());
+      }
 
       // FIXME: we must guaranty here that the relationship is from
       // right to left, otherwise, the space size computed between

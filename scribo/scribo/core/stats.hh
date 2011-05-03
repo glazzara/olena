@@ -273,14 +273,14 @@ private:
 	       && left_distance <= std))
 	++cluster_index;
 
-      clusters[i] = cluster_index;
+      clusters.push_back(cluster_index);
     }
 
     if (nelements > 1
 	&& data_[i] - data_[i - 1] > std)
       ++cluster_index;
 
-    clusters[i] = cluster_index;
+    clusters.push_back(cluster_index);
 
     clusters_.clear();
     clusters_.reserve(cluster_index);

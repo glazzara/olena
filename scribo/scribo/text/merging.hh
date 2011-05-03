@@ -460,7 +460,8 @@ namespace scribo
 	if (l_cur_height < l_ted_x_height
 	    && l_cur_height > 0.05f * l_ted_x_height
 	    && float(l_cur_width) / float(l_cur.card()) < l_ted.char_width()
-	    && dx < l_ted_cw)
+	    && dx < l_ted_cw
+	    && l_cur_pmin.row() < l_ted_pmax.row())
 	{
 	  l_cur.update_type(line::Punctuation);
 	  return true;

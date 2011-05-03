@@ -132,18 +132,16 @@ namespace scribo
 	  {
 	    // ror : right neighbor of the right neighbor
 	    const value::int_u16 ror_nbh = right(right_nbh);
-	    const box2d& ror_line_bbox = lines(ror_nbh).bbox();
+	    // const box2d& ror_line_bbox = lines(ror_nbh).bbox();
 
 	    // If the current line has a ror
 	    if (ror_nbh != right_nbh
 		&& output(ror_nbh) == right_nbh)
 	    {
 	      // Distance between the current line and the right neighbor
-	      const float right_distance =
-		current_line_bbox.pcenter().row() - right_line_bbox.pcenter().row();
+	      const float right_distance = lines(l).meanline() - lines(right_nbh).baseline();
 	      // Distance between the right neighbor and the ror
-	      const float ror_distance =
-		right_line_bbox.pcenter().row() - ror_line_bbox.pcenter().row();
+	      const float ror_distance = lines(right_nbh).meanline() - lines(ror_nbh).baseline();
 	      // ror x_height
 	      const float ror_x_height = lines(ror_nbh).x_height();
 
@@ -168,7 +166,7 @@ namespace scribo
 	      // If the distance between the two lines is greater than
 	      // the minimum x height of the two lines then we cut the
 	      // link between them
-	      if (distance > std::min(x_height, right_x_height)
+	      if (distance > 2.0f * std::min(x_height, right_x_height)
 		&& output(right_nbh) == l)
 	      {
 		  output(right_nbh) = right_nbh;
@@ -207,12 +205,12 @@ namespace scribo
 	    if (lol_nbh != left_nbh)
 	    {
 	      // Distance between the current line and its left neighbor
-	      const float left_distance =
-		left_line_bbox.pcenter().row() - current_line_bbox.pcenter().row();
+	      const float left_distance = lines(left_nbh).meanline() -
+		lines(l).baseline();
 	      // Distance between the left neighbor and the left
 	      // neighbor of its left neighbor
-	      const float lol_distance =
-		lol_line_bbox.pcenter().row() - left_line_bbox.pcenter().row();
+	      const float lol_distance = lines(lol_nbh).meanline() -
+		lines(left_nbh).baseline();
 	      // lol x height
 	      const float lol_x_height = lines(lol_nbh).x_height();
 
@@ -237,7 +235,7 @@ namespace scribo
 
 	      // If the distance is greater than the min x height
 	      // between the two lines
-	      if (distance > std::min(x_height, left_x_height))
+	      if (distance > 2.0f * std::min(x_height, left_x_height))
 	      {
 		  output(l) = l;
 		  continue;
