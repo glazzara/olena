@@ -1,5 +1,10 @@
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Make use of
+	component::extract::alignments.
+
+2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* scribo/core/paragraph_info.hh: Add color information.
@@ -10,8 +15,9 @@
 
 	* scribo/make/text_components_image.hh: Fix wrong domain inclusions.
 
-	* scribo/toolchain/text_in_picture.hh: Make use of
-	component::extract::alignments.
+	* scribo/toolchain/text_in_picture.hh: Fix wrong include.
+
+	* src/debug/show_paragraph_blocks.cc: Add missing curly brackets.
 
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 

@@ -37,7 +37,8 @@
 # include <scribo/primitive/extract/separators.hh>
 # include <scribo/primitive/extract/vertical_separators.hh>
 # include <scribo/primitive/extract/horizontal_separators.hh>
-# include <scribo/primitive/extract/separators_nonvisible.hh>
+
+# include <scribo/primitive/extract/alignments.hh>
 
 # include <scribo/primitive/identify.hh>
 
@@ -197,24 +198,8 @@ namespace scribo
 	  on_progress();
 	}
 
-	mln_ch_value(I,bool) whitespaces;
-	if (enable_whitespace_seps)
-	{
-	  // Whitespace separators
-	  on_new_progress_label("Find whitespace separators...");
 
-	  whitespaces = primitive::extract::separators_nonvisible(input_cleaned);
-
-	  on_progress();
-	}
-
-
-	// Debug
 #  ifndef SCRIBO_NDEBUG
-	if (enable_whitespace_seps)
-	  debug::logger().log_image(debug::AuxiliaryResults,
-				    whitespaces, "whitespaces");
-
 	// Debug
 	if (enable_line_seps)
 	{
@@ -264,11 +249,6 @@ namespace scribo
 	/// Set separator components.
 	if (enable_line_seps)
 	  components.add_separators(separators);
-	if (enable_whitespace_seps)
-	{
-	  components.add_separators(whitespaces);
-	  doc.set_whitespace_separators(whitespaces);
-	}
 
 	// Debug
 #  ifndef SCRIBO_NDEBUG
@@ -291,13 +271,14 @@ namespace scribo
 	object_links<L> left_link
 	  = primitive::link::with_single_left_link_dmax_ratio(
 	    components,
-	    primitive::link::internal::dmax_width_and_height(1),
+	    primitive::link::internal::dmax_default(1),
 	    anchor::MassCenter);
+
 
 	object_links<L> right_link
 	  = primitive::link::with_single_right_link_dmax_ratio(
 	    components,
-	    primitive::link::internal::dmax_width_and_height(1),
+	    primitive::link::internal::dmax_default(1),
 	    anchor::MassCenter);
 
 	// Debug
@@ -317,7 +298,6 @@ namespace scribo
 	    "object_links");
 	}
 #  endif // ! SCRIBO_NDEBUG
-
 
 	// Validating left and right links.
 	object_links<L>
@@ -364,10 +344,34 @@ namespace scribo
 	  lines = scribo::make::line_set(groups);
 
 
+	// Extract whitespace to improve text merging results afterwards.
+	mln_ch_value(L,bool) whitespaces;
+	if (enable_whitespace_seps)
+	{
+	  scribo::paragraph_set<L> parset = scribo::make::paragraph(lines);
+	  doc.set_paragraphs(parset);
+
+	  // Whitespace separators
+	  on_new_progress_label("Find whitespace separators...");
+
+	  mln::util::couple<component_set<L>, mln_ch_value(L,bool)>
+	    res =  primitive::extract::alignments(doc, 3, 3);
+	  whitespaces = res.second();
+
+	  on_progress();
+
+	  components.add_separators(res.second());
+	  doc.set_whitespace_separators(res.second(), res.first());
+	}
+
+
 	//===== DEBUG =====
 #  ifndef SCRIBO_NDEBUG
 	if (debug::logger().is_enabled())
 	{
+	  if (enable_whitespace_seps)
+	    debug::logger().log_image(debug::AuxiliaryResults,
+				      whitespaces, "whitespaces");
 
 	  // Bboxes image.
 	  debug::logger().log_image(
