@@ -61,6 +61,9 @@
 # include <scribo/core/internal/sort_comp_ids.hh>
 # include <scribo/core/concept/serializable.hh>
 
+// DEBUG
+
+# include <scribo/core/stats.hh>
 
 namespace scribo
 {
@@ -144,6 +147,11 @@ namespace scribo
 
     private:
       void init_();
+
+      // DEBUG
+      stats< float > meanline_clusters_;
+      stats< float > baseline_clusters_;
+    };
 
     };
 
@@ -273,7 +281,8 @@ namespace scribo
 
     /// @}
 
-
+    bool chars_same_width() const;
+    unsigned get_first_char_height() const;
     /// Force a new computation of statistics.
     void force_stats_update();
 
@@ -300,6 +309,9 @@ namespace scribo
 			    const scribo::line_info<L>& info);
 
     void update_components_type(component::Type type);
+
+    int compute_baseline();
+    int compute_meanline();
 
   private: // Attributes
     line_id_t id_;
@@ -810,7 +822,7 @@ namespace scribo
   int
   line_info<L>::delta_of_line() const
   {
-    return char_width() + 2 * char_space();
+    return 2 * char_width() + 2 * char_space();
     // FIXME: choose between:
     //   not enough: char_width + char_space
     //   too much:   2 * char_width
@@ -960,6 +972,145 @@ namespace scribo
   }
 
   template <typename L>
+  bool
+  line_info<L>::chars_same_width() const
+  {
+    // Only for the case of two-character words
+    if (card() == 2)
+    {
+      const component_set<L>& comp_set = data_->holder_.components();
+
+      const unsigned c1 = data_->components_(0);
+      const unsigned c2 = data_->components_(1);
+
+      if (data_->holder_.components()(c1).type() == component::Punctuation
+	  || data_->holder_.components()(c2).type() == component::Punctuation)
+	return false;
+
+      const mln::box2d& bb1 = comp_set(c1).bbox();
+      const mln::box2d& bb2 = comp_set(c2).bbox();
+
+      const float w1 = bb1.width();
+      const float h1 = bb1.height();
+      const float w2 = bb2.width();
+      const float h2 = bb2.height();
+
+      const float space = std::max(bb1.pmin().col(), bb2.pmin().col()) -
+      	std::min(bb1.pmax().col(), bb2.pmax().col());
+
+      const int dy = bb1.pmax().row() - bb2.pmax().row();
+
+      // The two characters must be distinct
+      if (space < 0)
+	return false;
+
+      if (// Approximately the same width
+	((std::max(w1, w2) / std::min(w1, w2)) > 1.1f ||
+	 // One character must not be smaller than the space between
+	 // the two characters
+	   (w1 < space || w2 < space))
+	// If the two characters have a different width they must also
+	// have a different height
+	  && not (std::max(h1, h2) / std::min(h1, h2) <= 1.5f))
+	return false;
+
+      // Approximately aligned on baseline
+      if (std::abs(dy) > 10)
+	return false;
+
+      return true;
+    }
+
+    return false;
+  }
+
+  template< typename L >
+  unsigned
+  line_info<L>::get_first_char_height() const
+  {
+    const component_set<L>& comp_set = data_->holder_.components();
+    const unsigned c1 = data_->components_(0);
+    const mln::box2d& bb1 = comp_set(c1).bbox();
+
+    return bb1.height();
+  }
+
+  template <typename L>
+  int
+  line_info<L>::compute_baseline()
+  {
+    const unsigned nelements = data_->baseline_clusters_.nelements();
+
+    if (nelements == 2)
+      return data_->baseline_clusters_.mean();
+
+    mln::util::array< cluster_stats< float > >& clusters_b = data_->baseline_clusters_.clusters();
+
+    unsigned index = 0;
+    float min_base = 0.0f;
+    const unsigned clusters_b_nelements = clusters_b.nelements();
+
+    for (unsigned i = 0; i < clusters_b_nelements; ++i)
+    {
+      const unsigned clusters_b_i_nelements = clusters_b[i].nelements();
+
+      if (clusters_b_i_nelements >= min_base * 2.0f)
+      {
+	min_base = clusters_b_i_nelements;
+	index = i;
+      }
+      else if (clusters_b_i_nelements >= 0.5f * min_base)
+      {
+	if (clusters_b_i_nelements > 1 &&
+	    clusters_b[index].median() > clusters_b[i].median())
+	{
+	  if (clusters_b_i_nelements > min_base)
+	    min_base = clusters_b_i_nelements;
+	  index = i;
+	}
+      }
+    }
+
+    if (clusters_b[index].nelements() <= 2 && nelements <= 5)
+      return data_->baseline_clusters_.mean();
+
+    return clusters_b[index].median();
+  }
+
+  template <typename L>
+  int
+  line_info<L>::compute_meanline()
+  {
+    mln::util::array< cluster_stats< float > >& clusters_m = data_->meanline_clusters_.clusters();
+
+    unsigned index = 0;
+    float max_mean = 0.0f;
+    const unsigned clusters_m_nelements = clusters_m.nelements();
+
+    for (unsigned i = 0; i < clusters_m_nelements; ++i)
+    {
+      const unsigned clusters_m_i_nelements = clusters_m[i].nelements();
+
+      if (clusters_m_i_nelements >= max_mean * 2.0f)
+      {
+	max_mean = clusters_m_i_nelements;
+	index = i;
+      }
+      else if (clusters_m_i_nelements >= 0.5f * max_mean)
+      {
+	if (clusters_m[index].median() < clusters_m[i].median())
+	{
+	  if (clusters_m_i_nelements > max_mean)
+	    max_mean = clusters_m_i_nelements;
+	  index = i;
+	}
+      }
+    }
+
+    return clusters_m[index].median();
+  }
+
+  template <typename L>
   void
   line_info<L>::force_stats_update()
   {
@@ -970,8 +1121,8 @@ namespace scribo
     typedef mln::value::int_u<12> median_data_t;
     typedef mln::accu::stat::median_h<median_data_t> median_t;
     median_t
-      meanline,
-      baseline,
+      // meanline,
+      // baseline,
       char_space,
       char_width;
 
@@ -994,6 +1145,10 @@ namespace scribo
     mln::accu::shape::bbox<P> bbox;
 
     mln::def::coord ref_line = mln_max(mln::def::coord);
+
+    // DEBUG
+    data_->baseline_clusters_.reset();
+    data_->meanline_clusters_.reset();
 
     // Find a reference line to compute baselines and other attributes.
     // Workaround to avoid overflow with int_u<12> in median accumulators.
@@ -1033,23 +1188,22 @@ namespace scribo
       // incremented.
       ++used_comps;
 
-
       // COMPUTE FEATURES DATA
-      if (comp_set(c).has_features())
-      {
-	// Compute boldness
-	boldness.take(comp_set(c).features().boldness);
-	sum2_boldness += mln::math::sqr<float>(comp_set(c).features().boldness);
+      // if (comp_set(c).has_features())
+      // {
+      // 	// Compute boldness
+      // 	boldness.take(comp_set(c).features().boldness);
+      // 	sum2_boldness += mln::math::sqr<float>(comp_set(c).features().boldness);
 
-	// Compute color
-	color_red.take(comp_set(c).features().color.red());
-	color_green.take(comp_set(c).features().color.green());
-	color_blue.take(comp_set(c).features().color.blue());
+      // 	// Compute color
+      // 	color_red.take(comp_set(c).features().color.red());
+      // 	color_green.take(comp_set(c).features().color.green());
+      // 	color_blue.take(comp_set(c).features().color.blue());
 
-	sum2_red += mln::math::sqr<unsigned>(comp_set(c).features().color.red());
-	sum2_green += mln::math::sqr<unsigned>(comp_set(c).features().color.green());
-	sum2_blue += mln::math::sqr<unsigned>(comp_set(c).features().color.blue());
-      }
+      // 	sum2_red += mln::math::sqr<unsigned>(comp_set(c).features().color.red());
+      // 	sum2_green += mln::math::sqr<unsigned>(comp_set(c).features().color.green());
+      // 	sum2_blue += mln::math::sqr<unsigned>(comp_set(c).features().color.blue());
+      // }
 
       // FIXME: we must guaranty here that the relationship is from
       // right to left, otherwise, the space size computed between
@@ -1083,12 +1237,14 @@ namespace scribo
       // Meanline (compute an absolute value, from the top left corner
       // of the highest character bounding box, excluding
       // punctuation).
-      meanline.take(bb.pmin().row() - ref_line);
+      // meanline.take(bb.pmin().row() - ref_line);
+      data_->meanline_clusters_.take(bb.pmin().row());
 
       // Baseline (compute an absolute value, from the top left corner
       // of the highest character bounding box, excluding
       // punctuation).
-      baseline.take(bb.pmax().row() - ref_line);
+      // baseline.take(bb.pmax().row() - ref_line);
+      data_->baseline_clusters_.take(bb.pmax().row());
     }
 
     // Finalization
@@ -1140,12 +1296,14 @@ namespace scribo
       else
 	data_->char_width_ = char_width.to_result();
 
-      mln::def::coord
-	absolute_baseline_r = baseline.to_result() + ref_line,
-	absolute_meanline_r = meanline.to_result() + ref_line;
+      // // mln::def::coord
+      // // 	absolute_baseline_r = baseline.to_result() + ref_line,
+      // // 	absolute_meanline_r = meanline.to_result() + ref_line;
 
-      data_->baseline_ = absolute_baseline_r;
-      data_->meanline_ = absolute_meanline_r;
+      // data_->baseline_ = absolute_baseline_r;
+      // data_->meanline_ = absolute_meanline_r;
+      data_->baseline_ = compute_baseline();
+      data_->meanline_ = compute_meanline();
       data_->x_height_ = data_->baseline_ - data_->meanline_ + 1;
       data_->d_height_ = data_->baseline_ - bbox.to_result().pmax().row();
       data_->a_height_ = data_->baseline_ - bbox.to_result().pmin().row() + 1;

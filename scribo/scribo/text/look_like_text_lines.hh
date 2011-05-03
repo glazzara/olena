@@ -64,6 +64,22 @@ namespace scribo
       inline
       bool looks_like_a_text_line(const scribo::line_info<L>& l)
       {
+	// Special case for two-letter words
+	if (l.card() == 2)
+	{
+	  const float ratio = (float) l.bbox().width() / l.bbox().height();
+
+	  if (// Minimal width / height ratio
+	    ratio > 0.4f && ratio < 2.0f
+	      // Minimal height
+	      && l.bbox().height() >= 15
+	      // Characters must have approximately the same width
+	      && l.chars_same_width())
+	    {
+	      return true;
+	    }
+	 }
+
 	return
 	  l.card() >= 3                  // at least 3 components
 	  && l.bbox().height() > 10      // and minimal height

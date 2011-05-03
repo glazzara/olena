@@ -188,21 +188,24 @@ namespace scribo
 	swap_ordering(l1, l2);
 	parent[l2] = l1; // The smallest label value is root.
 
-	if (lines(l2).card() > lines(l1).card())
+	line_info<L>& l1_info = lines(l1);
+	line_info<L>& l2_info = lines(l2);
+
+	if (l2_info.card() > l1_info.card())
 	{
           // we transfer data from the largest item to the root one.
-	  scribo::line_info<L> tmp = lines(l1);
-	  std::swap(lines(l1), lines(l2));
-	  lines(l1).fast_merge(tmp);
+	  scribo::line_info<L> tmp = l1_info;
+	  std::swap(l1_info, l2_info);
+	  l1_info.fast_merge(tmp);
 
 	  // We must set manually the tag for lines(l2) since it is
 	  // not used directly in merge process so its tag cannot be
 	  // updated automatically.
-	  lines(l2).update_tag(line::Merged);
-	  lines(l2).set_hidden(true);
+	  l2_info.update_tag(line::Merged);
+	  l2_info.set_hidden(true);
 	}
 	else
-	  lines(l1).fast_merge(lines(l2));
+	  l1_info.fast_merge(l2_info);
 
 	// l1's tag is automatically set to line::Needs_Precise_Stats_Update
 	// l2's tag is automatically set to line::Merged
@@ -226,34 +229,57 @@ namespace scribo
       bool between_separators(const scribo::line_info<L>& l1,
 			      const scribo::line_info<L>& l2)
       {
-	// No separators found in image.
+        // No separators found in image.
 	mln_precondition(l1.holder().components().has_separators());
 
-	unsigned
-	  col1 = l1.bbox().pcenter().col(),
-	  col2 = l2.bbox().pcenter().col();
+	const box2d& l1_bbox = l1.bbox();
+	const box2d& l2_bbox = l2.bbox();
+
+	const unsigned
+	  col1 = l1_bbox.pcenter().col(),
+	  col2 = l2_bbox.pcenter().col();
 	const mln_ch_value(L, bool)&
 	  separators = l1.holder().components().separators();
 
+	// Checking for separators starting from 1 / 4, 3/ 4 and the
+	// center of the box
 	typedef const bool* sep_ptr_t;
-	sep_ptr_t sep_ptr, end;
+	sep_ptr_t sep_ptr, sep_ptr_top, sep_ptr_bottom, end;
 
 	if (col1 < col2)
 	{
-	  sep_ptr = &separators(l1.bbox().pcenter());
+	  const unsigned quarter =
+	    ((l1_bbox.pcenter().row() - l1_bbox.pmin().row()) >> 1);
+
+	  sep_ptr = &separators(l1_bbox.pcenter());
+	  sep_ptr_top = &separators(point2d(l1_bbox.pmin().row() + quarter,
+					    l1_bbox.pcenter().col()));
+	  sep_ptr_bottom = &separators(point2d(l1_bbox.pmax().row() - quarter,
+					    l1_bbox.pcenter().col()));
 	  end = sep_ptr + col2 - col1;
 	}
 	else
 	{
-	  sep_ptr = &separators(l2.bbox().pcenter());
+	  const unsigned quarter =
+	    ((l2_bbox.pcenter().row() - l2_bbox.pmin().row()) >> 1);
+
+	  sep_ptr = &separators(l2_bbox.pcenter());
+	  sep_ptr_top = &separators(point2d(l2_bbox.pmin().row() + quarter,
+					    l2_bbox.pcenter().col()));
+	  sep_ptr_bottom = &separators(point2d(l2_bbox.pmax().row() - quarter,
+					    l2_bbox.pcenter().col()));
 	  end = sep_ptr + col1 - col2;
 	}
 
 	// If sep_ptr is true, then a separator is reached.
-	while (!*sep_ptr && sep_ptr != end)
+	while (!*sep_ptr && !*sep_ptr_top && !*sep_ptr_bottom && sep_ptr != end)
+	{
 	  ++sep_ptr;
+	  ++sep_ptr_top;
+	  ++sep_ptr_bottom;
+	}
 
-	return *sep_ptr;
+	return (*sep_ptr || *sep_ptr_top || *sep_ptr_bottom);
       }
 
 
@@ -266,16 +292,78 @@ namespace scribo
 
       */
       template <typename L>
-      bool lines_can_merge(const scribo::line_info<L>& l1,
+      bool lines_can_merge(scribo::line_info<L>& l1,
 			   const scribo::line_info<L>& l2)
       {
 	// Parameters.
-	const float x_ratio_max = 1.7, baseline_delta_max = 3;
+	const float x_ratio_max = 1.7f;
+	const float baseline_delta_max =
+	  0.5f * std::min(l1.x_height(), l2.x_height());
+
+	const box2d& l1_bbox = l1.bbox();
+	const box2d& l2_bbox = l2.bbox();
+
+	const point2d& l1_pmin = l1_bbox.pmin();
+	const point2d& l2_pmin = l2_bbox.pmin();
+	const point2d& l1_pmax = l1_bbox.pmax();
+	const point2d& l2_pmax = l2_bbox.pmax();
+
+	const bool l1_has_separators = l1.holder().components().has_separators();
+	const bool l1_l2_between_separators = (l1_has_separators) ?
+	  between_separators(l1, l2) : false;
+	const float l_ted_cw = l2.char_width();
+
+	const float dx = std::max(l1_pmin.col(), l2_pmin.col())
+	  - std::min(l1_pmax.col(), l2_pmax.col());
+	const float dy = std::max(l1_pmin.row(), l2_pmin.row())
+	  - std::min(l1_pmax.row(), l2_pmax.row());
+
+	// Particular case of "
+	{
+	  if (// Must have 2 characters
+	    (l1.card() == 2
+	     // The box height must be smaller than the touched line x height
+	     && l1_bbox.height() < l2.x_height())
+	    // The line must be vertically and horizontally close to
+	    // the touched line
+	      && (dx < l_ted_cw && dy < 0)
+	    // No separator between the two lines
+	      && not (l1_l2_between_separators))
+	  {
+	    // Line is then considered as punctuation
+	    l1.update_type(line::Punctuation);
+	    return true;
+	  }
+	}
+
+	// Particular case like merging between a line and [5]
+	{
+	  const mln::def::coord
+	    top_row_l2 = l2_pmin.row(),
+	    top_row_l1 = l1_pmin.row(),
+	    bot_row = l2_pmax.row();
+	  const float x1 = l1.x_height(), x2 = l2.x_height();
+	  const float x_ratio = std::max(x1, x2) / std::min(x1, x2);
+
+	  if (// No separator
+	    !l1_l2_between_separators
+	    // The x height ration must be lower than 2
+	      && (x_ratio < 2.0f)
+	    // Baseline alignment
+	      && (std::abs(bot_row - l1.baseline()) < baseline_delta_max)
+	    // The top of the boxes must be aligned
+	      && (std::abs(top_row_l2 - top_row_l1) < 5)
+            // Distance between the line and the touched line.
+	      && dx < 5.0f * l_ted_cw)
+	  {
+	    return true;
+	  }
+	}
 
 	// Similarity of x_height.
 	{
-	  float x1 = l1.x_height(), x2 = l2.x_height();
-	  float x_ratio = std::max(x1, x2) / std::min(x1, x2);
+	  const float x1 = l1.x_height(), x2 = l2.x_height();
+	  const float x_ratio = std::max(x1, x2) / std::min(x1, x2);
 	  if (x_ratio > x_ratio_max)
 	    return false;
 	}
@@ -287,22 +375,21 @@ namespace scribo
 	}
 
 	// left / right
-	unsigned
-	  col1 = l1.bbox().pcenter().col(),
-	  col2 = l2.bbox().pcenter().col();
+	const unsigned
+	  col1 = l1_bbox.pcenter().col(),
+	  col2 = l2_bbox.pcenter().col();
 	if (col1 < col2)
 	{
-	  if ((col1 + l1.bbox().width() / 4) >= (col2 - l2.bbox().width() / 4))
+	  if ((col1 + l1_bbox.width() / 4) >= (col2 - l2_bbox.width() / 4))
  	    return false;
 	}
 	else
-	  if ((col2 + l2.bbox().width() / 4) >= (col1 - l1.bbox().width() / 4))
+	  if ((col2 + l2_bbox.width() / 4) >= (col1 - l1_bbox.width() / 4))
 	    return false;
 
-
  	// Check that there is no separator in between.
-	if (l1.holder().components().has_separators())
-	  return ! between_separators(l1, l2);
+	if (l1_has_separators)
+	  return ! l1_l2_between_separators;
 
 	return true;
       }
@@ -310,14 +397,14 @@ namespace scribo
 
 
 
-      template <typename L>
-      int horizontal_distance(const scribo::line_info<L>& l1,
-			      const scribo::line_info<L>& l2)
+      inline
+      int horizontal_distance(const box2d& l1,
+			      const box2d& l2)
       {
-	if (l1.bbox().pcenter().col() < l2.bbox().pcenter().col())
-	  return l2.bbox().pmin().col() - l1.bbox().pmax().col();
+	if (l1.pcenter().col() < l2.pcenter().col())
+	  return l2.pmin().col() - l1.pmax().col();
 	else
-	  return l1.bbox().pmin().col() - l2.bbox().pmax().col();
+	  return l1.pmin().col() - l2.pmax().col();
       }
 
 
@@ -339,7 +426,7 @@ namespace scribo
 
       */
       template <typename L>
-      bool non_text_and_text_can_merge(const scribo::line_info<L>& l_cur, // current
+      bool non_text_and_text_can_merge(scribo::line_info<L>& l_cur, // current
 				       const scribo::line_info<L>& l_ted) // touched
       {
 	if (l_cur.type() == line::Text || l_ted.type() != line::Text)
@@ -353,22 +440,42 @@ namespace scribo
 	    && between_separators(l_cur, l_ted))
 	  return false;
 
+	const box2d& l_cur_bbox = l_cur.bbox();
+	const box2d& l_ted_bbox = l_ted.bbox();
+
+	const point2d& l_cur_pmin = l_cur_bbox.pmin();
+	const point2d& l_ted_pmin = l_ted_bbox.pmin();
+	const point2d& l_cur_pmax = l_cur_bbox.pmax();
+	const point2d& l_ted_pmax = l_ted_bbox.pmax();
+
+	const float dx = std::max(l_cur_pmin.col(), l_ted_pmin.col())
+	  - std::min(l_cur_pmax.col(), l_ted_pmax.col());
+	const float l_ted_cw = l_ted.char_width();
+	const float l_ted_x_height = l_ted.x_height();
+
+	const unsigned l_cur_height = l_cur_bbox.height();
+	const unsigned l_cur_width = l_cur_bbox.width();
 
 	// General case (for tiny components like --> ',:."; <--):
-	if (l_cur.bbox().height() < l_ted.x_height()
-	    && float(l_cur.bbox().width()) / float(l_cur.card()) < l_ted.char_width())
+	if (l_cur_height < l_ted_x_height
+	    && l_cur_height > 0.05f * l_ted_x_height
+	    && float(l_cur_width) / float(l_cur.card()) < l_ted.char_width()
+	    && dx < l_ted_cw)
+	{
+	  l_cur.update_type(line::Punctuation);
 	  return true;
-
+	}
 
 	// Special case for '---':
 	if (// small height:
-	  l_cur.bbox().height() < l_ted.x_height()
+	  l_cur_height < l_ted_x_height
 	  // // not so long width:
-	  && l_cur.bbox().width() < 5 * l_ted.char_width()
+	  && l_cur_width > 0.8 * l_ted_cw
+	  && l_cur_width < 5 * l_ted_cw
 	  // align with the 'x' center:
 	  && std::abs((l_ted.baseline() + l_ted.meanline()) / 2 - l_cur.bbox().pcenter().row()) < 7
 	  // tiny spacing:
-	  && unsigned(horizontal_distance(l_cur, l_ted)) < l_ted.char_width()
+	  && unsigned(horizontal_distance(l_cur_bbox, l_ted_bbox)) < 2 * l_ted_cw
 	  )
 	{
 	  return true;
@@ -378,10 +485,11 @@ namespace scribo
 	// Special case
 
 	// Looking for alignement.
-	mln::def::coord
+	const mln::def::coord
 	  top_row = l_cur.bbox().pmin().row(),
 	  bot_row = l_cur.bbox().pmax().row();
 
+	const box2d& l_ted_ebbox = l_ted.ebbox();
 
 // 	std::cout << "top_row = " << top_row << " - bot_row = " << bot_row << std::endl;
 // 	std::cout << std::abs(bot_row - l_ted.baseline())
@@ -402,10 +510,11 @@ namespace scribo
 // 		  << std::endl;
 
 	if ((std::abs(bot_row - l_ted.baseline()) < 5
-	     || std::abs(bot_row - l_ted.ebbox().pmax().row()) < 5)
+	     || std::abs(bot_row - l_ted_ebbox.pmax().row()) < 5)
 	    &&
 	    (std::abs(top_row - l_ted.meanline()) < 5
-	     || std::abs(top_row - l_ted.ebbox().pmin().row()) < 5))
+	     || std::abs(top_row - l_ted_ebbox.pmin().row()) < 5)
+	    && dx < 5.0f * l_ted_cw)
 	{
 	  return true;
 	}
@@ -536,35 +645,33 @@ namespace scribo
 	  if (parent[l] != l) // not a root, so has already merged, thus ignore it
 	    continue;
 
-	  box2d b = lines(l).bbox();
+	  const box2d& b = lines(l).bbox();
 
-	  unsigned tl, tr, ml, mc, mr, bl, br;
+	  // unsigned tl, tr, ml, mc, mr, bl, br;
 
-	  {
-	    box2d b_ = lines(l).ebbox();
+	  const box2d& b_ = lines(l).ebbox();
 
-	    /*
-	      tl             tr
-	      x---------------x
-	      |               |
-	      |       mc      |
-	   ml x       x       x mr
-	      |               |
-	      |               |
-	      x---------------x
-	      bl             br
+	  /*
+	    tl             tr
+	    x---------------x
+	    |               |
+	    |       mc      |
+	    ml x       x       x mr
+	    |               |
+	    |               |
+	    x---------------x
+	    bl             br
 
-	    */
+	  */
 
 
-	    tl = billboard(b_.pmin());
-	    tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
-	    ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
-	    mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
-	    mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
-	    bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
-	    br = billboard(b_.pmax());
-	  }
+	  const unsigned tl = billboard(b_.pmin());
+	  const unsigned tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
+	  const unsigned ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
+	  const unsigned mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
+	  const unsigned mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
+	  const unsigned bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
+	  const unsigned br = billboard(b_.pmax());
 
 	  typedef std::set<unsigned> set_t;
 	  std::set<unsigned> labels;
@@ -596,11 +703,47 @@ namespace scribo
 	    {
 	      // Main case: it is an "included" box (falling in an already drawn box)
 
-	      if (lines(l).type() == line::Text) // the current object IS a text line
+	      const line_info<L>& l_info = lines(l);
+	      const line_info<L>& mc_info = lines(mc);
+
+	      if (l_info.type() == line::Text) // the current object IS a text line
 	      {
-		if (lines(mc).type() == line::Text) // included in a text line => weird
+		if (mc_info.type() == line::Text) // included in a text line => weird
 		{
 		  ++count_txtline_IN_txtline;
+
+		  // Particular case of "
+		  // {
+		  //   if ((lines(l).card() == 2 &&
+		  //        lines(l).bbox().height() < lines(mc).x_height()) &&
+		  // 	not (lines(l).holder().components().has_separators()
+		  // 	     && between_separators(lines(l),
+		  // lines(mc))))
+
+		  const box2d& l_bbox = l_info.bbox();
+		  const box2d& mc_bbox = mc_info.bbox();
+
+		  const point2d& l_pmin = l_bbox.pmin();
+		  const point2d& mc_pmin = mc_bbox.pmin();
+		  const point2d& l_pmax = l_bbox.pmax();
+		  const point2d& mc_pmax = mc_bbox.pmax();
+
+		  const float dx = std::max(l_pmin.col(), mc_pmin.col())
+		    - std::min(l_pmax.col(), mc_pmax.col());
+		  const float dy = std::max(l_pmin.row(), mc_pmin.row())
+		    - std::min(l_pmax.row(), mc_pmax.row());
+		  const float l_ted_cw = mc_info.char_width();
+
+		  // We accept a line included into another only if it
+		  // is horizontally close to the line's bbox and
+		  // vertically aligned
+		  // Obviously no separators between the two lines
+		  if (dx < l_ted_cw && dy < 0
+		    && 	not (l_info.holder().components().has_separators()
+		  	     && between_separators(l_info, mc_info)))
+		    l = do_union(lines, l, mc,  parent);
+		  // }
+
 //		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
 
 		  /// Merge is perform if the current line is a
@@ -649,15 +792,15 @@ namespace scribo
 		  // could be noise or garbage... So adding new
 		  // criterions could fix this issue.
 		  //
- 		  //if (!non_text_and_text_can_merge(lines(l), lines(mc)))
- 		  //  continue;
+ 		  if (!non_text_and_text_can_merge(lines(l), lines(mc)))
+ 		   continue;
 
 		  // Avoid the case when a large title ebbox overlap
 		  // with a text column. In that case, the title may
 		  // merge with punctuation from the text.
-		  if (lines(l).holder().components().has_separators()
-		      && between_separators(lines(l), lines(mc)))
-		    continue;
+		  // if (lines(l).holder().components().has_separators()
+		  //     && between_separators(lines(l), lines(mc)))
+		  //   continue;
 
 		  // Mark current line as punctuation.
 		  lines(l).update_type(line::Punctuation);
@@ -832,9 +975,12 @@ namespace scribo
 
 	bool operator()(const scribo::line_id_t& l1, const scribo::line_id_t& l2) const
 	{
-	  if (lines_(l1).bbox().nsites() == lines_(l2).bbox().nsites())
+	  const unsigned l1_nsites = lines_(l1).bbox().nsites();
+	  const unsigned l2_nsites = lines_(l2).bbox().nsites();
+
+	  if (l1_nsites == l2_nsites)
 	    return l1 < l2;
-	  return lines_(l1).bbox().nsites() < lines_(l2).bbox().nsites();
+	  return l1_nsites < l2_nsites;
 	}
 
 	scribo::line_set<L> lines_;
