@@ -38,6 +38,7 @@ check_PROGRAMS +=  \
 scribo_convert_from_base64 \
 scribo_convert_from_qimage \
 scribo_io_xml_internal_full_xml_visitor \
+scribo_io_xml_internal_save_image_to_xml \
 scribo_io_xml_load
 
 scribo_convert_from_base64_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
@@ -49,6 +50,9 @@ scribo_convert_from_qimage_SOURCES = scribo_convert_from_qimage.cc
 scribo_io_xml_internal_full_xml_visitor_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 scribo_io_xml_internal_full_xml_visitor_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
 scribo_io_xml_internal_full_xml_visitor_SOURCES = scribo_io_xml_internal_full_xml_visitor.cc
+scribo_io_xml_internal_save_image_to_xml_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
+scribo_io_xml_internal_save_image_to_xml_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
+scribo_io_xml_internal_save_image_to_xml_SOURCES = scribo_io_xml_internal_save_image_to_xml.cc
 scribo_io_xml_load_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 scribo_io_xml_load_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
 scribo_io_xml_load_SOURCES = scribo_io_xml_load.cc
@@ -117,8 +121,10 @@ scribo_core_def_color_type \
 scribo_core_def_lbl_type \
 scribo_core_document \
 scribo_core_erase_objects \
+scribo_core_group_info \
 scribo_core_init_integral_image \
 scribo_core_internal_doc_serializer \
+scribo_core_internal_sort_comp_ids \
 scribo_core_line_info \
 scribo_core_line_links \
 scribo_core_line_set \
@@ -158,16 +164,16 @@ scribo_estim_components_features \
 scribo_estim_font_boldness \
 scribo_estim_font_color \
 scribo_estim_internal_compute_skeleton \
-scribo_estim_object_groups_v_thickness \
+scribo_estim_object_groups_mean_width \
 scribo_filter_all \
 scribo_filter_common_objects_photo \
 scribo_filter_internal_alignment_angle \
 scribo_filter_internal_component_aligned \
 scribo_filter_internal_compute \
 scribo_filter_line_links_x_height \
+scribo_filter_object_groups_mean_width \
 scribo_filter_object_groups_size_ratio \
 scribo_filter_object_groups_small \
-scribo_filter_object_groups_v_thickness \
 scribo_filter_object_groups_with_holes \
 scribo_filter_object_links_aligned \
 scribo_filter_object_links_bbox_h_ratio \
@@ -361,8 +367,10 @@ scribo_core_def_color_type_SOURCES = scribo_core_def_color_type.cc
 scribo_core_def_lbl_type_SOURCES = scribo_core_def_lbl_type.cc
 scribo_core_document_SOURCES = scribo_core_document.cc
 scribo_core_erase_objects_SOURCES = scribo_core_erase_objects.cc
+scribo_core_group_info_SOURCES = scribo_core_group_info.cc
 scribo_core_init_integral_image_SOURCES = scribo_core_init_integral_image.cc
 scribo_core_internal_doc_serializer_SOURCES = scribo_core_internal_doc_serializer.cc
+scribo_core_internal_sort_comp_ids_SOURCES = scribo_core_internal_sort_comp_ids.cc
 scribo_core_line_info_SOURCES = scribo_core_line_info.cc
 scribo_core_line_links_SOURCES = scribo_core_line_links.cc
 scribo_core_line_set_SOURCES = scribo_core_line_set.cc
@@ -402,16 +410,16 @@ scribo_estim_components_features_SOURCES = scribo_estim_components_features.cc
 scribo_estim_font_boldness_SOURCES = scribo_estim_font_boldness.cc
 scribo_estim_font_color_SOURCES = scribo_estim_font_color.cc
 scribo_estim_internal_compute_skeleton_SOURCES = scribo_estim_internal_compute_skeleton.cc
-scribo_estim_object_groups_v_thickness_SOURCES = scribo_estim_object_groups_v_thickness.cc
+scribo_estim_object_groups_mean_width_SOURCES = scribo_estim_object_groups_mean_width.cc
 scribo_filter_all_SOURCES = scribo_filter_all.cc
 scribo_filter_common_objects_photo_SOURCES = scribo_filter_common_objects_photo.cc
 scribo_filter_internal_alignment_angle_SOURCES = scribo_filter_internal_alignment_angle.cc
 scribo_filter_internal_component_aligned_SOURCES = scribo_filter_internal_component_aligned.cc
 scribo_filter_internal_compute_SOURCES = scribo_filter_internal_compute.cc
 scribo_filter_line_links_x_height_SOURCES = scribo_filter_line_links_x_height.cc
+scribo_filter_object_groups_mean_width_SOURCES = scribo_filter_object_groups_mean_width.cc
 scribo_filter_object_groups_size_ratio_SOURCES = scribo_filter_object_groups_size_ratio.cc
 scribo_filter_object_groups_small_SOURCES = scribo_filter_object_groups_small.cc
-scribo_filter_object_groups_v_thickness_SOURCES = scribo_filter_object_groups_v_thickness.cc
 scribo_filter_object_groups_with_holes_SOURCES = scribo_filter_object_groups_with_holes.cc
 scribo_filter_object_links_aligned_SOURCES = scribo_filter_object_links_aligned.cc
 scribo_filter_object_links_bbox_h_ratio_SOURCES = scribo_filter_object_links_bbox_h_ratio.cc

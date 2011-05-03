@@ -1,5 +1,9 @@
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add a test for object_groups.
 
 	* tests/core/Makefile.am: New target.
