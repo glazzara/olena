@@ -88,6 +88,8 @@ namespace scribo
 	  None,
 	  ComponentSet,
 	  ComponentInfo,
+	  ComponentFeatures,
+	  Elements,
 	  LabeledImage,
 	  SeparatorsImage,
 	  ObjectLinks,
@@ -95,6 +97,7 @@ namespace scribo
 	  Point,
 	  Link,
 	  Group,
+	  GroupMember,
 	  Line,
 	  LineLinks,
 	  LineLink,
@@ -102,7 +105,13 @@ namespace scribo
 	  TextRegion,
 	  CompIdList,
 	  CompId,
-	  Page
+	  Page,
+	  WhitespacesDelimitors,
+	  HLineSeparators,
+	  VLineSeparators,
+	  WhitespacesDelimitorsImage,
+	  HLineSeparatorsImage,
+	  VLineSeparatorsImage,
 	};
 
 
@@ -116,6 +125,8 @@ namespace scribo
 	static const ModeData mode_data[] = {
 	  { "component_set", ComponentSet },
 	  { "component_info", ComponentInfo },
+	  { "component_features", ComponentFeatures },
+	  { "elements", Elements },
 	  { "labeled_image", LabeledImage },
 	  { "separators_image", SeparatorsImage },
 	  { "object_links",  ObjectLinks },
@@ -123,6 +134,7 @@ namespace scribo
 	  { "point", Point },
 	  { "link", Link },
 	  { "group", Group },
+	  { "group_member", GroupMember },
 	  { "line",  Line },
 	  { "line_links",  LineLinks },
 	  { "line_link",  LineLink },
@@ -131,9 +143,33 @@ namespace scribo
 	  { "compid_list", CompIdList },
 	  { "compid", CompId },
 	  { "page", Page },
+	  { "whitespaces_delimitors", WhitespacesDelimitors },
+	  { "hlines_separators", HLineSeparators },
+	  { "vlines_separators", VLineSeparators },
+	  { "whitespaces_delimitors_image", WhitespacesDelimitorsImage },
+	  { "hlines_separators_image", HLineSeparatorsImage },
+	  { "vlines_separators_image", VLineSeparatorsImage },
 	  { 0, None }
 	};
 
+
+	namespace internal
+	{
+
+	  value::rgb8 parse_color(const QString& color_str)
+	  {
+	    QString color = color_str;
+	    color.chop(1);
+	    color = color.remove(0, 1);
+	    QStringList rgb = color.split(',');
+
+	    return
+	      value::rgb8(rgb.at(0).toInt(),
+			  rgb.at(1).toInt(),
+			  rgb.at(2).toInt());
+	  }
+
+	}
 
 	template <typename L>
 	class xml_handler : public QXmlDefaultHandler
@@ -142,7 +178,8 @@ namespace scribo
 	  typedef mln_ch_value(L,bool) B;
 
 	public:
-	  xml_handler() : current_paragraph_id(1) { lines_data.append(line_info<L>()); } // line info id starts from 1.
+	  xml_handler(document<L>& doc_) : current_paragraph_id(1), doc(doc_)
+	  { lines_data.append(line_info<L>()); } // line info id starts from 1.
 
 	  virtual
 	  bool
@@ -185,6 +222,20 @@ namespace scribo
 	      break;
 
 
+	      case ComponentFeatures:
+	      {
+		if (atts.value("valid").toInt())
+		{
+		  component_features_data comp_features;
+		  comp_features.valid = true;
+		  comp_features.color = internal::parse_color(atts.value("color"));
+		  comp_features.boldness = atts.value("boldness").toFloat();
+
+		  comp_set_data->infos_.last().update_features(comp_features);
+		}
+	      }
+	      break;
+
 	      // Object links
 	      case ObjectLinks:
 	      {
@@ -197,8 +248,9 @@ namespace scribo
 	      // Object groups
 	      case ObjectGroups:
 	      {
-		// qDebug() << "object_groups created";
-		groups = object_groups<L>(links);
+		//qDebug() << "Processing object_groups";
+		group_info_.reserve(atts.value("ngroups").toInt());
+		group_info_.resize(1);
 	      }
 	      break;
 
@@ -225,6 +277,8 @@ namespace scribo
 		// qDebug() << "TextRegion";
 
 		current_paragraph = paragraph_info<L>(llinks);
+		current_paragraph.set_color_(internal::parse_color(atts.value("color")));
+		current_paragraph.set_color_reliability_(atts.value("color_reliability").toFloat());
 	      }
 	      break;
 
@@ -257,6 +311,7 @@ namespace scribo
 		line_data->a_height_ = atts.value("a_height").toInt();
 		line_data->char_space_ = atts.value("kerning").toInt();
 		line_data->char_width_ = atts.value("char_width").toInt();
+		line_data->char_width_ = atts.value("char_width").toInt();
 		line_data->word_space_ = 0;
 
 		line_data->reading_direction_ = line::LeftToRight;
@@ -265,6 +320,13 @@ namespace scribo
 		line_data->orientation_ = 0;
 		line_data->reading_orientation_ = atts.value("txt_reading_orientation").toInt();
 		line_data->indented_ = (atts.value("txt_indented") == "false" ? false : true);
+
+
+		line_data->boldness_ = atts.value("boldness").toFloat();
+		line_data->boldness_reliability_ = atts.value("boldness_reliability").toFloat();
+		line_data->color_ = internal::parse_color(atts.value("color"));
+
+		line_data->color_reliability_ = atts.value("color_reliability").toFloat();
 
 		bbox.init();
 	      }
@@ -282,7 +344,7 @@ namespace scribo
 	      // CompId
 	      case CompId:
 	      {
-		line_data->components_.append(atts.value("value").toInt());
+		line_data->component_ids_.append(atts.value("value").toInt());
 	      }
 	      break;
 
@@ -316,10 +378,21 @@ namespace scribo
 	      break;
 
 
+	      // Separators/delimitor images
+	      case WhitespacesDelimitorsImage:
+	      case HLineSeparatorsImage:
+	      case VLineSeparatorsImage:
+	      {
+		width = atts.value("width").toInt();
+		height = atts.value("height").toInt();
+		seps = B(mln::make::box2d(height, width), 0); // No border
+	      }
+	      break;
+
 	      // Link
 	      case Link:
 	      {
-		links(atts.value("from").toInt()) = atts.value("to").toInt();
+		links.update(atts.value("from").toInt(), atts.value("to").toInt());
 	      }
 	      break;
 
@@ -327,7 +400,20 @@ namespace scribo
 	      // Group
 	      case Group:
 	      {
-		groups(atts.value("object_id").toInt()) = atts.value("group_id").toInt();
+		group_info_.append(group_info(atts.value("id").toInt(),
+					      atts.value("pixel_area").toInt(),
+					      mln::make::box2d(atts.value("pmin_x").toInt(),
+							       atts.value("pmin_y").toInt(),
+							       atts.value("pmax_x").toInt(),
+							       atts.value("pmax_y").toInt()),
+					      atts.value("valid").toInt()));
+	      }
+	      break;
+
+	      // GroupMember
+	      case GroupMember:
+	      {
+		component_ids.append(atts.value("comp_id").toInt());
 	      }
 	      break;
 
@@ -352,6 +438,7 @@ namespace scribo
 	      {
 		// qDebug() << "Component set done";
 		components = component_set<L>(comp_set_data);
+
 	      }
 	      break;
 
@@ -382,6 +469,46 @@ namespace scribo
 		// qDebug() << "Page done";
 		lines.update_line_data_(lines_data);
 		parset = paragraph_set<L>(par_data);
+		doc.set_paragraphs(parset);
+	      }
+	      break;
+
+	      // ObjectGroups
+	      case ObjectGroups:
+	      {
+		groups = object_groups<L>(links, group_info_);
+	      }
+	      break;
+
+	      // Group
+	      case Group:
+	      {
+		group_info_.last().component_ids_() = component_ids;
+		component_ids.clear();
+	      }
+	      break;
+
+	      case Elements:
+	      {
+		doc.set_elements(components);
+	      }
+	      break;
+
+	      case WhitespacesDelimitors:
+	      {
+		doc.set_whitespace_separators(seps, components);
+	      }
+	      break;
+
+	      case HLineSeparators:
+	      {
+		doc.set_hline_separators(seps, components);
+	      }
+	      break;
+
+	      case VLineSeparators:
+	      {
+		doc.set_vline_separators(seps, components);
 	      }
 	      break;
 
@@ -419,6 +546,17 @@ namespace scribo
 	      }
 	      break;
 
+	      case WhitespacesDelimitorsImage:
+	      case HLineSeparatorsImage:
+	      case VLineSeparatorsImage:
+	      {
+		QByteArray data = ch.toAscii();
+		data = QByteArray::fromBase64(data);
+		data = qUncompress(data);
+		memcpy((char *) seps.buffer(), data.data(), data.size());
+	      }
+	      break;
+
 	      default:
 		;
 	    }
@@ -453,7 +591,10 @@ namespace scribo
 	  component_set<L> components;
 
 	  object_links<L> links;
+
 	  object_groups<L> groups;
+	  mln::util::array<component_id_t> component_ids;
+	  mln::util::array<group_info> group_info_;
 
 	  // Lines
 	  unsigned current_line_id;
@@ -468,6 +609,11 @@ namespace scribo
 
 	  mln::util::array<line_info<L> > lines_data;
 	  line_set<L> lines;
+
+	  // Delimitors/separators
+	  B seps; // Temporary image.
+
+	  document<L>& doc;
 	};
 
 
@@ -484,7 +630,7 @@ namespace scribo
 	load_extended(document<L>& doc,
 		      const std::string& output_name)
 	{
-	  xml_handler<L> handler;
+	  xml_handler<L> handler(doc);
 	  QXmlSimpleReader reader;
 	  reader.setContentHandler(&handler);
 
@@ -498,8 +644,6 @@ namespace scribo
 	  QXmlInputSource xmlInputSource(&file);
 	  if (reader.parse(xmlInputSource))
 	    qDebug() << "Loaded successfuly";
-
-	  doc.set_paragraphs(handler.parset);
 	}
 
       } // end of namespace scribo::io::xml::internal

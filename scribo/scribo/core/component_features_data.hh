@@ -49,9 +49,14 @@ namespace scribo
   std::ostream&
   operator<<(std::ostream& ostr, const component_features_data& data);
 
+  bool
+  operator==(const component_features_data& lhs,
+	     const component_features_data& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   component_features_data::component_features_data()
     : valid(false)
   {
@@ -67,6 +72,17 @@ namespace scribo
 		<< ", color=" << data.color
 		<< ", boldness=" << data.boldness
 		<< "]" << std::endl;
+  }
+
+
+  bool
+  operator==(const component_features_data& lhs,
+	     const component_features_data& rhs)
+  {
+    return
+      lhs.valid == rhs.valid
+      && lhs.color == rhs.color
+      && lhs.boldness == rhs.boldness;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -89,6 +89,8 @@ namespace scribo
   template <typename L>
   std::ostream& operator<<(std::ostream& ostr, const paragraph_info<L>& info);
 
+  template <typename L>
+  bool operator==(const paragraph_info<L>& lhs, const paragraph_info<L>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -248,6 +250,22 @@ namespace scribo
   }
 
   template <typename L>
+  bool
+  operator==(const paragraph_info<L>& lhs, const paragraph_info<L>& rhs)
+  {
+
+
+
+    return
+      lhs.line_ids() == rhs.line_ids()
+      && lhs.bbox() == rhs.bbox()
+      && lhs.llinks() == rhs.llinks()
+      && lhs.color() == rhs.color()
+      && lhs.color_reliability() == rhs.color_reliability()
+      && lhs.needs_stats_update() == rhs.needs_stats_update();
+  }
+
+  template <typename L>
   std::ostream&
   operator<<(std::ostream& ostr, const paragraph_info<L>& info)
   {
@@ -258,6 +276,7 @@ namespace scribo
 		<< ", color_reliability=" << info.color_reliability()
 		<< ")" << std::endl;
   }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

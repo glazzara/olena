@@ -103,6 +103,10 @@ namespace scribo
   std::ostream&
   operator<<(std::ostream& ostr, const line_links<L>& links);
 
+  template <typename L>
+  bool
+  operator==(const line_links<L>& lhs, const line_links<L>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -253,6 +257,14 @@ namespace scribo
     return ostr;
   }
 
+
+  template <typename L>
+  bool
+  operator==(const line_links<L>& lhs, const line_links<L>& rhs)
+  {
+    return lhs.lines() == rhs.lines()
+      && lhs.line_to_link() == rhs.line_to_link();
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

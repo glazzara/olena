@@ -43,12 +43,9 @@
 # include <scribo/core/line_links.hh>
 # include <scribo/core/line_info.hh>
 
+# include <scribo/io/xml/internal/save_image_to_xml.hh>
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
-
-// Compression level 0-9. 9 is the best but is slow.
-// 5 seems to be a good compromise.
-# define COMPRESSION_LEVEL 5
 
 namespace scribo
 {
@@ -157,19 +154,45 @@ namespace scribo
 	  if (doc.has_elements())
 	  {
 	    const component_set<L>& elts = doc.elements();
+
+	    output << "     <elements>" << std::endl;
+	    elts.accept(*this);
+
 	    for_all_comps(e, elts)
 	      if (elts(e).is_valid())
 		elts(e).accept(*this);
+
+	    output << "     </elements>" << std::endl;
 	  }
 
 
 	  // line seraparators
 	  if (doc.has_hline_seps())
+	  {
+	    output << "     <hlines_separators>" << std::endl;
+	    doc.hline_seps_comps().accept(*this);
+
 	    for_all_comps(c, doc.hline_seps_comps())
 	      doc.hline_seps_comps()(c).accept(*this);
+
+	    save_image_to_xml(output, doc.hline_seps(),
+			      "hlines_separators_image");
+
+	    output << "     </hlines_separators>" << std::endl;
+	  }
 	  if (doc.has_vline_seps())
+	  {
+	    output << "     <vlines_separators>" << std::endl;
+	    doc.vline_seps_comps().accept(*this);
+
 	    for_all_comps(c, doc.vline_seps_comps())
 	      doc.vline_seps_comps()(c).accept(*this);
+
+	    save_image_to_xml(output, doc.vline_seps(),
+			      "vlines_separators_image");
+
+	    output << "     </vlines_separators>" << std::endl;
+	  }
 
 
 	  // Whitespace seraparators
@@ -178,8 +201,16 @@ namespace scribo
 	    const component_set<L>&
 	      whitespace_seps_comps = doc.whitespace_seps_comps();
 
+	    output << "     <whitespaces_delimitors>" << std::endl;
+	    whitespace_seps_comps.accept(*this);
+
 	    for_all_comps(c, whitespace_seps_comps)
 	      whitespace_seps_comps(c).accept(*this);
+
+	    save_image_to_xml(output, doc.whitespace_seps(),
+			      "whitespaces_delimitors_image");
+
+	    output << "     </whitespaces_delimitors>" << std::endl;
 	  }
 
 	  output << "  </page>" << std::endl;
@@ -212,13 +243,26 @@ namespace scribo
 	void
 	full_xml_visitor::visit(const object_groups<L>& groups) const
 	{
-	  output << "      <object_groups>" << std::endl;
+	  output << "      <object_groups ngroups=\"" << groups.nelements()
+		 << "\">" << std::endl;
+
 	  for_all_groups(g, groups)
 	  {
-	    output << "      <group "
-		 << " object_id=\"" << g
-		 << "\" group_id=\"" << groups(g)
-		 << "\"/>" << std::endl;
+	    output << "        <group id=\"" << groups(g).id()
+		   << "\" valid=\"" << groups(g).is_valid()
+		   << "\" pixel_area=\"" << groups(g).pixel_area()
+		   << "\" pmin_x=\"" << groups(g).bbox().pmin().row()
+		   << "\" pmin_y=\"" << groups(g).bbox().pmin().col()
+		   << "\" pmax_x=\"" << groups(g).bbox().pmax().row()
+		   << "\" pmax_y=\"" << groups(g).bbox().pmax().col()
+		   << "\">" << std::endl;
+
+	    for_all_elements(e, groups(g).component_ids())
+	      output << "          <group_member comp_id=\""
+		     << groups(g).component_ids()(e)
+		     << "\"/>" << std::endl;
+
+	    output << "        </group>" << std::endl;
 	  }
 	  output << "      </object_groups>" << std::endl;
 	}
@@ -263,51 +307,36 @@ namespace scribo
 		     << "\" pmin_x=\"" << comp_set(c).bbox().pmin().col()
 		     << "\" pmin_y=\"" << comp_set(c).bbox().pmin().row()
 		     << "\" pmax_x=\"" << comp_set(c).bbox().pmax().col()
-		     << "\" pmax_y=\"" << comp_set(c).bbox().pmax().row()
-		     << "\"/>" << std::endl;
+		     << "\" pmax_y=\"" << comp_set(c).bbox().pmax().row();
+
+	      if (comp_set(c).has_features())
+	      {
+		output << "\">" << std::endl;
+
+		output << "      <component_features"
+		       << " valid=\"" << comp_set(c).features().valid
+		       << "\" color=\"" << comp_set(c).features().color
+		       << "\" boldness=\"" << comp_set(c).features().boldness
+		       << "\"/>" << std::endl;
+
+		output << "    </component_info>" << std::endl;
+	      }
+	      else
+		output << "\"/>" << std::endl;
 	    }
 
 
 	  // Save labeled image
 	  {
 	    const L& lbl = comp_set.labeled_image();
-	    output << "<labeled_image "
-		   << " height=\"" << lbl.domain().height()
-		   << "\" width=\"" << lbl.domain().width() << "\">"
-		   << "<![CDATA[";
-
-	    // FIXME: Try to avoid that!
-	    border::resize(lbl, 0);
-	    QByteArray
-	      lbl64 = QByteArray::fromRawData((const char *)lbl.buffer(),
-					      lbl.nelements() * sizeof(mln_value(L)));
-	    lbl64 = qCompress(lbl64, COMPRESSION_LEVEL);
-	    lbl64 = lbl64.toBase64();
-
-	    output.write(lbl64.data(), lbl64.size());
-
-	    output <<  "]]></labeled_image>" << std::endl;
+	    save_image_to_xml(output, lbl, "labeled_image");
 	  }
 
 	  // Save separators image
 	  if (comp_set.has_separators())
 	  {
 	    const mln_ch_value(L,bool)& seps = comp_set.separators();
-	    output << "<separators_image "
-		   << " height=\"" << seps.domain().height()
-		   << "\" width=\"" << seps.domain().width() << "\">"
-		   << "<![CDATA[";
-
-	    border::resize(seps, 0);
-	    QByteArray
-	      seps64 = QByteArray::fromRawData((const char *)seps.buffer(),
-					       seps.nelements() * sizeof(bool));
-	    seps64 = qCompress(seps64, COMPRESSION_LEVEL);
-	    seps64 = seps64.toBase64();
-
-	    output.write(seps64.data(), seps64.size());
-
-	    output <<  "]]></separators_image>" << std::endl;
+	    save_image_to_xml(output, seps, "separators_image");
 	  }
 
 	  output << "</component_set>" << std::endl;
@@ -394,7 +423,9 @@ namespace scribo
 		   << "\" x_height=\"" << lines(fid).x_height()
 		   << "\" d_height=\"" << lines(fid).d_height()
 		   << "\" a_height=\"" << lines(fid).a_height()
-		   << "\" char_width=\"" << lines(fid).char_width();
+		   << "\" char_width=\"" << lines(fid).char_width()
+		   << "\" color=\"" << parset(p).color()
+		   << "\" color_reliability=\"" << parset(p).color_reliability();
 	    // End of EXTENSIONS
 	    output << "\">"
 		   << std::endl;
@@ -469,6 +500,5 @@ namespace scribo
 
 } // end of namespace scribo
 
-# undef COMPRESSION_LEVEL
 
 #endif // SCRIBO_IO_XML_INTERNAL_FULL_XML_VISITOR_HH

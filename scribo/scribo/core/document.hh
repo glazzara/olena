@@ -88,19 +88,27 @@ namespace scribo
     bool has_whitespace_seps() const;
     const mln::image2d<bool>& whitespace_seps() const;
     const component_set<L>& whitespace_seps_comps() const;
-    void set_whitespace_separators(const image2d<bool>& whitespace_seps);
+    void set_whitespace_separators(const image2d<bool>& whitespace_seps,
+				   const component_set<L>& whitespace_seps_comps);
 
     // Horizontal separators
     bool has_hline_seps() const;
     const mln::image2d<bool>& hline_seps() const;
     const component_set<L>& hline_seps_comps() const;
+    // Set vline separators image. The component is automatically computed.
     void set_hline_separators(const image2d<bool>& line_seps);
+    void set_hline_separators(const image2d<bool>& line_seps,
+			      const component_set<L>& hline_seps_comps);
 
     // Vertical separators
     bool has_vline_seps() const;
     const mln::image2d<bool>& vline_seps() const;
     const component_set<L>& vline_seps_comps() const;
-    void set_vline_separators(const image2d<bool>& line_seps);
+
+    // Set vline separators image. The component is automatically computed.
+    void set_vline_separators(const image2d<bool>& vline_seps);
+    void set_vline_separators(const image2d<bool>& vline_seps,
+			      const component_set<L>& vline_seps_comps);
 
     const mln::image2d<value::rgb8>& image() const;
     void set_image(const mln::image2d<value::rgb8>& image);
@@ -127,6 +135,9 @@ namespace scribo
     component_set<L> vline_seps_comps_;
   };
 
+
+  template <typename L>
+  bool operator==(const document<L>& lhs, const document<L>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -291,14 +302,11 @@ namespace scribo
 
   template <typename L>
   void
-  document<L>::set_whitespace_separators(const image2d<bool>& whitespace_seps)
+  document<L>::set_whitespace_separators(const image2d<bool>& whitespace_seps,
+					 const component_set<L>& whitespace_seps_comps)
   {
     whitespace_seps_ = whitespace_seps;
-
-    mln_value(L) ncomps;
-    whitespace_seps_comps_ = primitive::extract::components(whitespace_seps,
-							    mln::c8(), ncomps,
-							    component::WhitespaceSeparator);
+    whitespace_seps_comps_ = whitespace_seps_comps;
   }
 
 
@@ -340,6 +348,16 @@ namespace scribo
 
 
   template <typename L>
+  void
+  document<L>::set_hline_separators(const image2d<bool>& hline_seps,
+				    const component_set<L>& hline_seps_comps)
+  {
+    hline_seps_ = hline_seps;
+    hline_seps_comps_ = hline_seps_comps;
+  }
+
+
+  template <typename L>
   bool
   document<L>::has_vline_seps() const
   {
@@ -377,6 +395,16 @@ namespace scribo
 
 
   template <typename L>
+  void
+  document<L>::set_vline_separators(const image2d<bool>& vline_seps,
+				    const component_set<L>& vline_seps_comps)
+  {
+    vline_seps_ = vline_seps;
+    vline_seps_comps_ = vline_seps_comps;
+  }
+
+
+  template <typename L>
   const mln::image2d<value::rgb8>&
   document<L>::image() const
   {
@@ -407,6 +435,30 @@ namespace scribo
     binary_image_ = binary_image;
   }
 
+
+  template <typename L>
+  bool operator==(const document<L>& lhs, const document<L>& rhs)
+  {
+
+
+    return
+      lhs.filename() == rhs.filename()
+      && lhs.image() == rhs.image()
+      && lhs.binary_image() == rhs.binary_image()
+      && lhs.has_text() == rhs.has_text()
+      && lhs.paragraphs() == rhs.paragraphs()
+      && lhs.has_elements() == rhs.has_elements()
+      && lhs.elements() == rhs.elements()
+      && lhs.has_whitespace_seps() == rhs.has_whitespace_seps()
+      && lhs.whitespace_seps() == rhs.whitespace_seps()
+      && lhs.whitespace_seps_comps() == rhs.whitespace_seps_comps()
+      && lhs.has_hline_seps() == rhs.has_hline_seps()
+      && lhs.hline_seps() == rhs.hline_seps()
+      && lhs.hline_seps_comps() == rhs.hline_seps_comps()
+      && lhs.has_vline_seps() == rhs.has_vline_seps()
+      && lhs.vline_seps() == rhs.vline_seps()
+      && lhs.vline_seps_comps() == rhs.vline_seps_comps();
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

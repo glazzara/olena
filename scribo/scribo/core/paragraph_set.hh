@@ -86,6 +86,8 @@ namespace scribo
   };
 
 
+  template <typename L>
+  bool operator==(const paragraph_set<L>& lhs, const paragraph_set<L>& rhs);
 
   namespace make
   {
@@ -197,6 +199,25 @@ namespace scribo
   {
     mln_precondition(data_ != 0);
     return data_->links_;
+  }
+
+
+  template <typename L>
+  bool operator==(const paragraph_set<L>& lhs, const paragraph_set<L>& rhs)
+  {
+    if (! (lhs.lines() == rhs.lines() && lhs.nelements() == rhs.nelements()))
+    {
+      return false;
+    }
+
+    for_all_paragraphs(p, lhs)
+      if (!(lhs(p) == rhs(p)))
+      {
+	std::cout << "paragraph.info" << std::endl;
+	return false;
+      }
+
+    return true;
   }
 
 

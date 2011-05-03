@@ -1,5 +1,27 @@
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Several improvements related to low-level data structures in XML
+	output.
+
+	* scribo/core/component_features_data.hh,
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/document.hh,
+	* scribo/core/line_links.hh,
+	* scribo/core/paragraph_info.hh,
+	* scribo/core/paragraph_set.hh: Add operator==().
+
+	* scribo/io/xml/internal/full_xml_visitor.hh: Save more data for
+	groups, separators and paragraphs.
+
+	* scribo/io/xml/internal/save_image_to_xml.hh: New.
+
+	* scribo/io/xml/load.hh: Load new saved data.
+
+	* tests/unit_test/cond_tests_qt: Add save_image_to_xml.hh.
+
+2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* scribo/toolchain/internal/content_in_doc_functor.hh: Make use of
 	component::extract::alignments.
 

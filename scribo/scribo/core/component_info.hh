@@ -97,6 +97,9 @@ namespace scribo
   std::ostream&
   operator<<(std::ostream& ostr, const component_info& info);
 
+  bool
+  operator==(const component_info& lhs, const component_info& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -230,6 +233,20 @@ namespace scribo
 		<< ")" << std::endl;
   }
 
+  inline
+  bool
+  operator==(const component_info& lhs, const component_info& rhs)
+  {
+
+    return
+      lhs.id() == rhs.id()
+      && lhs.bbox() == rhs.bbox()
+      && lhs.mass_center() == rhs.mass_center()
+      && lhs.card() == rhs.card()
+      && lhs.features() == rhs.features()
+      && lhs.tag() == rhs.tag()
+      && lhs.type() == rhs.type();
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

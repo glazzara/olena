@@ -459,22 +459,6 @@ namespace scribo
     return data_->infos_[id];
   }
 
-//   template <typename L>
-//   inline
-//   const component_info&
-//   component_set<L>::operator()(const mln_value(L)& id) const
-//   {
-//     return data_->infos_[id];
-//   }
-
-//   template <typename L>
-//   inline
-//   component_info&
-//   component_set<L>::operator()(const mln_value(L)& id)
-//   {
-//     return data_->infos_[id];
-//   }
-
   template <typename L>
   inline
   const component_info&
@@ -650,7 +634,25 @@ namespace scribo
   bool
   operator==(const component_set<L>& lhs, const component_set<L>& rhs)
   {
-    return lhs.id_() == rhs.id_();
+    if (! (lhs.labeled_image() == rhs.labeled_image()))
+      std::cout << "comp.lbl" << std::endl;
+
+    if (! (lhs.separators() == rhs.separators()))
+      std::cout << "comp.seps" << std::endl;
+
+    if (! (lhs.nelements() == rhs.nelements()
+	   && lhs.labeled_image() == rhs.labeled_image()
+	   && lhs.separators() == rhs.separators()))
+      return false;
+
+    for_all_comps(c, lhs)
+      if (! (lhs(c) == rhs(c)))
+      {
+	std::cout << "comp.info" << std::endl;
+	return false;
+      }
+
+    return true;
   }
 
   template <typename L>
