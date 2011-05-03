@@ -1,5 +1,10 @@
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* scribo/primitive/extract/separators_nonvisible.hh: Update use of
+	object_groups and object_links.
+
+2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Several improvements related to low-level data structures in XML
 	output.
 

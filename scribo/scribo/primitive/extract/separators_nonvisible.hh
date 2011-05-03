@@ -27,84 +27,56 @@
 /// \file
 ///
 /// \brief Find non visible separators (whitespaces)
-///
-/// \fixme To be cleaned up
+
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_SEPARATORS_NONVISIBLE_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_SEPARATORS_NONVISIBLE_HH
 
-#include <mln/core/concept/image.hh>
-#include <mln/core/image/dmorph/image_if.hh>
-#include <mln/pw/all.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/pw/all.hh>
 
-#include <mln/draw/line.hh>
+# include <mln/accu/count_value.hh>
 
-#include <mln/data/wrap.hh>
-#include <mln/data/fill.hh>
-#include <mln/data/convert.hh>
+# include <mln/draw/line.hh>
+
+# include <mln/data/fill.hh>
+# include <mln/data/convert.hh>
+
+# include <mln/labeling/relabel.hh>
+# include <mln/labeling/value.hh>
+
+# include <mln/morpho/closing/structural.hh>
+
+# include <mln/literal/colors.hh>
+
+# include <mln/value/label_16.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
+
+# include <mln/util/timer.hh>
+
+# include <scribo/core/object_groups.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/core/def/lbl_type.hh>
+
+# include <scribo/debug/logger.hh>
+
+# include <scribo/filter/object_groups_small.hh>
+# include <scribo/filter/object_links_bottom_aligned.hh>
+# include <scribo/filter/object_links_top_aligned.hh>
+
+# include <scribo/preprocessing/rotate_90.hh>
+
+# include <scribo/primitive/extract/components.hh>
+
+# include <scribo/primitive/link/internal/dmax_default.hh>
+# include <scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh>
+# include <scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh>
+
+# include <scribo/primitive/group/from_double_link_any.hh>
 
 
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/relabel.hh>
-#include <mln/labeling/blobs.hh>
-
-#include <mln/morpho/closing/structural.hh>
-#include <mln/morpho/closing/area.hh>
-#include <mln/morpho/opening/structural.hh>
-#include <mln/win/rectangle2d.hh>
-#include <mln/win/vline2d.hh>
-
-#include <mln/logical/not.hh>
-#include <mln/io/pbm/all.hh>
-#include <mln/io/pgm/all.hh>
-#include <mln/io/ppm/save.hh>
-
-#include <mln/literal/colors.hh>
-
-#include <mln/value/label_16.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/int_u12.hh>
-#include <mln/value/int_u16.hh>
-#include <mln/value/rgb8.hh>
-
-#include <mln/draw/box_plain.hh>
-
-#include <mln/transform/influence_zone_geodesic.hh>
-
-#include <mln/data/stretch.hh>
-
-#include <mln/util/timer.hh>
-
-#include <mln/norm/l1.hh>
-
-#include <scribo/debug/logger.hh>
-#include <scribo/core/object_groups.hh>
-#include <scribo/core/component_set.hh>
-#include <scribo/primitive/extract/components.hh>
-
-#include <scribo/primitive/extract/lines_h_pattern.hh>
-#include <scribo/primitive/remove/separators.hh>
-
-#include <scribo/preprocessing/denoise_fg.hh>
-#include <scribo/preprocessing/rotate_90.hh>
-
-#include <scribo/primitive/link/internal/compute_anchor.hh>
-
-#include <scribo/primitive/link/internal/dmax_default.hh>
-
-#include <scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh>
-#include <scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh>
-
-#include <scribo/primitive/group/from_double_link_any.hh>
-
-#include <scribo/filter/object_links_top_aligned.hh>
-#include <scribo/filter/object_groups_small.hh>
-#include <scribo/filter/object_links_bottom_aligned.hh>
-
-#include <scribo/core/def/lbl_type.hh>
-#include <scribo/core/line_set.hh>
-#include <scribo/text/extract_lines.hh>
-#include <mln/draw/box.hh>
 
 
 namespace scribo
@@ -120,7 +92,8 @@ namespace scribo
       using namespace scribo::debug;
 
 
-      /// \brief Find non visible separators (whitespaces)
+      /// \brief Find non visible separators. Based on components
+      /// alignments.
       //
       template <typename I>
       mln_concrete(I)
@@ -161,19 +134,8 @@ namespace scribo
 	// Closing structural - Connect characters.
 	t.start();
 
-	// line_set<L> lines = text::extract_lines(in, c8());
-
-	// mln_concrete(I) input_clo;
-	// initialize(input_clo, in);
-	// data::fill(input_clo, false);
-
-	// for_all_lines(l, lines)
-	//   draw::box(input_clo, lines(l).bbox(), true);
-
 	win::hline2d vl(17);
 	mln_concrete(I) input_clo = morpho::closing::structural(in, vl);
-
-
 
 	float t_ = t;
 	std::cout << "closing_structural - " << t_ << std::endl;
@@ -320,23 +282,7 @@ namespace scribo
 	t_ = t;
 	std::cout << "small groups - " << t_ << std::endl;
 
-
 	// Compute group bboxes
-	t.restart();
-	util::array<accu::shape::bbox<point2d> >
-	  top_accu(top_groups.nelements()),
-	  bot_accu(bot_groups.nelements());
-
-
-	for_all_groups(c, top_groups)
-	{
-	  top_accu(top_groups(c)).take(components(c).bbox());
-	  bot_accu(bot_groups(c)).take(components(c).bbox());
-	}
-	t_ = t;
-	std::cout << "groups to group bboxes - " << t_ << std::endl;
-
-
 
 	t.restart();
 	mln_concrete(I) separators;
@@ -350,26 +296,28 @@ namespace scribo
 	std::cout << "Initialize separators image - " << t_ << std::endl;
 
 	t.restart();
-	for_all_comp_data(d, top_accu)
-	{
-	  if (top_accu(d).is_valid())
+	for_all_groups(d, top_groups)
+	  if (top_groups(d).is_valid())
 	  {
 	    mln::draw::line(separators,
-			    top_accu(d).to_result().pmin(),
-			    point2d(top_accu(d).to_result().pmin().row(),
-				    top_accu(d).to_result().pmax().col()),
-			    true);
-	  }
-	  if (bot_accu(d).is_valid())
-	  {
-	    mln::draw::line(separators,
-			    point2d(bot_accu(d).to_result().pmax().row(),
-				    bot_accu(d).to_result().pmin().col()),
-			    bot_accu(d).to_result().pmax(),
+			    top_groups(d).bbox().pmin(),
+			    point2d(top_groups(d).bbox().pmin().row(),
+				    top_groups(d).bbox().pmax().col()),
 			    true);
 	  }
 
-	}
+
+	for_all_groups(d, bot_groups)
+	  if (bot_groups(d).is_valid())
+	  {
+	    mln::draw::line(separators,
+			    point2d(bot_groups(d).bbox().pmax().row(),
+				    bot_groups(d).bbox().pmin().col()),
+			    bot_groups(d).bbox().pmax(),
+			    true);
+	  }
+
+
 	t_ = t;
 	std::cout << "Drawing output image - " << t_ << std::endl;
 
@@ -379,94 +327,30 @@ namespace scribo
 	  // Restore input orientation.
 	  mln_concrete(I) input = scribo::preprocessing::rotate_90(in, false);
 
-
-	  // Debug group bboxes (includes all bboxes before filtering)
-	  util::array<accu::shape::bbox<point2d> >
-	    btop_accu(top_groups.nelements()),
-	    bbot_accu(bot_groups.nelements());
-
-
-	  for_all_groups(c, top_groups)
-	  {
-	    btop_accu(top_groups(c)).take(components(c).bbox());
-	    bbot_accu(bot_groups(c)).take(components(c).bbox());
-	  }
-
 	  mln_ch_value(I, value::rgb8)
 	    wo_filtering = data::convert(value::rgb8(), input);
 
-	  for_all_comp_data(d, btop_accu)
-	  {
-	    if (btop_accu(d).is_valid())
+	  for_all_groups(d, top_groups)
+	    if (top_groups(d).is_valid())
 	    {
 	      mln::draw::line(wo_filtering,
-			      btop_accu(d).to_result().pmin(),
-			      point2d(btop_accu(d).to_result().pmin().row(),
-				      btop_accu(d).to_result().pmax().col()),
+			      top_groups(d).bbox().pmin(),
+			      point2d(top_groups(d).bbox().pmin().row(),
+				      top_groups(d).bbox().pmax().col()),
 			      literal::green);
-
 	    }
-	  }
 
-	  for_all_comp_data(d, bbot_accu)
-	  {
-	    if (bbot_accu(d).is_valid())
+	  for_all_groups(d, bot_groups)
+	    if (bot_groups(d).is_valid())
 	    {
 	      mln::draw::line(wo_filtering,
-			      point2d(bbot_accu(d).to_result().pmax().row(),
-				      bbot_accu(d).to_result().pmin().col()),
-			      bbot_accu(d).to_result().pmax(),
+			      point2d(bot_groups(d).bbox().pmax().row(),
+				      bot_groups(d).bbox().pmin().col()),
+			      bot_groups(d).bbox().pmax(),
 			      literal::green);
 	    }
-	  }
+
 	  logger().log_image(AuxiliaryResults, wo_filtering, "wo_filtering");
-
-	  // mln_ch_value(I, value::rgb8) both = data::convert(value::rgb8(), input);
-
-	  // for_all_comp_data(d, top_accu)
-	  // {
-	  //   if (top_accu(d).is_valid()  ||  btop_accu(d).is_valid())
-	  //   {
-	  //     if (top_accu(d).is_valid())
-	  //     {
-	  // 	  mln::draw::line(both,
-	  // 			  top_accu(d).to_result().pmin(),
-	  // 			  point2d(top_accu(d).to_result().pmin().row(),
-	  // 				  top_accu(d).to_result().pmax().col()),
-	  // 			  literal::green);
-	  //     }
-	  //     else
-	  // 	if (btop_accu(d).is_valid())
-	  // 	  mln::draw::line(both,
-	  // 			  btop_accu(d).to_result().pmin(),
-	  // 			  point2d(btop_accu(d).to_result().pmin().row(),
-	  // 				  btop_accu(d).to_result().pmax().col()),
-	  // 			  literal::yellow);
-
-	  //   }
-	  //   if (bot_accu(d).is_valid() ||  bbot_accu(d).is_valid())
-	  //   {
-	  //     if (bot_accu(d).is_valid())
-	  //     {
-	  // 	  mln::draw::line(both,
-	  // 			  point2d(bot_accu(d).to_result().pmax().row(),
-	  // 				  bot_accu(d).to_result().pmin().col()),
-	  // 			  bot_accu(d).to_result().pmax(),
-	  // 			  literal::green);
-	  //     }
-	  //     else
-	  // 	if (bbot_accu(d).is_valid())
-	  // 	  mln::draw::line(both,
-	  // 			  point2d(bbot_accu(d).to_result().pmax().row(),
-	  // 				  bbot_accu(d).to_result().pmin().col()),
-	  // 			  bbot_accu(d).to_result().pmax(),
-	  // 			  literal::yellow);
-	  //   }
-
-	  // }
-
-	  // logger().log_image(AuxiliaryResults,
-	  // 				    both, "both");
 	  logger().log_image(AuxiliaryResults, separators, "separators");
 	}
 
@@ -499,9 +383,6 @@ namespace scribo
 
 	  t_ = t;
 	  std::cout << "* accu::transform_line - " << t_ << std::endl;
-
-	  // if (_debug_)
-	  //   io::pgm::save(data::convert(value::int_u8(), tmp), "tmp.pgm");
 
 
 	  t.restart();
