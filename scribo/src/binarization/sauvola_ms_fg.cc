@@ -58,10 +58,10 @@ bool check_args(int argc, char * argv[])
 const char *args_desc[][2] =
 {
   { "input.*", "An image." },
-  { "output.pbm", "A binary image." },
   { "lambda", "Lambda used to split bg/fg." },
   { "w", "Window size at scale 1. (Common value: 101)" },
   { "s", "First subsampling ratio (Common value: 3)." },
+  { "output.pbm", "A binary image." },
   {0, 0}
 };
 
@@ -92,6 +92,8 @@ int main(int argc, char *argv[])
 
   std::cout << "Using w_1=" << w_1 << " - s=" << s << std::endl;
 
+  Magick::InitializeMagick(0);
+
   // Load
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, argv[1]);
@@ -108,7 +110,7 @@ int main(int argc, char *argv[])
   image2d<bool>
     output = scribo::binarization::sauvola_ms(fg_gl, w_1, s, SCRIBO_DEFAULT_SAUVOLA_K);
 
-  io::pbm::save(output, argv[6]);
+  io::pbm::save(output, argv[5]);
 }
 
 

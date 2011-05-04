@@ -66,6 +66,13 @@ namespace scribo
 	NonText : Display non-text regions.
 
 	Full : Text and non-text regions.
+
+	DebugWoImage : Display all regions onto a subsampled copy of
+	the original image. A dark background is used as background.
+
+	DebugWithImage : Display all regions onto a subsampled copy of
+	the original image. The original image is used as background.
+
        */
       enum Format
       {

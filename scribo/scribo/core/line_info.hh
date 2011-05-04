@@ -351,7 +351,7 @@ namespace scribo
       static std::map<char, std::string> map = init_map();
 
       std::string output = input;
-      for (unsigned i = 0; i < input.size(); ++i)
+      for (unsigned i = 0; i < output.size(); ++i)
       {
 	std::map<char, std::string>::iterator it = map.find(output.at(i));
 	if (it != map.end())
@@ -360,6 +360,7 @@ namespace scribo
 	  i += it->second.size() - 1;
 	}
       }
+
       return output;
     }
 

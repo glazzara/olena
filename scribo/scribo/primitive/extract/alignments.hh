@@ -1085,7 +1085,7 @@ namespace scribo
 
 	V ndelim;
 	component_set<L>
-	  delim_comps = primitive::extract::components(delimitors, c8(), ndelim);
+	  delim_comps = primitive::extract::components(delimitors, c8(), ndelim, component::WhitespaceSeparator);
 
 	mln::util::couple<component_set<L>, mln_ch_value(L,bool)>
 	  output(delim_comps, delimitors);

@@ -326,6 +326,8 @@ bool ImageCrop::crop_regions(bool temp)
   else
     {
       f.close();
+      qDebug() << "Error while reading XML file!";
+      abort();
       return false;
     }
 }

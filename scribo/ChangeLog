@@ -1,5 +1,24 @@
 2011-05-04  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* demo/xml2doc/image_crop.cc: Abort xml loading if an error
+	is found.
+
+	* scribo/core/line_info.hh: Fix text cleanup.
+
+	* scribo/io/img/save.hh: Add documentation.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Use
+	internal_gradient.
+
+	* scribo/primitive/extract/alignments.hh: Set component type to
+	whitespaceSeparator.
+
+	* src/binarization/sauvola_ms_fg.cc: Fix argument use.
+
+2011-05-04  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Make paragraph extraction work with this branch.
 
 	* scribo/core/line_info.hh: Keep few attributes public and update

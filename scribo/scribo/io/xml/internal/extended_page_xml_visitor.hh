@@ -32,7 +32,7 @@
 
 # include <fstream>
 
-# include <mln/morpho/elementary/gradient_external.hh>
+# include <mln/morpho/elementary/gradient_internal.hh>
 # include <mln/pw/all.hh>
 # include <mln/core/image/dmorph/image_if.hh>
 
@@ -122,7 +122,7 @@ namespace scribo
 	  if (doc.has_elements())
 	  {
 	    // Prepare element edges
-	    elt_edge = morpho::elementary::gradient_external(doc.elements().labeled_image(), c4());
+	    elt_edge = morpho::elementary::gradient_internal(doc.elements().labeled_image(), c4());
 
 	    doc.elements().accept(*this);
 	  }
