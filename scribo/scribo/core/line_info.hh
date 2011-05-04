@@ -145,14 +145,12 @@ namespace scribo
       // Line set holding this element.
       line_set<L> holder_;
 
-    private:
-      void init_();
-
       // DEBUG
       stats< float > meanline_clusters_;
       stats< float > baseline_clusters_;
-    };
 
+    private:
+      void init_();
     };
 
   } // end of namespace scribo::internal
@@ -980,8 +978,8 @@ namespace scribo
     {
       const component_set<L>& comp_set = data_->holder_.components();
 
-      const unsigned c1 = data_->components_(0);
-      const unsigned c2 = data_->components_(1);
+      const unsigned c1 = data_->component_ids_(0);
+      const unsigned c2 = data_->component_ids_(1);
 
       if (data_->holder_.components()(c1).type() == component::Punctuation
 	  || data_->holder_.components()(c2).type() == component::Punctuation)

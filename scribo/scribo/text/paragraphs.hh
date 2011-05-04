@@ -15,7 +15,9 @@
 
 #include <scribo/core/macros.hh>
 #include <scribo/core/line_set.hh>
+#include <scribo/core/line_links.hh>
 #include <scribo/core/line_info.hh>
+#include <scribo/core/paragraph_set.hh>
 
 using namespace mln;
 
@@ -59,15 +61,15 @@ namespace scribo
 
     template <typename L>
     inline
-    void paragraph_links(const util::array<value::int_u16>& left,
-			 const util::array<value::int_u16>& right,
-			 util::array<value::int_u16>& output,
-			 const util::array< line_info<L> >& lines,
+    void paragraph_links(const line_links<L>& left,
+			 const line_links<L>& right,
+			 line_links<L>& output,
+			 const line_set<L>& lines,
 			 const image2d<bool>& input)
     {
-      output = left;
+      output = left.duplicate();
 
-      const unsigned nlines = lines.nelements();
+      // const unsigned nlines = lines.nelements();
 
       // image2d<value::rgb8> links = data::convert(value::rgb8(), input);
       // for (unsigned l = 0; l < nlines; ++l)
@@ -77,242 +79,259 @@ namespace scribo
       // mln::io::ppm::save(links, "out_links.ppm");
 
       // For each line
-      for (unsigned l = 0; l < nlines; ++l)
-      {
-	// Neighbors
-
-	const value::int_u16 left_nbh = output(l);
-	const value::int_u16 right_nbh = right(l);
-	const value::int_u16 lol_nbh = output(left_nbh);
-
-	// Line features
-	const float x_height = lines(l).x_height();
-	const float left_x_height = lines(left_nbh).x_height();
-	const float right_x_height = lines(right_nbh).x_height();
-
-	const box2d& left_line_bbox = lines(left_nbh).bbox();
-	const box2d& current_line_bbox = lines(l).bbox();
-	const box2d& right_line_bbox = lines(right_nbh).bbox();
-	const box2d& lol_line_bbox = lines(lol_nbh).bbox(); // lol : left neighbor of the left neighbor
-
-	const int lline_col_min = left_line_bbox.pmin().col();
-	const int cline_col_min = current_line_bbox.pmin().col();
-	const int rline_col_min = right_line_bbox.pmin().col();
-	const int lolline_col_min = lol_line_bbox.pmin().col();
-
-	const int lline_col_max = left_line_bbox.pmax().col();
-	const int cline_col_max = current_line_bbox.pmax().col();
-	const int rline_col_max = right_line_bbox.pmax().col();
-
-	const int lline_cw = lines(left_nbh).char_width();
-	const int cline_cw = lines(l).char_width();
-	const int rline_cw = lines(right_nbh).char_width();
-	// Maximal x variation to consider two lines vertically aligned
-	const int delta_alignment = cline_cw;
-
-	// Checks the baseline distances of the two neighbors
+      for_all_lines(l, lines)
+	if (lines(l).is_textline())
 	{
-	  // Current line baseline
-	  const int c_baseline = lines(l).baseline();
+	  // Neighbors
 
-	  // Baseline distance with the left and right neighbors
-	  const int lc_baseline = lines(left_nbh).baseline() - c_baseline;
-	  const int rc_baseline = c_baseline -lines(right_nbh).baseline();
+	  const line_id_t left_nbh = output(l);
+	  const line_id_t right_nbh = right(l);
+	  const line_id_t lol_nbh = output(left_nbh);
 
-	  // Max baseline distance between the two neighbors
-	  // const float delta_baseline_max = std::max(lc_baseline, rc_baseline);
-	  // const float delta_baseline_min = std::min(lc_baseline,
-	  // rc_baseline);
+	  // Line features
+	  const float x_height = lines(l).x_height();
+	  const float left_x_height = lines(left_nbh).x_height();
+	  const float right_x_height = lines(right_nbh).x_height();
 
-	  // Only two lines, meaning the current line has only one neighbor
-	  bool two_lines = false;
+	  const box2d& left_line_bbox = lines(left_nbh).bbox();
+	  const box2d& current_line_bbox = lines(l).bbox();
+	  const box2d& right_line_bbox = lines(right_nbh).bbox();
+	  const box2d& lol_line_bbox = lines(lol_nbh).bbox(); // lol : left neighbor of the left neighbor
 
-	  // If the current line has no left neighbor
-	  if (lc_baseline == 0)
+	  const int lline_col_min = left_line_bbox.pmin().col();
+	  const int cline_col_min = current_line_bbox.pmin().col();
+	  const int rline_col_min = right_line_bbox.pmin().col();
+	  const int lolline_col_min = lol_line_bbox.pmin().col();
+
+	  const int lline_col_max = left_line_bbox.pmax().col();
+	  const int cline_col_max = current_line_bbox.pmax().col();
+	  const int rline_col_max = right_line_bbox.pmax().col();
+
+	  const int lline_cw = lines(left_nbh).char_width();
+	  const int cline_cw = lines(l).char_width();
+	  const int rline_cw = lines(right_nbh).char_width();
+	  // Maximal x variation to consider two lines vertically aligned
+	  const int delta_alignment = cline_cw;
+
+	  // Checks the baseline distances of the two neighbors
 	  {
-	    // ror : right neighbor of the right neighbor
-	    const value::int_u16 ror_nbh = right(right_nbh);
-	    // const box2d& ror_line_bbox = lines(ror_nbh).bbox();
+	    // Current line baseline
+	    const int c_baseline = lines(l).baseline();
 
-	    // If the current line has a ror
-	    if (ror_nbh != right_nbh
-		&& output(ror_nbh) == right_nbh)
+	    // Baseline distance with the left and right neighbors
+	    const int lc_baseline = lines(left_nbh).baseline() - c_baseline;
+	    const int rc_baseline = c_baseline -lines(right_nbh).baseline();
+
+	    // Max baseline distance between the two neighbors
+	    // const float delta_baseline_max = std::max(lc_baseline, rc_baseline);
+	    // const float delta_baseline_min = std::min(lc_baseline,
+	    // rc_baseline);
+
+	    // Only two lines, meaning the current line has only one neighbor
+	    bool two_lines = false;
+
+	    // If the current line has no left neighbor
+	    if (lc_baseline == 0)
 	    {
-	      // Distance between the current line and the right neighbor
-	      const float right_distance = lines(l).meanline() - lines(right_nbh).baseline();
-	      // Distance between the right neighbor and the ror
-	      const float ror_distance = lines(right_nbh).meanline() - lines(ror_nbh).baseline();
-	      // ror x_height
-	      const float ror_x_height = lines(ror_nbh).x_height();
+	      // ror : right neighbor of the right neighbor
+	      const line_id_t ror_nbh = right(right_nbh);
+	      //const box2d& ror_line_bbox = lines(ror_nbh).bbox();
 
-	      // Conditions to cut the link between the current line
-	      // and its right neighbor
-	      if (right_distance > 1.4f * ror_distance
-		  && std::max(ror_x_height, right_x_height) <
-		  1.2f * std::min(ror_x_height, right_x_height)
-		  && output(right_nbh) == l)
+	      // If the current line has a ror
+	      if (ror_nbh != right_nbh
+		  && output(ror_nbh) == right_nbh)
 	      {
+		// Distance between the current line and the right neighbor
+		const float right_distance = lines(l).meanline() - lines(right_nbh).baseline();
+		// Distance between the right neighbor and the ror
+		const float ror_distance = lines(right_nbh).meanline() - lines(ror_nbh).baseline();
+		// ror x_height
+		const float ror_x_height = lines(ror_nbh).x_height();
+
+		// Conditions to cut the link between the current line
+		// and its right neighbor
+		if (right_distance > 1.4f * ror_distance
+		    && std::max(ror_x_height, right_x_height) <
+		    1.2f * std::min(ror_x_height, right_x_height)
+		    && output(right_nbh) == l)
+		{
 		  output(right_nbh) = right_nbh;
 		  continue;
+		}
 	      }
-	    }
-	    // Otherwise we only have a group of two lines
-	    else
-	    {
-	      // We determine the distance between the two lines
-	      const float distance = lines(l).meanline() - lines(right_nbh).baseline();
-	      two_lines = true;
-
-	      // If the distance between the two lines is greater than
-	      // the minimum x height of the two lines then we cut the
-	      // link between them
-	      if (distance > 2.0f * std::min(x_height, right_x_height)
-		&& output(right_nbh) == l)
+	      // Otherwise we only have a group of two lines
+	      else
 	      {
+		// We determine the distance between the two lines
+		const float distance = lines(l).meanline() - lines(right_nbh).baseline();
+		two_lines = true;
+
+		// If the distance between the two lines is greater than
+		// the minimum x height of the two lines then we cut the
+		// link between them
+		if (distance > 2.0f * std::min(x_height, right_x_height)
+		    && output(right_nbh) == l)
+		{
 		  output(right_nbh) = right_nbh;
 		  continue;
+		}
 	      }
-	    }
 
-	    // Lines features
-	    const float min_x_height = std::min(x_height, right_x_height);
-	    const float max_x_height = std::max(x_height, right_x_height);
-	    const float min_char_width = std::min(rline_cw, cline_cw);
-	    const float max_char_width = std::max(rline_cw, cline_cw);
+	      // Lines features
+	      const float min_x_height = std::min(x_height, right_x_height);
+	      const float max_x_height = std::max(x_height, right_x_height);
+	      const float min_char_width = std::min(rline_cw, cline_cw);
+	      const float max_char_width = std::max(rline_cw, cline_cw);
 
-	    // Condition to cut the link between the current line and
-	    // its right neighbor
-	    if ((max_x_height > min_x_height * 1.2f) &&
-		!(max_char_width <= 1.2f * min_char_width))
-	    {
-	      if (output(right_nbh) == l)
+	      // Condition to cut the link between the current line and
+	      // its right neighbor
+	      if ((max_x_height > min_x_height * 1.2f) &&
+		  !(max_char_width <= 1.2f * min_char_width))
 	      {
-		output(right_nbh) = right_nbh;
+		if (output(right_nbh) == l)
+		{
+		  output(right_nbh) = right_nbh;
+		  continue;
+		}
+	      }
+
+	      // If we only have two lines we stop the study
+	      if (two_lines)
 		continue;
-	      }
 	    }
-
-	    // If we only have two lines we stop the study
-	    if (two_lines)
-	      continue;
-	  }
-	  // If the current line has no right neighbor
-	  else if (rc_baseline == 0)
-	  {
-	    // lol : left neighbor of the left neighbor
-
-	    // If the left neighbor of the current line has a left neighbor
-	    if (lol_nbh != left_nbh)
+	    // If the current line has no right neighbor
+	    else if (rc_baseline == 0)
 	    {
-	      // Distance between the current line and its left neighbor
-	      const float left_distance = lines(left_nbh).meanline() -
-		lines(l).baseline();
-	      // Distance between the left neighbor and the left
-	      // neighbor of its left neighbor
-	      const float lol_distance = lines(lol_nbh).meanline() -
-		lines(left_nbh).baseline();
-	      // lol x height
-	      const float lol_x_height = lines(lol_nbh).x_height();
+	      // lol : left neighbor of the left neighbor
 
-	      // Conditions to cut the link between the current line
-	      // and its left neighbor
-	      if (left_distance > 1.4f * lol_distance
-		  && std::max(lol_x_height, left_x_height) <
-		  1.2f * std::min(lol_x_height, left_x_height))
+	      // If the left neighbor of the current line has a left neighbor
+	      if (lol_nbh != left_nbh)
 	      {
+		// Distance between the current line and its left neighbor
+		const float left_distance = lines(left_nbh).meanline() -
+		  lines(l).baseline();
+		// Distance between the left neighbor and the left
+		// neighbor of its left neighbor
+		const float lol_distance = lines(lol_nbh).meanline() -
+		  lines(left_nbh).baseline();
+		// lol x height
+		const float lol_x_height = lines(lol_nbh).x_height();
+
+		// Conditions to cut the link between the current line
+		// and its left neighbor
+		if (left_distance > 1.4f * lol_distance
+		    && std::max(lol_x_height, left_x_height) <
+		    1.2f * std::min(lol_x_height, left_x_height))
+		{
 		  output(l) = l;
 		  continue;
+		}
 	      }
-	    }
-	    // Otherwise we only have a group of two lines
-	    else
-	    {
-	      // Distance between the current line and it left neighbor
-	      const float distance = lines(left_nbh).meanline() -
-		lines(l).baseline();
-
-	      two_lines = true;
-
-	      // If the distance is greater than the min x height
-	      // between the two lines
-	      if (distance > 2.0f * std::min(x_height, left_x_height))
+	      // Otherwise we only have a group of two lines
+	      else
 	      {
+		// Distance between the current line and it left neighbor
+		const float distance = lines(left_nbh).meanline() -
+		  lines(l).baseline();
+
+		two_lines = true;
+
+		// If the distance is greater than the min x height
+		// between the two lines
+		if (distance > 2.0f * std::min(x_height, left_x_height))
+		{
 		  output(l) = l;
 		  continue;
+		}
 	      }
-	    }
 
-	    // Lines features
-	    const float min_x_height = std::min(x_height, left_x_height);
-	    const float max_x_height = std::max(x_height, left_x_height);
-	    const float min_char_width = std::min(lline_cw, cline_cw);
-	    const float max_char_width = std::max(lline_cw, cline_cw);
-
-	    // Condition to cut the link between the current line and
-	    // its left neighbor
-	    if ((max_x_height > min_x_height * 1.2f) &&
-		!(max_char_width <= 1.2f * min_char_width))
-	    {
-	      output(l) = l;
-	      continue;
-	    }
-
-	    // If we only have two lines we stop the study
-	    if (two_lines)
-	      continue;
-	  }
-	  // The current line has at least one left and one right neighbor
-	  else // if (delta_baseline_max >= delta_baseline_min)
-	  {
-	    // Distance between the left and the current line
-	    const float left_distance =
-	      lines(left_nbh).meanline() - lines(l).baseline();
-	    // Distance between the right and the current line
-	    const float right_distance =
-	      lines(l).meanline() - lines(right_nbh).baseline();
-
-	    // If the left line is too far compared to the right one
-	    // we cut the link with it
-	    if (left_distance > 1.2f * right_distance
-	      && std::max(x_height, left_x_height) > 1.2f * std::min(x_height, left_x_height))
-	    {
-	      output(l) = l;
-	      continue;
-	    }
-	    // If the right line is too far compared to the left one
-	    // we cut the link with it
-	    else if (right_distance > 1.2f * left_distance
-		     && std::max(x_height, right_x_height) > 1.2f * std::min(x_height, right_x_height)
-	    	     && output(right_nbh) == l)
-	    {
-	      output(right_nbh) = right_nbh;
-	      continue;
-	    }
-
-	    // If the distance between the baseline of the left
-	    // neighbor and the baseline of the current line is
-	    // greater than the one between the current line baseline
-	    // and the right line baseline we have to study the texte
-	    // features of the right and left lines
-	    if (lc_baseline > rc_baseline)
-	    {
-	      const float cw_max = std::max(lline_cw, cline_cw);
-	      const float cw_min = std::min(lline_cw, cline_cw);
+	      // Lines features
 	      const float min_x_height = std::min(x_height, left_x_height);
 	      const float max_x_height = std::max(x_height, left_x_height);
+	      const float min_char_width = std::min(lline_cw, cline_cw);
+	      const float max_char_width = std::max(lline_cw, cline_cw);
 
+	      // Condition to cut the link between the current line and
+	      // its left neighbor
 	      if ((max_x_height > min_x_height * 1.2f) &&
-		  !(cw_max <= 1.2f * cw_min))
+		  !(max_char_width <= 1.2f * min_char_width))
 	      {
 		output(l) = l;
 		continue;
 	      }
 
+	      // If we only have two lines we stop the study
+	      if (two_lines)
+		continue;
+	    }
+	    // The current line has at least one left and one right neighbor
+	    else // if (delta_baseline_max >= delta_baseline_min)
+	    {
+	      // Distance between the left and the current line
+	      const float left_distance =
+		lines(left_nbh).meanline() - lines(l).baseline();
+	      // Distance between the right and the current line
+	      const float right_distance =
+		lines(l).meanline() - lines(right_nbh).baseline();
+
+	      // If the left line is too far compared to the right one
+	      // we cut the link with it
+	      if (left_distance > 1.2f * right_distance
+		  && std::max(x_height, left_x_height) > 1.2f * std::min(x_height, left_x_height))
 	      {
-		const float min_x_height = std::min(x_height, right_x_height);
-		const float max_x_height = std::max(x_height, right_x_height);
+		output(l) = l;
+		continue;
+	      }
+	      // If the right line is too far compared to the left one
+	      // we cut the link with it
+	      else if (right_distance > 1.2f * left_distance
+		       && std::max(x_height, right_x_height) > 1.2f * std::min(x_height, right_x_height)
+		       && output(right_nbh) == l)
+	      {
+		output(right_nbh) = right_nbh;
+		continue;
+	      }
+
+	      // If the distance between the baseline of the left
+	      // neighbor and the baseline of the current line is
+	      // greater than the one between the current line baseline
+	      // and the right line baseline we have to study the texte
+	      // features of the right and left lines
+	      if (lc_baseline > rc_baseline)
+	      {
+		const float cw_max = std::max(lline_cw, cline_cw);
+		const float cw_min = std::min(lline_cw, cline_cw);
+		const float min_x_height = std::min(x_height, left_x_height);
+		const float max_x_height = std::max(x_height, left_x_height);
+
+		if ((max_x_height > min_x_height * 1.2f) &&
+		    !(cw_max <= 1.2f * cw_min))
+		{
+		  output(l) = l;
+		  continue;
+		}
+
+		{
+		  const float min_x_height = std::min(x_height, right_x_height);
+		  const float max_x_height = std::max(x_height, right_x_height);
+		  const float cw_max = std::max(rline_cw, cline_cw);
+		  const float cw_min = std::min(rline_cw, cline_cw);
+
+		  if ((max_x_height > min_x_height * 1.2f)
+		      && !(cw_max <= 1.2f * cw_min)
+		      && output(right_nbh) == l)
+		  {
+		    output(right_nbh) = right_nbh;
+		    continue;
+		  }
+		}
+	      }
+	      else
+	      {
 		const float cw_max = std::max(rline_cw, cline_cw);
 		const float cw_min = std::min(rline_cw, cline_cw);
+		const float min_x_height = std::min(x_height, right_x_height);
+		const float max_x_height = std::max(x_height, right_x_height);
 
 		if ((max_x_height > min_x_height * 1.2f)
 		    && !(cw_max <= 1.2f * cw_min)
@@ -321,44 +340,28 @@ namespace scribo
 		  output(right_nbh) = right_nbh;
 		  continue;
 		}
-	      }
-	    }
-	    else
-	    {
-	      const float cw_max = std::max(rline_cw, cline_cw);
-	      const float cw_min = std::min(rline_cw, cline_cw);
-	      const float min_x_height = std::min(x_height, right_x_height);
-	      const float max_x_height = std::max(x_height, right_x_height);
 
-	      if ((max_x_height > min_x_height * 1.2f)
-		  && !(cw_max <= 1.2f * cw_min)
-		  && output(right_nbh) == l)
-	      {
-		  output(right_nbh) = right_nbh;
-		  continue;
-	      }
-
-	      {
-		const float min_x_height = std::min(x_height, left_x_height);
-		const float max_x_height = std::max(x_height, left_x_height);
-		const float cw_max = std::max(lline_cw, cline_cw);
-		const float cw_min = std::min(lline_cw, cline_cw);
-
-		if ((max_x_height > min_x_height * 1.2f)
-		    && !(cw_max <= 1.2f * cw_min))
 		{
-		  output(l) = l;
-		  continue;
+		  const float min_x_height = std::min(x_height, left_x_height);
+		  const float max_x_height = std::max(x_height, left_x_height);
+		  const float cw_max = std::max(lline_cw, cline_cw);
+		  const float cw_min = std::min(lline_cw, cline_cw);
+
+		  if ((max_x_height > min_x_height * 1.2f)
+		      && !(cw_max <= 1.2f * cw_min))
+		  {
+		    output(l) = l;
+		    continue;
+		  }
 		}
 	      }
 	    }
 	  }
-	}
 
-	// If we arrive here, it means than the lines in the
-	// neighborhood of the current line are quite similar. We can
-	// then begin to study the indentations in order to determine
-	// the beginning of new paragraphs
+	  // If we arrive here, it means than the lines in the
+	  // neighborhood of the current line are quite similar. We can
+	  // then begin to study the indentations in order to determine
+	  // the beginning of new paragraphs
 
 //-----------------------------------------------------------------------------
 //   ___________________________
@@ -375,35 +378,35 @@ namespace scribo
 //
 //-----------------------------------------------------------------------------
 
-	{
-	  // Check if the current line neighbors are aligned
-	  bool left_right_aligned = false;
-	  bool left_lol_aligned = false;
-	  const int dx_lr = std::abs(lline_col_min - rline_col_min);
-	  const int dx_llol = std::abs(lline_col_min - lolline_col_min);
-
-	  if (dx_lr < delta_alignment)
-	    left_right_aligned = true;
-
-	  if (dx_llol < delta_alignment)
-	    left_lol_aligned = true;
-
-	  if (left_right_aligned && left_lol_aligned)
 	  {
-	    const int left_right_col_min = std::min(lline_col_min, rline_col_min);
-	    const int dx_lrc = std::abs(left_right_col_min - cline_col_min);
-	    const float l_char_width = 1.5f * lines(l).char_width();
+	    // Check if the current line neighbors are aligned
+	    bool left_right_aligned = false;
+	    bool left_lol_aligned = false;
+	    const int dx_lr = std::abs(lline_col_min - rline_col_min);
+	    const int dx_llol = std::abs(lline_col_min - lolline_col_min);
 
-	    if (dx_lrc > l_char_width &&
-		dx_lrc < 3.0f * l_char_width &&
-		cline_col_min > rline_col_min &&
-		cline_col_min > lline_col_min)
+	    if (dx_lr < delta_alignment)
+	      left_right_aligned = true;
+
+	    if (dx_llol < delta_alignment)
+	      left_lol_aligned = true;
+
+	    if (left_right_aligned && left_lol_aligned)
 	    {
-	      output(right_nbh) = right_nbh;
-	      continue;
+	      const int left_right_col_min = std::min(lline_col_min, rline_col_min);
+	      const int dx_lrc = std::abs(left_right_col_min - cline_col_min);
+	      const float l_char_width = 1.5f * lines(l).char_width();
+
+	      if (dx_lrc > l_char_width &&
+		  dx_lrc < 3.0f * l_char_width &&
+			   cline_col_min > rline_col_min &&
+		  cline_col_min > lline_col_min)
+	      {
+		output(right_nbh) = right_nbh;
+		continue;
+	      }
 	    }
 	  }
-	}
 
 //-----------------------------------------------------------------------------
 //   ___________________________
@@ -419,41 +422,41 @@ namespace scribo
 //
 //-----------------------------------------------------------------------------
 
-	{
-	  // Check if the current line neighbors are aligned
-	  bool left_right_max_aligned = false;
-	  bool left_current_min_aligned = false;
-	  bool lol_current_min_aligned = false;
-	  const bool lol_is_left = output(left_nbh) == left_nbh;
-	  const int dx_lr_max = std::abs(lline_col_max - rline_col_max);
-	  const int dx_lc_min = std::abs(lline_col_min - cline_col_min);
-	  const int dx_lolc_min = std::abs(lolline_col_min - cline_col_min);
-
-	  if (dx_lr_max < delta_alignment)
-	    left_right_max_aligned = true;
-
-	  if (dx_lc_min < delta_alignment)
-	    left_current_min_aligned = true;
-
-	  if (dx_lolc_min < delta_alignment)
-	    lol_current_min_aligned = true;
-
-	  if (!left_current_min_aligned && left_right_max_aligned &&
-	      (lol_current_min_aligned || lol_is_left))
 	  {
-	    const int dx_lrc = std::abs(lline_col_max - cline_col_max);
-	    const int l_char_width = lines(l).char_width();
+	    // Check if the current line neighbors are aligned
+	    bool left_right_max_aligned = false;
+	    bool left_current_min_aligned = false;
+	    bool lol_current_min_aligned = false;
+	    const bool lol_is_left = output(left_nbh) == left_nbh;
+	    const int dx_lr_max = std::abs(lline_col_max - rline_col_max);
+	    const int dx_lc_min = std::abs(lline_col_min - cline_col_min);
+	    const int dx_lolc_min = std::abs(lolline_col_min - cline_col_min);
 
-	    if (dx_lrc > l_char_width &&
-		cline_col_max < lline_col_max &&
-		cline_col_min < lline_col_min &&
-		(lline_col_min > lolline_col_min || lol_is_left))
+	    if (dx_lr_max < delta_alignment)
+	      left_right_max_aligned = true;
+
+	    if (dx_lc_min < delta_alignment)
+	      left_current_min_aligned = true;
+
+	    if (dx_lolc_min < delta_alignment)
+	      lol_current_min_aligned = true;
+
+	    if (!left_current_min_aligned && left_right_max_aligned &&
+		(lol_current_min_aligned || lol_is_left))
 	    {
-	      output(l) = l;
-	      continue;
+	      const int dx_lrc = std::abs(lline_col_max - cline_col_max);
+	      const int l_char_width = lines(l).char_width();
+
+	      if (dx_lrc > l_char_width &&
+		  cline_col_max < lline_col_max &&
+		  cline_col_min < lline_col_min &&
+		  (lline_col_min > lolline_col_min || lol_is_left))
+	      {
+		output(l) = l;
+		continue;
+	      }
 	    }
 	  }
-	}
 
 
 //-----------------------------------------------------------------------------
@@ -469,68 +472,69 @@ namespace scribo
 //
 //-----------------------------------------------------------------------------
 
-	if (left_nbh == l)
-	{
-	  const value::int_u16 ror_nbh = right(right_nbh);
-	  const box2d& ror_line_bbox = lines(ror_nbh).bbox();
-	  const int rorline_col_min  = ror_line_bbox.pmin().col();
-
-	  bool right_ror_min_aligned = false;
-	  const int dx_rror_min = std::abs(rline_col_min - rorline_col_min);
-
-	  if (dx_rror_min < delta_alignment)
-	    right_ror_min_aligned = true;
-
-	  if (right_ror_min_aligned)
+	  if (left_nbh == l)
 	  {
-	    const int right_ror_col_min = std::min(rline_col_min, rorline_col_min);
-	    const int dx_rrorc = std::abs(right_ror_col_min - cline_col_min);
-	    const float l_char_width = 1.5f * lines(l).char_width();
+	    const line_id_t ror_nbh = right(right_nbh);
+	    const box2d& ror_line_bbox = lines(ror_nbh).bbox();
+	    const int rorline_col_min  = ror_line_bbox.pmin().col();
 
-	    if (dx_rrorc > l_char_width &&
-		dx_rrorc < 3.0f * l_char_width &&
-		cline_col_min > rline_col_min &&
-		cline_col_max >= rline_col_max)
+	    bool right_ror_min_aligned = false;
+	    const int dx_rror_min = std::abs(rline_col_min - rorline_col_min);
+
+	    if (dx_rror_min < delta_alignment)
+	      right_ror_min_aligned = true;
+
+	    if (right_ror_min_aligned)
 	    {
-	      output(right_nbh) = right_nbh;
-	      continue;
+	      const int right_ror_col_min = std::min(rline_col_min, rorline_col_min);
+	      const int dx_rrorc = std::abs(right_ror_col_min - cline_col_min);
+	      const float l_char_width = 1.5f * lines(l).char_width();
+
+	      if (dx_rrorc > l_char_width &&
+		  dx_rrorc < 3.0f * l_char_width &&
+			     cline_col_min > rline_col_min &&
+		  cline_col_max >= rline_col_max)
+	      {
+		output(right_nbh) = right_nbh;
+		continue;
+	      }
 	    }
 	  }
 	}
-      }
 
 
       // Only debug
 
-      {
-	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
+      // {
+      // 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
 
-	for (unsigned i = 0; i < output.nelements(); ++i)
-	  output(i) = internal::find_root(output, i);
+      // 	for (unsigned i = 0; i < output.nelements(); ++i)
+      // 	  output(i) = scribo::make::internal::find_root(output, i);
 
-	mln::util::array<accu::shape::bbox<point2d> > nbbox(output.nelements());
-	for (unsigned i = 0; i < nlines; ++i)
-	{
-	  // if (lines(i).is_textline())
-	  // {
-	  // mln::draw::box(debug, lines(i).bbox(), literal::red);
-	    nbbox(output(i)).take(lines(i).bbox());
-	  // }
-	}
+      // 	mln::util::array<accu::shape::bbox<point2d> > nbbox(output.nelements());
+      // 	for_all_lines(l, lines)
+      // 	  if (lines(l).is_textline())
+      // 	  {
+      // 	    // if (lines(i).is_textline())
+      // 	    // {
+      // 	    // mln::draw::box(debug, lines(i).bbox(), literal::red);
+      // 	    nbbox(output(l)).take(lines(l).bbox());
+      // 	    // }
+      // 	  }
 
-	for (unsigned i = 0; i < nbbox.nelements(); ++i)
-	  if (nbbox(i).is_valid())
-	  {
-	    box2d b = nbbox(i).to_result();
-	    mln::draw::box(debug, b, literal::orange);
-	    b.enlarge(1);
-	    mln::draw::box(debug, b, literal::orange);
-	    b.enlarge(1);
-	    mln::draw::box(debug, b, literal::orange);
-	  }
+      // 	for (unsigned i = 0; i < nbbox.nelements(); ++i)
+      // 	  if (nbbox(i).is_valid())
+      // 	  {
+      // 	    box2d b = nbbox(i).to_result();
+      // 	    mln::draw::box(debug, b, literal::orange);
+      // 	    b.enlarge(1);
+      // 	    mln::draw::box(debug, b, literal::orange);
+      // 	    b.enlarge(1);
+      // 	    mln::draw::box(debug, b, literal::orange);
+      // 	  }
 
-	mln::io::ppm::save(debug, "out_paragraph.ppm");
-      }
+      // 	mln::io::ppm::save(debug, "out_paragraph.ppm");
+      // }
 
     }
   }
@@ -547,262 +551,269 @@ namespace scribo
   template <typename L>
   inline
   void prepare_lines(const box2d& domain,
-		     const util::array< line_info<L> >& lines,
-		     image2d<value::int_u16>& blocks,
+		     const line_set<L>& lines,
+		     L& blocks,
 		     util::array<box2d>& rbbox)
   {
     std::map< int, std::vector< const box2d* > > drawn_lines;
-    const unsigned nlines = lines.nelements();
+    // const unsigned nlines = lines.nelements();
 
     // For each line
-    for (unsigned l = 0; l < nlines; ++l)
-    {
-      // Rotation of the bounding box
-      box2d b = geom::rotate(lines(l).bbox(), -90, domain.pcenter());
-      rbbox.append(b);
-
-      const unsigned index = l + 1;
-      const unsigned even_index = 2 * index;
-      const unsigned odd_index = even_index + 1;
-
-      // Top of the line
+    //for (unsigned l = 0; l < nlines; ++l)
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
       {
-	bool not_finished = true;
-	int col_offset = 0;
+	// Rotation of the bounding box
+	box2d b = geom::rotate(lines(l).bbox(), -90, domain.pcenter());
+//	rbbox.append(b);
+	rbbox(l) = b;
 
-	while (not_finished)
+	const unsigned index = l + 1;
+	const unsigned even_index = 2 * index;
+	const unsigned odd_index = even_index + 1;
+
+	// Top of the line
 	{
-	  // Looking for a column in the image to draw the top of the
-          // line
+	  bool not_finished = true;
+	  int col_offset = 0;
 
-	  const int col = b.pmax().col() + col_offset;
-	  std::map< int, std::vector< const box2d* > >::iterator it
-	    = drawn_lines.find(col);
-
-	  if (it != drawn_lines.end())
+	  while (not_finished)
 	  {
-	    const std::vector< const box2d* >& lines = (*it).second;
-	    const unsigned nb_lines = lines.size();
-	    unsigned i = 0;
+	    // Looking for a column in the image to draw the top of the
+	    // line
 
-	    for (i = 0; i < nb_lines; ++i)
+	    const int col = b.pmax().col() + col_offset;
+	    std::map< int, std::vector< const box2d* > >::iterator it
+	      = drawn_lines.find(col);
+
+	    if (it != drawn_lines.end())
 	    {
-	      const box2d* box = lines[i];
-	      const int min_row = std::max(b.pmin().row(), box->pmin().row());
-	      const int max_row = std::min(b.pmax().row(), box->pmax().row());
+	      const std::vector< const box2d* >& lines = (*it).second;
+	      const unsigned nb_lines = lines.size();
+	      unsigned i = 0;
 
-	      if (min_row - max_row <= 0)
-		break;
+	      for (i = 0; i < nb_lines; ++i)
+	      {
+		const box2d* box = lines[i];
+		const int min_row = std::max(b.pmin().row(), box->pmin().row());
+		const int max_row = std::min(b.pmax().row(), box->pmax().row());
+
+		if (min_row - max_row <= 0)
+		  break;
+	      }
+
+	      if (i == nb_lines)
+	      {
+		mln::draw::line(blocks, point2d(b.pmin().row(), col),
+				point2d(b.pmax().row(), col), even_index);
+		not_finished = false;
+		drawn_lines[col].push_back(&(rbbox[l]));
+	      }
+	      else
+		++col_offset;
 	    }
-
-	    if (i == nb_lines)
+	    else
 	    {
 	      mln::draw::line(blocks, point2d(b.pmin().row(), col),
 			      point2d(b.pmax().row(), col), even_index);
 	      not_finished = false;
 	      drawn_lines[col].push_back(&(rbbox[l]));
 	    }
-	    else
-	      ++col_offset;
-	  }
-	  else
-	  {
-	    mln::draw::line(blocks, point2d(b.pmin().row(), col),
-			    point2d(b.pmax().row(), col), even_index);
-	    not_finished = false;
-	    drawn_lines[col].push_back(&(rbbox[l]));
 	  }
 	}
-      }
 
-      // Bottom of the line
-      {
-	bool not_finished = true;
-	int col_offset = 0;
-
-	while (not_finished)
+	// Bottom of the line
 	{
-	  // Looking for a column in the image to draw the bottom of
-	  // the line
+	  bool not_finished = true;
+	  int col_offset = 0;
 
-	  const int col = b.pmin().col() - col_offset;
-	  std::map< int, std::vector< const box2d* > >::iterator it
-	    = drawn_lines.find(col);
-
-	  if (it != drawn_lines.end())
+	  while (not_finished)
 	  {
-	    const std::vector< const box2d* >& lines = (*it).second;
-	    const unsigned nb_lines = lines.size();
-	    unsigned i = 0;
+	    // Looking for a column in the image to draw the bottom of
+	    // the line
 
-	    for (i = 0; i < nb_lines; ++i)
+	    const int col = b.pmin().col() - col_offset;
+	    std::map< int, std::vector< const box2d* > >::iterator it
+	      = drawn_lines.find(col);
+
+	    if (it != drawn_lines.end())
 	    {
-	      const box2d* box = lines[i];
-	      const int min_row = std::max(b.pmin().row(), box->pmin().row());
-	      const int max_row = std::min(b.pmax().row(), box->pmax().row());
+	      const std::vector< const box2d* >& lines = (*it).second;
+	      const unsigned nb_lines = lines.size();
+	      unsigned i = 0;
 
-	      if (min_row - max_row <= 0)
-		break;
+	      for (i = 0; i < nb_lines; ++i)
+	      {
+		const box2d* box = lines[i];
+		const int min_row = std::max(b.pmin().row(), box->pmin().row());
+		const int max_row = std::min(b.pmax().row(), box->pmax().row());
+
+		if (min_row - max_row <= 0)
+		  break;
+	      }
+
+	      if (i == nb_lines)
+	      {
+		mln::draw::line(blocks, point2d(b.pmin().row(), col),
+				point2d(b.pmax().row(), col), odd_index);
+		not_finished = false;
+		drawn_lines[col].push_back(&(rbbox[l]));
+	      }
+	      else
+		++col_offset;
 	    }
-
-	    if (i == nb_lines)
+	    else
 	    {
 	      mln::draw::line(blocks, point2d(b.pmin().row(), col),
 			      point2d(b.pmax().row(), col), odd_index);
 	      not_finished = false;
 	      drawn_lines[col].push_back(&(rbbox[l]));
 	    }
-	    else
-	      ++col_offset;
-	  }
-	  else
-	  {
-	    mln::draw::line(blocks, point2d(b.pmin().row(), col),
-			    point2d(b.pmax().row(), col), odd_index);
-	    not_finished = false;
-	    drawn_lines[col].push_back(&(rbbox[l]));
 	  }
 	}
       }
-    }
   }
 
   template <typename L>
   inline
   void
-  process_left_link(image2d<value::int_u16>& blocks,
+  process_left_link(L& blocks,
 		    const util::array<box2d>& rbbox,
-		    const util::array< line_info<L> >& lines,
-		    util::array<value::int_u16>& left)
+		    const line_set<L>& lines,
+		    line_links<L>& left)
   {
-    typedef value::int_u16 V;
+    typedef scribo::def::lbl_type V;
 
     // At the beginning each line is its own neighbor
-    for (unsigned i = 0; i < left.nelements(); ++i)
-      left(i) = i;
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
+	left(l) = l;
+      else
+	left(l) = 0;
 
-    const unsigned nlines = lines.nelements();
+    // const unsigned nlines = lines.nelements();
 
     // For each line
-    for (unsigned i = 0; i < nlines; ++i)
-    {
-      // Max distance for the line search
-      int dmax = 1.5f * lines(i).x_height();
-
-      // Starting points in the current line box
-      point2d c = rbbox(i).pcenter();
-      point2d q(rbbox(i).pmin().row() + ((c.row() - rbbox(i).pmin().row()) / 4), c.col());
-
-      int
-	midcol = (rbbox(i).pmax().col()
-		  - rbbox(i).pmin().col()) / 2;
-
-      // Left
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
       {
-	// marge gauche
+	// Max distance for the line search
+	int dmax = 1.5f * lines(l).x_height();
+
+	// Starting points in the current line box
+	point2d c = rbbox(l).pcenter();
+	point2d q(rbbox(l).pmin().row() + ((c.row() - rbbox(l).pmin().row()) / 4), c.col());
+
 	int
-	  nleftima = c.col() - blocks.domain().pmin().col(),
-	  // Distance gauche
-	  nleft = std::min(nleftima, midcol + dmax);
+	  midcol = (rbbox(l).pmax().col()
+		    - rbbox(l).pmin().col()) / 2;
 
-	V
-	  // Starting points in the box
-	  *p = &blocks(c),
-	  *p2 = &blocks(q),
-	  // End of search
-	  *pstop = p - nleft - 1,
-	  // Line neighbor
-	  *nbh_p = 0;
-
-	// While we haven't found a neighbor or reached the limit
-	for (; p != pstop; --p, --p2)
+	// Left
 	{
-	  if (*p2 != literal::zero  // Not the background
-	      && ((*p2 % 2) == 0) // Looking for the bottom of a line
-	      && left((*p2 >> 1) - 1) != i) // No loops
+	  // marge gauche
+	  int
+	    nleftima = c.col() - blocks.domain().pmin().col(),
+	    // Distance gauche
+	    nleft = std::min(nleftima, midcol + dmax);
+
+	  V
+	    // Starting points in the box
+	    *p = &blocks(c),
+	    *p2 = &blocks(q),
+	    // End of search
+	    *pstop = p - nleft - 1,
+	    // Line neighbor
+	    *nbh_p = 0;
+
+	  // While we haven't found a neighbor or reached the limit
+	  for (; p != pstop; --p, --p2)
 	  {
-	    // Neightbor found, we stop the research
-	    nbh_p = p2;
-	    break;
-	  }
-
-	  if (*p != literal::zero  // Not the background
-	      && ((*p % 2) == 0) // Looking for the bottom of a line
-	      && left((*p >> 1) - 1) != i) // No loops
-	  {
-	    // Neightbor found, we stop the research
-	    nbh_p = p;
-	    break;
-	  }
-	}
-
-	// If a neighbor was found, then we have found the top of the
-	// line. We are then looking for the bottom of the encountered
-	// line. If during the search process we find a complete line
-	// included in the touched line, this line is considered as
-	// the neighbor under certain conditions (see below)
-
-	//---------------------------------------------------------------
-	//   _________________________                        |
-	//  |_________________________| => Current line       | Search direction
-	//                                                    v
-	//  => First encountered top line
-	//  __________________________________________________ 2Q
-	// |                 Q                                |
-	// |   _________________________                      |2P
-	// |  |_____________P___________|  => Second top      |2P + 1
-	// |                                  line            |
-	// |__________________________________________________|2Q + 1
-	//
-	//
-	//---------------------------------------------------------------
-
-	if (nbh_p)
-	{
-	  std::vector<V> lines_nbh;
-	  const V end_p = *nbh_p + 1;
-	  const V* nbh_p_copy = nbh_p;
-
-	  for (; *nbh_p != end_p; --nbh_p)
-	  {
-	    if ((*nbh_p) != literal::zero)  // Not the background
+	    if (*p2 != literal::zero  // Not the background
+		&& ((*p2 % 2) == 0) // Looking for the bottom of a line
+		&& left((*p2 >> 1) - 1) != l) // No loops
 	    {
-	      if ((*nbh_p) % 2 == 0)// We have found the top of
-		// another line
-		lines_nbh.push_back(*nbh_p);
-	      else
-	      {
-		// We have found the bottom of a line. We are looking if
-		// we have already encountered the top of this
-		// line. If so, we link the current line with this one
-		// under certain conditions:
+	      // Neightbor found, we stop the research
+	      nbh_p = p2;
+	      break;
+	    }
 
-		if (std::find(lines_nbh.begin(), lines_nbh.end(),
-			      (*nbh_p) - 1) != lines_nbh.end())
-		{
-		  // If we can link the complete line with the current line
-		  if (// It must be in the search range
-		    nbh_p > pstop
-		    // Avoid loops
-		      && left(((*nbh_p - 1) >> 1) - 1) != i)
-		    left(i) = ((*nbh_p - 1) >> 1) - 1;
-
-		  // We have found a complete line so we stop the search
-		  break;
-		}
-	      }
+	    if (*p != literal::zero  // Not the background
+		&& ((*p % 2) == 0) // Looking for the bottom of a line
+		&& left((*p >> 1) - 1) != l) // No loops
+	    {
+	      // Neightbor found, we stop the research
+	      nbh_p = p;
+	      break;
 	    }
 	  }
 
+	  // If a neighbor was found, then we have found the top of the
+	  // line. We are then looking for the bottom of the encountered
+	  // line. If during the search process we find a complete line
+	  // included in the touched line, this line is considered as
+	  // the neighbor under certain conditions (see below)
 
-	  // If we haven't found any included line in the first
-	  // neighbor, then the line is considered as the neighbor of
-	  // the current line
-	  if (*nbh_p == end_p)
-	    left(i) = (*nbh_p_copy >> 1) - 1;
+	  //---------------------------------------------------------------
+	  //   _________________________                        |
+	  //  |_________________________| => Current line       | Search direction
+	  //                                                    v
+	  //  => First encountered top line
+	  //  __________________________________________________ 2Q
+	  // |                 Q                                |
+	  // |   _________________________                      |2P
+	  // |  |_____________P___________|  => Second top      |2P + 1
+	  // |                                  line            |
+	  // |__________________________________________________|2Q + 1
+	  //
+	  //
+	  //---------------------------------------------------------------
+
+	  if (nbh_p)
+	  {
+	    std::vector<V> lines_nbh;
+	    const V end_p = *nbh_p + 1;
+	    const V* nbh_p_copy = nbh_p;
+
+	    for (; *nbh_p != end_p; --nbh_p)
+	    {
+	      if ((*nbh_p) != literal::zero)  // Not the background
+	      {
+		if ((*nbh_p) % 2 == 0)// We have found the top of
+		  // another line
+		  lines_nbh.push_back(*nbh_p);
+		else
+		{
+		  // We have found the bottom of a line. We are looking if
+		  // we have already encountered the top of this
+		  // line. If so, we link the current line with this one
+		  // under certain conditions:
+
+		  if (std::find(lines_nbh.begin(), lines_nbh.end(),
+				(*nbh_p) - 1) != lines_nbh.end())
+		  {
+		    // If we can link the complete line with the current line
+		    if (// It must be in the search range
+		      nbh_p > pstop
+		      // Avoid loops
+		      && left(((*nbh_p - 1) >> 1) - 1) != l)
+		      left(l) = ((*nbh_p - 1) >> 1) - 1;
+
+		    // We have found a complete line so we stop the search
+		    break;
+		  }
+		}
+	      }
+	    }
+
+
+	    // If we haven't found any included line in the first
+	    // neighbor, then the line is considered as the neighbor of
+	    // the current line
+	    if (*nbh_p == end_p)
+	      left(l) = (*nbh_p_copy >> 1) - 1;
+	  }
 	}
       }
-    }
   }
 
 
@@ -810,137 +821,141 @@ namespace scribo
   template <typename L>
   inline
   void
-  process_right_link(image2d<value::int_u16>& blocks,
+  process_right_link(L& blocks,
 		     const util::array<box2d>& rbbox,
-		     const util::array< line_info<L> >& lines,
-		     util::array<value::int_u16>& right)
+		     const line_set<L>& lines,
+		     line_links<L>& right)
   {
-    typedef value::int_u16 V;
+    typedef scribo::def::lbl_type V;
 
     // At the beginning each line is its own neighbor
-    for (unsigned i = 0; i < right.nelements(); ++i)
-      right(i) = i;
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
+	right(l) = l;
+      else
+	right(l) = 0;
 
-    const unsigned nlines = lines.nelements();
+    // const unsigned nlines = lines.nelements();
 
     // For each line
-    for (unsigned i = 0; i < nlines; ++i)
-    {
-      // Max distance for the line search
-      int dmax = 1.5f * lines(i).x_height();
-
-      // Starting points in the current line box
-      point2d c = rbbox(i).pcenter();
-      point2d q(rbbox(i).pmax().row() - ((rbbox(i).pmax().row() - c.row()) / 4), c.col());
-
-      int
-	midcol = (rbbox(i).pmax().col()
-	  - rbbox(i).pmin().col()) / 2;
-
-      // Right
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
       {
+	// Max distance for the line search
+	int dmax = 1.5f * lines(l).x_height();
+
+	// Starting points in the current line box
+	point2d c = rbbox(l).pcenter();
+	point2d q(rbbox(l).pmax().row() - ((rbbox(l).pmax().row() - c.row()) / 4), c.col());
+
 	int
-	  nrightima = geom::ncols(blocks) - c.col() + blocks.domain().pmin().col(),
-	  nright = std::min(nrightima, midcol + dmax);
+	  midcol = (rbbox(l).pmax().col()
+		    - rbbox(l).pmin().col()) / 2;
 
-	V
-	  // Starting points in the box
-	  *p = &blocks(c),
-	  *p2 = &blocks(q),
-	  // End of search
-	  *pstop = p + nright - 1,
-	  // Line neighbor
-	  *nbh_p = 0;
-
-	// While we haven't found a neighbor or reached the limit
-	for (; p != pstop; ++p, ++p2)
+	// Right
 	{
-	  if (*p2 != literal::zero  // Not the background
-	      && ((*p2 % 2) == 1) // Looking for the bottom of a line
-	      && right(((*p2 - 1) >> 1) - 1) != i) // No loops
+	  int
+	    nrightima = geom::ncols(blocks) - c.col() + blocks.domain().pmin().col(),
+	    nright = std::min(nrightima, midcol + dmax);
+
+	  V
+	    // Starting points in the box
+	    *p = &blocks(c),
+	    *p2 = &blocks(q),
+	    // End of search
+	    *pstop = p + nright - 1,
+	    // Line neighbor
+	    *nbh_p = 0;
+
+	  // While we haven't found a neighbor or reached the limit
+	  for (; p != pstop; ++p, ++p2)
 	  {
-	    // Neightbor found, we stop the research
-	    nbh_p = p2;
-	    break;
-	  }
-
-	  if (*p != literal::zero  // Not the background
-	      && ((*p % 2) == 1) // Looking for the bottom of a line
-	      && right(((*p - 1) >> 1) - 1) != i) // No loops
-	  {
-	    // Neightbor found, we stop the research
-	    nbh_p = p;
-	    break;
-	  }
-	}
-
-	// If a neighbor was found, then we have found the bottom of the
-	// line. We are then looking for the top of the encountered
-	// line. If during the search process we find a complete line
-	// included in the touched line, this line is considered as
-	// the neighbor under certain conditions (see below)
-
-	//---------------------------------------------------------------
-	//
-	//
-	//  __________________________________________________ 2Q
-	// |                 Q                                |
-	// |   _________________________                      |2P
-	// |  |_____________P___________|  => Second bottom   |2P + 1
-	// |                                  line            |
-	// |__________________________________________________|2Q + 1
-	//  => First encountered bottom line
-	//   _________________________                        ^
-	//  |_________________________| => Current line       | Search direction
-	//                                                    |
-	//---------------------------------------------------------------
-
-	if (nbh_p)
-	{
-	  std::vector<V> lines_nbh;
-	  const V end_p = *nbh_p - 1;
-	  const V* nbh_p_copy = nbh_p;
-
-	  for (; *nbh_p != end_p; ++nbh_p)
-	  {
-	    if (*nbh_p != literal::zero)  // Not the background
+	    if (*p2 != literal::zero  // Not the background
+		&& ((*p2 % 2) == 1) // Looking for the bottom of a line
+		&& right(((*p2 - 1) >> 1) - 1) != l) // No loops
 	    {
-	      if (*nbh_p % 2 == 1) // We have found the bottom of
-		// another line
-		lines_nbh.push_back(*nbh_p);
-	      else
-	      {
-		// We have found the top of a line. We are looking if
-		//we have already encountered the bottom of this
-		// line. If so, we link the current line with this one
-		// under certain conditions:
+	      // Neightbor found, we stop the research
+	      nbh_p = p2;
+	      break;
+	    }
 
-		if (std::find(lines_nbh.begin(), lines_nbh.end(),
-			      *nbh_p + 1) != lines_nbh.end())
-		{
-		  // If we can link the complete line with the current line
-		  if (// It must be in the search range
-		    nbh_p < pstop
-		    // Avoid loops
-		      && right((*nbh_p >> 1) - 1) != i)
-		    right(i) = (*nbh_p >> 1) - 1;
-
-		  // We have found a complete line, so we stop the search
-		  break;
-		}
-	      }
+	    if (*p != literal::zero  // Not the background
+		&& ((*p % 2) == 1) // Looking for the bottom of a line
+		&& right(((*p - 1) >> 1) - 1) != l) // No loops
+	    {
+	      // Neightbor found, we stop the research
+	      nbh_p = p;
+	      break;
 	    }
 	  }
 
-	  // If we haven't found any included line in the first
-	  // neighbor, then the line is considered as the neighbor of
-	  // the current line
+	  // If a neighbor was found, then we have found the bottom of the
+	  // line. We are then looking for the top of the encountered
+	  // line. If during the search process we find a complete line
+	  // included in the touched line, this line is considered as
+	  // the neighbor under certain conditions (see below)
 
-	  if (*nbh_p == end_p)
-	    right(i) = ((*nbh_p_copy - 1) >> 1) - 1;
+	  //---------------------------------------------------------------
+	  //
+	  //
+	  //  __________________________________________________ 2Q
+	  // |                 Q                                |
+	  // |   _________________________                      |2P
+	  // |  |_____________P___________|  => Second bottom   |2P + 1
+	  // |                                  line            |
+	  // |__________________________________________________|2Q + 1
+	  //  => First encountered bottom line
+	  //   _________________________                        ^
+	  //  |_________________________| => Current line       | Search direction
+	  //                                                    |
+	  //---------------------------------------------------------------
+
+	  if (nbh_p)
+	  {
+	    std::vector<V> lines_nbh;
+	    const V end_p = *nbh_p - 1;
+	    const V* nbh_p_copy = nbh_p;
+
+	    for (; *nbh_p != end_p; ++nbh_p)
+	    {
+	      if (*nbh_p != literal::zero)  // Not the background
+	      {
+		if (*nbh_p % 2 == 1) // We have found the bottom of
+		  // another line
+		  lines_nbh.push_back(*nbh_p);
+		else
+		{
+		  // We have found the top of a line. We are looking if
+		  //we have already encountered the bottom of this
+		  // line. If so, we link the current line with this one
+		  // under certain conditions:
+
+		  if (std::find(lines_nbh.begin(), lines_nbh.end(),
+				*nbh_p + 1) != lines_nbh.end())
+		  {
+		    // If we can link the complete line with the current line
+		    if (// It must be in the search range
+		      nbh_p < pstop
+		      // Avoid loops
+		      && right((*nbh_p >> 1) - 1) != l)
+		      right(l) = (*nbh_p >> 1) - 1;
+
+		    // We have found a complete line, so we stop the search
+		    break;
+		  }
+		}
+	      }
+	    }
+
+	    // If we haven't found any included line in the first
+	    // neighbor, then the line is considered as the neighbor of
+	    // the current line
+
+	    if (*nbh_p == end_p)
+	      right(l) = ((*nbh_p_copy - 1) >> 1) - 1;
+	  }
 	}
       }
-    }
   }
 
 //-----------------------------------------------------------------------
@@ -950,76 +965,83 @@ namespace scribo
 
   template< typename L >
   inline
-  void finalize_links(util::array<value::int_u16>& left,
-		      util::array<value::int_u16>& right,
-		      const util::array< line_info<L> >& lines)
+  void finalize_links(line_links<L>& left,
+		      line_links<L>& right,
+		      const line_set<L>& lines)
   {
-    const unsigned nlines = lines.nelements();
+    // const unsigned nlines = lines.nelements();
 
-    for (unsigned i = 0; i < nlines; ++i)
-    {
-      const unsigned left_value = left(i);
-      const unsigned right_value = right(i);
-
-      // If the right neighbor of my left neighbor is itself then its
-      // right neighbor is me
+    for_all_lines(l, lines)
+      if (lines(l).is_textline())
       {
-	value::int_u16& v = right(left_value);
+	const unsigned left_value = left(l);
+	const unsigned right_value = right(l);
 
-	if (v == left_value)
-	  v = i;
+	// If the right neighbor of my left neighbor is itself then its
+	// right neighbor is me
+	{
+	  line_id_t& v = right(left_value);
+
+	  if (v == left_value)
+	    v = l;
+	}
+
+	// If the left neighbor of my right neighbor is itself then its
+	// left neighbor is me
+	{
+	  line_id_t& v = left(right_value);
+
+	  if (v == right_value)
+	    v = l;
+	}
       }
-
-      // If the left neighbor of my right neighbor is itself then its
-      // left neighbor is me
-      {
-	value::int_u16& v = left(right_value);
-
-	if (v == right_value)
-	  v = i;
-      }
-    }
   }
 
   template <typename L>
   inline
-  void extract_paragraphs(line_set<L>& lines,
-			  const image2d<bool>& input)
+  paragraph_set<L>
+  extract_paragraphs(line_set<L>& lines,
+		     const image2d<bool>& input)
   {
-    typedef value::int_u16 V;
+    typedef scribo::def::lbl_type V;
 
     image2d<V> blocks(geom::rotate(input.domain(), -90, input.domain().pcenter()));
     data::fill(blocks, 0);
 
-    util::array< line_info<L> > lines_info;
+    // util::array< line_info<L> > lines_info;
 
-    for_all_lines(l, lines)
-    {
-      if (lines(l).is_textline())
-	lines_info.append(lines(l));
-    }
+    // for_all_lines(l, lines)
+    // {
+    //   if (lines(l).is_textline())
+    // 	lines_info.append(lines(l));
+    // }
 
-    const unsigned nlines = lines_info.nelements();
+/// const unsigned nlines = lines_info.nelemnts();
     util::array<box2d> rbbox;
-    util::array<V> left(nlines);
-    util::array<V> right(nlines);
-    util::array<V> output;
+    line_links<L> left(lines);
+    left(0) = 0;
+    line_links<L> right(lines);
+    right(0) = 0;
+    line_links<L> output(lines);
+    output(0) = 0;
 
-    rbbox.reserve(nlines);
-    output.reserve(nlines);
+    rbbox.resize(lines.nelements() + 1);
 
     std::cout << "Preparing lines" << std::endl;
-    prepare_lines(input.domain(), lines_info, blocks, rbbox);
+    prepare_lines(input.domain(), lines , blocks, rbbox);
 //    io::pgm::save(blocks, "blocks.pgm");
     std::cout << "Linking left" << std::endl;
-    process_left_link(blocks, rbbox, lines_info, left);
+    process_left_link(blocks, rbbox, lines , left);
     std::cout << "Linking right" << std::endl;
-    process_right_link(blocks, rbbox, lines_info, right);
+    process_right_link(blocks, rbbox, lines , right);
     std::cout << "Finalizing links" << std::endl;
-    finalize_links(left, right, lines_info);
+    finalize_links(left, right, lines );
     // std::cout << "Finalizing merging" << std::endl;
     // finalize_line_merging(left, right, lines);
     std::cout << "Extracting paragraphs" << std::endl;
-    filter::paragraph_links(left, right, output, lines_info, input);
+    filter::paragraph_links(left, right, output, lines, input);
+
+    paragraph_set<L> par_set = make::paragraph(output);
+    return par_set;
   }
 }

@@ -261,7 +261,7 @@ private:
     unsigned i = 0;
     const unsigned nelements = data_.nelements();
 
-    clusters[0] = cluster_index;
+    clusters.push_back(cluster_index);
     const T std = data_.standard_deviation();
 
     for (i = 1; i < nelements - 1; ++i)
@@ -276,11 +276,12 @@ private:
       clusters.push_back(cluster_index);
     }
 
-    if (nelements > 1
-	&& data_[i] - data_[i - 1] > std)
-      ++cluster_index;
-
-    clusters.push_back(cluster_index);
+    if (nelements > 1)
+    {
+      if (data_[i] - data_[i - 1] > std)
+	++cluster_index;
+      clusters.push_back(cluster_index);
+    }
 
     clusters_.clear();
     clusters_.reserve(cluster_index);

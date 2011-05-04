@@ -1,3 +1,18 @@
+2011-05-04  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Make paragraph extraction work with this branch.
+
+	* scribo/core/line_info.hh: Keep few attributes public and update
+	method names.
+
+	* scribo/core/stats.hh: Fix missed elements in computation.
+
+	* scribo/text/paragraphs.hh: Use line_set and line_links
+	structures.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Make use of
+	the new paragraph extraction algorithm.
+
 2011-05-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Regen.
