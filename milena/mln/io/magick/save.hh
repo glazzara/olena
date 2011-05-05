@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,12 +59,28 @@ namespace mln
     {
 
       /** Save a Milena image into a file using Magick++.
+	  \overload
 
-	  \param[out] ima       The image to save.
-	  \param[in]  filename  The name of the output file.  */
+	  \param[in] ima       The image to save.
+	  \param[in] filename  The name of the output file.  */
       template <typename I>
       void
       save(const Image<I>& ima, const std::string& filename);
+
+      /** Save a Milena image into a file using Magick++.
+
+	  \param[in] ima       The image to save.
+
+	  \param[in] opacity_mask Mask used to set pixel opacity_mask in output
+	  image. Output format must support this feature to be taken
+	  into account.
+
+	  \param[in] filename  The name of the output file.
+      */
+      template <typename I, typename J>
+      void
+      save(const Image<I>& ima, const Image<J>& opacity_mask,
+	   const std::string& filename);
 
 
       // FIXME: Unfinished?
@@ -125,10 +141,92 @@ namespace mln
       } // end of namespace mln::io::magick::impl
 
 
-      template <typename I>
-      inline
+      namespace internal
+      {
+
+	template <typename I>
+	void
+	paste_data(const Image<I>& ima_, Magick::Image& magick_ima)
+	{
+	  const I& ima = exact(ima_);
+
+	  def::coord
+	    minrow = geom::min_row(ima),
+	    mincol = geom::min_col(ima),
+	    maxrow = geom::max_row(ima),
+	    maxcol = geom::max_col(ima),
+	    ncols  = geom::ncols(ima),
+	    nrows  = geom::nrows(ima);
+
+	  // Ensure that there is only one reference to underlying image
+	  // If this is not done, then image pixels will not be modified.
+	  magick_ima.modifyImage();
+
+	  Magick::Pixels view(magick_ima);
+	  // As above, `ncols' is passed before `nrows'.
+	  Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+	  const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
+
+	  unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+
+	  for (def::coord row = minrow; row <= maxrow;
+	       ++row, ptr_ima += row_offset)
+	    for (def::coord col = mincol; col <= maxcol; ++col)
+	      *pixels++ = impl::get_color(*ptr_ima++);
+
+	  view.sync();
+	}
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity(const Image<I>& ima_,
+			   const Image<J>& opacity_mask_,
+			   Magick::Image& magick_ima)
+	{
+	  const I& ima = exact(ima_);
+	  const J& opacity_mask = exact(opacity_mask_);
+
+	  def::coord
+	    minrow = geom::min_row(ima),
+	    mincol = geom::min_col(ima),
+	    maxrow = geom::max_row(ima),
+	    maxcol = geom::max_col(ima),
+	    ncols  = geom::ncols(ima),
+	    nrows  = geom::nrows(ima);
+
+	  // Ensure that there is only one reference to underlying image
+	  // If this is not done, then image pixels will not be modified.
+	  magick_ima.modifyImage();
+
+	  Magick::Pixels view(magick_ima);
+	  // As above, `ncols' is passed before `nrows'.
+	  Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+	  const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
+	  const mln_value(J) *ptr_opacity_mask = &opacity_mask(opacity_mask.domain().pmin());
+
+	  unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+	  unsigned opacity_row_offset = opacity_mask.delta_index(dpoint2d(+1, - ncols));
+
+	  for (def::coord row = minrow; row <= maxrow;
+	       ++row, ptr_ima += row_offset,
+		 ptr_opacity_mask += opacity_row_offset)
+	    for (def::coord col = mincol; col <= maxcol; ++col)
+	    {
+	      *pixels = impl::get_color(*ptr_ima++);
+	      (*pixels).opacity = ((*ptr_opacity_mask++) ? 255 : 0);
+	      ++pixels;
+	    }
+
+	  view.sync();
+	}
+
+      } // end of namespace mln::io::magick::internal
+
+
+      template <typename I, typename J>
       void
-      save(const Image<I>& ima_, const std::string& filename)
+      save(const Image<I>& ima_, const Image<J>& opacity_mask_,
+	   const std::string& filename)
       {
 	trace::entering("mln::io::magick::save");
 
@@ -149,14 +247,12 @@ namespace mln
 	}
 
 	const I& ima = exact(ima_);
+	const J& opacity_mask = exact(opacity_mask_);
 
 	def::coord
-	  minrow = geom::min_row(ima),
-	  mincol = geom::min_col(ima),
-	  maxrow = geom::max_row(ima),
-	  maxcol = geom::max_col(ima),
 	  ncols  = geom::ncols(ima),
 	  nrows  = geom::nrows(ima);
+
 
 	// In the construction of a Geometry object, the width (i.e.
 	// `ncols') comes first, then the height (i.e. `nrows')
@@ -168,28 +264,31 @@ namespace mln
 	// declared further fails and segfault...
 	Magick::Image magick_ima(Magick::Geometry(ncols, nrows), "white");
 
-	magick_ima.type(Magick::TrueColorType);
+	if (opacity_mask.is_valid())
+	{
+	  magick_ima.type(Magick::TrueColorMatteType);
+	  internal::paste_data_opacity(ima, opacity_mask, magick_ima);
+	}
+	else
+	{
+	  magick_ima.type(Magick::TrueColorType);
+	  internal::paste_data(ima, magick_ima);
+	}
 
-        // Ensure that there is only one reference to underlying image
-        // If this is not done, then image pixels will not be modified.
-	magick_ima.modifyImage();
-
-	Magick::Pixels view(magick_ima);
-	// As above, `ncols' is passed before `nrows'.
-	Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
-	const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
-
-	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
-
-	for (def::coord row = minrow; row <= maxrow;
-	     ++row, ptr_ima += row_offset)
-	  for (def::coord col = mincol; col <= maxcol; ++col)
-	    *pixels++ = impl::get_color(*ptr_ima++);
-
-	view.sync();
 	magick_ima.write(filename);
 
 	trace::exiting("mln::io::magick::save");
+      }
+
+
+
+      template <typename I>
+      inline
+      void
+      save(const Image<I>& ima, const std::string& filename)
+      {
+	mln_ch_value(I,bool) opacity_mask;
+	save(ima, opacity_mask, filename);
       }
 
 
