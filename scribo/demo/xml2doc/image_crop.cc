@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -16,10 +17,13 @@
 
 #include <limits.h>
 
+#include <scribo/core/macros.hh>
 #include <scribo/preprocessing/crop.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/image/image2d.hh>
+#include <mln/util/couple.hh>
+#include <mln/draw/line.hh>
 #include <mln/io/magick/save.hh>
 #include <mln/io/magick/load.hh>
 #include <mln/io/ppm/all.hh>
@@ -28,6 +32,7 @@
 #include "loader.hh"
 #include "common.hh"
 
+#include <mln/io/pbm/save.hh>
 
 ImageCrop::ImageCrop(const QString& xml, const QString& img,
 		     const QString& output)
@@ -270,7 +275,14 @@ bool ImageCrop::crop_regions(bool temp)
 	      QDomNode coords = region.firstChild();
 	      QString id = region.toElement().attribute("id", "none");
 
-	      //	      qDebug() << region.toElement().tagName();
+	      // Retrieve region bbox.
+	      using namespace mln;
+	      def::coord
+		x_min = region.toElement().attribute("x_min").toInt(),
+		y_min = region.toElement().attribute("y_min").toInt(),
+		x_max = region.toElement().attribute("x_max").toInt(),
+		y_max = region.toElement().attribute("y_max").toInt();
+	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
 
 	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
 		coords = coords.nextSibling();
@@ -279,33 +291,41 @@ bool ImageCrop::crop_regions(bool temp)
 		break;
 
 	      QDomNode point = coords.firstChild();
-	      int x_max = 0;
-	      int y_max = 0;
-	      int x_min = INT_MAX;
-	      int y_min = INT_MAX;
 
+	      // For each row, store first and last column of the line
+	      // to be set as object. The rest will be considered as
+	      // transparent.
+	      util::array<util::couple<def::coord, def::coord> >
+		p_mask(box.nrows(),
+		       util::couple<def::coord, def::coord>(x_max + 1, x_min - 1));
+
+	      // Compute opacity mask for image region.
 	      while (!point.isNull())
 		{
 		  int x = point.toElement().attribute("x", "none").toInt();
 		  int y = point.toElement().attribute("y", "none").toInt();
 
-		  if (x < x_min)
-		    x_min = x;
-		  if (x > x_max)
-		    x_max = x;
-
-		  if (y < y_min)
-		    y_min = y;
-		  if (y > y_max)
-		    y_max = y;
+		  if (p_mask(y - y_min).first() > x)
+		    p_mask(y - y_min).first() = x;
+		  if  (p_mask(y - y_min).second() < x)
+		    p_mask(y - y_min).second() = x;
 
 		  point = point.nextSibling();
 		}
 
-	      using namespace mln;
-	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
-
+	      // Crop image in input.
 	      image2d<value::rgb8> crop = scribo::preprocessing::crop(ima_, box);
+
+	      // Build image mask.
+	      image2d<bool> opacity_mask(box);
+	      {
+		data::fill(opacity_mask, true);
+		for_all_elements(e, p_mask)
+		  draw::line(opacity_mask,
+			     point2d(e + y_min, p_mask(e).first()),
+			     point2d(e + y_min, p_mask(e).second()),
+			     false);
+	      }
 
 	      if (temp)
 		{
@@ -313,10 +333,10 @@ bool ImageCrop::crop_regions(bool temp)
 		  tmp.open();
 		  region_map_[id] = tmp.fileName();
 		  tmp.setAutoRemove(false);
-		  io::magick::save(crop, tmp.fileName().toStdString());
+		  io::magick::save(crop, opacity_mask, tmp.fileName().toStdString());
 		}
 	      else
-		io::magick::save(crop, QString(output_dir_ + id + ".png").toStdString());
+		io::magick::save(crop, opacity_mask, QString(output_dir_ + id + ".png").toStdString());
 	    }
 	  region = region.nextSibling();
 	}

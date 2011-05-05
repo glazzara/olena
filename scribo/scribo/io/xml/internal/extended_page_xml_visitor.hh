@@ -166,7 +166,12 @@ namespace scribo
 	    {
 	      output << "    <whitespace_separator_region id=\"wss"
 		     << info.id()
-		     << "\">" << std::endl;
+		     << "\""
+		     << " x_min=\"" << info.bbox().pmin().col() << "\""
+		     << " y_min=\"" << info.bbox().pmin().row() << "\""
+		     << " x_max=\"" << info.bbox().pmax().col() << "\""
+		     << " y_max=\"" << info.bbox().pmax().row() << "\""
+		     << ">" << std::endl;
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
@@ -179,7 +184,12 @@ namespace scribo
 	      output << "    <separator_region id=\"sr" << info.id()
 		     << "\" sep_orientation=\"0.000000\" "
 		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\">" << std::endl;
+		     << " sep_bgcolour=\"White\""
+		     << " x_min=\"" << info.bbox().pmin().col() << "\""
+		     << " y_min=\"" << info.bbox().pmin().row() << "\""
+		     << " x_max=\"" << info.bbox().pmax().col() << "\""
+		     << " y_max=\"" << info.bbox().pmax().row() << "\""
+		     << ">" << std::endl;
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
@@ -195,7 +205,12 @@ namespace scribo
 		     << "\" img_colour_type=\"24_Bit_Colour\""
 		     << " img_orientation=\"0.000000\" "
 		     << " img_emb_text=\"No\" "
-		     << " img_bgcolour=\"White\">" << std::endl;
+		     << " img_bgcolour=\"White\""
+		     << " x_min=\"" << info.bbox().pmin().col() << "\""
+		     << " y_min=\"" << info.bbox().pmin().row() << "\""
+		     << " x_max=\"" << info.bbox().pmax().col() << "\""
+		     << " y_max=\"" << info.bbox().pmax().row() << "\""
+		     << ">" << std::endl;
 
 	      internal::print_image_coords(output,
 					   ((elt_edge | info.bbox())
