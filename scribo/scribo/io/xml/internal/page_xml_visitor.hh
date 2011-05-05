@@ -146,7 +146,8 @@ namespace scribo
 	{
 	  switch (info.type())
 	  {
-	    case component::LineSeparator:
+	    case component::VerticalLineSeparator:
+	    case component::HorizontalLineSeparator:
 	    {
 	      output << "    <separator_region id=\"sr" << info.id()
 		     << "\" sep_orientation=\"0.000000\" "

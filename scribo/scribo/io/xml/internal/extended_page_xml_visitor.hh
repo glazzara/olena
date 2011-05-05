@@ -179,9 +179,9 @@ namespace scribo
 	      break;
 	    }
 
-	    case component::LineSeparator:
+	    case component::VerticalLineSeparator:
 	    {
-	      output << "    <separator_region id=\"sr" << info.id()
+	      output << "    <vertical_separator_region id=\"vlsr" << info.id()
 		     << "\" sep_orientation=\"0.000000\" "
 		     << " sep_colour=\"Black\" "
 		     << " sep_bgcolour=\"White\""
@@ -193,7 +193,25 @@ namespace scribo
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </separator_region>" << std::endl;
+	      output << "    </vertical_separator_region>" << std::endl;
+	      break;
+	    }
+
+	    case component::HorizontalLineSeparator:
+	    {
+	      output << "    <horizontal_separator_region id=\"hlsr" << info.id()
+		     << "\" sep_orientation=\"0.000000\" "
+		     << " sep_colour=\"Black\" "
+		     << " sep_bgcolour=\"White\""
+		     << " x_min=\"" << info.bbox().pmin().col() << "\""
+		     << " y_min=\"" << info.bbox().pmin().row() << "\""
+		     << " x_max=\"" << info.bbox().pmax().col() << "\""
+		     << " y_max=\"" << info.bbox().pmax().row() << "\""
+		     << ">" << std::endl;
+
+	      internal::print_box_coords(output, info.bbox(), "      ");
+
+	      output << "    </horizontal_separator_region>" << std::endl;
 	      break;
 	    }
 

@@ -101,7 +101,7 @@ void ImageCrop::from_base64()
   child = child.firstChild();
   while (!child.isNull())
     {
-      if (child.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
+      if (child.toElement().tagName().contains(QRegExp("(image|graphic|chart|horizontal_separator|vertical_separator|table)_region")))
 	{
 	  QDomNode node = child.firstChild();
 	  QString id = child.toElement().attribute("id", "none");
@@ -208,7 +208,7 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
       while(!line.contains("</pcGts>"))
 	{
 	  stream2 << "\n" << line;
-	  if (line.contains(QRegExp("<(image|graphic|chart|separator|table)_region")))
+	  if (line.contains(QRegExp("<(image|graphic|chart|horizontal_separator|vertical_separator|table)_region")))
 	    {
 	      stream2 << "\n" << "      <container>\n";
 	      stream2 << "        <mime>png</mime>\n";
@@ -268,7 +268,7 @@ bool ImageCrop::crop_regions(bool temp)
 
       while (!region.isNull())
 	{
-	  if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
+	  if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|vertical_separator|horizontal_separator|table)_region")))
 	    {
 	      found_regions = true;
 
@@ -338,6 +338,7 @@ bool ImageCrop::crop_regions(bool temp)
 	      else
 		io::magick::save(crop, opacity_mask, QString(output_dir_ + id + ".png").toStdString());
 	    }
+
 	  region = region.nextSibling();
 	}
 

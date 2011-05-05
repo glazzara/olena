@@ -1,5 +1,23 @@
 2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Explicitly set vertical or horizontal attribute for separators in
+	XML output.
+
+	* demo/xml2doc/image_crop.cc,
+	* demo/xml2doc/templates/pdf/regions.xsl: Handle new XML tags.
+
+	* scribo/core/document.hh,
+	* scribo/core/tag/component.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/internal/non_text_img_visitor.hh,
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Update enum
+	declaration and handle new cases.
+
+2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Make use of opacity in PDF output.
 
 	* demo/xml2doc/image_crop.cc: Create opacity mask.

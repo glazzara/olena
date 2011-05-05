@@ -55,7 +55,8 @@ namespace scribo
     {
       Undefined = 0,
       Character,
-      LineSeparator,
+      VerticalLineSeparator,
+      HorizontalLineSeparator,
       WhitespaceSeparator,
       Noise,
       Punctuation,
@@ -117,8 +118,11 @@ namespace scribo
 	case Character:
 	  str = "Character";
 	  break;
-	case LineSeparator:
-	  str = "LineSeparator";
+	case HorizontalLineSeparator:
+	  str = "HorizontalLineSeparator";
+	  break;
+	case VerticalLineSeparator:
+	  str = "VerticalLineSeparator";
 	  break;
 	case WhitespaceSeparator:
 	  str = "WhitespaceSeparator";
@@ -143,8 +147,10 @@ namespace scribo
     {
       if (str == "Character")
 	return Character;
-      else if (str == "LineSeparator")
-	return LineSeparator;
+      else if (str == "HorizontalLineSeparator")
+	return HorizontalLineSeparator;
+      else if (str == "VerticalLineSeparator")
+	return VerticalLineSeparator;
       else if (str == "WhitespaceSeparator")
 	return WhitespaceSeparator;
       else if (str == "Noise")

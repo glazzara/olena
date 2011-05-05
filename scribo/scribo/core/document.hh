@@ -343,7 +343,7 @@ namespace scribo
     mln_value(L) ncomps;
     hline_seps_comps_ = primitive::extract::components(hline_seps,
 						       mln::c8(), ncomps,
-						       component::LineSeparator);
+						       component::HorizontalLineSeparator);
   }
 
 
@@ -390,7 +390,7 @@ namespace scribo
     mln_value(L) ncomps;
     vline_seps_comps_ = primitive::extract::components(vline_seps,
 						       mln::c8(), ncomps,
-						       component::LineSeparator);
+						       component::VerticalLineSeparator);
   }
 
 

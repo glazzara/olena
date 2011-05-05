@@ -8,7 +8,8 @@
 		       pcGts/page/graphic_region|
 		       pcGts/page/chart_region|
 		       pcGts/page/table_region|
-		       pcGts/page/separator_region">
+		       pcGts/page/vertical_separator_region|
+		       pcGts/page/horizontal_separator_region">
 
     <!-- ID of the region, used to display id.png -->
     <xsl:variable name="data">

@@ -132,7 +132,8 @@ namespace scribo
 	{
 	  switch (info.type())
 	  {
-	    case component::LineSeparator:
+	    case component::HorizontalLineSeparator:
+	    case component::VerticalLineSeparator:
 	    {
 	      mln::draw::box(output, info.bbox(), literal::cyan);
 	    }
