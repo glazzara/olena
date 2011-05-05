@@ -348,6 +348,8 @@ AC_CONFIG_FILES([
     scribo/tests/core/Makefile
     scribo/tests/estim/Makefile
     scribo/tests/filter/Makefile
+    scribo/tests/io/Makefile
+    scribo/tests/io/xml/Makefile
     scribo/tests/preprocessing/Makefile
     scribo/tests/primitive/Makefile
     scribo/tests/primitive/extract/Makefile
@@ -357,6 +359,7 @@ AC_CONFIG_FILES([
     scribo/tests/toolchain/Makefile
     scribo/tests/toolchain/nepomuk/Makefile
     scribo/tests/unit_test/Makefile
+    scribo/tests/util/Makefile
 ])
 
 # Flags for Scribo
