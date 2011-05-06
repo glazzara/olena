@@ -40,11 +40,15 @@ ImageCrop::ImageCrop(const QString& xml, const QString& img,
     image_(img),
     output_dir_(output)
 {
-  mln::io::magick::load(ima_, image_.toStdString());
+  if (!image_.isEmpty())
+    mln::io::magick::load(ima_, image_.toStdString());
 }
 
 ImageCrop::~ImageCrop()
 {
+  // Cleanup temporary files.
+  foreach (QString value, region_map_)
+    QFile::remove(value);
 }
 
 

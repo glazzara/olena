@@ -18,21 +18,11 @@
 
     <!-- Regions coordinates -->
     <xsl:variable name="y1">
-      <xsl:for-each select="coords/point">
-	<xsl:sort select="@y" order="ascending" data-type="number"/>
-	<xsl:if test="position() = 1">
-	  <xsl:value-of select="@y" />
-	</xsl:if>
-      </xsl:for-each>
+	  <xsl:value-of select="@y_min" />
     </xsl:variable>
 
     <xsl:variable name="x1">
-      <xsl:for-each select="coords/point">
-	<xsl:sort select="@x" order="ascending" data-type="number"/>
-	<xsl:if test="position() = 1">
-	  <xsl:value-of select="@x" />
-	</xsl:if>
-      </xsl:for-each>
+	  <xsl:value-of select="@x_min" />
     </xsl:variable>
     <!-- END OF regions coordinates -->
 

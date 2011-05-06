@@ -1,3 +1,14 @@
+2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Improve PDF output.
+
+	* demo/xml2doc/image_crop.cc: Cleanup temporary files.
+
+	* demo/xml2doc/templates/pdf/line.xsl: Use paragraph
+	information. Take color into account.
+
+	* demo/xml2doc/templates/pdf/regions.xsl: Fix image localization.
+
 2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
 	Add hexadecimal color conversion routines.
