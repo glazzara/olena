@@ -46,6 +46,9 @@
 # include <scribo/io/xml/internal/save_image_to_xml.hh>
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
+# include <scribo/io/xml/internal/compute_text_colour.hh>
+
+# include <scribo/util/color_to_hex.hh>
 
 namespace scribo
 {
@@ -103,6 +106,8 @@ namespace scribo
 	full_xml_visitor::full_xml_visitor(std::ofstream& out)
 	  : output(out)
 	{
+	  output << std::setiosflags(std::ios::fixed);
+	  output.precision(26);
 	}
 
 
@@ -448,6 +453,7 @@ namespace scribo
 		   << "\" txt_text_type=\"" << lines(fid).type()
 		   << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
 		   << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
+		   << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(parset(p).color())
 		   << "\" kerning=\"" << lines(fid).char_space();
 
 	    // EXTENSIONS - Not officially supported
@@ -457,7 +463,7 @@ namespace scribo
 		   << "\" d_height=\"" << lines(fid).d_height()
 		   << "\" a_height=\"" << lines(fid).a_height()
 		   << "\" char_width=\"" << lines(fid).char_width()
-		   << "\" color=\"" << parset(p).color()
+		   << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
 		   << "\" color_reliability=\"" << parset(p).color_reliability();
 	    // End of EXTENSIONS
 	    output << "\">"
@@ -493,7 +499,7 @@ namespace scribo
 	  output << "id=\"" << line.id()
 		 << "\" boldness=\"" << line.boldness()
 		 << "\" boldness_reliability=\"" << line.boldness_reliability()
-		 << "\" color=\"" << line.color()
+		 << "\" color=\"" << scribo::util::color_to_hex(line.color())
 		 << "\" color_reliability=\"" << line.color_reliability()
 		 << "\" txt_orientation=\"" << line.orientation()
 		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
@@ -501,6 +507,7 @@ namespace scribo
 		 << "\" txt_text_type=\"" << line.type()
 		 << "\" txt_reverse_video=\"" << (line.reverse_video() ? "true" : "false")
 		 << "\" txt_indented=\"" << (line.indented() ? "true" : "false")
+		 << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(line.color())
 		 << "\" kerning=\"" << line.char_space()
 		 << "\" baseline=\"" << line.baseline()
 		 << "\" meanline=\"" << line.meanline()

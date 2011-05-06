@@ -50,7 +50,9 @@
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_image_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
+# include <scribo/io/xml/internal/compute_text_colour.hh>
 
+# include <scribo/util/color_to_hex.hh>
 
 namespace scribo
 {
@@ -122,7 +124,8 @@ namespace scribo
 	  if (doc.has_elements())
 	  {
 	    // Prepare element edges
-	    elt_edge = morpho::elementary::gradient_internal(doc.elements().labeled_image(), c4());
+	    elt_edge = morpho::elementary::gradient_internal(
+	      extend(doc.elements().labeled_image(), 0), c4()).unmorph_();
 
 	    doc.elements().accept(*this);
 	  }
@@ -264,11 +267,12 @@ namespace scribo
 		   << "\" txt_text_type=\"" << lines(fid).type()
 		   << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
 		   << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
+		   << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(parset(p).color())
 		   << "\" kerning=\"" << lines(fid).char_space();
 
 	    // EXTENSIONS - Not officially supported
 	    // FIXME: add boldness?
-	    output << "\" color=\"" << parset(p).color()
+	    output << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
 		   << "\" color_reliability=\"" << parset(p).color_reliability()
 		   << "\" baseline=\"" << lines(fid).baseline()
 		   << "\" meanline=\"" << lines(fid).meanline()
@@ -309,7 +313,7 @@ namespace scribo
 	  output << "id=\"" << line.id()
 		 << "\" boldness=\"" << line.boldness()
 		 << "\" boldness_reliability=\"" << line.boldness_reliability()
-		 << "\" color=\"" << line.color()
+		 << "\" color=\"" << scribo::util::color_to_hex(line.color())
 		 << "\" color_reliability=\"" << line.color_reliability()
 		 << "\" txt_orientation=\"" << line.orientation()
 		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
@@ -317,6 +321,7 @@ namespace scribo
 		 << "\" txt_text_type=\"" << line.type()
 		 << "\" txt_reverse_video=\"" << (line.reverse_video() ? "true" : "false")
 		 << "\" txt_indented=\"" << (line.indented() ? "true" : "false")
+		 << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(line.color())
 		 << "\" kerning=\"" << line.char_space()
 		 << "\" baseline=\"" << line.baseline()
 		 << "\" meanline=\"" << line.meanline()

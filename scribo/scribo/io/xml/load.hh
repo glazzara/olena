@@ -50,6 +50,8 @@
 # include <scribo/core/line_set.hh>
 # include <scribo/core/line_info.hh>
 
+# include <scribo/util/hex_to_color.hh>
+
 namespace scribo
 {
 
@@ -153,24 +155,6 @@ namespace scribo
 	};
 
 
-	namespace internal
-	{
-
-	  value::rgb8 parse_color(const QString& color_str)
-	  {
-	    QString color = color_str;
-	    color.chop(1);
-	    color = color.remove(0, 1);
-	    QStringList rgb = color.split(',');
-
-	    return
-	      value::rgb8(rgb.at(0).toInt(),
-			  rgb.at(1).toInt(),
-			  rgb.at(2).toInt());
-	  }
-
-	}
-
 	template <typename L>
 	class xml_handler : public QXmlDefaultHandler
 	{
@@ -228,7 +212,7 @@ namespace scribo
 		{
 		  component_features_data comp_features;
 		  comp_features.valid = true;
-		  comp_features.color = internal::parse_color(atts.value("color"));
+		  comp_features.color = scribo::util::hex_to_color(atts.value("color"));
 		  comp_features.boldness = atts.value("boldness").toFloat();
 
 		  comp_set_data->infos_.last().update_features(comp_features);
@@ -277,7 +261,7 @@ namespace scribo
 		// qDebug() << "TextRegion";
 
 		current_paragraph = paragraph_info<L>(llinks);
-		current_paragraph.set_color_(internal::parse_color(atts.value("color")));
+		current_paragraph.set_color_(scribo::util::hex_to_color(atts.value("color")));
 		current_paragraph.set_color_reliability_(atts.value("color_reliability").toFloat());
 	      }
 	      break;
@@ -324,7 +308,7 @@ namespace scribo
 
 		line_data->boldness_ = atts.value("boldness").toFloat();
 		line_data->boldness_reliability_ = atts.value("boldness_reliability").toFloat();
-		line_data->color_ = internal::parse_color(atts.value("color"));
+		line_data->color_ = scribo::util::hex_to_color(atts.value("color"));
 
 		line_data->color_reliability_ = atts.value("color_reliability").toFloat();
 

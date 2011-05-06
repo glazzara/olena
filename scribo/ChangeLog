@@ -1,8 +1,18 @@
-2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Load and save color information.
+
+	* scribo/io/xml/internal/compute_text_colour.hh: New.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/load.hh: Load and save color as hex format.
+
+2011-05-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* scribo/text/paragraphs.hh: Remove unused argument.
 
-2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix namespace ambiguities.
 
@@ -12,7 +22,7 @@
 	* scribo/convert/to_base64.hh,
 	* scribo/preprocessing/denoise_bg.hh: Here.
 
-2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Improve PDF output.
 
@@ -23,7 +33,7 @@
 
 	* demo/xml2doc/templates/pdf/regions.xsl: Fix image localization.
 
-2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add hexadecimal color conversion routines.
 
@@ -35,7 +45,7 @@
 	* tests/util/color_to_hex.cc,
 	* tests/util/hex_to_color.cc: New.
 
-2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Explicitly set vertical or horizontal attribute for separators in
 	XML output.
@@ -53,7 +63,7 @@
 	* scribo/io/xml/internal/page_xml_visitor.hh: Update enum
 	declaration and handle new cases.
 
-2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make use of opacity in PDF output.
 
@@ -62,7 +72,7 @@
 	* scribo/io/xml/internal/extended_page_xml_visitor.hh: Add bbox
 	information in region tag.
 
-2011-05-04  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-04  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes in Scribo.
 
@@ -81,7 +91,7 @@
 
 	* src/binarization/sauvola_ms_fg.cc: Fix argument use.
 
-2011-05-04  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+2011-05-04  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make paragraph extraction work with this branch.
 
