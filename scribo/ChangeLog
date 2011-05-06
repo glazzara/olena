@@ -1,5 +1,9 @@
 2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	* scribo/text/paragraphs.hh: Remove unused argument.
+
+2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Fix namespace ambiguities.
 
 	* scribo/binarization/internal/first_pass_functor.hh,

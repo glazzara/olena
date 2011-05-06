@@ -64,8 +64,7 @@ namespace scribo
     void paragraph_links(const line_links<L>& left,
 			 const line_links<L>& right,
 			 line_links<L>& output,
-			 const line_set<L>& lines,
-			 const image2d<bool>& input)
+			 const line_set<L>& lines)
     {
       output = left.duplicate();
 
@@ -1039,7 +1038,7 @@ namespace scribo
     // std::cout << "Finalizing merging" << std::endl;
     // finalize_line_merging(left, right, lines);
     std::cout << "Extracting paragraphs" << std::endl;
-    filter::paragraph_links(left, right, output, lines, input);
+    filter::paragraph_links(left, right, output, lines);
 
     paragraph_set<L> par_set = make::paragraph(output);
     return par_set;
