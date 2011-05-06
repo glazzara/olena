@@ -1,5 +1,17 @@
 2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Add hexadecimal color conversion routines.
+
+	* tests/Makefile.am: Add subdir.
+
+	* scribo/util/color_to_hex.hh,
+	* scribo/util/hex_to_color.hh,
+	* tests/util/Makefile.am,
+	* tests/util/color_to_hex.cc,
+	* tests/util/hex_to_color.cc: New.
+
+2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Explicitly set vertical or horizontal attribute for separators in
 	XML output.
 

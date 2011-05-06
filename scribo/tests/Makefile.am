@@ -43,7 +43,8 @@ SUBDIRS = 		\
   table 		\
   text 			\
   toolchain 		\
-  unit_test
+  unit_test		\
+  util
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk
