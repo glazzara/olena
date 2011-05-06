@@ -739,9 +739,12 @@ namespace scribo
 		  // is horizontally close to the line's bbox and
 		  // vertically aligned
 		  // Obviously no separators between the two lines
-		  if (dx < l_ted_cw && dy < 0
-		    && 	not (l_info.holder().components().has_separators()
-		  	     && between_separators(l_info, mc_info)))
+		  if ((l_info.card() <= 5 ||
+		       (std::abs(l_info.baseline() - mc_info.baseline()) < 5
+			&& std::abs(l_info.meanline() - mc_info.meanline()) < 5))
+		      && dx < l_ted_cw && dy < 0
+		      && not (l_info.holder().components().has_separators()
+			      && between_separators(l_info, mc_info)))
 		    l = do_union(lines, l, mc,  parent);
 		  // }
 

@@ -269,7 +269,7 @@ private:
       const T left_distance = data_[i] - data_[i - 1];
       const T right_distance = data_[i + 1] - data_[i];
 
-      if (not ((left_distance <= 2 || left_distance < right_distance)
+      if (not ((left_distance <= 1 || left_distance < right_distance)
 	       && left_distance <= std))
 	++cluster_index;
 
