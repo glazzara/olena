@@ -1,5 +1,15 @@
 2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Fix namespace ambiguities.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/convert/to_base64.hh,
+	* scribo/preprocessing/denoise_bg.hh: Here.
+
+2011-05-06  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Improve PDF output.
 
 	* demo/xml2doc/image_crop.cc: Cleanup temporary files.

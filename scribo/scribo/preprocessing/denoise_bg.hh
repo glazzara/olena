@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -131,7 +132,7 @@ namespace scribo
       unsigned nlabels;
       image2d<unsigned> lbl = labeling::background(input, nbh, nlabels);
 
-      util::array<unsigned>
+      mln::util::array<unsigned>
 	result = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
       mln::fun::i2v::array<bool> f(nlabels + 1, false);

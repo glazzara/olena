@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -138,7 +138,7 @@ namespace scribo
 			  unsigned lambda_min, unsigned lambda_max,
 			  unsigned s,
 			  unsigned q, unsigned i, unsigned w,
-			  const image2d<util::couple<double,double> >& integral_sum_sum_2,
+			  const image2d<mln::util::couple<double,double> >& integral_sum_sum_2,
 			  double K)
       {
 	typedef image2d<int_u8> I;
@@ -188,7 +188,7 @@ namespace scribo
 
 	// 2nd pass
 	{
-	  util::array<mln_value_(I) *> ptr(ratio);
+	  mln::util::array<mln_value_(I) *> ptr(ratio);
 	  unsigned nrows = geom::nrows(e_2);
 
 	  mln_box_runend_piter_(I) sp(sub.domain()); // Backward.
@@ -272,7 +272,7 @@ namespace scribo
       template <typename I, typename J, typename K>
       mln_ch_value(I, bool)
       multi_scale_binarization(const I& in, const J& e2,
-			       const util::array<K>& t_ima,
+			       const mln::util::array<K>& t_ima,
 			       unsigned s)
       {
 	mln_ch_value(I,bool) out;
@@ -758,10 +758,10 @@ namespace scribo
       // Compute domains of subsampled images and make sure they can be
       // divided by 2.
       template <typename I>
-      util::array<util::couple<mln_domain(I), unsigned> >
+      mln::util::array<mln::util::couple<mln_domain(I), unsigned> >
       compute_sub_domains(const I& ima, unsigned n_scales, unsigned s)
       {
-	util::array<util::couple<unsigned, unsigned> > n(n_scales + 2);
+	mln::util::array<mln::util::couple<unsigned, unsigned> > n(n_scales + 2);
 
 	n(1) = mln::make::couple(ima.nrows(), ima.ncols());
 	n(2) = mln::make::couple(sub(n(1).first(), s),
@@ -771,7 +771,7 @@ namespace scribo
 				   sub(n(i - 1).second(), 2));
 
 
-	util::array<util::couple<mln_domain(I), unsigned> > out(n.size());
+	mln::util::array<mln::util::couple<mln_domain(I), unsigned> > out(n.size());
 	out(0) = mln::make::couple(mln::make::box2d(1,1), 1u);
 	out(1) = mln::make::couple(mln::make::box2d(ima.nrows(),
 						    ima.ncols()), 2u);
@@ -833,7 +833,7 @@ namespace scribo
 	  unsigned lambda_max_2 = lambda_min_2 * q;
 
 
-	  util::array<I> t_ima;
+	  mln::util::array<I> t_ima;
 
 	  // Make sure t_ima indexes start from 2.
 	  {
@@ -842,7 +842,7 @@ namespace scribo
 	      t_ima.append(dummy);
 	  }
 
-	  util::array<I> sub_ima;
+	  mln::util::array<I> sub_ima;
 
 	  // Make sure sub_ima indexes start from 2.
 	  {
@@ -851,7 +851,7 @@ namespace scribo
 	    sub_ima.append(dummy);
 	  }
 
-	  util::array<util::couple<box2d, unsigned> >
+	  mln::util::array<mln::util::couple<box2d, unsigned> >
 	    sub_domains = internal::compute_sub_domains(input_1, nb_subscale, s);
 
 	  border::adjust(input_1, sub_domains(1).second());
@@ -859,7 +859,7 @@ namespace scribo
 
 
 	  // Resize input and compute integral images.
-	  typedef image2d<util::couple<double,double> > integral_t;
+	  typedef image2d<mln::util::couple<double,double> > integral_t;
 	  integral_t integral_sum_sum_2;
 
 	  // Subsampling from scale 1 to 2.

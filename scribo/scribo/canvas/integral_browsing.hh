@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +40,7 @@ namespace scribo
 
 
     template <typename F>
-    void integral_browsing(const image2d<util::couple<double, double> >& ima,
+    void integral_browsing(const image2d<mln::util::couple<double, double> >& ima,
 			   unsigned step,
 			   unsigned w, unsigned h,
 			   F& functor);
@@ -75,13 +75,13 @@ namespace scribo
 
 
     template <typename F>
-    void integral_browsing(const image2d<util::couple<double, double> >& ima,
+    void integral_browsing(const image2d<mln::util::couple<double, double> >& ima,
 			   unsigned step,
 			   unsigned w, unsigned h,
 			   unsigned s,
 			   F& functor)
     {
-      typedef util::couple<double, double> V;
+      typedef mln::util::couple<double, double> V;
       typedef const V* Ptr;
       Ptr a_ima, b_ima, c_ima, d_ima;
 

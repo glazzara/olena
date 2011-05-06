@@ -81,7 +81,7 @@ namespace scribo
 
     template <typename I>
     void
-    to_base64(const Image<I>& input, util::array<unsigned char>& output);
+    to_base64(const Image<I>& input, mln::util::array<unsigned char>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -116,7 +116,7 @@ namespace scribo
 
     template <typename I>
     void
-    to_base64(const Image<I>& input_, util::array<unsigned char>& output)
+    to_base64(const Image<I>& input_, mln::util::array<unsigned char>& output)
     {
       trace::entering("scribo::convert::to_base64");
 
