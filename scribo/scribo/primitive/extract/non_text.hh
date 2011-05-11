@@ -329,9 +329,9 @@ namespace scribo
 
 	// Debug
 	{
-	  debug::logger().log_image(debug::Special,//debug::AuxiliaryResults,
+	  debug::logger().log_image(debug::AuxiliaryResults,
 				    txt, "txt_components");
-	  debug::logger().log_image(debug::Special,//debug::AuxiliaryResults,
+	  debug::logger().log_image(debug::AuxiliaryResults,
 				    txtblocks, "txt_blocks");
 	}
 

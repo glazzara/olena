@@ -1,3 +1,14 @@
+2011-05-11  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* scribo/primitive/extract/lines_pattern.hh: Fix missing include.
+
+	* scribo/primitive/extract/non_text.hh: Change debug level for
+	debug image.
+
+	* src/primitive/extract/alignments.cc: Improve comment.
+
 2011-05-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Load and save color information.

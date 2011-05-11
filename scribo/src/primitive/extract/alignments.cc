@@ -30,6 +30,7 @@
 
 #include <scribo/text/extract_lines_wo_merge.hh>
 #include <scribo/primitive/extract/alignments.hh>
+#include <scribo/primitive/remove/separators.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =

@@ -195,9 +195,10 @@ namespace scribo
 		continue;
 	      }
 
-	      // If the background parts of the pattern have exactly or
-	      // less than 95% of background pixels, the current pixel is
-	      // considered as part of the background.
+	      // If the background parts of the pattern have exactly
+	      // or less than 95% of background pixels each, the
+	      // current pixel is considered as part of the
+	      // background.
 	      is_foreground = true;
 	      for (unsigned i = 0; i < q_arr.size(); ++i)
 		if ((length - *(tmp_ptr + q_arr[i])) < miss_ratio)
