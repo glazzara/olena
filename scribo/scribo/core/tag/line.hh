@@ -158,8 +158,7 @@ namespace scribo
 
 
     inline
-    std::ostream&
-    operator<<(std::ostream& ostr, const Type& type)
+    std::string type2str(const Type& type)
     {
       std::string str;
       switch(type)
@@ -205,8 +204,16 @@ namespace scribo
 	  break;
       }
 
-      return ostr << str;
+      return str;
     }
+
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const Type& type)
+    {
+      return ostr << type2str(type);
+    }
+
 
     inline
     Type str2type(const std::string& str)

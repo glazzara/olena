@@ -48,7 +48,7 @@ namespace scribo
       {
 
 	const char *
-	compute_txt_text_colour(const value::rgb8& v);
+	compute_text_colour(const value::rgb8& v);
 
 
 	struct color_t
@@ -63,23 +63,23 @@ namespace scribo
 
 
 	const char *
-	compute_txt_text_colour(const value::rgb8& v)
+	compute_text_colour(const value::rgb8& v)
 	{
 	  static color_t colors[] = {
-	    { mln::make::vec(0, 0, 0), "Black", 0 },
-	    { mln::make::vec(255, 0, 0), "Red", 0 },
-	    { mln::make::vec(255, 255, 255), "White", 0 },
-	    { mln::make::vec(0, 255, 0), "Green", 0 },
-	    { mln::make::vec(0, 0, 255), "Blue", 0 },
-	    { mln::make::vec(255, 255, 0), "Yellow", 0 },
-	    { mln::make::vec(255, 165, 0), "Orange", 0 },
-	    { mln::make::vec(255, 192, 203), "Pink", 0 },
-	    { mln::make::vec(192, 192, 192), "Grey", 0 },
-	    { mln::make::vec(64, 224, 208), "Turquoise", 0 },
-	    { mln::make::vec(75, 0, 130), "Indigo", 0 },
-	    { mln::make::vec(238, 130, 238), "Violet", 0 },
-	    { mln::make::vec(0, 255, 255), "Cyan", 0 },
-	    { mln::make::vec(255, 0, 255), "Magenta", 0 },
+	    { mln::make::vec(0, 0, 0), "black", 0 },
+	    { mln::make::vec(255, 0, 0), "red", 0 },
+	    { mln::make::vec(255, 255, 255), "white", 0 },
+	    { mln::make::vec(0, 255, 0), "green", 0 },
+	    { mln::make::vec(0, 0, 255), "blue", 0 },
+	    { mln::make::vec(255, 255, 0), "yellow", 0 },
+	    { mln::make::vec(255, 165, 0), "orange", 0 },
+	    { mln::make::vec(255, 192, 203), "pink", 0 },
+	    { mln::make::vec(192, 192, 192), "grey", 0 },
+	    { mln::make::vec(64, 224, 208), "turquoise", 0 },
+	    { mln::make::vec(75, 0, 130), "indigo", 0 },
+	    { mln::make::vec(238, 130, 238), "violet", 0 },
+	    { mln::make::vec(0, 255, 255), "cyan", 0 },
+	    { mln::make::vec(255, 0, 255), "magenta", 0 },
 	    { mln::make::vec(0, 0, 0), 0, 0 } // Invalid
 	  };
 

@@ -1,3 +1,19 @@
+2011-05-12  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Update support for PAGE XML format.
+
+	* scribo/core/tag/line.hh: Add operator<<.
+
+	* scribo/io/xml/internal/compute_text_colour.hh: Update color
+	names.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/io/xml/internal/print_box_coords.hh,
+	* scribo/io/xml/internal/print_page_preambule.hh: Update in order
+	to produce PAGE compatible XML files.
+
 2011-05-11  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
 	Small fixes in Scribo.

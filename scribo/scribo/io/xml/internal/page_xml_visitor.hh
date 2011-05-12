@@ -37,6 +37,7 @@
 
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
+# include <scribo/io/xml/internal/compute_text_colour.hh>
 
 
 namespace scribo
@@ -56,12 +57,11 @@ namespace scribo
 	  We use a XML Schema part of the PAGE (Page Analysis and Ground
 	  truth Elements) image representation framework.
 
-	  This schema was used in the Page Segmentation COMPetition
-	  (PSCOMP) for ICDAR 2009.
+	  This schema was used in the Historical Document Layout
+	  Analysis COMPetition (HDLAC) for ICDAR 2011.
 
 	  Its XSD file is located here:
-	  http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd
-
+	  http://schema.primaresearch.org/PAGE/gts/pagecontent/2010-03-19/pagecontent.xsd
 	*/
 	class page_xml_visitor : public doc_serializer<page_xml_visitor>
 	{
@@ -83,6 +83,7 @@ namespace scribo
 
 	private: // Attributes
 	  std::ofstream& output;
+	  mutable int base_vertical_line_id_;
 	};
 
 
@@ -104,6 +105,12 @@ namespace scribo
 	void
 	page_xml_visitor::visit(const document<L>& doc) const
 	{
+	  // Make sure there are no duplicate ids for line separators.
+	  // Vertical and horizontal lines are indexed separately from
+	  // 0, so vertical and horizontal lines with the same id
+	  // exist.
+	  base_vertical_line_id_ = doc.hline_seps_comps().nelements();
+
 	  // Preambule
 	  print_PAGE_preambule(output, doc, true);
 
@@ -121,8 +128,8 @@ namespace scribo
 	  if (doc.has_hline_seps())
 	    doc.hline_seps_comps().accept(*this);
 
-	  output << "  </page>" << std::endl;
-	  output << "</pcGts>" << std::endl;
+	  output << "  </Page>" << std::endl;
+	  output << "</PcGts>" << std::endl;
 	}
 
 
@@ -147,16 +154,26 @@ namespace scribo
 	  switch (info.type())
 	  {
 	    case component::VerticalLineSeparator:
-	    case component::HorizontalLineSeparator:
 	    {
-	      output << "    <separator_region id=\"sr" << info.id()
-		     << "\" sep_orientation=\"0.000000\" "
-		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\">" << std::endl;
+	      output << "    <SeparatorRegion id=\"sr" << info.id() + base_vertical_line_id_
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"black\">" << std::endl;
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </separator_region>" << std::endl;
+	      output << "    </SeparatorRegion>" << std::endl;
+	      break;
+	    }
+
+	    case component::HorizontalLineSeparator:
+	    {
+	      output << "    <SeparatorRegion id=\"sr" << info.id()
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"black\">" << std::endl;
+
+	      internal::print_box_coords(output, info.bbox(), "      ");
+
+	      output << "    </SeparatorRegion>" << std::endl;
 	      break;
 	    }
 
@@ -164,15 +181,15 @@ namespace scribo
 	    default:
 	    case component::Image:
 	    {
-	      output << "    <image_region id=\"ir" << info.id()
-		     << "\" img_colour_type=\"24_Bit_Colour\""
-		     << " img_orientation=\"0.000000\" "
-		     << " img_emb_text=\"No\" "
-		     << " img_bgcolour=\"White\">" << std::endl;
+	      output << "    <ImageRegion id=\"ir" << info.id()
+		     << "\" colourDepth=\"colour\""
+		     << " orientation=\"0.000000\" "
+		     << " embText=\"false\" "
+		     << " bgColour=\"white\">" << std::endl;
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </image_region>" << std::endl;
+	      output << "    </ImageRegion>" << std::endl;
 	      break;
 	    }
 	  }
@@ -194,20 +211,30 @@ namespace scribo
 	    // FIXME: compute that information on the whole paragraph
 	    // and use them here.
 	    line_id_t fid = line_ids(0);
-	    output << "    <text_region id=\"" << p
-		   << "\" txt_orientation=\"" << lines(fid).orientation()
-		   << "\" txt_reading_orientation=\"" << lines(fid).reading_orientation()
-		   << "\" txt_reading_direction=\"" << lines(fid).reading_direction()
-		   << "\" txt_text_type=\"" << lines(fid).type()
-		   << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		   << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
+	    output << "    <TextRegion id=\"r" << p
+		   << "\" orientation=\"" << lines(fid).orientation()
+		   << "\" readingOrientation=\"" << lines(fid).reading_orientation()
+		   << "\" readingDirection=\"" << lines(fid).reading_direction()
+		   << "\" type=\"" << ((lines(fid).type() == line::Text) ? "paragraph" : line::type2str(lines(fid).type()))
+		   << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		   << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
 		   << "\" kerning=\"" << lines(fid).char_space()
+		   << "\" textColour=\"" << compute_text_colour(lines(fid).color())
+//		   << "\" bgColour=\"" << compute_text_color(lines(fid).bgcolor())
+//		   << "\" fontSize=\"" << compute_text_color(lines(fid).x_height())
+//		   << "\" leading=\"" << compute_text_color(lines(fid).leading())
 		   << "\">"
 		   << std::endl;
 
+	    // Add support for text recognition
+	    // <TextEquiv>
+	    //    <PlainText></PlainText>
+	    //    <Unicode></Unicode>
+	    //    </TextEquiv>
+
 	    internal::print_box_coords(output, parset(p).bbox(), "      ");
 
-	    output << "    </text_region>" << std::endl;
+	    output << "    </TextRegion>" << std::endl;
 	  }
 	}
 

@@ -453,7 +453,7 @@ namespace scribo
 		   << "\" txt_text_type=\"" << lines(fid).type()
 		   << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
 		   << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
-		   << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(parset(p).color())
+		   << "\" txt_text_colour=\"" << internal::compute_text_colour(parset(p).color())
 		   << "\" kerning=\"" << lines(fid).char_space();
 
 	    // EXTENSIONS - Not officially supported
@@ -507,7 +507,7 @@ namespace scribo
 		 << "\" txt_text_type=\"" << line.type()
 		 << "\" txt_reverse_video=\"" << (line.reverse_video() ? "true" : "false")
 		 << "\" txt_indented=\"" << (line.indented() ? "true" : "false")
-		 << "\" txt_text_colour=\"" << internal::compute_txt_text_colour(line.color())
+		 << "\" txt_text_colour=\"" << internal::compute_text_colour(line.color())
 		 << "\" kerning=\"" << line.char_space()
 		 << "\" baseline=\"" << line.baseline()
 		 << "\" meanline=\"" << line.meanline()

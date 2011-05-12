@@ -64,20 +64,20 @@ namespace scribo
 	{
 	  std::string sc = space;
 	  std::string sp = sc + "  ";
-	  ostr << sc << "<coords>" << std::endl
-	       << sp << "<point x=\"" << b.pmin().col()
+	  ostr << sc << "<Coords>" << std::endl
+	       << sp << "<Point x=\"" << b.pmin().col()
 	       << "\" y=\"" << b.pmin().row() << "\"/>"
 	       << std::endl
-	       << sp << "<point x=\"" << b.pmax().col()
+	       << sp << "<Point x=\"" << b.pmax().col()
 	       << "\" y=\"" << b.pmin().row() << "\"/>"
 	       << std::endl
-	       << sp << "<point x=\"" << b.pmax().col()
+	       << sp << "<Point x=\"" << b.pmax().col()
 	       << "\" y=\"" << b.pmax().row() << "\"/>"
 	       << std::endl
-	       << sp << "<point x=\"" << b.pmin().col()
+	       << sp << "<Point x=\"" << b.pmin().col()
 	       << "\" y=\"" << b.pmax().row() << "\"/>"
 	       << std::endl
-	       << sc << "</coords>" << std::endl;
+	       << sc << "</Coords>" << std::endl;
 
 	}
 
