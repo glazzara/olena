@@ -1,3 +1,8 @@
+2011-05-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/dicom/load.hh: Fix invalid data while loading large
+	image.
+
 2010-12-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Ensure non implemented reconstructions on sets abort at run time.

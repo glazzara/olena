@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -139,14 +140,21 @@ namespace mln
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
 	algebra::vec<mln_site_(I)::dim, unsigned int> vdims;
-	for (int i = 0; i < ndims; ++i)
+	int j = ndims - 1;
+	for (int i = 0; i < ndims; ++i, --j)
 	{
 	  vmin[i] = 0;
 	  vmax[i] = dims[i] - 1;
 	  if (i == 0)
-	    vdims[i] = 1;
+	    vdims[j] = 1;
 	  else
-	    vdims[i] = dims[i - 1] * vdims[i - 1];
+	    vdims[j] = dims[i - 1] * vdims[j + 1];
+	}
+
+	if (ndims > 1)
+	{
+	  std::swap(vmin[0], vmin[1]);
+	  std::swap(vmax[0], vmax[1]);
 	}
 
 	mln_site(I) pmin(vmin);
@@ -155,25 +163,23 @@ namespace mln
 	initialize(ima, result);
 	mln_piter(I) p(ima.domain());
 	unsigned int index = 0;
+
 	for_all(p)
 	{
 	  index = 0;
 	  for (int i = 0; i < ndims; ++i)
 	  {
-	    index += p.to_site().to_vec()[i] * vdims[i];
+	    index += p[i] * vdims[i];
 	  }
 
-	  ima(p) = (unsigned char) dataBuffer[(index * bytes_allocated) * samples_per_pixel];
+	  mln_value(I) v = (unsigned char) dataBuffer[(index * bytes_allocated) * samples_per_pixel];
 	  // FIXME: RGB support, HighBit if HB == 1
-	  for (int j = 0; j < bytes_allocated; ++j)
+	  for (unsigned int j = 0; j < bytes_allocated; ++j)
 	  {
-	    ima(p) += ((unsigned char) dataBuffer[(index * bytes_allocated + j) * samples_per_pixel]) * 256 * j;
+	    v += ((unsigned char) dataBuffer[(index * bytes_allocated + j) * samples_per_pixel]) * 256 * j;
 	  }
-	  /*std::cout << "[ x = " << p.to_site().to_vec()[0]
-		    << " | y = " << p.to_site().to_vec()[1]
-		    << " | z = " << p.to_site().to_vec()[2]
-		    << " ] => " << ima(p)
-		    << std::endl;*/
+
+	  ima(p) = v;
 	}
 
 	delete(dataBuffer);
