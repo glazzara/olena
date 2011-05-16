@@ -19,6 +19,7 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
   objects_with_holes 				\
+  objects_on_border 				\
   object_links_bbox_h_ratio			\
   object_links_bbox_w_ratio			\
   object_links_bbox_overlap			\
@@ -36,6 +37,7 @@ check_PROGRAMS =				\
 
 
 objects_with_holes_SOURCES = objects_with_holes.cc
+objects_on_border_SOURCES = objects_on_border.cc
 object_links_bbox_h_ratio_SOURCES = object_links_bbox_h_ratio.cc
 object_links_bbox_w_ratio_SOURCES = object_links_bbox_w_ratio.cc
 object_links_bbox_overlap_SOURCES = object_links_bbox_overlap.cc

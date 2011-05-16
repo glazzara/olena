@@ -1,5 +1,19 @@
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Add new tests.
+
+	* tests/filter/Makefile.am,
+	* tests/util/Makefile.am: Add new targets.
+
+	* tests/filter/objects_on_border.cc,
+	* tests/util/component_outline.cc: New.
+
+	* tests/img/comp_on_borders.pbm,
+	* tests/img/multi_scale.png,
+	* tests/img/single_object.pbm: New test data.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	New routine to extract both thin and thick separators.
 
 	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
