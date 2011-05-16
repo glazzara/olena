@@ -1,5 +1,12 @@
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	New object filter.
+
+	* scribo/fun/v2b/objects_on_border_filter.hh,
+	* scribo/filter/objects_on_border.hh: New.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Various small fixes in Scribo.
 
 	* scribo/core/document.hh: Store binary image without separators.
