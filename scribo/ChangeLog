@@ -1,5 +1,22 @@
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Add holder information to component_info.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/internal/doc_serializer.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/draw_edges.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/internal/non_text_img_visitor.hh,
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/util/component_outline.hh: Add a template parameter to
+	component_info structure and update its use.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	New specific toolchain for historical documents.
 
 	* scribo/toolchain/content_in_hdoc.hh,

@@ -60,8 +60,9 @@ namespace scribo
 
         /*! \brief Draw component edges.
 	 */
+	template <typename L>
 	void
-	draw_edges(const component_info& info,
+	draw_edges(const component_info<L>& info,
 		   image2d<value::rgb8>& output, const value::rgb8& value,
 		   const image2d<scribo::def::lbl_type>& edges);
 
@@ -69,9 +70,9 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
+	template <typename L>
 	void
-	draw_edges(const component_info& info,
+	draw_edges(const component_info<L>& info,
 		   image2d<value::rgb8>& output, const value::rgb8& value,
 		   const image2d<scribo::def::lbl_type>& edges)
 	{

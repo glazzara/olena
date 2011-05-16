@@ -66,7 +66,8 @@ namespace scribo
 	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  void visit(const component_info& info) const;
+	  template <typename L>
+	  void visit(const component_info<L>& info) const;
 
 	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
@@ -129,9 +130,9 @@ namespace scribo
 
 	/// Component_info
 	//
-	inline
+	template <typename L>
 	void
-	full_img_visitor::visit(const component_info& info) const
+	full_img_visitor::visit(const component_info<L>& info) const
 	{
 	  switch (info.type())
 	  {

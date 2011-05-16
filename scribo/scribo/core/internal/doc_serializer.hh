@@ -65,7 +65,8 @@ namespace scribo
     template <typename L>
     void visit(const component_set<L>& comp_set) const;
 
-    void visit(const component_info& info) const;
+    template <typename L>
+    void visit(const component_info<L>& info) const;
 
     template <typename L>
     void visit(const paragraph_set<L>& parset) const;
@@ -113,8 +114,9 @@ namespace scribo
   }
 
   template <typename E>
+  template <typename L>
   void
-  doc_serializer<E>::visit(const component_info& info) const
+  doc_serializer<E>::visit(const component_info<L>& info) const
   {
   }
 

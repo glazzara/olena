@@ -35,6 +35,8 @@
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/convert/to_base64.hh>
 
+# include <scribo/util/component_outline.hh>
+
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 # include <scribo/io/xml/internal/compute_text_colour.hh>
@@ -76,7 +78,8 @@ namespace scribo
 	  template <typename L>
 	  void visit(const component_set<L>& comp_set) const;
 
-	  void visit(const component_info& info) const;
+	  template <typename L>
+	  void visit(const component_info<L>& info) const;
 
 	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
@@ -120,7 +123,9 @@ namespace scribo
 
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
+	  {
 	    doc.elements().accept(*this);
+	  }
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
@@ -147,10 +152,18 @@ namespace scribo
 
 	/// Component_info
 	//
-	inline
+	template <typename L>
 	void
-	page_xml_visitor::visit(const component_info& info) const
+	page_xml_visitor::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = util::component_outline(((lbl | info.bbox())
+					   | (pw::value(lbl) == pw::cst(id))),
+					  1);
+
 	  switch (info.type())
 	  {
 	    case component::VerticalLineSeparator:
@@ -159,7 +172,7 @@ namespace scribo
 		     << "\" orientation=\"0.000000\" "
 		     << " colour=\"black\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </SeparatorRegion>" << std::endl;
 	      break;
@@ -171,7 +184,7 @@ namespace scribo
 		     << "\" orientation=\"0.000000\" "
 		     << " colour=\"black\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </SeparatorRegion>" << std::endl;
 	      break;
@@ -187,7 +200,7 @@ namespace scribo
 		     << " embText=\"false\" "
 		     << " bgColour=\"white\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </ImageRegion>" << std::endl;
 	      break;
