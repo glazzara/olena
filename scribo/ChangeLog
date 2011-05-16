@@ -1,3 +1,11 @@
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	New specific toolchain for historical documents.
+
+	* scribo/toolchain/content_in_hdoc.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh,
+	* src/content_in_hdoc.cc: New.
+
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix use of skeleton_constrained.
