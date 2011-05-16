@@ -116,11 +116,15 @@ namespace scribo
     const mln::image2d<bool>& binary_image() const;
     void set_binary_image(const mln::image2d<bool>& binary_image);
 
+    const mln::image2d<bool>& binary_image_wo_seps() const;
+    void set_binary_image_wo_seps(const mln::image2d<bool>& binary_image_wo_seps);
+
 
   private:
     std::string filename_;
     mln::image2d<mln::value::rgb8> image_;
     mln::image2d<bool> binary_image_;
+    mln::image2d<bool> binary_image_wo_seps_;
 
     paragraph_set<L> parset_;
     component_set<L> elements_;
@@ -433,6 +437,23 @@ namespace scribo
   document<L>::set_binary_image(const mln::image2d<bool>& binary_image)
   {
     binary_image_ = binary_image;
+  }
+
+
+  template <typename L>
+  const mln::image2d<bool>&
+  document<L>::binary_image_wo_seps() const
+  {
+    return binary_image_wo_seps_;
+  }
+
+
+  template <typename L>
+  void
+  document<L>::set_binary_image_wo_seps(
+    const mln::image2d<bool>& binary_image_wo_seps)
+  {
+    binary_image_wo_seps_ = binary_image_wo_seps;
   }
 
 

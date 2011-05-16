@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -114,6 +114,24 @@ if HAVE_QT
 			      $(QT_LDFLAGS) \
 			      -lpthread
     content_in_doc_LDADD    = $(LDADD) \
+			      $(QT_LIBS)
+
+    utilexec_PROGRAMS	   += content_in_hdoc
+    content_in_hdoc_SOURCES  = content_in_hdoc.cc
+    content_in_hdoc_CPPFLAGS = $(AM_CPPFLAGS) \
+			      $(TESSERACT_CPPFLAGS) \
+			      $(TIFF_CPPFLAGS) \
+			      $(MAGICKXX_CPPFLAGS) \
+			      $(QT_CPPFLAGS) -DHAVE_QT
+    content_in_hdoc_CXXFLAGS = $(AM_CXXFLAGS) \
+		  	      $(QT_CXXFLAGS)
+    content_in_hdoc_LDFLAGS  = $(AM_LDFLAGS) \
+			      $(TESSERACT_LDFLAGS) \
+			      $(TIFF_LDFLAGS) \
+			      $(MAGICKXX_LDFLAGS) \
+			      $(QT_LDFLAGS) \
+			      -lpthread
+    content_in_hdoc_LDADD    = $(LDADD) \
 			      $(QT_LIBS)
 
 

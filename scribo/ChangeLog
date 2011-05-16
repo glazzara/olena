@@ -1,5 +1,29 @@
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	Various small fixes in Scribo.
+
+	* scribo/core/document.hh: Store binary image without separators.
+
+	* scribo/filter/object_links_bbox_overlap.hh: Fix use of
+	object_links structure.
+
+	* scribo/io/img/internal/debug_img_visitor.hh: Do not draw invalid
+	elements.
+
+	* scribo/make/text_components_image.hh: Add a precondition.
+
+	* scribo/primitive/extract/alignments.hh: Add debug guards.
+
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh: Fix structural
+	element used for dilation.
+
+	* scribo/text/merging.hh: Reindent comments.
+
+	* scribo/src/Makefile.am: Add content_in_hdoc target.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	Add holder information to component_info.
 
 	* scribo/core/component_info.hh,

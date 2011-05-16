@@ -78,13 +78,16 @@ namespace scribo
       mln_precondition(links.is_valid());
 
       const component_set<L>& components = links.components();
-      object_links<L> output(links);
+      object_links<L> output = links.duplicate();
 
-      for_all_comps(i, components)
-	if (components(i).is_valid() && links(i) && links(i) != i)
+      bool has_intersection;
+      mln_site(L) pmin, pmax;
+      float ratio_i, ratio_link_i;
+
+      for_all_links(i, links)
+	if (links.is_linked(i))
 	{
-	  bool has_intersection = true;
-	  mln_site(L) pmin, pmax;
+	  has_intersection = true;
 	  for (unsigned dim = 0; dim < mln_site_(L)::dim; ++dim)
 	  {
 	    pmin[dim] = math::max(components(i).bbox().pmin()[dim],
@@ -103,9 +106,9 @@ namespace scribo
 	    continue;
 
 	  mln_box(L) interbbox(pmin, pmax);
-	  float
-	    ratio_i = interbbox.nsites() /(float)components(i).bbox().nsites(),
-	    ratio_link_i = interbbox.nsites() /(float)components(links(i)).bbox().nsites();
+
+	  ratio_i = interbbox.nsites() /(float)components(i).bbox().nsites();
+	  ratio_link_i = interbbox.nsites() /(float)components(links(i)).bbox().nsites();
 
 	  if (ratio_i >= max_overlap_ratio
 	      || ratio_link_i >= max_overlap_ratio)

@@ -50,6 +50,7 @@
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/primitive/extract/components.hh>
 # include <scribo/filter/object_links_aligned.hh>
+# include <scribo/filter/object_links_bbox_overlap.hh>
 # include <scribo/filter/object_groups_small.hh>
 # include <scribo/preprocessing/denoise_fg.hh>
 # include <scribo/primitive/link/internal/link_single_dmax_ratio_aligned_delta_base.hh>
@@ -252,7 +253,9 @@ namespace scribo
 	    : super_(components, dmax_f, delta, delta_direction),
 	      bbox_ima_(bbox_ima), delta_ws_lookup_(delta_ws_lookup)
 	  {
+# ifndef SCRIBO_NDEBUG
 	    debug_ = data::convert(value::rgb8(), data::convert(bool(), bbox_ima));
+# endif // ! SCRIBO_NDEBUG
 	  }
 
 	  void compute_next_site_(P& p)
@@ -286,7 +289,9 @@ namespace scribo
 		for (; p.col() <= this->components_(nbh).bbox().pmax().col()
 		       && (bbox_ima_(p) == 0);)
 		{
+# ifndef SCRIBO_NDEBUG
 		  debug_(p) = literal::violet;
+# endif // ! SCRIBO_NDEBUG
 		  ++p.col();
 		}
 
@@ -304,7 +309,9 @@ namespace scribo
 		for (; p.col() <= this->components_(nbh).bbox().pmax().col()
 		       && (bbox_ima_(p) == 0);)
 		{
+# ifndef SCRIBO_NDEBUG
 		  debug_(p) = literal::violet;
+# endif // ! SCRIBO_NDEBUG
 		  ++p.col();
 		}
 
@@ -322,7 +329,9 @@ namespace scribo
 	  L bbox_ima_;
 	  unsigned delta_ws_lookup_;
 
+# ifndef SCRIBO_NDEBUG
 	  image2d<value::rgb8> debug_;
+# endif // ! SCRIBO_NDEBUG
 	};
 
 
@@ -346,7 +355,9 @@ namespace scribo
 	    : super_(components, dmax_f, delta, delta_direction),
 	      bbox_ima_(bbox_ima), delta_ws_lookup_(delta_ws_lookup)
 	  {
+# ifndef SCRIBO_NDEBUG
 	    debug_ = data::convert(value::rgb8(), data::convert(bool(), bbox_ima));
+# endif // ! SCRIBO_NDEBUG
 	  }
 
 	  void compute_next_site_(P& p)
@@ -381,7 +392,9 @@ namespace scribo
 		for (; p.col() > this->components_(nbh).bbox().pmin().col()
 		       && (bbox_ima_(p) == 0);)
 		{
+# ifndef SCRIBO_NDEBUG
 		  debug_(p) = literal::violet;
+# endif // ! SCRIBO_NDEBUG
 		  --p.col();
 		}
 
@@ -399,7 +412,9 @@ namespace scribo
 		for (; p.col() > this->components_(nbh).bbox().pmin().col()
 		       && (bbox_ima_(p) == 0);)
 		{
+# ifndef SCRIBO_NDEBUG
 		  debug_(p) = literal::violet;
+# endif // ! SCRIBO_NDEBUG
 		  --p.col();
 		}
 
@@ -417,7 +432,9 @@ namespace scribo
 	  L bbox_ima_;
 	  unsigned delta_ws_lookup_;
 
+# ifndef SCRIBO_NDEBUG
 	  image2d<value::rgb8> debug_;
+# endif // ! SCRIBO_NDEBUG
 	};
 
 
@@ -656,10 +673,12 @@ namespace scribo
 	    top_links = primitive::link::merge_double_link_closest_aligned(left, right,
 									   anchor::StrictTopCenter);
 
+	    // Remove links if component bboxes overlap too much.
+	    top_links = filter::object_links_bbox_overlap(top_links, 0.80f);
+
 	    // Remove groups with not enough links.
 	    top_groups = primitive::group::from_single_link(top_links);
 	    top_groups = filter::object_groups_small(top_groups, min_card);
-
 
 	    // Compute char_width and char_space statistics.
 	    //
@@ -888,6 +907,9 @@ namespace scribo
 	    // Merge links
 	    bot_links = primitive::link::merge_double_link_closest_aligned(left, right,
 									   anchor::StrictBottomCenter);
+
+	    // Remove links if component bboxes overlap too much.
+	    bot_links = filter::object_links_bbox_overlap(bot_links, 0.80f);
 
 	    // Remove groups with not enough links.
 	    bot_groups = primitive::group::from_single_link(bot_links);

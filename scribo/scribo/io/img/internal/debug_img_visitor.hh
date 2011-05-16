@@ -130,11 +130,16 @@ namespace scribo
 	  {
 	    // Prepare element edges
 
+	    L lbl = duplicate(doc.elements().labeled_image());
+	    for_all_comps(c, doc.elements())
+	      if (! doc.elements()(c).is_valid())
+		data::fill(((lbl | doc.elements()(c).bbox()).rw()
+			    | (pw::value(lbl) == pw::cst(c))).rw(), 0);
+
 	    // FIXME: UGLY! Too slow!
 	    scribo::def::lbl_type nlabels;
 	    component_set<L> elts = primitive::extract::components(
-	      data::convert(bool(), mln::subsampling::antialiased(doc.elements().labeled_image(),
-								  output_ratio)),
+	      data::convert(bool(), mln::subsampling::antialiased(lbl, output_ratio)),
 	      c8(),
 	      nlabels);
 
@@ -150,11 +155,13 @@ namespace scribo
 	    }
 	    else
 	      for_all_comps(c, doc.elements())
+	      {
 		elts(c).update_type(doc.elements()(c).type());
+		elts(c).update_tag(doc.elements()(c).tag());
+	      }
 
 	    elt_edge = morpho::elementary::gradient_external(elts.labeled_image(), c8());
 
-//	    const component_set<L>& elts = doc.elements();
 	    for_all_comps(e, elts)
 	      if (elts(e).is_valid())
 		elts(e).accept(*this);

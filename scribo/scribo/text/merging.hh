@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -657,7 +658,7 @@ namespace scribo
 	    x---------------x
 	    |               |
 	    |       mc      |
-	    ml x       x       x mr
+         ml x       x       x mr
 	    |               |
 	    |               |
 	    x---------------x
