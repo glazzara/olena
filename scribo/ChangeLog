@@ -1,5 +1,10 @@
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
+	* scribo/primitive/extract/non_text_hdoc.hh: New routine for
+	historical documents.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
 	New object filter.
 
 	* scribo/fun/v2b/objects_on_border_filter.hh,
