@@ -1,3 +1,15 @@
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add fastest versions for skeleton constrained related algorithms.
+
+	* mln/morpho/skeleton_constrained.hh,
+	* mln/topo/skeleton/crest.hh: Add fastest versions.
+
+	* mln/topo/skeleton/is_simple_point.hh: Rewrite as functor and add
+	fastest versions.
+
+	* tests/topo/skeleton/is_simple_point.cc: Fix test.
+
 2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
 	* mln/io/magick/save.hh: Add support for opacity.

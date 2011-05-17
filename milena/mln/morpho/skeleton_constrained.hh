@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,6 +40,7 @@
 # include <mln/extension/adjust_duplicate.hh>
 # include <mln/data/fill.hh>
 
+# include <mln/util/timer.hh>
 
 namespace mln
 {
@@ -58,70 +60,241 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace impl
+    {
+
+      namespace generic
+      {
+
+	template <typename I,
+		  typename N, typename F,
+		  typename K, typename R>
+	inline
+	mln_ch_value(I, bool)
+	  skeleton_constrained(const Image<I>& input_,
+			       const Neighborhood<N>& nbh_, const F& is_simple,
+			       const Image<K>& constraint_, const Image<R>& priority_)
+	{
+	  trace::entering("morpho::skeleton_constrained");
+
+	  const I& input      = exact(input_);
+	  const N& nbh        = exact(nbh_);
+	  const K& constraint = exact(constraint_);
+	  const R& priority   = exact(priority_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(nbh.is_valid());
+	  mln_precondition(constraint.is_valid());
+	  mln_precondition(priority.is_valid());
+
+	  typedef mln_value(I) V;
+	  mlc_is(V, bool)::check();
+
+	  extension::adjust_duplicate(input, nbh);
+
+	  // FIXME: Tests!
+
+	  typedef mln_psite(I) P;
+	  typedef p_queue_fast<P> Q;
+	  p_priority<mln_value(R), Q> q;
+
+	  mln_concrete(I) output;
+
+	  // Initialization.
+	  {
+	    output = duplicate(input);
+	    extension::adjust_duplicate(output, nbh);
+
+	    mln_piter(I) p(output.domain());
+	    for_all(p)
+	      if (output(p) == false &&
+		  is_simple.check(input, p)) // <-- is_simple.check
+                                      // p is a simple point of the background.
+	      {
+		q.push(priority(p), p);
+	      }
+	  }
+
+	  // Propagation.
+	  {
+	    P p;
+	    mln_niter(N) n(nbh, p);
+	    while (! q.is_empty())
+	    {
+	      p = q.pop_front();
+	      for_all(n)
+		if (output.has(n) &&
+		    output(n) == true &&
+		    constraint(n) == false &&
+		    is_simple.check(output, n)) // <-- is_simple.check
+		{
+		  output(n) = false; // Remove n from object.
+		  q.push(priority(n), n);
+		}
+	    }
+	  }
+
+	  trace::exiting("morpho::skeleton_constrained");
+	  return output;
+	}
+
+      } // end of namespace mln::morpho::impl::generic
+
+
+	template <typename I,
+		  typename N, typename F,
+		  typename K, typename R>
+	inline
+	mln_ch_value(I, bool)
+	skeleton_constrained_fast(const Image<I>& input_,
+				  const Neighborhood<N>& nbh_,
+				  const F& is_simple,
+				  const Image<K>& constraint_,
+				  const Image<R>& priority_)
+	{
+	  trace::entering("morpho::skeleton_constrained_fast");
+
+	  const I& input      = exact(input_);
+	  const N& nbh        = exact(nbh_);
+	  const K& constraint = exact(constraint_);
+	  const R& priority   = exact(priority_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(nbh.is_valid());
+	  mln_precondition(constraint.is_valid());
+	  mln_precondition(priority.is_valid());
+
+	  typedef mln_value(I) V;
+	  mlc_is(V, bool)::check();
+
+	  // Whatever the value of the extension, results of this fast
+	  // version may differ from the generic one. Indeed, we
+	  // cannot check whether a site belongs to the image or not,
+	  // so we try to not take border site in consideration by
+	  // setting their value to false.
+	  extension::adjust_fill(input, nbh, false);
+	  extension::adjust_fill(constraint, nbh, false);
+
+	  // FIXME: Tests!
+
+	  typedef p_queue_fast<unsigned> Q;
+	  p_priority<mln_value(R), Q> q;
+
+	  mln_concrete(I) output;
+
+	  // Initialization.
+	  {
+	    output = duplicate(input);
+	    extension::adjust_fill(output, nbh, false);
+
+	    mln_pixter(I) p_out(output);
+	    for_all(p_out)
+	      if (p_out.val() == false &&
+		  is_simple.check__(input, p_out)) // <-- is_simple.check
+		                                   // p is a simple point of the background.
+	      {
+		q.push(priority.element(p_out.offset()), p_out);
+	      }
+	  }
+
+	  // Propagation.
+	  {
+	    mln_pixter(I) p(output);
+	    mln_nixter(I, N) n(p, nbh);
+
+	    util::array<int> dp = offsets_wrt(input, nbh);
+	    const unsigned n_nbhs = dp.nelements();
+	    while (! q.is_empty())
+	    {
+	      unsigned p = q.pop_front();
+
+	      for (unsigned i = 0; i < n_nbhs; ++i)
+	      {
+		unsigned n = p + dp[i];
+
+		if (output.element(n) == true &&
+		    constraint.element(n) == false &&
+		    is_simple.check__(output, n)) // <-- is_simple.check
+		{
+		  output.element(n) = false; // Remove n from object.
+		  q.push(priority.element(n), n);
+		}
+	      }
+	    }
+	  }
+
+	  trace::exiting("morpho::skeleton_constrained_fast");
+	  return output;
+	}
+
+
+    } // end of namespace mln::morpho::impl
+
+
+    namespace internal
+    {
+
+      template <typename I,
+		typename N, typename F,
+		typename K, typename R>
+      inline
+      mln_ch_value(I, bool)
+      skeleton_constrained_dispatch(
+	mln::trait::image::value_access::any,
+	mln::trait::image::value_storage::any,
+	const Image<I>& input,
+	const Neighborhood<N>& nbh,
+	const F& is_simple,
+	const Image<K>& constraint,
+	const Image<R>& priority)
+      {
+	return impl::generic::skeleton_constrained(input, nbh,
+						   is_simple,
+						   constraint,
+						   priority);
+      }
+
+      template <typename I,
+		typename N, typename F,
+		typename K, typename R>
+      inline
+      mln_ch_value(I, bool)
+      skeleton_constrained_dispatch(
+	mln::trait::image::value_access::direct,
+	mln::trait::image::value_storage::one_block,
+	const Image<I>& input,
+	const Neighborhood<N>& nbh,
+	const F& is_simple,
+	const Image<K>& constraint,
+	const Image<R>& priority)
+      {
+	return impl::skeleton_constrained_fast(input, nbh,
+					       is_simple,
+					       constraint,
+					       priority);
+      }
+
+
+    } // end of namespace mln::morpho::internal
+
+
     template <typename I,
 	      typename N, typename F,
 	      typename K, typename R>
     inline
     mln_ch_value(I, bool)
-    skeleton_constrained(const Image<I>& input_,
-			 const Neighborhood<N>& nbh_, const F& is_simple,
-			 const Image<K>& constraint_, const Image<R>& priority_)
+    skeleton_constrained(const Image<I>& input,
+			 const Neighborhood<N>& nbh, const F& is_simple,
+			 const Image<K>& constraint, const Image<R>& priority)
     {
       trace::entering("morpho::skeleton_constrained");
 
-      const I& input      = exact(input_);
-      const N& nbh        = exact(nbh_);
-      const K& constraint = exact(constraint_);
-      const R& priority   = exact(priority_);
-
-      mln_precondition(input.is_valid());
-      mln_precondition(nbh.is_valid());
-      mln_precondition(constraint.is_valid());
-      mln_precondition(priority.is_valid());
-
-      extension::adjust_duplicate(input, nbh);
-
-      // FIXME: Tests!
-
-      typedef mln_psite(I) P;
-      typedef p_queue_fast<P> Q;
-      p_priority<mln_value(R), Q> q;
-
-      mln_ch_value(I, bool) output;
-
-      // Initialization.
-      {
-	initialize(output, input);
-	data::fill(output, input);
-	extension::adjust_duplicate(output, nbh);
-
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  if (input(p) == false &&
-	      is_simple(input, nbh, p)) // p is a simple point of the background.
-	    {
-	      q.push(priority(p), p);
-	    }
-      }
-
-      // Propagation.
-      {
-	P p;
-	mln_niter(N) n(nbh, p);
-	while (! q.is_empty())
-	  {
-	    p = q.pop_front();
-	    for_all(n)
-	      if (output.has(n) &&
-		  output(n) == true &&
-		  constraint(n) == false &&
-		  is_simple(output, nbh, n))
-		{
-		  output(n) = false; // Remove n from object.
-		  q.push(priority(n), n);
-		}
-	  }
-      }
+      mln_ch_value(I, bool)
+	output = internal::skeleton_constrained_dispatch(
+	  mln_trait_image_value_access(I)(),
+	  mln_trait_image_value_storage(I)(),
+	  input, nbh, is_simple, constraint, priority);
 
       trace::exiting("morpho::skeleton_constrained");
       return output;

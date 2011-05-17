@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,8 +28,6 @@
 #include <mln/topo/skeleton/is_simple_point.hh>
 #include <mln/make/image.hh>
 
-#include <mln/debug/println.hh>
-
 static const unsigned ref[] = { 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0 };
 
 int main()
@@ -38,10 +37,17 @@ int main()
   bool vals[][6] = { { 0, 1, 0, 0, 1, 1 },
                      { 0, 0, 0, 0, 1, 1 } };
 
-  image2d<bool> ima = make::image(vals);
+  typedef image2d<bool> I;
+  I ima = make::image(vals);
 
   unsigned i = 0;
-  mln_piter_(image2d<bool>) p(ima.domain());
-  for_all(p)
-    mln_assertion(ref[i++] == topo::skeleton::is_simple_point(ima, c8(), p));
+  topo::skeleton::is_simple_point<neighb2d> is_simple(c8());
+
+  // Test generic version.
+  {
+    mln_piter_(I) p(ima.domain());
+    for_all(p)
+      mln_assertion(ref[i++] == is_simple.check(ima, p));
+  }
+
 }

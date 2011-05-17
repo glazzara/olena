@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,20 +61,35 @@ namespace mln
 
        \endverbatim
        */
-      template <typename I, typename N>
-      bool
-      is_simple_point(const Image<I>& ima,
-		      const Neighborhood<N>& nbh,
-		      const mln_site(I)& p);
+      template <typename N>
+      struct is_simple_point
+      {
 
+	is_simple_point(const Neighborhood<N>& nbh);
+
+	template <typename I>
+	bool check(const I& ima, const mln_psite(I)& p) const;
+	template <typename I>
+	bool check__(const I& ima, unsigned p) const;
+
+      protected:
+	const N& nbh_;
+	bool is_c8_;
+
+	template <typename I>
+        unsigned nb_connexity2d(const I&, bool nbh_c8,
+				const mln_psite(I)& p, bool object) const;
+	template <typename I>
+        unsigned nb_connexity2d__(const I&, bool nbh_c8,
+				  unsigned p, bool object) const;
+
+      };
 
 # ifndef MLN_INCLUDE_ONLY
 
 
       namespace internal
       {
-
-
 	static const unsigned char nb_connexity_c8[256] =
 	{
 	  0,  1,  1,  1,   1,  2,  1,  1,   1,  1,  1,  1,   2,  2,  1,  1,
@@ -120,157 +136,94 @@ namespace mln
 	  1,  1,  2,  2,   1,  1,  1,  1,   1,  1,  2,  1,   1,  1,  1,  1
 	};
 
+      } // end of namespace internal
 
-
-	template <typename I, typename N>
-        inline
-        unsigned
-        nb_connexity2d(const I& ima,
-		       const N& nbh,
-		       const mln_site(I)& p,
-		       bool object)
-	{
-	  unsigned res = 0;
-
-	  mln_bkd_niter(N) n(c8(), p);
-	  for_all(n)
-	  {
-	    res = (res << 1);
-	    if (ima.domain().has(n) && ima(n) == object)
-	      res = res | 1;
-	  }
-
-	  if (nbh == c8())
-	    return nb_connexity_c8[res];
-	  else
-	  {
-	    mln_assertion(nbh == c4());
-	    return nb_connexity_c4[res];
-	  }
-	}
-
-
-	template <typename N>
-	neighb2d
-	complement2d(const Neighborhood<N>& nbh_)
-	{
-	  const N& nbh = exact(nbh_);
-	  mln_precondition(nbh.is_valid());
-	  mln_precondition(nbh == c4() || nbh == c8());
-
-	  if (nbh == c4())
-	    return c8();
-	  else
-	    return c4();
-	}
-
-
-	// Tests.
-
-	template <typename I, typename N>
-	inline
-	void
-	is_simple_point_tests(const Image<I>& ima_,
-			      const Neighborhood<N>& nbh_,
-			      const mln_site(I)& p)
-	{
-	  const I& ima = exact(ima_);
-	  const N& nbh = exact(nbh_);
-
-	  mln_assertion(nbh == c4() || nbh == c8());
-	  mln_precondition(ima.is_valid());
-	  mln_precondition(nbh.is_valid());
-
-	  (void) ima;
-	  (void) nbh;
-	  (void) p;
-	}
-
-      } // end of namespace mln::topo::skeleton::internal
-
-
-
-      // Implementations
-
-      namespace impl
+      template <typename N>
+      is_simple_point<N>::is_simple_point(const Neighborhood<N>& nbh)
+	: nbh_(exact(nbh)), is_c8_(exact(nbh) == c8())
       {
-
-	template <typename I, typename N>
-	inline
-	bool
-	is_simple_point2d(const Image<I>& ima_,
-			  const Neighborhood<N>& nbh_,
-			  const point2d& p)
-	{
-	  const I& ima = exact(ima_);
-	  const N& nbh = exact(nbh_);
-
-	  internal::is_simple_point_tests(ima, nbh, p);
-
-	  bool b = (internal::nb_connexity2d(ima, nbh, p, true) == 1)
-	    && (internal::nb_connexity2d(ima, internal::complement2d(nbh),
-					 p, false) == 1);
-
-	  trace::exiting("topo::skeleton::is_simple_point2d");
-	  return b;
-	}
-
-      } // end of namespace mln::topo::skeleton::impl
+	mln_assertion(nbh_ == c4() || nbh_ == c8());
+	mln_precondition(nbh_.is_valid());
+      }
 
 
-
-
-      // Dispatch
-
-      namespace internal
+      template <typename N>
+      template <typename I>
+      unsigned
+      is_simple_point<N>::nb_connexity2d(const I& ima,
+					 bool nbh_c8,
+					 const mln_psite(I)& p,
+					 bool object) const
       {
+	unsigned res = 0;
 
-	template <typename I, typename N>
-        inline
-        bool
-	is_simple_point_dispatch(const Image<I>& ima,
-				 const Neighborhood<N>& nbh,
-				 const point2d& p)
+	mln_bkd_niter(N) n(c8(), p);
+	for_all(n)
 	{
-	  return impl::is_simple_point2d(ima, nbh, p);
+	  res = (res << 1);
+	  if (ima.domain().has(n) && ima(n) == object)
+	    res = res | 1;
 	}
 
+	if (nbh_c8)
+	  return internal::nb_connexity_c8[res];
+	else
+	  return internal::nb_connexity_c4[res];
+      }
 
-	template <typename I, typename N>
-        inline
-        bool
-	is_simple_point_dispatch(const Image<I>& ima,
-				 const Neighborhood<N>& nbh,
-				 const mln_site(I)& p)
+
+      template <typename N>
+      template <typename I>
+      unsigned
+      is_simple_point<N>::nb_connexity2d__(const I& ima,
+					   bool nbh_c8,
+					   unsigned p,
+					   bool object) const
+      {
+	unsigned res = 0;
+
+	static util::array<int>
+	  noffset = mln::offsets_wrt(ima, c8());
+
+	for (int i = noffset.nelements() - 1; i >= 0; --i)
 	{
-	  /// Not implemented for that site type yet.
-	  mlc_abort(I)::check();
-	  return false;
+	  res = (res << 1);
+	  if (ima.element(p + noffset[i]) == object)
+	    res = res | 1;
 	}
 
-      } // end of namespace mln::topo::skeleton::internal
+	if (nbh_c8)
+	  return internal::nb_connexity_c8[res];
+	else
+	  return internal::nb_connexity_c4[res];
+      }
 
 
-
-
-
-      // Facade
-
-      template <typename I, typename N>
+      template <typename N>
+      template <typename I>
       inline
       bool
-      is_simple_point(const Image<I>& ima,
-		      const Neighborhood<N>& nbh,
-		      const mln_site(I)& p)
+      is_simple_point<N>::check(const I& ima,
+				const mln_psite(I)& p) const
       {
-	trace::entering("topo::skeleton::is_simple_point2d");
+	mln_precondition(ima.is_valid());
+	return (nb_connexity2d(ima, is_c8_, p, true) == 1)  // Consider neighbor.
+	  && (nb_connexity2d(ima, !is_c8_, p, false) == 1); // Consider complement neighbor.
+      }
 
-	internal::is_simple_point_tests(ima, nbh, p);
 
-	bool b = internal::is_simple_point_dispatch(ima, nbh, p);
 
-	trace::exiting("topo::skeleton::is_simple_point2d");
-	return b;
+
+      template <typename N>
+      template <typename I>
+      inline
+      bool
+      is_simple_point<N>::check__(const I& ima,
+				  unsigned p) const
+      {
+	mln_precondition(ima.is_valid());
+	return (nb_connexity2d__(ima, is_c8_, p, true) == 1)  // Consider neighbor
+	  && (nb_connexity2d__(ima, !is_c8_, p, false) == 1); // Consider complement neighbor.
       }
 
 
