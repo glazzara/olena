@@ -94,8 +94,8 @@ namespace scribo
 
 	mln_concrete(I) skel =
 	  morpho::skeleton_constrained(input, c8(),
-				       topo::skeleton::is_simple_point<I,neighb2d>,
-				       extend(K, false), dist_map);
+				       topo::skeleton::is_simple_point<neighb2d>(c8()),
+				       K, dist_map);
 
 	trace::exiting("scribo::estim::internal::compute_skeleton");
 	return skel;

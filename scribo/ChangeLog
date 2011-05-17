@@ -1,3 +1,10 @@
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix use of skeleton_constrained.
+
+	* scribo/estim/components_features.hh,
+	* scribo/estim/internal/compute_skeleton.hh: Here.
+
 2011-05-12  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
 	Update support for PAGE XML format.

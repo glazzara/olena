@@ -124,8 +124,8 @@ namespace scribo
 
 	skel =
 	  morpho::skeleton_constrained(bin_input, c8(),
-				       topo::skeleton::is_simple_point<B,neighb2d>,
-				       extend(K, false), dist_map);
+				       topo::skeleton::is_simple_point<neighb2d>(c8()),
+				       K, dist_map);
 
 	t.stop();
 	std::cout << "Skeleton constrained " << t << std::endl;
