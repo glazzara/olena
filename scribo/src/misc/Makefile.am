@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,12 +18,14 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 noinst_PROGRAMS = 			\
+  closure_rectangle 			\
   dmap                               	\
   morpho                    		\
   negate 				\
   rectangularity 			\
   superpose
 
+closure_rectangle_SOURCES = closure_rectangle.cc
 dmap_SOURCES = dmap.cc
 morpho_SOURCES = morpho.cc
 negate_SOURCES = negate.cc

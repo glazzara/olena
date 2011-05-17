@@ -1,5 +1,13 @@
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new tool.
+
+	* src/misc/Makefile.am: Add new target.
+
+	* src/misc/closure_rectanle.cc: New.
+
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix use of skeleton_constrained.
 
 	* scribo/estim/components_features.hh,
