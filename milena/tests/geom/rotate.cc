@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,18 +27,17 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/geom/rotate.hh>
 # include <mln/make/image.hh>
-# include <mln/make/box1d.hh>
 # include <mln/data/compare.hh>
 
 int main()
 {
   using namespace mln;
 
-  bool ref_values[][5] = { { 0, 1, 0, 0, 0 },
-			   { 0, 1, 1, 0, 0 },
-			   { 0, 0, 1, 1, 0 },
-			   { 0, 0, 0, 1, 1 },
-			   { 0, 0, 0, 0, 1 } };
+  bool ref_values[][5] = { { 0, 0, 0, 0, 0 },
+			   { 0, 1, 0, 0, 0 },
+			   { 0, 0, 1, 0, 0 },
+			   { 0, 0, 0, 1, 0 },
+			   { 0, 0, 0, 0, 0 } };
 
 
   bool values[][5] = { { 0, 0, 1, 0, 0 },
@@ -49,10 +48,13 @@ int main()
 
   image2d<bool> ima = make::image(values);
 
-
   image2d<bool> ref = make::image(ref_values);
 
-  image2d<bool> ima_rot = geom::rotate(ima, 45);
+  image2d<bool> ima_rot = geom::rotate(ima, 45, false, ima.domain());
 
   mln_assertion(ima_rot == ref);
+
+  ima_rot = geom::rotate(ima_rot, - 45, false, ima.domain());
+
+  mln_assertion(ima_rot == ima);
 }

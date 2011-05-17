@@ -331,16 +331,10 @@ namespace mln
 	mlc_bool(G::dim == n)::check();
 
 	unsigned j = 0;
-	//FIXME: to be improved while adding a conversion routine.
-	if (dim < 3)
-	  to.hook_coord_() = from;
-	else
-	{
-	  for (unsigned i = dim - 2; i < dim; ++i)
-	    to[i]   = mln::internal::convert_data<C2>(from[j++]);
-	  for (unsigned i = 2; i < dim; ++i, ++j)
-	    to[i-j] = mln::internal::convert_data<C2>(from[j]);
-	}
+	for (unsigned i = dim - 2; i < dim; ++i)
+	  to[i]   = mln::internal::convert_data<C2>(from[j++]);
+	for (unsigned i = 2; i < dim; ++i, ++j)
+	  to[i-j] = mln::internal::convert_data<C2>(from[j]);
       }
 
       template <unsigned n, typename C1, typename G>
@@ -352,16 +346,10 @@ namespace mln
 	mlc_bool(G::dim == n)::check();
 
 	unsigned j = 0;
-	//FIXME: to be improved while adding a conversion routine.
-	if (dim < 3)
-	  to.hook_coord_() = from;
-	else
-	{
-	  for (unsigned i = dim - 2; i < dim; ++i)
-	    to[i]   = from[j++];
-	  for (unsigned i = 2; i < dim; ++i, ++j)
-	    to[i-j] = from[j];
-	}
+	for (unsigned i = dim - 2; i < dim; ++i)
+	  to[i]   = from[j++];
+	for (unsigned i = 2; i < dim; ++i, ++j)
+	  to[i-j] = from[j];
       }
 
 
@@ -566,9 +554,9 @@ namespace mln
       mln::algebra::vec<G::dim, float> tmp;
       unsigned j = 0;
       for (unsigned i = dim - 2; i < dim; ++i)
-	tmp[j++] = coord_[i];
+	tmp[j++] = mln::internal::convert_data<float>(coord_[i]);
       for (unsigned i = 2; i < dim; ++i, ++j)
-	tmp[j] = coord_[i-j];
+	tmp[j] = mln::internal::convert_data<float>(coord_[i-j]);
 
       return tmp;
     }

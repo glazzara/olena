@@ -1,5 +1,14 @@
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix precision issue with algebra::vec conversion.
+
+	* mln/core/point.hh: Round float values.
+
+	* tests/geom/rotate.cc: Add a test to be sure there is no
+	precision issues.
+
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add fastest versions for skeleton constrained related algorithms.
 
 	* mln/morpho/skeleton_constrained.hh,
