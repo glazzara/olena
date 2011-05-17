@@ -20,6 +20,7 @@ include $(top_srcdir)/scribo/scribo.mk
 noinst_PROGRAMS = 				\
   show_components_bboxes 			\
   show_groups_bboxes 				\
+  show_groups_bboxes_filtered			\
   show_info_x_height 				\
   show_info_median_inter_characters		\
   show_lines_boldness 				\
@@ -53,6 +54,7 @@ noinst_PROGRAMS = 				\
 
 show_components_bboxes_SOURCES = show_components_bboxes.cc
 show_groups_bboxes_SOURCES = show_groups_bboxes.cc
+show_groups_bboxes_filtered_SOURCES = show_groups_bboxes_filtered.cc
 show_info_x_height_SOURCES = show_info_x_height.cc
 show_info_median_inter_characters_SOURCES = show_info_median_inter_characters.cc
 show_lines_boldness_SOURCES = show_lines_boldness.cc
@@ -126,6 +128,20 @@ if HAVE_QT
 			     $(QT_LDFLAGS)
   show_text_lines_LDADD    = $(LDADD) \
 			     $(QT_LIBS)
+
+  noinst_PROGRAMS  	  += show_text_lines_wo_seps
+  show_text_lines_wo_seps_SOURCES  = show_text_lines_wo_seps.cc
+  show_text_lines_wo_seps_CPPFLAGS = $(AM_CPPFLAGS) \
+		  	     $(MAGICKXX_CPPFLAGS) \
+			     $(QT_CPPFLAGS) -DHAVE_QT
+  show_text_lines_wo_seps_CXXFLAGS = $(AM_CXXFLAGS) \
+		  	     $(QT_CXXFLAGS)
+  show_text_lines_wo_seps_LDFLAGS  = $(AM_LDFLAGS) \
+			     $(MAGICKXX_LDFLAGS) \
+			     $(QT_LDFLAGS)
+  show_text_lines_wo_seps_LDADD    = $(LDADD) \
+			     $(QT_LIBS)
+
 
 
   noinst_PROGRAMS       += show_stoppers

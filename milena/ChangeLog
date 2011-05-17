@@ -1,5 +1,14 @@
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new sample programs.
+
+	* src/debug/Makefile.am: New targets.
+
+	* src/debug/show_groups_bboxes_filtered.cc,
+	* src/debug/show_text_lines_wo_seps.cc: New.
+
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix precision issue with algebra::vec conversion.
 
 	* mln/core/point.hh: Round float values.
