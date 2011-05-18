@@ -1,0 +1,230 @@
+%% Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+%%
+%% This file is part of Olena.
+%%
+%% Olena is free software: you can redistribute it and/or modify it under
+%% the terms of the GNU General Public License as published by the Free
+%% Software Foundation, version 2 of the License.
+%%
+%% Olena is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+%% General Public License for more details.
+%%
+%% You should have received a copy of the GNU General Public License
+%% along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+\documentclass[a4]{book}
+
+%\usepackage{hevea}
+
+\usepackage{html}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{color}
+
+\title{SCRIBO\\
+  \large{Research report} }
+\author{LRDE}
+\date{}
+\makeindex
+
+
+\begin{document}
+
+\maketitle
+
+
+
+%===========================================
+%===========================================
+%===========================================
+\chapter{Preprocessing}
+
+
+
+%*******************************************
+%*******************************************
+\section{Show-through removal}
+
+
+%*******************************************
+%*******************************************
+\section{Color to grayscale conversion}
+
+2 formulas tested :
+\begin{itemize}
+\item $R + G + V$
+\item $0.299 * R + 0.587 * G + 0.114 * B$
+\end{itemize}
+
+
+%*******************************************
+%*******************************************
+\section{Binarization}
+
+
+
+%...........................................
+\subsection{Sauvola}
+\par{Sauvola}
+
+\cite{Sauvola}
+
+Best published method for documents.
+
+Parameters set up according to \cite{Badekas}.
+
+\par{Sauvola Multi-scale}
+
+Implemented with integral images. \cite{Faisal.integral_images}
+
+\par{Sauvola 3-channels}
+
+
+
+%*******************************************
+%*******************************************
+\section{Background/Foreground identification}
+
+
+
+%*******************************************
+%*******************************************
+\section{Unskew}
+
+
+
+%*******************************************
+%*******************************************
+\section{Denoising}
+
+
+
+%*******************************************
+%*******************************************
+\section{Delimitors}
+
+%...........................................
+\subsection{Lines}
+
+%...........................................
+\subsection{Tab-stops and whitespaces}
+
+File concerned : scribo/primitive/extract/separators\_non\_visible.hh
+
+First attempt to retrieve tab-stops/whitespaces delimitors.  In order
+to limit false positive, the components are dilated horizontaly prior
+the algorithm.
+
+False positive were still too numerous in the core paragraphes.
+
+
+File concerned : scribo/primitive/extract/alignments.hh
+
+In order to avoid too much false positive, the text is grouped once
+(almost by word).  To limit connections between paragraphs, the rules
+used to connect components is as follows : lookup for the closest left
+neighbor until a maximum distance compute with the formula (w / 2.0f)
++ (dmax_factor_ * h), where w and h are respectively the width and the
+height of the component. dmax_factor_ is a user defined parameter set
+to 1. Functor primitive::link::internal::dmax_default is used and
+implement that rule..
+
+We tried to find tabstops and whitespaces without grouping first but
+there were too much false positive inside paragraphs.  Grouping may be
+a problem some times since if two paragraphs are too close to
+eachother, they may already connect...
+
+
+%===========================================
+%===========================================
+%===========================================
+\chapter{Text extraction}
+
+%*******************************************
+%*******************************************
+\section{lines}
+
+%...........................................
+\subsection{Component labeling}
+
+%...........................................
+\subsection{Component grouping}
+
+%...........................................
+\subsection{Line reconstruction}
+
+
+
+%*******************************************
+%*******************************************
+\section{paragraphs/text blocks}
+
+
+%===========================================
+%===========================================
+%===========================================
+\chapter{Non-text object extraction}
+
+%*******************************************
+%*******************************************
+\section{Background learning}
+
+
+%===========================================
+%===========================================
+%===========================================
+\chapter{Text recognition (OCR)}
+
+%*******************************************
+%*******************************************
+\section{Tesseract Integration}
+
+
+%*******************************************
+%*******************************************
+\section{Text cleanup}
+
+
+%===========================================
+%===========================================
+%===========================================
+\chapter{Data structures}
+
+%*******************************************
+%*******************************************
+\section{Component\_set}
+\subsection{Component\_info}
+
+%*******************************************
+%*******************************************
+\section{object\_links}
+
+%*******************************************
+%*******************************************
+\section{object\_groups}
+
+
+
+%*******************************************
+%*******************************************
+\section{line\_set}
+
+%...........................................
+\subsection{line\_info}
+
+
+
+
+%*******************************************
+%*******************************************
+\section{paragraph\_set}
+
+%...........................................
+\subsection{paragraph\_info}
+
+\end{document}
+
