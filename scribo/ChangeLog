@@ -1,3 +1,11 @@
+2011-05-18 Julien Marquegnies <marquegnies@lrde.epita.fr>
+
+	Improve paragraph grouping for historical documents.
+
+	* scribo/core/line_info.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/paragraphs.hh: Here.
+
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix use of skeleton_constrained.

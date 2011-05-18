@@ -30,29 +30,139 @@ namespace scribo
 //-------------------------------------
 // Extracting root of links
 //-------------------------------------
-      template <typename T>
-      inline
-      unsigned
-      find_root(util::array<T>& parent, unsigned x)
+    template <typename T>
+    inline
+    unsigned
+    find_root(util::array<T>& parent, unsigned x)
+    {
+      unsigned tmp_x = x;
+
+      while (parent(tmp_x) != tmp_x)
+	tmp_x = parent(tmp_x);
+
+      while (parent(x) != x)
       {
-	unsigned tmp_x = x;
-
-	while (parent(tmp_x) != tmp_x)
-	  tmp_x = parent(tmp_x);
-
-	while (parent(x) != x)
-	{
-	  const unsigned tmp = parent(x);
-	  x = parent(x);
-	  parent(tmp) = tmp_x;
-	}
-
-	return x;
+	const unsigned tmp = parent(x);
+	x = parent(x);
+	parent(tmp) = tmp_x;
       }
+
+      return x;
+    }
+
+    template <typename T>
+    inline
+    void
+    set_root(util::array<T>& parent, unsigned x, const unsigned root)
+    {
+      while (parent(x) != x && parent(x) != root)
+      {
+	const unsigned tmp = parent(x);
+	x = parent(x);
+	parent(tmp) = root;
+      }
+
+      parent(x) = root;
+    }
+
   }
 
   namespace filter
   {
+
+    template <typename L>
+    inline
+    bool
+    between_horizontal_separator(const scribo::line_info<L>& l1,
+				 const scribo::line_info<L>& l2)
+    {
+      // No separators found in image.
+      mln_precondition(l1.holder().components().has_separators());
+
+      const box2d& l1_bbox = l1.bbox();
+      const box2d& l2_bbox = l2.bbox();
+
+      unsigned
+	row1 = l1_bbox.pcenter().row(),
+	row2 = l2_bbox.pcenter().row();
+      const mln_ch_value(L, bool)&
+	separators = l1.holder().components().separators();
+
+      unsigned row;
+      unsigned col_ptr;
+      unsigned left_col_ptr;
+      unsigned right_col_ptr;
+      unsigned end;
+
+      if (row1 < row2)
+      {
+	row1 = l1_bbox.pmax().row();
+	row2 = l2_bbox.pmin().row();
+
+	const unsigned quarter =
+	  ((l1_bbox.pcenter().col() - l1_bbox.pmin().col()) >> 2);
+
+	row = l1_bbox.pcenter().row();
+	col_ptr = l1_bbox.pcenter().col();
+	left_col_ptr = l1_bbox.pmin().col() + quarter;
+	right_col_ptr = l1_bbox.pmax().col() - quarter;
+	end = row2;
+      }
+      else
+      {
+	row2 = l2_bbox.pmax().row();
+	row1 = l1_bbox.pmin().row();
+
+	const unsigned quarter =
+	  ((l2_bbox.pcenter().col() - l2_bbox.pmin().col()) >> 2);
+
+	row = l2_bbox.pcenter().row();
+	col_ptr = l2_bbox.pcenter().col();
+	left_col_ptr = l2_bbox.pmin().col() + quarter;
+	right_col_ptr = l2_bbox.pmax().col() - quarter;
+	end = row1;
+      }
+
+      // If sep_ptr is true, then a separator is reached.
+      while (row < end)
+      {
+	++row;
+	if (separators.at_(row, col_ptr)
+	    || separators.at_(row, left_col_ptr)
+	    || separators.at_(row, right_col_ptr))
+	  return true;
+      }
+
+      return false;
+    }
+
+
+    template <typename L>
+    bool may_have_another_left_link(const line_links<L>& right,
+				    const line_id_t& index,
+				    const line_id_t& current_line,
+				    const line_set<L>& lines)
+    {
+      const line_info<L>& l = lines(current_line);
+      const point2d& pmin = l.bbox().pmin();
+      const unsigned x1 = l.x_height();
+
+      for_all_links(i, right)
+	if (i != index && right(i) == index)
+	{
+	  const line_info<L>& l_info = lines(i);
+	  const unsigned x2 = l_info.x_height();
+
+	  const float delta_max = 0.5f * std::min(x1, x2);
+
+	  if (l_info.bbox().pmin().col() < pmin.col()
+	      && std::abs(l.baseline() - l_info.baseline()) < delta_max
+	    )
+	    return true;
+	}
+
+      return false;
+    }
 
 //---------------------------------------------------------------------
 // This method aims to cut the links between lines that do not fit the
@@ -62,7 +172,7 @@ namespace scribo
     template <typename L>
     inline
     void paragraph_links(const line_links<L>& left,
-			 const line_links<L>& right,
+			 line_links<L>& right,
 			 line_links<L>& output,
 			 const line_set<L>& lines)
     {
@@ -83,9 +193,27 @@ namespace scribo
 	{
 	  // Neighbors
 
-	  const line_id_t left_nbh = output(l);
-	  const line_id_t right_nbh = right(l);
-	  const line_id_t lol_nbh = output(left_nbh);
+	  line_id_t left_nbh = output(l);
+	  line_id_t right_nbh = right(l);
+	  line_id_t lol_nbh = output(left_nbh);
+
+	  const line_info<L>& left_line = lines(left_nbh);
+	  const line_info<L>& current_line = lines(l);
+	  const line_info<L>& right_line = lines(right_nbh);
+
+	  if (right_line.holder().components().has_separators() &&
+	      between_horizontal_separator(right_line, current_line))
+	  {
+	    output(right_nbh) = right_nbh;
+	    right_nbh = l;
+	  }
+	  if (current_line.holder().components().has_separators() &&
+	      between_horizontal_separator(current_line, left_line))
+	  {
+	    output(l) = l;
+	    left_nbh = l;
+	    lol_nbh = l;
+	  }
 
 	  // Line features
 	  const float x_height = lines(l).x_height();
@@ -111,6 +239,7 @@ namespace scribo
 	  const int rline_cw = lines(right_nbh).char_width();
 	  // Maximal x variation to consider two lines vertically aligned
 	  const int delta_alignment = cline_cw;
+
 
 	  // Checks the baseline distances of the two neighbors
 	  {
@@ -151,7 +280,7 @@ namespace scribo
 		// and its right neighbor
 		if (right_distance > 1.4f * ror_distance
 		    && std::max(ror_x_height, right_x_height) <
-		    1.2f * std::min(ror_x_height, right_x_height)
+		    1.4f * std::min(ror_x_height, right_x_height)
 		    && output(right_nbh) == l)
 		{
 		  output(right_nbh) = right_nbh;
@@ -184,7 +313,7 @@ namespace scribo
 
 	      // Condition to cut the link between the current line and
 	      // its right neighbor
-	      if ((max_x_height > min_x_height * 1.2f) &&
+	      if ((max_x_height > min_x_height * 1.4f) &&
 		  !(max_char_width <= 1.2f * min_char_width))
 	      {
 		if (output(right_nbh) == l)
@@ -220,7 +349,7 @@ namespace scribo
 		// and its left neighbor
 		if (left_distance > 1.4f * lol_distance
 		    && std::max(lol_x_height, left_x_height) <
-		    1.2f * std::min(lol_x_height, left_x_height))
+		    1.4f * std::min(lol_x_height, left_x_height))
 		{
 		  output(l) = l;
 		  continue;
@@ -252,7 +381,7 @@ namespace scribo
 
 	      // Condition to cut the link between the current line and
 	      // its left neighbor
-	      if ((max_x_height > min_x_height * 1.2f) &&
+	      if ((max_x_height > min_x_height * 1.4f) &&
 		  !(max_char_width <= 1.2f * min_char_width))
 	      {
 		output(l) = l;
@@ -264,18 +393,18 @@ namespace scribo
 		continue;
 	    }
 	    // The current line has at least one left and one right neighbor
-	    else // if (delta_baseline_max >= delta_baseline_min)
+	    else // if (delta_baseline_max >= 1.1 * delta_baseline_min)
 	    {
 	      // Distance between the left and the current line
-	      const float left_distance =
-		lines(left_nbh).meanline() - lines(l).baseline();
+	      const float
+		left_distance = left_line_bbox.pcenter().row() - current_line_bbox.pcenter().row();
 	      // Distance between the right and the current line
-	      const float right_distance =
-		lines(l).meanline() - lines(right_nbh).baseline();
+	      const float
+		right_distance = current_line_bbox.pcenter().row() - right_line_bbox.pcenter().row();;
 
 	      // If the left line is too far compared to the right one
 	      // we cut the link with it
-	      if (left_distance > 1.2f * right_distance
+	      if (left_distance > 1.5f * right_distance
 		  && std::max(x_height, left_x_height) > 1.2f * std::min(x_height, left_x_height))
 	      {
 		output(l) = l;
@@ -283,8 +412,8 @@ namespace scribo
 	      }
 	      // If the right line is too far compared to the left one
 	      // we cut the link with it
-	      else if (right_distance > 1.2f * left_distance
-		       && std::max(x_height, right_x_height) > 1.2f * std::min(x_height, right_x_height)
+	      else if (right_distance > 1.5f * left_distance
+		       && std::max(x_height, right_x_height) >= 1.2f * std::min(x_height, right_x_height)
 		       && output(right_nbh) == l)
 	      {
 		output(right_nbh) = right_nbh;
@@ -303,7 +432,7 @@ namespace scribo
 		const float min_x_height = std::min(x_height, left_x_height);
 		const float max_x_height = std::max(x_height, left_x_height);
 
-		if ((max_x_height > min_x_height * 1.2f) &&
+		if ((max_x_height > min_x_height * 1.4f) &&
 		    !(cw_max <= 1.2f * cw_min))
 		{
 		  output(l) = l;
@@ -316,7 +445,7 @@ namespace scribo
 		  const float cw_max = std::max(rline_cw, cline_cw);
 		  const float cw_min = std::min(rline_cw, cline_cw);
 
-		  if ((max_x_height > min_x_height * 1.2f)
+		  if ((max_x_height > min_x_height * 1.4f)
 		      && !(cw_max <= 1.2f * cw_min)
 		      && output(right_nbh) == l)
 		  {
@@ -332,7 +461,7 @@ namespace scribo
 		const float min_x_height = std::min(x_height, right_x_height);
 		const float max_x_height = std::max(x_height, right_x_height);
 
-		if ((max_x_height > min_x_height * 1.2f)
+		if ((max_x_height > min_x_height * 1.4f)
 		    && !(cw_max <= 1.2f * cw_min)
 		    && output(right_nbh) == l)
 		{
@@ -346,7 +475,7 @@ namespace scribo
 		  const float cw_max = std::max(lline_cw, cline_cw);
 		  const float cw_min = std::min(lline_cw, cline_cw);
 
-		  if ((max_x_height > min_x_height * 1.2f)
+		  if ((max_x_height > min_x_height * 1.4f)
 		      && !(cw_max <= 1.2f * cw_min))
 		  {
 		    output(l) = l;
@@ -445,8 +574,11 @@ namespace scribo
 	    {
 	      const int dx_lrc = std::abs(lline_col_max - cline_col_max);
 	      const int l_char_width = lines(l).char_width();
+	      const int dx_indent = std::abs(std::max(lline_col_min,
+						      rline_col_min) - cline_col_min);
 
 	      if (dx_lrc > l_char_width &&
+		  dx_indent < 4 * delta_alignment &&
 		  cline_col_max < lline_col_max &&
 		  cline_col_min < lline_col_min &&
 		  (lline_col_min > lolline_col_min || lol_is_left))
@@ -457,6 +589,172 @@ namespace scribo
 	    }
 	  }
 
+//-----------------------------------------------------------------------------
+//   ___________________________
+//  |___________________________|
+//      ________________________
+//     |________________________|
+//   ___________________________
+//  |___________________________|
+//   ___________________________
+//  |___________________________|
+//
+//  Simple case : paragraphs are justified on the left. We try to find any
+//  indentation like above.
+//
+//-----------------------------------------------------------------------------
+
+	  {
+	    // Check if the current line neighbors are aligned
+	    bool left_right_aligned = false;
+	    bool left_lol_aligned = false;
+	    const int dx_lr = std::abs(lline_col_min - rline_col_min);
+	    const int dx_llol = std::abs(lline_col_min - lolline_col_min);
+
+	    if (dx_lr < delta_alignment)
+	      left_right_aligned = true;
+
+	    if (dx_llol < delta_alignment)
+	      left_lol_aligned = true;
+
+	    if (left_right_aligned && left_lol_aligned)
+	    {
+	      const int left_right_col_min = std::min(lline_col_min, rline_col_min);
+	      const int dx_lrc = std::abs(left_right_col_min - cline_col_min);
+	      const float l_char_width = 1.5f * lines(l).char_width();
+
+	      if (dx_lrc > l_char_width &&
+		  !may_have_another_left_link(right, right_nbh, l, lines) &&
+		  dx_lrc < 10.0f * l_char_width &&
+			   cline_col_min > rline_col_min &&
+		  cline_col_min > lline_col_min)
+	      {
+		const line_id_t out_right_nbh = output(right_nbh);
+
+		if (out_right_nbh != l)
+		  right(l) = l;
+		else
+		  output(right_nbh) = right_nbh;
+		continue;
+	      }
+	    }
+	  }
+
+//-----------------------------------------------------------------------------
+//   ___________________________
+//  |___________________________|
+//   ___________________________
+//  |___________________________|
+//      ________________________
+//     |________________________|
+//   ___________________________
+//  |___________________________|
+//
+//  Simple case : paragraphs are justified on the left. We try to find any
+//  indentation like above.
+//
+//-----------------------------------------------------------------------------
+
+	  {
+	    const line_id_t ror_nbh = right(right_nbh);
+	    const box2d& ror_line_bbox = lines(ror_nbh).bbox();
+	    const int rorline_col_min  = ror_line_bbox.pmin().col();
+
+	    bool right_ror_min_aligned = false;
+	    bool left_right_aligned = false;
+	    const int dx_lr = std::abs(lline_col_min - rline_col_min);
+	    const int dx_rror_min = std::abs(rline_col_min - rorline_col_min);
+
+	    if (dx_rror_min < delta_alignment)
+	      right_ror_min_aligned = true;
+
+	    if (dx_lr < delta_alignment)
+	      left_right_aligned = true;
+
+	    if (right_ror_min_aligned && left_right_aligned &&
+		ror_nbh != right_nbh)
+	    {
+	      const int left_right_col_min = std::min(lline_col_min, rline_col_min);
+	      const int dx_lrc = std::abs(left_right_col_min - cline_col_min);
+	      const float l_char_width = 1.5f * lines(l).char_width();
+
+	      if (dx_lrc > l_char_width &&
+		  !may_have_another_left_link(right, right_nbh, l, lines) &&
+		  dx_lrc < 10.0f * l_char_width &&
+			   cline_col_min > rline_col_min &&
+		  cline_col_min > lline_col_min)
+	      {
+		const line_id_t out_right_nbh = output(right_nbh);
+
+		if (out_right_nbh != l)
+		  right(l) = l;
+		else
+		  output(right_nbh) = right_nbh;
+		continue;
+	      }
+	    }
+	  }
+
+//-----------------------------------------------------------------------------
+//   ___________________________
+//  |___________________________|
+//           ___________
+//          |___________|
+//      ________________________
+//     |________________________|
+//   ___________________________
+//  |___________________________|
+//
+//  Simple case : paragraphs are justified on the left. We try to find any
+//  indentation like above.
+//
+//-----------------------------------------------------------------------------
+
+	  {
+	    const line_id_t ror_nbh = right(right_nbh);
+	    const box2d& ror_line_bbox = lines(ror_nbh).bbox();
+	    const int rorline_col_min  = ror_line_bbox.pmin().col();
+
+	    bool left_ror_aligned = false;
+	    const int dx_lror = std::abs(lline_col_min - rorline_col_min);
+
+	    if (dx_lror < delta_alignment)
+	      left_ror_aligned = true;
+
+	    if (left_ror_aligned)
+	    {
+	      const int left_ror_col_min = std::min(lline_col_min, rorline_col_min);
+	      const int dx_lrorc = std::abs(left_ror_col_min - cline_col_min);
+	      const float l_char_width = 1.5f * lines(l).char_width();
+	      const int dx_lrorr = std::abs(left_ror_col_min - rline_col_min);
+	      const int dx_crmax = std::abs(rline_col_max - cline_col_max);
+
+	      if (dx_lrorc > l_char_width &&
+		  dx_lrorr > 5 * l_char_width &&
+		  dx_lrorr > dx_lrorc &&
+		  dx_crmax > 5 * l_char_width &&
+		  !may_have_another_left_link(right, right_nbh, l, lines) &&
+		  dx_lrorc < 10.0f * l_char_width &&
+			     cline_col_min > rorline_col_min &&
+		  cline_col_min > lline_col_min)
+	      {
+		right(right_nbh) = right_nbh;
+		continue;
+	      }
+	    }
+	  }
+
+
+// Strange case
+	  {
+	    if (rline_col_min > current_line_bbox.pcenter().col()
+		&& !may_have_another_left_link(right, right_nbh, l, lines)
+		&& cline_col_max < rline_col_max
+		&& output(right_nbh) == l)
+	    {
+	      output(right_nbh) = right_nbh;
+	    }
+	  }
 
 //-----------------------------------------------------------------------------
 //   ___________________________
@@ -490,7 +788,7 @@ namespace scribo
 	      const float l_char_width = 1.5f * lines(l).char_width();
 
 	      if (dx_rrorc > l_char_width &&
-		  dx_rrorc < 3.0f * l_char_width &&
+		  dx_rrorc < 10.0f * l_char_width &&
 			     cline_col_min > rline_col_min &&
 		  cline_col_max >= rline_col_max)
 	      {
@@ -501,14 +799,26 @@ namespace scribo
 	  }
 	}
 
-
       // Only debug
 
       // {
       // 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
 
-      // 	for (unsigned i = 0; i < output.nelements(); ++i)
-      // 	  output(i) = scribo::make::internal::find_root(output, i);
+	  // const util::array<value::int_u16> backup = output;
+	  // for (unsigned i = 0; i < output.nelements(); ++i)
+	  // {
+	  //   const value::int_u16 current_neighbor = backup(i);
+	  //   output(i) = internal::find_root(output, i);
+	  //   const value::int_u16 root_index = output(i);
+
+	  //   for (unsigned j = 0; j < right.nelements(); ++j)
+	  //   {
+	  //     if (i != j &&
+	  //     	  current_neighbor != i &&
+	  //     	  right(j) == i)
+	  //     	internal::set_root(output, j, root_index);
+	  //   }
+	  // }
 
       // 	mln::util::array<accu::shape::bbox<point2d> > nbbox(output.nelements());
       // 	for_all_lines(l, lines)

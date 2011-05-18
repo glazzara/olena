@@ -461,8 +461,8 @@ namespace scribo
 	if (l_cur_height < l_ted_x_height
 	    && l_cur_height > 0.05f * l_ted_x_height
 	    && float(l_cur_width) / float(l_cur.card()) < l_ted.char_width()
-	    && dx < l_ted_cw
-	    && l_cur_pmin.row() < l_ted_pmax.row())
+	    && dx < 2 * l_ted_cw
+	    && l_cur_pmin.row() < l_ted.baseline())
 	{
 	  l_cur.update_type(line::Punctuation);
 	  return true;
@@ -741,11 +741,12 @@ namespace scribo
 		  // vertically aligned
 		  // Obviously no separators between the two lines
 		  if ((l_info.card() <= 5 ||
-		       (std::abs(l_info.baseline() - mc_info.baseline()) < 5
-			&& std::abs(l_info.meanline() - mc_info.meanline()) < 5))
-		      && dx < l_ted_cw && dy < 0
-		      && not (l_info.holder().components().has_separators()
-			      && between_separators(l_info, mc_info)))
+		       (std::abs(l_info.baseline() - mc_info.baseline())
+			< 5 && std::abs(l_info.meanline() -
+					mc_info.meanline()) < 5))
+		    && dx < l_ted_cw && dy < 0
+		    && 	not (l_info.holder().components().has_separators()
+		  	     && between_separators(l_info, mc_info)))
 		    l = do_union(lines, l, mc,  parent);
 		  // }
 
@@ -1046,7 +1047,6 @@ namespace scribo
 	one_merge_pass(2, input_domain, v, lines, parent); // <- last pass
 // 	ts = t.stop();
 // 	std::cout << "time " << ts << std::endl;
-
 
 	lines.force_stats_update();
 

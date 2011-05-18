@@ -1000,21 +1000,22 @@ namespace scribo
       const int dy = bb1.pmax().row() - bb2.pmax().row();
 
       // The two characters must be distinct
-      if (space < 0)
-	return false;
+      // if (space < 0)
+      // 	return false;
 
       if (// Approximately the same width
-	((std::max(w1, w2) / std::min(w1, w2)) > 1.1f ||
+	((std::max(w1, w2) / std::min(w1, w2)) > 1.3 ||
 	 // One character must not be smaller than the space between
 	 // the two characters
 	   (w1 < space || w2 < space))
 	// If the two characters have a different width they must also
 	// have a different height
-	  && not (std::max(h1, h2) / std::min(h1, h2) <= 1.5f))
+	  && not (std::max(h1, h2) / std::min(h1, h2) <= 1.7f))
 	return false;
 
       // Approximately aligned on baseline
-      if (std::abs(dy) > 10)
+      if (std::abs(dy) > 10 &&
+	  not (std::max(h1, h2) / std::min(h1, h2) <= 1.7f))
 	return false;
 
       return true;
@@ -1048,6 +1049,10 @@ namespace scribo
     unsigned index = 0;
     float min_base = 0.0f;
     const unsigned clusters_b_nelements = clusters_b.nelements();
+
+    if (clusters_b_nelements >= 3)
+      return data_->baseline_clusters_.mean();
+
 
     for (unsigned i = 0; i < clusters_b_nelements; ++i)
     {
@@ -1085,6 +1090,9 @@ namespace scribo
     unsigned index = 0;
     float max_mean = 0.0f;
     const unsigned clusters_m_nelements = clusters_m.nelements();
+
+    if (clusters_m_nelements >= 3)
+      return data_->meanline_clusters_.mean();
 
     for (unsigned i = 0; i < clusters_m_nelements; ++i)
     {
