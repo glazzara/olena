@@ -1,3 +1,12 @@
+2011-05-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make code for icdar 2009 compile.
+
+	* icdar/2009/hsc/clean_input.hh: Use pcenter().
+
+	* icdar/2009/hsc/ws_to_wsl.hh: Update call to
+	make::p_vertices_with_mass_centers.
+
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Add milena library components.

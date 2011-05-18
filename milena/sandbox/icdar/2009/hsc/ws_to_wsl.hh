@@ -136,7 +136,7 @@ namespace mln
     def::coord col() const
     {
       mln_invariant(valid_);
-      return static_cast<def::coord>(0.49999f + mean_[1]); // col = coord #1 
+      return static_cast<def::coord>(0.49999f + mean_[1]); // col = coord #1
     }
 
     /// Get the covariance matrix.
@@ -184,7 +184,7 @@ namespace mln
     algebra::mat<2,2,float> cov_, cov_1_;
     float lambda1_, lambda2_;
   };
-  
+
 
 
   template <typename L>
@@ -264,7 +264,7 @@ namespace mln
     typedef util::graph G;
 
     G gr = make::region_adjacency_graph(ws, c8(), n_basins);
-    
+
     util::array<mahalanobis> m;
     m = mahalanobis_from_images(ws, small, n_basins);
 
@@ -311,7 +311,7 @@ namespace mln
 		 literal::red);
 
       typedef p_vertices< G, fun::i2v::array<point2d> > pv_t;
-      pv_t pv = make::p_vertices_with_mass_centers(ws, n_basins, gr);
+      pv_t pv = make::p_vertices_with_mass_centers(ws, gr);
 
       debug::draw_graph(cool, pv,
 			literal::green,
@@ -321,7 +321,7 @@ namespace mln
     }
 #endif // LOG
 
-    
+
     util::array<unsigned>
       v_left (n_basins + 1),
       v_right(n_basins + 1);
@@ -373,7 +373,7 @@ namespace mln
 
     }
 
-	
+
     util::array<L> parent(n_basins + 1);
 
     // Computing parent.
@@ -433,7 +433,7 @@ namespace mln
       unsigned s = input.nrows() / small.nrows();
 
       image2d<L> ws_nol = morpho::elementary::dilation(ws, c8());
-      
+
       mln_piter(box2d) p(input.domain());
       for_all(p)
 	if (input(p))

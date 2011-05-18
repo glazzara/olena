@@ -34,7 +34,7 @@ namespace mln
 	    ok(l) = true; // into bg
 	    continue;
 	  }
-	int center_col = box[l].center().col();
+	int center_col = box[l].pcenter().col();
 	if (center_col >= max_col - 3 ||
 	    center_col <= 3)
 	  ok(l) = true;
