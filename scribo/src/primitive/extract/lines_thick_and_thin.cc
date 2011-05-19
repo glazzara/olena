@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     input, length, delta);
   I vseparators = preprocessing::rotate_90(
       primitive::extract::lines_h_thick_and_thin(
-	preprocessing::rotate_90(input), length, delta, 0.05, 0.80, 2), false);
+	preprocessing::rotate_90(input), length, delta, 0.1, 0.80, 2), false);
 
   I separators = duplicate(vseparators);
   separators += hseparators;

@@ -182,14 +182,14 @@ namespace scribo
 	    mln_ch_value(I,bool)
 	      vseparators = preprocessing::rotate_90(
 	       	primitive::extract::lines_h_thick_and_thin(
-		  preprocessing::rotate_90(processed_image), 101, 3, 0.05, 0.80, 2), false),
+		  preprocessing::rotate_90(processed_image), 101, 3, 0.2, 0.6, 1), false),
 	      hseparators = primitive::extract::lines_h_thick_and_thin(
 		processed_image, 101, 3);
 
 	    doc.set_vline_separators(vseparators);
 	    doc.set_hline_separators(hseparators);
 
-	    separators = vseparators;
+	    separators = duplicate(vseparators);
 	    separators += hseparators;
 
 	    border::resize(processed_image, border::thickness);
@@ -202,7 +202,6 @@ namespace scribo
 	  input_cleaned = primitive::remove::separators(processed_image,
 							separators);
 
-	  doc.set_binary_image_wo_seps(input_cleaned);
 	  on_progress();
 	}
 
@@ -231,7 +230,7 @@ namespace scribo
 	{
 	  on_new_progress_label("Denoise...");
 
-	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 3);
+	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 10);
 
 	  // Debug
 #  ifndef SCRIBO_NDEBUG
@@ -242,13 +241,15 @@ namespace scribo
 	  on_progress();
 	}
 
+	doc.set_binary_image_wo_seps(input_cleaned);
+
 	/// Finding components.
 	on_new_progress_label("Finding components...");
 
+	// NOTE: Component features computation is disabled.
 	V ncomponents;
 	component_set<L>
-	  components = scribo::primitive::extract::components(original_image,
-							      input_cleaned,
+	  components = scribo::primitive::extract::components(input_cleaned,
 							      c8(),
 							      ncomponents);
 
@@ -269,7 +270,7 @@ namespace scribo
 
 	on_new_progress_label("Filtering components");
 
-	components = scribo::filter::components_small(components, 3);
+	components = scribo::filter::components_small(components, 10);
 
 	on_progress();
 

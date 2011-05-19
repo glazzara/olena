@@ -200,7 +200,7 @@ int main(int argc, char* argv[])
 
   // Saving results
   std::cout << "Saving results..." << std::endl;
-  scribo::io::xml::save(doc, "page.xml", scribo::io::xml::Page);
+//  scribo::io::xml::save(doc, "page.xml", scribo::io::xml::Page);
 
   std::cout << "End of process - " << t << std::endl;
 

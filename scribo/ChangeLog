@@ -1,3 +1,19 @@
+2011-05-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve results.
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Fix structural element length.
+
+	* scribo/primitive/extract/non_text_hdoc.hh: Filter too small images.
+
+	* scribo/text/paragraphs.hh: Make it compile.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Denoise
+	larger objects. Fix vseparator image and binary_image_wo_seps.
+
+	* src/primitive/extract/lines_thick_and_thin.cc: Be less severe on
+	parameters.
+
 2011-05-18 Julien Marquegnies <marquegnies@lrde.epita.fr>
 
 	Improve paragraph grouping for historical documents.

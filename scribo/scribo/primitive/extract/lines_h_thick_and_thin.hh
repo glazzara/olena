@@ -49,6 +49,7 @@
 # include <mln/pw/all.hh>
 # include <mln/core/routine/duplicate.hh>
 # include <mln/win/rectangle2d.hh>
+# include <mln/win/hline2d.hh>
 # include <mln/morpho/dilation.hh>
 
 # include <mln/data/convert.hh>
@@ -63,6 +64,7 @@
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/primitive/internal/rd.hh>
 
+# include <scribo/debug/logger.hh>
 
 
 namespace scribo
@@ -485,8 +487,15 @@ namespace scribo
 	mln_concrete(I) mask = internal::detect_thick(tags);
 	internal::add_thin(tags, mask);
 
+
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  mask, "lines_h_thick_and_thin_mask");
+
 	image2d<bool> output = internal::rd3_fast(mask, binary_image,
-						  length, delta);
+						  2 * length, 2 * delta);
+
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  output, "lines_h_thick_and_thin_output_before_filter");
 
 	// Remove invalid lines
 	typedef scribo::def::lbl_type V;
@@ -498,6 +507,10 @@ namespace scribo
 	for_all_ncomponents(e, nlabels)
 	  if (bbox(e).width() < filter_factor * length || bbox(e).width() / bbox(e).height() < 3)
 	    data::fill(((output | bbox(e)).rw() | (pw::value(lbl) == pw::cst(e))).rw(), false);
+
+	debug::logger().log_image(debug::Results,
+				  output, "lines_h_thick_and_thin_output");
+
 
 	trace::exiting("scribo::primitive::extract::lines_h_thick_and_thin");
 	return output;

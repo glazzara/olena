@@ -47,6 +47,8 @@
 
 # include <scribo/filter/objects_small.hh>
 # include <scribo/filter/objects_on_border.hh>
+# include <scribo/filter/objects_v_thin.hh>
+# include <scribo/filter/objects_h_thin.hh>
 
 //DEBUG
 #include <mln/util/timer.hh>
@@ -111,6 +113,8 @@ namespace scribo
 
 	elements = scribo::filter::components_small(elements, 200);
 	elements = scribo::filter::components_on_border(elements);
+	elements = scribo::filter::objects_v_thin(elements, 100);
+	elements = scribo::filter::objects_h_thin(elements, 100);
 
 	// Debug
 	{
