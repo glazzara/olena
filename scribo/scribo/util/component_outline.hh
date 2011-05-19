@@ -264,13 +264,16 @@ namespace scribo
 	mln::point2d node = find_farthest(ima, begin, end, precision);
 
 	if (node != begin)
-	{
-	  split_rec(ima, begin, node, l, precision);
+	  {
+	    if (find_farthest(ima, begin, node, precision) != end)
+	      split_rec(ima, begin, node, l, precision);
 
-	  l.append(node);
+	    l.append(node);
+	    
+	    if (find_farthest(ima, node, end, precision) != begin)
+	      split_rec(ima, node, end, l, precision);
+	  }
 
-	  split_rec(ima, node, end, l, precision);
-	}
       }
 
       /// Init the spliting procedure on both side of the line.
@@ -318,9 +321,11 @@ namespace scribo
       get_initials(const I& ima)
       {
 	mln::point2d begin(mln::geom::min_row(ima),
-			   mln::geom::min_col(ima));
+			   mln::geom::max_col(ima)
+			   - ima.ncols() / 2);
 	mln::point2d end(mln::geom::max_row(ima),
-			 mln::geom::max_col(ima));
+			 mln::geom::max_col(ima)
+			 - ima.ncols() / 2);
 
 	while (ima(begin) == mln::literal::zero)
 	  begin[0]++;
@@ -346,7 +351,7 @@ namespace scribo
 
       mln_precondition(ima.is_valid());
 
-      mln::accu::shape::bbox<point2d> ab;
+      mln::accu::shape::bbox<mln::point2d> ab;
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ab.take(p);

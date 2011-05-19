@@ -14,6 +14,12 @@
 	* src/primitive/extract/lines_thick_and_thin.cc: Be less severe on
 	parameters.
 
+2011-05-20 Coddy Levi <levi@lrde.epita.fr>
+
+	Correct a bug in the compononent outlining algorithm.
+
+	* scribo/util/component_outline.hh: Here.
+
 2011-05-18 Julien Marquegnies <marquegnies@lrde.epita.fr>
 
 	Improve paragraph grouping for historical documents.
