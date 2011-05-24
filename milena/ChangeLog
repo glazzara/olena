@@ -1,3 +1,12 @@
+2011-05-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a tool to compute 3D connectivity numbers.
+
+	* tools/connectivity_numbers_3d.cc: New.
+	* tools/Makefile.am (noinst_PROGRAMS):
+	Add connectivity_numbers_3d.
+	(connectivity_numbers_3d_SOURCES): New.
+
 2011-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have tools/compute_local_configurations compile.

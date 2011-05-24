@@ -23,4 +23,7 @@ bin_PROGRAMS =					\
 
 noinst_PROGRAMS = compute_local_configurations
 
+noinst_PROGRAMS += connectivity_numbers_3d
+connectivity_numbers_3d_SOURCES = connectivity_numbers_3d.cc
+
 # FIXME: Add some tests for these tools.
