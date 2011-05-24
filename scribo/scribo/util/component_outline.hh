@@ -209,10 +209,11 @@ namespace scribo
       find_farthest(const I& ima,
 		    const mln::point2d& begin,
 		    const mln::point2d& end,
-		    float precision)
+		    float precision,
+		    int* nb)
       {
 	float d = 0.;
-	float dmax = 0.;
+	float dmax = -1.;
 	e_dir dir = find_first_dir(ima, begin);
 
 	float a = end[1] - begin[1];
@@ -229,6 +230,8 @@ namespace scribo
 
 	while (cur != end)
 	{
+	  if (nb != NULL)
+	    (*nb)++;
 	  old = cur;
 	  cur = next_pt_in_contour(ima, cur, &dir);
 
@@ -237,7 +240,7 @@ namespace scribo
 	  if (d < 0)
 	    d = -d;
 
-	  if (d > dmax)
+	  if (d >= dmax)
 	  {
 	    dmax = d;
 	    max = cur;
@@ -245,7 +248,7 @@ namespace scribo
 
 	}
 
-	if (dmax > precision * norm)
+	if (dmax >= precision * norm)
 	  return max;
 	else
 	  return begin;
@@ -261,16 +264,22 @@ namespace scribo
 		mln::p_array<mln::point2d>& l,
 		float precision)
       {
-	mln::point2d node = find_farthest(ima, begin, end, precision);
+	int nb = 0;
+	mln::point2d node = find_farthest(ima, begin, end, precision, &nb);
+	int nb_old = nb;
 
 	if (node != begin)
 	  {
-	    if (find_farthest(ima, begin, node, precision) != end)
+	    nb = 0;
+	    mln::point2d test_left = find_farthest(ima, begin, node, precision, &nb);
+	    if ((test_left != end) && (test_left != begin) && (nb_old > nb))
 	      split_rec(ima, begin, node, l, precision);
 
 	    l.append(node);
 	    
-	    if (find_farthest(ima, node, end, precision) != begin)
+	    nb = 0;
+	    mln::point2d test_right = find_farthest(ima, node, end, precision, &nb);
+	    if ((test_right != begin) && (test_right != end) && (nb_old > nb))
 	      split_rec(ima, node, end, l, precision);
 	  }
 
@@ -287,7 +296,7 @@ namespace scribo
       {
 	mln::point2d node;
 
-	node = find_farthest(ima, begin, end, precision);
+	node = find_farthest(ima, begin, end, precision, NULL);
 
 	l.append(begin);
 
@@ -302,7 +311,7 @@ namespace scribo
 
 	l.append(end);
 
-	node = find_farthest(ima, end, begin, precision);
+	node = find_farthest(ima, end, begin, precision, NULL);
 
 	if (node != end)
 	{
@@ -362,7 +371,7 @@ namespace scribo
       std::pair<mln::point2d, mln::point2d> initials =
 	internal::get_initials(ima);
 
-      std::cout << " - " << initials.first << " - " << initials.second << std::endl;
+      std::cout << " - " << initials.first << " - " << initials.first << std::endl;
 
       internal::split(ima,
 		      initials.first,

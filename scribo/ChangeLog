@@ -1,3 +1,9 @@
+2011-05-24 Coddy Levi <levi@lrde.epita.fr>
+
+	Further correction of the component outlining bug.
+
+	* scribo/util/component_outline.hh: Here.
+
 2011-05-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve results.
@@ -42,7 +48,7 @@
 	* tests/filter/Makefile.am,
 	* tests/util/Makefile.am: Add new targets.
 
-	* tests/filter/objects_on_border.cc,
+v	* tests/filter/objects_on_border.cc,
 	* tests/util/component_outline.cc: New.
 
 	* tests/img/comp_on_borders.pbm,
