@@ -17,6 +17,7 @@
 
 include $(top_srcdir)/milena/tools/tools.mk
 
+# FIXME: Add some tests for these tools.
 bin_PROGRAMS =					\
   seed2tiling 					\
   area_flooding
@@ -24,6 +25,6 @@ bin_PROGRAMS =					\
 noinst_PROGRAMS = compute_local_configurations
 
 noinst_PROGRAMS += connectivity_numbers_3d
-connectivity_numbers_3d_SOURCES = connectivity_numbers_3d.cc
-
-# FIXME: Add some tests for these tools.
+connectivity_numbers_3d_SOURCES =		\
+  connectivity_numbers_3d.cc			\
+  connectivity_numbers_3d.hh

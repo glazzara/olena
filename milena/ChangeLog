@@ -1,3 +1,13 @@
+2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor soon-to-be shared components of connectivity_numbers_3d.
+
+	* tools/connectivity_numbers_3d.cc: Move most of the contents of
+	this file into..
+	* tools/connectivity_numbers_3d.hh: ...this (new) file.
+	* tools/Makefile.am (connectivity_numbers_3d_SOURCES):
+	Add connectivity_numbers_3d.hh
+
 2011-05-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a tool to compute 3D connectivity numbers.
