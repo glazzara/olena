@@ -177,7 +177,7 @@ namespace scribo
 	return (dir);
       }
 
-      /// Give the next point in the contour
+      /// find the next point in the contour of the image
       template <typename I>
       static
       mln::point2d
@@ -201,53 +201,86 @@ namespace scribo
 	return cur;
       }
 
+      /// Give an array of the pixels on the contour
+      /// Ordered so that two consecutive indexes correspond
+      /// to two adjacent points.
+      template <typename I>
+      mln::p_array<mln::point2d>
+      get_contour(const I&ima,
+		  const mln::point2d& first)
+      {
+	mln::p_array<mln::point2d> contour;
+	mln::point2d current;
+
+	e_dir dir = find_first_dir(ima, first);
+
+	contour.append(first);
+
+	current = next_pt_in_contour(ima, first, &dir);
+	
+	while (current != first)
+	  {
+	    contour.append(current);
+	    current = next_pt_in_contour(ima, current, &dir);
+	  }
+
+	return contour;
+      }
+
+      /// Give the next point in the contour array
+      inline
+      unsigned
+      get_next(mln::p_array<mln::point2d>& contour,
+	       unsigned i)
+      {
+	if (i + 1 == contour.nsites())
+	  return 0;
+	else
+	  return i + 1;
+      }
+
       /// Give The farthest point from line (begin, end) or NULL
       /// if that distance is inferior to the given precision. (bottleneck)
-      template <typename I>
-      static inline
-      mln::point2d
-      find_farthest(const I& ima,
-		    const mln::point2d& begin,
-		    const mln::point2d& end,
-		    float precision,
-		    int* nb)
+      inline
+      unsigned
+      find_farthest(mln::p_array<mln::point2d>& contour,
+		    unsigned begin,
+		    unsigned end,
+		    float precision)
       {
 	float d = 0.;
-	float dmax = -1.;
-	e_dir dir = find_first_dir(ima, begin);
+	float dmax = 0.;
 
-	float a = end[1] - begin[1];
-	float b = begin[0] - end[0];
-	float c = begin[1] * end[0] - begin[0] * end[1];
+	float a = contour[end][1] - contour[begin][1];
+	float b = contour[begin][0] - contour[end][0];
+	float c = contour[begin][1] * contour[end][0]
+	  - contour[begin][0] * contour[end][1];
 	float norm = sqrt ((a * a) + (b * b));
 
-	mln::point2d max;
-	mln::point2d cur;
-	mln::point2d old;
+	unsigned max;
+	unsigned cur;
+	unsigned old;
 
 	cur = begin;
 	max = cur;
 
 	while (cur != end)
-	{
-	  if (nb != NULL)
-	    (*nb)++;
-	  old = cur;
-	  cur = next_pt_in_contour(ima, cur, &dir);
-
-	  d = a * cur[0] + cur[1] * b + c;
-
-	  if (d < 0)
-	    d = -d;
-
-	  if (d >= dmax)
 	  {
-	    dmax = d;
-	    max = cur;
+	    old = cur;
+	    cur = get_next(contour, cur);
+
+	    d = a * contour[cur][0] + contour[cur][1] * b + c;
+	    
+	    if (d < 0)
+	      d = -d;
+	    
+	    if (d >= dmax)
+	      {
+		dmax = d;
+		max = cur;
+	      }
 	  }
-
-	}
-
+	
 	if (dmax >= precision * norm)
 	  return max;
 	else
@@ -256,71 +289,24 @@ namespace scribo
 
       /// Split the line (begin, end) at the farthest point on the curve
       /// and apply itself recursively.
-      template <typename I>
       void
-      split_rec(const I& ima,
-		const mln::point2d& begin,
-		const mln::point2d& end,
+      split_rec(unsigned begin,
+		unsigned end,
 		mln::p_array<mln::point2d>& l,
+		mln::p_array<mln::point2d>& contour,
 		float precision)
       {
-	int nb = 0;
-	mln::point2d node = find_farthest(ima, begin, end, precision, &nb);
-	int nb_old = nb;
+	unsigned node = find_farthest(contour, begin, end, precision);
 
 	if (node != begin)
 	  {
-	    nb = 0;
-	    mln::point2d test_left = find_farthest(ima, begin, node, precision, &nb);
-	    if ((test_left != end) && (test_left != begin) && (nb_old > nb))
-	      split_rec(ima, begin, node, l, precision);
+	    split_rec(begin, node, l, contour, precision);
 
-	    l.append(node);
-	    
-	    nb = 0;
-	    mln::point2d test_right = find_farthest(ima, node, end, precision, &nb);
-	    if ((test_right != begin) && (test_right != end) && (nb_old > nb))
-	      split_rec(ima, node, end, l, precision);
+	    l.append(contour[node]);
+
+	    split_rec(node, end, l, contour, precision);
 	  }
 
-      }
-
-      /// Init the spliting procedure on both side of the line.
-      template <typename I>
-      void
-      split(const I& ima,
-	    const mln::point2d& begin,
-	    const mln::point2d& end,
-	    mln::p_array<mln::point2d>& l,
-	    float precision)
-      {
-	mln::point2d node;
-
-	node = find_farthest(ima, begin, end, precision, NULL);
-
-	l.append(begin);
-
-	if (node != begin)
-	{
-	  split_rec(ima, begin, node, l, precision);
-
-	  l.append(node);
-
-	  split_rec(ima, node, end, l, precision);
-	}
-
-	l.append(end);
-
-	node = find_farthest(ima, end, begin, precision, NULL);
-
-	if (node != end)
-	{
-	  split_rec(ima, end, node, l, precision);
-
-	  l.append(node);
-
-	  split_rec(ima, node, begin, l, precision);
-	}
       }
 
       /// Find (simply) 2 points on the contour of the component
@@ -367,21 +353,31 @@ namespace scribo
 
       std::cout << ab.to_result() << std::endl;
 
-      mln::p_array<mln::point2d> contour;
+      mln::p_array<mln::point2d> approx_contour;
       std::pair<mln::point2d, mln::point2d> initials =
 	internal::get_initials(ima);
 
-      std::cout << " - " << initials.first << " - " << initials.first << std::endl;
+      mln::p_array<mln::point2d> contour;
 
-      internal::split(ima,
-		      initials.first,
-		      initials.second,
-		      contour,
-		      precision);
+      contour = internal::get_contour(ima, initials.first);
+
+      std::cout << " - " << initials.first
+		<< " - " << initials.first << std::endl;
+
+      internal::split_rec(0,
+			  contour.nsites() / 2,
+			  approx_contour,
+			  contour,
+			  precision);
+      internal::split_rec(contour.nsites() / 2,
+			  0,
+			  approx_contour,
+			  contour,
+			  precision);
 
       mln::trace::exiting("scribo::component_outline");
 
-      return contour;
+      return approx_contour;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

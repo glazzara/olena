@@ -1,3 +1,9 @@
+2011-05-25 Coddy Levi <levi@lrde.epita.fr>
+
+	Deep modifications and clean correction of the previous bug.
+
+	* scribo/util/component_outline.hh: Here.
+
 2011-05-24 Coddy Levi <levi@lrde.epita.fr>
 
 	Further correction of the component outlining bug.
