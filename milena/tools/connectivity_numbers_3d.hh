@@ -115,6 +115,8 @@
     number of neighbors.  This number fits on an mln::value::int_u8
     when the dimension is lower or equal to 5.  */
 typedef mln::value::int_u8 conn_number_t;
+/// Type of a vector of connectivity numbers.
+typedef std::vector<conn_number_t> conn_numbers_t;
 
 /// Type of a 3D (neighborhood) configuration number (index).
 typedef mln::value::int_u32 config_3d_t;
@@ -136,16 +138,65 @@ struct within_c18 : mln::Function_v2b<within_c18>
   bool operator()(const mln::point3d& p) const { return f_within_c18(p); }
 };
 
-/// Canevas to compute 3D connectivity numbers.
+/* FIXME: Concurrent accesses to the neighborhood (reference) returned
+   by routines such as mln::c26() are not thread-safe.
+
+   Short explanation
+
+     This neighborhood is not thread-safe, because
+     mln::util::set<T>::freeze_() is not thread-safe.
+
+   Long explanation
+
+     The neighborhood is built on a window object containing an
+     mln::util::set of delta-points.  However, this set is implemented
+     as a kind of variant containing an array and a set, with actual
+     data in one of these containers or the other at any time.
+     mln::util:set changes its internal representation when the nature
+     of the current operation (read or write) changes with respect to
+     the previously performed operation.  Alas, with concurrent
+     accesses, this does not work as expected.
+
+     The issue here is that mln::c26() (an similar routines) creates a
+     neighborhood containing an mln::util::set where only write
+     operations are performed at the beginning.  The next read
+     operation (occurring when the neighborhood is browsed) may be
+     done currently, and mln::util::set<T>::freeze_() may then be
+     called concurrently.  As it has not been designed to support
+     concurrent calls, it generally causes run-time errors (double
+     deallocations, deallocation before allocation, etc.).
+
+   Workaround
+
+     A simple workaround is to prevent concurrent accesses, by copying
+     the neighborhood returned by mln::c26() and other routines,
+     instead of using it directly (i.e., as a shared reference).
+
+     Another option would be to force-freeze the mln::util::set
+     contained in the neighborhood `nbh', e.g. by calling
+     `nbh.win().std_vector()'.  (We have to peform an indirect
+     invocation, as mln::util::set<T>::freeze_() is a private method
+     and cannot be called directly.)
+
+  To do
+
+     We must improve mln::util::set<T>::freeze_() and make it thread
+     safe.  And maybe get rid of mln::c26() and others, or change
+     their implementations.  */
+
+/*----------------------------------------------------.
+| Sequential computation of 3D connectivity numbers.  |
+`----------------------------------------------------*/
+
+/// Canevas to compute 3D connectivity numbers (in sequence)
 ///
-/// \param f  A function computing the
+/// \param f  A function computing the connectivity number for each
+///           configuration (as a 3x3x3 3D image).
 template <typename F>
-std::vector<conn_number_t>
+conn_numbers_t
 connectivity_numbers_3d(F f)
 {
   using namespace mln;
-  using value::int_u8;
-  using value::int_u32;
 
   typedef image3d<bool> I;
   // B must be a model of mln::Box.
@@ -160,7 +211,7 @@ connectivity_numbers_3d(F f)
   const unsigned max_nneighbs = mlc_pow_int(3, dim) - 1;
   const unsigned nconfigs = mlc_pow_int(2, max_nneighbs);
 
-  std::vector<conn_number_t> numbers(nconfigs, 0);
+  conn_numbers_t numbers(nconfigs, 0);
 
   typedef neighb3d N;
   N nbh = c26();
@@ -202,19 +253,23 @@ connectivity_number_3d__6_26_one(const mln::image3d<bool>& ima)
   typedef mln_psite_(I) P;
   P p(0, 0, 0);
 
+  // Create a copy of mln::c6()'s own neighborhood to avoid
+  // thread-unsafe accesses to this neighborhood (see the long
+  // explanation above).
+  mln::neighb3d nbh = c6();
   config_3d_t unused_nl;
   // Restrict the image to the 18-c neighborhood of P.
   image_if<image3d<config_3d_t>, within_c18> lab =
-    labeling::blobs(ima | within_c18(), c6(), unused_nl);
+    labeling::blobs(ima | within_c18(), nbh, unused_nl);
   std::set<config_3d_t> s;
-  mln_niter_(N) n(c6(), p);
+  mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
       s.insert(lab(n));
   return s.size();
 }
 
-std::vector<conn_number_t>
+conn_numbers_t
 connectivity_numbers_3d__6_26()
 {
   return connectivity_numbers_3d(connectivity_number_3d__6_26_one);
@@ -231,12 +286,16 @@ connectivity_number_3d__26_6_one(const mln::image3d<bool>& ima)
 {
   using namespace mln;
 
+  // Create a copy of mln::c26()'s own neighborhood to avoid
+  // thread-unsafe accesses to this neighborhood (see the long
+  // explanation above).
+  mln::neighb3d nbh = c26();
   conn_number_t n;
-  labeling::blobs(ima, c26(), n);
+  labeling::blobs(ima, nbh, n);
   return n;
 }
 
-std::vector<conn_number_t>
+conn_numbers_t
 connectivity_numbers_3d__26_6()
 {
   return connectivity_numbers_3d(connectivity_number_3d__26_6_one);
@@ -257,17 +316,21 @@ connectivity_number_3d__6p_18_one(const mln::image3d<bool>& ima)
   typedef mln_psite_(I) P;
   P p(0, 0, 0);
 
+  // Create a copy of mln::c6()'s own neighborhood to avoid
+  // thread-unsafe accesses to this neighborhood (see the long
+  // explanation above).
+  mln::neighb3d nbh = c6();
   config_3d_t unused_nl;
-  image3d<config_3d_t> lab = labeling::blobs(ima, c6(), unused_nl);
+  image3d<config_3d_t> lab = labeling::blobs(ima, nbh, unused_nl);
   std::set<config_3d_t> s;
-  mln_niter_(N) n(c6(), p);
+  mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
       s.insert(lab(n));
   return s.size();
 }
 
-std::vector<conn_number_t>
+conn_numbers_t
 connectivity_numbers_3d__6p_18()
 {
   return connectivity_numbers_3d(connectivity_number_3d__6p_18_one);
@@ -288,17 +351,21 @@ connectivity_number_3d__18_6p_one(const mln::image3d<bool>& ima)
   typedef mln_psite_(I) P;
   P p(0, 0, 0);
 
+  // Create a copy of mln::c18()'s own neighborhood to avoid
+  // thread-unsafe accesses to this neighborhood (see the long
+  // explanation above).
+  mln::neighb3d nbh = c18();
   config_3d_t unused_nl;
-  image3d<config_3d_t> lab = labeling::blobs(ima, c18(), unused_nl);
+  image3d<config_3d_t> lab = labeling::blobs(ima, nbh, unused_nl);
   std::set<config_3d_t> s;
-  mln_niter_(N) n(c18(), p);
+  mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
       s.insert(lab(n));
   return s.size();
 }
 
-std::vector<conn_number_t>
+conn_numbers_t
 connectivity_numbers_3d__18_6p()
 {
   return connectivity_numbers_3d(connectivity_number_3d__18_6p_one);

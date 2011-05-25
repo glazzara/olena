@@ -1,5 +1,19 @@
 2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make tools/connectivity_numbers_3d thread-safe.
+
+	* tools/connectivity_numbers_3d.hh
+	(connectivity_number_3d__6_26_one)
+	(connectivity_number_3d__26_6_one)
+	(connectivity_number_3d__6p_18_one)
+	(connectivity_number_3d__18_6p_one):
+	Create and use a copy of the neighborhood instead of using a
+	shared, thread-unsafe object.
+	Aesthetic changes.
+	* tools/connectivity_numbers_3d.cc: Aesthetic changes.
+
+2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor soon-to-be shared components of connectivity_numbers_3d.
 
 	* tools/connectivity_numbers_3d.cc: Move most of the contents of

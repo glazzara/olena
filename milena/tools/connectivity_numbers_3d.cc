@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     usage(argv[0]);
 
   std::string nbhs = argv[1];
-  std::vector<conn_number_t> conn_numbers;
+  conn_numbers_t conn_numbers;
   if      (nbhs == "6_26")  conn_numbers = connectivity_numbers_3d__6_26();
   else if (nbhs == "26_6")  conn_numbers = connectivity_numbers_3d__26_6();
   else if (nbhs == "6p_18") conn_numbers = connectivity_numbers_3d__6p_18();
