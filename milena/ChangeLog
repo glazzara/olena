@@ -1,5 +1,20 @@
 2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a parallel version of connectivity_numbers_3d using TBB.
+
+	* tools/connectivity_numbers_3d_tbb.hh,
+	* tools/connectivity_numbers_3d_tbb.cc:
+	New.
+	* tools/Makefile.am (CPPFLAGS_TBB, LDFLAGS_TBB): New.
+	(extra): New (phony) target.
+	(EXTRA_PROGRAMS)
+	(connectivity_numbers_3d_tbb_SOURCES)
+	(connectivity_numbers_3d_tbb_CPPFLAGS)
+	(connectivity_numbers_3d_tbb_LDFLAGS):
+	New variables.
+
+2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make tools/connectivity_numbers_3d thread-safe.
 
 	* tools/connectivity_numbers_3d.hh

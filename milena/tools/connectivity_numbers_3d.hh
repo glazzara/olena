@@ -216,8 +216,6 @@ connectivity_numbers_3d(F f)
   typedef neighb3d N;
   N nbh = c26();
 
-  /* FIXME: We compute these number in parallel...  Or help G++
-     vectorize this (is this possible?).  */
   for (config_3d_t i = 0; i < nconfigs; ++i)
   {
     // Create the local i-th configuration around P.
