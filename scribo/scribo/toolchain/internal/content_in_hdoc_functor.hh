@@ -132,6 +132,20 @@ namespace scribo
 	// Results
 	//=========
 	document<L> doc;
+
+
+
+#  ifndef SCRIBO_NDEBUG
+	//=============
+	// DEBUG TOOLS
+	//=============
+	virtual void on_start();
+	virtual void on_end();
+	virtual void on_progress();
+
+	mln::util::timer t;
+	mln::util::timer gt;
+#  endif // ! SCRIBO_NDEBUG
       };
 
 
@@ -164,6 +178,8 @@ namespace scribo
       {
 	mln_precondition(exact(original_image).is_valid());
 	mln_precondition(exact(processed_image).is_valid());
+
+	on_start();
 
 	doc.set_image(exact(original_image));
 	doc.set_binary_image(exact(processed_image));
@@ -352,6 +368,8 @@ namespace scribo
 	// Construct a line set.
 	line_set<L>
 	  lines = scribo::make::line_set(groups);
+
+	on_progress();
 
 
 	// Extract whitespace to improve text merging results afterwards.
@@ -594,6 +612,8 @@ namespace scribo
 	  on_progress();
 	}
 
+	on_end();
+
 	return doc;
       }
 
@@ -614,6 +634,39 @@ namespace scribo
       {
 	// Nothing
       }
+
+#  ifndef SCRIBO_NDEBUG
+
+      template <typename I>
+      void
+      content_in_hdoc_functor<I>::on_start()
+      {
+	gt.start();
+	t.start();
+      }
+
+      template <typename I>
+      void
+      content_in_hdoc_functor<I>::on_end()
+      {
+	gt.stop();
+	if (verbose)
+	  std::cout << "Total time: " << gt << std::endl;
+      }
+
+      template <typename I>
+      void
+      content_in_hdoc_functor<I>::on_progress()
+      {
+	t.stop();
+	if (verbose)
+	  std::cout << t << std::endl;
+	t.restart();
+      }
+
+
+#  endif // ! SCRIBO_NDEBUG
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

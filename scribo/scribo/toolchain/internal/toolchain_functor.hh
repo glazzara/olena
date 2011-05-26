@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,6 +27,7 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 
+# include <unistd.h>
 # include <iostream>
 
 namespace scribo
@@ -50,6 +52,8 @@ namespace scribo
 	// Triggers
 	//==========
 
+	virtual void on_start();
+	virtual void on_end();
 	virtual void on_progress();
 	virtual void on_new_progress_label(const char *label);
 
@@ -71,17 +75,37 @@ namespace scribo
       // Triggers
       //==========
 
+
+      inline
+      void Toolchain_Functor::on_start()
+      {
+	// Nothing
+      }
+
+      inline
+      void Toolchain_Functor::on_end()
+      {
+	// Nothing
+      }
+
       inline
       void Toolchain_Functor::on_progress()
       {
 	// Nothing
+	if (verbose)
+	  std::cout << std::endl;
       }
 
       inline
       void Toolchain_Functor::on_new_progress_label(const char *label)
       {
 	if (verbose)
-	  std::cout << label << std::endl;
+	{
+	  if (isatty(1))
+	    std::cout << "> \e[0;32m " << label << " \e[m - ";
+	  else
+	    std::cout << "> " << label << " - ";
+	}
       }
 
 # endif // ! MLN_INCLUDE_ONLY

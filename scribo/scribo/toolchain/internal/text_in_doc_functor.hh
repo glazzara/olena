@@ -130,6 +130,8 @@ namespace scribo
       line_set<typename text_in_doc_functor<I>::L>
       text_in_doc_functor<I>::operator()(const Image<I>& input)
       {
+	on_start();
+
 	// Remove separators
 	mln_ch_value(I,bool)
 	  separators,
@@ -386,6 +388,8 @@ namespace scribo
 	scribo::text::recognition(lines, ocr_language.c_str());
 
 	on_progress();
+
+	on_end();
 
 	output = lines;
 	return output;

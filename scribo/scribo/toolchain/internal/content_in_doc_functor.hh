@@ -162,6 +162,8 @@ namespace scribo
 	mln_precondition(exact(original_image).is_valid());
 	mln_precondition(exact(processed_image).is_valid());
 
+	on_start();
+
 	doc.set_image(exact(original_image));
 	doc.set_binary_image(exact(processed_image));
 
@@ -567,6 +569,8 @@ namespace scribo
 
 	  on_progress();
 	}
+
+	on_end();
 
 	return doc;
       }

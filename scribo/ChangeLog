@@ -1,5 +1,17 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new hooks in toolchain functors.
+
+	* toolchain/internal/toolchain_functor.hh: Here.
+
+	* toolchain/internal/content_in_doc_functor.hh,
+	* toolchain/internal/content_in_hdoc_functor.hh,
+	* toolchain/internal/text_in_doc_functor.hh,
+	* toolchain/internal/text_in_doc_preprocess_functor.hh: Make use
+	of them.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/util/component_precise_outline.hh: New. Precise component
 	outline extraction.
 
