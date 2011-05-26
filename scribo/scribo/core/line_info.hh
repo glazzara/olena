@@ -61,8 +61,6 @@
 # include <scribo/core/internal/sort_comp_ids.hh>
 # include <scribo/core/concept/serializable.hh>
 
-// DEBUG
-
 # include <scribo/core/stats.hh>
 
 namespace scribo

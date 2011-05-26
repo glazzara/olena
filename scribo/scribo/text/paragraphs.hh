@@ -23,50 +23,6 @@ using namespace mln;
 
 namespace scribo
 {
-
-  namespace internal
-  {
-
-//-------------------------------------
-// Extracting root of links
-//-------------------------------------
-    template <typename L>
-    inline
-    unsigned
-    find_root(line_links<L>& parent, unsigned x)
-    {
-      unsigned tmp_x = x;
-
-      while (parent(tmp_x) != tmp_x)
-	tmp_x = parent(tmp_x);
-
-      while (parent(x) != x)
-      {
-	const unsigned tmp = parent(x);
-	x = parent(x);
-	parent(tmp) = tmp_x;
-      }
-
-      return x;
-    }
-
-    template <typename L>
-    inline
-    void
-    set_root(line_links<L>& parent, unsigned x, const unsigned root)
-    {
-      while (parent(x) != x && parent(x) != root)
-      {
-	const unsigned tmp = parent(x);
-	x = parent(x);
-	parent(tmp) = root;
-      }
-
-      parent(x) = root;
-    }
-
-  }
-
   namespace filter
   {
 
@@ -799,25 +755,6 @@ namespace scribo
 	  }
 	}
 
-      // Post link processing
-
-      const line_links<L> backup = output.duplicate();
-      for (unsigned i = 0; i < output.nelements(); ++i)
-      {
-	const line_id_t current_neighbor = backup(i);
-	output(i) = scribo::internal::find_root(output, i);
-	const line_id_t root_index = output(i);
-
-	for (unsigned j = 0; j < right.nelements(); ++j)
-	{
-	  if (i != j &&
-	      current_neighbor != i &&
-	      right(j) == i)
-	    scribo::internal::set_root(output, j, root_index);
-	}
-      }
-
-
       // Only debug
       // {
       // 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
@@ -1352,7 +1289,7 @@ namespace scribo
 //    std::cout << "Extracting paragraphs" << std::endl;
     filter::paragraph_links(left, right, output, lines);
 
-    paragraph_set<L> par_set = make::paragraph(output);
+    paragraph_set<L> par_set = make::paragraph(output, right);
     return par_set;
   }
 }

@@ -76,6 +76,9 @@ namespace scribo
     bool needs_stats_update() const;
     void force_stats_update();
 
+    void set_delta_baseline(const int delta_baseline);
+    int delta_baseline() const;
+
   private:
     mln::util::array<line_id_t> line_ids_;
     mln::accu::shape::bbox<mln_site(L)> bbox_;
@@ -84,6 +87,7 @@ namespace scribo
     mln::value::rgb8 color_;
     float color_reliability_;
 
+    int delta_baseline_;
     bool needs_stats_update_;
     bool is_valid_;
   };
@@ -256,6 +260,20 @@ namespace scribo
     // FIXME: Update paragraph stats
 
     needs_stats_update_ = false;
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::set_delta_baseline(const int delta_baseline)
+  {
+    delta_baseline_ = delta_baseline;
+  }
+
+  template <typename L>
+  int
+  paragraph_info<L>::delta_baseline() const
+  {
+    return delta_baseline_;
   }
 
   template <typename L>

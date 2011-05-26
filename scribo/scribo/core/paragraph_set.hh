@@ -33,6 +33,7 @@
 # include <scribo/core/line_links.hh>
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_info.hh>
+# include <scribo/core/stats.hh>
 
 # include <scribo/core/concept/serializable.hh>
 # include <scribo/core/tag/paragraph.hh>
@@ -106,7 +107,8 @@ namespace scribo
     /// \brief Construct a paragraph set from line links information.
     template <typename L>
     scribo::paragraph_set<L>
-    paragraph(const line_links<L>& llinks);
+    paragraph(const line_links<L>& llinks,
+	      const line_links<L>& rlinks);
 
     /// \brief Construct a paragraph set from line set information.
     template <typename L>
@@ -267,11 +269,36 @@ namespace scribo
       unsigned
       find_root(line_links<L>& parent, unsigned x)
       {
-	if (parent(x) == x)
-	  return x;
-	else
-	  return parent(x) = find_root(parent, parent(x));
+	unsigned tmp_x = x;
+
+	while (parent(tmp_x) != tmp_x)
+	  tmp_x = parent(tmp_x);
+
+	while (parent(x) != x)
+	{
+	  const unsigned tmp = parent(x);
+	  x = parent(x);
+	  parent(tmp) = tmp_x;
+	}
+
+	return x;
       }
+
+      template <typename L>
+      inline
+      void
+      set_root(line_links<L>& parent, unsigned x, const unsigned root)
+      {
+	while (parent(x) != x && parent(x) != root)
+	{
+	  const unsigned tmp = parent(x);
+	  x = parent(x);
+	  parent(tmp) = root;
+	}
+
+	parent(x) = root;
+      }
+
 
     } // end of namespace scribo::make::internal
 
@@ -279,12 +306,25 @@ namespace scribo
     // FIXME: move that code into paragraph_set constructor?
     template <typename L>
     scribo::paragraph_set<L>
-    paragraph(const line_links<L>& llinks)
+    paragraph(const line_links<L>& llinks,
+	      const line_links<L>& rlinks)
     {
       line_links<L> links = llinks.duplicate();
 
       for_all_links(l, links)
+      {
+	const line_id_t current_neighbor = llinks(l);
 	links(l) = internal::find_root(links, l);
+	const line_id_t root_index = links(l);
+
+	for (unsigned j = 0; j < rlinks.nelements(); ++j)
+	{
+	  if (l != j &&
+	      current_neighbor != l &&
+	      rlinks(j) == l)
+	    internal::set_root(links, j, root_index);
+	}
+      }
 
       unsigned npars;
       mln::fun::i2v::array<unsigned>
@@ -301,7 +341,37 @@ namespace scribo
 	}
 
       for_all_paragraphs(p, parset)
-	parset(p).force_stats_update();
+      {
+	paragraph_info<L>& current_par = parset(p);
+	stats< float > delta(current_par.nlines());
+
+	// Update stats
+	current_par.force_stats_update();
+
+	// Compute paragraph's delta baseline
+	const mln::util::array<line_id_t>& line_ids = current_par.line_ids();
+	const unsigned nelements = line_ids.nelements();
+
+	for (unsigned i = 0; i < nelements; ++i)
+	{
+	  const line_id_t& current_id = line_ids(i);
+
+	  if (llinks(current_id) != current_id)
+	  {
+	    const line_info<L>& current_line = lines(current_id);
+	    const line_info<L>& left_line = lines(llinks(current_id));
+
+	    delta.take(left_line.baseline() - current_line.baseline());
+	  }
+	}
+
+	int median = delta.median();
+
+	if (!median)
+	  median = lines(current_par.line_ids()(0)).x_height();
+
+	current_par.set_delta_baseline(median);
+      }
 
       return parset;
     }
