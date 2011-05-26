@@ -1,5 +1,10 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Improve
+	result quality.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new hooks in toolchain functors.
 
 	* toolchain/internal/toolchain_functor.hh: Here.

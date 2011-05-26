@@ -83,7 +83,7 @@ namespace scribo
 			     unsigned length, unsigned delta,
 			     float p_few = 0.2,     // very tolerant  (v. severe is 0.05)
 			     float p_enough = 0.6, // very tolerant  (v. severe is 0.80)
-			     unsigned filter_factor = 1);
+			     float ratio = 8);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -469,7 +469,7 @@ namespace scribo
       lines_h_thick_and_thin(const Image<I>& binary_image_,
 			     unsigned length, unsigned delta,
 			     float p_few, float p_enough,
-			     unsigned filter_factor)
+			     float ratio)
       {
 	trace::entering("scribo::primitive::extract::lines_h_thick_and_thin");
 
@@ -504,9 +504,17 @@ namespace scribo
 	mln::util::array<box2d>
 	  bbox = labeling::compute(accu::shape::bbox<point2d>(), lbl, nlabels);
 
+	image2d<value::int_u8> debug;
+	initialize(debug, binary_image);
+	data::fill(debug, 0);
 	for_all_ncomponents(e, nlabels)
-	  if (bbox(e).width() < filter_factor * length || bbox(e).width() / bbox(e).height() < 3)
-	    data::fill(((output | bbox(e)).rw() | (pw::value(lbl) == pw::cst(e))).rw(), false);
+	{
+	  if (bbox(e).width() < length ||
+	      (std::max(bbox(e).width(), bbox(e).height()) /
+	       std::min(bbox(e).width(), bbox(e).height()) + 0.49999) < ratio)
+	    data::fill(((output | bbox(e)).rw()
+			| (pw::value(lbl) == pw::cst(e))).rw(), false);
+	}
 
 	debug::logger().log_image(debug::Results,
 				  output, "lines_h_thick_and_thin_output");
