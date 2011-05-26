@@ -215,7 +215,7 @@ namespace mln
   operator | (const fun::i2v::array<V>& vertex_values,
 	      const p_vertices<G, fun::i2v::array<P> >& pv)
   {
-    vertex_image<P,V,G> tmp(vertex_values, pv);
+    vertex_image<P,V,G> tmp(pv, vertex_values);
     return tmp;
   }
 
