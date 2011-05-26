@@ -1,5 +1,15 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve and cleanup Results in hdoc toolchain.
+
+	* scribo/primitive/extract/non_text_hdoc.hh: Make parameters
+	depend on the image size.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Add new
+	filters.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Improve
 	result quality.
 

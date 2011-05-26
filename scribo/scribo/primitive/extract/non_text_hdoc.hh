@@ -98,27 +98,47 @@ namespace scribo
 	mln_ch_value(L,bool)
 	  element_image = duplicate(doc.binary_image_wo_seps());
 
-	for_all_lines(l, doc.lines())
-	  if (doc.lines()(l).is_textline())
-	    mln::draw::box_plain(element_image, doc.lines()(l).bbox(), false);
+	// Mask text areas.
+	const paragraph_set<L>& parset = doc.paragraphs();
+	for_all_paragraphs(p, parset)
+	  if (parset(p).is_valid())
+	    for_all_paragraph_lines(l, parset(p).line_ids())
+	    {
+	      line_id_t lid = parset(p).line_ids()(l);
+	      mln::draw::box_plain(element_image, doc.lines()(lid).bbox(), false);
+	    }
 
 	element_image = morpho::closing::structural(element_image,
 						    win::rectangle2d(closing_size,
 								     closing_size));
+	// Debug
+	{
+	  debug::logger().log_image(debug::AuxiliaryResults,
+				    element_image,
+				    "non_text_hdoc_element_image");
+	}
+
 
 	mln_value(L) ncomps;
+
+	// FIXME: we should not tag elements as image here since we
+	// just don't know!
 	component_set<L>
 	  elements = primitive::extract::components(element_image,
-						    c8(), ncomps);
+						    c8(), ncomps,
+						    component::Image);
 
 	elements = scribo::filter::components_small(elements, 200);
 	elements = scribo::filter::components_on_border(elements);
-	elements = scribo::filter::objects_v_thin(elements, 100);
-	elements = scribo::filter::objects_h_thin(elements, 100);
+
+	elements = scribo::filter::objects_v_thin(elements,
+						  0.03 * doc.image().domain().height());
+	elements = scribo::filter::objects_h_thin(elements,
+						  0.03 * doc.image().domain().width());
 
 	// Debug
 	{
-	  debug::logger().log_image(debug::Special,
+	  debug::logger().log_image(debug::Results,
 				    elements.labeled_image(),
 				    "non_text_hdoc_components");
 	}

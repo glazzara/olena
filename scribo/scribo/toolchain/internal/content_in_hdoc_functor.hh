@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_HDOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_HDOC_FUNCTOR_HH
 
+#  ifndef SCRIBO_NDEBUG
+#  include <mln/util/timer.hh>
+#  endif // ! SCRIBO_NDEBUG
+
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/line_set.hh>
@@ -34,9 +38,6 @@
 
 # include <scribo/primitive/extract/non_text_hdoc.hh>
 # include <scribo/primitive/extract/components.hh>
-// # include <scribo/primitive/extract/separators.hh>
-// # include <scribo/primitive/extract/vertical_separators.hh>
-// # include <scribo/primitive/extract/horizontal_separators.hh>
 # include <scribo/primitive/extract/lines_h_thick_and_thin.hh>
 
 # include <scribo/primitive/extract/alignments.hh>
@@ -50,6 +51,11 @@
 # include <scribo/filter/line_links_x_height.hh>
 # include <scribo/filter/object_links_bbox_h_ratio.hh>
 # include <scribo/filter/objects_small.hh>
+# include <scribo/filter/paragraphs_bbox_overlap.hh>
+# include <scribo/filter/paragraphs_in_image.hh>
+# include <scribo/filter/separators_in_element.hh>
+# include <scribo/filter/separators_in_paragraph.hh>
+# include <scribo/filter/images_in_paragraph.hh>
 
 # include <scribo/primitive/group/from_single_link.hh>
 
@@ -198,7 +204,7 @@ namespace scribo
 	    mln_ch_value(I,bool)
 	      vseparators = preprocessing::rotate_90(
 	       	primitive::extract::lines_h_thick_and_thin(
-		  preprocessing::rotate_90(processed_image), 101, 3, 0.2, 0.6, 1), false),
+		  preprocessing::rotate_90(processed_image), 101, 3, 0.2, 0.6, 10), false),
 	      hseparators = primitive::extract::lines_h_thick_and_thin(
 		processed_image, 101, 3);
 
@@ -226,27 +232,31 @@ namespace scribo
 	// Debug
 	if (enable_line_seps)
 	{
-	  debug::logger().log_image(debug::Special,
+	  debug::logger().log_image(debug::AuxiliaryResults,
 				    doc.vline_seps(),
 				    "vseparators");
 
-	  debug::logger().log_image(debug::Special,
+	  debug::logger().log_image(debug::AuxiliaryResults,
 				    doc.hline_seps(),
 				    "hseparators");
 
-	  debug::logger().log_image(debug::Special,
+	  debug::logger().log_image(debug::AuxiliaryResults,
 				    input_cleaned,
 				    "input_wo_separators");
 	}
 #  endif // ! SCRIBO_NDEBUG
 
+	unsigned min_area = std::min(0.005 * doc.image().domain().width(),
+				     0.005 * doc.image().domain().height());
 
 	// Denoise
 	if (enable_denoising)
 	{
 	  on_new_progress_label("Denoise...");
 
-	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 10);
+	  std::cout << ">> min_area = " << min_area << std::endl;
+
+	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), min_area);
 
 	  // Debug
 #  ifndef SCRIBO_NDEBUG
@@ -286,7 +296,7 @@ namespace scribo
 
 	on_new_progress_label("Filtering components");
 
-	components = scribo::filter::components_small(components, 10);
+	components = scribo::filter::components_small(components, min_area);
 
 	on_progress();
 
@@ -297,6 +307,7 @@ namespace scribo
 	object_links<L> left_link
 	  = primitive::link::with_single_left_link_dmax_ratio(
 	    components,
+//	    primitive::link::internal::dmax_width_and_height(1),
 	    primitive::link::internal::dmax_default(1),
 	    anchor::MassCenter);
 
@@ -304,6 +315,7 @@ namespace scribo
 	object_links<L> right_link
 	  = primitive::link::with_single_right_link_dmax_ratio(
 	    components,
+//	    primitive::link::internal::dmax_width_and_height(1),
 	    primitive::link::internal::dmax_default(1),
 	    anchor::MassCenter);
 
@@ -398,7 +410,7 @@ namespace scribo
 	if (debug::logger().is_enabled())
 	{
 	  if (enable_whitespace_seps)
-	    debug::logger().log_image(debug::Special,
+	    debug::logger().log_image(debug::AuxiliaryResults,
 				      whitespaces, "whitespaces");
 
 	  // Bboxes image.
@@ -428,7 +440,7 @@ namespace scribo
 #  endif // ! SCRIBO_NDEBUG
 	//===== END OF DEBUG =====
 
-
+	on_new_progress_label("Merging segmented lines");
 
 	lines = scribo::text::merging(lines);
 
@@ -488,96 +500,17 @@ namespace scribo
 	  on_progress();
 	}
 
-// 	// Link text lines
-// 	on_new_progress_label("Linking text lines");
-// 	line_links<L> llinks = scribo::text::link_lines(lines);
-
-
-// 	//===== DEBUG =====
-// #  ifndef SCRIBO_NDEBUG
-// 	if (debug::logger().is_enabled())
-// 	{
-// 	  image2d<value::rgb8>
-// 	    debug = data::convert(value::rgb8(), original_image);
-// 	  for_all_lines(l, lines)
-// 	  {
-// 	    if (! lines(l).is_textline())
-// 	      continue;
-
-// 	    mln::draw::box(debug, lines(l).bbox(), literal::blue);
-// 	    mln::draw::line(debug, lines(l).bbox().pcenter(),
-// 			    lines(llinks(l)).bbox().pcenter(), literal::green);
-// 	  }
-
-// 	  debug::logger().log_image(debug::AuxiliaryResults,
-// 					      debug, "links_raw");
-// 	}
-// #  endif // ! SCRIBO_NDEBUG
-// 	//===== END OF DEBUG =====
-
-// 	on_progress();
-
-
-// 	// Filter line links.
-// 	on_new_progress_label("Filter line links");
-// 	llinks = scribo::filter::line_links_x_height(llinks);
-
-// 	//===== DEBUG =====
-// #  ifndef SCRIBO_NDEBUG
-// 	if (debug::logger().is_enabled())
-// 	{
-// 	  image2d<value::rgb8>
-// 	    debug = data::convert(value::rgb8(), original_image);
-// 	  for_all_links(i, llinks)
-// 	    if (llinks(i) && llinks(i) != i)
-// 	      mln::draw::line(debug, lines(i).bbox().pcenter(),
-// 			      lines(llinks(i)).bbox().pcenter(), literal::red);
-
-// 	  debug::logger().log_image(debug::AuxiliaryResults,
-// 					      debug, "links");
-
-// 	  for (unsigned i = 1; i < llinks.nelements(); ++i)
-// 	    llinks(i) = scribo::make::internal::find_root(llinks, i);
-
-// 	  debug = data::convert(value::rgb8(), original_image);
-// 	  mln::util::array<accu::shape::bbox<point2d> >
-// 	    nbbox(llinks.nelements());
-
-// 	  for_all_lines(i, lines)
-// 	  {
-// 	    if (! lines(i).is_textline())
-// 	      continue;
-
-// 	    mln::draw::box(debug, lines(i).bbox(), literal::red);
-// 	    nbbox(llinks(i)).take(lines(i).bbox());
-// 	  }
-
-// 	  for (unsigned i = 1; i < nbbox.nelements(); ++i)
-// 	    if (nbbox(i).is_valid())
-// 	    {
-// 	      box2d b = nbbox(i).to_result();
-// 	      mln::draw::box(debug, b, literal::green);
-// 	      b.enlarge(1);
-// 	      mln::draw::box(debug, b, literal::green);
-// 	      b.enlarge(1);
-// 	      mln::draw::box(debug, b, literal::green);
-// 	    }
-
-// 	  debug::logger().log_image(debug::AuxiliaryResults,
-// 					      debug, "par");
-// 	}
-// #  endif // ! SCRIBO_NDEBUG
-// 	//===== END OF DEBUG =====
-
-// 	on_progress();
-
-
-// 	// Construct paragraphs
-// 	on_new_progress_label("Constructing paragraphs");
-// 	scribo::paragraph_set<L> parset = scribo::make::paragraph(llinks);
+	on_new_progress_label("Extracting paragraphs");
 
 	scribo::paragraph_set<L>
 	  parset = extract_paragraphs(lines, doc.binary_image());
+
+	on_progress();
+
+	on_new_progress_label("Filtering paragraphs");
+
+	parset = filter::paragraphs_bbox_overlap(parset);
+
 	doc.set_paragraphs(parset);
 
 	on_progress();
@@ -585,8 +518,16 @@ namespace scribo
 
 	// Extract other Elements
 	on_new_progress_label("Extracting Elements");
+
+	unsigned closing_size = std::min(0.01 * doc.image().domain().width(),
+					 0.01 * doc.image().domain().height());
+	if (!(closing_size % 2))
+	  closing_size += 1;
+
+	std::cout << ">> CLosing size = " << closing_size << std::endl;
+
 	component_set<L>
-	  elements = scribo::primitive::extract::non_text_hdoc(doc, 31);
+	  elements = scribo::primitive::extract::non_text_hdoc(doc, closing_size);
 
 	on_progress();
 
@@ -596,6 +537,15 @@ namespace scribo
 	elements = scribo::primitive::identify(elements);
 
 	doc.set_elements(elements);
+
+	on_progress();
+
+	on_new_progress_label("Cleanup miscellaneous false positive");
+
+	filter::separators_in_element(doc);
+	filter::separators_in_paragraph(doc);
+	filter::paragraphs_in_image(doc);
+	filter::images_in_paragraph(doc);
 
 	on_progress();
 
