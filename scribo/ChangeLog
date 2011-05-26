@@ -1,5 +1,14 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve XML output.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Save element
+	outlines and do not save invalid elements.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve and cleanup Results in hdoc toolchain.
 
 	* scribo/primitive/extract/non_text_hdoc.hh: Make parameters

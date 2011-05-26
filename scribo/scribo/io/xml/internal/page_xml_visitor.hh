@@ -35,7 +35,7 @@
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/convert/to_base64.hh>
 
-# include <scribo/util/component_outline.hh>
+# include <scribo/util/component_precise_outline.hh>
 
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
@@ -160,9 +160,8 @@ namespace scribo
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
 	  const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = util::component_outline(((lbl | info.bbox())
-					   | (pw::value(lbl) == pw::cst(id))),
-					  1);
+	    par = scribo::util::component_precise_outline(
+	      extend((lbl | info.bbox()) | (pw::value(lbl) == pw::cst(id)), 0));
 
 	  switch (info.type())
 	  {

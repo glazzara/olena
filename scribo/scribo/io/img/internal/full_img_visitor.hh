@@ -34,6 +34,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/draw/site_set.hh>
 # include <mln/draw/box.hh>
 
 # include <scribo/core/internal/doc_serializer.hh>
@@ -42,6 +43,7 @@
 # include <scribo/core/line_info.hh>
 
 # include <scribo/io/img/internal/draw_edges.hh>
+# include <scribo/util/component_precise_outline.hh>
 
 namespace scribo
 {
@@ -77,8 +79,6 @@ namespace scribo
 
 	private: // Attributes
 	  mln::image2d<value::rgb8>& output;
-
-	  mutable image2d<scribo::def::lbl_type> elt_edge;
 	};
 
 
@@ -107,9 +107,6 @@ namespace scribo
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
 	  {
-	    // Prepare element edges
-	    elt_edge = morpho::elementary::gradient_external(doc.elements().labeled_image(), c8());
-
 	    const component_set<L>& elts = doc.elements();
 	    for_all_comps(e, elts)
 	      if (elts(e).is_valid())
@@ -120,10 +117,12 @@ namespace scribo
 	  // line seraparators
 	  if (doc.has_vline_seps())
 	    for_all_comps(c, doc.vline_seps_comps())
-	      doc.vline_seps_comps()(c).accept(*this);
+	      if (doc.vline_seps_comps()(c).is_valid())
+		doc.vline_seps_comps()(c).accept(*this);
 	  if (doc.has_hline_seps())
 	    for_all_comps(c, doc.hline_seps_comps())
-	      doc.hline_seps_comps()(c).accept(*this);
+	      if (doc.hline_seps_comps()(c).is_valid())
+		doc.hline_seps_comps()(c).accept(*this);
 
 	}
 
@@ -134,12 +133,18 @@ namespace scribo
 	void
 	full_img_visitor::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = scribo::util::component_precise_outline((lbl | info.bbox()) | (pw::value(lbl) == pw::cst(id)));
+
 	  switch (info.type())
 	  {
 	    case component::HorizontalLineSeparator:
 	    case component::VerticalLineSeparator:
 	    {
-	      mln::draw::box(output, info.bbox(), literal::cyan);
+	      mln::draw::site_set(output, par, literal::cyan);
 	    }
 	    break;
 
@@ -147,7 +152,7 @@ namespace scribo
 	    default:
 	    case component::Image:
 	    {
-	      draw_edges(info, output, literal::orange, elt_edge);
+	      mln::draw::site_set(output, par, literal::orange);
 	    }
 	    break;
 	  }
@@ -162,17 +167,18 @@ namespace scribo
 	  const line_set<L>& lines = parset.lines();
 
 	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
-
-	    for_all_paragraph_lines(lid, line_ids)
+	    if (parset(p).is_valid())
 	    {
-	      line_id_t l = line_ids(lid);
-	      lines(l).accept(*this);
-	    }
+	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
-	    mln::draw::box(output, parset(p).bbox(), literal::blue);
-	  }
+	      for_all_paragraph_lines(lid, line_ids)
+	      {
+		line_id_t l = line_ids(lid);
+		lines(l).accept(*this);
+	      }
+
+	      mln::draw::box(output, parset(p).bbox(), literal::blue);
+	    }
 	}
 
 
