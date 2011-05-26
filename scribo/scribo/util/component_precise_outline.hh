@@ -81,9 +81,11 @@ namespace scribo
       find_first_point(const I& input,
 		       point2d& p)
       {
-	const def::coord mid_row = geom::min_row(input) + (geom::nrows(input) >> 1);
+	const mln::def::coord
+	  mid_row = geom::min_row(input) + (geom::nrows(input) >> 1);
 
-	for (def::coord i = geom::min_col(input); i <= geom::max_col(input); ++i)
+	for (mln::def::coord i = geom::min_col(input);
+	     i <= geom::max_col(input); ++i)
 	{
 	  if (opt::at(input, mid_row, i))
 	  {
@@ -285,7 +287,8 @@ namespace scribo
 
       const std::vector<point2d>& vec_points = points.hook_std_vector_();
 
-      if (std::find(vec_points.begin(), vec_points.end(), cur_pt) == vec_points.end())
+      if (std::find(vec_points.begin(),
+		    vec_points.end(), cur_pt) == vec_points.end())
       {
 	points.append(cur_pt);
 

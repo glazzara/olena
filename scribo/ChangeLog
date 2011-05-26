@@ -1,5 +1,10 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/util/component_precise_outline.hh: Fix namespace
+	ambiguity.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve XML output.
 
 	* scribo/io/img/internal/debug_img_visitor.hh,
