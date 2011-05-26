@@ -181,10 +181,7 @@ namespace scribo
 	l1 = my_find_root(parent, l1);
 	l2 = my_find_root(parent, l2);
 	if (l1 == l2)
-	  {
-	    std::cerr << "what! in'do_union': already merged!!!" << std::endl;
-	    return l1;
-	  }
+	  return l1;
 
 	swap_ordering(l1, l2);
 	parent[l2] = l1; // The smallest label value is root.
@@ -625,8 +622,10 @@ namespace scribo
 	image2d<unsigned> billboard(domain);
 	data::fill(billboard, 0);
 
+# ifndef SCRIBO_NDEBUG
 	image2d<value::int_u8> log(domain);
 	data::fill(log, 0);
+# endif // ! SCRIBO_NDEBUG
 
 	const unsigned n = v.size();
 	unsigned l_;
@@ -765,9 +764,10 @@ namespace scribo
 // 		  l_ = do_union(lines, mc, l, parent);
 // 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
  		  // Log:
  		  draw_box(log, b, 126);
-
+# endif // ! SCRIBO_NDEBUG
 		}
 
 		else  // FIXME: Remove!  since included in a non-text-line, so not drawn, so inclusion impossible!!!!!!!!!!
@@ -777,8 +777,11 @@ namespace scribo
 
 		  // a non-text-line (probably a drawing or a frame) includes a text line
 		  draw_box(billboard, lines(l).ebbox(), l);
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 100);
+# endif // ! SCRIBO_NDEBUG
 		}
 
 	      }
@@ -817,8 +820,10 @@ namespace scribo
 		  // it may change of label (take the one of the included line).
 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 128);
+# endif // ! SCRIBO_NDEBUG
 		}
 	      }
 	    }
@@ -831,11 +836,15 @@ namespace scribo
 	      {
 		++count_new_txtline;
 		draw_box(billboard, lines(l).ebbox(), l);
+# ifndef SCRIBO_NDEBUG
 		// Log:
 		draw_box(log, b, 127);
+# endif // ! SCRIBO_NDEBUG
 	      }
+# ifndef SCRIBO_NDEBUG
 	      else
-		draw_box(log, b, 1);
+	      	draw_box(log, b, 1);
+# endif // ! SCRIBO_NDEBUG
 	    }
 	  }
 	  else
@@ -852,8 +861,8 @@ namespace scribo
 	      if (lcand == 0) // Skip background.
 		continue;
 
-	      if (lines(lcand).type() != line::Text)
-		std::cerr << "again!" << std::endl;
+	      // if (lines(lcand).type() != line::Text)
+	      // 	std::cerr << "again!" << std::endl;
 
 
 	      if (lines(l_).type() == line::Text)
@@ -865,15 +874,22 @@ namespace scribo
 		  l_ = do_union(lines, l_, lcand,  parent);
 
 		  draw_box(billboard, lines(l_).ebbox(), l_);
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 151);
+# endif // ! SCRIBO_NDEBUG
+
 		  continue;
 		}
 		else
 		{
 		  ++count_WTF;
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 255);
+# endif // ! SCRIBO_NDEBUG
 
 		  // (*) SEE BELOW
 		  draw_box(billboard, lines(l_).ebbox(), l_);
@@ -890,15 +906,20 @@ namespace scribo
 		  l_ = do_union(lines, l_, lcand,  parent);
 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 169);
+# endif // ! SCRIBO_NDEBUG
+
 		  continue;
 		}
+# ifndef SCRIBO_NDEBUG
 		else
 		{
 		  // Log:
 		  draw_box(log, b, 254);
 		}
+# endif // ! SCRIBO_NDEBUG
 	      }
 
 

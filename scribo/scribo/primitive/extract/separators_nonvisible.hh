@@ -124,8 +124,8 @@ namespace scribo
 	  max_angle = 5,
 	  min_card = 3;
 
-	util::timer t;
-	util::timer gt;
+	mln::util::timer t;
+	mln::util::timer gt;
 
 	gt.start();
 
@@ -395,7 +395,7 @@ namespace scribo
 
 	  t.restart();
 
-	  util::array<bool> relbl(unsigned(nlabels) + 1, true);
+	  mln::util::array<bool> relbl(unsigned(nlabels) + 1, true);
 	  relbl(0) = false;
 
 	  unsigned invalid_ratio = unsigned(length * 0.30f);

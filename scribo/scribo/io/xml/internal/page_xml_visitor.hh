@@ -218,37 +218,38 @@ namespace scribo
 	  const line_set<L>& lines = parset.lines();
 
 	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
+	    if (parset(p).is_valid())
+	    {
+	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
-	    // FIXME: compute that information on the whole paragraph
-	    // and use them here.
-	    line_id_t fid = line_ids(0);
-	    output << "    <TextRegion id=\"r" << p
-		   << "\" orientation=\"" << lines(fid).orientation()
-		   << "\" readingOrientation=\"" << lines(fid).reading_orientation()
-		   << "\" readingDirection=\"" << lines(fid).reading_direction()
-		   << "\" type=\"" << ((lines(fid).type() == line::Text) ? "paragraph" : line::type2str(lines(fid).type()))
-		   << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		   << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
-		   << "\" kerning=\"" << lines(fid).char_space()
-		   << "\" textColour=\"" << compute_text_colour(lines(fid).color())
+	      // FIXME: compute that information on the whole paragraph
+	      // and use them here.
+	      line_id_t fid = line_ids(0);
+	      output << "    <TextRegion id=\"r" << p
+		     << "\" orientation=\"" << lines(fid).orientation()
+		     << "\" readingOrientation=\"" << lines(fid).reading_orientation()
+		     << "\" readingDirection=\"" << lines(fid).reading_direction()
+		     << "\" type=\"" << ((lines(fid).type() == line::Text) ? "paragraph" : line::type2str(lines(fid).type()))
+		     << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		     << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
+		     << "\" kerning=\"" << lines(fid).char_space()
+		     << "\" textColour=\"" << compute_text_colour(lines(fid).color())
 //		   << "\" bgColour=\"" << compute_text_color(lines(fid).bgcolor())
 //		   << "\" fontSize=\"" << compute_text_color(lines(fid).x_height())
 //		   << "\" leading=\"" << compute_text_color(lines(fid).leading())
-		   << "\">"
-		   << std::endl;
+		     << "\">"
+		     << std::endl;
 
-	    // Add support for text recognition
-	    // <TextEquiv>
-	    //    <PlainText></PlainText>
-	    //    <Unicode></Unicode>
-	    //    </TextEquiv>
+	      // Add support for text recognition
+	      // <TextEquiv>
+	      //    <PlainText></PlainText>
+	      //    <Unicode></Unicode>
+	      //    </TextEquiv>
 
-	    internal::print_box_coords(output, parset(p).bbox(), "      ");
+	      internal::print_box_coords(output, parset(p).bbox(), "      ");
 
-	    output << "    </TextRegion>" << std::endl;
-	  }
+	      output << "    </TextRegion>" << std::endl;
+	    }
 	}
 
 

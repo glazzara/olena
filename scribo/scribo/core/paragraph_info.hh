@@ -71,6 +71,7 @@ namespace scribo
     void set_color_reliability_(float v);
 
     bool is_valid() const;
+    void invalidate();
 
     bool needs_stats_update() const;
     void force_stats_update();
@@ -84,6 +85,7 @@ namespace scribo
     float color_reliability_;
 
     bool needs_stats_update_;
+    bool is_valid_;
   };
 
   template <typename L>
@@ -97,13 +99,13 @@ namespace scribo
 
   template <typename L>
   paragraph_info<L>::paragraph_info()
-    : needs_stats_update_(false)
+    : needs_stats_update_(false), is_valid_(false)
   {
   }
 
   template <typename L>
   paragraph_info<L>::paragraph_info(const line_links<L>& llinks)
-    : llinks_(llinks), needs_stats_update_(false)
+    : llinks_(llinks), needs_stats_update_(false), is_valid_(true)
   {
   }
 
@@ -186,7 +188,14 @@ namespace scribo
   bool
   paragraph_info<L>::is_valid() const
   {
-    return llinks_.is_valid();
+    return llinks_.is_valid() && is_valid_;
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::invalidate()
+  {
+    is_valid_ = false;
   }
 
   template <typename L>

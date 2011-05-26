@@ -43,8 +43,6 @@
 
 # include <mln/io/pbm/load.hh>
 
-# include <mln/labeling/colorize.hh>
-
 # include <mln/util/couple.hh>
 
 # include <scribo/core/def/lbl_type.hh>
@@ -61,7 +59,6 @@
 # include <scribo/debug/usage.hh>
 # include <scribo/debug/links_image.hh>
 
-
 # include <scribo/core/document.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/line_set.hh>
@@ -75,11 +72,6 @@
 
 # include <scribo/preprocessing/rotate_90.hh>
 # include <scribo/filter/object_links_bbox_h_ratio.hh>
-
-# include <scribo/primitive/extract/separators.hh>
-# include <scribo/primitive/extract/vertical_separators.hh>
-# include <scribo/primitive/extract/horizontal_separators.hh>
-# include <scribo/primitive/extract/separators_nonvisible.hh>
 
 
 namespace scribo
@@ -710,7 +702,7 @@ namespace scribo
 
 	  // 2.1.2. Check TOP whitespaces
 	  {
-	    util::array<accu::shape::bbox<point2d> >
+	    mln::util::array<accu::shape::bbox<point2d> >
 	      group_bbox(top_groups.nelements());
 
 	    // Compute group bboxes
@@ -941,7 +933,7 @@ namespace scribo
 
 	  // 2.2.2. Check BOTTOM whitespaces
 	  {
-	    util::array<accu::shape::bbox<point2d> >
+	    mln::util::array<accu::shape::bbox<point2d> >
 	      group_bbox(bot_groups.nelements());
 
             // Compute group bboxes

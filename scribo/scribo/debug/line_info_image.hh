@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,7 +71,7 @@ namespace scribo
 
       for_all_lines(l, line)
       {
-	if (! line(l).is_valid() || line(l).is_hidden())
+	if (! line(l).is_textline())
 	  continue;
 
 	// Bounding box.

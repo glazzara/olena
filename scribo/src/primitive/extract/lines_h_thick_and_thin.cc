@@ -25,6 +25,7 @@
 
 #include <scribo/primitive/extract/lines_h_thick_and_thin.hh>
 
+#include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
 {

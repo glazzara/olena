@@ -166,7 +166,7 @@ namespace scribo
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  util::array<int>
+	  mln::util::array<int>
 	    q_arr = offsets_wrt(output, win);
 
 	  bool is_foreground;

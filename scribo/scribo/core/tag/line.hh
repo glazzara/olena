@@ -255,4 +255,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_CORE_TAG_COMP_HH
+#endif // ! SCRIBO_CORE_TAG_LINE_HH

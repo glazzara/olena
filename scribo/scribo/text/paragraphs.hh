@@ -864,7 +864,7 @@ namespace scribo
   void prepare_lines(const box2d& domain,
 		     const line_set<L>& lines,
 		     L& blocks,
-		     util::array<box2d>& rbbox)
+		     mln::util::array<box2d>& rbbox)
   {
     std::map< int, std::vector< const box2d* > > drawn_lines;
     // const unsigned nlines = lines.nelements();
@@ -989,7 +989,7 @@ namespace scribo
   inline
   void
   process_left_link(L& blocks,
-		    const util::array<box2d>& rbbox,
+		    const mln::util::array<box2d>& rbbox,
 		    const line_set<L>& lines,
 		    line_links<L>& left)
   {
@@ -1133,7 +1133,7 @@ namespace scribo
   inline
   void
   process_right_link(L& blocks,
-		     const util::array<box2d>& rbbox,
+		     const mln::util::array<box2d>& rbbox,
 		     const line_set<L>& lines,
 		     line_links<L>& right)
   {
@@ -1328,7 +1328,7 @@ namespace scribo
     // }
 
 /// const unsigned nlines = lines_info.nelemnts();
-    util::array<box2d> rbbox;
+    mln::util::array<box2d> rbbox;
     line_links<L> left(lines);
     left(0) = 0;
     line_links<L> right(lines);
@@ -1338,18 +1338,18 @@ namespace scribo
 
     rbbox.resize(lines.nelements() + 1);
 
-    std::cout << "Preparing lines" << std::endl;
+//    std::cout << "Preparing lines" << std::endl;
     prepare_lines(input.domain(), lines , blocks, rbbox);
 //    io::pgm::save(blocks, "blocks.pgm");
-    std::cout << "Linking left" << std::endl;
+//    std::cout << "Linking left" << std::endl;
     process_left_link(blocks, rbbox, lines , left);
-    std::cout << "Linking right" << std::endl;
+//    std::cout << "Linking right" << std::endl;
     process_right_link(blocks, rbbox, lines , right);
-    std::cout << "Finalizing links" << std::endl;
+//    std::cout << "Finalizing links" << std::endl;
     finalize_links(left, right, lines );
     // std::cout << "Finalizing merging" << std::endl;
     // finalize_line_merging(left, right, lines);
-    std::cout << "Extracting paragraphs" << std::endl;
+//    std::cout << "Extracting paragraphs" << std::endl;
     filter::paragraph_links(left, right, output, lines);
 
     paragraph_set<L> par_set = make::paragraph(output);

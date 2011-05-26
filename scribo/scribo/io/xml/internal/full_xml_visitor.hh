@@ -441,48 +441,49 @@ namespace scribo
 	  const line_set<L>& lines = parset.lines();
 
 	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
-
-	    // FIXME: compute that information on the whole paragraph
-	    // and use them here.
-	    line_id_t fid = line_ids(0);
-	    output << "    <text_region id=\"" << p
-		   << "\" txt_orientation=\"" << lines(fid).orientation()
-		   << "\" txt_reading_orientation=\"" << lines(fid).reading_orientation()
-		   << "\" txt_reading_direction=\"" << lines(fid).reading_direction()
-		   << "\" txt_text_type=\"" << lines(fid).type()
-		   << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		   << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
-		   << "\" txt_text_colour=\"" << internal::compute_text_colour(parset(p).color())
-		   << "\" kerning=\"" << lines(fid).char_space();
-
-	    // EXTENSIONS - Not officially supported
-	    output << "\" baseline=\"" << lines(fid).baseline()
-		   << "\" meanline=\"" << lines(fid).meanline()
-		   << "\" x_height=\"" << lines(fid).x_height()
-		   << "\" d_height=\"" << lines(fid).d_height()
-		   << "\" a_height=\"" << lines(fid).a_height()
-		   << "\" char_width=\"" << lines(fid).char_width()
-		   << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
-		   << "\" color_reliability=\"" << parset(p).color_reliability();
-	    // End of EXTENSIONS
-	    output << "\">"
-		   << std::endl;
-
-	    internal::print_box_coords(output, parset(p).bbox(), "      ");
-
-
-	    // EXTENSIONS - Not officially supported
-	    for_all_paragraph_lines(lid, line_ids)
+	    if (parset(p).is_valid())
 	    {
-	      line_id_t l = line_ids(lid);
+	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
-	      lines(l).accept(*this);
+	      // FIXME: compute that information on the whole paragraph
+	      // and use them here.
+	      line_id_t fid = line_ids(0);
+	      output << "    <text_region id=\"" << p
+		     << "\" txt_orientation=\"" << lines(fid).orientation()
+		     << "\" txt_reading_orientation=\"" << lines(fid).reading_orientation()
+		     << "\" txt_reading_direction=\"" << lines(fid).reading_direction()
+		     << "\" txt_text_type=\"" << lines(fid).type()
+		     << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		     << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
+		     << "\" txt_text_colour=\"" << internal::compute_text_colour(parset(p).color())
+		     << "\" kerning=\"" << lines(fid).char_space();
+
+	      // EXTENSIONS - Not officially supported
+	      output << "\" baseline=\"" << lines(fid).baseline()
+		     << "\" meanline=\"" << lines(fid).meanline()
+		     << "\" x_height=\"" << lines(fid).x_height()
+		     << "\" d_height=\"" << lines(fid).d_height()
+		     << "\" a_height=\"" << lines(fid).a_height()
+		     << "\" char_width=\"" << lines(fid).char_width()
+		     << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
+		     << "\" color_reliability=\"" << parset(p).color_reliability();
+	      // End of EXTENSIONS
+	      output << "\">"
+		     << std::endl;
+
+	      internal::print_box_coords(output, parset(p).bbox(), "      ");
+
+
+	      // EXTENSIONS - Not officially supported
+	      for_all_paragraph_lines(lid, line_ids)
+	      {
+		line_id_t l = line_ids(lid);
+
+		lines(l).accept(*this);
+	      }
+
+	      output << "    </text_region>" << std::endl;
 	    }
-
-	    output << "    </text_region>" << std::endl;
-	  }
 	}
 
 

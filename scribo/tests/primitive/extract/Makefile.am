@@ -26,7 +26,7 @@ check_PROGRAMS =
 
 if HAVE_MAGICKXX
 
-check_PROGRAMS = alignments
+check_PROGRAMS += alignments
 alignments_SOURCES = alignments.cc
 alignments_CPPFLAGS = $(AM_CPPFLAGS) \
 		      $(MAGICKXX_CPPFLAGS) \

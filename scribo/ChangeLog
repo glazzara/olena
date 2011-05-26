@@ -1,5 +1,35 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes in Scribo.
+
+	* scribo/core/paragraph_info.hh: Add validity information.
+
+	* scribo/core/tag/line.hh: Fix guard.
+
+	* scribo/debug/line_info_image.hh: Use is_textline().
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Check paragraph
+	validity.
+
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/group/from_double_link_any.hh,
+	* scribo/text/link_lines.hh,
+	* scribo/text/paragraphs.hh: Fix namespace ambiguity.
+
+	* scribo/text/merging.hh: Add missing SCRIBO_NDEBUG guards.
+
+	* src/primitive/extract/lines_h_thick_and_thin.cc: Add a missing
+	include.
+
+	* tests/primitive/extract/Makefile.am: Do not override an existing
+	variable.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce paragraph_id_t type.
 
 	* scribo/core/paragraph_set.hh: Make use of this new type.
