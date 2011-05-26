@@ -1,5 +1,15 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new element filters.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh: New.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add util::box_intersection.
 
 	* scribo/util/box_intersection.hh: New.
