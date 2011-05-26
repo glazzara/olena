@@ -1,3 +1,7 @@
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/site_set.hh: new.
+
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new sample programs.
