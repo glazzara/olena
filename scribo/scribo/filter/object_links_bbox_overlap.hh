@@ -41,6 +41,7 @@
 # include <scribo/core/object_links.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/filter/object_links_bbox_ratio.hh>
+# include <scribo/util/box_intersection.hh>
 
 namespace scribo
 {
@@ -80,32 +81,14 @@ namespace scribo
       const component_set<L>& components = links.components();
       object_links<L> output = links.duplicate();
 
-      bool has_intersection;
-      mln_site(L) pmin, pmax;
       float ratio_i, ratio_link_i;
 
       for_all_links(i, links)
 	if (links.is_linked(i))
 	{
-	  has_intersection = true;
-	  for (unsigned dim = 0; dim < mln_site_(L)::dim; ++dim)
-	  {
-	    pmin[dim] = math::max(components(i).bbox().pmin()[dim],
-				  components(links(i)).bbox().pmin()[dim]);
-	    pmax[dim] = math::min(components(i).bbox().pmax()[dim],
-				  components(links(i)).bbox().pmax()[dim]);
-
-	    if (pmin[dim] > pmax[dim])
-	    {
-	      has_intersection = false;
-	      break;
-	    }
-	  }
-
-	  if (!has_intersection)
-	    continue;
-
-	  mln_box(L) interbbox(pmin, pmax);
+	  mln_box(L)
+	    interbbox = scribo::util::box_intersection(components(i).bbox(),
+						       components(links(i)).bbox());
 
 	  ratio_i = interbbox.nsites() /(float)components(i).bbox().nsites();
 	  ratio_link_i = interbbox.nsites() /(float)components(links(i)).bbox().nsites();

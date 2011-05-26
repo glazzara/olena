@@ -1,5 +1,14 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add util::box_intersection.
+
+	* scribo/util/box_intersection.hh: New.
+
+	* scribo/filter/object_links_bbox_overlap.hh: Make use of this new
+	routine.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes in Scribo.
 
 	* scribo/core/paragraph_info.hh: Add validity information.
