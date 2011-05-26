@@ -1,5 +1,10 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/util/component_precise_outline.hh: New. Precise component
+	outline extraction.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new element filters.
 
 	* scribo/filter/images_in_paragraph.hh,
