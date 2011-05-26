@@ -29,14 +29,18 @@
 # include <mln/util/array.hh>
 # include <mln/make/relabelfun.hh>
 # include <mln/value/int_u16.hh>
+# include <mln/core/concept/function.hh>
 # include <scribo/core/line_links.hh>
 # include <scribo/core/line_set.hh>
 # include <scribo/core/paragraph_info.hh>
 
 # include <scribo/core/concept/serializable.hh>
+# include <scribo/core/tag/paragraph.hh>
 
 namespace scribo
 {
+
+  typedef mln::util::object_id<scribo::ParagraphId, unsigned> paragraph_id_t;
 
   namespace internal
   {
@@ -56,7 +60,6 @@ namespace scribo
   } // end of namespace scribo::internal
 
 
-
   /*! \brief Paragraph container.
 
     Paragraph ids start from 1.
@@ -65,6 +68,8 @@ namespace scribo
   template <typename L>
   class paragraph_set : public Serializable<paragraph_set<L> >
   {
+    typedef internal::paragraph_set_data<L> data_t;
+
   public:
     paragraph_set();
     paragraph_set(internal::paragraph_set_data<L>* data);
@@ -72,14 +77,20 @@ namespace scribo
 
     unsigned nelements() const;
 
-    paragraph_info<L>& operator()(unsigned i);
-    const paragraph_info<L>& operator()(unsigned i) const;
+    paragraph_info<L>& operator()(const paragraph_id_t& i);
+    const paragraph_info<L>& operator()(const paragraph_id_t& i) const;
 
     bool is_valid() const;
+
+    // Massively invalidate paragraphs.
+    template <typename F>
+    void invalidate(const Function_v2b<F>& f);
 
     const line_set<L>& lines() const;
 
     const line_links<L>& links() const;
+
+    paragraph_set<L> duplicate() const;
 
   private:
     mln::util::tracked_ptr< internal::paragraph_set_data<L> > data_;
@@ -161,7 +172,7 @@ namespace scribo
 
   template <typename L>
   paragraph_info<L>&
-  paragraph_set<L>::operator()(unsigned i)
+  paragraph_set<L>::operator()(const paragraph_id_t& i)
   {
     mln_precondition(data_ != 0);
     return data_->pars_[i];
@@ -169,7 +180,7 @@ namespace scribo
 
   template <typename L>
   const paragraph_info<L>&
-  paragraph_set<L>::operator()(unsigned i) const
+  paragraph_set<L>::operator()(const paragraph_id_t& i) const
   {
     mln_precondition(data_ != 0);
     return data_->pars_[i];
@@ -183,6 +194,17 @@ namespace scribo
     return data_ && !data_->pars_.is_empty();
   }
 
+  template <typename L>
+  template <typename F>
+  void
+  paragraph_set<L>::invalidate(const Function_v2b<F>& f_)
+  {
+    const F& f = exact(f_);
+
+    for_all_paragraphs(p, (*this))
+      if (!f(p))
+	(*this)(p).invalidate();
+  }
 
   template <typename L>
   const line_set<L>&
@@ -199,6 +221,19 @@ namespace scribo
   {
     mln_precondition(data_ != 0);
     return data_->links_;
+  }
+
+
+  template <typename L>
+  inline
+  paragraph_set<L>
+  paragraph_set<L>::duplicate() const
+  {
+    paragraph_set<L> output;
+    output.data_ = new data_t();
+
+    *(output.data_.ptr_) = *(data_.ptr_);
+    return output;
   }
 
 
@@ -248,8 +283,8 @@ namespace scribo
     {
       line_links<L> links = llinks.duplicate();
 
-      for (unsigned i = 1; i < links.nelements(); ++i)
-	links(i) = internal::find_root(links, i);
+      for_all_links(l, links)
+	links(l) = internal::find_root(links, l);
 
       unsigned npars;
       mln::fun::i2v::array<unsigned>

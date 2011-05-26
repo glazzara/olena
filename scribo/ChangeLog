@@ -1,5 +1,13 @@
 2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce paragraph_id_t type.
+
+	* scribo/core/paragraph_set.hh: Make use of this new type.
+
+	* scribo/core/tag/paragraph.hh: New.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Share document structure data.
 
 	* scribo/core/document.hh: Here.
