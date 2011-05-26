@@ -1,3 +1,9 @@
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share document structure data.
+
+	* scribo/core/document.hh: Here.
+
 2011-05-25 Coddy Levi <levi@lrde.epita.fr>
 
 	Deep modifications and clean correction of the previous bug.

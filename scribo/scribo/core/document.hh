@@ -47,9 +47,44 @@
 namespace scribo
 {
 
+  namespace internal
+  {
+    /// Data structure for \c scribo::document<L>.
+    template <typename L>
+    struct document_data
+    {
+      document_data();
+      document_data(const char *filename);
+      document_data(const char *filename,
+		    const mln::image2d<mln::value::rgb8>& input);
+
+      std::string filename_;
+      mln::image2d<mln::value::rgb8> image_;
+      mln::image2d<bool> binary_image_;
+      mln::image2d<bool> binary_image_wo_seps_;
+
+      paragraph_set<L> parset_;
+      component_set<L> elements_;
+
+      mln::image2d<bool> whitespace_seps_;
+      component_set<L> whitespace_seps_comps_;
+
+      mln::image2d<bool> hline_seps_;
+      component_set<L> hline_seps_comps_;
+
+      mln::image2d<bool> vline_seps_;
+      component_set<L> vline_seps_comps_;
+    };
+
+  } // end of namespace scribo::internal
+
+
+
   template <typename L>
   struct document : public Serializable<document<L> >
   {
+    typedef internal::document_data<L> data_t;
+
   public:
 
     document();
@@ -121,22 +156,7 @@ namespace scribo
 
 
   private:
-    std::string filename_;
-    mln::image2d<mln::value::rgb8> image_;
-    mln::image2d<bool> binary_image_;
-    mln::image2d<bool> binary_image_wo_seps_;
-
-    paragraph_set<L> parset_;
-    component_set<L> elements_;
-
-    mln::image2d<bool> whitespace_seps_;
-    component_set<L> whitespace_seps_comps_;
-
-    mln::image2d<bool> hline_seps_;
-    component_set<L> hline_seps_comps_;
-
-    mln::image2d<bool> vline_seps_;
-    component_set<L> vline_seps_comps_;
+    mln::util::tracked_ptr<data_t> data_;
   };
 
 
@@ -145,6 +165,32 @@ namespace scribo
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace internal
+  {
+
+    template <typename L>
+    document_data<L>::document_data()
+    {
+    }
+
+    template <typename L>
+    document_data<L>::document_data(const char *filename,
+				    const mln::image2d<mln::value::rgb8>& input)
+      : filename_(filename),
+	image_(input)
+    {
+    }
+
+    template <typename L>
+    document_data<L>::document_data(const char *filename)
+      : filename_(filename)
+    {
+    }
+
+
+  } // end of namespace scribo::internal
+
 
 
   template <typename L>
@@ -155,17 +201,16 @@ namespace scribo
 
   template <typename L>
   document<L>::document(const char *filename)
-    : filename_(filename)
   {
+    data_ = new internal::document_data<L>(filename);
   }
 
 
   template <typename L>
   document<L>::document(const char *filename,
 			const mln::image2d<mln::value::rgb8>& input)
-    : filename_(filename),
-      image_(input)
   {
+    data_ = new internal::document_data<L>(filename, input);
   }
 
 
@@ -173,7 +218,7 @@ namespace scribo
   const char *
   document<L>::filename() const
   {
-    return filename_.c_str();
+    return data_->filename_.c_str();
   }
 
 
@@ -181,7 +226,7 @@ namespace scribo
   void
   document<L>::set_filename(const char *filename)
   {
-    filename_ = filename;
+    data_->filename_ = filename;
   }
 
 
@@ -190,7 +235,7 @@ namespace scribo
   document<L>::open()
   {
     Magick::InitializeMagick(0);
-    mln::io::magick::load(image_, filename_);
+    mln::io::magick::load(data_->image_, data_->filename_);
   }
 
 
@@ -198,7 +243,7 @@ namespace scribo
   bool
   document<L>::is_open() const
   {
-    return image_.is_valid();
+    return data_->image_.is_valid();
   }
 
 
@@ -206,7 +251,7 @@ namespace scribo
   bool
   document<L>::is_valid() const
   {
-    return image_.is_valid();
+    return data_->image_.is_valid();
   }
 
 
@@ -214,7 +259,7 @@ namespace scribo
   mln::def::coord
   document<L>::width() const
   {
-    return image_.ncols();
+    return data_->image_.ncols();
   }
 
 
@@ -222,7 +267,7 @@ namespace scribo
   mln::def::coord
   document<L>::height() const
   {
-    return image_.nrows();
+    return data_->image_.nrows();
   }
 
 
@@ -230,7 +275,7 @@ namespace scribo
   bool
   document<L>::has_text() const
   {
-    return parset_.is_valid();
+    return data_->parset_.is_valid();
   }
 
 
@@ -238,14 +283,14 @@ namespace scribo
   const line_set<L>&
   document<L>::lines() const
   {
-    return parset_.lines();
+    return data_->parset_.lines();
   }
 
   template <typename L>
   const paragraph_set<L>&
   document<L>::paragraphs() const
   {
-    return parset_;
+    return data_->parset_;
   }
 
 
@@ -253,7 +298,7 @@ namespace scribo
   void
   document<L>::set_paragraphs(const paragraph_set<L>& parset)
   {
-    parset_ = parset;
+    data_->parset_ = parset;
   }
 
 
@@ -261,7 +306,7 @@ namespace scribo
   const component_set<L>&
   document<L>::elements() const
   {
-    return elements_;
+    return data_->elements_;
   }
 
 
@@ -269,7 +314,7 @@ namespace scribo
   bool
   document<L>::has_elements() const
   {
-    return elements_.is_valid();
+    return data_->elements_.is_valid();
   }
 
 
@@ -277,14 +322,14 @@ namespace scribo
   void
   document<L>::set_elements(const component_set<L>& elements)
   {
-    elements_ = elements;
+    data_->elements_ = elements;
   }
 
   template <typename L>
   bool
   document<L>::has_whitespace_seps() const
   {
-    return whitespace_seps_.is_valid();
+    return data_->whitespace_seps_.is_valid();
   }
 
 
@@ -292,7 +337,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::whitespace_seps() const
   {
-    return whitespace_seps_;
+    return data_->whitespace_seps_;
   }
 
 
@@ -300,7 +345,7 @@ namespace scribo
   const component_set<L>&
   document<L>::whitespace_seps_comps() const
   {
-    return whitespace_seps_comps_;
+    return data_->whitespace_seps_comps_;
   }
 
 
@@ -309,8 +354,8 @@ namespace scribo
   document<L>::set_whitespace_separators(const image2d<bool>& whitespace_seps,
 					 const component_set<L>& whitespace_seps_comps)
   {
-    whitespace_seps_ = whitespace_seps;
-    whitespace_seps_comps_ = whitespace_seps_comps;
+    data_->whitespace_seps_ = whitespace_seps;
+    data_->whitespace_seps_comps_ = whitespace_seps_comps;
   }
 
 
@@ -318,7 +363,7 @@ namespace scribo
   bool
   document<L>::has_hline_seps() const
   {
-    return hline_seps_.is_valid();
+    return data_->hline_seps_.is_valid();
   }
 
 
@@ -326,7 +371,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::hline_seps() const
   {
-    return hline_seps_;
+    return data_->hline_seps_;
   }
 
 
@@ -334,7 +379,7 @@ namespace scribo
   const component_set<L>&
   document<L>::hline_seps_comps() const
   {
-    return hline_seps_comps_;
+    return data_->hline_seps_comps_;
   }
 
 
@@ -342,12 +387,13 @@ namespace scribo
   void
   document<L>::set_hline_separators(const image2d<bool>& hline_seps)
   {
-    hline_seps_ = hline_seps;
+    data_->hline_seps_ = hline_seps;
 
     mln_value(L) ncomps;
-    hline_seps_comps_ = primitive::extract::components(hline_seps,
-						       mln::c8(), ncomps,
-						       component::HorizontalLineSeparator);
+    data_->hline_seps_comps_ = primitive::extract::components(
+      hline_seps,
+      mln::c8(), ncomps,
+      component::HorizontalLineSeparator);
   }
 
 
@@ -356,8 +402,8 @@ namespace scribo
   document<L>::set_hline_separators(const image2d<bool>& hline_seps,
 				    const component_set<L>& hline_seps_comps)
   {
-    hline_seps_ = hline_seps;
-    hline_seps_comps_ = hline_seps_comps;
+    data_->hline_seps_ = hline_seps;
+    data_->hline_seps_comps_ = hline_seps_comps;
   }
 
 
@@ -365,7 +411,7 @@ namespace scribo
   bool
   document<L>::has_vline_seps() const
   {
-    return vline_seps_.is_valid();
+    return data_->vline_seps_.is_valid();
   }
 
 
@@ -373,7 +419,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::vline_seps() const
   {
-    return vline_seps_;
+    return data_->vline_seps_;
   }
 
 
@@ -381,7 +427,7 @@ namespace scribo
   const component_set<L>&
   document<L>::vline_seps_comps() const
   {
-    return vline_seps_comps_;
+    return data_->vline_seps_comps_;
   }
 
 
@@ -389,12 +435,13 @@ namespace scribo
   void
   document<L>::set_vline_separators(const image2d<bool>& vline_seps)
   {
-    vline_seps_ = vline_seps;
+    data_->vline_seps_ = vline_seps;
 
     mln_value(L) ncomps;
-    vline_seps_comps_ = primitive::extract::components(vline_seps,
-						       mln::c8(), ncomps,
-						       component::VerticalLineSeparator);
+    data_->vline_seps_comps_ = primitive::extract::components(
+      vline_seps,
+      mln::c8(), ncomps,
+      component::VerticalLineSeparator);
   }
 
 
@@ -403,8 +450,8 @@ namespace scribo
   document<L>::set_vline_separators(const image2d<bool>& vline_seps,
 				    const component_set<L>& vline_seps_comps)
   {
-    vline_seps_ = vline_seps;
-    vline_seps_comps_ = vline_seps_comps;
+    data_->vline_seps_ = vline_seps;
+    data_->vline_seps_comps_ = vline_seps_comps;
   }
 
 
@@ -412,7 +459,7 @@ namespace scribo
   const mln::image2d<value::rgb8>&
   document<L>::image() const
   {
-    return image_;
+    return data_->image_;
   }
 
 
@@ -420,7 +467,7 @@ namespace scribo
   void
   document<L>::set_image(const mln::image2d<value::rgb8>& image)
   {
-    image_ = image;
+    data_->image_ = image;
   }
 
 
@@ -428,7 +475,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::binary_image() const
   {
-    return binary_image_;
+    return data_->binary_image_;
   }
 
 
@@ -436,7 +483,7 @@ namespace scribo
   void
   document<L>::set_binary_image(const mln::image2d<bool>& binary_image)
   {
-    binary_image_ = binary_image;
+    data_->binary_image_ = binary_image;
   }
 
 
@@ -444,7 +491,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::binary_image_wo_seps() const
   {
-    return binary_image_wo_seps_;
+    return data_->binary_image_wo_seps_;
   }
 
 
@@ -453,7 +500,7 @@ namespace scribo
   document<L>::set_binary_image_wo_seps(
     const mln::image2d<bool>& binary_image_wo_seps)
   {
-    binary_image_wo_seps_ = binary_image_wo_seps;
+    data_->binary_image_wo_seps_ = binary_image_wo_seps;
   }
 
 
