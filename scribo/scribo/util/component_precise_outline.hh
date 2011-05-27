@@ -252,6 +252,53 @@ namespace scribo
 	cur_pt = tmp;
       }
 
+      void
+      filter_points(mln::p_array<point2d>& points,
+		    mln::p_array<point2d>& waypoints)
+      {
+	const unsigned nelements = points.nsites();
+
+	if (nelements > 2)
+	{
+	  const point2d* first_pt = & points[0];
+	  const point2d* last_pt = first_pt;
+	  waypoints.append(*first_pt);
+	  unsigned i = 1;
+	  const point2d* cur_pt = & points[i];
+
+	  while (i < nelements)
+	  {
+	    while (cur_pt->row() == first_pt->row()
+		   || cur_pt->col() == first_pt->col())
+	    {
+	      ++i;
+	      if (i == nelements)
+		break;
+
+	      const point2d* llast_pt = last_pt;
+	      last_pt = cur_pt;
+	      cur_pt = & points[i];
+
+	      if (llast_pt->col() == last_pt->col() && last_pt->col() == cur_pt->col())
+	      {
+		if (llast_pt->row() == cur_pt->row())
+		  break;
+	      }
+	      else if(llast_pt->row() == last_pt->row() && last_pt->row() == cur_pt->row())
+	      {
+		if (llast_pt->col() == cur_pt->col())
+		  break;
+	      }
+	    }
+
+	    waypoints.append(*last_pt);
+	    first_pt = last_pt;
+	    last_pt = first_pt;
+	  }
+
+	  waypoints.append(*cur_pt);
+	}
+      }
     } // end of namespace scribo::util::internal
 
 
@@ -299,8 +346,11 @@ namespace scribo
 	}
       }
 
+      mln::p_array<P> waypoints;
+      internal::filter_points(points, waypoints);
+
       trace::exiting("scribo::util::component_precise_outline");
-      return points;
+      return waypoints;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
