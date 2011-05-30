@@ -99,7 +99,6 @@ namespace scribo
       template <typename I>
       void
       left_up(int& direction,
-	      const unsigned i,
 	      const I& input,
 	      const point2d& cur_pt)
       {
@@ -113,7 +112,12 @@ namespace scribo
 	  direction = 3;
 	  return;
 	}
+      }
 
+      void
+      left_up_after(int& direction,
+		    const unsigned i)
+      {
 	if (i == 3 || i == 4)
 	  direction = 1;
 	else if (i == 5 || i == 6)
@@ -122,11 +126,9 @@ namespace scribo
 	  direction = 3;
       }
 
-
       template <typename I>
       void
       right_up(int& direction,
-	       const unsigned i,
 	       const I& input,
 	       const point2d& cur_pt)
       {
@@ -142,8 +144,12 @@ namespace scribo
 	  direction = 0;
 	  return;
 	}
+      }
 
-
+      void
+      right_up_after(int& direction,
+		     const unsigned i)
+      {
 	if (i == 3 || i == 4)
 	  direction = 2;
 	else if (i == 5 || i == 6)
@@ -152,11 +158,9 @@ namespace scribo
 	  direction = 0;
       }
 
-
       template <typename I>
       void
       right_down(int& direction,
-		 const unsigned i,
 		 const I& input,
 		 const point2d& cur_pt)
       {
@@ -170,7 +174,12 @@ namespace scribo
 	  direction = 1;
 	  return;
 	}
+      }
 
+      void
+      right_down_after(int& direction,
+		       const unsigned i)
+      {
 	if (i == 3 || i == 4)
 	  direction = 3;
 	else if (i == 5 || i == 6)
@@ -179,11 +188,9 @@ namespace scribo
 	  direction = 1;
       }
 
-
       template <typename I>
       void
       left_down(int& direction,
-		const unsigned i,
 		const I& input,
 		const point2d& cur_pt)
       {
@@ -199,7 +206,12 @@ namespace scribo
 	  direction = 2;
 	  return;
 	}
+      }
 
+      void
+      left_down_after(int& direction,
+		      const unsigned i)
+      {
 	if (i == 3 || i == 4)
 	  direction = 0;
 	else if (i == 5 || i == 6)
@@ -207,6 +219,7 @@ namespace scribo
 	else if (i == 7)
 	  direction = 2;
       }
+
 
       template <typename I>
       void
@@ -216,6 +229,14 @@ namespace scribo
       {
 	unsigned i = 0;
 	point2d tmp;
+
+	switch (direction)
+	{
+	  case 0: left_up(direction, input, cur_pt); break;
+	  case 1: right_up(direction , input, cur_pt); break;
+	  case 2: right_down(direction, input, cur_pt); break;
+	  case 3: left_down(direction, input, cur_pt); break;
+	}
 
 	for (; i < 8; ++i)
 	{
@@ -232,10 +253,10 @@ namespace scribo
 
 	switch (direction)
 	{
-	  case 0: left_up(direction, i, input, cur_pt); break;
-	  case 1: right_up(direction , i, input, cur_pt); break;
-	  case 2: right_down(direction, i, input, cur_pt); break;
-	  case 3: left_down(direction, i, input, cur_pt); break;
+	  case 0: left_up_after(direction, i); break;
+	  case 1: right_up_after(direction , i); break;
+	  case 2: right_down_after(direction, i); break;
+	  case 3: left_down_after(direction, i); break;
 	}
 
 	cur_pt = tmp;
