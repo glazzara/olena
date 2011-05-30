@@ -103,20 +103,15 @@ namespace scribo
 	      const I& input,
 	      const point2d& cur_pt)
       {
-	if (i < 3)
-	{
-	  const point2d p1(cur_pt.row() + offset[direction][0][1],
-			   cur_pt.col() + offset[direction][0][0]);
-	  const point2d p2(cur_pt.row() + offset[direction][5][1],
-			   cur_pt.col() + offset[direction][5][0]);
-	  const point2d p3(cur_pt.row() + offset[direction][7][1],
-			   cur_pt.col() + offset[direction][7][0]);
+	const point2d p2(cur_pt.row() + offset[direction][5][1],
+			 cur_pt.col() + offset[direction][5][0]);
+	const point2d p3(cur_pt.row() + offset[direction][7][1],
+			 cur_pt.col() + offset[direction][7][0]);
 
-	  if (input(p1) && !input(p2) && input(p3))
-	  {
-	    direction = 3;
-	    return;
-	  }
+	if (!input(p2) && input(p3))
+	{
+	  direction = 3;
+	  return;
 	}
 
 	if (i == 3 || i == 4)
@@ -135,19 +130,19 @@ namespace scribo
 	       const I& input,
 	       const point2d& cur_pt)
       {
-	if (i < 3)
-	{
-	  const point2d p2(cur_pt.row() + offset[direction][5][1],
-			   cur_pt.col() + offset[direction][5][0]);
-	  const point2d p3(cur_pt.row() + offset[direction][7][1],
-			   cur_pt.col() + offset[direction][7][0]);
+	const point2d p1(cur_pt.row() + offset[direction][0][1],
+			 cur_pt.col() + offset[direction][0][0]);
+	const point2d p2(cur_pt.row() + offset[direction][5][1],
+			 cur_pt.col() + offset[direction][5][0]);
+	const point2d p3(cur_pt.row() + offset[direction][7][1],
+			 cur_pt.col() + offset[direction][7][0]);
 
-	  if (!input(p2) && input(p3))
-	  {
-	    direction = 0;
-	    return;
-	  }
+	if (!input(p2) && (input(p1) || input(p3)))
+	{
+	  direction = 0;
+	  return;
 	}
+
 
 	if (i == 3 || i == 4)
 	  direction = 2;
@@ -165,20 +160,15 @@ namespace scribo
 		 const I& input,
 		 const point2d& cur_pt)
       {
-	if (i < 3)
-	{
-	  const point2d p1(cur_pt.row() + offset[direction][0][1],
-			   cur_pt.col() + offset[direction][0][0]);
-	  const point2d p2(cur_pt.row() + offset[direction][5][1],
-			   cur_pt.col() + offset[direction][5][0]);
-	  const point2d p3(cur_pt.row() + offset[direction][7][1],
-			   cur_pt.col() + offset[direction][7][0]);
+	const point2d p2(cur_pt.row() + offset[direction][5][1],
+			 cur_pt.col() + offset[direction][5][0]);
+	const point2d p3(cur_pt.row() + offset[direction][7][1],
+			 cur_pt.col() + offset[direction][7][0]);
 
-	  if (input(p1) && !input(p2) && input(p3))
-	  {
-	    direction = 1;
-	    return;
-	  }
+	if (!input(p2) && input(p3))
+	{
+	  direction = 1;
+	  return;
 	}
 
 	if (i == 3 || i == 4)
@@ -197,18 +187,17 @@ namespace scribo
 		const I& input,
 		const point2d& cur_pt)
       {
-	if (i < 3)
-	{
-	  const point2d p2(cur_pt.row() + offset[direction][5][1],
-			   cur_pt.col() + offset[direction][5][0]);
-	  const point2d p3(cur_pt.row() + offset[direction][7][1],
-			   cur_pt.col() + offset[direction][7][0]);
+	const point2d p1(cur_pt.row() + offset[direction][0][1],
+			 cur_pt.col() + offset[direction][0][0]);
+	const point2d p2(cur_pt.row() + offset[direction][5][1],
+			 cur_pt.col() + offset[direction][5][0]);
+	const point2d p3(cur_pt.row() + offset[direction][7][1],
+			 cur_pt.col() + offset[direction][7][0]);
 
-	  if (!input(p2) && input(p3))
-	  {
-	    direction = 2;
-	    return;
-	  }
+	if (!input(p2) && (input(p1) || input(p3)))
+	{
+	  direction = 2;
+	  return;
 	}
 
 	if (i == 3 || i == 4)
@@ -346,11 +335,11 @@ namespace scribo
 	}
       }
 
-      mln::p_array<P> waypoints;
-      internal::filter_points(points, waypoints);
+      // mln::p_array<P> waypoints;
+      // internal::filter_points(points, waypoints);
 
       trace::exiting("scribo::util::component_precise_outline");
-      return waypoints;
+      return points;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
