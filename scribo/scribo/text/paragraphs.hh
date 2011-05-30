@@ -486,7 +486,16 @@ namespace scribo
 			   cline_col_min > rline_col_min &&
 		  cline_col_min > lline_col_min)
 	      {
-		output(right_nbh) = right_nbh;
+		const line_id_t out_right_nbh = output(right_nbh);
+
+		if (out_right_nbh != l)
+		{
+		  if (output(out_right_nbh) == l)
+		    output(out_right_nbh) = out_right_nbh;
+		  right(l) = l;
+		}
+		else
+		  output(right_nbh) = right_nbh;
 		continue;
 	      }
 	    }
@@ -548,57 +557,6 @@ namespace scribo
 //-----------------------------------------------------------------------------
 //   ___________________________
 //  |___________________________|
-//      ________________________
-//     |________________________|
-//   ___________________________
-//  |___________________________|
-//   ___________________________
-//  |___________________________|
-//
-//  Simple case : paragraphs are justified on the left. We try to find any
-//  indentation like above.
-//
-//-----------------------------------------------------------------------------
-
-	  {
-	    // Check if the current line neighbors are aligned
-	    bool left_right_aligned = false;
-	    bool left_lol_aligned = false;
-	    const int dx_lr = std::abs(lline_col_min - rline_col_min);
-	    const int dx_llol = std::abs(lline_col_min - lolline_col_min);
-
-	    if (dx_lr < delta_alignment)
-	      left_right_aligned = true;
-
-	    if (dx_llol < delta_alignment)
-	      left_lol_aligned = true;
-
-	    if (left_right_aligned && left_lol_aligned)
-	    {
-	      const int left_right_col_min = std::min(lline_col_min, rline_col_min);
-	      const int dx_lrc = std::abs(left_right_col_min - cline_col_min);
-	      const float l_char_width = 1.5f * lines(l).char_width();
-
-	      if (dx_lrc > l_char_width &&
-		  !may_have_another_left_link(right, right_nbh, l, lines) &&
-		  dx_lrc < 10.0f * l_char_width &&
-			   cline_col_min > rline_col_min &&
-		  cline_col_min > lline_col_min)
-	      {
-		const line_id_t out_right_nbh = output(right_nbh);
-
-		if (out_right_nbh != l)
-		  right(l) = l;
-		else
-		  output(right_nbh) = right_nbh;
-		continue;
-	      }
-	    }
-	  }
-
-//-----------------------------------------------------------------------------
-//   ___________________________
-//  |___________________________|
 //   ___________________________
 //  |___________________________|
 //      ________________________
@@ -643,7 +601,11 @@ namespace scribo
 		const line_id_t out_right_nbh = output(right_nbh);
 
 		if (out_right_nbh != l)
+		{
+		  if (output(out_right_nbh) == l)
+		    output(out_right_nbh) = out_right_nbh;
 		  right(l) = l;
+		}
 		else
 		  output(right_nbh) = right_nbh;
 		continue;
@@ -748,7 +710,16 @@ namespace scribo
 			     cline_col_min > rline_col_min &&
 		  cline_col_max >= rline_col_max)
 	      {
-		output(right_nbh) = right_nbh;
+		const line_id_t out_right_nbh = output(right_nbh);
+
+		if (out_right_nbh != l)
+		{
+		  if (output(out_right_nbh) == l)
+		    output(out_right_nbh) = out_right_nbh;
+		  right(l) = l;
+		}
+		else
+		  output(right_nbh) = right_nbh;
 		continue;
 	      }
 	    }
