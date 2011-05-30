@@ -89,8 +89,6 @@ namespace scribo
 	    && doc.elements()(e).type() == component::Image)
 	  mln::draw::box_plain(billboard, doc.elements()(e).bbox(), true);
 
-      mln::io::pbm::save(billboard, "billboard_parimage.pbm");
-
       const paragraph_set<L>& parset = doc.paragraphs();
       mln::util::array<bool> not_to_ignore(parset.nelements() + 1, true);
       not_to_ignore(0) = false;
@@ -101,15 +99,34 @@ namespace scribo
 	const bool
 	  tl = billboard(b_.pmin()),
 	  tr = billboard.at_(b_.pmin().row(), b_.pmax().col()),
-	  ml = billboard.at_(b_.pcenter().row(), b_.pmin().col()),
 	  mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col()),
-	  mr = billboard.at_(b_.pcenter().row(), b_.pmax().col()),
 	  bl = billboard.at_(b_.pmax().row(), b_.pmin().col()),
 	  br = billboard(b_.pmax());
 
+	typedef mln::util::set<int> set_t;
+	set_t s;
+	s.insert(tl);
+	s.insert(tr);
+	s.insert(mc);
+	s.insert(bl);
+	s.insert(br);
+
+	if (s.nelements() > 2 || (s.nelements() == 2 && !s.has(0)))
+	  continue;
+
 	// The paragraph is fully included in an image.
-	if (tl && tr && ml && mc && mr && bl && br)
-	  not_to_ignore(cur_id) = false;
+	for_all_elements(e, s)
+	  if (s[e] != 0
+	      && (mc != 0 && mc == s[e]
+		  && ((tl == mc && bl == mc)
+		      || (tr == mc && br == mc)
+		      || (tl == mc && tr == mc)
+		      || (bl == mc && br == mc))))
+	  {
+//	if (tl && tr && ml && mc && mr && bl && br)
+	    not_to_ignore(cur_id) = false;
+	    break;
+	  }
       }
 
       paragraph_set<L> output = parset.duplicate();

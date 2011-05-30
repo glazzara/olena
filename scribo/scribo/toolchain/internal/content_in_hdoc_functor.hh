@@ -53,8 +53,10 @@
 # include <scribo/filter/objects_small.hh>
 # include <scribo/filter/paragraphs_bbox_overlap.hh>
 # include <scribo/filter/paragraphs_in_image.hh>
+# include <scribo/filter/paragraphs_in_borders.hh>
 # include <scribo/filter/separators_in_element.hh>
 # include <scribo/filter/separators_in_paragraph.hh>
+# include <scribo/filter/separators_in_borders.hh>
 # include <scribo/filter/images_in_paragraph.hh>
 
 # include <scribo/primitive/group/from_single_link.hh>
@@ -65,6 +67,8 @@
 # include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
 
 # include <scribo/preprocessing/denoise_fg.hh>
+
+# include <scribo/postprocessing/images_to_drop_capital.hh>
 
 # include <scribo/text/recognition.hh>
 # include <scribo/text/merging.hh>
@@ -84,6 +88,7 @@
 
 # include <scribo/io/xml/save.hh>
 
+#include <scribo/io/img/save.hh>
 
 namespace scribo
 {
@@ -201,12 +206,22 @@ namespace scribo
 
 	  // Vertical and horizontal separators
 	  {
+	    unsigned closing_size = std::min(0.01 * doc.image().domain().width(),
+					     0.01 * doc.image().domain().height());
+	    win::hline2d hl(closing_size);
+
+	    // Apply a closing::structural in order to disconnected
+	    // parts of a single separator.
 	    mln_ch_value(I,bool)
 	      vseparators = preprocessing::rotate_90(
-	       	primitive::extract::lines_h_thick_and_thin(
-		  preprocessing::rotate_90(processed_image), 101, 3, 0.2, 0.6, 10), false),
-	      hseparators = primitive::extract::lines_h_thick_and_thin(
-		processed_image, 101, 3);
+		morpho::closing::structural(
+		  primitive::extract::lines_h_thick_and_thin(
+		    preprocessing::rotate_90(processed_image),
+		    101, 3, 0.2, 0.6, 10), hl), false),
+
+	      hseparators = morpho::closing::structural(
+		primitive::extract::lines_h_thick_and_thin(
+		  processed_image, 101, 3), hl);
 
 	    doc.set_vline_separators(vseparators);
 	    doc.set_hline_separators(hseparators);
@@ -509,9 +524,11 @@ namespace scribo
 
 	on_new_progress_label("Filtering paragraphs");
 
-	parset = filter::paragraphs_bbox_overlap(parset);
+	paragraph_set<L> parset_f = filter::paragraphs_bbox_overlap(parset);
+	doc.set_paragraphs(parset_f);
 
-	doc.set_paragraphs(parset);
+	// parset = filter::paragraphs_bbox_overlap(parset);
+	// doc.set_paragraphs(parset);
 
 	on_progress();
 
@@ -540,16 +557,38 @@ namespace scribo
 
 	on_progress();
 
+// TEMPORARY DEBUG
+	on_new_progress_label("Saving debug data");
+	doc.set_paragraphs(parset);
+	scribo::io::img::save(doc, "debug_wo_filter.png", scribo::io::img::DebugWoImage);
+	scribo::io::img::save(doc, "full_wo_filter.png", scribo::io::img::DebugWithImage);
+	doc.set_paragraphs(parset_f);
+	on_progress();
+// END OF TEMPORARY DEBUG
+
 	on_new_progress_label("Cleanup miscellaneous false positive");
 
 	filter::separators_in_element(doc);
-	filter::separators_in_paragraph(doc);
+	filter::separators_in_paragraph(doc, 81, 121);
+	filter::separators_in_borders(doc, 0.05, 0.02);
+
 	filter::paragraphs_in_image(doc);
-	filter::images_in_paragraph(doc);
+	filter::paragraphs_in_borders(doc);
 
 	on_progress();
 
+	on_new_progress_label("Rebuild extracted images");
 
+	elements = scribo::primitive::extract::non_text_hdoc(doc, closing_size);
+	doc.set_elements(elements);
+
+	on_progress();
+
+	on_new_progress_label("Tag images as drop capital");
+
+	postprocessing::images_to_drop_capital(doc);
+
+	on_progress();
 
 	// Saving results
 	if (save_doc_as_xml)
@@ -563,6 +602,9 @@ namespace scribo
 	}
 
 	on_end();
+
+
+	sleep(10);
 
 	return doc;
       }

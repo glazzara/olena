@@ -1,5 +1,22 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve output cleanup for historical document toolchain.
+
+	* scribo/filter/paragraphs_in_borders.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/filter/separators_vert_in_borders.hh: New.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh: Improve filtering.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Make use
+	of new filters.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/util/component_precise_outline.hh: Add support for
 	labeled_image.
 

@@ -101,11 +101,11 @@ namespace scribo
 	  // => Ignore it.
 	  if (tl && tr && ml && mc && mr && bl && br)
 	    elts(c).update_tag(component::Ignored);
-
-	  // FIXME: warning this call may produce inconsistent data
-	  // Ignored components are still in the separator image...
-	  doc.set_elements(elts);
 	}
+
+      // FIXME: warning this call may produce inconsistent data
+      // Ignored components are still in the separator image...
+      doc.set_elements(elts);
 
       trace::exiting("scribo::filter::images_in_paragraph");
     }

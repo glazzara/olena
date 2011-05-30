@@ -90,26 +90,26 @@ namespace scribo
       {
 	component_set<L> hline = doc.hline_seps_comps().duplicate();
 	for_all_comps(c, hline)
-	{
-	  const mln_box(L)& b_ = hline(c).bbox();
+	  if (hline(c).is_valid())
+	  {
+	    const mln_box(L)& b_ = hline(c).bbox();
 
-	  const bool tl = billboard(b_.pmin());
-	  const bool tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
-	  const bool ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
-	  const bool mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
-	  const bool mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
-	  const bool bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
-	  const bool br = billboard(b_.pmax());
+	    const bool tl = billboard(b_.pmin());
+	    const bool tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
+	    const bool ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
+	    const bool mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
+	    const bool mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
+	    const bool bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
+	    const bool br = billboard(b_.pmax());
 
-	  // This separator is included in an element (picture, drawing...)
-	  // => Ignore it.
-	  if (tl && tr && ml && mc && mr && bl && br)
-	    hline(c).update_tag(component::Ignored);
-
-	  // FIXME: warning this call may produce inconsistent data
-	  // Ignored components are still in the separator image...
-	  doc.set_hline_separators(doc.hline_seps(), hline);
-	}
+	    // This separator is included in an element (picture, drawing...)
+	    // => Ignore it.
+	    if (tl && tr && ml && mc && mr && bl && br)
+	      hline(c).update_tag(component::Ignored);
+	  }
+	// FIXME: warning this call may produce inconsistent data
+	// Ignored components are still in the separator image...
+	doc.set_hline_separators(doc.hline_seps(), hline);
       }
 
       // Vertical separators
@@ -117,29 +117,29 @@ namespace scribo
       {
 	component_set<L> vline = doc.vline_seps_comps().duplicate();
 	for_all_comps(c, vline)
-	{
-	  const mln_box(L)& b_ = vline(c).bbox();
+	  if (vline(c).is_valid())
+	  {
+	    const mln_box(L)& b_ = vline(c).bbox();
 
-	  const bool tl = billboard(b_.pmin());
-	  const bool tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
-	  const bool ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
-	  const bool mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
-	  const bool mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
-	  const bool bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
-	  const bool br = billboard(b_.pmax());
+	    const bool tl = billboard(b_.pmin());
+	    const bool tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
+	    const bool ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
+	    const bool mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
+	    const bool mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
+	    const bool bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
+	    const bool br = billboard(b_.pmax());
 
-	  // This separator is included in an element (picture, drawing...)
-	  // => Ignore it.
-	  if (tl && tr && ml && mc && mr && bl && br)
-	    vline(c).update_tag(component::Ignored);
-
-	  // FIXME: warning this call may produce inconsistent data
-	  // Ignored components are still in the separator image...
-	  doc.set_vline_separators(doc.vline_seps(), vline);
-	}
-
-	trace::exiting("scribo::filter::separators_in_element");
+	    // This separator is included in an element (picture, drawing...)
+	    // => Ignore it.
+	    if (tl && tr && ml && mc && mr && bl && br)
+	      vline(c).update_tag(component::Ignored);
+	  }
+	// FIXME: warning this call may produce inconsistent data
+	// Ignored components are still in the separator image...
+	doc.set_vline_separators(doc.vline_seps(), vline);
       }
+
+      trace::exiting("scribo::filter::separators_in_element");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

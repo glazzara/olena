@@ -41,6 +41,7 @@
 
 # include <scribo/core/paragraph_set.hh>
 
+#include <mln/labeling/colorize.hh>
 
 namespace scribo
 {
@@ -59,7 +60,7 @@ namespace scribo
     /// Paragraph::Ignored.
     template <typename L>
     paragraph_set<L>
-    paragraphs_bbox_overlap(const paragraph_set<L>& paragraphs);
+    paragraphs_bbox_overlap(const paragraph_set<L>& parset);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,23 +71,23 @@ namespace scribo
       template <typename L>
       struct order_paragraphs_id
       {
-	order_paragraphs_id(const scribo::paragraph_set<L>& paragraphs)
-	  : paragraphs_(paragraphs)
+	order_paragraphs_id(const scribo::paragraph_set<L>& parset)
+	  : parset_(parset)
 	{
 	}
 
 	bool operator()(const scribo::paragraph_id_t& l1,
 			const scribo::paragraph_id_t& l2) const
 	{
-	  const unsigned l1_nsites = paragraphs_(l1).bbox().nsites();
-	  const unsigned l2_nsites = paragraphs_(l2).bbox().nsites();
+	  const unsigned l1_nsites = parset_(l1).bbox().nsites();
+	  const unsigned l2_nsites = parset_(l2).bbox().nsites();
 
 	  if (l1_nsites == l2_nsites)
 	    return l1 > l2;
 	  return l1_nsites > l2_nsites;
 	}
 
-	scribo::paragraph_set<L> paragraphs_;
+	scribo::paragraph_set<L> parset_;
       };
 
     } // end of namespace scribo::filter::internal
@@ -94,73 +95,149 @@ namespace scribo
 
     template <typename L>
     paragraph_set<L>
-    paragraphs_bbox_overlap(const paragraph_set<L>& paragraphs)
+    paragraphs_bbox_overlap(const paragraph_set<L>& parset)
     {
       trace::entering("scribo::filter::paragraphs_bbox_overlap");
 
-      mln_precondition(paragraphs.is_valid());
+      mln_precondition(parset.is_valid());
 
-      L billboard;
-      initialize(billboard, paragraphs.lines().components().labeled_image());
+      mln_ch_value(L, paragraph_id_t) billboard;
+      initialize(billboard, parset.lines().components().labeled_image());
       data::fill(billboard, 0);
 
-      mln::util::array<bool> not_to_ignore(paragraphs.nelements() + 1, true);
+      mln::util::array<bool> not_to_ignore(parset.nelements() + 1, true);
       not_to_ignore(0) = false;
 
-      for_all_paragraphs(cur_id, paragraphs)
-      {
-	const box2d& b_ = paragraphs(cur_id).bbox();
+      paragraph_set<L> output = parset.duplicate();
 
-	if (paragraphs(cur_id).nlines() > 1)
+      mln::util::array<paragraph_id_t> candidate;
+      candidate.reserve(parset.nelements());
+      for_all_paragraphs(cur_id, parset)
+	if (parset(cur_id).is_valid())
+	  candidate.append(cur_id);
+
+      std::sort(candidate.hook_std_vector_().begin(),
+		candidate.hook_std_vector_().end(),
+		internal::order_paragraphs_id<L>(parset));
+
+      for_all_elements(e, candidate)
+      {
+	paragraph_id_t cur_id = candidate(e);
+
+	const box2d& b_ = parset(cur_id).bbox();
+
+	if (parset(cur_id).nlines() > 3)
 	{
 	  mln::draw::box_plain(billboard, b_, cur_id);
 	  continue;
 	}
 
-	const unsigned tl = billboard(b_.pmin());
-	const unsigned tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
-	const unsigned ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
 	const unsigned mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
-	const unsigned mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
-	const unsigned bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
-	const unsigned br = billboard(b_.pmax());
 
-	typedef std::set<unsigned> set_t;
-	set_t labels;
-	labels.insert(tl);
-	labels.insert(tl);
-	labels.insert(tr);
-	labels.insert(ml);
-	labels.insert(mc);
-	labels.insert(mr);
-	labels.insert(bl);
-	labels.insert(br);
+	// Box is mostly in the background => do nothing.
+	if (mc == 0)
+	{
+	  mln::draw::box_plain(billboard, b_, cur_id);
+	  continue;
+	}
+	else // Bbox center is inside another box. Check if we can
+	     // merge the current box with it.
+	{
+	  // Consider other potential overlapping bboxes.
+	  const unsigned tl = billboard(b_.pmin());
+	  const unsigned tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
+	  const unsigned bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
+	  const unsigned br = billboard(b_.pmax());
 
-	for (set_t::const_iterator it = labels.begin();
-	     it != labels.end();
-	     ++it)
-	  if (not_to_ignore(*it))
+	  typedef std::set<unsigned> set_t;
+	  set_t labels;
+	  labels.insert(tl);
+	  labels.insert(tr);
+	  labels.insert(mc);
+	  labels.insert(bl);
+	  labels.insert(br);
+
+	  // FIXME: check that there are at least 3 points (including
+	  // the center) in another paragraph.
+
+	  // The potential merged bbox is already ignored or the
+	  // current bbox overlaps with several bboxes.
+	  // => Ignore current bbox .
+	  //
+	  if (!not_to_ignore(mc)
+	      || (labels.size() > 1 && labels.find(0) == labels.end()))
 	  {
-	    box2d b2 = paragraphs(*it).bbox();
-	    box2d b_i = scribo::util::box_intersection(b_, b2);
-
-	    // si b_ est inclus dans une boite donc le nombre de comp > 1 => invalid juste b_
-	    // sinon => invalid b_ et b2
-	    if ((b_i.nsites() / (float)b_.nsites() > 0.4
-		 || (b_i.nsites() / (float)b2.nsites()) > 0.9))
-	    {
-	      not_to_ignore(cur_id) = false;
-
-	      if (paragraphs(*it).nlines() < 4)
-		not_to_ignore(*it) = false;
-	    }
+	    mln::draw::box_plain(billboard, b_, cur_id); // Really?
+	    not_to_ignore(cur_id) = false;
+	    continue;
 	  }
 
-	mln::draw::box_plain(billboard, b_, cur_id);
+	  for (set_t::const_iterator it = labels.begin();
+	       it != labels.end(); ++it)
+	    if (*it)
+	    {
+	      mln_assertion(*it != mc);
+
+	      box2d b2 = output(*it).bbox();
+	      box2d b_i = scribo::util::box_intersection(b_, b2);
+	      volatile float
+		b_ratio = b_i.nsites() / (float)b_.nsites();
+
+	      // If the bbox is widely included in another box.
+	      if (b_ratio > 0.8)
+	      {
+		output(mc).fast_merge(output(cur_id));
+		mln::draw::box_plain(billboard, parset(mc).bbox(), mc);
+	      }
+	      else
+		mln::draw::box_plain(billboard, parset(cur_id).bbox(), cur_id);
+	      break;
+	    }
+
+	}
       }
 
-      paragraph_set<L> output = paragraphs.duplicate();
+      // 	  if (not_to_ignore(*it))
+      // 	  {
+      // 	    box2d b2 = output(*it).bbox();
+      // 	    box2d b_i = scribo::util::box_intersection(b_, b2);
+
+      // 	    volatile float
+      // 	      b_ratio = b_i.nsites() / (float)b_.nsites(),
+      // 	      b2_ratio = b_i.nsites() / (float)b2.nsites();
+
+      // 	    if (b2_ratio == 1)
+      // 	    {
+      // 	      // Merge paragraphs and redraw the new bbox.
+      // 	      output(cur_id).fast_merge(output(*it));
+      // 	      mln::draw::box_plain(billboard, output(cur_id).bbox(), cur_id);
+      // 	    }
+      // 	    else if (b_ratio == 1)
+      // 	    {
+      // 	      // Merge paragraphs and redraw the new bbox.
+      // 	      output(*it).fast_merge(output(cur_id));
+      // 	      mln::draw::box_plain(billboard, output(*it).bbox(), *it);
+      // 	    }
+      // 	    else if ((b_ratio > 0.4 || b2_ratio > 0.9))
+      // 	    {
+      // 	      // si b_ est inclus dans une boite dont le nombre de
+      // 	      // comp > 4 => invalid juste b_ sinon => invalid b_ et
+      // 	      // b2
+      // 	      not_to_ignore(cur_id) = false;
+
+      // 	      if (parset(*it).nlines() < 4)
+      // 		not_to_ignore(*it) = false;
+      // 	    }
+      // 	  }
+
+      // 	mln::draw::box_plain(billboard, b_, cur_id);
+      // }
+
       output.invalidate(not_to_ignore);
+
+      for_all_paragraphs(p, output)
+      	if (output(p).is_valid())
+      	  output(p).force_stats_update();
 
       trace::exiting("scribo::filter::paragraphs_bbox_overlap");
       return output;
