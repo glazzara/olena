@@ -275,12 +275,16 @@ namespace scribo
 	  waypoints.append(*first_pt);
 	  unsigned i = 1;
 	  const point2d* cur_pt = & points[i];
+	  bool has_changed = false;
 
 	  while (i < nelements)
 	  {
+	    has_changed = false;
+
 	    while (cur_pt->row() == first_pt->row()
 		   || cur_pt->col() == first_pt->col())
 	    {
+	      has_changed = true;
 	      ++i;
 	      if (i == nelements)
 		break;
@@ -301,12 +305,24 @@ namespace scribo
 	      }
 	    }
 
+	    if (!has_changed)
+	    {
+	      ++i;
+	      last_pt = cur_pt;
+	      if (i < nelements)
+		cur_pt = & points[i];
+	    }
 	    waypoints.append(*last_pt);
 	    first_pt = last_pt;
 	    last_pt = first_pt;
 	  }
 
 	  waypoints.append(*cur_pt);
+	}
+	else
+	{
+	  for (unsigned i = 0; i < nelements; ++i)
+	    waypoints.append(points[i]);
 	}
       }
     } // end of namespace scribo::util::internal
