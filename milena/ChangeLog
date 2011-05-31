@@ -1,3 +1,14 @@
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Sequential computation of simple 3D points look-up tables.
+
+	* tools/simple_point_3d_lut.hh,
+	* tools/simple_point_3d_lut.cc:
+	New.
+	* tools/Makefile.am (noinst_HEADERS): Add simple_point_3d_lut.hh.
+	(EXTRA_PROGRAMS): Add simple_point_3d_lut.
+	(simple_point_3d_lut_SOURCES): New.
+
 2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve mln::topo::is_simple_2d_t.
