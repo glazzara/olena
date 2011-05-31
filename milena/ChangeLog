@@ -1,5 +1,11 @@
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a first version of a simple 3D point predicate.
+
+	* mln/topo/is_simple_point3d.hh: New.
+
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate a simple 3D points look-up table for the (26,6)-adjacency.
 
 	* tools/Makefile.am (CLEANFILES): New.
