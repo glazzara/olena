@@ -358,6 +358,7 @@ mln_core_image_dmorph_hexa \
 mln_core_image_dmorph_hexa_piter \
 mln_core_image_dmorph_image2d_h \
 mln_core_image_dmorph_image_if \
+mln_core_image_dmorph_mutable_extension_ima \
 mln_core_image_dmorph_p2p_image \
 mln_core_image_dmorph_slice_image \
 mln_core_image_dmorph_sub_image \
@@ -451,6 +452,7 @@ mln_core_routine_exact \
 mln_core_routine_extend \
 mln_core_routine_init \
 mln_core_routine_initialize \
+mln_core_routine_mutable_extend \
 mln_core_routine_ops \
 mln_core_routine_primary \
 mln_core_site_set_all \
@@ -791,6 +793,7 @@ mln_io_raw_save \
 mln_io_txt_all \
 mln_io_txt_save \
 mln_io_vtk_all \
+mln_io_vtk_load \
 mln_io_vtk_save \
 mln_labeling_all \
 mln_labeling_background \
@@ -1103,7 +1106,9 @@ mln_topo_center_only_iter \
 mln_topo_centered_iter_adapter \
 mln_topo_complex \
 mln_topo_complex_iterators \
-mln_topo_detach \
+mln_topo_detach_cell \
+mln_topo_detach_pair \
+mln_topo_detach_point \
 mln_topo_essential \
 mln_topo_face \
 mln_topo_face_data \
@@ -1114,14 +1119,19 @@ mln_topo_internal_complex_relative_iterator_sequence \
 mln_topo_internal_complex_set_iterator_base \
 mln_topo_is_facet \
 mln_topo_is_n_face \
+mln_topo_is_not_end_point \
 mln_topo_is_simple_2d \
 mln_topo_is_simple_cell \
+mln_topo_is_simple_pair \
+mln_topo_is_simple_point2d \
+mln_topo_is_simple_point3d \
 mln_topo_n_face \
 mln_topo_n_face_iter \
 mln_topo_n_faces_set \
 mln_topo_skeleton_breadth_first_thinning \
 mln_topo_skeleton_crest \
 mln_topo_skeleton_is_simple_point \
+mln_topo_skeleton_priority_driven_thinning \
 mln_topo_static_n_face_iter \
 mln_trait_accumulator_print \
 mln_trait_accumulator_props \

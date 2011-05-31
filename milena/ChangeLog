@@ -1,5 +1,11 @@
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen Milena's Makefile helpers.
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Here.
+
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a first version of a simple 3D point predicate.
 
 	* mln/topo/is_simple_point3d.hh: New.

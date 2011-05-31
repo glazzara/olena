@@ -740,6 +740,7 @@ mln/io/tiff/load.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
 mln/io/vtk/all.hh \
+mln/io/vtk/load.hh \
 mln/io/vtk/save.hh \
 mln/labeling/all.hh \
 mln/labeling/background.hh \
@@ -1056,6 +1057,7 @@ mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
 mln/topo/detach_cell.hh \
+mln/topo/detach_pair.hh \
 mln/topo/detach_point.hh \
 mln/topo/essential.hh \
 mln/topo/face.hh \
@@ -1070,7 +1072,9 @@ mln/topo/is_n_face.hh \
 mln/topo/is_not_end_point.hh \
 mln/topo/is_simple_2d.hh \
 mln/topo/is_simple_cell.hh \
+mln/topo/is_simple_pair.hh \
 mln/topo/is_simple_point2d.hh \
+mln/topo/is_simple_point3d.hh \
 mln/topo/n_face.hh \
 mln/topo/n_face_iter.hh \
 mln/topo/n_faces_set.hh \
