@@ -54,6 +54,10 @@ int main()
 
   for (unsigned i = 0; i < 256; i++)
   {
+    /* Create the local i-th configuration around P.
+
+       Note that the value corresponding to P is always `false', to
+       prevent the connection of two components through P.  */
     data::fill(ima, false);
 
     int_u8 tmp = i;

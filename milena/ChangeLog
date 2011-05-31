@@ -1,3 +1,23 @@
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor connectivity_numbers_3d and connectivity_numbers_3d_tbb.
+
+	* tools/connectivity_numbers_3d.hh (connectivity_numbers_3d):
+	Reindent.
+	(connectivity_number_3d__6_26_one)
+	(connectivity_number_3d__6p_18_one)
+	(connectivity_number_3d__18_6p_one):
+	Fix types: s/config_3d_t/conn_number_t/.
+	(usage): New function.
+	(display_connectivity_numbers): New function.
+	Use it to simplify...
+	* tools/connectivity_numbers_3d.cc,
+	* tools/connectivity_numbers_3d_tbb.cc (main): ...these functions.
+	(usage): Remove.
+	* tools/compute_local_configurations.cc,
+	* tools/connectivity_numbers_3d_tbb.hh:
+	Add a comment.
+
 2011-05-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a parallel version of connectivity_numbers_3d using TBB.

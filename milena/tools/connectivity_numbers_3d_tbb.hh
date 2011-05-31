@@ -69,7 +69,10 @@ struct connectivity_numbers_3d_tbb_range
 
     for (config_3d_t i = r.begin(); i != r.end(); ++i)
       {
-	// Create the local i-th configuration around P.
+	/* Create the local i-th configuration around P.
+
+	   Note that the value corresponding to P is always `false',
+	   to prevent the connection of two components through P.  */
 	data::fill(ima, false);
 	config_3d_t tmp = i;
 	mln_fwd_niter_(N) n(nbh_, p);

@@ -23,24 +23,13 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-/// \brief Compute 3D connectivity numbers.
+/// \brief Compute 3D connectivity numbers in parallel, using Intel
+/// Threading Building Blocks.
 
 #include "connectivity_numbers_3d_tbb.hh"
 
-void
-usage(const std::string& program)
-{
-  std::cerr <<
-    "usage: " << program << " <nbhs>" << std::endl <<
-    "where <nbhs> is one of these values:\n\n"
-    "  `6_26'  :  6-c foreground,  26-c background\n"
-    "  `26_6'  : 26-c foreground,  6-c background\n"
-    "  `6p_18' : 6+-c foreground, 18-c background\n"
-    "  `18_6p' : 18-c foreground, 6+-c background\n" << std::endl;
-  std::exit(1);
-}
-
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
   if (argc != 2)
     usage(argv[0]);
@@ -54,12 +43,5 @@ int main(int argc, char* argv[])
   else
     usage(argv[0]);
 
-  // Display numbers.
-  for (size_t i = 0; i < conn_numbers.size(); ++i)
-    {
-      std::cout << std::setw(2) << conn_numbers[i] << ", ";
-      if (! ((i + 1) % 4)) std::cout << " ";
-      if (! ((i + 1) % 16)) std::cout << std::endl;
-      if (! ((i + 1) % 64)) std::cout <<  std::endl;
-    }
+  display_connectivity_numbers(conn_numbers);
 }

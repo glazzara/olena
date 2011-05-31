@@ -217,19 +217,22 @@ connectivity_numbers_3d(F f)
   N nbh = c26();
 
   for (config_3d_t i = 0; i < nconfigs; ++i)
-  {
-    // Create the local i-th configuration around P.
-    data::fill(ima, false);
-    config_3d_t tmp = i;
-    mln_fwd_niter_(N) n(nbh, p);
-    for_all(n)
     {
-      if (tmp % 2)
-	ima(n) = true;
-      tmp = tmp >> 1;
+      /* Create the local i-th configuration around P.
+
+	 Note that the value corresponding to P is always `false', to
+	 prevent the connection of two components through P.  */
+      data::fill(ima, false);
+      config_3d_t tmp = i;
+      mln_fwd_niter_(N) n(nbh, p);
+      for_all(n)
+      {
+	if (tmp % 2)
+	  ima(n) = true;
+	tmp = tmp >> 1;
+      }
+      numbers[i] = f(ima);
     }
-    numbers[i] = f(ima);
-  }
   return numbers;
 }
 
@@ -255,11 +258,11 @@ connectivity_number_3d__6_26_one(const mln::image3d<bool>& ima)
   // thread-unsafe accesses to this neighborhood (see the long
   // explanation above).
   mln::neighb3d nbh = c6();
-  config_3d_t unused_nl;
+  conn_number_t unused_nl;
   // Restrict the image to the 18-c neighborhood of P.
-  image_if<image3d<config_3d_t>, within_c18> lab =
+  image_if<image3d<conn_number_t>, within_c18> lab =
     labeling::blobs(ima | within_c18(), nbh, unused_nl);
-  std::set<config_3d_t> s;
+  std::set<conn_number_t> s;
   mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
@@ -318,9 +321,9 @@ connectivity_number_3d__6p_18_one(const mln::image3d<bool>& ima)
   // thread-unsafe accesses to this neighborhood (see the long
   // explanation above).
   mln::neighb3d nbh = c6();
-  config_3d_t unused_nl;
-  image3d<config_3d_t> lab = labeling::blobs(ima, nbh, unused_nl);
-  std::set<config_3d_t> s;
+  conn_number_t unused_nl;
+  image3d<conn_number_t> lab = labeling::blobs(ima, nbh, unused_nl);
+  std::set<conn_number_t> s;
   mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
@@ -353,9 +356,9 @@ connectivity_number_3d__18_6p_one(const mln::image3d<bool>& ima)
   // thread-unsafe accesses to this neighborhood (see the long
   // explanation above).
   mln::neighb3d nbh = c18();
-  config_3d_t unused_nl;
-  image3d<config_3d_t> lab = labeling::blobs(ima, nbh, unused_nl);
-  std::set<config_3d_t> s;
+  conn_number_t unused_nl;
+  image3d<conn_number_t> lab = labeling::blobs(ima, nbh, unused_nl);
+  std::set<conn_number_t> s;
   mln_niter_(N) n(nbh, p);
   for_all(n)
     if (lab(n) != 0)
@@ -367,6 +370,36 @@ conn_numbers_t
 connectivity_numbers_3d__18_6p()
 {
   return connectivity_numbers_3d(connectivity_number_3d__18_6p_one);
+}
+
+
+/*----------------------.
+| Helpers for drivers.  |
+`----------------------*/
+
+void
+usage(const std::string& program)
+{
+  std::cerr <<
+    "usage: " << program << " <nbhs>" << std::endl <<
+    "where <nbhs> is one of these values:\n\n"
+    "  `6_26'  :  6-c foreground,  26-c background\n"
+    "  `26_6'  : 26-c foreground,  6-c background\n"
+    "  `6p_18' : 6+-c foreground, 18-c background\n"
+    "  `18_6p' : 18-c foreground, 6+-c background\n" << std::endl;
+  std::exit(1);
+}
+
+void
+display_connectivity_numbers(const conn_numbers_t& conn_numbers)
+{
+  for (size_t i = 0; i < conn_numbers.size(); ++i)
+    {
+      std::cout << std::setw(2) << conn_numbers[i] << ", ";
+      if (! ((i + 1) % 4)) std::cout << " ";
+      if (! ((i + 1) % 16)) std::cout << std::endl;
+      if (! ((i + 1) % 64)) std::cout <<  std::endl;
+    }
 }
 
 #endif // ! TOOLS_CONNECTIVITY_NUMBERS_3D_HH
