@@ -1,5 +1,19 @@
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Parallel computation of simple 3D point look-up tables.
+
+	* tools/simple_point_3d_lut_tbb.hh,
+	* tools/simple_point_3d_lut_tbb.cc:
+	New.
+	* tools/Makefile.am (noinst_HEADERS): Add simple_point_3d_lut_tbb.hh.
+	(EXTRA_PROGRAMS): Add simple_point_3d_lut_tbb.
+	(simple_point_3d_lut_tbb_SOURCES)
+	(simple_point_3d_lut_tbb_CPPFLAGS)
+	(simple_point_3d_lut_tbb_LDFLAGS):
+	New.
+
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Sequential computation of simple 3D points look-up tables.
 
 	* tools/simple_point_3d_lut.hh,

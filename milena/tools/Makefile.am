@@ -46,3 +46,9 @@ connectivity_numbers_3d_tbb_LDFLAGS =  $(LDFLAGS_TBB)
 noinst_HEADERS += simple_point_3d_lut.hh
 EXTRA_PROGRAMS += simple_point_3d_lut
 simple_point_3d_lut_SOURCES = simple_point_3d_lut.cc
+
+noinst_HEADERS += simple_point_3d_lut_tbb.hh
+EXTRA_PROGRAMS += simple_point_3d_lut_tbb
+simple_point_3d_lut_tbb_SOURCES = simple_point_3d_lut_tbb.cc
+simple_point_3d_lut_tbb_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_TBB)
+simple_point_3d_lut_tbb_LDFLAGS =  $(LDFLAGS_TBB)
