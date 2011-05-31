@@ -1,5 +1,16 @@
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate a simple 3D points look-up table for the (26,6)-adjacency.
+
+	* tools/Makefile.am (CLEANFILES): New.
+	Add simple_point_3d_lut_26_6.txt and simple_point_3d_lut_26_6.hh.
+	(simple_point_luts): New (phony) target.
+	(simple_point_3d_lut_26_6.txt)
+	(simple_point_3d_lut_26_6.hh):
+	New targets.
+
+2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Parallel computation of simple 3D point look-up tables.
 
 	* tools/simple_point_3d_lut_tbb.hh,
