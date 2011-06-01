@@ -1,5 +1,12 @@
 2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix use of uninitialized values.
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/remove/separators.hh: Initialize border.
+
+2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix a serious memory leak.
 
 	* scribo/core/component_info.hh,

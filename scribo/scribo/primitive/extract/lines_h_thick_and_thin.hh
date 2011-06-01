@@ -156,6 +156,7 @@ namespace scribo
 	  extension::adjust_fill(input, length / 2, 0);
 	  accu::count_value<bool> accu(true);
 	  image2d<unsigned> count = accu::transform_line(accu, input, length, 1);
+	  border::fill(count, 0); // FIXME: correct?
 
 	  image2d<value::int_u8> output;
 	  initialize(output, count);
