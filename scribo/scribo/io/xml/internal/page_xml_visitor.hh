@@ -66,28 +66,27 @@ namespace scribo
 	  Its XSD file is located here:
 	  http://schema.primaresearch.org/PAGE/gts/pagecontent/2010-03-19/pagecontent.xsd
 	*/
-	class page_xml_visitor : public doc_serializer<page_xml_visitor>
+	template <typename L>
+	class page_xml_visitor : public doc_serializer<page_xml_visitor<L> >
 	{
 	public:
 	  // Constructor
-	  page_xml_visitor(std::ofstream& out);
+	  page_xml_visitor<L>(std::ofstream& out);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  template <typename L>
 	  void visit(const component_set<L>& comp_set) const;
 
-	  template <typename L>
 	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
 	private: // Attributes
 	  std::ofstream& output;
 	  mutable int base_vertical_line_id_;
+
+	  mutable L lbl_;
 	};
 
 
@@ -95,8 +94,8 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	page_xml_visitor::page_xml_visitor(std::ofstream& out)
+	template <typename L>
+	page_xml_visitor<L>::page_xml_visitor(std::ofstream& out)
 	  : output(out)
 	{
 	}
@@ -107,7 +106,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const document<L>& doc) const
+	page_xml_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Make sure there are no duplicate ids for line separators.
 	  // Vertical and horizontal lines are indexed separately from
@@ -143,8 +142,9 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const component_set<L>& comp_set) const
+	page_xml_visitor<L>::visit(const component_set<L>& comp_set) const
 	{
+	  lbl_ = comp_set.labeled_image();
 	  for_all_comps(c, comp_set)
 	    if (comp_set(c).is_valid())
 	      comp_set(c).accept(*this);
@@ -155,13 +155,13 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const component_info<L>& info) const
+	page_xml_visitor<L>::visit(const component_info<L>& info) const
 	{
 	  // Getting component outline
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
-	  const L& lbl = info.holder().labeled_image();
+	  //const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
 
 	  switch (info.type())
 	  {
@@ -223,7 +223,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const paragraph_set<L>& parset) const
+	page_xml_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  const line_set<L>& lines = parset.lines();
 

@@ -61,7 +61,8 @@ namespace scribo
       {
 
 
-	class debug_img_visitor : public doc_serializer<debug_img_visitor>
+	template <typename L>
+	class debug_img_visitor : public doc_serializer<debug_img_visitor<L> >
 	{
 	public:
 	  // Constructor
@@ -69,21 +70,18 @@ namespace scribo
 			    unsigned output_ratio);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  template <typename L>
 	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
-	  template <typename L>
 	  void visit(const line_info<L>& line) const;
 
 	private: // Attributes
 	  mln::image2d<value::rgb8>& output;
 	  unsigned output_ratio;
+	  mutable L lbl_;
 
 	private: // Methods
 	  box2d compute_bbox(const box2d& b) const;
@@ -94,9 +92,9 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
- 	inline
+	template <typename L>
 	box2d
-	debug_img_visitor::compute_bbox(const box2d& b) const
+	debug_img_visitor<L>::compute_bbox(const box2d& b) const
 	{
 	  point2d
 	    pmin = b.pmin() / output_ratio,
@@ -106,8 +104,8 @@ namespace scribo
 	}
 
 
-	inline
-	debug_img_visitor::debug_img_visitor(mln::image2d<value::rgb8>& out,
+	template <typename L>
+	debug_img_visitor<L>::debug_img_visitor(mln::image2d<value::rgb8>& out,
 					     unsigned output_ratio)
 	  : output(out), output_ratio(output_ratio)
 	{
@@ -119,7 +117,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	debug_img_visitor::visit(const document<L>& doc) const
+	debug_img_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Text
 	  if (doc.has_text())
@@ -129,19 +127,28 @@ namespace scribo
 	  if (doc.has_elements())
 	  {
 	    for_all_comps(e, doc.elements())
+	    {
+	      lbl_ = doc.elements().labeled_image();
 	      if (doc.elements()(e).is_valid())
 		doc.elements()(e).accept(*this);
+	    }
 	  }
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
+	  {
+	    lbl_ = doc.vline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.vline_seps_comps())
 	      if (doc.vline_seps_comps()(c).is_valid())
 		doc.vline_seps_comps()(c).accept(*this);
+	  }
 	  if (doc.has_hline_seps())
+	  {
+	    lbl_ = doc.hline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.hline_seps_comps())
 	      if (doc.hline_seps_comps()(c).is_valid())
 		doc.hline_seps_comps()(c).accept(*this);
+	  }
 
 	}
 
@@ -150,13 +157,13 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	debug_img_visitor::visit(const component_info<L>& info) const
+	debug_img_visitor<L>::visit(const component_info<L>& info) const
 	{
 	  // Getting component outline
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
-	  const L& lbl = info.holder().labeled_image();
+	  //const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
 
 	  switch (info.type())
 	  {
@@ -187,7 +194,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	debug_img_visitor::visit(const paragraph_set<L>& parset) const
+	debug_img_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  const line_set<L>& lines = parset.lines();
 
@@ -216,7 +223,7 @@ namespace scribo
 
 	template <typename L>
 	void
-	debug_img_visitor::visit(const line_info<L>& line) const
+	debug_img_visitor<L>::visit(const line_info<L>& line) const
 	{
 	  point2d
 	    pmin = line.bbox().pmin(),

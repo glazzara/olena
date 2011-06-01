@@ -150,7 +150,7 @@ namespace scribo
 	{
 	  mln_precondition(doc.is_valid());
 	  mln::image2d<value::rgb8> output = duplicate(doc.image());
-	  scribo::io::img::internal::full_img_visitor f(output);
+	  scribo::io::img::internal::full_img_visitor<L> f(output);
 	  doc.accept(f);
 	  return output;
 	}
@@ -164,7 +164,7 @@ namespace scribo
 	    output(box2d(doc.image().domain().pmin() / 4,
 			 doc.image().domain().pmax() / 4));
 	  data::fill(output, literal::black);
-	  scribo::io::img::internal::debug_img_visitor f(output, 4);
+	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
 	  doc.accept(f);
 	  return output;
 	}
@@ -178,7 +178,7 @@ namespace scribo
 	    output = mln::subsampling::antialiased(doc.image(), 4);
 	  internal::highlight_mask highlight(0.5f);
 	  data::transform_inplace(output, highlight);
-	  scribo::io::img::internal::debug_img_visitor f(output, 4);
+	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
 	  doc.accept(f);
 	  return output;
 	}

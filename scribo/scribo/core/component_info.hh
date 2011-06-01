@@ -57,8 +57,7 @@ namespace scribo
 
   public:
     component_info();
-    component_info(const component_set<L>& holder,
-		   const component_id_t& id,
+    component_info(const component_id_t& id,
 		   const mln::box2d& bbox,
 		   const mln::point2d& mass_center,
 		   unsigned card,
@@ -86,8 +85,6 @@ namespace scribo
 
     bool is_valid() const;
 
-    const component_set<L>& holder() const;
-
   protected:
     component_id_t id_;
     mln::box2d bbox_;
@@ -98,8 +95,6 @@ namespace scribo
 
     component::Tag tag_;
     component::Type type_;
-
-    component_set<L> holder_;
   };
 
 
@@ -125,14 +120,13 @@ namespace scribo
 
 
   template <typename L>
-  component_info<L>::component_info(const component_set<L>& holder,
-				    const component_id_t& id,
+  component_info<L>::component_info(const component_id_t& id,
 				    const mln::box2d& bbox,
 				    const mln::point2d& mass_center,
 				    unsigned card,
 				    component::Type type)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
-      type_(type), holder_(holder)
+      type_(type)
   {
     if (!bbox.is_valid())
       tag_ = component::Ignored;
@@ -231,13 +225,6 @@ namespace scribo
     return tag_ != component::Ignored && bbox_.is_valid();
   }
 
-
-  template <typename L>
-  const component_set<L>&
-  component_info<L>::holder() const
-  {
-    return holder_;
-  }
 
 
   template <typename L>

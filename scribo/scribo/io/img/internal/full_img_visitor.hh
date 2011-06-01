@@ -58,27 +58,26 @@ namespace scribo
       {
 
 
-	class full_img_visitor : public doc_serializer<full_img_visitor>
+	template <typename L>
+	class full_img_visitor : public doc_serializer<full_img_visitor<L> >
 	{
 	public:
 	  // Constructor
 	  full_img_visitor(mln::image2d<value::rgb8>& out);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  template <typename L>
 	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
-	  template <typename L>
 	  void visit(const line_info<L>& line) const;
 
 	private: // Attributes
 	  mln::image2d<value::rgb8>& output;
+
+	  mutable L lbl_;
 	};
 
 
@@ -86,8 +85,8 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	full_img_visitor::full_img_visitor(mln::image2d<value::rgb8>& out)
+	template <typename L>
+	full_img_visitor<L>::full_img_visitor(mln::image2d<value::rgb8>& out)
 	  : output(out)
 	{
 	  mln_assertion(output.is_valid());
@@ -98,7 +97,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	full_img_visitor::visit(const document<L>& doc) const
+	full_img_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Text
 	  if (doc.has_text())
@@ -109,20 +108,29 @@ namespace scribo
 	  {
 	    const component_set<L>& elts = doc.elements();
 	    for_all_comps(e, elts)
+	    {
+	      lbl_ = elts.labeled_image();
 	      if (elts(e).is_valid())
 		elts(e).accept(*this);
+	    }
 	  }
 
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
+	  {
+	    lbl_ = doc.vline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.vline_seps_comps())
 	      if (doc.vline_seps_comps()(c).is_valid())
 		doc.vline_seps_comps()(c).accept(*this);
+	  }
 	  if (doc.has_hline_seps())
+	  {
+	    lbl_ = doc.hline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.hline_seps_comps())
 	      if (doc.hline_seps_comps()(c).is_valid())
 		doc.hline_seps_comps()(c).accept(*this);
+	  }
 
 	}
 
@@ -131,13 +139,13 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	full_img_visitor::visit(const component_info<L>& info) const
+	full_img_visitor<L>::visit(const component_info<L>& info) const
 	{
 	  // Getting component outline
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
-	  const L& lbl = info.holder().labeled_image();
+	  //const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
 
 	  switch (info.type())
 	  {
@@ -167,7 +175,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	full_img_visitor::visit(const paragraph_set<L>& parset) const
+	full_img_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  // const line_set<L>& lines = parset.lines();
 
@@ -187,7 +195,7 @@ namespace scribo
 
 	template <typename L>
 	void
-	full_img_visitor::visit(const line_info<L>& line) const
+	full_img_visitor<L>::visit(const line_info<L>& line) const
 	{
 //	  mln::draw::box(output, line.bbox(), literal::red);
 

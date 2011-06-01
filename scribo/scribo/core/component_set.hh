@@ -337,7 +337,7 @@ namespace scribo
     data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
     for_all_comp_data(i, attribs)
     {
-      component_info<L> info(*this, i, attribs[i].first(),
+      component_info<L> info(i, attribs[i].first(),
 			     attribs[i].second(), attribs[i].second_accu().nsites());
       data_->infos_.append(info);
     }
@@ -362,7 +362,7 @@ namespace scribo
     data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
     for_all_comp_data(i, attribs)
     {
-      component_info<L> info(*this, i, attribs[i].first(),
+      component_info<L> info(i, attribs[i].first(),
 			     attribs[i].second(), attribs[i].second_accu().nsites(),
 			     type);
       data_->infos_.append(info);
@@ -389,7 +389,7 @@ namespace scribo
     data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
     for_all_comp_data(i, attribs)
     {
-      component_info<L> info(*this, i, attribs[i].first,
+      component_info<L> info(i, attribs[i].first,
 			     attribs[i].second.first, attribs[i].second.second,
 			     type);
       data_->infos_.append(info);

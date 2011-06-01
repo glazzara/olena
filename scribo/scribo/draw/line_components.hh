@@ -46,6 +46,7 @@ namespace scribo
     template <typename L, typename I>
     void
     line_components(Image<I>& input_,
+		    const line_set<L>& lines,
 		    const line_info<L>& line,
 		    const mln_value(I)& value);
 
@@ -56,6 +57,7 @@ namespace scribo
     template <typename L, typename I>
     void
     line_components(Image<I>& input_,
+		    const line_set<L>& lines,
 		    const line_info<L>& line,
 		    const mln_value(I)& value)
     {
@@ -65,9 +67,8 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      const line_set<L>& holder = line.holder();
-      const component_set<L>& comp_set = holder.components();
-      const L& labeled_image = holder.components().labeled_image();
+      const component_set<L>& comp_set = lines.components();
+      const L& labeled_image = lines.components().labeled_image();
 
       const mln::util::array<component_id_t>& component_ids = line.component_ids();
 

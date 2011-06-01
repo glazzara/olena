@@ -1,3 +1,26 @@
+2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a serious memory leak.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/line_info.hh,
+	* scribo/draw/line_components.hh: Remove holder data. Prevented
+	the containers from being freed.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/save.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/paragraphs.hh,
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Update
+	code in order to make holder data useless.
+
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/text/paragraphs_closing.hh: Revamp code.

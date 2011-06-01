@@ -140,12 +140,12 @@ namespace scribo
       std::string text_;
       std::string html_text_;
 
-      // Line set holding this element.
-      line_set<L> holder_;
-
       // DEBUG
       stats< float > meanline_clusters_;
       stats< float > baseline_clusters_;
+
+      component_set<L> components_;
+      object_links<L> links_;
 
     private:
       void init_();
@@ -282,10 +282,6 @@ namespace scribo
     /// Force a new computation of statistics.
     void force_stats_update();
 
-
-    /// Returns the line set holding this element.
-    const line_set<L>& holder() const;
-
     /// Returns the delta used to compute the extended bbox.
     int delta_of_line() const;
 
@@ -376,7 +372,7 @@ namespace scribo
     line_info_data<L>::line_info_data(const line_set<L>& holder,
 				      const group_info& group)
       : hidden_(false), tag_(line::None), component_ids_(group.component_ids()),
-	type_(line::Undefined), holder_(holder)
+	type_(line::Undefined), components_(holder.components()), links_(holder.links())
     {
       init_();
     }
@@ -385,7 +381,7 @@ namespace scribo
     line_info_data<L>::line_info_data(const line_set<L>& holder,
 				      const mln::util::array<component_id_t>& component_ids)
       : hidden_(false), tag_(line::None), component_ids_(component_ids),
-	type_(line::Undefined), holder_(holder)
+	type_(line::Undefined), components_(holder.components()), links_(holder.links())
     {
       init_();
     }
@@ -696,7 +692,7 @@ namespace scribo
     for_all_elements(i, data_->component_ids_)
     {
       unsigned c = data_->component_ids_[i];
-      data_->holder_.components_()(c).update_type(type);
+      data_->components_(c).update_type(type);
     }
   }
 
@@ -855,7 +851,7 @@ namespace scribo
 				     data_->baseline_ + D,
 				     bbox().pmax().col() + delta);
 
-    data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
+    data_->ebbox_.crop_wrt(data_->components_.labeled_image().domain());
   }
 
 
@@ -915,7 +911,7 @@ namespace scribo
 	  data_->ebbox_.merge(enlarge(b, d_delta));
 	}
 
-	data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
+	data_->ebbox_.crop_wrt(data_->components_.labeled_image().domain());
       }
       else // /other/ IS NOT a text line.
       {
@@ -941,7 +937,7 @@ namespace scribo
     data_->bbox_.merge(other.bbox());
 
     // Make sure the ebbox is included in the image domain.
-    data_->ebbox_.crop_wrt(data_->holder_.components().labeled_image().domain());
+    data_->ebbox_.crop_wrt(data_->components_.labeled_image().domain());
   }
 
 
@@ -975,13 +971,13 @@ namespace scribo
     // Only for the case of two-character words
     if (card() == 2)
     {
-      const component_set<L>& comp_set = data_->holder_.components();
+      const component_set<L>& comp_set = data_->components_;
 
       const unsigned c1 = data_->component_ids_(0);
       const unsigned c2 = data_->component_ids_(1);
 
-      if (data_->holder_.components()(c1).type() == component::Punctuation
-	  || data_->holder_.components()(c2).type() == component::Punctuation)
+      if (data_->components_(c1).type() == component::Punctuation
+	  || data_->components_(c2).type() == component::Punctuation)
 	return false;
 
       const mln::box2d& bb1 = comp_set(c1).bbox();
@@ -1026,7 +1022,7 @@ namespace scribo
   unsigned
   line_info<L>::get_first_char_height() const
   {
-    const component_set<L>& comp_set = data_->holder_.components();
+    const component_set<L>& comp_set = data_->components_;
     const unsigned c1 = data_->components_(0);
     const mln::box2d& bb1 = comp_set(c1).bbox();
 
@@ -1120,7 +1116,7 @@ namespace scribo
   line_info<L>::force_stats_update()
   {
     typedef mln_site(L) P;
-    const component_set<L>& comp_set = data_->holder_.components();
+    const component_set<L>& comp_set = data_->components_;
 
     // Init.
     typedef mln::value::int_u<12> median_data_t;
@@ -1222,11 +1218,11 @@ namespace scribo
       //  (right link)            (left link)
 
       // Space between characters.
-      if (data_->holder_.links()(c) != c)
+      if (data_->links_(c) != c)
       {
 	int
 	  space = bb.pmin().col()
-	  - comp_set(data_->holder_.links()(c)).bbox().pmax().col() - 1;
+	  - comp_set(data_->links_(c)).bbox().pmax().col() - 1;
 
 	// -- Ignore overlapped characters.
 	if (space > 0)
@@ -1326,14 +1322,6 @@ namespace scribo
       update_ebbox();
     }
 
-  }
-
-
-  template <typename L>
-  const line_set<L>&
-  line_info<L>::holder() const
-  {
-    return data_->holder_;
   }
 
 

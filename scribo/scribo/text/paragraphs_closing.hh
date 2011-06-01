@@ -210,7 +210,7 @@ namespace scribo
 	    const line_id_t& line_id = line_ids(i);
 	    const line_info<L>& current_line = lines(line_id);
 
-	    scribo::draw::line_components(debug, current_line, p);
+	    scribo::draw::line_components(debug, lines, current_line, p);
 
 	    // HACK DISCLAIMER : this line is drawn in order to be
 	    // sure that every line will be reduced to a single
