@@ -1,4 +1,4 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,14 +16,20 @@
 
 # Find Milena and trimesh headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Find apps/data.hh (generated file).
+AM_CPPFLAGS += -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 
-bin_PROGRAMS = image2d-skel-unconstrained image2d-skel-with-end-points
+bin_PROGRAMS =					\
+  image2d-skel-unconstrained			\
+  image2d-skel-with-end-points			\
+  image3d_skel_with_end_points
 image2d_skel_unconstrained_SOURCES = image2d-skel-unconstrained.cc image2d-skel.hh
 image2d_skel_with_end_points_SOURCES = image2d-skel-with-end-points.cc image2d-skel.hh
+image3d_skel_with_end_points_SOURCES = image3d-skel-with-end-points.cc
 
 EXTRA_DIST = test-image2d-skel-unconstrained.in test-image2d-skel-with-end-points.in
 
@@ -47,7 +53,13 @@ test-image2d-skel-with-end-points: $(srcdir)/test-image2d-skel-with-end-points.i
 TESTS = test-image2d-skel-unconstrained test-image2d-skel-with-end-points
 CLEANFILES = test-image2d-skel-unconstrained test-image2d-skel-with-end-points
 
+# FIXME: Exercise image3d-skel-with-end-points (when its input can be
+# passed as a command-line argument).
+
+# FIXME: Rename outputs to have their names use their generator as prefix.
 MOSTLYCLEANFILES =				\
+  image3d-skel-with-end-points-input.raw	\
+  image3d-skel-with-end-points-skel.raw		\
   picasso-skel-unconstrained.pbm		\
   picasso-skel-with-end-points.pbm		\
   tiny-skel-unconstrained.pbm			\

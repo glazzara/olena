@@ -1,3 +1,14 @@
+2011-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	New application computing a 3D skeleton preserving end points.
+
+	* apps/generic-skel/image3d-skel-with-end-points.cc: New.
+	* apps/generic-skel/Makefile.am (bin_PROGRAMS):
+	Add image3d_skel_with_end_points.
+	(image3d_skel_with_end_points): New.
+	(MOSTLYCLEANFILES): Add image3d-skel-with-end-points-input.raw
+	and image3d-skel-with-end-points-skel.raw.
+
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Milena's Makefile helpers.
