@@ -1,5 +1,9 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/util/box_is_included.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix Page XML output.
 
 	* scribo/io/xml/internal/print_image_coords.hh,
