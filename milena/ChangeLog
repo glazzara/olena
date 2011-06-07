@@ -1,5 +1,9 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/draw/polygon.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a missing conversion routine for object ids.
 
 	* mln/convert/from_to.hxx,
