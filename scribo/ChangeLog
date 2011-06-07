@@ -1,5 +1,13 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new toolchain for ICDAR contests.
+
+	* src/contest/DAE-2011/Makefile.am: New target.
+
+	* src/contest/DAE-2011/content_in_doc_dae.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Disable OCR in ICDAR toolchains.
 
 	* scribo/toolchain/internal/content_in_doc_functor.hh,
