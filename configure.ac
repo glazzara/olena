@@ -339,6 +339,7 @@ AC_CONFIG_FILES([
       scribo/src/text/Makefile
       scribo/src/toolchain/Makefile
         scribo/src/toolchain/nepomuk/Makefile
+      scribo/src/util/Makefile
 ])
 
 AC_CONFIG_FILES([scribo/tests/data.hh])
