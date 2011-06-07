@@ -60,6 +60,7 @@
 const char *args_desc[][2] =
 {
   { "input.tif", "An image." },
+  { "output_dir", "Output directory." },
   {0, 0}
 };
 
@@ -70,10 +71,10 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 2)
+  if (argc != 3)
     return scribo::debug::usage(argv,
 				"Document Image Analysis in Historical Documents",
-				"input.tif",
+				"input.tif output_dir",
 				args_desc);
 
   trace::entering("main");
@@ -144,7 +145,7 @@ int main(int argc, char* argv[])
     }
 
     std::stringstream ss;
-    ss << basename(argv[1]) << p << ".pbm";
+    ss << argv[2] << "/" << basename(argv[1]) << "." << p << ".pbm";
     mln::io::pbm::save(output, ss.str());
   }
 

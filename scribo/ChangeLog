@@ -1,5 +1,9 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc: Specify output dir.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new example.
 
 	* src/util/Makefile.am,
