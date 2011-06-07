@@ -40,8 +40,14 @@
 # include <mln/io/ppm/save.hh>
 # include <mln/data/convert.hh>
 # include <mln/opt/at.hh>
+# include <mln/extension/fill.hh>
 
 # include <iostream>
+
+#include <mln/io/pgm/save.hh>
+#include <mln/data/wrap.hh>
+#include <mln/data/convert.hh>
+
 
 namespace scribo
 {
@@ -79,7 +85,8 @@ namespace scribo
       template <typename I>
       void
       find_first_point(const I& input,
-		       point2d& p)
+		       point2d& p,
+		       const mln_value(I)& id)
       {
 	const mln::def::coord
 	  mid_row = geom::min_row(input) + (geom::nrows(input) >> 1);
@@ -87,7 +94,7 @@ namespace scribo
 	for (mln::def::coord i = geom::min_col(input);
 	     i <= geom::max_col(input); ++i)
 	{
-	  if (opt::at(input, mid_row, i))
+	  if (opt::at(input, mid_row, i) == id)
 	  {
 	    p.row() = mid_row;
 	    p.col() = i;
@@ -100,14 +107,15 @@ namespace scribo
       void
       left_up(int& direction,
 	      const I& input,
-	      const point2d& cur_pt)
+	      const point2d& cur_pt,
+	      const mln_value(I)& id)
       {
 	const point2d p2(cur_pt.row() + offset[direction][5][1],
 			 cur_pt.col() + offset[direction][5][0]);
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if (!input(p2) && input(p3))
+	if ((input(p2) != id) && (input(p3) == id))
 	{
 	  direction = 3;
 	  return;
@@ -130,7 +138,8 @@ namespace scribo
       void
       right_up(int& direction,
 	       const I& input,
-	       const point2d& cur_pt)
+	       const point2d& cur_pt,
+	       const mln_value(I)& id)
       {
 	const point2d p1(cur_pt.row() + offset[direction][0][1],
 			 cur_pt.col() + offset[direction][0][0]);
@@ -139,7 +148,7 @@ namespace scribo
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if (!input(p2) && (input(p1) || input(p3)))
+	if ((input(p2) != id) && ((input(p1) == id) || (input(p3) == id)))
 	{
 	  direction = 0;
 	  return;
@@ -162,14 +171,15 @@ namespace scribo
       void
       right_down(int& direction,
 		 const I& input,
-		 const point2d& cur_pt)
+		 const point2d& cur_pt,
+		 const mln_value(I)& id)
       {
 	const point2d p2(cur_pt.row() + offset[direction][5][1],
 			 cur_pt.col() + offset[direction][5][0]);
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if (!input(p2) && input(p3))
+	if ((input(p2) != id) && (input(p3) == id))
 	{
 	  direction = 1;
 	  return;
@@ -192,7 +202,8 @@ namespace scribo
       void
       left_down(int& direction,
 		const I& input,
-		const point2d& cur_pt)
+		const point2d& cur_pt,
+		const mln_value(I)& id)
       {
 	const point2d p1(cur_pt.row() + offset[direction][0][1],
 			 cur_pt.col() + offset[direction][0][0]);
@@ -201,7 +212,7 @@ namespace scribo
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if (!input(p2) && (input(p1) || input(p3)))
+	if ((input(p2) != id) && ((input(p1) == id) || (input(p3) == id)))
 	{
 	  direction = 2;
 	  return;
@@ -225,17 +236,18 @@ namespace scribo
       void
       find_next_point(const I& input,
 		      point2d& cur_pt,
-		      int& direction)
+		      int& direction,
+		      const mln_value(I)& id)
       {
 	unsigned i = 0;
 	point2d tmp;
 
 	switch (direction)
 	{
-	  case 0: left_up(direction, input, cur_pt); break;
-	  case 1: right_up(direction , input, cur_pt); break;
-	  case 2: right_down(direction, input, cur_pt); break;
-	  case 3: left_down(direction, input, cur_pt); break;
+	  case 0: left_up(direction, input, cur_pt, id); break;
+	  case 1: right_up(direction , input, cur_pt, id); break;
+	  case 2: right_down(direction, input, cur_pt, id); break;
+	  case 3: left_down(direction, input, cur_pt, id); break;
 	}
 
 	for (; i < 8; ++i)
@@ -243,7 +255,7 @@ namespace scribo
 	  tmp = point2d(cur_pt.row() + offset[direction][i][1],
 			cur_pt.col() + offset[direction][i][0]);
 
-	  if (input.domain().has(tmp) && input(tmp))
+	  if (input(tmp) == id)
 	    break;
 	}
 
@@ -263,7 +275,7 @@ namespace scribo
       }
 
       void
-      filter_points(mln::p_array<point2d>& points,
+      filter_points(const mln::p_array<point2d>& points,
 		    mln::p_array<point2d>& waypoints)
       {
 	const unsigned nelements = points.nsites();
@@ -330,33 +342,35 @@ namespace scribo
 
     template <typename I>
     mln::p_array<point2d>
-    component_precise_outline(const Image<I>& input_)
+    component_precise_outline(const Image<I>& input_, const mln_value(I)& id)
     {
       trace::entering("scribo::util::component_precise_outline");
 
       const I& input = exact(input_);
       typedef mln_site(I) P;
 
-      point2d start_pt;
-      int direction = 0;
+      extension::fill(input, 0);
+
       mln::p_array<P> points;
       points.reserve(std::max(geom::ncols(input), geom::nrows(input)));
 
-      internal::find_first_point(input, start_pt);
+      point2d start_pt;
+      int direction = 0;
+
+      internal::find_first_point(input, start_pt, id);
 
       P cur_pt = start_pt;
 
-      internal::find_next_point(input, cur_pt, direction);
+      internal::find_next_point(input, cur_pt, direction, id);
       points.append(cur_pt);
 
       while (cur_pt != start_pt)
       {
-	internal::find_next_point(input, cur_pt, direction);
+	internal::find_next_point(input, cur_pt, direction, id);
 	points.append(cur_pt);
       }
 
-
-      internal::find_next_point(input, cur_pt, direction);
+      internal::find_next_point(input, cur_pt, direction, id);
 
       const std::vector<point2d>& vec_points = points.hook_std_vector_();
 
@@ -367,16 +381,27 @@ namespace scribo
 
 	while (cur_pt != start_pt)
 	{
-	  internal::find_next_point(input, cur_pt, direction);
+	  internal::find_next_point(input, cur_pt, direction, id);
 	  points.append(cur_pt);
 	}
       }
 
-      // mln::p_array<P> waypoints;
-      // internal::filter_points(points, waypoints);
+      std::cout << "Before filter points - " << points.nsites() << std::endl;
+
+      mln::p_array<P> waypoints;
+      internal::filter_points(points, waypoints);
+
+      std::cout << "After filter points - " << waypoints.nsites() << std::endl;
 
       trace::exiting("scribo::util::component_precise_outline");
-      return points;
+      return waypoints;
+    }
+
+    template <typename I>
+    mln::p_array<point2d>
+    component_precise_outline(const Image<I>& input)
+    {
+      return component_precise_outline(input, true);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
