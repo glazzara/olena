@@ -1,5 +1,12 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new example.
+
+	* src/util/Makefile.am,
+	* src/util/component_precise_outline.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add binaries for ICDAR 2011 contests.
 
 	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Remove
