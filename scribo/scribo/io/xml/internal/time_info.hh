@@ -23,15 +23,14 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_IO_XML_INTERNAL_PRINT_IMAGE_COORDS_HH
-# define SCRIBO_IO_XML_INTERNAL_PRINT_IMAGE_COORDS_HH
+#ifndef SCRIBO_IO_XML_INTERNAL_TIME_INFO_HH
+# define SCRIBO_IO_XML_INTERNAL_TIME_INFO_HH
 
 /// \file
 ///
-/// \brief Prints box2d coordinates to XML data.
+/// Get formated time info for PAGE XML format.
 
-# include <fstream>
-# include <mln/core/concept/site_set.hh>
+# include <ctime>
 
 namespace scribo
 {
@@ -47,37 +46,18 @@ namespace scribo
 
 	using namespace mln;
 
-        /*! \brief Prints box2d coordinates to XML data.
-	 */
-	template <typename S>
-	void
-	print_image_coords(std::ofstream& ostr, const mln::Site_Set<S>& b,
-			   const char *space);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
-
-	template <typename S>
-	void
-	print_image_coords(std::ofstream& ostr, const mln::Site_Set<S>& b_,
-			   const char *space)
+	std::string time_info()
 	{
-	  std::string sc = space;
-	  std::string sp = sc + "  ";
+	  time_t cur_time = time(NULL);
+	  tm * time_struct;
+	  time_struct = localtime(&cur_time);
+	  char time_info_[55];
+	  strftime(time_info_, 55, "%Y-%m-%dT%H:%M:%S", time_struct);
+	  std::string output(time_info_);
 
-	  const S& b = exact(b_);
-	  mln_precondition(b.is_valid());
-
-	  ostr << sc << "<Coords>" << std::endl;
-
-	  mln_piter(S) p(b);
-	  for_all(p)
-	    ostr << sp << "<Point x=\"" << p.col()
-		 << "\" y=\"" << p.row() << "\"/>"
-		 << std::endl;
-
-	  ostr << sc << "</Coords>" << std::endl;
+	  return output;
 	}
 
 
@@ -91,4 +71,5 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_IO_XML_INTERNAL_PRINT_IMAGE_COORDS_HH
+
+#endif // ! SCRIBO_IO_XML_INTERNAL_TIME_INFO_HH

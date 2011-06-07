@@ -1,5 +1,14 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix Page XML output.
+
+	* scribo/io/xml/internal/print_image_coords.hh,
+	* scribo/io/xml/internal/print_page_preambule.hh: Fix typos.
+
+	* scribo/io/xml/internal/time_info.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Handle drop capital components.
 
 	* scribo/core/tag/component.hh: New tag.
