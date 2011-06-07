@@ -1,5 +1,4 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,7 +19,19 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-SUBDIRS = 		\
-  hdibco-2010 		\
-  hdlac-2011 		\
-  DAE-2011
+noinst_PROGRAMS =
+
+
+if HAVE_MAGICKXX
+
+noinst_PROGRAMS += content_in_hdoc_hdlac
+
+content_in_hdoc_hdlac_SOURCES = content_in_hdoc_hdlac.cc
+content_in_hdoc_hdlac_CPPFLAGS = $(AM_CPPFLAGS) \
+	  		         $(TESSERACT_CPPFLAGS) \
+	  		    	 -I$(top_builddir)
+content_in_hdoc_hdlac_LDFLAGS  = $(AM_LDFLAGS) \
+		      	       	 -lpthread \
+			   	 $(MAGICKXX_LDFLAGS)
+
+endif HAVE_MAGICKXX

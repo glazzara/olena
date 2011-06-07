@@ -272,7 +272,8 @@ namespace scribo
 	{
 	  on_new_progress_label("Denoise...");
 
-	  std::cout << ">> min_area = " << min_area << std::endl;
+	  if (verbose)
+	    std::cout << ">> min_area = " << min_area << std::endl;
 
 	  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), min_area);
 
@@ -547,7 +548,8 @@ namespace scribo
 	if (!(closing_size % 2))
 	  closing_size += 1;
 
-	std::cout << ">> CLosing size = " << closing_size << std::endl;
+	if (verbose)
+	  std::cout << ">> CLosing size = " << closing_size << std::endl;
 
 	component_set<L>
 	  elements = scribo::primitive::extract::non_text_hdoc(doc, closing_size);

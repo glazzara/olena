@@ -1,5 +1,21 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add binaries for ICDAR 2011 contests.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Remove
+	debug.
+
+	* src/content_in_hdoc.cc: Disable debug.
+
+	* src/contest/DAE-2011/Makefile.am,
+	* src/contest/Makefile.am,
+	* src/contest/hdlac-2011/Makefile.am: New targets.
+
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* scribo/io/xml/internal/page_xml_visitor.hh: Fix duplicate ids.
