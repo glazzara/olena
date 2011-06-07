@@ -1,5 +1,9 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/text/paragraphs_closing.hh: Revamp code.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/util/box_is_included.hh: New.
 
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>

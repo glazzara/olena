@@ -31,6 +31,9 @@
 ///
 /// Paragraphs closing using CRLA.
 
+# include <mln/draw/line.hh>
+# include <scribo/draw/line_components.hh>
+
 namespace scribo
 {
 
@@ -39,162 +42,217 @@ namespace scribo
 
     using namespace mln;
 
-    template< typename L, typename V >
-    void
-    paragraphs_closing(image2d<V>& output,
-		       const paragraph_set<L>& par_set,
-		       const box2d& domain);
+    template< typename L>
+    mln_concrete(L)
+    paragraphs_closing(const paragraph_set<L>& parset);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template< typename V >
-    inline
-    void horizontal_CRLA(const image2d<V>& input,
-			 image2d<V>& output,
-			 const mln::util::array<int>& deltas)
+    namespace internal
     {
-      mln_piter(image2d<V>) p(input.domain());
-      int count = 0;
-      unsigned nrows = input.nrows();
-      unsigned ncols = input.ncols();
-      V last_pixel_value = 0;
 
-      for (unsigned i = 0; i < nrows; ++i)
+      template<typename L>
+      inline
+      void horizontal_CRLA(const Image<L>& input_,
+			   Image<L>& output_,
+			   const mln::util::array<int>& deltas)
       {
-	for (unsigned j = 0; j < ncols; ++j)
-	{
-	  const V& current_pixel = input.at_(i, j);
+	const L& input = exact(input_);
+	L& output = exact(output_);
+	mln_precondition(input.is_valid());
+	mln_precondition(output.is_valid());
 
-	  if (!current_pixel)
-	  {
-	    if (last_pixel_value)
-	    {
-	      unsigned k = j + 1;
-	      for (; !input.at_(i, k) && (k < ncols); ++k);
+	mln_piter(L) p(input.domain());
+	int count = 0;
+	unsigned nrows = input.nrows();
+	unsigned ncols = input.ncols();
+	mln_value(L) last_pixel_value = 0;
 
-	      count = k - j;
-	      const int threshold = deltas(last_pixel_value - 1);
-
-	      if (last_pixel_value == input.at_(i, k) && count < threshold)
-		for (unsigned l = j; l <= k; ++l)
-		  output.at_(i, l) = last_pixel_value;
-
-	      j = k;
-	      last_pixel_value = 0;
-	    }
-	  }
-	  else
-	  {
-	    output.at_(i, j) = current_pixel;
-	    last_pixel_value = current_pixel;
-	  }
-	}
-      }
-    }
-
-    template< typename V >
-    inline
-    void vertical_CRLA(const image2d<V>& input,
-		       image2d<V>& output,
-		       const mln::util::array<int>& deltas)
-    {
-      mln_piter(image2d<V>) p(input.domain());
-      int count = 0;
-      unsigned nrows = input.nrows();
-      unsigned ncols = input.ncols();
-      V last_pixel_value = 0;
-
-      for (unsigned j = 0; j < ncols; ++j)
-      {
 	for (unsigned i = 0; i < nrows; ++i)
 	{
-	  const V& current_pixel = input.at_(i, j);
-
-	  if (!current_pixel)
+	  for (unsigned j = 0; j < ncols; ++j)
 	  {
-	    if (last_pixel_value)
+	    const mln_value(L)& current_pixel = input.at_(i, j);
+
+	    if (!current_pixel)
 	    {
-	      unsigned k = i + 1;
-	      for (; !input.at_(k, j) && (k < nrows); ++k);
+	      if (last_pixel_value)
+	      {
+		unsigned k = j + 1;
+		for (; !(input.at_(i, k)) && (k < ncols); ++k);
 
-	      count = k - i;
-	      const int threshold = deltas(last_pixel_value - 1);
+		count = k - j;
+		const int threshold = deltas(last_pixel_value);
 
-	      if (last_pixel_value == input.at_(k, j)
-		  && count < threshold)
-		for (unsigned l = i; l <= k; ++l)
-		  output.at_(l, j) = last_pixel_value;
+		if (last_pixel_value == input.at_(i, k) && count < threshold)
+		  for (unsigned l = j; l <= k; ++l)
+		    output.at_(i, l) = last_pixel_value;
 
-	      i = k;
-	      last_pixel_value = 0;
+		j = k;
+		last_pixel_value = 0;
+	      }
 	    }
-	  }
-	  else
-	  {
-	    output.at_(i, j) = current_pixel;
-	    last_pixel_value = current_pixel;
+	    else
+	    {
+	      output.at_(i, j) = current_pixel;
+	      last_pixel_value = current_pixel;
+	    }
 	  }
 	}
       }
-    }
 
-    template< typename V >
-    inline
-    void CRLA(const image2d<V>& input,
-	      image2d<V>& output,
-	      const mln::util::array<int>& deltas,
-	      const mln::util::array<int>& deltas_factor)
-    {
-      horizontal_CRLA(input, output, deltas_factor);
-      vertical_CRLA(output, output, deltas);
-      horizontal_CRLA(output, output, deltas_factor);
-    }
+      template<typename L>
+      inline
+      void vertical_CRLA(const Image<L>& input_,
+			 Image<L>& output_,
+			 const mln::util::array<int>& deltas)
+      {
+	const L& input = exact(input_);
+	L& output = exact(output_);
+	mln_precondition(input.is_valid());
+	mln_precondition(output.is_valid());
 
-    template< typename L, typename V >
-    void
-    paragraphs_closing(image2d<V>& output,
-		       const paragraph_set<L>& par_set,
-		       const box2d& domain)
+	mln_piter(L) p(input.domain());
+	int count = 0;
+	unsigned nrows = input.nrows();
+	unsigned ncols = input.ncols();
+	mln_value(L) last_pixel_value = 0;
+
+	for (unsigned j = 0; j < ncols; ++j)
+	{
+	  for (unsigned i = 0; i < nrows; ++i)
+	  {
+	    const mln_value(L)& current_pixel = input.at_(i, j);
+
+	    if (!current_pixel)
+	    {
+	      if (last_pixel_value)
+	      {
+		unsigned k = i + 1;
+		for (; !(input.at_(k, j)) && (k < nrows); ++k);
+
+		count = k - i;
+		const int threshold = deltas(last_pixel_value);
+
+		if (last_pixel_value == input.at_(k, j)
+		    && count < threshold)
+		  for (unsigned l = i; l <= k; ++l)
+		    output.at_(l, j) = last_pixel_value;
+
+		i = k;
+		last_pixel_value = 0;
+	      }
+	    }
+	    else
+	    {
+	      output.at_(i, j) = current_pixel;
+	      last_pixel_value = current_pixel;
+	    }
+	  }
+	}
+      }
+
+      template<typename L>
+      inline
+      void CRLA(const Image<L>& input,
+		Image<L>& output,
+		const mln::util::array<int>& deltas,
+		const mln::util::array<int>& deltas_factor)
+      {
+	horizontal_CRLA(input, output, deltas_factor);
+
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  output,
+				  "paragraph_closing_horizontal_CRLA");
+
+
+	vertical_CRLA(output, output, deltas);
+
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  output,
+				  "paragraph_closing_vertical_CRLA");
+
+	horizontal_CRLA(output, output, deltas_factor);
+      }
+
+    } // end of namespace scribo::text::internal
+
+
+    template<typename L>
+    mln_concrete(L)
+    paragraphs_closing(const paragraph_set<L>& parset)
     {
       trace::entering("scribo::text::paragraphs_closing");
 
-      image2d<V> debug(domain);
+      // FIXME: 'debug' may be useless.
+      mln_concrete(L) output, debug;
+      initialize(output, parset.lines().components().labeled_image());
+      initialize(debug, output);
 
-      mln::util::array<int> deltas;
-      deltas.reserve(par_set.nelements());
-      mln::util::array<int> deltas_factor;
-      deltas_factor.reserve(par_set.nelements());
+      mln::util::array<int> deltas(parset.nelements() + 1, 0);
+      mln::util::array<int> deltas_factor(parset.nelements() + 1, 0);
 
       data::fill(debug, 0);
       data::fill(output, 0);
 
-      const line_set<L>& lines = par_set.lines();
+      const line_set<L>& lines = parset.lines();
 
-      for_all_paragraphs(p, par_set)
-      {
-	const paragraph_info<L>& current_par = par_set(p);
-	const mln::util::array<line_id_t>& line_ids = current_par.line_ids();
-	const unsigned nelements = line_ids.nelements();
-
-	for (unsigned i = 0; i < nelements; ++i)
+      for_all_paragraphs(p, parset)
+	if (parset(p).is_valid())
 	{
-	  const line_id_t& line_id = line_ids(i);
-	  const line_info<L>& current_line = lines(line_id);
+	  const paragraph_info<L>& current_par = parset(p);
+	  const mln::util::array<line_id_t>& line_ids = current_par.line_ids();
 
-	  draw::line_components(debug, current_line, p);
-	}
+	  line_id_t last_id = line_ids[0];
+	  for_all_elements(i, line_ids)
+	  {
+	    const line_id_t& line_id = line_ids(i);
+	    const line_info<L>& current_line = lines(line_id);
 
-	int delta_baseline = current_par.delta_baseline();
+	    scribo::draw::line_components(debug, current_line, p);
 
-	if (delta_baseline % 2 == 0)
+	    // HACK DISCLAIMER : this line is drawn in order to be
+	    // sure that every line will be reduced to a single
+	    // component after closing.  It is necessary to reduce a
+	    // paragraph to one component in order to extract its
+	    // outline correctly for xml/debug output.
+	    component_id_t last_comp = lines(line_id).component_ids()(0);
+	    for_all_elements(i, lines(line_id).component_ids())
+	    {
+	      const unsigned c = lines(line_id).component_ids()(i);
+	      mln::draw::line(debug,
+	    		      lines.components()(c).mass_center(),
+	    		      lines.components()(last_comp).mass_center(),
+	    		      p);
+	      last_comp = c;
+	    }
+
+	    // mln::draw::line(debug, current_line.bbox().pcenter(), lines(last_id).bbox().pcenter(), p);
+	    // last_id = line_id;
+	  }
+
+	  int delta_baseline = current_par.delta_baseline();
+
+	  if (delta_baseline % 2 == 0)
 	    --delta_baseline;
 
-	deltas.append(delta_baseline);
-	deltas_factor.append(3 * delta_baseline);
-      }
-      CRLA(debug, output, deltas, deltas_factor);
+	  deltas(p) = 2 * delta_baseline; // Vertical
+	  deltas_factor(p) = 3 * delta_baseline; // Horizontal
+	}
 
-      trace::exiting("scribo::draw::line_components");
+      debug::logger().log_image(debug::AuxiliaryResults,
+				debug,
+				"paragraph_closing_input_CRLA");
+
+      internal::CRLA(debug, output, deltas, deltas_factor);
+
+      debug::logger().log_image(debug::Results,
+				output,
+				"paragraph_closing");
+
+      trace::exiting("scribo::text::paragraphs_closing");
+      return output;
     }
 
 # endif
