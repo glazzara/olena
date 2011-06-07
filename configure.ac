@@ -323,6 +323,8 @@ AC_CONFIG_FILES([
       scribo/src/binarization/Makefile
       scribo/src/contest/Makefile
       scribo/src/contest/hdibco-2010/Makefile
+      scribo/src/contest/hdlac-2011/Makefile
+      scribo/src/contest/DAE-2011/Makefile
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile

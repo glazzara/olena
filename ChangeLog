@@ -1,3 +1,7 @@
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure ICDAR contests directories.
+
 2011-05-05  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
 	* configure.ac: Configure scribo/tests/util.
