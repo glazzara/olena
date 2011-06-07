@@ -28,7 +28,8 @@ SUBDIRS =					\
   preprocessing 				\
   table	 					\
   text 						\
-  toolchain
+  toolchain					\
+  util
 
 
 

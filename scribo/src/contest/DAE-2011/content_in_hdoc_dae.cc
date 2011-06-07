@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2011 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -24,7 +24,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-# define SCRIBO_NOCR
+#define SCRIBO_NOCR
 
 #include <libgen.h>
 #include <fstream>

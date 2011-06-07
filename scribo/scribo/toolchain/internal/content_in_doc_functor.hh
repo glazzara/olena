@@ -57,7 +57,10 @@
 
 # include <scribo/preprocessing/denoise_fg.hh>
 
+#  ifndef SCRIBO_NOCR
 # include <scribo/text/recognition.hh>
+#  endif // ! SCRIBO_NOCR
+
 # include <scribo/text/merging.hh>
 # include <scribo/text/link_lines.hh>
 # include <scribo/text/paragraphs.hh>
@@ -437,6 +440,7 @@ namespace scribo
 	on_progress();
 
 
+#  ifndef SCRIBO_NOCR
 	// Text recognition
 	if (enable_ocr)
 	{
@@ -446,6 +450,7 @@ namespace scribo
 
 	  on_progress();
 	}
+#  endif // ! SCRIBO_NOCR
 
 // 	// Link text lines
 // 	on_new_progress_label("Linking text lines");
