@@ -1,5 +1,14 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add support for tags in paragraph_info.
+
+	* scribo/core/paragraph_info.hh: Here.
+
+	* scribo/core/tag/paragraph.hh: Introduce paragraph tags.
+
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve output cleanup for historical document toolchain.
 
 	* scribo/filter/paragraphs_in_borders.hh,

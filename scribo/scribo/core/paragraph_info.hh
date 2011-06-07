@@ -28,6 +28,7 @@
 
 # include <scribo/core/line_info.hh>
 # include <scribo/core/line_links.hh>
+# include <scribo/core/tag/paragraph.hh>
 # include <mln/util/array.hh>
 # include <mln/accu/shape/bbox.hh>
 
@@ -79,6 +80,11 @@ namespace scribo
     void set_delta_baseline(const int delta_baseline);
     int delta_baseline() const;
 
+    void fast_merge(paragraph_info<L>& info);
+
+    void update_tag(paragraph::Tag tag);
+    paragraph::Tag tag() const;
+
   private:
     mln::util::array<line_id_t> line_ids_;
     mln::accu::shape::bbox<mln_site(L)> bbox_;
@@ -88,7 +94,7 @@ namespace scribo
     float color_reliability_;
 
     int delta_baseline_;
-    bool needs_stats_update_;
+    paragraph::Tag tag_;
     bool is_valid_;
   };
 
@@ -103,13 +109,13 @@ namespace scribo
 
   template <typename L>
   paragraph_info<L>::paragraph_info()
-    : needs_stats_update_(false), is_valid_(false)
+    : tag_(paragraph::None), is_valid_(false)
   {
   }
 
   template <typename L>
   paragraph_info<L>::paragraph_info(const line_links<L>& llinks)
-    : llinks_(llinks), needs_stats_update_(false), is_valid_(true)
+    : llinks_(llinks), tag_(paragraph::None), is_valid_(true)
   {
   }
 
@@ -121,7 +127,7 @@ namespace scribo
     bbox_.take(line.bbox());
 
     // More data may need to be updated!
-    needs_stats_update_ = true;
+    tag_ = paragraph::Needs_Precise_Stats_Update;
   }
 
   template <typename L>
@@ -206,14 +212,14 @@ namespace scribo
   bool
   paragraph_info<L>::needs_stats_update() const
   {
-    return needs_stats_update_;
+    return tag_ == paragraph::Needs_Precise_Stats_Update;
   }
 
   template <typename L>
   void
   paragraph_info<L>::force_stats_update()
   {
-    if (!needs_stats_update_)
+    if (!needs_stats_update())
       return;
 
     const line_set<L>& lines = llinks_.lines();
@@ -259,7 +265,7 @@ namespace scribo
 
     // FIXME: Update paragraph stats
 
-    needs_stats_update_ = false;
+    tag_ = paragraph::None;
   }
 
   template <typename L>
@@ -274,6 +280,38 @@ namespace scribo
   paragraph_info<L>::delta_baseline() const
   {
     return delta_baseline_;
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::fast_merge(paragraph_info<L>& other)
+  {
+    tag_ = paragraph::Needs_Precise_Stats_Update;
+    other.update_tag(paragraph::Merged);
+    other.invalidate();
+
+    // Merge bboxes.
+    bbox_.take(other.bbox());
+
+    // Update delta_baseline
+    // FIXME: delta base line should be updated correctly!!
+    set_delta_baseline(std::max(other.delta_baseline_, delta_baseline_));
+
+    line_ids_.append(other.line_ids());
+  }
+
+  template <typename L>
+  void
+  paragraph_info<L>::update_tag(paragraph::Tag tag)
+  {
+    tag_ = tag;
+  }
+
+  template <typename L>
+  paragraph::Tag
+  paragraph_info<L>::tag() const
+  {
+    return tag_;
   }
 
   template <typename L>

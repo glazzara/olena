@@ -36,6 +36,20 @@ namespace scribo
   // Paragraph id tag.
   struct ParagraphId;
 
+  namespace paragraph
+  {
+
+
+    enum Tag
+    {
+      None = 0,
+      Needs_Precise_Stats_Update,
+      Merged
+    };
+
+
+  } // end of namespace scribo::paragraph
+
 
 } // end of namespace scribo
 
