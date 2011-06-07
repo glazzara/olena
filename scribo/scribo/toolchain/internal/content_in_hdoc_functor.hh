@@ -70,7 +70,10 @@
 
 # include <scribo/postprocessing/images_to_drop_capital.hh>
 
+#  ifndef SCRIBO_NOCR
 # include <scribo/text/recognition.hh>
+#  endif // ! SCRIBO_NOCR
+
 # include <scribo/text/merging.hh>
 # include <scribo/text/link_lines.hh>
 # include <scribo/text/paragraphs.hh>
@@ -505,6 +508,8 @@ namespace scribo
 #  endif // ! SCRIBO_NDEBUG
 	//===== END OF DEBUG =====
 
+
+#  ifndef SCRIBO_NOCR
 	// Text recognition
 	if (enable_ocr)
 	{
@@ -514,6 +519,7 @@ namespace scribo
 
 	  on_progress();
 	}
+#  endif // ! SCRIBO_NOCR
 
 	on_new_progress_label("Extracting paragraphs");
 
@@ -524,11 +530,11 @@ namespace scribo
 
 	on_new_progress_label("Filtering paragraphs");
 
-	paragraph_set<L> parset_f = filter::paragraphs_bbox_overlap(parset);
-	doc.set_paragraphs(parset_f);
+	// paragraph_set<L> parset_f = filter::paragraphs_bbox_overlap(parset);
+	// doc.set_paragraphs(parset_f);
 
-	// parset = filter::paragraphs_bbox_overlap(parset);
-	// doc.set_paragraphs(parset);
+	parset = filter::paragraphs_bbox_overlap(parset);
+	doc.set_paragraphs(parset);
 
 	on_progress();
 
@@ -557,14 +563,14 @@ namespace scribo
 
 	on_progress();
 
-// TEMPORARY DEBUG
-	on_new_progress_label("Saving debug data");
-	doc.set_paragraphs(parset);
-	scribo::io::img::save(doc, "debug_wo_filter.png", scribo::io::img::DebugWoImage);
-	scribo::io::img::save(doc, "full_wo_filter.png", scribo::io::img::DebugWithImage);
-	doc.set_paragraphs(parset_f);
-	on_progress();
-// END OF TEMPORARY DEBUG
+// // TEMPORARY DEBUG
+// 	on_new_progress_label("Saving debug data");
+// 	doc.set_paragraphs(parset);
+// 	scribo::io::img::save(doc, "debug_wo_filter.png", scribo::io::img::DebugWoImage);
+// 	scribo::io::img::save(doc, "full_wo_filter.png", scribo::io::img::DebugWithImage);
+// 	doc.set_paragraphs(parset_f);
+// 	on_progress();
+// // END OF TEMPORARY DEBUG
 
 	on_new_progress_label("Cleanup miscellaneous false positive");
 
@@ -603,8 +609,6 @@ namespace scribo
 
 	on_end();
 
-
-	sleep(10);
 
 	return doc;
       }

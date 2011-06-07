@@ -85,6 +85,7 @@ namespace scribo
 	private: // Attributes
 	  std::ofstream& output;
 	  mutable int base_vertical_line_id_;
+	  mutable int base_text_id_;
 
 	  mutable L lbl_;
 	};
@@ -113,13 +114,23 @@ namespace scribo
 	  // 0, so vertical and horizontal lines with the same id
 	  // exist.
 	  base_vertical_line_id_ = doc.hline_seps_comps().nelements();
+	  base_text_id_ = 0;
 
 	  // Preambule
 	  print_PAGE_preambule(output, doc, true);
 
 	  // Text
 	  if (doc.has_text())
+	  {
+
+	    // FIXME: counting the number of valid lines...
+	    for_all_paragraphs(p, doc.paragraphs())
+	      if (doc.paragraphs()(p).is_valid())
+		++base_text_id_;
+	    --base_text_id_;
+
 	    doc.paragraphs().accept(*this);
+	  }
 
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
@@ -191,8 +202,8 @@ namespace scribo
 
 	    case component::DropCapital:
 	    {
-	      output << "    <TextRegion id=\"r" << id << "\" "
-		     << " Type=\"Drop_Capital\">"
+	      output << "    <TextRegion id=\"r" << base_text_id_ + id << "\" "
+		     << " type=\"drop-capital\">" // FIXME: should not be inline here!
 		     << std::endl;
 
 	      internal::print_image_coords(output, par, "      ");

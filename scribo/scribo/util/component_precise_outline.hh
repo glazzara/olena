@@ -386,12 +386,8 @@ namespace scribo
 	}
       }
 
-      std::cout << "Before filter points - " << points.nsites() << std::endl;
-
       mln::p_array<P> waypoints;
       internal::filter_points(points, waypoints);
-
-      std::cout << "After filter points - " << waypoints.nsites() << std::endl;
 
       trace::exiting("scribo::util::component_precise_outline");
       return waypoints;

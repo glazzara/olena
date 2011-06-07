@@ -1,3 +1,14 @@
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* scribo/io/xml/internal/page_xml_visitor.hh: Fix duplicate ids.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Remove
+	debug and disable OCR.
+
+	* scribo/util/component_precise_outline.hh: Remove debug.
+
 2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix use of uninitialized values.
