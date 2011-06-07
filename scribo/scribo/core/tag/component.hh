@@ -60,7 +60,8 @@ namespace scribo
       WhitespaceSeparator,
       Noise,
       Punctuation,
-      Image
+      Image,
+      DropCapital
     };
 
 
@@ -135,6 +136,8 @@ namespace scribo
 	  break;
 	case Image:
 	  str = "Image";
+	case DropCapital:
+	  str = "DropCapital";
 	  break;
       }
 
@@ -159,6 +162,8 @@ namespace scribo
 	return Punctuation;
       else if (str == "Image")
 	return Image;
+      else if (str == "DropCapital")
+	return DropCapital;
 
       return Undefined;
     }

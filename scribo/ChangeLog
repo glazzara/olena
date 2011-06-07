@@ -1,5 +1,13 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle drop capital components.
+
+	* scribo/core/tag/component.hh: New tag.
+
+	* scribo/postprocessing/images_to_drop_capital.hh: New routine.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Save component outlines instead of bboxes.
 
 	* scribo/io/img/internal/debug_img_visitor.hh,
