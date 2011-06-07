@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -84,6 +84,7 @@ namespace mln
 
   namespace util {
     template <typename T> class array;
+    template <typename Tag, typename V> class object_id;
   }
 
   namespace value {
@@ -472,6 +473,10 @@ namespace mln
         from_to(from.first(), to.first());
         from_to(from.second(), to.second());
       }
+
+      // util::object_id<Tag,V> -> V.
+      template <typename Tag, typename V>
+      void from_to_(const util::object_id<Tag,V>& from, V& to_);
 
     } // end of namespace mln::convert::over_load
 

@@ -38,6 +38,24 @@
 namespace mln
 {
 
+    // Forward declaration
+  namespace util { template <typename Tag, typename V> class object_id; }
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // object_id<Tag,V> -> V.
+      template <typename Tag, typename V>
+      void from_to_(const util::object_id<Tag,V>& from, V& to_);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
   namespace util
   {
 
@@ -90,9 +108,12 @@ namespace mln
     bool
     operator<(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs);
 
+  } // end of namespace mln::util
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace util
+  {
 
     template <typename Tag, typename V>
     inline
@@ -205,10 +226,26 @@ namespace mln
       return lhs.value() < rhs.value();
     }
 
+  } // end of namespace mln::util
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // object_id<Tag,V> -> V.
+      template <typename Tag, typename V>
+      void from_to_(const util::object_id<Tag,V>& from, V& to_)
+      {
+	to_ = from.value();
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::util
 
 } // end of namespace mln
 
