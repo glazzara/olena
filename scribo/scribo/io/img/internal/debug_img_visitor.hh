@@ -34,7 +34,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/draw/site_set.hh>
+# include <mln/draw/polygon.hh>
 # include <mln/subsampling/antialiased.hh>
 # include <mln/morpho/elementary/gradient_external.hh>
 
@@ -45,7 +45,7 @@
 
 # include <scribo/util/component_precise_outline.hh>
 # include <scribo/io/img/internal/draw_edges.hh>
-
+# include <scribo/text/paragraphs_closing.hh>
 
 
 namespace scribo
@@ -85,9 +85,6 @@ namespace scribo
 	  mln::image2d<value::rgb8>& output;
 	  unsigned output_ratio;
 
-	  // FIXME: we would like its type to be L.
-	  mutable image2d<scribo::def::lbl_type> lbl_sub;
-
 	private: // Methods
 	  box2d compute_bbox(const box2d& b) const;
 	};
@@ -97,7 +94,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
+ 	inline
 	box2d
 	debug_img_visitor::compute_bbox(const box2d& b) const
 	{
@@ -131,49 +128,10 @@ namespace scribo
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
 	  {
-	    // Prepare element edges
-
-	    // L lbl = duplicate(doc.elements().labeled_image());
-	    // for_all_comps(c, doc.elements())
-	    //   if (! doc.elements()(c).is_valid())
-	    // 	data::fill(((lbl | doc.elements()(c).bbox()).rw()
-	    // 		    | (pw::value(lbl) == pw::cst(c))).rw(), 0);
-
-	    // const L& lbl = doc.lines().components().labeled_image();
-	    // lbl_sub = mln::subsampling::antialiased(lbl, output_ratio);
-
-	    // mln::io::pgm::save(data::wrap(value::int_u8(), lbl), "lbl.pgm");
-	    // mln::io::pgm::save(data::wrap(value::int_u8(), lbl_sub), "lbl_sub.pgm");
-
-	    // // FIXME: UGLY! Too slow!
-	    // scribo::def::lbl_type nlabels;
-	    // component_set<L> elts = primitive::extract::components(
-	    //   data::convert(bool(), lbl_sub),
-	    //   c8(),
-	    //   nlabels);
-
-	    // Preserving elements tags
-	    // if (doc.elements().nelements() != elts.nelements())
-	    // {
-	    //   std::cerr << "Warnig: could not preserve element type in "
-	    // 		<< "img debug output." << std::endl;
-	    //   std::cerr << "The number of non text element has changed while "
-	    // 		<< "subsampling images : "
-	    // 		<< doc.elements().nelements() << " vs "
-	    // 		<< elts.nelements() << std::endl;
-	    // }
-	    // else
-	    //   for_all_comps(c, doc.elements())
-	    //   {
-	    // 	elts(c).update_type(doc.elements()(c).type());
-	    // 	elts(c).update_tag(doc.elements()(c).tag());
-	    //   }
-
 	    for_all_comps(e, doc.elements())
 	      if (doc.elements()(e).is_valid())
 		doc.elements()(e).accept(*this);
 	  }
-
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
@@ -198,23 +156,28 @@ namespace scribo
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
 	  const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline(
-	      extend((lbl | info.bbox()) | (pw::value(lbl) == pw::cst(id)), 0));
+	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
 
 	  switch (info.type())
 	  {
 	    case component::HorizontalLineSeparator:
 	    case component::VerticalLineSeparator:
 	    {
-	      mln::draw::site_set(output, par, literal::cyan, output_ratio);
+	      mln::draw::polygon(output, par, literal::cyan, output_ratio);
 	    }
 	    break;
 
 
+	    case component::DropCapital:
+	    {
+	      mln::draw::polygon(output, par, literal::violet, output_ratio);
+	    }
+	    break;
+
 	    default:
 	    case component::Image:
 	    {
-	      mln::draw::site_set(output, par, literal::orange, output_ratio);
+	      mln::draw::polygon(output, par, literal::orange, output_ratio);
 	    }
 	    break;
 	  }
@@ -228,6 +191,9 @@ namespace scribo
 	{
 	  const line_set<L>& lines = parset.lines();
 
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
+
 	  for_all_paragraphs(p, parset)
 	    if (parset(p).is_valid())
 	    {
@@ -235,10 +201,11 @@ namespace scribo
 
 	      for_all_paragraph_lines(lid, line_ids)
 	      {
-		line_id_t l = line_ids(lid);
-		lines(l).accept(*this);
+	      	line_id_t l = line_ids(lid);
+	      	lines(l).accept(*this);
 	      }
 
+	      // Adjust bbox to output image size.
 	      box2d b = compute_bbox(parset(p).bbox());
 	      b.enlarge(1);
 	      b.crop_wrt(output.domain());

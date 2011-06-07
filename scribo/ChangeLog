@@ -1,5 +1,13 @@
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Save component outlines instead of bboxes.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Here.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add support for tags in paragraph_info.
 
 	* scribo/core/paragraph_info.hh: Here.

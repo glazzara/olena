@@ -40,6 +40,7 @@
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 # include <scribo/io/xml/internal/compute_text_colour.hh>
+# include <scribo/text/paragraphs_closing.hh>
 
 
 namespace scribo
@@ -160,8 +161,7 @@ namespace scribo
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
 	  const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline(
-	      extend((lbl | info.bbox()) | (pw::value(lbl) == pw::cst(id)), 0));
+	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
 
 	  switch (info.type())
 	  {
@@ -189,6 +189,17 @@ namespace scribo
 	      break;
 	    }
 
+	    case component::DropCapital:
+	    {
+	      output << "    <TextRegion id=\"r" << id << "\" "
+		     << " Type=\"Drop_Capital\">"
+		     << std::endl;
+
+	      internal::print_image_coords(output, par, "      ");
+
+	      output << "    </TextRegion>" << std::endl;
+	      break;
+	    }
 
 	    default:
 	    case component::Image:
@@ -216,9 +227,15 @@ namespace scribo
 	{
 	  const line_set<L>& lines = parset.lines();
 
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
+
 	  for_all_paragraphs(p, parset)
 	    if (parset(p).is_valid())
 	    {
+	      p_array<mln_site(L)> par = scribo::util::component_precise_outline(par_clo
+										 | parset(p).bbox(), p);
+
 	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
 	      // FIXME: compute that information on the whole paragraph
@@ -245,7 +262,7 @@ namespace scribo
 	      //    <Unicode></Unicode>
 	      //    </TextEquiv>
 
-	      internal::print_box_coords(output, parset(p).bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </TextRegion>" << std::endl;
 	    }

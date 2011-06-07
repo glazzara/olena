@@ -34,7 +34,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/draw/site_set.hh>
+# include <mln/draw/polygon.hh>
 # include <mln/draw/box.hh>
 
 # include <scribo/core/internal/doc_serializer.hh>
@@ -137,22 +137,27 @@ namespace scribo
 	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
 	  const L& lbl = info.holder().labeled_image();
 	  p_array<point2d>
-	    par = scribo::util::component_precise_outline((lbl | info.bbox()) | (pw::value(lbl) == pw::cst(id)));
+	    par = scribo::util::component_precise_outline(lbl | info.bbox(), id);
 
 	  switch (info.type())
 	  {
 	    case component::HorizontalLineSeparator:
 	    case component::VerticalLineSeparator:
 	    {
-	      mln::draw::site_set(output, par, literal::cyan);
+	      mln::draw::polygon(output, par, literal::cyan);
 	    }
 	    break;
 
+	    case component::DropCapital:
+	    {
+	      mln::draw::polygon(output, par, literal::violet);
+	    }
+	    break;
 
 	    default:
 	    case component::Image:
 	    {
-	      mln::draw::site_set(output, par, literal::orange);
+	      mln::draw::polygon(output, par, literal::orange);
 	    }
 	    break;
 	  }
@@ -164,20 +169,18 @@ namespace scribo
 	void
 	full_img_visitor::visit(const paragraph_set<L>& parset) const
 	{
-	  const line_set<L>& lines = parset.lines();
+	  // const line_set<L>& lines = parset.lines();
+
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
 
 	  for_all_paragraphs(p, parset)
 	    if (parset(p).is_valid())
 	    {
-	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
+	      p_array<point2d> par = scribo::util::component_precise_outline(par_clo
+	  								     | parset(p).bbox(), p);
 
-	      for_all_paragraph_lines(lid, line_ids)
-	      {
-		line_id_t l = line_ids(lid);
-		lines(l).accept(*this);
-	      }
-
-	      mln::draw::box(output, parset(p).bbox(), literal::blue);
+	      mln::draw::polygon(output, par, literal::blue);
 	    }
 	}
 
@@ -186,7 +189,15 @@ namespace scribo
 	void
 	full_img_visitor::visit(const line_info<L>& line) const
 	{
-	  mln::draw::box(output, line.bbox(), literal::red);
+//	  mln::draw::box(output, line.bbox(), literal::red);
+
+	  point2d
+	    pmin = line.bbox().pmin(),
+	    pmax = line.bbox().pmax();
+	  pmax.row() = line.baseline();
+	  pmin.row() = line.baseline();
+
+	  mln::draw::line(output, pmin, pmax, literal::red);
 	}
 
 #endif // MLN_INCLUDE_ONLY
