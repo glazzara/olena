@@ -1,3 +1,9 @@
+2011-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make SCRIBO's copyright headers uniform.
+
+	* tests/data.hh.in: Here.
+
 2011-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distcleancheck target.
