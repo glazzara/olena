@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,55 +23,60 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_P2B_ANTILOGY_HH
-# define MLN_FUN_P2B_ANTILOGY_HH
+#ifndef MLN_TOPO_NO_CONSTRAINT_HH
+# define MLN_TOPO_NO_CONSTRAINT_HH
 
 /// \file
-/// \brief Definition of a p2b function always returning \c false.
+/// \brief Definition of a functor expressing a lack of constraint.
 
 # include <mln/core/concept/function.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace topo
   {
 
-    namespace p2b
+    /// \brief A constraint functor always returning \c true.
+    ///
+    /// \see mln::fun::p2b::tautology
+    struct no_constraint : public Function_v2b<no_constraint>
     {
+      typedef bool result;
 
+      /// Dummy setter (does nothing).
+      template <typename I>
+      void set_image(const Image<I>& ima) const;
 
-      /// \brief A p2b function always returning \c false.
-      ///
-      /// A simpler name would be `false', but this is not a valid C++
-      /// identifier, as \c false is a keyword of the language.
-      struct antilogy : public Function_v2b< antilogy >
-      {
-	typedef bool result;
-
-	template <typename P>
-	bool operator()(const P& p) const;
-      };
+      template <typename P>
+      bool operator()(const P& p) const;
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename P>
-      inline
-      bool
-      antilogy::operator()(const P& /* p */) const
-      {
-	return false;
-      }
+    template <typename I>
+    inline
+    void
+    no_constraint::set_image(const Image<I>& /* ima */) const
+    {
+    }
+
+    template <typename P>
+    inline
+    bool
+    no_constraint::operator()(const P& /* p */) const
+    {
+      return true;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::p2b
-
-  } // end of namespace mln::fun
+  } // end of namespace mln::topo
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_P2B_ANTILOGY_HH
+#endif // ! MLN_TOPO_NO_CONSTRAINT_HH

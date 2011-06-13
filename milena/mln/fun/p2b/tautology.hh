@@ -30,7 +30,6 @@
 /// \brief Definition of a p2b function always returning \c true.
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/alias/point2d.hh>
 
 
 namespace mln

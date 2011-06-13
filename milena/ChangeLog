@@ -1,3 +1,17 @@
+2011-06-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Introduce a no-constraint functor to replace fun::p2b::tautology.
+
+	* mln/fun/p2b/antilogy.hh,
+	* mln/fun/p2b/tautology.hh:
+	Do not include mln/core/alias/point2d.hh.
+	* mln/topo/no_constraint.hh: New file.
+	* mln/topo/skeleton/breadth_first_thinning.hh,
+	* mln/topo/skeleton/priority_driven_thinning.hh:
+	Use mln::topo::no_constraint instead of mln::fun::p2b::tautology.
+	Do not include the standard header `algorithm'.
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
 2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor code of 2D skeletonizations in apps/generic-skel/.

@@ -30,8 +30,14 @@
 /// \file
 /// \brief Computing a skeleton by using priority-driven thinning on a
 /// binary image.
-
-# include <algorithm>
+///
+/// Careful: The meaning of the `constraint' is inversed with respect
+/// to the definitions used in
+///
+///   Gilles Bertrand and Michel Couprie: Transformations topologiques
+///   discrètes.  In David Coeurjolly, Annick Montanvert and Jean-Marc
+///   Chassery, eds.: Géométrie discrète et images numériques.  Hermes
+///   Sciences Publications (2007), pages 187--209.
 
 # include <mln/core/routine/duplicate.hh>
 
@@ -41,7 +47,7 @@
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
 
-# include <mln/fun/p2b/tautology.hh>
+# include <mln/topo/no_constraint.hh>
 
 # include <mln/data/fill.hh>
 
@@ -192,8 +198,11 @@ namespace mln
 			       G& detach,
 			       const Image<J>& priority)
       {
+	// mln::topo::no_constraint is a dummy functor always
+	// returning `true'.
+	no_constraint constraint;
 	return priority_driven_thinning(input, nbh, is_simple, detach,
-					priority, fun::p2b::tautology());
+					priority, constraint);
       }
 
 # endif // MLN_INCLUDE_ONLY

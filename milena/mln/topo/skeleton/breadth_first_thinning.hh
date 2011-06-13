@@ -30,8 +30,14 @@
 /// \file
 /// \brief Computing a skeleton by using breadth-first thinning on a
 /// binary image.
-
-# include <algorithm>
+///
+/// Careful: The meaning of the `constraint' is inversed with respect
+/// to the definitions used in
+///
+///   Gilles Bertrand and Michel Couprie: Transformations topologiques
+///   discrètes.  In David Coeurjolly, Annick Montanvert and Jean-Marc
+///   Chassery, eds.: Géométrie discrète et images numériques.  Hermes
+///   Sciences Publications (2007), pages 187--209.
 
 # include <mln/core/routine/duplicate.hh>
 
@@ -40,7 +46,7 @@
 
 # include <mln/core/site_set/p_queue_fast.hh>
 
-# include <mln/fun/p2b/tautology.hh>
+# include <mln/topo/no_constraint.hh>
 
 # include <mln/data/fill.hh>
 
@@ -181,8 +187,11 @@ namespace mln
 			     Function_v2b<F>& is_simple,
 			     G& detach)
       {
+	// mln::topo::no_constraint is a dummy functor always
+	// returning `true'.
+	no_constraint constraint;
 	return breadth_first_thinning(input, nbh, is_simple, detach,
-				      fun::p2b::tautology());
+				      constraint);
       }
 
 # endif // MLN_INCLUDE_ONLY

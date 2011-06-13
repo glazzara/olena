@@ -1131,6 +1131,7 @@ mln_topo_is_simple_point3d \
 mln_topo_n_face \
 mln_topo_n_face_iter \
 mln_topo_n_faces_set \
+mln_topo_no_constraint \
 mln_topo_skeleton_breadth_first_thinning \
 mln_topo_skeleton_crest \
 mln_topo_skeleton_is_simple_point \
