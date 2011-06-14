@@ -82,6 +82,7 @@ nobase_nodist_include_HEADERS = mln/version.hh
 imgdir = $(pkgdatadir)/images
 dist_img_DATA =					\
   img/README					\
+  img/bunny.pgm					\
   img/fly.pbm					\
   img/fly.pgm					\
   img/fly.ppm					\

@@ -1,3 +1,13 @@
+2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a 3D volume of the Stanford bunny.
+
+	* img/bunny.pgm: New.
+	From Benjamin Raynal <raynalb@esiee.fr>.
+	Document it...
+	* img/README: ...here.
+	* Makefile.am (dist_img_DATA): Add img/bunny.pgm.
+
 2011-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	New application computing a 3D skeleton preserving end points.

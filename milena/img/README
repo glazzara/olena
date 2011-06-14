@@ -1,5 +1,11 @@
 	-*- outline -*-
 
+* bunny.pgm
+
+A 3D volume 300x300x300 of the Stanford bunny, composed of 8-bit
+gray-level values; however all of them being are either 0 or 255
+(hence this image is ``binary'').
+
 * tiny.pgm
 
 lena 16x16, graylevel / 8bit
