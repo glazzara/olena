@@ -1,5 +1,17 @@
 2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Isolate reusable code from image3d-skel-with-end-points.
+
+	* apps/generic-skel/image3d-skel-with-end-points.cc
+	(load_pgm_3d, save_raw_3d, subsampling_3d, draw_torus):
+	Move functions...
+	* apps/generic-skel/image3d-skel.hh: ...here (new file).
+	(make_triple_torus): New function.
+	* apps/generic-skel/Makefile.am (noinst_HEADERS):
+	Add image3d-skel.hh.
+
+2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a 3D volume of the Stanford bunny.
 
 	* img/bunny.pgm: New.
