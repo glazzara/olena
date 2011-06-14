@@ -23,24 +23,38 @@ APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 
+# FIXME: Really install these programs?
 bin_PROGRAMS =					\
   image2d-skel-unconstrained			\
   image2d-skel-with-end-points			\
-  image3d_skel_with_end_points
+						\
+  image3d-skel-unconstrained			\
+  image3d-skel-with-end-points
+
+# 2D cases.
 image2d_skel_unconstrained_SOURCES = image2d-skel-unconstrained.cc image2d-skel.hh
 image2d_skel_with_end_points_SOURCES = image2d-skel-with-end-points.cc image2d-skel.hh
 
+# 3D cases, slow versions.
 noinst_HEADERS = image3d-skel.hh
 image3d_skel_with_end_points_SOURCES = image3d-skel-with-end-points.cc
+image3d_skel_unconstrained_SOURCES = image3d-skel-unconstrained.cc
 
-EXTRA_DIST = test-image2d-skel-unconstrained.in test-image2d-skel-with-end-points.in
+EXTRA_DIST =					\
+  test-image2d-skel-unconstrained.in		\
+  test-image2d-skel-with-end-points.in
 
 # Use Make to generate Doxyfile instead of `configure', as advised by
 # Autoconf's manual (see section ``Installation Directory
 # Variables'').
 edit = sed -e 's|@top_srcdir[@]|$(top_srcdir)|g'
 
-test-image2d-skel-unconstrained test-image2d-skel-with-end-points: Makefile
+# Tests for the 2D case.
+generated_tests =				\
+  test-image2d-skel-unconstrained		\
+  test-image2d-skel-with-end-points
+
+$(generated_tests): Makefile
 	rm -f $@ $@.tmp
 	srcdir=''; \
 	  test -f ./$@.in || srcdir=$(srcdir)/; \
@@ -52,14 +66,20 @@ test-image2d-skel-unconstrained test-image2d-skel-with-end-points: Makefile
 test-image2d-skel-unconstrained: $(srcdir)/test-image2d-skel-unconstrained.in
 test-image2d-skel-with-end-points: $(srcdir)/test-image2d-skel-with-end-points.in
 
-TESTS = test-image2d-skel-unconstrained test-image2d-skel-with-end-points
-CLEANFILES = test-image2d-skel-unconstrained test-image2d-skel-with-end-points
+CLEANFILES = $(generated_tests)
 
-# FIXME: Exercise image3d-skel-with-end-points (when its input can be
-# passed as a command-line argument).
+TESTS = $(generated_tests)
 
-# FIXME: Rename outputs to have their names use their generator as prefix.
+# Tests for the 3D case.
+# FIXME: Create real test cases with inputs passed as argument.
+TESTS +=					\
+  image3d-skel-unconstrained			\
+  image3d-skel-with-end-points
+
+# FIXME: Rename all outputs to have their names use their generator as prefix.
 MOSTLYCLEANFILES =				\
+  image3d-skel-unconstrained-input.raw		\
+  image3d-skel-unconstrained-skel.raw		\
   image3d-skel-with-end-points-input.raw	\
   image3d-skel-with-end-points-skel.raw		\
   picasso-skel-unconstrained.pbm		\

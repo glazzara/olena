@@ -1,5 +1,25 @@
 2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New app: apps/generic-skel/image3d-skel-unconstrained.
+
+	* apps/generic-skel/image3d-skel-unconstrained.cc: New.
+	* apps/generic-skel/Makefile.am (bin_PROGRAMS):
+	Add image3d-skel-unconstrained.
+	(image3d_skel_unconstrained_SOURCES): New.
+	(TESTS): Rename as...
+	(generated_tests): New variable.
+	($(generated_tests)): New target.
+	Supersede...
+	(test-image2d-skel-unconstrained test-image2d-skel-with-end-points):
+	...this target.
+	(CLEANFILES): Set to $(generated_tests).
+	(TESTS): Add $(generated_tests).
+	Add image3d-skel-unconstrained and image3d-skel-with-end-points.
+	(MOSTLYCLEANFILES): Add image3d-skel-unconstrained-input.raw and
+	image3d-skel-unconstrained-skel.raw.
+
+2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Isolate reusable code from image3d-skel-with-end-points.
 
 	* apps/generic-skel/image3d-skel-with-end-points.cc
