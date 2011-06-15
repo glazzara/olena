@@ -26,7 +26,7 @@
 /// \brief Compute a compressed look-up table (LUT) showing whether a
 /// 3D point is simple or not.
 
-#include "simple_point_3d_lut.hh"
+#include "simple_point3d_lut.hh"
 
 int
 main(int argc, char* argv[])
@@ -36,10 +36,10 @@ main(int argc, char* argv[])
 
   std::string nbhs = argv[1];
   simple_point_lut_t simple_point_lut;
-  if      (nbhs == "6_26")  simple_point_lut = simple_point_3d_lut__6_26();
-  else if (nbhs == "26_6")  simple_point_lut = simple_point_3d_lut__26_6();
-  else if (nbhs == "6p_18") simple_point_lut = simple_point_3d_lut__6p_18();
-  else if (nbhs == "18_6p") simple_point_lut = simple_point_3d_lut__18_6p();
+  if      (nbhs == "6_26")  simple_point_lut = simple_point3d_lut__6_26();
+  else if (nbhs == "26_6")  simple_point_lut = simple_point3d_lut__26_6();
+  else if (nbhs == "6p_18") simple_point_lut = simple_point3d_lut__6p_18();
+  else if (nbhs == "18_6p") simple_point_lut = simple_point3d_lut__18_6p();
   else
     usage(argv[0]);
 

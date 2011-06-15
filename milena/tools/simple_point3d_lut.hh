@@ -26,8 +26,8 @@
 /// \brief Elements to compute a look-up table (LUT) showing whether a
 /// 3D point is simple or not.
 
-#ifndef TOOLS_SIMPLE_POINT_3D_LUT_HH
-# define TOOLS_SIMPLE_POINT_3D_LUT_HH
+#ifndef TOOLS_SIMPLE_POINT3D_LUT_HH
+# define TOOLS_SIMPLE_POINT3D_LUT_HH
 
 #include "connectivity_numbers_3d.hh"
 
@@ -52,7 +52,7 @@ typedef std::vector<bool> simple_point_lut_t;
 ///                background.
 template <typename FG, typename BG>
 simple_point_lut_t
-simple_point_3d_lut(FG fg_fun, BG bg_fun)
+simple_point3d_lut(FG fg_fun, BG bg_fun)
 {
   using namespace mln;
 
@@ -106,10 +106,10 @@ simple_point_3d_lut(FG fg_fun, BG bg_fun)
 `-------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut__6_26()
+simple_point3d_lut__6_26()
 {
-  return simple_point_3d_lut(connectivity_number_3d__6_26_one,
-			     connectivity_number_3d__26_6_one);
+  return simple_point3d_lut(connectivity_number_3d__6_26_one,
+			    connectivity_number_3d__26_6_one);
 }
 
 
@@ -119,10 +119,10 @@ simple_point_3d_lut__6_26()
 `-------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut__26_6()
+simple_point3d_lut__26_6()
 {
-  return simple_point_3d_lut(connectivity_number_3d__26_6_one,
-			     connectivity_number_3d__6_26_one);
+  return simple_point3d_lut(connectivity_number_3d__26_6_one,
+			    connectivity_number_3d__6_26_one);
 }
 
 
@@ -132,10 +132,10 @@ simple_point_3d_lut__26_6()
 `---------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut__6p_18()
+simple_point3d_lut__6p_18()
 {
-  return simple_point_3d_lut(connectivity_number_3d__6p_18_one,
-			     connectivity_number_3d__18_6p_one);
+  return simple_point3d_lut(connectivity_number_3d__6p_18_one,
+			    connectivity_number_3d__18_6p_one);
 }
 
 
@@ -145,10 +145,10 @@ simple_point_3d_lut__6p_18()
 `---------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut__18_6p()
+simple_point3d_lut__18_6p()
 {
-  return simple_point_3d_lut(connectivity_number_3d__18_6p_one,
-				 connectivity_number_3d__6p_18_one);
+  return simple_point3d_lut(connectivity_number_3d__18_6p_one,
+			    connectivity_number_3d__6p_18_one);
 }
 
 /*----------------------.
@@ -187,4 +187,4 @@ display_simple_point_lut(const simple_point_lut_t& simple_point_lut)
     }
 }
 
-#endif // ! TOOLS_SIMPLE_POINT_3D_LUT_HH
+#endif // ! TOOLS_SIMPLE_POINT3D_LUT_HH

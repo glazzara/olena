@@ -26,13 +26,13 @@
 /// \brief Elements to compute a look-up table (LUT) showing whether a
 /// 3D point is simple or not.
 
-#ifndef TOOLS_SIMPLE_POINT_3D_LUT_TBB_HH
-# define TOOLS_SIMPLE_POINT_3D_LUT_TBB_HH
+#ifndef TOOLS_SIMPLE_POINT3D_LUT_TBB_HH
+# define TOOLS_SIMPLE_POINT3D_LUT_TBB_HH
 
 #include <tbb/blocked_range.h>
 #include <tbb/parallel_for.h>
 
-#include "simple_point_3d_lut.hh"
+#include "simple_point3d_lut.hh"
 
 
 /*-------------------------------------------------------------------.
@@ -42,11 +42,11 @@
 
 // The core of the loop within connectivity_numbers_3d_tbb below.
 template <typename FG, typename BG>
-struct simple_point_3d_lut_tbb_range
+struct simple_point3d_lut_tbb_range
 {
   typedef mln::neighb3d N;
 
-  simple_point_3d_lut_tbb_range(FG fg_fun, BG bg_fun, const N& nbh,
+  simple_point3d_lut_tbb_range(FG fg_fun, BG bg_fun, const N& nbh,
 				simple_point_lut_t& simple_point_lut)
     : fg_fun_(fg_fun), bg_fun_(bg_fun), nbh_(nbh),
       simple_point_lut_(simple_point_lut)
@@ -115,9 +115,9 @@ private:
 ///                background.
 template <typename FG, typename BG>
 simple_point_lut_t
-simple_point_3d_lut_tbb(FG fg_fun, BG bg_fun)
+simple_point3d_lut_tbb(FG fg_fun, BG bg_fun)
 {
-  // FIXME: Code duplicated from simple_point_3d_lut_tbb_range.
+  // FIXME: Code duplicated from simple_point3d_lut_tbb_range.
   const unsigned dim = 3;
   const unsigned max_nneighbs = mlc_pow_int(3, dim) - 1;
   const unsigned nconfigs = mlc_pow_int(2, max_nneighbs);
@@ -127,7 +127,7 @@ simple_point_3d_lut_tbb(FG fg_fun, BG bg_fun)
   simple_point_lut_t simple_point_lut(nconfigs, false);
 
   tbb::parallel_for(tbb::blocked_range<config_3d_t>(0, nconfigs),
-		    simple_point_3d_lut_tbb_range<FG, BG>(fg_fun, bg_fun,
+		    simple_point3d_lut_tbb_range<FG, BG>(fg_fun, bg_fun,
 							  nbh,
 							  simple_point_lut));
 
@@ -141,10 +141,10 @@ simple_point_3d_lut_tbb(FG fg_fun, BG bg_fun)
 `-------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut_tbb__6_26()
+simple_point3d_lut_tbb__6_26()
 {
-  return simple_point_3d_lut_tbb(connectivity_number_3d__6_26_one,
-				 connectivity_number_3d__26_6_one);
+  return simple_point3d_lut_tbb(connectivity_number_3d__6_26_one,
+				connectivity_number_3d__26_6_one);
 }
 
 
@@ -154,10 +154,10 @@ simple_point_3d_lut_tbb__6_26()
 `-------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut_tbb__26_6()
+simple_point3d_lut_tbb__26_6()
 {
-  return simple_point_3d_lut_tbb(connectivity_number_3d__26_6_one,
-				 connectivity_number_3d__6_26_one);
+  return simple_point3d_lut_tbb(connectivity_number_3d__26_6_one,
+				connectivity_number_3d__6_26_one);
 }
 
 
@@ -167,10 +167,10 @@ simple_point_3d_lut_tbb__26_6()
 `---------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut_tbb__6p_18()
+simple_point3d_lut_tbb__6p_18()
 {
-  return simple_point_3d_lut_tbb(connectivity_number_3d__6p_18_one,
-				 connectivity_number_3d__18_6p_one);
+  return simple_point3d_lut_tbb(connectivity_number_3d__6p_18_one,
+				connectivity_number_3d__18_6p_one);
 }
 
 
@@ -180,10 +180,10 @@ simple_point_3d_lut_tbb__6p_18()
 `---------------------------------------------------------------*/
 
 simple_point_lut_t
-simple_point_3d_lut_tbb__18_6p()
+simple_point3d_lut_tbb__18_6p()
 {
-  return simple_point_3d_lut_tbb(connectivity_number_3d__18_6p_one,
-				 connectivity_number_3d__6p_18_one);
+  return simple_point3d_lut_tbb(connectivity_number_3d__18_6p_one,
+				connectivity_number_3d__6p_18_one);
 }
 
-#endif // ! TOOLS_SIMPLE_POINT_3D_LUT_TBB_HH
+#endif // ! TOOLS_SIMPLE_POINT3D_LUT_TBB_HH

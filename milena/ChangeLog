@@ -1,3 +1,17 @@
+2011-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	tools: s/simple_point_3d/simple_point3d/.
+
+	* tools/simple_point_3d_lut.cc,
+	* tools/simple_point_3d_lut.hh,
+	* tools/simple_point_3d_lut_tbb.hh:
+	Rename as...
+	* tools/simple_point3d_lut.cc,
+	* tools/simple_point3d_lut.hh,
+	* tools/simple_point3d_lut_tbb.hh:
+	...these.
+	* tools/Makefile.am: s/simple_point_3d/simple_point3d/.
+
 2011-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	New app: apps/generic-skel/image3d-skel-unconstrained.
