@@ -1,0 +1,103 @@
+# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+#! /bin/sh
+
+set -e;
+
+if test $# -ne 2; then
+  echo "usage: $0 LUT_NAME CONNECTIVITY" >&2
+  exit 1
+fi
+
+lut_name=$1
+connectivity_type=$2
+
+# Size of the (packed) simple 3D point look-up table: 2^26 / 8 = 2^23.
+lut_size=8388608
+
+lut_name_upper=`echo "$lut_name" | tr "[a-z]" "[A-Z]"`
+header_guard="MLN_MAKE_${lut_name_upper}_HH"
+
+cat <<EOF
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+#ifndef $header_guard
+# define $header_guard
+
+namespace mln
+{
+
+  namespace topo
+  {
+
+    /** \brief Look-up table showing whether a configuration (used as
+        index) around a point (in a binary image) corresponds to a
+        simple 3D point in the $connectivity_type connectivity.
+
+        Each configuration is a number representing the state of the
+        26 neighbors of the considered point, where first (resp. last)
+        neighbors are encoded in least (resp. most) significant bits,
+        according to the browsing order of mln_fwd_piter(box3d).
+
+        The information is packed: each \`unsigned char' cell of this
+        array corresponds to 8 \`bool' values.  */
+    extern const unsigned char $lut_name[$lut_size];
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const unsigned char $lut_name[$lut_size] =
+      {
+EOF
+
+# Remove the last (empty) line as well as the last comma, and add some
+# identation.
+sed -ne '$!p' | sed -e 's/^/        /' -e '$s/,$//'
+
+cat <<EOF
+      };
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
+
+} // end of namespace mln
+
+#endif // ! $header_guard
+EOF

@@ -1,5 +1,15 @@
 2011-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the generation of simple 3D point look-up tables.
+
+	* tools/gen_cxx_lut: New script.
+	* tools/Makefile.am (EXTRA_DIST): Add gen_cxx_lut.
+	(simple_point3d_lut_26_6.hh): Add a dependency on
+	$(srcdir)/gen_cxx_lut.
+	Use gen_cxx_lut to generate this target.
+
+2011-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	tools: s/simple_point_3d/simple_point3d/.
 
 	* tools/simple_point_3d_lut.cc,

@@ -63,19 +63,9 @@ CLEANFILES = simple_point3d_lut_26_6.txt
 simple_point3d_lut_26_6.txt:
 	./simple_point3d_lut_tbb$(EXEEXT) 26_6 >$@
 
+EXTRA_DIST = gen_cxx_lut
 CLEANFILES += simple_point3d_lut_26_6.hh
-## FIXME: Add copyright headers, guards and documentation (and
-## declaration/definition separation).  It may be a good idea to move
-## the action of this target into own file (outside this Makefile).
-# The sed scripts remove the last (empty) line as well as the last
-# comma, and add some identation.
-simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt
+simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt $(srcdir)/gen_cxx_lut
 	rm -f $@.tmp
-	{								      \
-	  set -e;							      \
-	  echo "    extern const unsigned char simple_point_3d_lut_26_6[] ="; \
-	  echo "      {";						      \
-	  sed -ne '$$!p' $< | sed -e 's/^/        /' -e '$$s/,$$//';	      \
-	  echo "      };";						      \
-	} >$@.tmp
+	$(srcdir)/gen_cxx_lut simple_point3d_lut_26_6 "(26, 6)" <$< >$@.tmp
 	mv $@.tmp $@
