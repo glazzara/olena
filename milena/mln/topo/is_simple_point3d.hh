@@ -35,55 +35,14 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/core/image/image3d.hh>
-# include <mln/core/alias/neighb3d.hh>
+# include <mln/topo/connectivity_number_3d.hh>
 
-# include <mln/value/int_u8.hh>
-# include <mln/value/int_u32.hh>
-
-# include <mln/labeling/blobs.hh>
-# include <mln/fun/v2b/lnot.hh>
-# include <mln/core/image/vmorph/fun_image.hh>
-# include <mln/core/image/dmorph/image_if.hh>
-
-
-// FIXME: Temporary.
-/* A function stating whether a point of the box (-1,-1-1)-(+1,+1,+1)
-   is within the 18-c neighborhood of (0, 0, 0). */
-bool
-f_within_c18(const mln::point3d& p)
-{
-  return !(mln::math::abs(p.sli()) == 1
-	   && mln::math::abs(p.row()) == 1
-	   && mln::math::abs(p.col()) == 1);
-}
-
-// FIXME: Temporary.
-// Associated functor.
-struct within_c18 : mln::Function_v2b<within_c18>
-{
-  typedef bool result;
-  bool operator()(const mln::point3d& p) const { return f_within_c18(p); }
-};
-
-
-/* FIXME: Factor code with is_simple_point2d.  */
-
-/* FIXME: BTW, we should implement a version of is_simple_point2d
-   based on a LUT as well.  */
-
-/* FIXME: Not that this routine produces false results when a point
-   has not exactly 26 neighbors (same issue with is_simple_point2d).
-   This functor should be placed in an `mln::topo::approx' namespace,
-   and an exact should be provided in addition.  */
 
 namespace mln
 {
 
   namespace topo
   {
-
-    // FIXME: Honor the neighborhoods of the fore- and background.
 
     /// \brief A predicate for the simplicity of an mln::point3d based
     /// on a look-up table.
@@ -158,9 +117,6 @@ namespace mln
       ima_ = exact(&ima);
     }
 
-    // FIXME: Honor the neighborhoods of the fore- and background.
-    // FIXME: Move the computation of connectivity numbers out of this
-    // routine.
     template <typename I, typename N>
     inline
     bool
@@ -169,61 +125,30 @@ namespace mln
       mln_precondition(ima_);
       const I& ima = *ima_;
 
-      /** Type of a connectivity number.
+      /* FIXME: Maybe we can select the connectivity number functions
+	 once and for all when the functor is constructed, instead of
+	 selecting them at each call of operator().  */
+      bool result;
+      if (nbh_fg_ == c6() && nbh_bg_ == c26())
+	result =
+	  connectivity_number_3d_c6 (ima, p, true)  == 1 &&
+	  connectivity_number_3d_c26(ima, p, false) == 1;
+      else if (nbh_fg_ == c26() && nbh_bg_ == c6())
+	result =
+	  connectivity_number_3d_c26(ima, p, true)  == 1 &&
+	  connectivity_number_3d_c6 (ima, p, false) == 1;
+      else if (nbh_fg_ == c6() && nbh_bg_ == c18())
+	result =
+	  connectivity_number_3d_c6p(ima, p, true)  == 1 &&
+	  connectivity_number_3d_c18(ima, p, false) == 1;
+      else if (nbh_fg_ == c18() && nbh_bg_ == c6())
+	result =
+	  connectivity_number_3d_c18(ima, p, true)  == 1 &&
+	  connectivity_number_3d_c6p(ima, p, false) == 1;
+      else
+	abort();
 
-	  Note: The maximun number of connected components in the
-	  neighborhood of a point is necessarily lower or equal to
-	  half the number of neighbors.  This number fits on an
-	  mln::value::int_u8 when the dimension is lower or equal
-	  to 5.  */
-      typedef mln::value::int_u8 conn_number_t;
-      /// Type of a 3D (neighborhood) configuration number (index).
-      typedef mln::value::int_u32 config_3d_t;
-
-      // Create a two 3x3 image representing foreground and background
-      // values in IMA around P.  The value under P is always set to
-      // `false'.
-      box3d b = make::box3d(-1,-1,-1, 1,1,1);
-      I fg_ima_local(b, 0);
-      I bg_ima_local(b, 0);
-      mln::data::fill(fg_ima_local, false);
-      mln::data::fill(bg_ima_local, false);
-      point3d center(0, 0, 0);
-      mln_niter(N) n_ima(c26(), p);
-      mln_niter(N) n_local(c26(), center);
-      for_all_2(n_ima, n_local)
-	if (ima.has(n_ima))
-	    {
-	      if (ima(n_ima))
-		fg_ima_local(n_local) = true;
-	      else
-		bg_ima_local(n_local) = true;
-	    }
-
-      // Foreground connectivity number.
-      conn_number_t fg_conn_number;
-      {
-	mln::neighb3d nbh = c26();
-	labeling::blobs(fg_ima_local, nbh, fg_conn_number);
-      }
-
-      // Background connectivity number.
-      conn_number_t bg_conn_number;
-      {
-	mln::neighb3d nbh = c6();
-	conn_number_t unused_nl;
-	// Restrict the image to the 18-c neighborhood of P.
-	image_if<image3d<conn_number_t>, within_c18> lab =
-	  labeling::blobs(bg_ima_local | within_c18(), nbh, unused_nl);
-	std::set<conn_number_t> s;
-	mln_niter(N) n(nbh, center);
-	for_all(n)
-	  if (lab(n) != 0)
-	    s.insert(lab(n));
-	bg_conn_number = s.size();
-      }
-
-      return fg_conn_number == 1 && bg_conn_number == 1;
+      return result;
     }
 
 # endif // MLN_INCLUDE_ONLY

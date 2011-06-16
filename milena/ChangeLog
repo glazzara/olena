@@ -1,5 +1,15 @@
 2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix, factor and improve the (exact) simple 3D point criterion.
+
+	* mln/topo/is_simple_point3d.hh
+	(mln::topo::is_simple_point3d<I, N>::operator()):
+	Honor the neighborhoods.
+	Use the new routines to compute the connectivity numbers instead
+	of computing them directly.
+
+2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add routines to compute 3D connectivity numbers.
 
 	* mln/topo/connectivity_number_3d.hh: New.
