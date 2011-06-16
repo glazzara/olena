@@ -1,3 +1,10 @@
+2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add routines to compute 3D connectivity numbers.
+
+	* mln/topo/connectivity_number_3d.hh: New.
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
 2011-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the generation of simple 3D point look-up tables.

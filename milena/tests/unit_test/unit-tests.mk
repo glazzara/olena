@@ -1106,6 +1106,7 @@ mln_topo_center_only_iter \
 mln_topo_centered_iter_adapter \
 mln_topo_complex \
 mln_topo_complex_iterators \
+mln_topo_connectivity_number_3d \
 mln_topo_detach_cell \
 mln_topo_detach_pair \
 mln_topo_detach_point \

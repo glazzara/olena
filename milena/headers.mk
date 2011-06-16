@@ -1056,6 +1056,7 @@ mln/topo/center_only_iter.hh \
 mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
+mln/topo/connectivity_number_3d.hh \
 mln/topo/detach_cell.hh \
 mln/topo/detach_pair.hh \
 mln/topo/detach_point.hh \
