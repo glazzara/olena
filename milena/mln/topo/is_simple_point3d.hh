@@ -78,12 +78,29 @@ namespace mln
       bool operator()(const mln_psite(I)& p) const;
 
     private:
+      /// Initialize the function pointers computing connectivity
+      /// numbers.
+      void init_();
+
+    private:
       /// The foreground neighborhood.
       const N& nbh_fg_;
       /// The background neighborhood.
       const N& nbh_bg_;
       /// The image.
       const I* ima_;
+
+      /// The type of pointer on function computing a 3D connectivity
+      /// number.
+      typedef conn_number_t (*connectivity_number_fun_t)(const Image<I>&,
+							 const mln_psite(I)&,
+							 bool);
+      /// The function (pointer) computing the foreground connectivity
+      /// number.
+      connectivity_number_fun_t connectivity_number_fg_;
+      /// The function (pointer) computing the background connectivity
+      /// number.
+      connectivity_number_fun_t connectivity_number_bg_;
     };
 
 
@@ -95,8 +112,10 @@ namespace mln
     is_simple_point3d<I, N>::is_simple_point3d(const Neighborhood<N>& nbh_fg,
 					       const Neighborhood<N>& nbh_bg)
       : nbh_fg_(exact(nbh_fg)), nbh_bg_(exact(nbh_bg)),
-	ima_(0)
+	ima_(0),
+	connectivity_number_fg_(0), connectivity_number_bg_(0)
     {
+      init_();
     }
 
     template <typename I, typename N>
@@ -105,8 +124,41 @@ namespace mln
 					       const Neighborhood<N>& nbh_bg,
 					       const Image<I>& ima)
       : nbh_fg_(exact(nbh_fg)), nbh_bg_(exact(nbh_bg)),
-	ima_(exact(&ima))
+	ima_(exact(&ima)),
+	connectivity_number_fg_(0), connectivity_number_bg_(0)
     {
+      init_();
+    }
+
+    template <typename I, typename N>
+    inline
+    void
+    is_simple_point3d<I, N>::init_()
+    {
+      if (nbh_fg_ == c6() && nbh_bg_ == c26())
+	{
+	  // (6, 26) case.
+	  connectivity_number_fg_ = connectivity_number_3d_c6<I>;
+	  connectivity_number_bg_ = connectivity_number_3d_c26<I>;
+	}
+      else if (nbh_fg_ == c26() && nbh_bg_ == c6())
+	{
+	  // (26, 6) case.
+	  connectivity_number_fg_ = connectivity_number_3d_c26<I>;
+	  connectivity_number_bg_ = connectivity_number_3d_c6<I>;
+	}
+      else if (nbh_fg_ == c6() && nbh_bg_ == c18())
+	{
+	  // (6+, 18) case.
+	  connectivity_number_fg_ = connectivity_number_3d_c6p<I>;
+	  connectivity_number_bg_ = connectivity_number_3d_c18<I>;
+	}
+      else if (nbh_fg_ == c18() && nbh_bg_ == c6())
+	{
+	  // (18, 6+) case.
+	  connectivity_number_fg_ = connectivity_number_3d_c18<I>;
+	  connectivity_number_bg_ = connectivity_number_3d_c6p<I>;
+	}
     }
 
     template <typename I, typename N>
@@ -125,30 +177,9 @@ namespace mln
       mln_precondition(ima_);
       const I& ima = *ima_;
 
-      /* FIXME: Maybe we can select the connectivity number functions
-	 once and for all when the functor is constructed, instead of
-	 selecting them at each call of operator().  */
-      bool result;
-      if (nbh_fg_ == c6() && nbh_bg_ == c26())
-	result =
-	  connectivity_number_3d_c6 (ima, p, true)  == 1 &&
-	  connectivity_number_3d_c26(ima, p, false) == 1;
-      else if (nbh_fg_ == c26() && nbh_bg_ == c6())
-	result =
-	  connectivity_number_3d_c26(ima, p, true)  == 1 &&
-	  connectivity_number_3d_c6 (ima, p, false) == 1;
-      else if (nbh_fg_ == c6() && nbh_bg_ == c18())
-	result =
-	  connectivity_number_3d_c6p(ima, p, true)  == 1 &&
-	  connectivity_number_3d_c18(ima, p, false) == 1;
-      else if (nbh_fg_ == c18() && nbh_bg_ == c6())
-	result =
-	  connectivity_number_3d_c18(ima, p, true)  == 1 &&
-	  connectivity_number_3d_c6p(ima, p, false) == 1;
-      else
-	abort();
-
-      return result;
+      return
+	connectivity_number_fg_(ima, p, true)  == 1 &&
+	connectivity_number_bg_(ima, p, false) == 1;
     }
 
 # endif // MLN_INCLUDE_ONLY

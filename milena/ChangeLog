@@ -1,5 +1,18 @@
 2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Set connectivity number functions when building is_simple_point3d.
+
+	* mln/topo/is_simple_point3d.hh
+	(mln::topo::is_simple_point3d<I, N>::init_): New method.
+	(connectivity_number_fun_t): New (private) typedef.
+	(connectivity_number_fg, connectivity_number_bg):
+	New (private) members.
+	Initialize them...
+	(mln::topo::is_simple_point3d<I, N>::is_simple_point3d):
+	...from the ctors, using init_().
+
+2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix, factor and improve the (exact) simple 3D point criterion.
 
 	* mln/topo/is_simple_point3d.hh
