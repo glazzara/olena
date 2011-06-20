@@ -63,7 +63,7 @@
 
 # include <scribo/text/merging.hh>
 # include <scribo/text/link_lines.hh>
-# include <scribo/text/paragraphs.hh>
+# include <scribo/text/extract_paragraphs.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -541,7 +541,7 @@ namespace scribo
 // 	scribo::paragraph_set<L> parset = scribo::make::paragraph(llinks);
 
 	scribo::paragraph_set<L>
-	  parset = extract_paragraphs(lines, doc.binary_image());
+	  parset = text::extract_paragraphs(lines, doc.binary_image());
 	doc.set_paragraphs(parset);
 
 	on_progress();

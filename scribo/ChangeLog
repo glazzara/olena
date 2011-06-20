@@ -1,3 +1,24 @@
+2011-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make different algorithms for doc and hdoc use cases.
+
+	* scribo/core/paragraph_set.hh: Add an overload of
+	make::paragraph().
+
+	* scribo/text/paragraphs.hh: Move...
+
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh: ... here.
+
+	* scribo/text/merging.hh: Remove holder() calls.
+
+	* scribo/text/merging_hdoc.hh: New.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Fix compilation.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Make use
+	of hdoc algorithms.
+
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new toolchain for ICDAR contests.

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_TEXT_MERGING_HH
-# define SCRIBO_TEXT_MERGING_HH
+#ifndef SCRIBO_TEXT_MERGING_HDOC_HH
+# define SCRIBO_TEXT_MERGING_HDOC_HH
 
 /// \file
 ///
@@ -81,7 +82,7 @@ namespace scribo
     //
     template <typename L>
     line_set<L>
-    merging(const scribo::line_set<L>& lines);
+    merging_hdoc(const scribo::line_set<L>& lines);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -180,10 +181,7 @@ namespace scribo
 	l1 = my_find_root(parent, l1);
 	l2 = my_find_root(parent, l2);
 	if (l1 == l2)
-	  {
-	    std::cerr << "what! in'do_union': already merged!!!" << std::endl;
-	    return l1;
-	  }
+	  return l1;
 
 	swap_ordering(l1, l2);
 	parent[l2] = l1; // The smallest label value is root.
@@ -226,15 +224,15 @@ namespace scribo
 
 
       template <typename L>
-      bool between_separators(const line_set<L>& lines,
+      bool between_separators(const scribo::line_set<L>& lines,
 			      const line_id_t& l1_,
 			      const line_id_t& l2_)
       {
-        // No separators found in image.
-	mln_precondition(lines.components().has_separators());
-
 	const scribo::line_info<L>& l1 = lines(l1_);
 	const scribo::line_info<L>& l2 = lines(l2_);
+
+        // No separators found in image.
+	mln_precondition(lines.components().has_separators());
 
 	const box2d& l1_bbox = l1.bbox();
 	const box2d& l2_bbox = l2.bbox();
@@ -297,11 +295,11 @@ namespace scribo
       */
       template <typename L>
       bool lines_can_merge(scribo::line_set<L>& lines,
-			   const line_id_t& l1_,
-			   const line_id_t& l2_)
+			   const scribo::line_id_t& l1_,
+			   const scribo::line_id_t& l2_)
       {
 	scribo::line_info<L>& l1 = lines(l1_);
-	const scribo::line_info<L>& l2 = lines(l2_);
+	scribo::line_info<L>& l2 = lines(l2_);
 
 	// Parameters.
 	const float x_ratio_max = 1.7f;
@@ -434,13 +432,12 @@ namespace scribo
 
       */
       template <typename L>
-      bool non_text_and_text_can_merge(line_set<L>& lines,
-				       const line_id_t& l_cur_, // current
-				       const line_id_t& l_ted_) // touched
+      bool non_text_and_text_can_merge(scribo::line_set<L>& lines,
+				       const scribo::line_id_t& l_cur_, // current
+				       const scribo::line_id_t l_ted_) // touched
       {
 	scribo::line_info<L>& l_cur = lines(l_cur_);
-	const scribo::line_info<L>& l_ted = lines(l_ted_);
-
+	scribo::line_info<L>& l_ted = lines(l_ted_);
 
 	if (l_cur.type() == line::Text || l_ted.type() != line::Text)
 	  return false;
@@ -473,8 +470,8 @@ namespace scribo
 	if (l_cur_height < l_ted_x_height
 	    && l_cur_height > 0.05f * l_ted_x_height
 	    && float(l_cur_width) / float(l_cur.card()) < l_ted.char_width()
-	    && dx < l_ted_cw
-	    && l_cur_pmin.row() < l_ted_pmax.row())
+	    && dx < 2 * l_ted_cw
+	    && l_cur_pmin.row() < l_ted.baseline())
 	{
 	  l_cur.update_type(line::Punctuation);
 	  return true;
@@ -637,8 +634,10 @@ namespace scribo
 	image2d<unsigned> billboard(domain);
 	data::fill(billboard, 0);
 
+# ifndef SCRIBO_NDEBUG
 	image2d<value::int_u8> log(domain);
 	data::fill(log, 0);
+# endif // ! SCRIBO_NDEBUG
 
 	const unsigned n = v.size();
 	unsigned l_;
@@ -670,7 +669,7 @@ namespace scribo
 	    x---------------x
 	    |               |
 	    |       mc      |
-	    ml x       x       x mr
+         ml x       x       x mr
 	    |               |
 	    |               |
 	    x---------------x
@@ -753,11 +752,12 @@ namespace scribo
 		  // vertically aligned
 		  // Obviously no separators between the two lines
 		  if ((l_info.card() <= 5 ||
-		       (std::abs(l_info.baseline() - mc_info.baseline()) < 5
-			&& std::abs(l_info.meanline() - mc_info.meanline()) < 5))
-		      && dx < l_ted_cw && dy < 0
-		      && not (lines.components().has_separators()
-			      && between_separators(lines, l, mc)))
+		       (std::abs(l_info.baseline() - mc_info.baseline())
+			< 5 && std::abs(l_info.meanline() -
+					mc_info.meanline()) < 5))
+		    && dx < l_ted_cw && dy < 0
+		    && 	not (lines.components().has_separators()
+		  	     && between_separators(lines, l, mc)))
 		    l = do_union(lines, l, mc,  parent);
 		  // }
 
@@ -776,9 +776,10 @@ namespace scribo
 // 		  l_ = do_union(lines, mc, l, parent);
 // 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
  		  // Log:
  		  draw_box(log, b, 126);
-
+# endif // ! SCRIBO_NDEBUG
 		}
 
 		else  // FIXME: Remove!  since included in a non-text-line, so not drawn, so inclusion impossible!!!!!!!!!!
@@ -788,8 +789,11 @@ namespace scribo
 
 		  // a non-text-line (probably a drawing or a frame) includes a text line
 		  draw_box(billboard, lines(l).ebbox(), l);
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 100);
+# endif // ! SCRIBO_NDEBUG
 		}
 
 	      }
@@ -828,8 +832,10 @@ namespace scribo
 		  // it may change of label (take the one of the included line).
 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 128);
+# endif // ! SCRIBO_NDEBUG
 		}
 	      }
 	    }
@@ -842,11 +848,15 @@ namespace scribo
 	      {
 		++count_new_txtline;
 		draw_box(billboard, lines(l).ebbox(), l);
+# ifndef SCRIBO_NDEBUG
 		// Log:
 		draw_box(log, b, 127);
+# endif // ! SCRIBO_NDEBUG
 	      }
+# ifndef SCRIBO_NDEBUG
 	      else
-		draw_box(log, b, 1);
+	      	draw_box(log, b, 1);
+# endif // ! SCRIBO_NDEBUG
 	    }
 	  }
 	  else
@@ -863,8 +873,8 @@ namespace scribo
 	      if (lcand == 0) // Skip background.
 		continue;
 
-	      if (lines(lcand).type() != line::Text)
-		std::cerr << "again!" << std::endl;
+	      // if (lines(lcand).type() != line::Text)
+	      // 	std::cerr << "again!" << std::endl;
 
 
 	      if (lines(l_).type() == line::Text)
@@ -876,15 +886,22 @@ namespace scribo
 		  l_ = do_union(lines, l_, lcand,  parent);
 
 		  draw_box(billboard, lines(l_).ebbox(), l_);
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 151);
+# endif // ! SCRIBO_NDEBUG
+
 		  continue;
 		}
 		else
 		{
 		  ++count_WTF;
+
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 255);
+# endif // ! SCRIBO_NDEBUG
 
 		  // (*) SEE BELOW
 		  draw_box(billboard, lines(l_).ebbox(), l_);
@@ -901,15 +918,20 @@ namespace scribo
 		  l_ = do_union(lines, l_, lcand,  parent);
 		  draw_box(billboard, lines(l_).ebbox(), l_);
 
+# ifndef SCRIBO_NDEBUG
 		  // Log:
 		  draw_box(log, b, 169);
+# endif // ! SCRIBO_NDEBUG
+
 		  continue;
 		}
+# ifndef SCRIBO_NDEBUG
 		else
 		{
 		  // Log:
 		  draw_box(log, b, 254);
 		}
+# endif // ! SCRIBO_NDEBUG
 	      }
 
 
@@ -1059,7 +1081,6 @@ namespace scribo
 // 	ts = t.stop();
 // 	std::cout << "time " << ts << std::endl;
 
-
 	lines.force_stats_update();
 
 	return lines;
@@ -1073,7 +1094,7 @@ namespace scribo
 
     template <typename L>
     line_set<L>
-    merging(const scribo::line_set<L>& lines)
+    merging_hdoc(const scribo::line_set<L>& lines)
     {
       using namespace mln;
 
@@ -1095,4 +1116,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_MERGING_HH
+#endif // ! SCRIBO_TEXT_MERGING_HDOC_HH

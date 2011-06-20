@@ -377,6 +377,35 @@ namespace scribo
     }
 
 
+    template <typename L>
+    scribo::paragraph_set<L>
+    paragraph(const line_links<L>& llinks)
+    {
+      line_links<L> links = llinks.duplicate();
+
+      for_all_links(l, links)
+	links(l) = internal::find_root(links, l);
+
+      unsigned npars;
+      mln::fun::i2v::array<unsigned>
+	par_ids = mln::make::relabelfun(links.line_to_link(),
+					links.nelements() - 1, npars);
+      paragraph_set<L> parset(links, npars);
+
+      const scribo::line_set<L>& lines = links.lines();
+      for_all_links(l, links)
+	if (links(l))
+	{
+	  value::int_u16 par_id = par_ids(l);
+	  parset(par_id).add_line(lines(l));
+	}
+
+      for_all_paragraphs(p, parset)
+	parset(p).force_stats_update();
+
+      return parset;
+    }
+
     // FIXME: move that code into paragraph_set constructor?
     template <typename L>
     scribo::paragraph_set<L>

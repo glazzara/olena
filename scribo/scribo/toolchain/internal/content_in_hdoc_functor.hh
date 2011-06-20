@@ -74,9 +74,9 @@
 # include <scribo/text/recognition.hh>
 #  endif // ! SCRIBO_NOCR
 
-# include <scribo/text/merging.hh>
+# include <scribo/text/merging_hdoc.hh>
 # include <scribo/text/link_lines.hh>
-# include <scribo/text/paragraphs.hh>
+# include <scribo/text/paragraphs_hdoc.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -461,7 +461,7 @@ namespace scribo
 
 	on_new_progress_label("Merging segmented lines");
 
-	lines = scribo::text::merging(lines);
+	lines = scribo::text::merging_hdoc(lines);
 
 
 	//===== DEBUG =====
@@ -525,7 +525,8 @@ namespace scribo
 	on_new_progress_label("Extracting paragraphs");
 
 	scribo::paragraph_set<L>
-	  parset = extract_paragraphs(lines, doc.binary_image());
+	  parset = scribo::text::extract_paragraphs_hdoc(lines,
+							 doc.binary_image());
 
 	on_progress();
 
