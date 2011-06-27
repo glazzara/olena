@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 
+#  ifndef SCRIBO_NDEBUG
+#  include <mln/util/timer.hh>
+#  endif // ! SCRIBO_NDEBUG
+
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/line_set.hh>
@@ -132,6 +136,19 @@ namespace scribo
 	// Results
 	//=========
 	document<L> doc;
+
+#  ifndef SCRIBO_NDEBUG
+	//=============
+	// DEBUG TOOLS
+	//=============
+	virtual void on_start();
+	virtual void on_end();
+	virtual void on_progress();
+
+	mln::util::timer t;
+	mln::util::timer gt;
+#  endif // ! SCRIBO_NDEBUG
+
       };
 
 
@@ -256,14 +273,6 @@ namespace scribo
 	if (enable_line_seps)
 	  components.add_separators(separators);
 
-	// Debug
-#  ifndef SCRIBO_NDEBUG
-	debug::logger().log_image(debug::AuxiliaryResults,
-				  components.separators(),
-				  "all_separators");
-#  endif // ! SCRIBO_NDEBUG
-
-
 	on_new_progress_label("Filtering components");
 
 	components = scribo::filter::components_small(components, 3);
@@ -373,6 +382,10 @@ namespace scribo
 
 	//===== DEBUG =====
 #  ifndef SCRIBO_NDEBUG
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  components.separators(),
+				  "all_separators");
+
 	if (debug::logger().is_enabled())
 	{
 	  if (enable_whitespace_seps)
@@ -598,8 +611,39 @@ namespace scribo
 	// Nothing
       }
 
-# endif // ! MLN_INCLUDE_ONLY
+#  ifndef SCRIBO_NDEBUG
 
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_start()
+      {
+	gt.start();
+	t.start();
+      }
+
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_end()
+      {
+	gt.stop();
+	if (verbose)
+	  std::cout << "Total time: " << gt << std::endl;
+      }
+
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_progress()
+      {
+	t.stop();
+	if (verbose)
+	  std::cout << t << std::endl;
+	t.restart();
+      }
+
+
+#  endif // ! SCRIBO_NDEBUG
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace scribo::toolchain::internal
 

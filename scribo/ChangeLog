@@ -1,5 +1,10 @@
 2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Add a
+	timer.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix XML output.
 
 	* demo/viewer/viewer.cc,
