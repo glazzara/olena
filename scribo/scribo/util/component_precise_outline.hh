@@ -122,6 +122,7 @@ namespace scribo
 	}
       }
 
+      inline
       void
       left_up_after(int& direction,
 		    const unsigned i)
@@ -155,6 +156,7 @@ namespace scribo
 	}
       }
 
+      inline
       void
       right_up_after(int& direction,
 		     const unsigned i)
@@ -186,6 +188,7 @@ namespace scribo
 	}
       }
 
+      inline
       void
       right_down_after(int& direction,
 		       const unsigned i)
@@ -219,6 +222,7 @@ namespace scribo
 	}
       }
 
+      inline
       void
       left_down_after(int& direction,
 		      const unsigned i)
@@ -274,6 +278,7 @@ namespace scribo
 	cur_pt = tmp;
       }
 
+      inline
       void
       filter_points(const mln::p_array<point2d>& points,
 		    mln::p_array<point2d>& waypoints)

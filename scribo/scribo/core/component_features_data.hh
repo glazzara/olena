@@ -75,6 +75,7 @@ namespace scribo
   }
 
 
+  inline
   bool
   operator==(const component_features_data& lhs,
 	     const component_features_data& rhs)

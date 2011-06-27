@@ -48,6 +48,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     std::string color_to_hex(const value::rgb8& v)
     {
       std::string result = "#";

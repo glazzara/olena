@@ -1,3 +1,17 @@
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* scribo/core/component_features_data.hh,
+	* scribo/core/group_info.hh,
+	* scribo/io/xml/internal/compute_text_colour.hh,
+	* scribo/io/xml/internal/time_info.hh,
+	* scribo/util/color_to_hex.hh,
+	* scribo/util/component_precise_outline.hh: Add missing inline.
+
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh: Add
+	a missing include.
+
 2011-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make different algorithms for doc and hdoc use cases.

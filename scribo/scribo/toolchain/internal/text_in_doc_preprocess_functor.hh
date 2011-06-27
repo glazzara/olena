@@ -33,6 +33,8 @@
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <mln/subsampling/antialiased.hh>
+#include <mln/util/timer.hh>
+
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/binarization/sauvola_ms.hh>
 

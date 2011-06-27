@@ -62,6 +62,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+	inline
 	const char *
 	compute_text_colour(const value::rgb8& v)
 	{

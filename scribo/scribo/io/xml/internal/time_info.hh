@@ -48,6 +48,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+	inline
 	std::string time_info()
 	{
 	  time_t cur_time = time(NULL);
