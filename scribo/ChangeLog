@@ -1,5 +1,15 @@
 2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix XML output.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/xml_widget.cc: Update tag names.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/save.hh: Save component outlines.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation issues.
 
 	* scribo/core/component_features_data.hh,

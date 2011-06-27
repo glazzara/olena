@@ -368,7 +368,7 @@ Viewer::add_text(QDomNode line)
 
   QDomNode coords = line.firstChild();
 
-  while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+  while (!coords.isNull() && !coords.toElement().tagName().contains("Coords"))
     coords = coords.nextSibling();
 
   if (coords.isNull())
@@ -416,7 +416,7 @@ Viewer::add_region(QDomNode father, QString attr_id)
   QString name = father.toElement().tagName();
   region::RegionId id = static_cast<region::RegionId>(region_ids_[name]);
 
-  while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+  while (!coords.isNull() && !coords.toElement().tagName().contains("Coords"))
     coords = coords.nextSibling();
 
   if (coords.isNull())
@@ -471,7 +471,7 @@ Viewer::add_typo_lines(QDomNode father, QString attr_id)
   // Looking for bbox coordinates.
   {
     QDomNode coords = father.firstChild();
-    while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+    while (!coords.isNull() && !coords.toElement().tagName().contains("Coords"))
       coords = coords.nextSibling();
 
     if (coords.isNull())
@@ -581,7 +581,7 @@ Viewer::load_xml(QString filename)
   QDomElement root = doc.documentElement();
   QDomNode page = root.firstChild();
 
-  while (!page.isNull() && !page.toElement().tagName().contains("page"))
+  while (!page.isNull() && !page.toElement().tagName().contains("Page"))
     page = page.nextSibling();
 
   if (page.isNull())
@@ -611,7 +611,7 @@ Viewer::load_xml(QString filename)
 
 	      QDomNode coords = region.firstChild();
 
-	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+	      while (!coords.isNull() && !coords.toElement().tagName().contains("Coords"))
 		coords = coords.nextSibling();
 
 	      if (!container.isNull() && !coords.isNull())

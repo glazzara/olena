@@ -86,7 +86,7 @@ void XmlWidget::NFS(QDomNode node, QTreeWidgetItem* item)
   if (!node.isNull())
   {
     QString append;
-    if (node.toElement().tagName().contains("point"))
+    if (node.toElement().tagName().contains("Point"))
     {
       QString x = node.toElement().attribute("x", "0");
       QString y = node.toElement().attribute("y", "0");

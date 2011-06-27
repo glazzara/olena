@@ -52,7 +52,11 @@
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 # include <scribo/io/xml/internal/compute_text_colour.hh>
 
+# include <scribo/text/paragraphs_closing.hh>
+
+# include <scribo/util/component_precise_outline.hh>
 # include <scribo/util/color_to_hex.hh>
+
 
 namespace scribo
 {
@@ -67,31 +71,29 @@ namespace scribo
       {
 
 
-	class extended_page_xml_visitor : public doc_serializer<extended_page_xml_visitor>
+	template <typename L>
+	class extended_page_xml_visitor
+	  : public doc_serializer<extended_page_xml_visitor<L> >
 	{
 	public:
 	  // Constructor
 	  extended_page_xml_visitor(std::ofstream& out);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  template <typename L>
 	  void visit(const component_set<L>& comp_set) const;
 
-	  template <typename L>
 	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
-	  template <typename L>
 	  void visit(const line_info<L>& line) const;
 
 	private: // Attributes
 	  std::ofstream& output;
 	  mutable image2d<scribo::def::lbl_type> elt_edge;
+	  mutable L lbl_;
 	};
 
 
@@ -99,8 +101,8 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	extended_page_xml_visitor::extended_page_xml_visitor(std::ofstream& out)
+	template <typename L>
+	extended_page_xml_visitor<L>::extended_page_xml_visitor(std::ofstream& out)
 	  : output(out)
 	{
 	}
@@ -111,7 +113,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	extended_page_xml_visitor::visit(const document<L>& doc) const
+	extended_page_xml_visitor<L>::visit(const document<L>& doc) const
  	{
 	  // Preambule
 	  print_PAGE_preambule(output, doc, false);
@@ -150,8 +152,9 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	extended_page_xml_visitor::visit(const component_set<L>& comp_set) const
+	extended_page_xml_visitor<L>::visit(const component_set<L>& comp_set) const
 	{
+	  lbl_ = comp_set.labeled_image();
 	  for_all_comps(c, comp_set)
 	    if (comp_set(c).is_valid())
 	      comp_set(c).accept(*this);
@@ -162,8 +165,14 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	extended_page_xml_visitor::visit(const component_info<L>& info) const
+	extended_page_xml_visitor<L>::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  //const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
+
 	  switch (info.type())
 	  {
 	    case component::WhitespaceSeparator:
@@ -177,7 +186,7 @@ namespace scribo
 		     << " y_max=\"" << info.bbox().pmax().row() << "\""
 		     << ">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </whitespace_separator_region>" << std::endl;
 	      break;
@@ -195,7 +204,7 @@ namespace scribo
 		     << " y_max=\"" << info.bbox().pmax().row() << "\""
 		     << ">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </vertical_separator_region>" << std::endl;
 	      break;
@@ -213,7 +222,7 @@ namespace scribo
 		     << " y_max=\"" << info.bbox().pmax().row() << "\""
 		     << ">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </horizontal_separator_region>" << std::endl;
 	      break;
@@ -250,13 +259,19 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	extended_page_xml_visitor::visit(const paragraph_set<L>& parset) const
+	extended_page_xml_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  const line_set<L>& lines = parset.lines();
+
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
 
 	  for_all_paragraphs(p, parset)
 	    if (parset(p).is_valid())
 	    {
+	      p_array<mln_site(L)> par = scribo::util::component_precise_outline(par_clo
+										 | parset(p).bbox(), p);
+
 	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
 	      // FIXME: compute that information on the whole paragraph
@@ -286,7 +301,7 @@ namespace scribo
 	      output << "\">"
 		     << std::endl;
 
-	      internal::print_box_coords(output, parset(p).bbox(), "      ");
+	      internal::print_image_coords(output, parset(p).bbox(), "      ");
 
 	      // EXTENSIONS - Not officially supported
 	      for_all_paragraph_lines(lid, line_ids)
@@ -303,7 +318,7 @@ namespace scribo
 
 	template <typename L>
 	void
-	extended_page_xml_visitor::visit(const line_info<L>& line) const
+	extended_page_xml_visitor<L>::visit(const line_info<L>& line) const
 	{
 	  if (line.has_text())
 	  {

@@ -103,7 +103,7 @@ namespace scribo
 	template <typename L>
 	void save_page_extended(const document<L>& doc, std::ofstream& output)
 	{
-	  scribo::io::xml::internal::extended_page_xml_visitor f(output);
+	  scribo::io::xml::internal::extended_page_xml_visitor<L> f(output);
 	  doc.accept(f);
 	}
 
