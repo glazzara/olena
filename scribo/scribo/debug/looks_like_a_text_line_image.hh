@@ -40,8 +40,7 @@
 
 # include <scribo/core/line_set.hh>
 
-// Declares internal::looks_like_a_text_line.
-# include <scribo/text/merging.hh>
+# include <scribo/text/look_like_text_lines.hh>
 
 
 namespace scribo

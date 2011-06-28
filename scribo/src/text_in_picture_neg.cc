@@ -86,7 +86,6 @@
 #include <scribo/filter/common/objects_photo.hh>
 
 #include <scribo/filter/object_groups_small.hh>
-#include <scribo/filter/object_groups_v_thickness.hh>
 
 #include <scribo/debug/highlight_text_area.hh>
 #include <scribo/debug/text_areas_image.hh>

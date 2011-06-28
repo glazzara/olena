@@ -246,14 +246,14 @@ namespace scribo
       // void
       // logger_::log_image_generic(const I& ima, const std::string& name)
       // {
-      // 	io::magick::save(ima, mln::debug::filename(name + ".png"));
+      // 	mln::io::magick::save(ima, mln::debug::filename(name + ".png"));
       // }
 
       template <typename I>
       void
       logger_::log_image_rgb(const I& ima, const std::string& name)
       {
-	io::ppm::save(ima, mln::debug::filename(name + ".ppm"));
+	mln::io::ppm::save(ima, mln::debug::filename(name + ".ppm"));
       }
 
 
@@ -261,7 +261,7 @@ namespace scribo
       void
       logger_::log_image_bool(const I& ima, const std::string& name)
       {
-	io::pbm::save(ima, mln::debug::filename(name + ".pbm"));
+	mln::io::pbm::save(ima, mln::debug::filename(name + ".pbm"));
       }
 
 
@@ -269,8 +269,8 @@ namespace scribo
       void
       logger_::log_image_grayscale(const I& ima, const std::string& name)
       {
-	io::pgm::save(data::wrap(value::int_u8(), ima),
-		      mln::debug::filename(name + ".pgm"));
+	mln::io::pgm::save(data::wrap(value::int_u8(), ima),
+			   mln::debug::filename(name + ".pgm"));
       }
 
     } // end of namespace scribo::debug::internal

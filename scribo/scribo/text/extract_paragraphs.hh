@@ -47,6 +47,7 @@
 #include <mln/geom/rotate.hh>
 #include <mln/literal/colors.hh>
 
+#include <scribo/core/def/lbl_type.hh>
 #include <scribo/core/macros.hh>
 #include <scribo/core/line_set.hh>
 #include <scribo/core/line_links.hh>

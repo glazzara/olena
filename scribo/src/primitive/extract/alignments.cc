@@ -30,6 +30,7 @@
 
 #include <scribo/text/extract_lines_wo_merge.hh>
 #include <scribo/primitive/extract/alignments.hh>
+#include <scribo/primitive/extract/separators.hh>
 #include <scribo/primitive/remove/separators.hh>
 #include <scribo/debug/usage.hh>
 
@@ -77,14 +78,14 @@ int main(int argc, char *argv[])
     lines = scribo::text::extract_lines_wo_merge(doc, c8(), separators);
   doc.set_paragraphs(scribo::make::paragraph(lines));
 
-  util::timer t;
+  mln::util::timer t;
   t.start();
   mln::util::couple<component_set<L>, mln_ch_value_(L,bool)>
     res = primitive::extract::alignments(doc, dmax_ratio, delta_pixel);
   t.stop();
   std::cout << t << std::endl;
 
-  io::pbm::save(res.second(), argv[2]);
+  mln::io::pbm::save(res.second(), argv[2]);
 
   trace::exiting("main");
 }

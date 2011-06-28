@@ -33,6 +33,7 @@
 
 
 # include <mln/core/concept/image.hh>
+# include <mln/draw/box_plain.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/document.hh>
 

@@ -38,10 +38,10 @@
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/data/transform.hh>
 # include <mln/util/array.hh>
+# include <mln/draw/box_plain.hh>
 
 # include <scribo/core/paragraph_set.hh>
-
-#include <mln/labeling/colorize.hh>
+# include <scribo/util/box_intersection.hh>
 
 namespace scribo
 {

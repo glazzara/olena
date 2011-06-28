@@ -47,6 +47,7 @@
 #include <mln/geom/rotate.hh>
 #include <mln/literal/colors.hh>
 
+#include <scribo/core/def/lbl_type.hh>
 #include <scribo/core/macros.hh>
 #include <scribo/core/line_set.hh>
 #include <scribo/core/line_links.hh>
@@ -1301,18 +1302,18 @@ namespace scribo
       rbbox.resize(lines.nelements() + 1);
 
 //    std::cout << "Preparing lines" << std::endl;
-      prepare_lines(input.domain(), lines , blocks, rbbox);
+      internal::prepare_lines(input.domain(), lines , blocks, rbbox);
 //    io::pgm::save(blocks, "blocks.pgm");
 //    std::cout << "Linking left" << std::endl;
-      process_left_link(blocks, rbbox, lines , left);
+      internal::process_left_link(blocks, rbbox, lines , left);
 //    std::cout << "Linking right" << std::endl;
-      process_right_link(blocks, rbbox, lines , right);
+      internal::process_right_link(blocks, rbbox, lines , right);
 //    std::cout << "Finalizing links" << std::endl;
-      finalize_links(left, right, lines );
+      internal::finalize_links(left, right, lines );
       // std::cout << "Finalizing merging" << std::endl;
       // finalize_line_merging(left, right, lines);
 //    std::cout << "Extracting paragraphs" << std::endl;
-      filter::paragraph_links(left, right, output, lines);
+      internal::paragraph_links(left, right, output, lines);
 
       paragraph_set<L> par_set = make::paragraph(output, right);
       return par_set;

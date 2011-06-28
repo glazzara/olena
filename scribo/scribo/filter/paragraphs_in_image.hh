@@ -38,11 +38,13 @@
 # include <mln/core/image/dmorph/image_if.hh>
 
 # include <mln/data/transform.hh>
+# include <mln/draw/box_plain.hh>
 
 # include <mln/util/array.hh>
 
 # include <mln/pw/all.hh>
 
+# include <scribo/core/document.hh>
 # include <scribo/core/paragraph_set.hh>
 # include <scribo/fun/v2b/objects_small_filter.hh>
 # include <scribo/primitive/extract/components.hh>

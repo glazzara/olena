@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
   scribo::paragraph_set<L> parset = scribo::make::paragraph(llinks);
   doc.set_paragraphs(parset);
 
-  util::timer t;
+  mln::util::timer t;
   t.start();
 
   image2d<bool> blocks;

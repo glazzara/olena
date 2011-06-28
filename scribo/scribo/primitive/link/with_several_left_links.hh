@@ -103,16 +103,16 @@ namespace scribo
 
 	for_all_comps(i, comps)
 	{
-	  if (link_center(i) != i)
-	    final_link(i) = link_center(i);
+	  if (link_center.is_linked(i))
+	    final_link.update((i), link_center(i));
 	  else if (link_top(i) == link_bot(i))
-	    final_link(i) = link_top(i);
-	  else if (link_top(i) != i && link_bot(i) == i)
-	    final_link(i) = link_top(i);
-	  else if (link_bot(i) != i && link_top(i) == i)
-	    final_link(i) = link_bot(i);
+	    final_link.update(i, link_top(i));
+	  else if (link_top.is_linked(i) && ! link_bot.is_linked(i))
+	    final_link.update(i, link_top(i));
+	  else if (link_bot.is_linked(i) && ! link_top.is_linked(i))
+	    final_link.update(i, link_bot(i));
 	  else
-	    final_link(i) = i;
+	    final_link.clear(i);
 	}
 
 

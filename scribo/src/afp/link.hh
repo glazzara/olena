@@ -52,7 +52,7 @@ namespace scribo
 
 
       template <typename L>
-      util::couple<object_links<L>, object_links<L> >
+      mln::util::couple<object_links<L>, object_links<L> >
       left_right(const component_set<L>& components)
       {
 	object_links<L>
@@ -96,7 +96,7 @@ namespace scribo
 		  && *p != i // Not the current component
 		  && right(*p) != i) // No loops
 	      {
-		right(i) = *p;
+		right.update(i, *p);
 		break;
 	      }
 	    }
@@ -115,7 +115,7 @@ namespace scribo
 		  && *p != i // Not the current component
 		  && left(*p) != i) // No loops
 	      {
-		left(i) = *p;
+		left.update(i, *p);
 		break;
 	      }
 	    }

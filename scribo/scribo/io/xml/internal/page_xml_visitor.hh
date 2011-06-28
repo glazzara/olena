@@ -37,6 +37,7 @@
 
 # include <scribo/util/component_precise_outline.hh>
 
+# include <scribo/io/xml/internal/print_image_coords.hh>
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 # include <scribo/io/xml/internal/compute_text_colour.hh>

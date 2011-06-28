@@ -23,7 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_SEPARATORS_IN_PARAGRAPHS_HH
+#ifndef SCRIBO_FILTER_SEPARATORS_IN_PARAGRAPH_HH
 # define SCRIBO_FILTER_SEPARATORS_IN_PARAGRAPH_HH
 
 /// \file
@@ -33,6 +33,7 @@
 
 
 # include <mln/core/concept/image.hh>
+# include <mln/draw/box_plain.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/document.hh>
 

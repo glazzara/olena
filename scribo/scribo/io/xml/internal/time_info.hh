@@ -31,6 +31,7 @@
 /// Get formated time info for PAGE XML format.
 
 # include <ctime>
+# include <string>
 
 namespace scribo
 {
@@ -44,7 +45,7 @@ namespace scribo
       namespace internal
       {
 
-	using namespace mln;
+	std::string time_info();
 
 # ifndef MLN_INCLUDE_ONLY
 

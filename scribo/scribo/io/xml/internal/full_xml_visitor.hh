@@ -30,6 +30,7 @@
 ///
 /// XML serializer Visitor.
 
+# include <iomanip>
 # include <fstream>
 
 # include <QByteArray>

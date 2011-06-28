@@ -42,6 +42,7 @@
 # include <scribo/core/paragraph_set.hh>
 # include <scribo/core/line_info.hh>
 
+# include <scribo/text/paragraphs_closing.hh>
 # include <scribo/io/img/internal/draw_edges.hh>
 # include <scribo/util/component_precise_outline.hh>
 

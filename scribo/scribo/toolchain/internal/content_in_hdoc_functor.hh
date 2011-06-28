@@ -76,7 +76,7 @@
 
 # include <scribo/text/merging_hdoc.hh>
 # include <scribo/text/link_lines.hh>
-# include <scribo/text/paragraphs_hdoc.hh>
+# include <scribo/text/extract_paragraphs_hdoc.hh>
 
 # include <scribo/make/debug_filename.hh>
 

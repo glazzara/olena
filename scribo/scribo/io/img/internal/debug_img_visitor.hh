@@ -37,6 +37,7 @@
 # include <mln/draw/polygon.hh>
 # include <mln/subsampling/antialiased.hh>
 # include <mln/morpho/elementary/gradient_external.hh>
+# include <mln/draw/box.hh>
 
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/core/document.hh>

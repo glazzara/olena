@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010. 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -89,27 +89,22 @@ namespace scribo
 	mln_precondition(left_link.nelements() == right_link.nelements());
 
 
-	object_groups<L> parent(left_link);
-	parent.init();
-	for_all_comps(i, left_link.components())
-	{
-	  mln::util::couple<bool, unsigned>
-	    nbh = internal::is_link_valid(left_link, right_link, i);
-	  if (nbh.first())
-	  {
-	    unsigned par = internal::find_root(parent, nbh.second());
-	    if (par < i)
-	      parent(par) = i;
-	    else
-	      parent(i) = par;
-	  }
-	}
+	object_links<L> parent = left_link.duplicate();
 
-	for (unsigned i = parent.nelements() - 1; i < parent.nelements(); --i)
-	  parent(i) = parent(parent(i));
+	for_all_comps(i, left_link.components())
+	  if (internal::is_link_valid(left_link, right_link, i))
+	  {
+	    component_id_t par = left_link(i);
+	    if (par < i)
+	      parent.update(par, i);
+	    else
+	      parent.update(i, par);
+	  }
+
+	object_groups<L> result = from_single_link(parent);
 
 	trace::exiting("scribo::primitive::group::from_double_link");
-	return parent;
+	return result;
       }
 
 

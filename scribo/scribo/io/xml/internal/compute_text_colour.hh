@@ -31,6 +31,7 @@
 /// Find the color name of a given color.
 
 # include <mln/value/rgb8.hh>
+# include <mln/value/int_u8.hh>
 # include <mln/make/vec.hh>
 # include <mln/norm/l2.hh>
 
@@ -46,6 +47,8 @@ namespace scribo
 
       namespace internal
       {
+
+	using namespace mln;
 
 	const char *
 	compute_text_colour(const value::rgb8& v);

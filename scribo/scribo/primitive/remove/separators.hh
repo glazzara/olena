@@ -39,6 +39,7 @@
 
 # include <mln/data/fill.hh>
 
+# include <mln/border/fill.hh>
 # include <mln/border/resize.hh>
 
 

@@ -32,7 +32,10 @@
 /// Paragraphs closing using CRLA.
 
 # include <mln/draw/line.hh>
+
+# include <scribo/core/paragraph_set.hh>
 # include <scribo/draw/line_components.hh>
+# include <scribo/debug/logger.hh>
 
 namespace scribo
 {

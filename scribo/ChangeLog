@@ -1,3 +1,51 @@
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation.
+
+	* scribo/core/object_groups.hh,
+	* scribo/debug/logger.hh,
+	* scribo/estim/object_groups_mean_width.hh,
+	* src/debug/show_paragraph_blocks.cc,
+	* src/debug/show_text_lines.cc,
+	* src/non_text_components.cc,
+	* src/primitive/extract/alignments.cc,
+	* scribo/text/extract_paragraphs_hdoc.hh: Fix namespace ambiguities.
+
+	* scribo/core/object_links.hh: Remove useless find_root().
+
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh: Update includes.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/compute_text_colour.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/io/xml/internal/time_info.hh,
+	* scribo/postprocessing/images_to_drop_capital.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Add
+	missing includes.
+
+	* scribo/io/xml/load.hh: Fix string conversions.
+
+	* scribo/primitive/group/from_double_link.hh
+	* scribo/primitive/link/with_several_left_links.hh
+	* scribo/primitive/link/with_several_right_links.hh
+	* src/afp/link.hh: Update according new API in
+	object_groups/links.
+
+	* src/text_in_picture.cc,
+	* src/text_in_picture_neg.cc,
+	* src/text_recognition_in_picture.cc: Update a routine name.
+
 2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/toolchain/internal/content_in_doc_functor.hh: Add a
