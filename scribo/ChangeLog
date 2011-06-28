@@ -1,5 +1,12 @@
 2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Here.
+
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation.
 
 	* scribo/core/object_groups.hh,
