@@ -38,6 +38,7 @@
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
 # include <mln/extension/adjust_duplicate.hh>
+# include <mln/extension/adjust_fill.hh>
 # include <mln/data/fill.hh>
 
 # include <mln/util/timer.hh>

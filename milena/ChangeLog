@@ -1,5 +1,9 @@
 2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/morpho/skeleton_constrained.hh: Add a missing include.
+
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/border/equalize.hh: Fix an invalid assertion.
 
 2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
