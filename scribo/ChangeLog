@@ -1,3 +1,8 @@
+2011-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/paragraphs.hh: Adding horizontal separators check in
+	paragraphs construction.
+
 2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen generated files.

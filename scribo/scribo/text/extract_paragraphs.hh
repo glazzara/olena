@@ -93,6 +93,76 @@ namespace scribo
 
 
 //---------------------------------------------------------------------
+// Checks if there is a horizontal separator between the two lines
+//---------------------------------------------------------------------
+
+    template <typename L>
+    inline
+    bool
+    between_horizontal_separator(const scribo::line_info<L>& l1,
+				 const scribo::line_info<L>& l2)
+    {
+      // No separators found in image.
+      mln_precondition(l1.holder().components().has_separators());
+
+      const box2d& l1_bbox = l1.bbox();
+      const box2d& l2_bbox = l2.bbox();
+
+      unsigned
+	row1 = l1_bbox.pcenter().row(),
+	row2 = l2_bbox.pcenter().row();
+      const mln_ch_value(L, bool)&
+	separators = l1.holder().components().separators();
+
+      unsigned row;
+      unsigned col_ptr;
+      unsigned left_col_ptr;
+      unsigned right_col_ptr;
+      unsigned end;
+
+      if (row1 < row2)
+      {
+	row1 = l1_bbox.pmax().row();
+	row2 = l2_bbox.pmin().row();
+
+	const unsigned quarter =
+	  ((l1_bbox.pcenter().col() - l1_bbox.pmin().col()) >> 2);
+
+	row = l1_bbox.pcenter().row();
+	col_ptr = l1_bbox.pcenter().col();
+	left_col_ptr = l1_bbox.pmin().col() + quarter;
+	right_col_ptr = l1_bbox.pmax().col() - quarter;
+	end = row2;
+      }
+      else
+      {
+	row2 = l2_bbox.pmax().row();
+	row1 = l1_bbox.pmin().row();
+
+	const unsigned quarter =
+	  ((l2_bbox.pcenter().col() - l2_bbox.pmin().col()) >> 2);
+
+	row = l2_bbox.pcenter().row();
+	col_ptr = l2_bbox.pcenter().col();
+	left_col_ptr = l2_bbox.pmin().col() + quarter;
+	right_col_ptr = l2_bbox.pmax().col() - quarter;
+	end = row1;
+      }
+
+      // If sep_ptr is true, then a separator is reached.
+      while (row < end)
+      {
+	++row;
+	if (separators.at_(row, col_ptr)
+	    || separators.at_(row, left_col_ptr)
+	    || separators.at_(row, right_col_ptr))
+	  return true;
+      }
+
+      return false;
+    }
+
+//---------------------------------------------------------------------
 // This method aims to cut the links between lines that do not fit the
 // different criteria
 //---------------------------------------------------------------------
@@ -124,6 +194,27 @@ namespace scribo
 	    const line_id_t left_nbh = output(l);
 	    const line_id_t right_nbh = right(l);
 	    const line_id_t lol_nbh = output(left_nbh);
+
+	    const line_info<L>& left_line = lines(left_nbh);
+	    const line_info<L>& current_line = lines(l);
+	    const line_info<L>& right_line = lines(right_nbh);
+
+	    if (right_line.holder().components().has_separators() &&
+		between_horizontal_separator(right_line, current_line))
+	    {
+	      if (output(right_nbh) == l)
+	      {
+		output(right_nbh) = right_nbh;
+		right_nbh = l;
+	      }
+	    }
+	    if (current_line.holder().components().has_separators() &&
+		between_horizontal_separator(current_line, left_line))
+	    {
+	      output(l) = l;
+	      left_nbh = l;
+	      lol_nbh = l;
+	    }
 
 	    // Line features
 	    const float x_height = lines(l).x_height();
@@ -160,9 +251,9 @@ namespace scribo
 	      const int rc_baseline = c_baseline -lines(right_nbh).baseline();
 
 	      // Max baseline distance between the two neighbors
-	      // const float delta_baseline_max = std::max(lc_baseline, rc_baseline);
-	      // const float delta_baseline_min = std::min(lc_baseline,
-	      // rc_baseline);
+	      const float delta_baseline_max = std::max(lc_baseline, rc_baseline);
+	      const float delta_baseline_min = std::min(lc_baseline,
+							rc_baseline);
 
 	      // Only two lines, meaning the current line has only one neighbor
 	      bool two_lines = false;
@@ -302,7 +393,7 @@ namespace scribo
 		  continue;
 	      }
 	      // The current line has at least one left and one right neighbor
-	      else // if (delta_baseline_max >= delta_baseline_min)
+	      else if (delta_baseline_max >= 1.1f * delta_baseline_min)
 	      {
 		// Distance between the left and the current line
 		const float left_distance =
@@ -313,16 +404,20 @@ namespace scribo
 
 		// If the left line is too far compared to the right one
 		// we cut the link with it
-		if (left_distance > 1.2f * right_distance
-		    && std::max(x_height, left_x_height) > 1.2f * std::min(x_height, left_x_height))
+		if ((left_distance > 1.2f * right_distance
+		     && std::max(x_height, left_x_height) > 1.2f *
+		     std::min(x_height, left_x_height))
+		    || (left_distance > 2.0 * right_distance))
 		{
 		  output(l) = l;
 		  continue;
 		}
 		// If the right line is too far compared to the left one
 		// we cut the link with it
-		else if (right_distance > 1.2f * left_distance
-			 && std::max(x_height, right_x_height) > 1.2f * std::min(x_height, right_x_height)
+		else if (((right_distance > 1.2f * left_distance
+			   && std::max(x_height, right_x_height) > 1.2f *
+			   std::min(x_height, right_x_height))
+			  || (right_distance > 2.0f * left_distance))
 			 && output(right_nbh) == l)
 		{
 		  output(right_nbh) = right_nbh;
