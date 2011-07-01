@@ -226,11 +226,15 @@ namespace scribo
 
 
       template <typename L>
-      bool between_separators(const scribo::line_info<L>& l1,
-			      const scribo::line_info<L>& l2)
+      bool between_separators(const line_set<L>& lines,
+			      const line_id_t& l1_,
+			      const line_id_t& l2_)
       {
         // No separators found in image.
-	mln_precondition(l1.holder().components().has_separators());
+	mln_precondition(lines.components().has_separators());
+
+	const scribo::line_info<L>& l1 = lines(l1_);
+	const scribo::line_info<L>& l2 = lines(l2_);
 
 	const box2d& l1_bbox = l1.bbox();
 	const box2d& l2_bbox = l2.bbox();
@@ -239,7 +243,7 @@ namespace scribo
 	  col1 = l1_bbox.pcenter().col(),
 	  col2 = l2_bbox.pcenter().col();
 	const mln_ch_value(L, bool)&
-	  separators = l1.holder().components().separators();
+	  separators = lines.components().separators();
 
 	// Checking for separators starting from 1 / 4, 3/ 4 and the
 	// center of the box
@@ -292,9 +296,13 @@ namespace scribo
 
       */
       template <typename L>
-      bool lines_can_merge(scribo::line_info<L>& l1,
-			   const scribo::line_info<L>& l2)
+      bool lines_can_merge(scribo::line_set<L>& lines,
+			   const line_id_t& l1_,
+			   const line_id_t& l2_)
       {
+	scribo::line_info<L>& l1 = lines(l1_);
+	const scribo::line_info<L>& l2 = lines(l2_);
+
 	// Parameters.
 	const float x_ratio_max = 1.7f;
 	const float baseline_delta_max =
@@ -308,9 +316,9 @@ namespace scribo
 	const point2d& l1_pmax = l1_bbox.pmax();
 	const point2d& l2_pmax = l2_bbox.pmax();
 
-	const bool l1_has_separators = l1.holder().components().has_separators();
+	const bool l1_has_separators = lines.components().has_separators();
 	const bool l1_l2_between_separators = (l1_has_separators) ?
-	  between_separators(l1, l2) : false;
+	  between_separators(lines, l1_, l2_) : false;
 	const float l_ted_cw = l2.char_width();
 
 	const float dx = std::max(l1_pmin.col(), l2_pmin.col())
@@ -426,9 +434,14 @@ namespace scribo
 
       */
       template <typename L>
-      bool non_text_and_text_can_merge(scribo::line_info<L>& l_cur, // current
-				       const scribo::line_info<L>& l_ted) // touched
+      bool non_text_and_text_can_merge(line_set<L>& lines,
+				       const line_id_t& l_cur_, // current
+				       const line_id_t& l_ted_) // touched
       {
+	scribo::line_info<L>& l_cur = lines(l_cur_);
+	const scribo::line_info<L>& l_ted = lines(l_ted_);
+
+
 	if (l_cur.type() == line::Text || l_ted.type() != line::Text)
 	  return false;
 	// the current object is a NON-textline
@@ -436,8 +449,8 @@ namespace scribo
 
 
  	// Check that there is no separator in between.
-	if (l_cur.holder().components().has_separators()
-	    && between_separators(l_cur, l_ted))
+	if (lines.components().has_separators()
+	    && between_separators(lines, l_cur_, l_ted_))
 	  return false;
 
 	const box2d& l_cur_bbox = l_cur.bbox();
@@ -743,8 +756,8 @@ namespace scribo
 		       (std::abs(l_info.baseline() - mc_info.baseline()) < 5
 			&& std::abs(l_info.meanline() - mc_info.meanline()) < 5))
 		      && dx < l_ted_cw && dy < 0
-		      && not (l_info.holder().components().has_separators()
-			      && between_separators(l_info, mc_info)))
+		      && not (lines.components().has_separators()
+			      && between_separators(lines, l, mc)))
 		    l = do_union(lines, l, mc,  parent);
 		  // }
 
@@ -796,7 +809,7 @@ namespace scribo
 		  // could be noise or garbage... So adding new
 		  // criterions could fix this issue.
 		  //
- 		  if (!non_text_and_text_can_merge(lines(l), lines(mc)))
+ 		  if (!non_text_and_text_can_merge(lines, l, mc))
  		   continue;
 
 		  // Avoid the case when a large title ebbox overlap
@@ -857,7 +870,7 @@ namespace scribo
 	      if (lines(l_).type() == line::Text)
 	      {
 		// l_ and lcand look like text line chunks.
-		if (lines_can_merge(lines(l_), lines(lcand)))
+		if (lines_can_merge(lines, l_, lcand))
 		{
 		  ++count_two_lines_merge;
 		  l_ = do_union(lines, l_, lcand,  parent);
@@ -881,7 +894,7 @@ namespace scribo
 	      {
 		// l_ does NOT looks like a text line chunk.
 		++count_comp_HITS_txtline;
-		if (non_text_and_text_can_merge(lines(l_), lines(lcand)))
+		if (non_text_and_text_can_merge(lines, l_, lcand))
 		  // a petouille merges with a text line?
 		{
 		  ++count_comp_HITS_txtline;

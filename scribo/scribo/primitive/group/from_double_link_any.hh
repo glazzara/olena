@@ -79,7 +79,7 @@ namespace scribo
       {
 
 	template <typename L>
-	util::array<unsigned> make_parent(const object_links<L>& link)
+	mln::util::array<unsigned> make_parent(const object_links<L>& link)
 	{
 	  mln::util::array<unsigned> parent = link.comp_to_link();
 	  for_all_links(l, link)
@@ -102,8 +102,9 @@ namespace scribo
 	object_links<L> merged_link(left_link.components());
 	merged_link.init();
 
-	util::array<unsigned> lparent = internal::make_parent(left_link);
-	util::array<unsigned> rparent = internal::make_parent(right_link);
+	mln::util::array<unsigned>
+	  lparent = internal::make_parent(left_link),
+	  rparent = internal::make_parent(right_link);
 
 	for_all_links(i, merged_link)
 	{

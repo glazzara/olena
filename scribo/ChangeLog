@@ -1,3 +1,512 @@
+2011-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/paragraphs.hh: Adding horizontal separators check in
+	paragraphs construction.
+
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Here.
+
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation.
+
+	* scribo/core/object_groups.hh,
+	* scribo/debug/logger.hh,
+	* scribo/estim/object_groups_mean_width.hh,
+	* src/debug/show_paragraph_blocks.cc,
+	* src/debug/show_text_lines.cc,
+	* src/non_text_components.cc,
+	* src/primitive/extract/alignments.cc,
+	* scribo/text/extract_paragraphs_hdoc.hh: Fix namespace ambiguities.
+
+	* scribo/core/object_links.hh: Remove useless find_root().
+
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh: Update includes.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/compute_text_colour.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/io/xml/internal/time_info.hh,
+	* scribo/postprocessing/images_to_drop_capital.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Add
+	missing includes.
+
+	* scribo/io/xml/load.hh: Fix string conversions.
+
+	* scribo/primitive/group/from_double_link.hh
+	* scribo/primitive/link/with_several_left_links.hh
+	* scribo/primitive/link/with_several_right_links.hh
+	* src/afp/link.hh: Update according new API in
+	object_groups/links.
+
+	* src/text_in_picture.cc,
+	* src/text_in_picture_neg.cc,
+	* src/text_recognition_in_picture.cc: Update a routine name.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Add a
+	timer.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix XML output.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/xml_widget.cc: Update tag names.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/save.hh: Save component outlines.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* scribo/core/component_features_data.hh,
+	* scribo/core/group_info.hh,
+	* scribo/io/xml/internal/compute_text_colour.hh,
+	* scribo/io/xml/internal/time_info.hh,
+	* scribo/util/color_to_hex.hh,
+	* scribo/util/component_precise_outline.hh: Add missing inline.
+
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh: Add
+	a missing include.
+
+2011-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make different algorithms for doc and hdoc use cases.
+
+	* scribo/core/paragraph_set.hh: Add an overload of
+	make::paragraph().
+
+	* scribo/text/paragraphs.hh: Move...
+
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh: ... here.
+
+	* scribo/text/merging.hh: Remove holder() calls.
+
+	* scribo/text/merging_hdoc.hh: New.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Fix compilation.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Make use
+	of hdoc algorithms.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new toolchain for ICDAR contests.
+
+	* src/contest/DAE-2011/Makefile.am: New target.
+
+	* src/contest/DAE-2011/content_in_doc_dae.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Disable OCR in ICDAR toolchains.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* src/Makefile.am,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc: Here.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add one more toolchain for DAE contest.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh:
+	* src/Makefile.am
+	* src/contest/DAE-2011/Makefile.am
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc: Specify output dir.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new example.
+
+	* src/util/Makefile.am,
+	* src/util/component_precise_outline.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add binaries for ICDAR 2011 contests.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Remove
+	debug.
+
+	* src/content_in_hdoc.cc: Disable debug.
+
+	* src/contest/DAE-2011/Makefile.am,
+	* src/contest/Makefile.am,
+	* src/contest/hdlac-2011/Makefile.am: New targets.
+
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* scribo/io/xml/internal/page_xml_visitor.hh: Fix duplicate ids.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Remove
+	debug and disable OCR.
+
+	* scribo/util/component_precise_outline.hh: Remove debug.
+
+2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix use of uninitialized values.
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/remove/separators.hh: Initialize border.
+
+2011-06-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a serious memory leak.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/line_info.hh,
+	* scribo/draw/line_components.hh: Remove holder data. Prevented
+	the containers from being freed.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/save.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/paragraphs.hh,
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Update
+	code in order to make holder data useless.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/paragraphs_closing.hh: Revamp code.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/box_is_included.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Page XML output.
+
+	* scribo/io/xml/internal/print_image_coords.hh,
+	* scribo/io/xml/internal/print_page_preambule.hh: Fix typos.
+
+	* scribo/io/xml/internal/time_info.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle drop capital components.
+
+	* scribo/core/tag/component.hh: New tag.
+
+	* scribo/postprocessing/images_to_drop_capital.hh: New routine.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Save component outlines instead of bboxes.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Here.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for tags in paragraph_info.
+
+	* scribo/core/paragraph_info.hh: Here.
+
+	* scribo/core/tag/paragraph.hh: Introduce paragraph tags.
+
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve output cleanup for historical document toolchain.
+
+	* scribo/filter/paragraphs_in_borders.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/filter/separators_vert_in_borders.hh: New.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh: Improve filtering.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Make use
+	of new filters.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/component_precise_outline.hh: Add support for
+	labeled_image.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/component_precise_outline.hh: Fix namespace
+	ambiguity.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve XML output.
+
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Save element
+	outlines and do not save invalid elements.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve and cleanup Results in hdoc toolchain.
+
+	* scribo/primitive/extract/non_text_hdoc.hh: Make parameters
+	depend on the image size.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Add new
+	filters.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Improve
+	result quality.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new hooks in toolchain functors.
+
+	* toolchain/internal/toolchain_functor.hh: Here.
+
+	* toolchain/internal/content_in_doc_functor.hh,
+	* toolchain/internal/content_in_hdoc_functor.hh,
+	* toolchain/internal/text_in_doc_functor.hh,
+	* toolchain/internal/text_in_doc_preprocess_functor.hh: Make use
+	of them.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/component_precise_outline.hh: New. Precise component
+	outline extraction.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new element filters.
+
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh: New.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add util::box_intersection.
+
+	* scribo/util/box_intersection.hh: New.
+
+	* scribo/filter/object_links_bbox_overlap.hh: Make use of this new
+	routine.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes in Scribo.
+
+	* scribo/core/paragraph_info.hh: Add validity information.
+
+	* scribo/core/tag/line.hh: Fix guard.
+
+	* scribo/debug/line_info_image.hh: Use is_textline().
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh: Check paragraph
+	validity.
+
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/group/from_double_link_any.hh,
+	* scribo/text/link_lines.hh,
+	* scribo/text/paragraphs.hh: Fix namespace ambiguity.
+
+	* scribo/text/merging.hh: Add missing SCRIBO_NDEBUG guards.
+
+	* src/primitive/extract/lines_h_thick_and_thin.cc: Add a missing
+	include.
+
+	* tests/primitive/extract/Makefile.am: Do not override an existing
+	variable.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce paragraph_id_t type.
+
+	* scribo/core/paragraph_set.hh: Make use of this new type.
+
+	* scribo/core/tag/paragraph.hh: New.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share document structure data.
+
+	* scribo/core/document.hh: Here.
+
+2011-05-25 Coddy Levi <levi@lrde.epita.fr>
+
+	Deep modifications and clean correction of the previous bug.
+
+	* scribo/util/component_outline.hh: Here.
+
+2011-05-24 Coddy Levi <levi@lrde.epita.fr>
+
+	Further correction of the component outlining bug.
+
+	* scribo/util/component_outline.hh: Here.
+
+2011-05-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve results.
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Fix structural element length.
+
+	* scribo/primitive/extract/non_text_hdoc.hh: Filter too small images.
+
+	* scribo/text/paragraphs.hh: Make it compile.
+
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh: Denoise
+	larger objects. Fix vseparator image and binary_image_wo_seps.
+
+	* src/primitive/extract/lines_thick_and_thin.cc: Be less severe on
+	parameters.
+
+2011-05-20 Coddy Levi <levi@lrde.epita.fr>
+
+	Correct a bug in the compononent outlining algorithm.
+
+	* scribo/util/component_outline.hh: Here.
+
+2011-05-18 Julien Marquegnies <marquegnies@lrde.epita.fr>
+
+	Improve paragraph grouping for historical documents.
+
+	* scribo/core/line_info.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/paragraphs.hh: Here.
+
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix use of skeleton_constrained.
+
+	* scribo/estim/components_features.hh,
+	* scribo/estim/internal/compute_skeleton.hh: Here.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Add new tests.
+
+	* tests/filter/Makefile.am,
+	* tests/util/Makefile.am: Add new targets.
+
+v	* tests/filter/objects_on_border.cc,
+	* tests/util/component_outline.cc: New.
+
+	* tests/img/comp_on_borders.pbm,
+	* tests/img/multi_scale.png,
+	* tests/img/single_object.pbm: New test data.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	New routine to extract both thin and thick separators.
+
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* src/primitive/extract/Makefile.am,
+	* src/primitive/extract/lines_h_thick_and_thin.cc,
+	* src/primitive/extract/lines_thick_and_thin.cc: New.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	* scribo/primitive/extract/non_text_hdoc.hh: New routine for
+	historical documents.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	New object filter.
+
+	* scribo/fun/v2b/objects_on_border_filter.hh,
+	* scribo/filter/objects_on_border.hh: New.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Various small fixes in Scribo.
+
+	* scribo/core/document.hh: Store binary image without separators.
+
+	* scribo/filter/object_links_bbox_overlap.hh: Fix use of
+	object_links structure.
+
+	* scribo/io/img/internal/debug_img_visitor.hh: Do not draw invalid
+	elements.
+
+	* scribo/make/text_components_image.hh: Add a precondition.
+
+	* scribo/primitive/extract/alignments.hh: Add debug guards.
+
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh: Fix structural
+	element used for dilation.
+
+	* scribo/text/merging.hh: Reindent comments.
+
+	* scribo/src/Makefile.am: Add content_in_hdoc target.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Add holder information to component_info.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/internal/doc_serializer.hh,
+	* scribo/io/img/internal/debug_img_visitor.hh,
+	* scribo/io/img/internal/draw_edges.hh,
+	* scribo/io/img/internal/full_img_visitor.hh,
+	* scribo/io/img/internal/non_text_img_visitor.hh,
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/internal/page_xml_visitor.hh,
+	* scribo/util/component_outline.hh: Add a template parameter to
+	component_info structure and update its use.
+
+2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	New specific toolchain for historical documents.
+
+	* scribo/toolchain/content_in_hdoc.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh,
+	* src/content_in_hdoc.cc: New.
+
 2011-05-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/research.tex: New file describing tests and conclusions.

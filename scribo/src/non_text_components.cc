@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> input;
   mln::io::magick::load(input, argv[1]);
 
-  util::timer t;
+  mln::util::timer t;
   t.start();
 
   // Preprocess document

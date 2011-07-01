@@ -79,10 +79,13 @@ public:
     {
       mean_ = 0;
 
-      for (unsigned i = 0; i < size_; ++i)
-	mean_ += data_[i];
+      if (size_ > 0)
+      {
+	for (unsigned i = 0; i < size_; ++i)
+	  mean_ += data_[i];
 
-      mean_ /= size_;
+	mean_ /= size_;
+      }
       mean_needs_update_ = false;
     }
 
@@ -93,10 +96,16 @@ public:
   {
     if (median_needs_update_)
     {
-      std::vector< T >& data = data_.hook_std_vector_();
-      std::sort(data.begin(), data.end(), compare_values< T >());
+      median_ = 0;
 
-      median_ = data[(size_ - 1) >> 1];
+      if (size_ > 0)
+      {
+	std::vector< T >& data = data_.hook_std_vector_();
+	std::sort(data.begin(), data.end(), compare_values< T >());
+
+	median_ = data[(size_ - 1) >> 1];
+      }
+
       median_needs_update_ = false;
     }
 
@@ -110,15 +119,18 @@ public:
       mean();
       variance_ = 0;
 
-      for (unsigned i = 0; i < size_; ++i)
+      if (size_ > 0)
       {
-	const T tmp = mean_ - data_[i];
+	for (unsigned i = 0; i < size_; ++i)
+	{
+	  const T tmp = mean_ - data_[i];
 
-	variance_ += (tmp * tmp);
+	  variance_ += (tmp * tmp);
+	}
+
+	variance_ /= size_;
+	std_ = sqrt(variance_);
       }
-
-      variance_ /= size_;
-      std_ = sqrt(variance_);
 
       variance_needs_update_ = false;
       std_needs_update_ = false;
@@ -135,8 +147,8 @@ public:
     return std_;
   }
 
-  T min() { return min_; }
-  T max() { return max_; }
+  T min() { return (size_ > 0) ? min_ : 0; }
+  T max() { return (size_ > 0) ? max_ : 0; }
 
   void sort()
   {

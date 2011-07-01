@@ -34,6 +34,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/draw/polygon.hh>
 # include <mln/draw/box.hh>
 
 # include <scribo/core/internal/doc_serializer.hh>
@@ -41,7 +42,9 @@
 # include <scribo/core/paragraph_set.hh>
 # include <scribo/core/line_info.hh>
 
+# include <scribo/text/paragraphs_closing.hh>
 # include <scribo/io/img/internal/draw_edges.hh>
+# include <scribo/util/component_precise_outline.hh>
 
 namespace scribo
 {
@@ -56,28 +59,26 @@ namespace scribo
       {
 
 
-	class full_img_visitor : public doc_serializer<full_img_visitor>
+	template <typename L>
+	class full_img_visitor : public doc_serializer<full_img_visitor<L> >
 	{
 	public:
 	  // Constructor
 	  full_img_visitor(mln::image2d<value::rgb8>& out);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  void visit(const component_info& info) const;
+	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
-	  template <typename L>
 	  void visit(const line_info<L>& line) const;
 
 	private: // Attributes
 	  mln::image2d<value::rgb8>& output;
 
-	  mutable image2d<scribo::def::lbl_type> elt_edge;
+	  mutable L lbl_;
 	};
 
 
@@ -85,8 +86,8 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	full_img_visitor::full_img_visitor(mln::image2d<value::rgb8>& out)
+	template <typename L>
+	full_img_visitor<L>::full_img_visitor(mln::image2d<value::rgb8>& out)
 	  : output(out)
 	{
 	  mln_assertion(output.is_valid());
@@ -97,7 +98,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	full_img_visitor::visit(const document<L>& doc) const
+	full_img_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Text
 	  if (doc.has_text())
@@ -106,47 +107,66 @@ namespace scribo
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
 	  {
-	    // Prepare element edges
-	    elt_edge = morpho::elementary::gradient_external(doc.elements().labeled_image(), c8());
-
 	    const component_set<L>& elts = doc.elements();
 	    for_all_comps(e, elts)
+	    {
+	      lbl_ = elts.labeled_image();
 	      if (elts(e).is_valid())
 		elts(e).accept(*this);
+	    }
 	  }
 
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
+	  {
+	    lbl_ = doc.vline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.vline_seps_comps())
-	      doc.vline_seps_comps()(c).accept(*this);
+	      if (doc.vline_seps_comps()(c).is_valid())
+		doc.vline_seps_comps()(c).accept(*this);
+	  }
 	  if (doc.has_hline_seps())
+	  {
+	    lbl_ = doc.hline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.hline_seps_comps())
-	      doc.hline_seps_comps()(c).accept(*this);
+	      if (doc.hline_seps_comps()(c).is_valid())
+		doc.hline_seps_comps()(c).accept(*this);
+	  }
 
 	}
 
 
 	/// Component_info
 	//
-	inline
+	template <typename L>
 	void
-	full_img_visitor::visit(const component_info& info) const
+	full_img_visitor<L>::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  //const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
+
 	  switch (info.type())
 	  {
 	    case component::HorizontalLineSeparator:
 	    case component::VerticalLineSeparator:
 	    {
-	      mln::draw::box(output, info.bbox(), literal::cyan);
+	      mln::draw::polygon(output, par, literal::cyan);
 	    }
 	    break;
 
+	    case component::DropCapital:
+	    {
+	      mln::draw::polygon(output, par, literal::violet);
+	    }
+	    break;
 
 	    default:
 	    case component::Image:
 	    {
-	      draw_edges(info, output, literal::orange, elt_edge);
+	      mln::draw::polygon(output, par, literal::orange);
 	    }
 	    break;
 	  }
@@ -156,30 +176,37 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	full_img_visitor::visit(const paragraph_set<L>& parset) const
+	full_img_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
-	  const line_set<L>& lines = parset.lines();
+	  // const line_set<L>& lines = parset.lines();
+
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
 
 	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
-
-	    for_all_paragraph_lines(lid, line_ids)
+	    if (parset(p).is_valid())
 	    {
-	      line_id_t l = line_ids(lid);
-	      lines(l).accept(*this);
-	    }
+	      p_array<point2d> par = scribo::util::component_precise_outline(par_clo
+	  								     | parset(p).bbox(), p);
 
-	    mln::draw::box(output, parset(p).bbox(), literal::blue);
-	  }
+	      mln::draw::polygon(output, par, literal::blue);
+	    }
 	}
 
 
 	template <typename L>
 	void
-	full_img_visitor::visit(const line_info<L>& line) const
+	full_img_visitor<L>::visit(const line_info<L>& line) const
 	{
-	  mln::draw::box(output, line.bbox(), literal::red);
+//	  mln::draw::box(output, line.bbox(), literal::red);
+
+	  point2d
+	    pmin = line.bbox().pmin(),
+	    pmax = line.bbox().pmax();
+	  pmax.row() = line.baseline();
+	  pmin.row() = line.baseline();
+
+	  mln::draw::line(output, pmin, pmax, literal::red);
 	}
 
 #endif // MLN_INCLUDE_ONLY

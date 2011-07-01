@@ -69,7 +69,7 @@
 #include <scribo/filter/object_links_bbox_overlap.hh>
 
 #include <scribo/filter/object_groups_small.hh>
-#include <scribo/filter/object_groups_v_thickness.hh>
+#include <scribo/filter/object_groups_mean_width.hh>
 
 #include <scribo/debug/highlight_text_area.hh>
 #include <scribo/debug/text_areas_image.hh>
@@ -498,8 +498,8 @@ int main(int argc, char* argv[])
   {
     std::cout << "** Using group too thin" << std::endl;
     filtered_thin_groups
-      = filter::object_groups_v_thickness(filtered_small_groups,
-					  conf.v_thickness);
+      = filter::object_groups_mean_width(filtered_small_groups,
+					 conf.v_thickness);
   }
   else
     filtered_thin_groups = filtered_small_groups;

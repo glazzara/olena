@@ -18,9 +18,11 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS = 	\
 	color_to_hex 	\
-	hex_to_color
+	hex_to_color 	\
+	component_outline
 
 color_to_hex_SOURCES = color_to_hex.cc
 hex_to_color_SOURCES = hex_to_color.cc
+component_outline_SOURCES = component_outline.cc
 
 TESTS = $(check_PROGRAMS)

@@ -90,7 +90,7 @@
 #include <scribo/filter/common/objects_photo.hh>
 
 #include <scribo/filter/object_groups_small.hh>
-#include <scribo/filter/object_groups_v_thickness.hh>
+#include <scribo/filter/object_groups_mean_width.hh>
 
 #include <scribo/debug/highlight_text_area.hh>
 
@@ -344,8 +344,8 @@ int main(int argc, char* argv[])
   // Remove components part of groups having a mean thickness lower than 8.
   object_groups<L> filtered_thin_groups;
   filtered_thin_groups
-    = filter::object_groups_v_thickness(filtered_small_groups,
-					conf.v_thickness);
+    = filter::object_groups_mean_width(filtered_small_groups,
+				       conf.v_thickness);
 
 
   // Grouping groups together if possible.

@@ -34,16 +34,20 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/draw/box.hh>
+# include <mln/draw/polygon.hh>
 # include <mln/subsampling/antialiased.hh>
 # include <mln/morpho/elementary/gradient_external.hh>
+# include <mln/draw/box.hh>
 
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/paragraph_set.hh>
 # include <scribo/core/line_info.hh>
 
+# include <scribo/util/component_precise_outline.hh>
 # include <scribo/io/img/internal/draw_edges.hh>
+# include <scribo/text/paragraphs_closing.hh>
+
 
 namespace scribo
 {
@@ -58,7 +62,8 @@ namespace scribo
       {
 
 
-	class debug_img_visitor : public doc_serializer<debug_img_visitor>
+	template <typename L>
+	class debug_img_visitor : public doc_serializer<debug_img_visitor<L> >
 	{
 	public:
 	  // Constructor
@@ -66,23 +71,18 @@ namespace scribo
 			    unsigned output_ratio);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  void visit(const component_info& info) const;
+	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
-	  template <typename L>
 	  void visit(const line_info<L>& line) const;
 
 	private: // Attributes
 	  mln::image2d<value::rgb8>& output;
 	  unsigned output_ratio;
-
-	  mutable image2d<scribo::def::lbl_type> elt_edge;
-
+	  mutable L lbl_;
 
 	private: // Methods
 	  box2d compute_bbox(const box2d& b) const;
@@ -93,9 +93,9 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
+	template <typename L>
 	box2d
-	debug_img_visitor::compute_bbox(const box2d& b) const
+	debug_img_visitor<L>::compute_bbox(const box2d& b) const
 	{
 	  point2d
 	    pmin = b.pmin() / output_ratio,
@@ -105,8 +105,8 @@ namespace scribo
 	}
 
 
-	inline
-	debug_img_visitor::debug_img_visitor(mln::image2d<value::rgb8>& out,
+	template <typename L>
+	debug_img_visitor<L>::debug_img_visitor(mln::image2d<value::rgb8>& out,
 					     unsigned output_ratio)
 	  : output(out), output_ratio(output_ratio)
 	{
@@ -118,7 +118,7 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	debug_img_visitor::visit(const document<L>& doc) const
+	debug_img_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Text
 	  if (doc.has_text())
@@ -127,83 +127,65 @@ namespace scribo
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
 	  {
-	    // Prepare element edges
-
-	    // FIXME: UGLY! Too slow!
-	    scribo::def::lbl_type nlabels;
-	    component_set<L> elts = primitive::extract::components(
-	      data::convert(bool(), mln::subsampling::antialiased(doc.elements().labeled_image(),
-								  output_ratio)),
-	      c8(),
-	      nlabels);
-
-	    // Preserving elements tags
-	    if (doc.elements().nelements() != elts.nelements())
+	    for_all_comps(e, doc.elements())
 	    {
-	      std::cerr << "Warnig: could not preserve element type in "
-			<< "img debug output." << std::endl;
-	      std::cerr << "The number of non text element has changed while "
-			<< "subsampling images : "
-			<< doc.elements().nelements() << " vs "
-			<< elts.nelements() << std::endl;
+	      lbl_ = doc.elements().labeled_image();
+	      if (doc.elements()(e).is_valid())
+		doc.elements()(e).accept(*this);
 	    }
-	    else
-	      for_all_comps(c, doc.elements())
-		elts(c).update_type(doc.elements()(c).type());
-
-	    elt_edge = morpho::elementary::gradient_external(elts.labeled_image(), c8());
-
-//	    const component_set<L>& elts = doc.elements();
-	    for_all_comps(e, elts)
-	      if (elts(e).is_valid())
-		elts(e).accept(*this);
 	  }
-
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
+	  {
+	    lbl_ = doc.vline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.vline_seps_comps())
-	      doc.vline_seps_comps()(c).accept(*this);
+	      if (doc.vline_seps_comps()(c).is_valid())
+		doc.vline_seps_comps()(c).accept(*this);
+	  }
 	  if (doc.has_hline_seps())
+	  {
+	    lbl_ = doc.hline_seps_comps().labeled_image();
 	    for_all_comps(c, doc.hline_seps_comps())
-	      doc.hline_seps_comps()(c).accept(*this);
+	      if (doc.hline_seps_comps()(c).is_valid())
+		doc.hline_seps_comps()(c).accept(*this);
+	  }
 
 	}
 
 
 	/// Component_info
 	//
-	inline
+	template <typename L>
 	void
-	debug_img_visitor::visit(const component_info& info) const
+	debug_img_visitor<L>::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  //const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
+
 	  switch (info.type())
 	  {
 	    case component::HorizontalLineSeparator:
 	    case component::VerticalLineSeparator:
 	    {
-	      mln::draw::box(output, compute_bbox(info.bbox()),
-			     literal::cyan);
+	      mln::draw::polygon(output, par, literal::cyan, output_ratio);
 	    }
 	    break;
 
 
+	    case component::DropCapital:
+	    {
+	      mln::draw::polygon(output, par, literal::violet, output_ratio);
+	    }
+	    break;
+
 	    default:
 	    case component::Image:
 	    {
-	      // The bbox does not need to be reajusted to the
-	      // subsampled domain since it has been recomputed while
-	      // computing the edge image.
-	      //
-	      // However, the bbox must be enlarged since only the
-	      // _external_ edge is computed.
-	      box2d b = info.bbox();
-	      b.enlarge(1);
-	      b.crop_wrt(output.domain());
-	      data::fill(((output | b).rw()
-			  | (pw::value(elt_edge)
-			     == pw::cst((scribo::def::lbl_type)info.id().to_equiv()))).rw(),
-			 literal::orange);
+	      mln::draw::polygon(output, par, literal::orange, output_ratio);
 	    }
 	    break;
 	  }
@@ -213,31 +195,36 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	debug_img_visitor::visit(const paragraph_set<L>& parset) const
+	debug_img_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  const line_set<L>& lines = parset.lines();
 
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
+
 	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
-
-	    for_all_paragraph_lines(lid, line_ids)
+	    if (parset(p).is_valid())
 	    {
-	      line_id_t l = line_ids(lid);
-	      lines(l).accept(*this);
-	    }
+	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
-	    box2d b = compute_bbox(parset(p).bbox());
-	    b.enlarge(1);
-	    b.crop_wrt(output.domain());
-	    mln::draw::box(output, b, literal::blue);
-	  }
+	      for_all_paragraph_lines(lid, line_ids)
+	      {
+	      	line_id_t l = line_ids(lid);
+	      	lines(l).accept(*this);
+	      }
+
+	      // Adjust bbox to output image size.
+	      box2d b = compute_bbox(parset(p).bbox());
+	      b.enlarge(1);
+	      b.crop_wrt(output.domain());
+	      mln::draw::box(output, b, literal::blue);
+	    }
 	}
 
 
 	template <typename L>
 	void
-	debug_img_visitor::visit(const line_info<L>& line) const
+	debug_img_visitor<L>::visit(const line_info<L>& line) const
 	{
 	  point2d
 	    pmin = line.bbox().pmin(),

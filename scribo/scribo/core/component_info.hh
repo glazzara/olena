@@ -44,9 +44,14 @@
 namespace scribo
 {
 
+  // Forward declarations.
+  template <typename L> class component_set;
+
   typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
 
-  class component_info : public Serializable<component_info>
+
+  template <typename L>
+  class component_info : public Serializable<component_info<L> >
   {
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
 
@@ -94,30 +99,32 @@ namespace scribo
 
 
 
+  template <typename L>
   std::ostream&
-  operator<<(std::ostream& ostr, const component_info& info);
+  operator<<(std::ostream& ostr, const component_info<L>& info);
 
+  template <typename L>
   bool
-  operator==(const component_info& lhs, const component_info& rhs);
+  operator==(const component_info<L>& lhs, const component_info<L>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-  inline
-  component_info::component_info()
+  template <typename L>
+  component_info<L>::component_info()
     : id_(0), tag_(component::Ignored), type_(component::Undefined)
   {
 
   }
 
 
-  inline
-  component_info::component_info(const component_id_t& id,
-				 const mln::box2d& bbox,
-				 const mln::point2d& mass_center,
-				 unsigned card,
-				 component::Type type)
+  template <typename L>
+  component_info<L>::component_info(const component_id_t& id,
+				    const mln::box2d& bbox,
+				    const mln::point2d& mass_center,
+				    unsigned card,
+				    component::Type type)
     : id_(id), bbox_(bbox), mass_center_(mass_center), card_(card),
       type_(type)
   {
@@ -128,114 +135,122 @@ namespace scribo
   }
 
 
-  inline
-  component_info::component_id_t
-  component_info::id() const
+  template <typename L>
+  typename component_info<L>::component_id_t
+  component_info<L>::id() const
   {
     return id_;
   }
 
 
-  inline
+  template <typename L>
   const mln::box2d&
-  component_info::bbox() const
+  component_info<L>::bbox() const
   {
     return bbox_;
   }
 
 
-  inline
+  template <typename L>
   const mln::point2d&
-  component_info::mass_center() const
+  component_info<L>::mass_center() const
   {
     return mass_center_;
   }
 
-  inline
+  template <typename L>
   unsigned
-  component_info::card() const
+  component_info<L>::card() const
   {
     return card_;
   }
 
-  inline
+  template <typename L>
   bool
-  component_info::has_features() const
+  component_info<L>::has_features() const
   {
     return features_.valid;
   }
 
-  inline
+  template <typename L>
   void
-  component_info::update_features(const component_features_data& features)
+  component_info<L>::update_features(const component_features_data& features)
   {
     features_ = features;
   }
 
-  inline
+  template <typename L>
   const component_features_data&
-  component_info::features() const
+  component_info<L>::features() const
   {
     return features_;
   }
 
-  inline
+  template <typename L>
   component::Tag
-  component_info::tag() const
+  component_info<L>::tag() const
   {
     return tag_;
   }
 
 
-  inline
+  template <typename L>
   void
-  component_info::update_tag(component::Tag tag)
+  component_info<L>::update_tag(component::Tag tag)
   {
     tag_ = tag;
   }
 
 
-  inline
+  template <typename L>
   component::Type
-  component_info::type() const
+  component_info<L>::type() const
   {
     return type_;
   }
 
 
-  inline
+  template <typename L>
   void
-  component_info::update_type(component::Type type)
+  component_info<L>::update_type(component::Type type)
   {
     type_ = type;
   }
 
 
-  inline
+  template <typename L>
   bool
-  component_info::is_valid() const
+  component_info<L>::is_valid() const
   {
     return tag_ != component::Ignored && bbox_.is_valid();
   }
 
 
-  inline
+
+  template <typename L>
   std::ostream&
-  operator<<(std::ostream& ostr, const component_info& info)
+  operator<<(std::ostream& ostr, const component_info<L>& info)
   {
-    return ostr << "component_info("
-		<< "id=" << info.id()
-		<< ", bbox=" << info.bbox()
-		<< ", mass_center=" << info.mass_center()
-		<< ", card=" << info.card()
-		<< ", tag=" << info.tag()
-		<< ", features=" << info.features()
-		<< ")" << std::endl;
+    ostr << "component_info("
+	 << "id=" << info.id()
+	 << ", bbox=" << info.bbox()
+	 << ", mass_center=" << info.mass_center()
+	 << ", card=" << info.card()
+	 << ", tag=" << info.tag();
+
+    if (info.features().valid)
+      ostr << ", features=" << info.features();
+    else
+      ostr << ", features=none";
+
+    ostr << ")" << std::endl;
+
+    return ostr;
   }
 
-  inline
+  template <typename L>
   bool
-  operator==(const component_info& lhs, const component_info& rhs)
+  operator==(const component_info<L>& lhs, const component_info<L>& rhs)
   {
 
     return

@@ -51,17 +51,6 @@ namespace scribo
   namespace internal
   {
 
-    inline
-    unsigned
-    find_root(mln::util::array<unsigned>& parent, unsigned x)
-    {
-      if (parent(x) == x)
-    	return x;
-      else
-	return parent(x) = find_root(parent, parent(x));
-    }
-
-
     /// Data structure for \c scribo::object_links<I>.
     template <typename L>
     struct object_links_data

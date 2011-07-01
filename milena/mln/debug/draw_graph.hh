@@ -37,6 +37,7 @@
 # include <mln/util/line_graph.hh>
 # include <mln/util/site_pair.hh>
 # include <mln/draw/line.hh>
+# include <mln/draw/box_plain.hh>
 # include <mln/data/fill.hh>
 # include <mln/metal/equal.hh>
 
@@ -107,24 +108,27 @@ namespace mln
     template <typename I, typename G, typename F>
     inline
     void
-    draw_graph(Image<I>& ima,
+    draw_graph(Image<I>& ima_,
 	       const p_edges<G, F>& pe,
 	       mln_value(I) vcolor,
 	       mln_value(I) ecolor)
     {
       trace::entering("debug::draw_graph");
 
+      I& ima = exact(ima_);
+      mln_precondition(ima.is_valid());
+
       // Draw edges.
       typedef p_edges<G, F> pe_t;
       mln_piter(pe_t) p(pe);
       for_all(p)
       {
-	if (exact(ima).has(p.first()) && exact(ima).has(p.second()))
-	  draw::line(exact(ima), p.first(), p.second(), ecolor);
-	if (exact(ima).has(p.first()))
-	  exact(ima)(p.first()) = vcolor;
-	if (exact(ima).has(p.second()))
-	  exact(ima)(p.second()) = vcolor;
+	if (ima.has(p.first()) && ima.has(p.second()))
+	  draw::line(ima, p.first(), p.second(), ecolor);
+	if (ima.has(p.first()))
+	  ima(p.first()) = vcolor;
+	if (ima.has(p.second()))
+	  ima(p.second()) = vcolor;
       }
 
       trace::exiting("debug::draw_graph");
@@ -134,25 +138,28 @@ namespace mln
     template <typename I, typename G, typename F>
     inline
     void
-    draw_graph(Image<I>& ima,
+    draw_graph(Image<I>& ima_,
 	       const p_vertices<G, F>& pv,
 	       mln_value(I) vcolor,
 	       mln_value(I) ecolor)
     {
       trace::entering("debug::draw_graph");
 
+      I& ima = exact(ima_);
+      mln_precondition(ima.is_valid());
+
       // Draw edges.
       const G& g = pv.graph();
       typedef p_vertices<G, F> pv_t;
       mln_edge_iter(G) ei(g);
       for_all(ei)
-	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor);
+	draw::line(ima, pv(ei.v1()), pv(ei.v2()), ecolor);
 
       // Draw vertices.
       mln_piter(pv_t) p(pv);
       for_all(p)
-	if (exact(ima).has(p))
-	  exact(ima)(p) = vcolor;
+	if (ima.has(p))
+	  ima(p) = vcolor;
 
       trace::exiting("debug::draw_graph");
     }
@@ -162,27 +169,34 @@ namespace mln
     template <typename I, typename G, typename F, typename V, typename E>
     inline
     void
-    draw_graph(Image<I>& ima,
+    draw_graph(Image<I>& ima_,
 	       const p_vertices<G, F>& pv,
 	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_)
     {
       trace::entering("debug::draw_graph");
 
+      I& ima = exact(ima_);
       const V& vcolor_f = exact(vcolor_f_);
       const E& ecolor_f = exact(ecolor_f_);
+
+      mln_precondition(ima.is_valid());
 
       // Draw edges.
       const G& g = pv.graph();
       typedef p_vertices<G, F> pv_t;
       mln_edge_iter(G) ei(g);
       for_all(ei)
-	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor_f(ei.id()));
+	if (ei.v1() != 0 && ei.v2() != 0)
+	  draw::line(ima, pv(ei.v1()), pv(ei.v2()), ecolor_f(ei.id()));
 
       // Draw vertices.
       mln_piter(pv_t) p(pv);
       for_all(p)
-	if (exact(ima).has(p))
-	  exact(ima)(p) = vcolor_f(p);
+	if (ima.has(p) && p.id() != 0u)
+	{
+	  box2d box(p + dpoint2d(-5, -5), p + dpoint2d(+5, +5));
+	  draw::box_plain(ima, box, vcolor_f(p.id()));
+	}
 
       trace::exiting("debug::draw_graph");
     }
@@ -192,14 +206,17 @@ namespace mln
     template <typename I, typename G, typename F, typename V, typename E>
     inline
     void
-    draw_graph(Image<I>& ima,
+    draw_graph(Image<I>& ima_,
 	       const p_vertices<util::line_graph<G>, F>& pv,
 	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_)
     {
       trace::entering("debug::draw_graph");
 
+      I& ima = exact(ima_);
       const V& vcolor_f = exact(vcolor_f_);
       const E& ecolor_f = exact(ecolor_f_);
+
+      mln_precondition(ima.is_valid());
 
       typedef util::line_graph<G> LG;
 
@@ -211,13 +228,13 @@ namespace mln
       {
 	p_line2d l = pv(vi.id());
 	// Draw edges (Line graph vertices).
-	draw::line(exact(ima), l.begin(), l.end(), ecolor_f(vi.id()));
+	draw::line(ima, l.begin(), l.end(), ecolor_f(vi.id()));
 
 	// Draw vertices (graph vertices).
-	if (exact(ima).has(l.begin()))
-	  exact(ima)(l.begin()) = vcolor_f(g.edge(vi).v1());
-	if (exact(ima).has(l.end()))
-	  exact(ima)(l.end()) = vcolor_f(g.edge(vi).v2());
+	if (ima.has(l.begin()))
+	  ima(l.begin()) = vcolor_f(g.edge(vi).v1());
+	if (ima.has(l.end()))
+	  ima(l.end()) = vcolor_f(g.edge(vi).v2());
       }
 
       trace::exiting("debug::draw_graph");

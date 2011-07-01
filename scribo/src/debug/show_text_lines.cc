@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
   image2d<bool> input_seps;
   mln::io::pbm::load(input_seps, argv[2]);
 
-  util::timer t;
+  mln::util::timer t;
   t.start();
 
   typedef image2d<scribo::def::lbl_type> L;
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     for_all_lines(l, lines)
       if (lines(l).is_textline())
       {
-	const util::array<component_id_t>& comps = lines(l).component_ids();
+	const mln::util::array<component_id_t>& comps = lines(l).component_ids();
 	const L& lbl = lines.components().labeled_image();
 	for_all_elements(c, comps)
 	  data::fill((output | lines.components()(comps(c)).bbox()).rw(),

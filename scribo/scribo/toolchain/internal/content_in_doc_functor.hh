@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 
+#  ifndef SCRIBO_NDEBUG
+#  include <mln/util/timer.hh>
+#  endif // ! SCRIBO_NDEBUG
+
 # include <scribo/core/def/lbl_type.hh>
 # include <scribo/core/document.hh>
 # include <scribo/core/line_set.hh>
@@ -57,10 +61,13 @@
 
 # include <scribo/preprocessing/denoise_fg.hh>
 
+#  ifndef SCRIBO_NOCR
 # include <scribo/text/recognition.hh>
+#  endif // ! SCRIBO_NOCR
+
 # include <scribo/text/merging.hh>
 # include <scribo/text/link_lines.hh>
-# include <scribo/text/paragraphs.hh>
+# include <scribo/text/extract_paragraphs.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -129,6 +136,19 @@ namespace scribo
 	// Results
 	//=========
 	document<L> doc;
+
+#  ifndef SCRIBO_NDEBUG
+	//=============
+	// DEBUG TOOLS
+	//=============
+	virtual void on_start();
+	virtual void on_end();
+	virtual void on_progress();
+
+	mln::util::timer t;
+	mln::util::timer gt;
+#  endif // ! SCRIBO_NDEBUG
+
       };
 
 
@@ -161,6 +181,8 @@ namespace scribo
       {
 	mln_precondition(exact(original_image).is_valid());
 	mln_precondition(exact(processed_image).is_valid());
+
+	on_start();
 
 	doc.set_image(exact(original_image));
 	doc.set_binary_image(exact(processed_image));
@@ -250,14 +272,6 @@ namespace scribo
 	/// Set separator components.
 	if (enable_line_seps)
 	  components.add_separators(separators);
-
-	// Debug
-#  ifndef SCRIBO_NDEBUG
-	debug::logger().log_image(debug::AuxiliaryResults,
-				  components.separators(),
-				  "all_separators");
-#  endif // ! SCRIBO_NDEBUG
-
 
 	on_new_progress_label("Filtering components");
 
@@ -368,6 +382,10 @@ namespace scribo
 
 	//===== DEBUG =====
 #  ifndef SCRIBO_NDEBUG
+	debug::logger().log_image(debug::AuxiliaryResults,
+				  components.separators(),
+				  "all_separators");
+
 	if (debug::logger().is_enabled())
 	{
 	  if (enable_whitespace_seps)
@@ -435,6 +453,7 @@ namespace scribo
 	on_progress();
 
 
+#  ifndef SCRIBO_NOCR
 	// Text recognition
 	if (enable_ocr)
 	{
@@ -444,6 +463,7 @@ namespace scribo
 
 	  on_progress();
 	}
+#  endif // ! SCRIBO_NOCR
 
 // 	// Link text lines
 // 	on_new_progress_label("Linking text lines");
@@ -534,7 +554,7 @@ namespace scribo
 // 	scribo::paragraph_set<L> parset = scribo::make::paragraph(llinks);
 
 	scribo::paragraph_set<L>
-	  parset = extract_paragraphs(lines, doc.binary_image());
+	  parset = text::extract_paragraphs(lines, doc.binary_image());
 	doc.set_paragraphs(parset);
 
 	on_progress();
@@ -568,6 +588,8 @@ namespace scribo
 	  on_progress();
 	}
 
+	on_end();
+
 	return doc;
       }
 
@@ -589,8 +611,39 @@ namespace scribo
 	// Nothing
       }
 
-# endif // ! MLN_INCLUDE_ONLY
+#  ifndef SCRIBO_NDEBUG
 
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_start()
+      {
+	gt.start();
+	t.start();
+      }
+
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_end()
+      {
+	gt.stop();
+	if (verbose)
+	  std::cout << "Total time: " << gt << std::endl;
+      }
+
+      template <typename I>
+      void
+      content_in_doc_functor<I>::on_progress()
+      {
+	t.stop();
+	if (verbose)
+	  std::cout << t << std::endl;
+	t.restart();
+      }
+
+
+#  endif // ! SCRIBO_NDEBUG
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace scribo::toolchain::internal
 

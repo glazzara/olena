@@ -1,3 +1,39 @@
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/morpho/skeleton_constrained.hh: Add a missing include.
+
+2011-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/border/equalize.hh: Fix an invalid assertion.
+
+2011-06-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/debug/draw_graph.hh: Limit the use of exact().
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/polygon.hh: New.
+
+2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a missing conversion routine for object ids.
+
+	* mln/convert/from_to.hxx,
+	* mln/util/object_id.hh: Here.
+
+2011-05-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/site_set.hh: new.
+
+2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new sample programs.
+
+	* src/debug/Makefile.am: New targets.
+
+	* src/debug/show_groups_bboxes_filtered.cc,
+	* src/debug/show_text_lines_wo_seps.cc: New.
+
 2011-05-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix precision issue with algebra::vec conversion.

@@ -72,7 +72,7 @@ namespace scribo
       mln::data::fill(blocks, literal::zero);
 
       // Construct a list of rotated bboxes for each lines.
-      util::array<mln_box(L)> rbbox(1);
+      mln::util::array<mln_box(L)> rbbox(1);
       rbbox.reserve(lines.nelements());
 
       for_all_lines(l, lines)

@@ -35,9 +35,13 @@
 # include <scribo/core/internal/doc_serializer.hh>
 # include <scribo/convert/to_base64.hh>
 
+# include <scribo/util/component_precise_outline.hh>
+
+# include <scribo/io/xml/internal/print_image_coords.hh>
 # include <scribo/io/xml/internal/print_box_coords.hh>
 # include <scribo/io/xml/internal/print_page_preambule.hh>
 # include <scribo/io/xml/internal/compute_text_colour.hh>
+# include <scribo/text/paragraphs_closing.hh>
 
 
 namespace scribo
@@ -63,27 +67,28 @@ namespace scribo
 	  Its XSD file is located here:
 	  http://schema.primaresearch.org/PAGE/gts/pagecontent/2010-03-19/pagecontent.xsd
 	*/
-	class page_xml_visitor : public doc_serializer<page_xml_visitor>
+	template <typename L>
+	class page_xml_visitor : public doc_serializer<page_xml_visitor<L> >
 	{
 	public:
 	  // Constructor
-	  page_xml_visitor(std::ofstream& out);
+	  page_xml_visitor<L>(std::ofstream& out);
 
 	  // Visit overloads
-	  template <typename L>
 	  void visit(const document<L>& doc) const;
 
-	  template <typename L>
 	  void visit(const component_set<L>& comp_set) const;
 
-	  void visit(const component_info& info) const;
+	  void visit(const component_info<L>& info) const;
 
-	  template <typename L>
 	  void visit(const paragraph_set<L>& parset) const;
 
 	private: // Attributes
 	  std::ofstream& output;
 	  mutable int base_vertical_line_id_;
+	  mutable int base_text_id_;
+
+	  mutable L lbl_;
 	};
 
 
@@ -91,8 +96,8 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	inline
-	page_xml_visitor::page_xml_visitor(std::ofstream& out)
+	template <typename L>
+	page_xml_visitor<L>::page_xml_visitor(std::ofstream& out)
 	  : output(out)
 	{
 	}
@@ -103,24 +108,36 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const document<L>& doc) const
+	page_xml_visitor<L>::visit(const document<L>& doc) const
 	{
 	  // Make sure there are no duplicate ids for line separators.
 	  // Vertical and horizontal lines are indexed separately from
 	  // 0, so vertical and horizontal lines with the same id
 	  // exist.
 	  base_vertical_line_id_ = doc.hline_seps_comps().nelements();
+	  base_text_id_ = 0;
 
 	  // Preambule
 	  print_PAGE_preambule(output, doc, true);
 
 	  // Text
 	  if (doc.has_text())
+	  {
+
+	    // FIXME: counting the number of valid lines...
+	    for_all_paragraphs(p, doc.paragraphs())
+	      if (doc.paragraphs()(p).is_valid())
+		++base_text_id_;
+	    --base_text_id_;
+
 	    doc.paragraphs().accept(*this);
+	  }
 
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
+	  {
 	    doc.elements().accept(*this);
+	  }
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
@@ -137,8 +154,9 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const component_set<L>& comp_set) const
+	page_xml_visitor<L>::visit(const component_set<L>& comp_set) const
 	{
+	  lbl_ = comp_set.labeled_image();
 	  for_all_comps(c, comp_set)
 	    if (comp_set(c).is_valid())
 	      comp_set(c).accept(*this);
@@ -147,10 +165,16 @@ namespace scribo
 
 	/// Component_info
 	//
-	inline
+	template <typename L>
 	void
-	page_xml_visitor::visit(const component_info& info) const
+	page_xml_visitor<L>::visit(const component_info<L>& info) const
 	{
+	  // Getting component outline
+	  scribo::def::lbl_type id = (scribo::def::lbl_type)info.id().to_equiv();
+	  //const L& lbl = info.holder().labeled_image();
+	  p_array<point2d>
+	    par = scribo::util::component_precise_outline(lbl_ | info.bbox(), id);
+
 	  switch (info.type())
 	  {
 	    case component::VerticalLineSeparator:
@@ -159,7 +183,7 @@ namespace scribo
 		     << "\" orientation=\"0.000000\" "
 		     << " colour=\"black\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </SeparatorRegion>" << std::endl;
 	      break;
@@ -171,12 +195,23 @@ namespace scribo
 		     << "\" orientation=\"0.000000\" "
 		     << " colour=\"black\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </SeparatorRegion>" << std::endl;
 	      break;
 	    }
 
+	    case component::DropCapital:
+	    {
+	      output << "    <TextRegion id=\"r" << base_text_id_ + id << "\" "
+		     << " type=\"drop-capital\">" // FIXME: should not be inline here!
+		     << std::endl;
+
+	      internal::print_image_coords(output, par, "      ");
+
+	      output << "    </TextRegion>" << std::endl;
+	      break;
+	    }
 
 	    default:
 	    case component::Image:
@@ -187,7 +222,7 @@ namespace scribo
 		     << " embText=\"false\" "
 		     << " bgColour=\"white\">" << std::endl;
 
-	      internal::print_box_coords(output, info.bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      output << "    </ImageRegion>" << std::endl;
 	      break;
@@ -200,42 +235,49 @@ namespace scribo
 	//
 	template <typename L>
 	void
-	page_xml_visitor::visit(const paragraph_set<L>& parset) const
+	page_xml_visitor<L>::visit(const paragraph_set<L>& parset) const
 	{
 	  const line_set<L>& lines = parset.lines();
 
-	  for_all_paragraphs(p, parset)
-	  {
-	    const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
+	  // Prepare paragraph outlines.
+	  L par_clo = text::paragraphs_closing(parset);
 
-	    // FIXME: compute that information on the whole paragraph
-	    // and use them here.
-	    line_id_t fid = line_ids(0);
-	    output << "    <TextRegion id=\"r" << p
-		   << "\" orientation=\"" << lines(fid).orientation()
-		   << "\" readingOrientation=\"" << lines(fid).reading_orientation()
-		   << "\" readingDirection=\"" << lines(fid).reading_direction()
-		   << "\" type=\"" << ((lines(fid).type() == line::Text) ? "paragraph" : line::type2str(lines(fid).type()))
-		   << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		   << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
-		   << "\" kerning=\"" << lines(fid).char_space()
-		   << "\" textColour=\"" << compute_text_colour(lines(fid).color())
+	  for_all_paragraphs(p, parset)
+	    if (parset(p).is_valid())
+	    {
+	      p_array<mln_site(L)> par = scribo::util::component_precise_outline(par_clo
+										 | parset(p).bbox(), p);
+
+	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
+
+	      // FIXME: compute that information on the whole paragraph
+	      // and use them here.
+	      line_id_t fid = line_ids(0);
+	      output << "    <TextRegion id=\"r" << p
+		     << "\" orientation=\"" << lines(fid).orientation()
+		     << "\" readingOrientation=\"" << lines(fid).reading_orientation()
+		     << "\" readingDirection=\"" << lines(fid).reading_direction()
+		     << "\" type=\"" << ((lines(fid).type() == line::Text) ? "paragraph" : line::type2str(lines(fid).type()))
+		     << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		     << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
+		     << "\" kerning=\"" << lines(fid).char_space()
+		     << "\" textColour=\"" << compute_text_colour(lines(fid).color())
 //		   << "\" bgColour=\"" << compute_text_color(lines(fid).bgcolor())
 //		   << "\" fontSize=\"" << compute_text_color(lines(fid).x_height())
 //		   << "\" leading=\"" << compute_text_color(lines(fid).leading())
-		   << "\">"
-		   << std::endl;
+		     << "\">"
+		     << std::endl;
 
-	    // Add support for text recognition
-	    // <TextEquiv>
-	    //    <PlainText></PlainText>
-	    //    <Unicode></Unicode>
-	    //    </TextEquiv>
+	      // Add support for text recognition
+	      // <TextEquiv>
+	      //    <PlainText></PlainText>
+	      //    <Unicode></Unicode>
+	      //    </TextEquiv>
 
-	    internal::print_box_coords(output, parset(p).bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
-	    output << "    </TextRegion>" << std::endl;
-	  }
+	      output << "    </TextRegion>" << std::endl;
+	    }
 	}
 
 

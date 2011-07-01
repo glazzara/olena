@@ -65,6 +65,7 @@ namespace scribo
       trace::entering("scribo::make::text_components_image");
 
       mln_precondition(doc.is_open());
+      mln_precondition(doc.has_text());
 
       mln_ch_value(L,bool) output;
       initialize(output, doc.image());

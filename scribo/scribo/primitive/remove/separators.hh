@@ -39,6 +39,7 @@
 
 # include <mln/data/fill.hh>
 
+# include <mln/border/fill.hh>
 # include <mln/border/resize.hh>
 
 
@@ -88,6 +89,8 @@ namespace scribo
 	mln_concrete(I) output = duplicate(input);
 
 	border::resize(separators, output.border());
+	border::fill(separators, 0); // FIXME: we should rewrite image
+				     // browsing below instead.
 
 	typedef const mln_value(I)* sep_ptr_t;
 	sep_ptr_t

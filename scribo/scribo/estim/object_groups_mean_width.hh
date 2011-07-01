@@ -63,7 +63,7 @@ namespace scribo
 
 
     template <typename L>
-    util::array<float>
+    mln::util::array<float>
     object_groups_mean_width(const object_groups<L>& groups)
     {
       trace::entering("scribo::estim::object_groups_mean_width");

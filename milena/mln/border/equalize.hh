@@ -93,7 +93,7 @@ namespace mln
 		}
 	      else
 		{
-		  mln_assertion(b2 < min_thickness);
+		  //mln_assertion(b2 < min_thickness); // why ?
 		  mln_assertion(b1 >= min_thickness);
 		  border::resize(ima2, b1);
 		}

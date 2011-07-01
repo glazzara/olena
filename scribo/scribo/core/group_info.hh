@@ -80,11 +80,13 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+  inline
   group_info::group_info()
     : valid_(false)
   {
   }
 
+  inline
   group_info::group_info(unsigned id, const mln::util::array<component_id_t>& comps,
 			 unsigned pixel_area, const box2d& bbox)
     : id_(id), comps_(comps), valid_(true),
@@ -92,53 +94,62 @@ namespace scribo
   {
   }
 
+  inline
   group_info::group_info(unsigned id, unsigned pixel_area, const box2d& bbox, bool valid)
     : id_(id), valid_(valid),
       pixel_area_(pixel_area), bbox_(bbox)
   {
   }
 
+  inline
   const mln::util::array<component_id_t>&
   group_info::component_ids() const
   {
     return comps_;
   }
 
+  inline
   mln::util::array<component_id_t>&
   group_info::component_ids_()
   {
     return comps_;
   }
 
+  inline
   bool group_info::is_valid() const
   {
     return valid_;
   }
 
+  inline
   void
   group_info::invalidate()
   {
     valid_ = false;
   }
 
+  inline
   unsigned
   group_info::card() const
   {
     return comps_.nelements();
   }
 
+  inline
   unsigned
   group_info::id() const
   {
     return id_;
   }
 
+  inline
   unsigned
   group_info::pixel_area() const
   {
     return pixel_area_;
   }
 
+  inline
   const box2d&
   group_info::bbox() const
   {

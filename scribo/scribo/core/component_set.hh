@@ -98,7 +98,7 @@ namespace scribo
 			 component::Type type = component::Undefined);
 
       component_set_data(const L& ima, const mln_value(L)& ncomps,
-			 const mln::util::array<scribo::component_info>& infos);
+			 const mln::util::array<scribo::component_info<L> >& infos);
 
       void fill_infos(const mln::util::array<pair_accu_t>& attribs,
 		      component::Type type = component::Undefined);
@@ -111,7 +111,7 @@ namespace scribo
 
       L ima_;
       mln_value(L) ncomps_;
-      mln::util::array<scribo::component_info> infos_;
+      mln::util::array<scribo::component_info<L> > infos_;
 
       mln_ch_value(L, bool) separators_;
     };
@@ -162,16 +162,16 @@ namespace scribo
     mln_value(L) nelements() const;
 
     /// Return component information for a given component id \p id.
-    const component_info& info(const mln_value(L)& id) const;
+    const component_info<L>& info(const mln_value(L)& id) const;
 
     /// Return component information for a given component id \p id.
-    component_info& info(const mln_value(L)& id);
+    component_info<L>& info(const mln_value(L)& id);
 
     /// Return component information for a given component id \p id.
-    component_info& operator()(const component_id_t& id);
+    component_info<L>& operator()(const component_id_t& id);
 
     /// Return component information for a given component id \p id.
-    const component_info& operator()(const component_id_t& id) const;
+    const component_info<L>& operator()(const component_id_t& id) const;
 
 
     /// Update tag of components set to 'false' in \p f with \p tag.
@@ -211,7 +211,7 @@ namespace scribo
     /// @{
 
     /// Return all the component infos.
-    const mln::util::array<scribo::component_info>& infos_() const;
+    const mln::util::array<scribo::component_info<L> >& infos_() const;
 
     /// Unique set Id.
     id_t id_() const;
@@ -278,99 +278,6 @@ namespace scribo
 					      const mln_value(L)& ncomps)
       : ima_(ima), ncomps_(ncomps)
     {
-      initialize(separators_, ima);  // FIXME: to be removed
-      mln::data::fill(separators_, false);
-
-      typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
-      typedef mln::accu::center<mln_site(L)> center_accu_t;
-      typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
-
-
-      mln::util::array<pair_accu_t> attribs;
-      mln::labeling::compute(attribs, ima_, ncomps_);
-
-      fill_infos(attribs);
-    }
-
-
-    template <typename L>
-    inline
-    component_set_data<L>::component_set_data(const L& ima,
-					      const mln_value(L)& ncomps,
-					      const mln::util::array<pair_accu_t>& attribs,
-					      component::Type type)
-      : ima_(ima), ncomps_(ncomps)
-    {
-      initialize(separators_, ima);  // FIXME: to be removed
-      mln::data::fill(separators_, false);
-
-      fill_infos(attribs, type);
-    }
-
-    template <typename L>
-    inline
-    component_set_data<L>::component_set_data(const L& ima,
-					      const mln_value(L)& ncomps,
-					      const mln::util::array<pair_data_t>& attribs,
-					      component::Type type)
-      : ima_(ima), ncomps_(ncomps)
-    {
-      initialize(separators_, ima);  // FIXME: to be removed
-      mln::data::fill(separators_, false);
-
-      fill_infos(attribs, type);
-    }
-
-    template <typename L>
-    inline
-    component_set_data<L>::component_set_data(const L& ima,
-					      const mln_value(L)& ncomps,
-					      const mln::util::array<scribo::component_info>& infos)
-      : ima_(ima), ncomps_(ncomps), infos_(infos)
-    {
-      initialize(separators_, ima);  // FIXME: to be removed
-      mln::data::fill(separators_, false);
-    }
-
-
-    template <typename L>
-    inline
-    void
-    component_set_data<L>::fill_infos(const mln::util::array<pair_accu_t>& attribs,
-				      component::Type type)
-    {
-      typedef mln_site(L) P;
-
-      infos_.reserve(mln::value::next(ncomps_));
-
-      infos_.append(component_info()); // Component 0, i.e. the background.
-      for_all_comp_data(i, attribs)
-      {
- 	component_info info(i, attribs[i].first(),
-			    attribs[i].second(), attribs[i].second_accu().nsites(),
-			    type);
- 	infos_.append(info);
-      }
-    }
-
-    template <typename L>
-    inline
-    void
-    component_set_data<L>::fill_infos(const mln::util::array<pair_data_t>& attribs,
-				      component::Type type)
-    {
-      typedef mln_site(L) P;
-
-      infos_.reserve(mln::value::next(ncomps_));
-
-      infos_.append(component_info()); // Component 0, i.e. the background.
-      for_all_comp_data(i, attribs)
-      {
- 	component_info info(i, attribs[i].first,
-			    attribs[i].second.first, attribs[i].second.second,
-			    type);
- 	infos_.append(info);
-      }
     }
 
 
@@ -383,7 +290,7 @@ namespace scribo
 
       ncomps_ = ncomps;
       infos_.reserve(ncomps_);
-      infos_.append(component_info()); // Component 0, i.e. the background.
+      infos_.append(component_info<L>()); // Component 0, i.e. the background.
     }
 
 
@@ -410,6 +317,30 @@ namespace scribo
   component_set<L>::component_set(const L& ima, const mln_value(L)& ncomps)
   {
     data_ = new internal::component_set_data<L>(ima, ncomps);
+
+    initialize(data_->separators_, ima);  // FIXME: to be removed
+    mln::data::fill(data_->separators_, false);
+
+    typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
+    typedef mln::accu::center<mln_site(L)> center_accu_t;
+    typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
+
+
+    mln::util::array<pair_accu_t> attribs;
+    mln::labeling::compute(attribs, ima, ncomps);
+
+
+    typedef mln_site(L) P;
+
+    data_->infos_.reserve(mln::value::next(ncomps));
+
+    data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
+    for_all_comp_data(i, attribs)
+    {
+      component_info<L> info(i, attribs[i].first(),
+			     attribs[i].second(), attribs[i].second_accu().nsites());
+      data_->infos_.append(info);
+    }
   }
 
 
@@ -419,7 +350,23 @@ namespace scribo
 				  const mln::util::array<pair_accu_t>& attribs,
 				  component::Type type)
   {
-    data_ = new internal::component_set_data<L>(ima, ncomps, attribs, type);
+    data_ = new internal::component_set_data<L>(ima, ncomps);
+
+    initialize(data_->separators_, ima);  // FIXME: to be removed
+    mln::data::fill(data_->separators_, false);
+
+    typedef mln_site(L) P;
+
+    data_->infos_.reserve(mln::value::next(ncomps));
+
+    data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
+    for_all_comp_data(i, attribs)
+    {
+      component_info<L> info(i, attribs[i].first(),
+			     attribs[i].second(), attribs[i].second_accu().nsites(),
+			     type);
+      data_->infos_.append(info);
+    }
   }
 
 
@@ -430,7 +377,23 @@ namespace scribo
 				  const mln::util::array<pair_data_t>& attribs,
 				  component::Type type)
   {
-    data_ = new internal::component_set_data<L>(ima, ncomps, attribs, type);
+    data_ = new internal::component_set_data<L>(ima, ncomps);
+
+    initialize(data_->separators_, ima);  // FIXME: to be removed
+    mln::data::fill(data_->separators_, false);
+
+    typedef mln_site(L) P;
+
+    data_->infos_.reserve(mln::value::next(ncomps));
+
+    data_->infos_.append(component_info<L>()); // Component 0, i.e. the background.
+    for_all_comp_data(i, attribs)
+    {
+      component_info<L> info(i, attribs[i].first,
+			     attribs[i].second.first, attribs[i].second.second,
+			     type);
+      data_->infos_.append(info);
+    }
   }
 
 
@@ -445,7 +408,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const component_info&
+  const component_info<L>&
   component_set<L>::info(const mln_value(L)& id) const
   {
     return data_->infos_[id];
@@ -453,7 +416,7 @@ namespace scribo
 
   template <typename L>
   inline
-  component_info&
+  component_info<L>&
   component_set<L>::info(const mln_value(L)& id)
   {
     return data_->infos_[id];
@@ -461,7 +424,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const component_info&
+  const component_info<L>&
   component_set<L>::operator()(const component_id_t& id) const
   {
     return data_->infos_[id];
@@ -469,7 +432,7 @@ namespace scribo
 
   template <typename L>
   inline
-  component_info&
+  component_info<L>&
   component_set<L>::operator()(const component_id_t& id)
   {
     return data_->infos_[id];
@@ -611,7 +574,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const mln::util::array<scribo::component_info>&
+  const mln::util::array<scribo::component_info<L> >&
   component_set<L>::infos_() const
   {
     return data_->infos_;

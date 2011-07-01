@@ -54,6 +54,18 @@ namespace scribo
 
   namespace internal
   {
+
+    inline
+    unsigned
+    find_root(mln::util::array<unsigned>& parent, unsigned x)
+    {
+      if (parent(x) == x)
+    	return x;
+      else
+	return parent(x) = find_root(parent, parent(x));
+    }
+
+
     /// Data structure for \c scribo::object_groups<I>.
     template <typename L>
     struct object_groups_data
@@ -149,7 +161,7 @@ namespace scribo
       comp_to_group_ = links.comp_to_link();
 
       unsigned ngroups = 0;
-      util::array<unsigned> new_id(comp_to_group_.nelements(), 0);
+      mln::util::array<unsigned> new_id(comp_to_group_.nelements(), 0);
       mln::util::array<mln::util::array<component_id_t> > comp_ids(1);
       mln::util::array<accu::shape::bbox<mln_site(L)> > bboxes(1);
       mln::util::array<unsigned> pixel_areas(1);
@@ -157,7 +169,7 @@ namespace scribo
       // Remove potential loops in linking
       // FIXME: we may try to avoid loops while linking...
       {
-      	util::array<bool> deja_vu(comp_to_group_.nelements());
+      	mln::util::array<bool> deja_vu(comp_to_group_.nelements());
       	for_all_elements(e, comp_to_group_)
       	  if (comp_to_group_(e) != e && comp_to_group_(e) != 0)
       	  {
@@ -199,7 +211,7 @@ namespace scribo
 
       group_info_.resize(1);
       group_info_.reserve(ngroups);
-      util::array<unsigned> group_idx(ngroups + 1, 0);
+      mln::util::array<unsigned> group_idx(ngroups + 1, 0);
 
       for (unsigned i = 1; i < new_id.nelements(); ++i)
 	if (new_id(i))
@@ -306,7 +318,7 @@ namespace scribo
   }
 
   template <typename L>
-  const util::array<unsigned>&
+  const mln::util::array<unsigned>&
   object_groups<L>::comp_to_group() const
   {
     return data_->comp_to_group_;

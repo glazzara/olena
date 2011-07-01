@@ -188,14 +188,14 @@ namespace scribo
 	      // Component Info
 	      case ComponentInfo:
 	      {
-		component_info info(atts.value("id").toInt(),
-				    mln::make::box2d(atts.value("pmin_y").toInt(),
-						     atts.value("pmin_x").toInt(),
-						     atts.value("pmax_y").toInt(),
-						     atts.value("pmax_x").toInt()),
-				    mln::point2d(atts.value("mass_center_y").toInt(),
-						 atts.value("mass_center_x").toInt()),
-				    atts.value("card").toInt());
+		component_info<L> info(atts.value("id").toInt(),
+				       mln::make::box2d(atts.value("pmin_y").toInt(),
+							atts.value("pmin_x").toInt(),
+							atts.value("pmax_y").toInt(),
+							atts.value("pmax_x").toInt()),
+				       mln::point2d(atts.value("mass_center_y").toInt(),
+						    atts.value("mass_center_x").toInt()),
+				       atts.value("card").toInt());
 
 
 		info.update_tag(component::str2tag(atts.value("tag").toUtf8().constData()));
@@ -212,7 +212,7 @@ namespace scribo
 		{
 		  component_features_data comp_features;
 		  comp_features.valid = true;
-		  comp_features.color = scribo::util::hex_to_color(atts.value("color"));
+		  comp_features.color = scribo::util::hex_to_color(atts.value("color").toUtf8().constData());
 		  comp_features.boldness = atts.value("boldness").toFloat();
 
 		  comp_set_data->infos_.last().update_features(comp_features);
@@ -261,7 +261,8 @@ namespace scribo
 		// qDebug() << "TextRegion";
 
 		current_paragraph = paragraph_info<L>(llinks);
-		current_paragraph.set_color_(scribo::util::hex_to_color(atts.value("color")));
+		current_paragraph.set_color_(
+		  scribo::util::hex_to_color(atts.value("color").toUtf8().constData()));
 		current_paragraph.set_color_reliability_(atts.value("color_reliability").toFloat());
 	      }
 	      break;
@@ -282,7 +283,6 @@ namespace scribo
 
 		line_data = new scribo::internal::line_info_data<L>(lines, mln::util::array<component_id_t>());
 
-		line_data->holder_ = lines;
 		line_data->text_ = atts.value("text").toUtf8().constData();
 
 		line_data->hidden_ = false;
@@ -299,7 +299,7 @@ namespace scribo
 		line_data->word_space_ = 0;
 
 		line_data->reading_direction_ = line::LeftToRight;
-		line_data->type_ = line::str2type(atts.value("txt_text_type").toAscii().constData());
+		line_data->type_ = line::str2type(atts.value("txt_text_type").toUtf8().constData());
 		line_data->reverse_video_ = (atts.value("txt_reverse_video") == "false" ? false : true);
 		line_data->orientation_ = 0;
 		line_data->reading_orientation_ = atts.value("txt_reading_orientation").toInt();
@@ -308,7 +308,8 @@ namespace scribo
 
 		line_data->boldness_ = atts.value("boldness").toFloat();
 		line_data->boldness_reliability_ = atts.value("boldness_reliability").toFloat();
-		line_data->color_ = scribo::util::hex_to_color(atts.value("color"));
+		line_data->color_ = scribo::util::hex_to_color(
+		  atts.value("color").toUtf8().constData());
 
 		line_data->color_reliability_ = atts.value("color_reliability").toFloat();
 
@@ -514,7 +515,7 @@ namespace scribo
 	    {
 	      case LabeledImage:
 	      {
-		QByteArray data = ch.toAscii();
+		QByteArray data = ch.toUtf8();
 		data = QByteArray::fromBase64(data);
 		data = qUncompress(data);
 		memcpy((char *) comp_set_data->ima_.buffer(), data.data(), data.size());
@@ -523,7 +524,7 @@ namespace scribo
 
 	      case SeparatorsImage:
 	      {
-		QByteArray data = ch.toAscii();
+		QByteArray data = ch.toUtf8();
 		data = QByteArray::fromBase64(data);
 		data = qUncompress(data);
 		memcpy((char *) comp_set_data->separators_.buffer(), data.data(), data.size());
@@ -534,7 +535,7 @@ namespace scribo
 	      case HLineSeparatorsImage:
 	      case VLineSeparatorsImage:
 	      {
-		QByteArray data = ch.toAscii();
+		QByteArray data = ch.toUtf8();
 		data = QByteArray::fromBase64(data);
 		data = qUncompress(data);
 		memcpy((char *) seps.buffer(), data.data(), data.size());

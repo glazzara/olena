@@ -33,6 +33,8 @@
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <mln/subsampling/antialiased.hh>
+#include <mln/util/timer.hh>
+
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/binarization/sauvola_ms.hh>
 
@@ -132,6 +134,18 @@ namespace scribo
 	mln_concrete(I) bg;
 	image2d<bool> output;
 
+#  ifndef SCRIBO_NDEBUG
+	//=============
+	// DEBUG TOOLS
+	//=============
+	virtual void on_start();
+	virtual void on_end();
+	virtual void on_progress();
+
+	mln::util::timer t;
+	mln::util::timer gt;
+#  endif // ! SCRIBO_NDEBUG
+
       private: // Methods
 	unsigned find_best_scale(const Image<I>& ima_);
 
@@ -168,6 +182,8 @@ namespace scribo
 	mln_precondition(input.is_valid());
 
 	mln_concrete(I) input_rgb = input;
+
+	on_start();
 
 	// Subsample
 	//----------
@@ -227,8 +243,6 @@ namespace scribo
 
 	// Binarization (always happens)
 	//------------------------------
-	on_new_progress_label("Binarization");
-
 	if (binarization_algo == Sauvola)
 	{
 	  on_new_progress_label("Binarization (Sauvola)");
@@ -242,7 +256,7 @@ namespace scribo
 	}
 	else // binarization_algo == Convert
 	{
-	  on_new_progress_label("Binary conversion");
+	  on_new_progress_label("Binarization (Binary conversion)");
 	  output = mln::data::convert(bool(), intensity_ima);
 	}
 
@@ -259,6 +273,8 @@ namespace scribo
 
 	  on_progress();
 	}
+
+	on_end();
 
 	return output;
       }
@@ -291,6 +307,39 @@ namespace scribo
 
 	return 1;
       }
+
+
+#  ifndef SCRIBO_NDEBUG
+
+      template <typename I>
+      void
+      text_in_doc_preprocess_functor<I>::on_start()
+      {
+	gt.start();
+	t.start();
+      }
+
+      template <typename I>
+      void
+      text_in_doc_preprocess_functor<I>::on_end()
+      {
+	gt.stop();
+	if (verbose)
+	  std::cout << "Total time: " << gt << std::endl;
+      }
+
+      template <typename I>
+      void
+      text_in_doc_preprocess_functor<I>::on_progress()
+      {
+	t.stop();
+	if (verbose)
+	  std::cout << t << std::endl;
+	t.restart();
+      }
+
+
+#  endif // ! SCRIBO_NDEBUG
 
 
 # endif // ! MLN_INCLUDE_ONLY

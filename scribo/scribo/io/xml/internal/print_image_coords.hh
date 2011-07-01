@@ -69,15 +69,15 @@ namespace scribo
 	  const S& b = exact(b_);
 	  mln_precondition(b.is_valid());
 
-	  ostr << sc << "<coords>" << std::endl;
+	  ostr << sc << "<Coords>" << std::endl;
 
 	  mln_piter(S) p(b);
 	  for_all(p)
-	    ostr << sp << "<point x=\"" << p.col()
+	    ostr << sp << "<Point x=\"" << p.col()
 		 << "\" y=\"" << p.row() << "\"/>"
 		 << std::endl;
 
-	  ostr << sc << "</coords>" << std::endl;
+	  ostr << sc << "</Coords>" << std::endl;
 	}
 
 
