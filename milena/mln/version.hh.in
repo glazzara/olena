@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -14,19 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+/// \file
+/// \brief Package metadata (name, version, etc.)
+
 #ifndef MLN_VERSION_HH
 # define MLN_VERSION_HH
 
 /// The address where bug reports should be sent.
-#undef OLN_PACKAGE_BUGREPORT
+#define OLN_PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
 
 /// The full name of this package.
-#undef OLN_PACKAGE_NAME
+#define OLN_PACKAGE_NAME "@PACKAGE_NAME@"
 
 // The full name and version of this package.
-#undef OLN_PACKAGE_STRING
+#define OLN_PACKAGE_STRING "@PACKAGE_STRING@"
 
 /// The version of this package.
-#undef OLN_PACKAGE_VERSION
+#define OLN_PACKAGE_VERSION "@PACKAGE_VERSION@"
 
 #endif // ! MLN_VERSION_HH

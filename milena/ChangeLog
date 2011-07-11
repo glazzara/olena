@@ -1,3 +1,12 @@
+2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	No longer consider mln/version.hh.in as handled by autoheader.
+
+	* mln/version.hh.in (OLN_PACKAGE_BUGREPORT, OLN_PACKAGE_NAME)
+	(OLN_PACKAGE_STRING, OLN_PACKAGE_VERSION): Define these macros
+	using "@PACKAGE_BUGREPORT@", "@PACKAGE_NAME@", "@PACKAGE_STRING@"
+	and "@PACKAGE_VERSION@".
+
 2011-06-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Set connectivity number functions when building is_simple_point3d.
