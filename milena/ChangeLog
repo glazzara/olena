@@ -1,5 +1,16 @@
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a better VTK output routine in apps/generic-skel.
+
+	* apps/generic-skel/image3d-skel.hh (save_vtk_polyhedrons):
+	New function.
+	Use it...
+	* apps/generic-skel/image3d-skel-unconstrained.cc,
+	* apps/generic-skel/image3d-skel-with-end-points.cc:
+	...here, instead of save_vtk_polygons.
+
+2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a VTK output routine in apps/generic-skel.
 
 	* apps/generic-skel/image3d-skel.hh: Aesthetic changes.
