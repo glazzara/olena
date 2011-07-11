@@ -32,4 +32,10 @@
 /// The version of this package.
 #define OLN_PACKAGE_VERSION "@PACKAGE_VERSION@"
 
+/// Home page for this package.
+#define OLN_PACKAGE_URL "@PACKAGE_URL@"
+
+/// Authors of the package.
+#define OLN_PACKAGE_AUTHORS "EPITA Research and Development Laboratory (LRDE)"
+
 #endif // ! MLN_VERSION_HH

@@ -1,5 +1,19 @@
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use package metadata macros instead of hard-coded strings in I/Os.
+
+	* mln/io/fld/write_header.hh (mln::io::fld::write_header)
+	* mln/io/off/save.hh
+	(mln::io::off::internal::off_saver<I, E>::operator())
+	* mln/io/pnm/save_header.hh (mln::io::pnm::save_header)
+	* mln/io/vtk/save.hh
+	(mln::io::vtk::internal::vtk_saver<I, E>::operator()):
+	Here.
+	* mln/version.hh.in (OLN_PACKAGE_URL, OLN_PACKAGE_AUTHORS):
+	New macros.
+
+2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	No longer consider mln/version.hh.in as handled by autoheader.
 
 	* mln/version.hh.in (OLN_PACKAGE_BUGREPORT, OLN_PACKAGE_NAME)
