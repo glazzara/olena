@@ -77,6 +77,7 @@ int main()
 
   std::cerr << input.domain() << std::endl;
   save_raw_3d(input, "image3d-skel-with-end-points-input.raw");
+  save_vtk_polygons(input, "image3d-skel-with-end-points-input.vtk");
 
   // FIXME: Debug.
   unsigned n_fg_comps;
@@ -109,4 +110,5 @@ int main()
 						    detach,
 						    constraint);
   save_raw_3d(output, "image3d-skel-with-end-points-skel.raw");
+  save_vtk_polygons(output, "image3d-skel-with-end-points-skel.vtk");
 }

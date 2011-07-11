@@ -76,6 +76,7 @@ int main()
 
   std::cerr << input.domain() << std::endl;
   save_raw_3d(input, "image3d-skel-unconstrained-input.raw");
+  save_vtk_polygons(input, "image3d-skel-unconstrained-input.vtk");
 
   // FIXME: Debug.
   unsigned n_fg_comps;
@@ -101,4 +102,5 @@ int main()
 						    is_simple,
 						    detach);
   save_raw_3d(output, "image3d-skel-unconstrained-skel.raw");
+  save_vtk_polygons(output, "image3d-skel-unconstrained-skel.vtk");
 }

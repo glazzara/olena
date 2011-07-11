@@ -79,9 +79,13 @@ TESTS +=					\
 # FIXME: Rename all outputs to have their names use their generator as prefix.
 MOSTLYCLEANFILES =				\
   image3d-skel-unconstrained-input.raw		\
+  image3d-skel-unconstrained-input.vtk		\
   image3d-skel-unconstrained-skel.raw		\
+  image3d-skel-unconstrained-skel.vtk		\
   image3d-skel-with-end-points-input.raw	\
+  image3d-skel-with-end-points-input.vtk	\
   image3d-skel-with-end-points-skel.raw		\
+  image3d-skel-with-end-points-skel.vtk		\
   picasso-skel-unconstrained.pbm		\
   picasso-skel-with-end-points.pbm		\
   tiny-skel-unconstrained.pbm			\

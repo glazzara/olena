@@ -1,5 +1,21 @@
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a VTK output routine in apps/generic-skel.
+
+	* apps/generic-skel/image3d-skel.hh: Aesthetic changes.
+	(save_vtk_polygons): New function.
+	Use it...
+	* apps/generic-skel/image3d-skel-unconstrained.cc,
+	* apps/generic-skel/image3d-skel-with-end-points.cc:
+	...here, to save images in VTK format.
+	* apps/generic-skel/Makefile.am (MOSTLYCLEANFILES):
+	Add image3d-skel-unconstrained-input.vtk,
+	image3d-skel-unconstrained-skel.vtk,
+	image3d-skel-with-end-points-input.vtk and
+	image3d-skel-with-end-points-skel.vtk,
+
+2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use package metadata macros instead of hard-coded strings in I/Os.
 
 	* mln/io/fld/write_header.hh (mln::io::fld::write_header)
