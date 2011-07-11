@@ -47,15 +47,11 @@ AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
 AM_SILENT_RULES([yes])
 
 # Package metadata.
+# Contrary to config.h, milena/mln/version.hh is meant to be installed.
+## FIXME: Consider generating milena/mln/version.hh with `make' instead
+## of `configure'.
 AC_CONFIG_FILES([milena/mln/version.hh])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
-                   [Package Full name.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
-                   [Bug report address.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_STRING], ["$PACKAGE_STRING"],
-                   [Full name and version.])
-AC_DEFINE_UNQUOTED([OLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
-                   [Package Version.])
+
 
 ## --------------------- ##
 ## C++ compiler set up.  ##
