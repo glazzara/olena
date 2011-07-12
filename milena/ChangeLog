@@ -1,5 +1,20 @@
 2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Check the consistency of tools/simple_point3d_lut_26_6.hh.
+
+	* tools/simple_point3d_lut_26_6.cc: New.
+	* tools/test_simple_point3d_lut_26_6.cc: New.
+	* tools/tools.mk (AM_CPPFLAGS): Add -I$(top_builddir)/milena.
+	* tools/Makefile.am (noinst_LTLIBRARIES): New.
+	Add libsimple_point3d_lut_26_6.la.
+	(libsimple_point3d_lut_26_6_la_SOURCES): New.
+	(EXTRA_PROGRAMS): Add test_simple_point3d_lut_26_6.
+	(test_simple_point3d_lut_26_6_SOURCES)
+	(test_simple_point3d_lut_26_6_LDADD):
+	New.
+
+2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix and improve the (fast) computation of 2D connectivity numbers.
 
 	* mln/topo/is_simple_2d.hh (mln::connectivity_number_2d): Create

@@ -69,3 +69,13 @@ simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt $(srcdir)/gen_cxx_lut
 	rm -f $@.tmp
 	$(srcdir)/gen_cxx_lut simple_point3d_lut_26_6 "(26, 6)" <$< >$@.tmp
 	mv $@.tmp $@
+
+# Very long (both to compile and execute) optional test, checking the
+# consistency of the LUT in simple_point3d_lut_26_6.hh.  Moreover, it
+# should be turned into a parallel program.
+noinst_LTLIBRARIES = libsimple_point3d_lut_26_6.la
+libsimple_point3d_lut_26_6_la_SOURCES =			\
+  simple_point3d_lut_26_6.hh simple_point3d_lut_26_6.cc
+EXTRA_PROGRAMS += test_simple_point3d_lut_26_6
+test_simple_point3d_lut_26_6_SOURCES = test_simple_point3d_lut_26_6.cc
+test_simple_point3d_lut_26_6_LDADD = libsimple_point3d_lut_26_6.la
