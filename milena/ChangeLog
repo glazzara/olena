@@ -1,5 +1,24 @@
 2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more tests.
+
+	* tests/core/alias/dpoint2d.cc: Exercise the substraction of a
+	dpoint2d from a point2d.
+	* tests/core/alias/neighb2d.cc: New.
+	* tests/core/alias/Makefile.am (check_PROGRAMS): Add neighb2d.
+	(neighb2d_SOURCES): New.
+	* tests/io/dump/dump.cc: Exercise mln::io::dump::load and
+	mln::io::dump::save with 3D binary images.
+	* tests/io/dump/Makefile.am (MOSTLYCLEANFILES):
+	Add dump-bool-3d.dump
+	* tests/value/int_u32.cc: New test (known to fail).
+	* tests/value/Makefile.am (check_PROGRAMS): Add int_u32.
+	(int_u32_SOURCES): New.
+	(XFAIL_TESTS): New.
+	Add int_u32.
+
+2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* apps/generic-skel/image3d-skel.hh: Add `inline' qualifiers.
 
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>

@@ -24,7 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+/// \brief Exercise mln::io::dump::load and mln::io::dump::save.
+
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/make/image3d.hh>
+
+#include <mln/debug/println.hh>
+
 #include <mln/io/dump/load.hh>
 #include <mln/io/dump/save.hh>
 
@@ -36,6 +44,7 @@
 #include "tests/data.hh"
 
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -53,6 +62,29 @@ int main()
 
     image2d<bool> pic2;
     io::dump::load(pic2, "dump-bool.dump");
+
+    mln_assertion(pic.domain() == pic2.domain());
+    mln_assertion(pic == pic2);
+  }
+
+  /// Value: bool (in 3D).
+  {
+    bool data[4] = { 0, 1,
+		     1, 0 };
+    image2d<bool> slice = make::image2d(data);
+
+    // Create a 3D image where each slice is a copy of SLICE.
+    util::array< image2d<bool> > slices;
+    for (unsigned i = 0; i < 3; ++i)
+      slices.append(slice);
+    image3d<bool> pic = make::image3d(slices);
+
+    debug::println(pic);
+
+    io::dump::save(pic, "dump-bool-3d.dump");
+
+    image3d<bool> pic2;
+    io::dump::load(pic2, "dump-bool-3d.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);

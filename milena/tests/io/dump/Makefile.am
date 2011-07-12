@@ -17,13 +17,13 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-check_PROGRAMS =				\
-   dump
+check_PROGRAMS = dump
 
 
 TESTS = $(check_PROGRAMS)
 
 MOSTLYCLEANFILES =				\
+  dump-bool-3d.dump				\
   dump-bool.dump				\
   dump-double.dump				\
   dump-float.dump				\

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,28 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/alias/dpoint2d.hh>
+/// \file
+/// \brief Exercise mln::value::int_u32.
 
-
+#include <iostream>
+#include <mln/value/int_u32.hh>
 
 int main()
 {
-  using namespace mln;
-
-  point2d p, q;
-  dpoint2d dp;
-
-   p =  point2d(1, 2);
-   q =  point2d(4, 7);
-  dp = dpoint2d(3, 5);
-
-  mln_assertion(dp == q - p);
-  mln_assertion(q == p + dp);
-  mln_assertion(p == q - dp);
-
-  algebra::vec<2, float> v = dp;
-  mln_assertion(v[0] / 2 == 1.5);
-
-  p += dp;
-  mln_assertion(q == p);  
+  // FIXME: This traits return `-1'.
+  std::cerr << mln::trait::value_<mln::value::int_u<32u> >::max()
+	    << std::endl;
 }

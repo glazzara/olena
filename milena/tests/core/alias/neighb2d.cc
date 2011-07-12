@@ -24,28 +24,31 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/alias/dpoint2d.hh>
+/// \file
+/// \brief Exercise mln::neighb2d.
 
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/convert/to_image.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  point2d p, q;
-  dpoint2d dp;
+  neighb2d nbh;
 
-   p =  point2d(1, 2);
-   q =  point2d(4, 7);
-  dp = dpoint2d(3, 5);
+  bool vals[] = { 0, 1, 0,
+		  1, 0, 1,
+		  0, 1, 0 };
+  convert::from_to(vals, nbh);
 
-  mln_assertion(dp == q - p);
-  mln_assertion(q == p + dp);
-  mln_assertion(p == q - dp);
+  mln_assertion(nbh.delta() == 1);
+  mln_assertion(nbh.size() == 4);
+  mln_assertion(nbh == c4());
 
-  algebra::vec<2, float> v = dp;
-  mln_assertion(v[0] / 2 == 1.5);
-
-  p += dp;
-  mln_assertion(q == p);  
+  // The code below is equivalent to:
+  //   image2d<bool> ima;
+  //   convert::from_to(nbh, ima);
+  image2d<bool> ima = convert::to_image(nbh);
+  (void) ima;
 }
