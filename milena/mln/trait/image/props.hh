@@ -91,7 +91,7 @@
 //                       + -- fastest
 //
 // Note that:
-//  fastest value implies value_storage::oneblock and  ext_domain::some
+//  fastest value implies value_storage::one_block and ext_domain::some
 
 // vw_io:  /any/
 //           |

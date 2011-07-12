@@ -192,6 +192,9 @@ namespace mln
     };
 
 
+    /* FIXME: Why `default_image_morpher' has no trailing underscore,
+       whereas `default_image_', `image_' and `undefined_image_' have
+       one?  */
     template <typename D, typename T, typename I>
     struct default_image_morpher : default_image_<T, I>
     {
@@ -199,11 +202,11 @@ namespace mln
       typedef typename image_<D>::size  size;
       typedef mln_internal_trait_image_speed_from(D) speed; // un-fastest
 
-      // Image geometry
+      // Image geometry => delegation
       typedef typename image_<D>::localization localization;
       typedef typename image_<D>::dimension    dimension;
 
-      // Memory organization
+      // Memory organization => delegation
       typedef typename image_<D>::value_alignment  value_alignment;
       typedef typename image_<D>::value_access     value_access;
       typedef typename image_<D>::value_storage    value_storage;

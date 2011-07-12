@@ -71,21 +71,19 @@ namespace mln
     {
       //      typedef trait::image::category::value_morpher   category;
       typedef trait::image::category::primary   category; // does not work either
-      typedef trait::image::value_io::read_only      value_io;
+      typedef trait::image::value_io::read_only       value_io;
       typedef trait::image::value_access::computed    value_access;
       typedef trait::image::value_storage::disrupted  value_storage;
-      typedef
-      mlc_if(mlc_equal(typename value_<mln_result(F)>::quant, trait::value::quant::low),
-	// Then
-	trait::image::quant::low,
-	// Else
-	     mlc_if(mlc_equal(typename value_<mln_result(F)>::quant, trait::value::quant::high),
-		    // Then
-		    trait::image::quant::high,
-		    // Else
-		    undef)
-	    )
-	quant;
+
+    private:
+      typedef mlc_equal(mln_trait_value_quant(mln_result(F)),
+			trait::value::quant::high)  is_high_quant_;
+    public:
+      typedef mln_trait_value_kind(mln_result(F))   kind;
+      typedef mln_trait_value_nature(mln_result(F)) nature;
+      typedef mlc_if(is_high_quant_,
+		     trait::image::quant::high,
+		     trait::image::quant::low)      quant;
     };
 
   } // end of namespace mln::trait

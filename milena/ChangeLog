@@ -1,3 +1,12 @@
+2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Various fixes related to image properties (traits).
+
+	* mln/core/image/vmorph/fun_image.hh,
+	* mln/trait/image/props.hh,
+	* mln/trait/images.hh:
+	Here.
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up white space.
