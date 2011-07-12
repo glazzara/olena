@@ -1,5 +1,22 @@
 2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix and improve the (fast) computation of 2D connectivity numbers.
+
+	* mln/topo/is_simple_2d.hh (mln::connectivity_number_2d): Create
+	the configuration number by considering that the first (resp.
+	last) neighbors (in the forward browsing order) represent the
+	least (resp. most) significant bits of the configuration number,
+	as does the algorithm that computed the 8-c and 4-c LUTs (arrays
+	mln::connectivity_number_c8 and mln::connectivity_number_c4).
+	* mln/topo/connectivity_number_2d.hh: New.
+	* mln/topo/is_simple_point2d.hh: Fix dates in copyright header.
+	* tests/topo/connectivity_numbers_2d.cc: New.
+	* tests/topo/Makefile.am (check_PROGRAMS):
+	Add connectivity_numbers_2d.
+	(connectivity_numbers_2d_SOURCES): New.
+
+2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add more tests.
 
 	* tests/core/alias/dpoint2d.cc: Exercise the substraction of a

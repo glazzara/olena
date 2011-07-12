@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //

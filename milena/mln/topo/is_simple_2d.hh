@@ -179,12 +179,17 @@ namespace mln
       const N& nbh = exact(nbh_);
 
       unsigned res = 0;
+      unsigned mask = 1;
       mln_fwd_niter(neighb2d) n(c8(), p);
       for_all(n)
       {
-        res = (res << 1);
-        if (ima.has(n) && ima(n) == b)
-          res = res | 1;
+	/* FIXME: The `ima.has(n)' predicate is not meaningful, as the
+	   computation below is wrong as soon as `p' has a number of
+	   neighbors other than 8.  We should instead abort or warn if
+	   for any `n' we don't have `ima.has(n)'.  */
+	if (ima.has(n) && ima(n) == b)
+	  res = res | mask;
+	mask = mask << 1;
       }
 
       unsigned number;
@@ -231,14 +236,18 @@ namespace mln
       mln_precondition(nbh.is_valid());
 
       unsigned res = 0;
-
+      unsigned mask = 1;
       // Note: fwd here but bkd in is_simple_point.hh...
       mln_fwd_niter(N2) n(c8(), p);
       for_all(n)
       {
-	res = (res << 1);
+	/* FIXME: The `ima.has(n)' predicate is not meaningful, as the
+	   computation below is wrong as soon as `p' has a number of
+	   neighbors other than 8.  We should instead abort or warn if
+	   for any `n' we don't have `ima.has(n)'.  */
 	if (ima.has(n) && ima(n) == b)
-	  res = res | 1;
+	  res = res | mask;
+	mask = mask << 1;
       }
 
       unsigned number;
@@ -263,15 +272,20 @@ namespace mln
       mln_precondition(nbh.is_valid());
 
       unsigned res = 0;
+      unsigned mask = 1;
 
       static util::array<int>
 	noffset = mln::offsets_wrt(ima, c8());
 
+      /* FIXME: Warning, this computation is meaningless if
+	 noffset.nelements() is not exactly 8, as the connectivity
+	 number tables have been computed within an 8-c neighborhood
+	 (for both 4-c and 8-c).  */
       for (unsigned i = 0; i < noffset.nelements(); ++i)
       {
-	res = (res << 1);
 	if (ima.element(p + noffset[i]) == b)
-	  res = res | 1;
+	  res = res | mask;
+	mask = mask << 1;
       }
 
       unsigned number;
