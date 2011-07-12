@@ -70,8 +70,8 @@ namespace mln
     /// The parameter \c T is the element type, which shall not be
     /// const-qualified.
     ///
-    /// The unicity of set elements is handled by the mln::util::ord
-    /// mechanism.
+    /// The unicity (and the order) of set elements is handled by the
+    /// mln::util::ord mechanism.
     ///
     /// \see mln::util::ord
     ///
