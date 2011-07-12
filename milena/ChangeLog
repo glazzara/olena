@@ -1,3 +1,7 @@
+2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	* apps/generic-skel/image3d-skel.hh: Add `inline' qualifiers.
+
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce a better VTK output routine in apps/generic-skel.

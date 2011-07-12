@@ -49,6 +49,7 @@
 // PGM (3D extension).  //
 // -------------------- //
 
+inline
 mln::image3d<bool>
 load_pgm_3d(const std::string& filename)
 {
@@ -95,6 +96,7 @@ load_pgm_3d(const std::string& filename)
 // Raw 3D data.  //
 // ------------- //
 
+inline
 void
 save_raw_3d(const mln::image3d<bool>& ima, const std::string& filename)
 {
@@ -110,6 +112,7 @@ save_raw_3d(const mln::image3d<bool>& ima, const std::string& filename)
 
 // Save a binary 3D image as a VTK file where each voxel is
 // represented by a cube decomposed in 6 square faces.
+inline
 void
 save_vtk_polygons(const mln::image3d<bool>& ima,
 		  const std::string& filename)
@@ -190,6 +193,7 @@ save_vtk_polygons(const mln::image3d<bool>& ima,
 // Save a binary 3D image as a VTK file where each voxel is
 // represented by a cube (voxel polyhedron).  This routine generates
 // smaller files than save_vtk_polygons.
+inline
 void
 save_vtk_polyhedrons(const mln::image3d<bool>& ima,
 		     const std::string& filename)
@@ -273,6 +277,7 @@ save_vtk_polyhedrons(const mln::image3d<bool>& ima,
 
 // FIXME: Again, this is a dedicated routine.  Use something from
 // subsample.
+inline
 mln::image3d<bool>
 subsampling_3d(const mln::image3d<bool>& input, unsigned factor)
 {
@@ -326,6 +331,7 @@ subsampling_3d(const mln::image3d<bool>& input, unsigned factor)
 ///                    the torus.
 /// \param int_radius  Internal radius of the torus.
 /// \param ext_radius  External radius of the torus.
+inline
 void
 draw_torus(mln::image3d<bool>& ima, unsigned axis_dim,
 	   unsigned int_radius, unsigned ext_radius)
@@ -371,6 +377,7 @@ draw_torus(mln::image3d<bool>& ima, unsigned axis_dim,
 }
 
 /// Create a 3D image containing three intersecting tori.
+inline
 mln::image3d<bool>
 make_triple_torus(mln::def::coord half_len = 100)
 {
