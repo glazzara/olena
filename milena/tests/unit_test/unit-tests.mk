@@ -1106,6 +1106,7 @@ mln_topo_center_only_iter \
 mln_topo_centered_iter_adapter \
 mln_topo_complex \
 mln_topo_complex_iterators \
+mln_topo_connectivity_number_2d \
 mln_topo_connectivity_number_3d \
 mln_topo_detach_cell \
 mln_topo_detach_pair \
@@ -1120,6 +1121,7 @@ mln_topo_internal_complex_relative_iterator_sequence \
 mln_topo_internal_complex_set_iterator_base \
 mln_topo_is_facet \
 mln_topo_is_n_face \
+mln_topo_is_not_1d_isthmus \
 mln_topo_is_not_end_point \
 mln_topo_is_simple_2d \
 mln_topo_is_simple_cell \

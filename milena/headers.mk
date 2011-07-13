@@ -1056,6 +1056,7 @@ mln/topo/center_only_iter.hh \
 mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
+mln/topo/connectivity_number_2d.hh \
 mln/topo/connectivity_number_3d.hh \
 mln/topo/detach_cell.hh \
 mln/topo/detach_pair.hh \
@@ -1070,6 +1071,7 @@ mln/topo/internal/complex_relative_iterator_sequence.hh \
 mln/topo/internal/complex_set_iterator_base.hh \
 mln/topo/is_facet.hh \
 mln/topo/is_n_face.hh \
+mln/topo/is_not_1d_isthmus.hh \
 mln/topo/is_not_end_point.hh \
 mln/topo/is_simple_2d.hh \
 mln/topo/is_simple_cell.hh \

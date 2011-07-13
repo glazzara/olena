@@ -1,3 +1,10 @@
+2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a non 1D isthmus predicate for (2D and 3D) binary images.
+
+	* mln/topo/is_not_1d_isthmus.hh: New.
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
 2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Check the consistency of tools/simple_point3d_lut_26_6.hh.
