@@ -29,7 +29,8 @@ bin_PROGRAMS =					\
   image2d-skel-with-end-points			\
 						\
   image3d-skel-unconstrained			\
-  image3d-skel-with-end-points
+  image3d-skel-with-end-points			\
+  image3d-skel-with-1d-isthmuses
 
 # 2D cases.
 image2d_skel_unconstrained_SOURCES = image2d-skel-unconstrained.cc image2d-skel.hh
@@ -37,8 +38,9 @@ image2d_skel_with_end_points_SOURCES = image2d-skel-with-end-points.cc image2d-s
 
 # 3D cases, slow versions.
 noinst_HEADERS = image3d-skel.hh
-image3d_skel_with_end_points_SOURCES = image3d-skel-with-end-points.cc
 image3d_skel_unconstrained_SOURCES = image3d-skel-unconstrained.cc
+image3d_skel_with_end_points_SOURCES = image3d-skel-with-end-points.cc
+image3d_skel_with_1d_isthmuses_SOURCES = image3d-skel-with-1d-isthmuses.cc
 
 EXTRA_DIST =					\
   test-image2d-skel-unconstrained.in		\
@@ -74,7 +76,8 @@ TESTS = $(generated_tests)
 # FIXME: Create real test cases with inputs passed as argument.
 TESTS +=					\
   image3d-skel-unconstrained			\
-  image3d-skel-with-end-points
+  image3d-skel-with-end-points			\
+  image3d-skel-with-1d-isthmuses
 
 # FIXME: Rename all outputs to have their names use their generator as prefix.
 MOSTLYCLEANFILES =				\
@@ -86,6 +89,10 @@ MOSTLYCLEANFILES =				\
   image3d-skel-with-end-points-input.vtk	\
   image3d-skel-with-end-points-skel.raw		\
   image3d-skel-with-end-points-skel.vtk		\
+  image3d-skel-with-1d-isthmuses-input.raw	\
+  image3d-skel-with-1d-isthmuses-input.vtk	\
+  image3d-skel-with-1d-isthmuses-skel.raw	\
+  image3d-skel-with-1d-isthmuses-skel.vtk	\
   picasso-skel-unconstrained.pbm		\
   picasso-skel-with-end-points.pbm		\
   tiny-skel-unconstrained.pbm			\

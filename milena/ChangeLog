@@ -1,5 +1,20 @@
 2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise breadth-first thinning with predicate is_not_1d_isthmus.
+
+	* apps/generic-skel/image3d-skel-with-1d-isthmuses.cc: New.
+	* apps/generic-skel/Makefile.am (bin_PROGRAMS):
+	Add image3d-skel-with-1d-isthmuses.
+	(image3d_skel_with_1d_isthmuses_SOURCES): New.
+	(TESTS): Add image3d-skel-with-1d-isthmuses.
+	(MOSTLYCLEANFILES): Add
+	image3d-skel-with-1d-isthmuses-input.raw,
+	image3d-skel-with-1d-isthmuses-input.vtk,
+	image3d-skel-with-1d-isthmuses-skel.raw and
+	image3d-skel-with-1d-isthmuses-skel.vtk.
+
+2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a non 1D isthmus predicate for (2D and 3D) binary images.
 
 	* mln/topo/is_not_1d_isthmus.hh: New.
