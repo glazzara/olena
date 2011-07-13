@@ -98,7 +98,7 @@ int main()
   topo::is_simple_point3d<I, N> is_simple(nbh_fg, nbh_bg);
   // Simple point detach procedure.
   topo::detach_point<I> detach;
-  // Constraint: do not collapse end points.
+  // Constraint: do not remove end points.
   /* FIXME: This criterion is static, e.g. it is attached to INPUT
      (fixed), not OUTPUT (changing during the thinning).  This is not
      as good as a dynamic critertion (attached to OUTPUT).  Maybe it

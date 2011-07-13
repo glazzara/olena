@@ -245,6 +245,8 @@ connectivity_numbers_3d(F f)
 | background.                                                  |
 `-------------------------------------------------------------*/
 
+// FIXME: Factor these using mln/topo/connectivity_number_3d.hh
+
 conn_number_t
 connectivity_number_3d__6_26_one(const mln::image3d<bool>& ima)
 {

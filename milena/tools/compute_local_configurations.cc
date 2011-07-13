@@ -59,11 +59,11 @@ int main()
        Note that the value corresponding to P is always `false', to
        prevent the connection of two components through P.  */
     data::fill(ima, false);
-
     int_u8 tmp = i;
     mln_fwd_niter_(neighb2d) n(c8(), p);
     for_all(n)
     {
+      // Inspect the least significant bit.
       if (tmp % 2)
 	ima(n) = true;
       tmp = tmp >> 1;

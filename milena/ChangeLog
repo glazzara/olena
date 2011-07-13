@@ -1,5 +1,17 @@
 2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc changes in apps/generic-skel/ and tools/.
+
+	* apps/generic-skel/image3d-skel-unconstrained.cc:
+	Remove a useless header inclusion.
+	* apps/generic-skel/image3d-skel-with-end-points.cc:
+	Fix a comment.
+	* tools/compute_local_configurations.cc:
+	Add a comment.
+	* tools/connectivity_numbers_3d.hh: Add a FIXME.
+
+2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise breadth-first thinning with predicate is_not_1d_isthmus.
 
 	* apps/generic-skel/image3d-skel-with-1d-isthmuses.cc: New.

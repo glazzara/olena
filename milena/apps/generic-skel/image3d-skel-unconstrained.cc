@@ -43,7 +43,6 @@
 
 #include <mln/topo/is_simple_point3d.hh>
 #include <mln/topo/detach_point.hh>
-#include <mln/topo/is_not_end_point.hh>
 
 #include "apps/data.hh"
 
