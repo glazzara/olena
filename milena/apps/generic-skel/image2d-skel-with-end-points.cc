@@ -34,9 +34,11 @@
 
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
-#include <mln/io/pbm/all.hh>
+#include <mln/topo/is_simple_point2d.hh>
+#include <mln/topo/detach_point.hh>
+#include <mln/topo/is_not_end_point.hh>
 
-#include "image2d-skel.hh"
+#include <mln/io/pbm/all.hh>
 
 
 int
@@ -71,11 +73,11 @@ main(int argc, char* argv[])
   neighb2d nbh_bg = c8();
 
   // Simplicity criterion functor.
-  ::is_simple_2d<I, N> is_simple(nbh_fg, nbh_bg);
-  // Detach procedure.
-  ::detach<I> detach;
+  topo::is_simple_point2d<I, N> is_simple(nbh_fg, nbh_bg);
+  // Simple point detach procedure.
+  topo::detach_point<I> detach;
   // Constraint: do not remove end points.
-  is_not_end_point<I, N> constraint(nbh_fg, input);
+  topo::is_not_end_point<I, N> constraint(nbh_fg, input);
 
   I output = topo::skeleton::breadth_first_thinning(input, nbh_fg,
 						    is_simple, detach,

@@ -1,5 +1,34 @@
 2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor code of 2D skeletonizations in apps/generic-skel/.
+
+	* mln/topo/is_not_end_point.hh: s/nbh/nbh_fg/.
+	(is_not_end_point<I, N>::is_not_end_point(const Neighborhood<N>&)):
+	New ctor.
+	(is_not_end_point<I, N>::set_image): New method.
+	(is_not_end_point<I, N>::ima_): Turn this reference into a pointer.
+	Adjust.
+	* mln/topo/is_simple_point2d.hh
+	(mln::topo::is_simple_point2d<I, N>::operator())
+	* mln/topo/detach_point.hh
+	(mln::topo::detach_point<I>::operator()):
+	Add preconditions.
+	* apps/generic-skel/image2d-skel-with-end-points.cc:
+	Use `mln::topo::is_simple_point2d' and `mln:: topo::detach_point'
+	from mln/topo/, instead of `is_simple_2d' and `detach' from
+	image2d-skel.hh
+	* apps/generic-skel/image2d-skel-unconstrained.cc: Likewise.
+	Remove the (lack of) constraint, as
+	mln::topo::skeleton::breadth_first_thinning already takes care of
+	this.
+	* apps/generic-skel/image2d-skel.hh: Remove.
+	* apps/generic-skel/Makefile.am
+	(image2d_skel_unconstrained_SOURCES)
+	(image2d_skel_with_end_points_SOURCES):
+	Remove image2d-skel.hh.
+
+2011-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Misc changes in apps/generic-skel/ and tools/.
 
 	* apps/generic-skel/image3d-skel-unconstrained.cc:

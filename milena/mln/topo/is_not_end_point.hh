@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,20 +45,28 @@ namespace mln
     template <typename I, typename N>
     struct is_not_end_point : public Function_v2b< is_not_end_point<I, N> >
     {
+      /// Build a functor.
+      ///
+      /// \param  nbh  The (foreground) neighborhood.
+      is_not_end_point(const Neighborhood<N>& nbh);
+
       /// Build a functor, and assign an image to it.
       ///
-      /// \param  nbh_fg  The foreground neighborhood.
-      /// \apram  ima     The image.
+      /// \param  nbh  The (foreground) neighborhood.
+      /// \apram  ima  The image.
       is_not_end_point(const Neighborhood<N>& nbh, const Image<I>& ima);
 
-      // Is \a p not an end point?
+      /// Set the underlying image.
+      void set_image(const Image<I>& ima);
+
+      /// Is \a p not an end point?
       bool operator()(const mln_psite(I)& p) const;
 
     private:
-      /// The foreground neighborhood.
+      /// The (foreground) neighborhood.
       const N& nbh_;
       /// The image.
-      const I& ima_;
+      const I* ima_;
     };
 
 
@@ -67,11 +75,27 @@ namespace mln
 
     template <typename I, typename N>
     inline
+    is_not_end_point<I, N>::is_not_end_point(const Neighborhood<N>& nbh)
+      : nbh_(exact(nbh)),
+	ima_(0)
+    {
+    }
+
+    template <typename I, typename N>
+    inline
     is_not_end_point<I, N>::is_not_end_point(const Neighborhood<N>& nbh,
 					     const Image<I>& ima)
       : nbh_(exact(nbh)),
-	ima_(exact(ima))
+	ima_(exact(&ima))
     {
+    }
+
+    template <typename I, typename N>
+    inline
+    void
+    is_not_end_point<I, N>::set_image(const Image<I>& ima)
+    {
+      ima_ = exact(&ima);
     }
 
     template <typename I, typename N>
@@ -79,11 +103,13 @@ namespace mln
     bool 
     is_not_end_point<I, N>::operator()(const mln_psite(I)& p) const
     {
+      mln_precondition(ima_);
+      const I& ima = *ima_;
       // Number of foreground neighbors pixels.
       unsigned nneighbs = 0;
       mln_niter(N) n(nbh_, p);
       for_all(n)
-	if (ima_.has(n) && ima_(n))
+	if (ima.has(n) && ima(n))
 	  ++nneighbs;
       return nneighbs != 1;
     }

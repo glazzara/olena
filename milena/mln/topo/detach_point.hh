@@ -101,6 +101,7 @@ namespace mln
     void
     detach_point<I>::operator()(const mln_psite(I)& p) const
     {
+      mln_precondition(ima_);
       (*ima_)(p) = false;
     }
 

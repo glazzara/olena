@@ -33,8 +33,8 @@ bin_PROGRAMS =					\
   image3d-skel-with-1d-isthmuses
 
 # 2D cases.
-image2d_skel_unconstrained_SOURCES = image2d-skel-unconstrained.cc image2d-skel.hh
-image2d_skel_with_end_points_SOURCES = image2d-skel-with-end-points.cc image2d-skel.hh
+image2d_skel_unconstrained_SOURCES = image2d-skel-unconstrained.cc
+image2d_skel_with_end_points_SOURCES = image2d-skel-with-end-points.cc
 
 # 3D cases, slow versions.
 noinst_HEADERS = image3d-skel.hh

@@ -127,6 +127,7 @@ namespace mln
     bool
     is_simple_point2d<I, N>::operator()(const mln_psite(I)& p) const
     {
+      mln_precondition(ima_);
       return
 	connectivity_number_2d(*ima_, nbh_fg_, p, true ) == 1 &&
 	connectivity_number_2d(*ima_, nbh_bg_, p, false) == 1;

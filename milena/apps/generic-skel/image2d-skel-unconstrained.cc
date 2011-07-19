@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,9 +33,10 @@
 
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
-#include <mln/io/pbm/all.hh>
+#include <mln/topo/is_simple_point2d.hh>
+#include <mln/topo/detach_point.hh>
 
-#include "image2d-skel.hh"
+#include <mln/io/pbm/all.hh>
 
 
 int
@@ -72,14 +73,12 @@ main(int argc, char* argv[])
   neighb2d nbh_bg = c8();
 
   // Simplicity criterion functor.
-  ::is_simple_2d<I, N> is_simple(nbh_fg, nbh_bg);
-  // Detach procedure.
-  ::detach<I> detach;
-  // (Lack of) constraint.
-  fun::p2b::tautology constraint;
+  topo::is_simple_point2d<I, N> is_simple(nbh_fg, nbh_bg);
+  // Simple point detach procedure.
+  topo::detach_point<I> detach;
 
   I output = topo::skeleton::breadth_first_thinning(input, nbh_fg,
-						    is_simple, detach,
-						    constraint);
+						    is_simple,
+						    detach);
   io::pbm::save(output, output_filename);
 }
