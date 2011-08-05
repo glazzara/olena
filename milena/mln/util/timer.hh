@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,6 +79,11 @@ namespace mln
 // 		  << float(std::clock()) / CLOCKS_PER_SEC << ' '
 // 		  << time_ << std::endl;
 //       }
+
+      double ms() const
+      {
+	return double(std::clock()) * 1000.f / CLOCKS_PER_SEC;
+      }
 
     private:
 
