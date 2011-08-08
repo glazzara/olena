@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -337,6 +337,18 @@ namespace mln
 	  to[i-j] = mln::internal::convert_data<C2>(from[j]);
       }
 
+      template <typename C1, typename G, typename C2>
+      inline
+      void
+      from_to_(const mln::algebra::vec<1,C1>& from, point<G,C2>& to)
+      {
+	mlc_converts_to(C1, C2)::check();
+	enum { dim = G::dim };
+	mlc_bool(G::dim == 1)::check();
+
+	to[0] = mln::internal::convert_data<C2>(from[0]);
+      }
+
       template <unsigned n, typename C1, typename G>
       inline
       void
@@ -352,6 +364,16 @@ namespace mln
 	  to[i-j] = from[j];
       }
 
+      template <typename C1, typename G>
+      inline
+      void
+      from_to_(const mln::algebra::vec<1,C1>& from, point<G,C1>& to)
+      {
+	enum { dim = G::dim };
+	mlc_bool(G::dim == 1)::check();
+
+	to[0] = from[0];
+      }
 
     } // end of namespace mln::convert::over_load
 

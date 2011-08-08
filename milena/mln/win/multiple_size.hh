@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -202,6 +203,7 @@ namespace mln
     multiple_size<n,W,F>::set_window(unsigned i, const W& win)
     {
       mln_precondition(i == win_.nelements());
+      (void) i;
       win_.append(win);
     }
 

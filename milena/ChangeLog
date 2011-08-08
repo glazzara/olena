@@ -1,3 +1,13 @@
+2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/core/point.hh: Fix point1d conversion.
+
+	* mln/debug/draw_graph.hh: Don't write outside output image.
+
+	* mln/win/multiple_size.hh: Avoid a warning.
+
 2011-08-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/util/timer.hh: Add support for milliseconds output.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -195,6 +196,7 @@ namespace mln
 	if (ima.has(p) && p.id() != 0u)
 	{
 	  box2d box(p + dpoint2d(-5, -5), p + dpoint2d(+5, +5));
+	  box.crop_wrt(ima.domain());
 	  draw::box_plain(ima, box, vcolor_f(p.id()));
 	}
 
