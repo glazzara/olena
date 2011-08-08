@@ -120,7 +120,7 @@ namespace mln
 	  // Propagation.
 	  {
 	    P p;
-	    mln_niter(N) n(nbh, p);
+	    mln_niter(N) n(nbh.foreground(), p);
 	    while (! q.is_empty())
 	    {
 	      p = q.pop_front();
@@ -201,10 +201,7 @@ namespace mln
 
 	  // Propagation.
 	  {
-	    mln_pixter(I) p(output);
-	    mln_nixter(I, N) n(p, nbh);
-
-	    util::array<int> dp = offsets_wrt(input, nbh);
+	    util::array<int> dp = offsets_wrt(input, nbh.foreground());
 	    const unsigned n_nbhs = dp.nelements();
 	    while (! q.is_empty())
 	    {

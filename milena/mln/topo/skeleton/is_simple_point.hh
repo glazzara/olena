@@ -31,6 +31,9 @@
 ///
 /// is_simple_point tells if a point is simple or not.
 /// For more information refer to bertrand.07.chap.
+///
+/// \fixme The fastest version give an approximation of the result. Do
+/// we want it to be exact?
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/point2d.hh>
@@ -76,11 +79,11 @@ namespace mln
 	const N& nbh_;
 	bool is_c8_;
 
-	template <typename I>
-        unsigned nb_connexity2d(const I&, bool nbh_c8,
+	template <typename I, typename N2>
+        unsigned nb_connexity2d(const I&, const N2 nbh,
 				const mln_psite(I)& p, bool object) const;
-	template <typename I>
-        unsigned nb_connexity2d__(const I&, bool nbh_c8,
+	template <typename I, typename N2>
+        unsigned nb_connexity2d__(const I&, const N2 nbh,
 				  unsigned p, bool object) const;
 
       };
@@ -140,18 +143,17 @@ namespace mln
 
       template <typename N>
       is_simple_point<N>::is_simple_point(const Neighborhood<N>& nbh)
-	: nbh_(exact(nbh)), is_c8_(exact(nbh) == c8())
+	: nbh_(exact(nbh))
       {
-	mln_assertion(nbh_ == c4() || nbh_ == c8());
 	mln_precondition(nbh_.is_valid());
       }
 
 
       template <typename N>
-      template <typename I>
+      template <typename I, typename N2>
       unsigned
       is_simple_point<N>::nb_connexity2d(const I& ima,
-					 bool nbh_c8,
+					 const N2 nbh,
 					 const mln_psite(I)& p,
 					 bool object) const
       {
@@ -165,18 +167,24 @@ namespace mln
 	    res = res | 1;
 	}
 
-	if (nbh_c8)
-	  return internal::nb_connexity_c8[res];
-	else
-	  return internal::nb_connexity_c4[res];
+	switch (nbh.size())
+	{
+	  case 4: // C4
+	    return internal::nb_connexity_c4[res];
+	  case 8: // C8
+	    return internal::nb_connexity_c8[res];
+	  default:
+	    mln_assertion(0);
+
+	}
       }
 
 
       template <typename N>
-      template <typename I>
+      template <typename I, typename N2>
       unsigned
       is_simple_point<N>::nb_connexity2d__(const I& ima,
-					   bool nbh_c8,
+					   const N2 nbh,
 					   unsigned p,
 					   bool object) const
       {
@@ -192,10 +200,17 @@ namespace mln
 	    res = res | 1;
 	}
 
-	if (nbh_c8)
-	  return internal::nb_connexity_c8[res];
-	else
-	  return internal::nb_connexity_c4[res];
+	switch (nbh.size())
+	{
+	  case 4: // C4
+	    return internal::nb_connexity_c4[res];
+	  case 8: // C8
+	    return internal::nb_connexity_c8[res];
+	  default:
+	    mln_assertion(0);
+
+	}
+	return 0;
       }
 
 
@@ -207,8 +222,8 @@ namespace mln
 				const mln_psite(I)& p) const
       {
 	mln_precondition(ima.is_valid());
-	return (nb_connexity2d(ima, is_c8_, p, true) == 1)  // Consider neighbor.
-	  && (nb_connexity2d(ima, !is_c8_, p, false) == 1); // Consider complement neighbor.
+	return (nb_connexity2d(ima, nbh_.foreground(), p, true) == 1)  // Consider neighbor.
+	  && (nb_connexity2d(ima, nbh_.background(), p, false) == 1); // Consider complement neighbor.
       }
 
 
@@ -222,8 +237,8 @@ namespace mln
 				  unsigned p) const
       {
 	mln_precondition(ima.is_valid());
-	return (nb_connexity2d__(ima, is_c8_, p, true) == 1)  // Consider neighbor
-	  && (nb_connexity2d__(ima, !is_c8_, p, false) == 1); // Consider complement neighbor.
+	return (nb_connexity2d__(ima, nbh_.foreground(), p, true) == 1)  // Consider neighbor
+	  && (nb_connexity2d__(ima, nbh_.background(), p, false) == 1); // Consider complement neighbor.
       }
 
 

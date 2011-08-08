@@ -1,5 +1,15 @@
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix genericity in skeleton computation.
+
+	* mln/morpho/skeleton_constrained.hh,
+	* mln/topo/skeleton/is_simple_point.hh: Expect a double
+	neighborhood.
+
+	* mln/topo/is_simple_2d.hh: Add a fast implementation.
+
+2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/core/point.hh: Fix point1d conversion.
