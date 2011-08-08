@@ -1,5 +1,9 @@
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/figures/ima2d-rot-2.ppm: Regen.
+
+2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tests.
 
 	* tests/labeling/blobs_and_compute.cc,
