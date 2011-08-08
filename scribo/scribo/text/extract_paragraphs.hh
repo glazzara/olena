@@ -99,11 +99,15 @@ namespace scribo
     template <typename L>
     inline
     bool
-    between_horizontal_separator(const scribo::line_info<L>& l1,
-				 const scribo::line_info<L>& l2)
+    between_horizontal_separator(const line_set<L>& lines,
+				 const scribo::line_id_t& l1_,
+				 const scribo::line_id_t& l2_)
     {
       // No separators found in image.
-      mln_precondition(l1.holder().components().has_separators());
+      mln_precondition(lines.components().has_separators());
+
+      const scribo::line_info<L>& l1 = lines(l1_);
+      const scribo::line_info<L>& l2 = lines(l2_);
 
       const box2d& l1_bbox = l1.bbox();
       const box2d& l2_bbox = l2.bbox();
@@ -112,7 +116,7 @@ namespace scribo
 	row1 = l1_bbox.pcenter().row(),
 	row2 = l2_bbox.pcenter().row();
       const mln_ch_value(L, bool)&
-	separators = l1.holder().components().separators();
+	separators = lines.components().separators();
 
       unsigned row;
       unsigned col_ptr;
@@ -190,17 +194,12 @@ namespace scribo
 	  if (lines(l).is_textline())
 	  {
 	    // Neighbors
+	    line_id_t left_nbh = output(l);
+	    line_id_t right_nbh = right(l);
+	    line_id_t lol_nbh = output(left_nbh);
 
-	    const line_id_t left_nbh = output(l);
-	    const line_id_t right_nbh = right(l);
-	    const line_id_t lol_nbh = output(left_nbh);
-
-	    const line_info<L>& left_line = lines(left_nbh);
-	    const line_info<L>& current_line = lines(l);
-	    const line_info<L>& right_line = lines(right_nbh);
-
-	    if (right_line.holder().components().has_separators() &&
-		between_horizontal_separator(right_line, current_line))
+	    if (lines.components().has_separators() &&
+		between_horizontal_separator(lines, right_nbh, l))
 	    {
 	      if (output(right_nbh) == l)
 	      {
@@ -208,8 +207,8 @@ namespace scribo
 		right_nbh = l;
 	      }
 	    }
-	    if (current_line.holder().components().has_separators() &&
-		between_horizontal_separator(current_line, left_line))
+	    if (lines.components().has_separators() &&
+		between_horizontal_separator(lines, l, left_nbh))
 	    {
 	      output(l) = l;
 	      left_nbh = l;
