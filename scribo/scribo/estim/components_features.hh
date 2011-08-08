@@ -39,6 +39,7 @@
 # include <mln/core/routine/extend.hh>
 # include <mln/labeling/blobs.hh>
 # include <mln/accu/stat/mean.hh>
+# include <mln/make/dual_neighb.hh>
 
 
 # include <mln/data/compute.hh>
@@ -122,9 +123,14 @@ namespace scribo
 	std::cout << "Crest " << t << std::endl;
 	t.restart();
 
+	typedef
+	  neighb<win::multiple_size<2u, window2d, pw::value_<J> > >
+	  nbh_t;
+	nbh_t nbh = mln::make::dual_neighb(bin_input, c8(), c4());
+
 	skel =
-	  morpho::skeleton_constrained(bin_input, c8(),
-				       topo::skeleton::is_simple_point<neighb2d>(c8()),
+	  morpho::skeleton_constrained(bin_input, nbh,
+				       topo::skeleton::is_simple_point<nbh_t>(nbh),
 				       K, dist_map);
 
 	t.stop();

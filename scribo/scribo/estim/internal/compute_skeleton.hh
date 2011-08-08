@@ -38,6 +38,7 @@
 # include <mln/transform/distance_front.hh>
 # include <mln/logical/not.hh>
 # include <mln/make/w_window2d_int.hh>
+# include <mln/make/dual_neighb.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/arith/revert.hh>
 # include <mln/morpho/skeleton_constrained.hh>
@@ -92,9 +93,14 @@ namespace scribo
 	mln_ch_value(I,value::int_u8) dist_map = arith::revert(dist);
 	mln_concrete(I) K = topo::skeleton::crest(input, dist, c8(), psi);
 
+	typedef
+	  neighb<win::multiple_size<2u, window2d, pw::value_<I> > >
+	  nbh_t;
+	nbh_t nbh = mln::make::dual_neighb(input, c8(), c4());
+
 	mln_concrete(I) skel =
-	  morpho::skeleton_constrained(input, c8(),
-				       topo::skeleton::is_simple_point<neighb2d>(c8()),
+	  morpho::skeleton_constrained(input, nbh,
+				       topo::skeleton::is_simple_point<nbh_t>(nbh),
 				       K, dist_map);
 
 	trace::exiting("scribo::estim::internal::compute_skeleton");
