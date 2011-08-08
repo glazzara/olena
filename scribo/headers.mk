@@ -288,10 +288,8 @@ scribo/upsampling/eagle.hh \
 scribo/util/box_intersection.hh \
 scribo/util/box_is_included.hh \
 scribo/util/color_to_hex.hh \
-scribo/util/component_outline.hh \
 scribo/util/component_precise_outline.hh \
-scribo/util/hex_to_color.hh \
-scribo/util/text_outline.hh
+scribo/util/hex_to_color.hh
 
 #<<lrde
 nobase_include_HEADERS +=

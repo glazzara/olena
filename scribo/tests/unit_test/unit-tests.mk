@@ -366,7 +366,6 @@ scribo_upsampling_eagle \
 scribo_util_box_intersection \
 scribo_util_box_is_included \
 scribo_util_color_to_hex \
-scribo_util_component_outline \
 scribo_util_component_precise_outline \
 scribo_util_hex_to_color
 
@@ -642,7 +641,6 @@ scribo_upsampling_eagle_SOURCES = scribo_upsampling_eagle.cc
 scribo_util_box_intersection_SOURCES = scribo_util_box_intersection.cc
 scribo_util_box_is_included_SOURCES = scribo_util_box_is_included.cc
 scribo_util_color_to_hex_SOURCES = scribo_util_color_to_hex.cc
-scribo_util_component_outline_SOURCES = scribo_util_component_outline.cc
 scribo_util_component_precise_outline_SOURCES = scribo_util_component_precise_outline.cc
 scribo_util_hex_to_color_SOURCES = scribo_util_hex_to_color.cc
 
