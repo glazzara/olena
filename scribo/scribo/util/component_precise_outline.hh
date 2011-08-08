@@ -60,6 +60,15 @@ namespace scribo
 
     template <typename I>
     mln::p_array<point2d>
+    component_precise_outline(const Image<I>& input_, const mln_value(I)& id,
+			      bool compress_points);
+
+    template <typename I>
+    mln::p_array<point2d>
+    component_precise_outline(const Image<I>& input_, const mln_value(I)& id);
+
+    template <typename I>
+    mln::p_array<point2d>
     component_precise_outline(const Image<I>& input_);
 
 
@@ -329,6 +338,10 @@ namespace scribo
 	      if (i < nelements)
 		cur_pt = & points[i];
 	    }
+
+	    if (i == nelements)
+	      break;
+
 	    waypoints.append(*last_pt);
 	    first_pt = last_pt;
 	    last_pt = first_pt;
@@ -347,7 +360,8 @@ namespace scribo
 
     template <typename I>
     mln::p_array<point2d>
-    component_precise_outline(const Image<I>& input_, const mln_value(I)& id)
+    component_precise_outline(const Image<I>& input_, const mln_value(I)& id,
+			      bool compress_points)
     {
       trace::entering("scribo::util::component_precise_outline");
 
@@ -391,18 +405,31 @@ namespace scribo
 	}
       }
 
-      mln::p_array<P> waypoints;
-      internal::filter_points(points, waypoints);
+      if (compress_points)
+      {
+	mln::p_array<P> waypoints;
+	internal::filter_points(points, waypoints);
+
+	trace::exiting("scribo::util::component_precise_outline");
+	return waypoints;
+      }
 
       trace::exiting("scribo::util::component_precise_outline");
-      return waypoints;
+      return points;
+    }
+
+    template <typename I>
+    mln::p_array<point2d>
+    component_precise_outline(const Image<I>& input, const mln_value(I)& id)
+    {
+      return component_precise_outline(input, id, true);
     }
 
     template <typename I>
     mln::p_array<point2d>
     component_precise_outline(const Image<I>& input)
     {
-      return component_precise_outline(input, true);
+      return component_precise_outline(input, true, true);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

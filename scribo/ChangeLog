@@ -1,5 +1,19 @@
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Preserve a single algorithm for outlines computation.
+
+	* scribo/util/component_outline.hh: Remove.
+
+	* scribo/util/component_precise_outline.hh: Add options.
+
+	* scribo/tests/util/Makefile.am: Fix targets.
+
+	* scribo/tests/util/component_outline.cc: Remove.
+
+	* scribo/tests/util/component_precise_outline.cc: New.
+
+2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix use of skeleton computation algorithms in Scribo.
 
 	* scribo/estim/components_features.hh,
