@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,22 +49,6 @@
 #include "tests/data.hh"
 
 
-template <typename N>
-void
-show_connectivity_numbers(const mln::image2d<bool>& ima, const N& nbh)
-{
-  mln::extension::adjust_duplicate(ima, nbh);
-
-  mln::image2d<unsigned> when_true(ima.domain()), when_false(ima.domain());
-  mln_piter(mln::box2d) p(ima.domain());
-  for_all(p)
-  {
-    when_true(p)  = connectivity_number_2d(ima, nbh.foreground(), p, true);
-    when_false(p) = connectivity_number_2d(ima, nbh.background(), p, false);
-  }
-}
-
-
 bool skl_ref_[22][18] =
   { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -106,8 +90,6 @@ int main()
     nbh_t;
   nbh_t nbh = make::dual_neighb(pic, c4(), c8());
 
-  show_connectivity_numbers(pic, nbh);
-
 
   image2d<bool> K(pic.domain());
   data::fill(K, false);
@@ -118,9 +100,10 @@ int main()
 						      mln_max(int_u8));
   dmap = arith::revert(dmap);
 
-  image2d<bool> skl = morpho::skeleton_constrained(pic,
-						   nbh, is_simple_2d_t(),
-						   K, dmap);
+  image2d<bool> skl = morpho::impl::generic::skeleton_constrained(pic,
+								  nbh,
+								  mln::topo::is_simple_2d_t<nbh_t>(nbh),
+								  K, dmap);
   image2d<bool> skl_ref = make::image(skl_ref_);
   mln_assertion(skl == skl_ref);
 }

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,6 +56,6 @@ int main()
   mln_assertion(result.second().first().size() == 34);
   mln_assertion(result.second().second().size() == 34);
   mln_assertion(result.second().first()[1] == point2d(10,30));
-  mln_assertion(result.second().second()[33] == point2d(310,66));
+  mln_assertion(result.second().second()[33] == point2d(311,67));
   mln_assertion(n == 33);
 }
