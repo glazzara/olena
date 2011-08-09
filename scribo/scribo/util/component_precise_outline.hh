@@ -368,7 +368,7 @@ namespace scribo
       const I& input = exact(input_);
       typedef mln_site(I) P;
 
-      extension::fill(input, 0);
+      extension::adjust_fill(input, 3, 0);
 
       mln::p_array<P> points;
       points.reserve(std::max(geom::ncols(input), geom::nrows(input)));

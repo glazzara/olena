@@ -224,6 +224,8 @@ namespace scribo
 
     const line_set<L>& lines = llinks_.lines();
 
+    // Update color
+
     mln::accu::stat::mean<mln::value::int_u<8> >
       color_red,
       color_green,
@@ -261,10 +263,35 @@ namespace scribo
     color_reliability_ = std::sqrt(std::max(var_red,
 					    std::max(var_green, var_blue)));
 
-    // Update color
-
     // FIXME: Update paragraph stats
 
+
+    // Compute paragraph's delta baseline
+    stats< float > delta(nlines());
+    const unsigned nelements = line_ids_.nelements();
+
+    for (unsigned i = 0; i < nelements; ++i)
+    {
+      const line_id_t& current_id = line_ids_(i);
+
+      if (llinks_(current_id) != current_id)
+      {
+	const line_info<L>& current_line = lines(current_id);
+	const line_info<L>& left_line = lines(llinks_(current_id));
+
+	delta.take(left_line.baseline() - current_line.baseline());
+      }
+    }
+
+    int median = delta.median();
+
+    if (!median)
+      median = lines(line_ids_(0)).x_height();
+
+    set_delta_baseline(median);
+
+
+    // Update tag
     tag_ = paragraph::None;
   }
 

@@ -42,6 +42,8 @@
 # include <scribo/primitive/extract/internal/union.hh>
 # include <scribo/debug/logger.hh>
 
+# include <mln/literal/black.hh>
+
 //DEBUG
 #include <mln/util/timer.hh>
 #include <mln/io/pbm/save.hh>
@@ -114,7 +116,7 @@ namespace scribo
 	    border::resize(seps, border::thickness);
 	    // std::abort();
 	  }
-
+	  extension::fill(input, literal::black);
 
 	  const unsigned q_div = std::pow(2.f, (int)(8 - nbits));
 	  const unsigned q = unsigned(std::pow(2.f, (int)nbits));
