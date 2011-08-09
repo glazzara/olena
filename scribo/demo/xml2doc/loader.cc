@@ -169,13 +169,13 @@ bool Loader::xml_output(const QString& xml_file, bool html, const QString& outpu
     stream_out << "\n<?xml-stylesheet type=\"text/xsl\" href=\"xsl.xsl\" ?>";
 
   // /!\ attributes of ICDAR PcGts removed.
-  while(!line.contains("<pcGts"))
+  while(!line.contains("<PcGts"))
     line = stream_in.readLine();
 
   line = stream_in.readLine();
-  stream_out << "\n<pcGts>";
+  stream_out << "\n<PcGts>";
 
-  while (!line.contains("</pcGts>"))
+  while (!line.contains("</PcGts>"))
     {
       stream_out << "\n" << line;
       line = stream_in.readLine();

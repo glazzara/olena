@@ -92,7 +92,6 @@ namespace scribo
 
 	private: // Attributes
 	  std::ofstream& output;
-	  mutable image2d<scribo::def::lbl_type> elt_edge;
 	  mutable L lbl_;
 	};
 
@@ -125,13 +124,7 @@ namespace scribo
 
 	  // Page elements (Pictures, ...)
 	  if (doc.has_elements())
-	  {
-	    // Prepare element edges
-	    elt_edge = morpho::elementary::gradient_internal(
-	      extend(doc.elements().labeled_image(), 0), c4()).unmorph_();
-
 	    doc.elements().accept(*this);
-	  }
 
 	  // line seraparators
 	  if (doc.has_vline_seps())
@@ -143,8 +136,8 @@ namespace scribo
 	  if (doc.has_whitespace_seps())
 	    doc.whitespace_seps_comps().accept(*this);
 
-	  output << "  </page>" << std::endl;
-	  output << "</pcGts>" << std::endl;
+	  output << "  </Page>" << std::endl;
+	  output << "</PcGts>" << std::endl;
 
 	}
 
@@ -177,7 +170,7 @@ namespace scribo
 	  {
 	    case component::WhitespaceSeparator:
 	    {
-	      output << "    <whitespace_separator_region id=\"wss"
+	      output << "    <WhitespaceSeparatorRegion id=\"wss"
 		     << info.id()
 		     << "\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
@@ -188,16 +181,16 @@ namespace scribo
 
 	      internal::print_image_coords(output, par, "      ");
 
-	      output << "    </whitespace_separator_region>" << std::endl;
+	      output << "    </WhitespaceSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
 	    case component::VerticalLineSeparator:
 	    {
-	      output << "    <vertical_separator_region id=\"vlsr" << info.id()
-		     << "\" sep_orientation=\"0.000000\" "
-		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\""
+	      output << "    <VerticalSeparatorRegion id=\"vlsr" << info.id()
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"Black\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
@@ -206,16 +199,16 @@ namespace scribo
 
 	      internal::print_image_coords(output, par, "      ");
 
-	      output << "    </vertical_separator_region>" << std::endl;
+	      output << "    </VerticalSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
 	    case component::HorizontalLineSeparator:
 	    {
-	      output << "    <horizontal_separator_region id=\"hlsr" << info.id()
-		     << "\" sep_orientation=\"0.000000\" "
-		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\""
+	      output << "    <HorizontalSeparatorRegion id=\"hlsr" << info.id()
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"Black\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
@@ -224,7 +217,7 @@ namespace scribo
 
 	      internal::print_image_coords(output, par, "      ");
 
-	      output << "    </horizontal_separator_region>" << std::endl;
+	      output << "    </HorizontalSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
@@ -232,23 +225,20 @@ namespace scribo
 	    default:
 	    case component::Image:
 	    {
-	      output << "    <image_region id=\"ir" << info.id()
-		     << "\" img_colour_type=\"24_Bit_Colour\""
-		     << " img_orientation=\"0.000000\" "
-		     << " img_emb_text=\"No\" "
-		     << " img_bgcolour=\"White\""
+	      output << "    <ImageRegion id=\"ir" << info.id()
+		     << "\" colourDepth=\"colour\""
+		     << " orientation=\"0.000000\" "
+		     << " embText=\"No\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
 		     << " y_max=\"" << info.bbox().pmax().row() << "\""
 		     << ">" << std::endl;
 
-	      internal::print_image_coords(output,
-					   ((elt_edge | info.bbox())
-					    | (pw::value(elt_edge) == pw::cst((scribo::def::lbl_type)info.id().to_equiv()))).domain(),
-					   "      ");
+	      internal::print_image_coords(output, par, "      ");
 
-	      output << "    </image_region>" << std::endl;
+	      output << "    </ImageRegion>" << std::endl;
 	      break;
 	    }
 	  }
@@ -269,39 +259,40 @@ namespace scribo
 	  for_all_paragraphs(p, parset)
 	    if (parset(p).is_valid())
 	    {
-	      p_array<mln_site(L)> par = scribo::util::component_precise_outline(par_clo
-										 | parset(p).bbox(), p);
+	      const box2d& b = parset(p).bbox();
+	      p_array<mln_site(L)>
+		par = scribo::util::component_precise_outline(par_clo | b, p);
 
 	      const mln::util::array<line_id_t>& line_ids = parset(p).line_ids();
 
 	      // FIXME: compute that information on the whole paragraph
 	      // and use them here.
 	      line_id_t fid = line_ids(0);
-	      output << "    <text_region id=\"" << p
-		     << "\" txt_orientation=\"" << lines(fid).orientation()
-		     << "\" txt_reading_orientation=\"" << lines(fid).reading_orientation()
-		     << "\" txt_reading_direction=\"" << lines(fid).reading_direction()
-		     << "\" txt_text_type=\"" << lines(fid).type()
-		     << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		     << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
-		     << "\" txt_text_colour=\"" << internal::compute_text_colour(parset(p).color())
+	      output << "    <TextRegion id=\"" << p
+		     << "\" orientation=\"" << lines(fid).orientation()
+		     << "\" readingOrientation=\"" << lines(fid).reading_orientation()
+		     << "\" readingDirection=\"" << lines(fid).reading_direction()
+		     << "\" type=\"" << lines(fid).type()
+		     << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		     << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
+		     << "\" textColour=\"" << internal::compute_text_colour(parset(p).color())
 		     << "\" kerning=\"" << lines(fid).char_space();
 
 	      // EXTENSIONS - Not officially supported
 	      // FIXME: add boldness?
 	      output << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
-		     << "\" color_reliability=\"" << parset(p).color_reliability()
+		     << "\" colorReliability=\"" << parset(p).color_reliability()
 		     << "\" baseline=\"" << lines(fid).baseline()
 		     << "\" meanline=\"" << lines(fid).meanline()
-		     << "\" x_height=\"" << lines(fid).x_height()
-		     << "\" d_height=\"" << lines(fid).d_height()
-		     << "\" a_height=\"" << lines(fid).a_height()
-		     << "\" char_width=\"" << lines(fid).char_width();
+		     << "\" xHeight=\"" << lines(fid).x_height()
+		     << "\" dHeight=\"" << lines(fid).d_height()
+		     << "\" aHeight=\"" << lines(fid).a_height()
+		     << "\" charWidth=\"" << lines(fid).char_width();
 	      // End of EXTENSIONS
 	      output << "\">"
 		     << std::endl;
 
-	      internal::print_image_coords(output, parset(p).bbox(), "      ");
+	      internal::print_image_coords(output, par, "      ");
 
 	      // EXTENSIONS - Not officially supported
 	      for_all_paragraph_lines(lid, line_ids)
@@ -311,7 +302,7 @@ namespace scribo
 	      }
 	      // End of EXTENSIONS
 
-	      output << "    </text_region>" << std::endl;
+	      output << "    </TextRegion>" << std::endl;
 	    }
 	}
 
@@ -322,35 +313,35 @@ namespace scribo
 	{
 	  if (line.has_text())
 	  {
-	    output << "        <line text=\"" << line.html_text() << "\" ";
+	    output << "        <Line text=\"" << line.html_text() << "\" ";
 	  }
 	  else
-	    output << "        <line ";
+	    output << "        <Line ";
 
 	  output << "id=\"" << line.id()
 		 << "\" boldness=\"" << line.boldness()
-		 << "\" boldness_reliability=\"" << line.boldness_reliability()
+		 << "\" boldnessReliability=\"" << line.boldness_reliability()
 		 << "\" color=\"" << scribo::util::color_to_hex(line.color())
-		 << "\" color_reliability=\"" << line.color_reliability()
-		 << "\" txt_orientation=\"" << line.orientation()
-		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
-		 << "\" txt_reading_direction=\"" << line.reading_direction()
-		 << "\" txt_text_type=\"" << line.type()
-		 << "\" txt_reverse_video=\"" << (line.reverse_video() ? "true" : "false")
-		 << "\" txt_indented=\"" << (line.indented() ? "true" : "false")
-		 << "\" txt_text_colour=\"" << internal::compute_text_colour(line.color())
+		 << "\" colorReliability=\"" << line.color_reliability()
+		 << "\" orientation=\"" << line.orientation()
+		 << "\" readingOrientation=\"" << line.reading_orientation()
+		 << "\" readingDirection=\"" << line.reading_direction()
+		 << "\" type=\"" << line.type()
+		 << "\" reverseVideo=\"" << (line.reverse_video() ? "true" : "false")
+		 << "\" indented=\"" << (line.indented() ? "true" : "false")
+		 << "\" textColour=\"" << internal::compute_text_colour(line.color())
 		 << "\" kerning=\"" << line.char_space()
 		 << "\" baseline=\"" << line.baseline()
 		 << "\" meanline=\"" << line.meanline()
-		 << "\" x_height=\"" << line.x_height()
-		 << "\" d_height=\"" << line.d_height()
-		 << "\" a_height=\"" << line.a_height()
-		 << "\" char_width=\"" << line.char_width()
+		 << "\" xHeight=\"" << line.x_height()
+		 << "\" dHeight=\"" << line.d_height()
+		 << "\" aHeight=\"" << line.a_height()
+		 << "\" charWidth=\"" << line.char_width()
 		 << "\">" << std::endl;
 
 	  internal::print_box_coords(output, line.bbox(), "          ");
 
-	  output << "        </line>" << std::endl;
+	  output << "        </Line>" << std::endl;
 	}
 
 #endif // MLN_INCLUDE_ONLY

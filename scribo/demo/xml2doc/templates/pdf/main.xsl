@@ -11,14 +11,14 @@
     <fo:root>
 
       <fo:layout-master-set>
-	<fo:simple-page-master master-name="page" margin-left="0cm" margin-right="0cm" margin-bottom="0cm" margin-top="0cm">
+	<fo:simple-page-master master-name="Page" margin-left="0cm" margin-right="0cm" margin-bottom="0cm" margin-top="0cm">
 
 	  <!-- Output will be sized with image size -->
 	  <xsl:attribute name="page-width">
-	    <xsl:value-of select="pcGts/page/@image_width" />px
+	    <xsl:value-of select="PcGts/Page/@imageWidth" />px
 	  </xsl:attribute>
 	  <xsl:attribute name="page-height">
-	    <xsl:value-of select="pcGts/page/@image_height" />px
+	    <xsl:value-of select="PcGts/Page/@imageHeight" />px
 	  </xsl:attribute>
 
           <fo:region-body
@@ -29,7 +29,7 @@
 	</fo:simple-page-master>
       </fo:layout-master-set>
 
-      <fo:page-sequence master-reference="page">
+      <fo:page-sequence master-reference="Page">
 
 	<fo:flow flow-name="xsl-region-body">
 	  <xsl:apply-imports />

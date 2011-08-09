@@ -99,13 +99,13 @@ void ImageCrop::from_base64()
   QDomElement root = doc.documentElement();
   QDomNode child = root.firstChild();
 
-  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+  while (!child.isNull() && !child.toElement().tagName().contains("Page"))
     child = child.nextSibling();
 
   child = child.firstChild();
   while (!child.isNull())
     {
-      if (child.toElement().tagName().contains(QRegExp("(image|graphic|chart|horizontal_separator|vertical_separator|table)_region")))
+      if (child.toElement().tagName().contains(QRegExp("(Image|Graphic|Chart|HorizontalSeparator|VerticalSeparator|Table)Region")))
 	{
 	  QDomNode node = child.firstChild();
 	  QString id = child.toElement().attribute("id", "none");
@@ -138,11 +138,11 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
   QDomElement root = doc.documentElement();
   QDomNode child = root.firstChild();
 
-  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+  while (!child.isNull() && !child.toElement().tagName().contains("Page"))
     child = child.nextSibling();
 
-  QString width = child.toElement().attribute("image_width", "0");
-  QString height = child.toElement().attribute("image_height", "0");
+  QString width = child.toElement().attribute("imageWidth", "0");
+  QString height = child.toElement().attribute("imageHeight", "0");
 
   file.close();
   file.open(QIODevice::ReadOnly);
@@ -159,7 +159,7 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
   line = stream.readLine();
 
   // HEAD
-  while (!line.contains("<page"))
+  while (!line.contains("<Page"))
     {
       stream2 << "\n" << line;
       line = stream.readLine();
@@ -169,7 +169,7 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
     {
       stream2 << "\n" << line;
 
-      stream2 << "\n" << "    <image_region id=\"image\">";
+      stream2 << "\n" << "    <ImageRegion id=\"image\">";
       stream2 << "\n" << "      <container>\n";
       stream2 << "        <mime>png</mime>\n";
 
@@ -186,20 +186,20 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
 
       stream2 << "        </data>";
       stream2 << "\n      </container>";
-      stream2 << "\n      <coords>\n";
+      stream2 << "\n      <Coords>\n";
 
-      stream2 << "        <point x=\"0\" y=\"0\" />\n";
-      stream2 << "        <point x=\"" << width << "\" y=\"0\" />\n";
-      stream2 << "        <point x=\"" << width << "\" y=\"" << height << "\" />\n";
-      stream2 << "        <point x=\"0\" y=\"" << height << "\" />";
+      stream2 << "        <Point x=\"0\" y=\"0\" />\n";
+      stream2 << "        <Point x=\"" << width << "\" y=\"0\" />\n";
+      stream2 << "        <Point x=\"" << width << "\" y=\"" << height << "\" />\n";
+      stream2 << "        <Point x=\"0\" y=\"" << height << "\" />";
 
-      stream2 << "\n      </coords>";
-      stream2 << "\n" << "    </image_region>\n";
+      stream2 << "\n      </Coords>";
+      stream2 << "\n" << "    </ImageRegion>\n";
       img.close();
 
       line = stream.readLine();
 
-      while(!line.contains("</pcGts>"))
+      while(!line.contains("</PcGts>"))
 	{
 	  stream2 << "\n" << line;
 	  line = stream.readLine();
@@ -209,10 +209,10 @@ void ImageCrop::to_base64(const QString& out_file, bool no_crop)
     }
   else
     {
-      while(!line.contains("</pcGts>"))
+      while(!line.contains("</PcGts>"))
 	{
 	  stream2 << "\n" << line;
-	  if (line.contains(QRegExp("<(image|graphic|chart|horizontal_separator|vertical_separator|table)_region")))
+	  if (line.contains(QRegExp("<(Image|Graphic|Chart|HorizontalSeparator|VerticalSeparator|Table)Region")))
 	    {
 	      stream2 << "\n" << "      <container>\n";
 	      stream2 << "        <mime>png</mime>\n";
@@ -262,7 +262,7 @@ bool ImageCrop::crop_regions(bool temp)
       QDomElement root = doc.documentElement();
       QDomNode page = root.firstChild();
 
-      while (!page.isNull() && !page.toElement().tagName().contains("page"))
+      while (!page.isNull() && !page.toElement().tagName().contains("Page"))
 	page = page.nextSibling();
 
       if (page.isNull())
@@ -272,7 +272,7 @@ bool ImageCrop::crop_regions(bool temp)
 
       while (!region.isNull())
 	{
-	  if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|vertical_separator|horizontal_separator|table)_region")))
+	  if (region.toElement().tagName().contains(QRegExp("(Image|Graphic|Chart|VerticalSeparator|HorizontalSeparator|Table)Region")))
 	    {
 	      found_regions = true;
 
@@ -288,7 +288,7 @@ bool ImageCrop::crop_regions(bool temp)
 		y_max = region.toElement().attribute("y_max").toInt();
 	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
 
-	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+	      while (!coords.isNull() && !coords.toElement().tagName().contains("Coords"))
 		coords = coords.nextSibling();
 
 	      if (coords.isNull())
@@ -303,17 +303,34 @@ bool ImageCrop::crop_regions(bool temp)
 		p_mask(box.nrows(),
 		       util::couple<def::coord, def::coord>(x_max + 1, x_min - 1));
 
+
+	      int last_point_y = 0;
+	      if (! point.isNull())
+		last_point_y = point.toElement().attribute("y", "none").toInt();
+
 	      // Compute opacity mask for image region.
 	      while (!point.isNull())
 		{
 		  int x = point.toElement().attribute("x", "none").toInt();
-		  int y = point.toElement().attribute("y", "none").toInt();
 
-		  if (p_mask(y - y_min).first() > x)
-		    p_mask(y - y_min).first() = x;
-		  if  (p_mask(y - y_min).second() < x)
-		    p_mask(y - y_min).second() = x;
+		  // Take point compression into account. Lines are
+		  // stored as two points, so we need to take into
+		  // account all the points between them.
+		  int y_bak = point.toElement().attribute("y", "none").toInt();
+		  int y = y_bak;
+		  if (y > last_point_y)
+		    std::swap(y, last_point_y);
 
+		  do
+		  {
+		    if (p_mask(y - y_min).first() > x)
+		      p_mask(y - y_min).first() = x;
+		    if  (p_mask(y - y_min).second() < x)
+		      p_mask(y - y_min).second() = x;
+		    ++y;
+		  } while (y < last_point_y);
+
+		  last_point_y = y;
 		  point = point.nextSibling();
 		}
 

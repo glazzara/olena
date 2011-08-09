@@ -25,7 +25,7 @@
 #include <mln/io/magick/load.hh>
 #include <scribo/make/debug_filename.hh>
 #include <mln/debug/filename.hh>
-#include <mln/literal/white.hh>
+#include <mln/literal/colors.hh>
 
 int main(int argc, char** argv)
 {

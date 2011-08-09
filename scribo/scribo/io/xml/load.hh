@@ -125,32 +125,32 @@ namespace scribo
 
 
 	static const ModeData mode_data[] = {
-	  { "component_set", ComponentSet },
-	  { "component_info", ComponentInfo },
-	  { "component_features", ComponentFeatures },
-	  { "elements", Elements },
-	  { "labeled_image", LabeledImage },
-	  { "separators_image", SeparatorsImage },
-	  { "object_links",  ObjectLinks },
-	  { "object_groups", ObjectGroups },
-	  { "point", Point },
-	  { "link", Link },
-	  { "group", Group },
-	  { "group_member", GroupMember },
-	  { "line",  Line },
-	  { "line_links",  LineLinks },
-	  { "line_link",  LineLink },
-	  { "text_data", TextData },
-	  { "text_region", TextRegion },
-	  { "compid_list", CompIdList },
-	  { "compid", CompId },
-	  { "page", Page },
-	  { "whitespaces_delimitors", WhitespacesDelimitors },
-	  { "hlines_separators", HLineSeparators },
-	  { "vlines_separators", VLineSeparators },
-	  { "whitespaces_delimitors_image", WhitespacesDelimitorsImage },
-	  { "hlines_separators_image", HLineSeparatorsImage },
-	  { "vlines_separators_image", VLineSeparatorsImage },
+	  { "ComponentSet", ComponentSet },
+	  { "ComponentInfo", ComponentInfo },
+	  { "ComponentFeatures", ComponentFeatures },
+	  { "Elements", Elements },
+	  { "LabeledImage", LabeledImage },
+	  { "SeparatorsImage", SeparatorsImage },
+	  { "ObjectLinks",  ObjectLinks },
+	  { "ObjectGroups", ObjectGroups },
+	  { "Point", Point },
+	  { "Link", Link },
+	  { "Group", Group },
+	  { "GroupMember", GroupMember },
+	  { "Line",  Line },
+	  { "LineLinks",  LineLinks },
+	  { "LineLink",  LineLink },
+	  { "TextData", TextData },
+	  { "TextRegion", TextRegion },
+	  { "CompidList", CompIdList },
+	  { "Compid", CompId },
+	  { "Page", Page },
+	  { "WhitespacesDelimitors", WhitespacesDelimitors },
+	  { "HlinesSeparators", HLineSeparators },
+	  { "VlinesSeparators", VLineSeparators },
+	  { "WhitespacesDelimitorsImage", WhitespacesDelimitorsImage },
+	  { "HlinesSeparatorsImage", HLineSeparatorsImage },
+	  { "VlinesSeparatorsImage", VLineSeparatorsImage },
 	  { 0, None }
 	};
 
@@ -193,8 +193,8 @@ namespace scribo
 							atts.value("pmin_x").toInt(),
 							atts.value("pmax_y").toInt(),
 							atts.value("pmax_x").toInt()),
-				       mln::point2d(atts.value("mass_center_y").toInt(),
-						    atts.value("mass_center_x").toInt()),
+				       mln::point2d(atts.value("massCenter_y").toInt(),
+						    atts.value("massCenter_x").toInt()),
 				       atts.value("card").toInt());
 
 
@@ -263,7 +263,7 @@ namespace scribo
 		current_paragraph = paragraph_info<L>(llinks);
 		current_paragraph.set_color_(
 		  scribo::util::hex_to_color(atts.value("color").toUtf8().constData()));
-		current_paragraph.set_color_reliability_(atts.value("color_reliability").toFloat());
+		current_paragraph.set_color_reliability_(atts.value("colorReliability").toFloat());
 	      }
 	      break;
 
@@ -290,28 +290,27 @@ namespace scribo
 
 		line_data->baseline_ = atts.value("baseline").toInt();
 		line_data->meanline_ = atts.value("meanline").toInt();
-		line_data->x_height_ = atts.value("x_height").toInt();
-		line_data->d_height_ = atts.value("d_height").toInt();
-		line_data->a_height_ = atts.value("a_height").toInt();
+		line_data->x_height_ = atts.value("xHeight").toInt();
+		line_data->d_height_ = atts.value("dHeight").toInt();
+		line_data->a_height_ = atts.value("aHeight").toInt();
 		line_data->char_space_ = atts.value("kerning").toInt();
-		line_data->char_width_ = atts.value("char_width").toInt();
-		line_data->char_width_ = atts.value("char_width").toInt();
+		line_data->char_width_ = atts.value("charWidth").toInt();
 		line_data->word_space_ = 0;
 
 		line_data->reading_direction_ = line::LeftToRight;
-		line_data->type_ = line::str2type(atts.value("txt_text_type").toUtf8().constData());
-		line_data->reverse_video_ = (atts.value("txt_reverse_video") == "false" ? false : true);
+		line_data->type_ = line::str2type(atts.value("type").toUtf8().constData());
+		line_data->reverse_video_ = (atts.value("reverseVideo") == "false" ? false : true);
 		line_data->orientation_ = 0;
-		line_data->reading_orientation_ = atts.value("txt_reading_orientation").toInt();
-		line_data->indented_ = (atts.value("txt_indented") == "false" ? false : true);
+		line_data->reading_orientation_ = atts.value("readingOrientation").toInt();
+		line_data->indented_ = (atts.value("indented") == "false" ? false : true);
 
 
 		line_data->boldness_ = atts.value("boldness").toFloat();
-		line_data->boldness_reliability_ = atts.value("boldness_reliability").toFloat();
+		line_data->boldness_reliability_ = atts.value("boldnessReliability").toFloat();
 		line_data->color_ = scribo::util::hex_to_color(
 		  atts.value("color").toUtf8().constData());
 
-		line_data->color_reliability_ = atts.value("color_reliability").toFloat();
+		line_data->color_reliability_ = atts.value("colorReliability").toFloat();
 
 		bbox.init();
 	      }
@@ -386,7 +385,7 @@ namespace scribo
 	      case Group:
 	      {
 		group_info_.append(group_info(atts.value("id").toInt(),
-					      atts.value("pixel_area").toInt(),
+					      atts.value("pixelArea").toInt(),
 					      mln::make::box2d(atts.value("pmin_x").toInt(),
 							       atts.value("pmin_y").toInt(),
 							       atts.value("pmax_x").toInt(),

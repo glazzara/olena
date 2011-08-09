@@ -1,3 +1,17 @@
+2011-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix XML I/O.
+
+	* demo/viewer/main.cc: Add a missing include.
+
+	* demo/viewer/viewer.cc,
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl,
+	* demo/xml2doc/templates/pdf/line.xsl,
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh,
+	* scribo/io/xml/load.hh: Update tag names.
+
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regen generated files.

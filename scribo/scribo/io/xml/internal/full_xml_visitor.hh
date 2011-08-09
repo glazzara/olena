@@ -145,7 +145,7 @@ namespace scribo
 	    // Save paragraphs related information (Extension)
 	    {
 	      // General text information
-	      output << "    <text_data nlines=\"" << lines.nelements() << "\" "
+	      output << "    <TextData nlines=\"" << lines.nelements() << "\" "
 		   << " nparagraphs=\"" << parset.nelements() << "\" />" << std::endl;
 
 	      // line_links
@@ -162,43 +162,43 @@ namespace scribo
 	  {
 	    const component_set<L>& elts = doc.elements();
 
-	    output << "     <elements>" << std::endl;
+	    output << "     <Elements>" << std::endl;
 	    elts.accept(*this);
 
 	    for_all_comps(e, elts)
 	      if (elts(e).is_valid())
 		elts(e).accept(*this);
 
-	    output << "     </elements>" << std::endl;
+	    output << "     </Elements>" << std::endl;
 	  }
 
 
 	  // line seraparators
 	  if (doc.has_hline_seps())
 	  {
-	    output << "     <hlines_separators>" << std::endl;
+	    output << "     <HlinesSeparators>" << std::endl;
 	    doc.hline_seps_comps().accept(*this);
 
 	    for_all_comps(c, doc.hline_seps_comps())
 	      doc.hline_seps_comps()(c).accept(*this);
 
 	    save_image_to_xml(output, doc.hline_seps(),
-			      "hlines_separators_image");
+			      "HlinesSeparatorsImage");
 
-	    output << "     </hlines_separators>" << std::endl;
+	    output << "     </HlinesSeparators>" << std::endl;
 	  }
 	  if (doc.has_vline_seps())
 	  {
-	    output << "     <vlines_separators>" << std::endl;
+	    output << "     <VlinesSeparators>" << std::endl;
 	    doc.vline_seps_comps().accept(*this);
 
 	    for_all_comps(c, doc.vline_seps_comps())
 	      doc.vline_seps_comps()(c).accept(*this);
 
 	    save_image_to_xml(output, doc.vline_seps(),
-			      "vlines_separators_image");
+			      "VlinesSeparatorsImage");
 
-	    output << "     </vlines_separators>" << std::endl;
+	    output << "     </VlinesSeparators>" << std::endl;
 	  }
 
 
@@ -208,20 +208,20 @@ namespace scribo
 	    const component_set<L>&
 	      whitespace_seps_comps = doc.whitespace_seps_comps();
 
-	    output << "     <whitespaces_delimitors>" << std::endl;
+	    output << "     <WhitespacesDelimitors>" << std::endl;
 	    whitespace_seps_comps.accept(*this);
 
 	    for_all_comps(c, whitespace_seps_comps)
 	      whitespace_seps_comps(c).accept(*this);
 
 	    save_image_to_xml(output, doc.whitespace_seps(),
-			      "whitespaces_delimitors_image");
+			      "WhitespacesDelimitorsImage");
 
-	    output << "     </whitespaces_delimitors>" << std::endl;
+	    output << "     </WhitespacesDelimitors>" << std::endl;
 	  }
 
-	  output << "  </page>" << std::endl;
-	  output << "</pcGts>" << std::endl;
+	  output << "  </Page>" << std::endl;
+	  output << "</PcGts>" << std::endl;
 
 	}
 
@@ -232,15 +232,15 @@ namespace scribo
 	void
 	full_xml_visitor::visit(const line_links<L>& llinks) const
 	{
-	  output << "      <line_links>" << std::endl;
+	  output << "      <LineLinks>" << std::endl;
 	  for_all_links(l, llinks)
 	  {
-	    output << "      <line_link"
+	    output << "      <LineLink"
 		   << " from=\"" << l
 		   << "\" to=\"" << llinks(l)
 		   << "\"/>" << std::endl;
 	  }
-	  output << "      </line_links>" << std::endl;
+	  output << "      </LineLinks>" << std::endl;
 	}
 
 
@@ -250,14 +250,14 @@ namespace scribo
 	void
 	full_xml_visitor::visit(const object_groups<L>& groups) const
 	{
-	  output << "      <object_groups ngroups=\"" << groups.nelements()
+	  output << "      <ObjectGroups ngroups=\"" << groups.nelements()
 		 << "\">" << std::endl;
 
 	  for_all_groups(g, groups)
 	  {
 	    output << "        <group id=\"" << groups(g).id()
 		   << "\" valid=\"" << groups(g).is_valid()
-		   << "\" pixel_area=\"" << groups(g).pixel_area()
+		   << "\" pixelArea=\"" << groups(g).pixel_area()
 		   << "\" pmin_x=\"" << groups(g).bbox().pmin().row()
 		   << "\" pmin_y=\"" << groups(g).bbox().pmin().col()
 		   << "\" pmax_x=\"" << groups(g).bbox().pmax().row()
@@ -265,13 +265,13 @@ namespace scribo
 		   << "\">" << std::endl;
 
 	    for_all_elements(e, groups(g).component_ids())
-	      output << "          <group_member comp_id=\""
+	      output << "          <GroupMember comp_id=\""
 		     << groups(g).component_ids()(e)
 		     << "\"/>" << std::endl;
 
-	    output << "        </group>" << std::endl;
+	    output << "        </Group>" << std::endl;
 	  }
-	  output << "      </object_groups>" << std::endl;
+	  output << "      </ObjectGroups>" << std::endl;
 	}
 
 
@@ -281,15 +281,15 @@ namespace scribo
 	void
 	full_xml_visitor::visit(const object_links<L>& links) const
 	{
-	  output << "      <object_links>" << std::endl;
+	  output << "      <ObjectLinks>" << std::endl;
 	  for_all_links(l, links)
 	  {
-	    output << "      <link"
+	    output << "      <Link"
 		   << " from=\"" << l
 		   << "\" to=\"" << links(l)
 		   << "\"/>" << std::endl;
 	  }
-	  output << "      </object_links>" << std::endl;
+	  output << "      </ObjectLinks>" << std::endl;
 	}
 
 
@@ -299,15 +299,15 @@ namespace scribo
 	void
 	full_xml_visitor::visit(const component_set<L>& comp_set) const
 	{
-	  output << "    <component_set nelements=\"" << comp_set.nelements()
+	  output << "    <ComponentSet nelements=\"" << comp_set.nelements()
 		 << "\">" << std::endl;
 	  for_all_comps(c, comp_set)
 	    if (comp_set(c).is_valid())
 	    {
-	      output << "      <component_info"
+	      output << "      <ComponentInfo"
 		     << " id=\"" << comp_set(c).id()
-		     << "\" mass_center_x=\"" << comp_set(c).mass_center().col()
-		     << "\" mass_center_y=\"" << comp_set(c).mass_center().row()
+		     << "\" massCenter_x=\"" << comp_set(c).mass_center().col()
+		     << "\" massCenter_y=\"" << comp_set(c).mass_center().row()
 		     << "\" card=\"" <<  comp_set(c).card()
 		     << "\" tag=\"" <<  comp_set(c).tag()
 		     << "\" type=\"" <<  comp_set(c).type()
@@ -320,13 +320,13 @@ namespace scribo
 	      {
 		output << "\">" << std::endl;
 
-		output << "      <component_features"
+		output << "      <ComponentFeatures"
 		       << " valid=\"" << comp_set(c).features().valid
 		       << "\" color=\"" << comp_set(c).features().color
 		       << "\" boldness=\"" << comp_set(c).features().boldness
 		       << "\"/>" << std::endl;
 
-		output << "    </component_info>" << std::endl;
+		output << "    </ComponentInfo>" << std::endl;
 	      }
 	      else
 		output << "\"/>" << std::endl;
@@ -336,17 +336,17 @@ namespace scribo
 	  // Save labeled image
 	  {
 	    const L& lbl = comp_set.labeled_image();
-	    save_image_to_xml(output, lbl, "labeled_image");
+	    save_image_to_xml(output, lbl, "LabeledImage");
 	  }
 
 	  // Save separators image
 	  if (comp_set.has_separators())
 	  {
 	    const mln_ch_value(L,bool)& seps = comp_set.separators();
-	    save_image_to_xml(output, seps, "separators_image");
+	    save_image_to_xml(output, seps, "SeparatorsImage");
 	  }
 
-	  output << "</component_set>" << std::endl;
+	  output << "</ComponentSet>" << std::endl;
 	}
 
 
@@ -360,7 +360,7 @@ namespace scribo
 	  {
 	    case component::WhitespaceSeparator:
 	    {
-	      output << "    <whitespace_separator_region id=\"wss"
+	      output << "    <WhitespaceSeparatorRegion id=\"wss"
 		     << info.id()
 		     << "\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
@@ -371,16 +371,16 @@ namespace scribo
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </whitespace_separator_region>" << std::endl;
+	      output << "    </WhitespaceSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
 	    case component::VerticalLineSeparator:
 	    {
-	      output << "    <vertical_separator_region id=\"vlsr" << info.id()
-		     << "\" sep_orientation=\"0.000000\" "
-		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\""
+	      output << "    <VerticalSeparatorRegion id=\"vlsr" << info.id()
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"Black\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
@@ -389,16 +389,16 @@ namespace scribo
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </vertical_separator_region>" << std::endl;
+	      output << "    </VerticalSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
 	    case component::HorizontalLineSeparator:
 	    {
-	      output << "    <horizontal_separator_region id=\"hlsr" << info.id()
-		     << "\" sep_orientation=\"0.000000\" "
-		     << " sep_colour=\"Black\" "
-		     << " sep_bgcolour=\"White\""
+	      output << "    <HorizontalSeparatorRegion id=\"hlsr" << info.id()
+		     << "\" orientation=\"0.000000\" "
+		     << " colour=\"Black\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
@@ -407,18 +407,18 @@ namespace scribo
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </horizontal_separator_region>" << std::endl;
+	      output << "    </HorizontalSeparatorRegion>" << std::endl;
 	      break;
 	    }
 
 	    default:
 	    case component::Image:
 	    {
-	      output << "    <image_region id=\"ir" << info.id()
-		     << "\" img_colour_type=\"24_Bit_Colour\""
-		     << " img_orientation=\"0.000000\" "
-		     << " img_emb_text=\"No\" "
-		     << " img_bgcolour=\"White\""
+	      output << "    <ImageRegion id=\"ir" << info.id()
+		     << "\" colourDepth=\"colour\""
+		     << " orientation=\"0.000000\" "
+		     << " embText=\"No\" "
+		     << " bgColour=\"White\""
 		     << " x_min=\"" << info.bbox().pmin().col() << "\""
 		     << " y_min=\"" << info.bbox().pmin().row() << "\""
 		     << " x_max=\"" << info.bbox().pmax().col() << "\""
@@ -427,7 +427,7 @@ namespace scribo
 
 	      internal::print_box_coords(output, info.bbox(), "      ");
 
-	      output << "    </image_region>" << std::endl;
+	      output << "    </ImageRegion>" << std::endl;
 	      break;
 	    }
 	  }
@@ -449,25 +449,25 @@ namespace scribo
 	      // FIXME: compute that information on the whole paragraph
 	      // and use them here.
 	      line_id_t fid = line_ids(0);
-	      output << "    <text_region id=\"" << p
-		     << "\" txt_orientation=\"" << lines(fid).orientation()
-		     << "\" txt_reading_orientation=\"" << lines(fid).reading_orientation()
-		     << "\" txt_reading_direction=\"" << lines(fid).reading_direction()
-		     << "\" txt_text_type=\"" << lines(fid).type()
-		     << "\" txt_reverse_video=\"" << (lines(fid).reverse_video() ? "true" : "false")
-		     << "\" txt_indented=\"" << (lines(fid).indented() ? "true" : "false")
-		     << "\" txt_text_colour=\"" << internal::compute_text_colour(parset(p).color())
+	      output << "    <TextRegion id=\"" << p
+		     << "\" orientation=\"" << lines(fid).orientation()
+		     << "\" readingOrientation=\"" << lines(fid).reading_orientation()
+		     << "\" readingDirection=\"" << lines(fid).reading_direction()
+		     << "\" type=\"" << lines(fid).type()
+		     << "\" reverseVideo=\"" << (lines(fid).reverse_video() ? "true" : "false")
+		     << "\" indented=\"" << (lines(fid).indented() ? "true" : "false")
+		     << "\" textColour=\"" << internal::compute_text_colour(parset(p).color())
 		     << "\" kerning=\"" << lines(fid).char_space();
 
 	      // EXTENSIONS - Not officially supported
 	      output << "\" baseline=\"" << lines(fid).baseline()
 		     << "\" meanline=\"" << lines(fid).meanline()
-		     << "\" x_height=\"" << lines(fid).x_height()
-		     << "\" d_height=\"" << lines(fid).d_height()
-		     << "\" a_height=\"" << lines(fid).a_height()
-		     << "\" char_width=\"" << lines(fid).char_width()
+		     << "\" xHeight=\"" << lines(fid).x_height()
+		     << "\" dHeight=\"" << lines(fid).d_height()
+		     << "\" aHeight=\"" << lines(fid).a_height()
+		     << "\" charWidth=\"" << lines(fid).char_width()
 		     << "\" color=\"" << scribo::util::color_to_hex(parset(p).color())
-		     << "\" color_reliability=\"" << parset(p).color_reliability();
+		     << "\" colorReliability=\"" << parset(p).color_reliability();
 	      // End of EXTENSIONS
 	      output << "\">"
 		     << std::endl;
@@ -483,7 +483,7 @@ namespace scribo
 		lines(l).accept(*this);
 	      }
 
-	      output << "    </text_region>" << std::endl;
+	      output << "    </TextRegion>" << std::endl;
 	    }
 	}
 
@@ -494,43 +494,43 @@ namespace scribo
 	{
 	  if (line.has_text())
 	  {
-	    output << "        <line text=\"" << line.html_text() << "\" ";
+	    output << "        <Line text=\"" << line.html_text() << "\" ";
 	  }
 	  else
-	    output << "        <line " << std::endl;
+	    output << "        <Line " << std::endl;
 
 	  output << "id=\"" << line.id()
 		 << "\" boldness=\"" << line.boldness()
-		 << "\" boldness_reliability=\"" << line.boldness_reliability()
+		 << "\" boldnessReliability=\"" << line.boldness_reliability()
 		 << "\" color=\"" << scribo::util::color_to_hex(line.color())
-		 << "\" color_reliability=\"" << line.color_reliability()
-		 << "\" txt_orientation=\"" << line.orientation()
-		 << "\" txt_reading_orientation=\"" << line.reading_orientation()
-		 << "\" txt_reading_direction=\"" << line.reading_direction()
-		 << "\" txt_text_type=\"" << line.type()
-		 << "\" txt_reverse_video=\"" << (line.reverse_video() ? "true" : "false")
-		 << "\" txt_indented=\"" << (line.indented() ? "true" : "false")
-		 << "\" txt_text_colour=\"" << internal::compute_text_colour(line.color())
+		 << "\" colorReliability=\"" << line.color_reliability()
+		 << "\" orientation=\"" << line.orientation()
+		 << "\" readingOrientation=\"" << line.reading_orientation()
+		 << "\" readingDirection=\"" << line.reading_direction()
+		 << "\" type=\"" << line.type()
+		 << "\" reverseVideo=\"" << (line.reverse_video() ? "true" : "false")
+		 << "\" indented=\"" << (line.indented() ? "true" : "false")
+		 << "\" textColour=\"" << internal::compute_text_colour(line.color())
 		 << "\" kerning=\"" << line.char_space()
 		 << "\" baseline=\"" << line.baseline()
 		 << "\" meanline=\"" << line.meanline()
-		 << "\" x_height=\"" << line.x_height()
-		 << "\" d_height=\"" << line.d_height()
-		 << "\" a_height=\"" << line.a_height()
-		 << "\" char_width=\"" << line.char_width()
+		 << "\" xHeight=\"" << line.x_height()
+		 << "\" dHeight=\"" << line.d_height()
+		 << "\" aHeight=\"" << line.a_height()
+		 << "\" charWidth=\"" << line.char_width()
 		 << "\">" << std::endl;
 
 	  internal::print_box_coords(output, line.bbox(), "          ");
 
-	  output << "          <compid_list>" << std::endl;
+	  output << "          <CompidList>" << std::endl;
 
 	  for_all_line_comps(c, line.component_ids())
-	    output << "            <compid value=\""
+	    output << "            <Compid value=\""
 		   << line.component_ids()(c) << "\" />" << std::endl;
 
-	  output << "          </compid_list>" << std::endl;
+	  output << "          </CompidList>" << std::endl;
 
-	  output << "        </line>" << std::endl;
+	  output << "        </Line>" << std::endl;
 	}
 
 #endif // MLN_INCLUDE_ONLY

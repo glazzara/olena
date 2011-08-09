@@ -2,10 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="1.0">
 
   <!-- FILE: line.xsl
-       DESCRIPTION: match all pcGts/page/text_region/line in order to display the "text" attributes
+       DESCRIPTION: match all PcGts/Page/TextRegion/Line in order to display the "text" attributes
   -->
 
-  <xsl:template match="pcGts/page/text_region">
+  <xsl:template match="PcGts/Page/TextRegion">
 
       <!-- WTF !?, Necessary to do a lower-case !
 	   FIXME: take a look at text-transform attribute -->
@@ -25,27 +25,27 @@
       </xsl:variable>
 
 
-    <xsl:for-each select="line">
+    <xsl:for-each select="Line">
 
       <!-- x_height -->
       <xsl:variable name="x_height">
-	<xsl:value-of select="@x_height" />
+	<xsl:value-of select="@xHeight" />
       </xsl:variable>
 
       <!-- a_height -->
       <xsl:variable name="a_height">
-	<xsl:value-of select="@a_height" />
+	<xsl:value-of select="@aHeight" />
       </xsl:variable>
 
 
       <!-- ABS(d_height) -->
       <xsl:variable name="d_height_abs">
 	<xsl:choose>
-	  <xsl:when test="@d_height &lt; 0">
-	    <xsl:value-of select="-@d_height" />
+	  <xsl:when test="@dHeight &lt; 0">
+	    <xsl:value-of select="-@dHeight" />
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:value-of select="@d_height" />
+	    <xsl:value-of select="@dHeight" />
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
@@ -82,7 +82,7 @@
 
       <!-- Text lines coordinates -->
       <xsl:variable name="y1">
-	<xsl:for-each select="coords/point">
+	<xsl:for-each select="Coords/Point">
 	  <xsl:sort select="@y" order="ascending" data-type="number"/>
 	  <xsl:if test="position() = 1">
 	    <xsl:value-of select="@y" />
@@ -91,7 +91,7 @@
       </xsl:variable>
 
       <xsl:variable name="ymax">
-	<xsl:for-each select="coords/point">
+	<xsl:for-each select="Coords/Point">
 	  <xsl:sort select="@y" order="ascending" data-type="number"/>
 	  <xsl:if test="position() = 3">
 	    <xsl:value-of select="@y" />
@@ -100,7 +100,7 @@
       </xsl:variable>
 
       <xsl:variable name="x1">
-	<xsl:for-each select="coords/point">
+	<xsl:for-each select="Coords/Point">
 	  <xsl:sort select="@x" order="ascending" data-type="number"/>
 	  <xsl:if test="position() = 1">
 	    <xsl:value-of select="@x" />
@@ -109,7 +109,7 @@
       </xsl:variable>
 
       <xsl:variable name="xmax">
-	<xsl:for-each select="coords/point">
+	<xsl:for-each select="Coords/Point">
 	  <xsl:sort select="@x" order="ascending" data-type="number"/>
 	  <xsl:if test="position() = 3">
 	    <xsl:value-of select="@x" />

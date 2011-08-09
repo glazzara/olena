@@ -4,12 +4,12 @@
   <!-- FILE: regions.xsl
        DESCRIPTION: Match all regions that are not text to display them -->
 
-  <xsl:template match="pcGts/page/image_region|
-		       pcGts/page/graphic_region|
-		       pcGts/page/chart_region|
-		       pcGts/page/table_region|
-		       pcGts/page/vertical_separator_region|
-		       pcGts/page/horizontal_separator_region">
+  <xsl:template match="PcGts/Page/ImageRegion|
+		       PcGts/Page/GraphicRegion|
+		       PcGts/Page/ChartRegion|
+		       PcGts/Page/TableRegion|
+		       PcGts/Page/VerticalSeparatorRegion|
+		       PcGts/Page/HorizontalSeparatorRegion">
 
     <!-- ID of the region, used to display id.png -->
     <xsl:variable name="data">

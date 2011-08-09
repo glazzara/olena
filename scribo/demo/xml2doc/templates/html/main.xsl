@@ -35,25 +35,25 @@
       </head>
       <body>
 
-	<xsl:apply-templates select="pcGts/page/text_region"/>
-	<xsl:apply-templates select="pcGts/page/graphic_region|
-				     pcGts/page/image_region|
-				     pcGts/page/chart_region|
-				     pcGts/page/table_region|
-				     pcGts/page/separator_region"/>
+	<xsl:apply-templates select="PcGts/Page/TextRegion"/>
+	<xsl:apply-templates select="PcGts/Page/GraphicRegion|
+				     PcGts/Page/ImageRegion|
+				     PcGts/Page/ChartRegion|
+				     PcGts/Page/TableRegion|
+				     PcGts/Page/SeparatorRegion"/>
 
       </body>
     </html>
   </xsl:template>
 
 
-  <xsl:template match="pcGts/page/text_region">
+  <xsl:template match="PcGts/Page/TextRegion">
 
     <!-- Regions Coordinates -->
 
     <!-- y1 -->
     <xsl:variable name="y1">
-      <xsl:for-each select="coords/point">
+      <xsl:for-each select="Coords/Point">
 	<xsl:sort select="@y" order="ascending" data-type="number"/>
 	<xsl:if test="position() = 1">
 	  <xsl:value-of select="@y" />
@@ -63,7 +63,7 @@
 
     <!-- x2 -->
     <xsl:variable name="x2">
-      <xsl:for-each select="coords/point">
+      <xsl:for-each select="Coords/Point">
 	<xsl:sort select="@x" order="descending" data-type="number"/>
 	<xsl:if test="position() = 1">
 	  <xsl:value-of select="@x" />
@@ -73,7 +73,7 @@
 
     <!-- y2 -->
     <xsl:variable name="y2">
-      <xsl:for-each select="coords/point">
+      <xsl:for-each select="Coords/Point">
 	<xsl:sort select="@y" order="descending" data-type="number"/>
 	<xsl:if test="position() = 1">
 	  <xsl:value-of select="@y" />
@@ -83,7 +83,7 @@
 
     <!-- x1 -->
     <xsl:variable name="x1">
-      <xsl:for-each select="coords/point">
+      <xsl:for-each select="Coords/Point">
 	<xsl:sort select="@x" order="ascending" data-type="number"/>
 	<xsl:if test="position() = 1">
 	  <xsl:value-of select="@x" />
@@ -93,7 +93,7 @@
 
     <!-- END OF Regions Coordinates -->
 
-    <xsl:apply-templates select="line"/>
+    <xsl:apply-templates select="Line"/>
 
   </xsl:template>
 
@@ -102,13 +102,13 @@
 
 
 
-  <xsl:template match="line">
+  <xsl:template match="Line">
 
 	  <!-- Regions Coordinates -->
 
 	  <!-- y1 -->
 	  <xsl:variable name="y1">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@y" order="ascending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@y" />
@@ -118,7 +118,7 @@
 
 	  <!-- x2 -->
 	  <xsl:variable name="x2">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@x" order="descending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@x" />
@@ -128,7 +128,7 @@
 
 	  <!-- y2 -->
 	  <xsl:variable name="y2">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@y" order="descending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@y" />
@@ -138,7 +138,7 @@
 
 	  <!-- x1 -->
 	  <xsl:variable name="x1">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@x" order="ascending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@x" />
@@ -149,10 +149,10 @@
 	  <!-- END OF Regions Coordinates -->
 
 	  <!-- TEXT LINE-->
-	  <xsl:variable name="colour">
+	  <xsl:variable name="color">
 	    <xsl:choose>
-	      <xsl:when test="@txt_colour != ''">
-		<xsl:value-of select="@txt_colour" />
+	      <xsl:when test="@color != ''">
+		<xsl:value-of select="@color" />
 	      </xsl:when>
 	      <xsl:otherwise>
 		Black
@@ -162,22 +162,22 @@
 
 	  <!-- x_height -->
 	  <xsl:variable name="x_height">
-	    <xsl:value-of select="@x_height" />
+	    <xsl:value-of select="@xHeight" />
 	  </xsl:variable>
 
 	  <!-- a_height -->
 	  <xsl:variable name="a_height">
-	    <xsl:value-of select="@a_height" />
+	    <xsl:value-of select="@aHeight" />
 	  </xsl:variable>
 
 	  <!-- ABS(d_height) -->
 	  <xsl:variable name="d_height_abs">
 	    <xsl:choose>
-	      <xsl:when test="@d_height &lt; 0">
-		<xsl:value-of select="-@d_height" />
+	      <xsl:when test="@dHeight &lt; 0">
+		<xsl:value-of select="-@dHeight" />
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:value-of select="@d_height" />
+		<xsl:value-of select="@dHeight" />
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:variable>
@@ -219,7 +219,7 @@
 	      width:<xsl:value-of select="$x2 - $x1" />px;
 	      left:<xsl:value-of select="$x1 " />px;
 	      top:<xsl:value-of select="$y1 " />px;
-	      color:<xsl:value-of select="$colour" />;
+	      color:<xsl:value-of select="$color" />;
 	    </xsl:attribute>
 	    <xsl:value-of select="@text"/>
 	  </span>
@@ -230,17 +230,17 @@
 
 
 
-  <xsl:template match="pcGts/page/graphic_region|
-		       pcGts/page/image_region|
-		       pcGts/page/chart_region|
-		       pcGts/page/table_region|
-		       pcGts/page/separator_region">
+  <xsl:template match="PcGts/Page/GraphicRegion|
+		       PcGts/Page/ImageRegion|
+		       PcGts/Page/ChartRegion|
+		       PcGts/Page/TableRegion|
+		       PcGts/Page/SeparatorRegion">
 
 	  <!-- Regions Coordinates -->
 
 	  <!-- y1 -->
 	  <xsl:variable name="y1">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@y" order="ascending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@y" />
@@ -250,7 +250,7 @@
 
 	  <!-- x2 -->
 	  <xsl:variable name="x2">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@x" order="descending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@x" />
@@ -260,7 +260,7 @@
 
 	  <!-- y2 -->
 	  <xsl:variable name="y2">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@y" order="descending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@y" />
@@ -270,7 +270,7 @@
 
 	  <!-- x1 -->
 	  <xsl:variable name="x1">
-	    <xsl:for-each select="coords/point">
+	    <xsl:for-each select="Coords/Point">
 	      <xsl:sort select="@x" order="ascending" data-type="number"/>
 	      <xsl:if test="position() = 1">
 		<xsl:value-of select="@x" />
@@ -289,7 +289,7 @@
 	  <!-- depth -->
 	  <xsl:variable name="depth">
 	    <xsl:choose>
-	      <xsl:when test="name() = 'separator_region'">
+	      <xsl:when test="name() = 'SeparatorRegion'">
 		1
 	      </xsl:when>
 	      <xsl:otherwise>

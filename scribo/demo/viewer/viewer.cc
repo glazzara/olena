@@ -80,22 +80,22 @@ Viewer::Viewer(int &argc, char** argv)
   // Region ids
   // ----------
 
-  region_ids_["text_region"] = region::Text;
+  region_ids_["TextRegion"] = region::Text;
 
   // Extension
-  region_ids_["line"] = region::Line;
+  region_ids_["Line"] = region::Line;
 
-  region_ids_["image_region"] = region::Image;
-  region_ids_["noise_region"] = region::Noise;
-  region_ids_["separator_region"] = region::Separator;
-  region_ids_["table_region"] = region::Table;
-  region_ids_["line_drawing_region"] = region::LineDrawing;
-  region_ids_["graphic_region"] = region::Graphic;
-  region_ids_["chart_region"] = region::Chart;
-  region_ids_["maths_region"] = region::Maths;
+  region_ids_["ImageRegion"] = region::Image;
+  region_ids_["NoiseRegion"] = region::Noise;
+  region_ids_["SeparatorRegion"] = region::Separator;
+  region_ids_["TableRegion"] = region::Table;
+  region_ids_["Line_drawingRegion"] = region::LineDrawing;
+  region_ids_["GraphicRegion"] = region::Graphic;
+  region_ids_["ChartRegion"] = region::Chart;
+  region_ids_["MathsRegion"] = region::Maths;
 
   // Extension
-  region_ids_["whitespace_separator_region"] = region::WhitespaceSeparator;
+  region_ids_["WhitespaceSeparatorRegion"] = region::WhitespaceSeparator;
 
 
 
@@ -353,9 +353,9 @@ void
 Viewer::add_text(QDomNode line)
 {
 
-  int a_height = line.toElement().attribute("a_height", "0").toInt();
-  int d_height = line.toElement().attribute("d_height", "0").toInt();
-  int x_height = line.toElement().attribute("x_height", "0").toInt();
+  int a_height = line.toElement().attribute("aHeight", "0").toInt();
+  int d_height = line.toElement().attribute("dHeight", "0").toInt();
+  int x_height = line.toElement().attribute("xHeight", "0").toInt();
 
   if (d_height < 0)
     d_height = -d_height;
@@ -587,8 +587,8 @@ Viewer::load_xml(QString filename)
   if (page.isNull())
     return;
 
-  int width = page.toElement().attribute("image_width", "none").toInt();
-  int height = page.toElement().attribute("image_height", "none").toInt();
+  int width = page.toElement().attribute("imageWidth", "none").toInt();
+  int height = page.toElement().attribute("imageHeight", "none").toInt();
 
   scene_->setSceneRect(0, 0, width, height);
 
@@ -596,13 +596,13 @@ Viewer::load_xml(QString filename)
 
   while (!region.isNull())
     {
-      if (region.toElement().tagName().contains(QRegExp("(whitespace_separator|image|graphic|chart|separator|table|text)_region")))
+      if (region.toElement().tagName().contains(QRegExp("(WhitespaceSeparator|Image|Graphic|Chart|Separator|Table|Text)Region")))
         {
 	  QString attr_id = region.toElement().attribute("id", "none");
 	  add_region(region, attr_id);
 
 	  if ( base64_ &&
-	       region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
+	       region.toElement().tagName().contains(QRegExp("(Image|Graphic|Chart|Separator|Table)Region")))
 	    {
 	      QDomNode container = region.firstChild();
 
@@ -665,13 +665,13 @@ Viewer::load_xml(QString filename)
 		}
 	    }
 
-	  if (region.toElement().tagName().contains("text_region"))
+	  if (region.toElement().tagName().contains("TextRegion"))
 	  {
 	    QDomNode line = region.firstChild();
 
 	    do
 	    {
-	      while (!line.isNull() && !line.toElement().tagName().contains("line"))
+	      while (!line.isNull() && !line.toElement().tagName().contains("Line"))
 		line = line.nextSibling();
 
 	      if (!line.isNull())
@@ -685,7 +685,7 @@ Viewer::load_xml(QString filename)
 		add_text(line);
 	      }
 	    }
-	    while (!(line = line.nextSiblingElement("line")).isNull());
+	    while (!(line = line.nextSiblingElement("Line")).isNull());
 	  }
 	}
 
@@ -801,13 +801,13 @@ QPixmap Viewer::load_base64(QString xml)
   QDomElement root = doc.documentElement();
   QDomNode child = root.firstChild();
 
-  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+  while (!child.isNull() && !child.toElement().tagName().contains("Page"))
     child = child.nextSibling();
 
   child = child.firstChild();
   while (!child.isNull())
     {
-      if (child.toElement().tagName().contains(QRegExp("image_region")))
+      if (child.toElement().tagName().contains(QRegExp("ImageRegion")))
         {
           QDomNode node = child.firstChild();
           QString id = child.toElement().attribute("id", "none");
