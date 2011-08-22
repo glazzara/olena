@@ -1,5 +1,10 @@
 2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/scribo-cli.in: Make Binarization algorithms accessible to
+	scribo-cli.
+
+2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an option parser to some examples.
 
 	* scribo/debug/option_check.hh,

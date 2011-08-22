@@ -94,6 +94,10 @@ EOF
 run_cmd()
 {
     cmd="$1";
+    if [ -z "$cmd" ]; then
+        usage
+	exit 0
+    fi
     shift;
 
     case $cmd in
@@ -120,6 +124,22 @@ run_cmd()
 
 	xml2doc)
 	    $bdir/scribo-xml2doc $@
+	    ;;
+
+	sauvola)
+	    $bdir/sauvola $@
+	    ;;
+
+	sauvola-ms)
+	    $bdir/sauvola_ms $@
+	    ;;
+
+    	sauvola-ms-fg)
+	    $bdir/sauvola_ms_fg $@
+	    ;;
+
+    	sauvola-ms-split)
+	    $bdir/sauvola_ms_split $@
 	    ;;
 
 	*)
