@@ -47,7 +47,8 @@ namespace scribo
     text_in_doc(const Image<I>& input, bool denoise,
 		const std::string& language = std::string("eng"),
 		bool find_line_seps = true,
-		bool find_whitespace_seps = true);
+		bool find_whitespace_seps = true,
+		bool verbose = false);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,13 +59,15 @@ namespace scribo
     text_in_doc(const Image<I>& input, bool denoise,
 		const std::string& language = std::string("eng"),
 		bool find_line_seps = true,
-		bool find_whitespace_seps = true)
+		bool find_whitespace_seps = true,
+		bool verbose = false)
     {
       internal::text_in_doc_functor<I> f;
       f.enable_denoising = denoise;
       f.enable_line_seps = find_line_seps;
       f.enable_whitespace_seps = find_whitespace_seps;
       f.ocr_language = language;
+      f.verbose = verbose;
 
       line_set<mln_ch_value(I, def::lbl_type)> lines = f(input);
 

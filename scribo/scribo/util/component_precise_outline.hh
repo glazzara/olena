@@ -40,7 +40,7 @@
 # include <mln/io/ppm/save.hh>
 # include <mln/data/convert.hh>
 # include <mln/opt/at.hh>
-# include <mln/extension/fill.hh>
+# include <mln/extension/adjust_fill.hh>
 
 # include <iostream>
 

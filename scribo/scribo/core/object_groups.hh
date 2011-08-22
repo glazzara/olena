@@ -123,6 +123,8 @@ namespace scribo
     // Map component ids to group ids.
     const mln::util::array<unsigned>& comp_to_group() const;
 
+    void merge(unsigned group_id_from, unsigned group_id_to);
+
     object_groups<L> duplicate() const;
 
 
@@ -322,6 +324,21 @@ namespace scribo
   object_groups<L>::comp_to_group() const
   {
     return data_->comp_to_group_;
+  }
+
+
+  template <typename L>
+  void
+  object_groups<L>::merge(unsigned group_id_from, unsigned group_id_to)
+  {
+    // Mark components as being part of group group_id_to.
+    const mln::util::array<component_id_t>&
+      comp_ids = data_->group_info_(group_id_from).component_ids();
+    for_all_elements(e, comp_ids)
+      data_->comp_to_group_(comp_ids(e)) = group_id_to;
+
+    // Merge group info.
+    data_->group_info_(group_id_to).merge(data_->group_info_(group_id_from));
   }
 
 

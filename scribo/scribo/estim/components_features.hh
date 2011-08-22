@@ -92,8 +92,8 @@ namespace scribo
       L skel_lbl;
       mln_value(L) nlabels;
 
-      util::timer t;
-      t.start();
+      // util::timer t;
+      // t.start();
       {
 	int psi = 7;
 	int vals[] = { 0, 9, 0, 9, 0,
@@ -107,21 +107,21 @@ namespace scribo
 	  dist = transform::distance_front(logical::not_(bin_input), c8(),
 					   mln::make::w_window2d_int(vals),
 					   mln_max(value::int_u8));
-	t.stop();
-	std::cout << "Distance front " << t << std::endl;
-	t.restart();
+	// t.stop();
+	// std::cout << "Distance front " << t << std::endl;
+	// t.restart();
 
 	dist_t dist_map = arith::revert(dist);
 
-	t.stop();
-	std::cout << "Revert " << t << std::endl;
-	t.restart();
+	// t.stop();
+	// std::cout << "Revert " << t << std::endl;
+	// t.restart();
 
 	B K = topo::skeleton::crest(bin_input, dist, c8(), psi);
 
-	t.stop();
-	std::cout << "Crest " << t << std::endl;
-	t.restart();
+	// t.stop();
+	// std::cout << "Crest " << t << std::endl;
+	// t.restart();
 
 	typedef
 	  neighb<win::multiple_size<2u, window2d, pw::value_<J> > >
@@ -133,10 +133,10 @@ namespace scribo
 				       topo::skeleton::is_simple_point<nbh_t>(nbh),
 				       K, dist_map);
 
-	t.stop();
-	std::cout << "Skeleton constrained " << t << std::endl;
+	// t.stop();
+	// std::cout << "Skeleton constrained " << t << std::endl;
       }
-      t.restart();
+      // t.restart();
 
       const L& lbl = output.labeled_image();
 
@@ -158,8 +158,8 @@ namespace scribo
       }
 
 
-      t.stop();
-      std::cout << "compute color and boldness " << t << std::endl;
+      // t.stop();
+      // std::cout << "compute color and boldness " << t << std::endl;
 
       trace::exiting("scribo::estim::components_features");
       return output;

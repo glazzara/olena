@@ -48,7 +48,8 @@ namespace scribo
 		   bool find_line_seps = true,
 		   bool find_whitespace_seps = true,
 		   bool enable_ocr = true,
-		   const std::string& language = std::string("eng"));
+		   const std::string& language = std::string("eng"),
+		   bool verbose = false);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -61,7 +62,8 @@ namespace scribo
 		   bool find_line_seps = true,
 		   bool find_whitespace_seps = true,
 		   bool enable_ocr = true,
-		   const std::string& language = std::string("eng"))
+		   const std::string& language = std::string("eng"),
+		   bool verbose = false)
     {
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(input_preproc).is_valid());
@@ -72,6 +74,7 @@ namespace scribo
       f.enable_whitespace_seps = find_whitespace_seps;
       f.ocr_language = language;
       f.enable_ocr = enable_ocr;
+      f.verbose = verbose;
 
       document<mln_ch_value(I, def::lbl_type)> doc = f(input, input_preproc);
 

@@ -1140,15 +1140,6 @@ namespace scribo
       image2d<V> blocks(geom::rotate(input.domain(), -90, input.domain().pcenter()));
       data::fill(blocks, 0);
 
-      // util::array< line_info<L> > lines_info;
-
-      // for_all_lines(l, lines)
-      // {
-      //   if (lines(l).is_textline())
-      // 	lines_info.append(lines(l));
-      // }
-
-/// const unsigned nlines = lines_info.nelemnts();
       mln::util::array<box2d> rbbox;
       line_links<L> left(lines);
       left(0) = 0;
@@ -1159,18 +1150,15 @@ namespace scribo
 
       rbbox.resize(lines.nelements() + 1);
 
-      std::cout << "Preparing lines" << std::endl;
+      // Prepare lines
       internal::prepare_lines(input.domain(), lines , blocks, rbbox);
-//    io::pgm::save(blocks, "blocks.pgm");
-      std::cout << "Linking left" << std::endl;
+      // Link left
       internal::process_left_link(blocks, rbbox, lines , left);
-      std::cout << "Linking right" << std::endl;
+      // Link right
       internal::process_right_link(blocks, rbbox, lines , right);
-      std::cout << "Finalizing links" << std::endl;
+      // Finalize links
       internal::finalize_links(left, right, lines );
-      // std::cout << "Finalizing merging" << std::endl;
-      // finalize_line_merging(left, right, lines);
-      std::cout << "Extracting paragraphs" << std::endl;
+      // Extract paragraphs
       internal::paragraph_links(left, right, output, lines);
 
       paragraph_set<L> par_set = make::paragraph(output);

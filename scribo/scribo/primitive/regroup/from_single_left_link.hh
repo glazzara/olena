@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -115,9 +116,13 @@ namespace scribo
 	object_groups<L>
 	  new_groups = primitive::group::from_single_link(links);
 
-	for_all_groups(g, groups)
-	  output(g) = new_groups(relabel_fun(g));
-
+	// Preserve the original groups ids but merge newly regrouped
+	// groups.
+	for_all_groups(g, new_groups)
+	  if (new_groups(g).card() > 1)
+	    for (unsigned i = 1; i < new_groups(g).component_ids().nelements(); ++i)
+	      output(relabel_fun(new_groups(g).component_ids()(0)))
+		.merge(output(relabel_fun(new_groups(g).component_ids()(i))));
 
 	trace::exiting("scribo::primitive::regroup::from_single_left_link");
 	return output;

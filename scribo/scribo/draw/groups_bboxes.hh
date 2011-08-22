@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,12 +73,9 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      // Grouping groups and relabel the underlying labeled image.
-      // Groups are now considered as components.
-      component_set<L> comps = primitive::group::apply(groups);
-
-      for_all_comps(c, comps)
-	mln::draw::box(input, comps(c).bbox(), value);
+      for_all_groups(g, groups)
+	if (groups(g).is_valid())
+	  mln::draw::box(input, groups(g).bbox(), value);
 
       trace::exiting("scribo::draw::groups_bboxes");
     }

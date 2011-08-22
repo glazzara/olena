@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -86,8 +86,16 @@ namespace scribo
 
 	L labeled_image = duplicate(components.labeled_image());
 
+	// Components part of an invalid group should not exist
+	// anymore, so they are relabeled as background.
+	mln::util::array<unsigned> tmp = groups.comp_to_group();
+	for_all_groups(g, groups)
+	  if (!groups(g).is_valid())
+	    for_all_elements(c, groups(g).component_ids())
+	      tmp(groups(g).component_ids()(c)) = 0;
+
 	mln_value(L) new_nlabels;
-	relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
+	relabel_fun = mln::make::relabelfun(tmp,
 					    components.nelements(),
 					    new_nlabels);
 

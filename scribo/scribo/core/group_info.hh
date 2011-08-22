@@ -32,6 +32,8 @@
 
 # include <mln/util/array.hh>
 
+# include <mln/accu/shape/bbox.hh>
+
 # include <scribo/core/object_links.hh>
 # include <scribo/core/component_set.hh>
 
@@ -66,6 +68,9 @@ namespace scribo
     unsigned id() const;
     unsigned pixel_area() const;
     const box2d& bbox() const;
+
+    // Merge rhs with this group_info and invalidate rhs afterwards.
+    void merge(group_info& rhs);
 
   private:
     unsigned id_;
@@ -154,6 +159,22 @@ namespace scribo
   group_info::bbox() const
   {
     return bbox_;
+  }
+
+  inline
+  void
+  group_info::merge(group_info& rhs)
+  {
+    comps_.append(rhs.component_ids());
+    pixel_area_ += rhs.pixel_area();
+
+    // Update bbox.
+    mln::accu::shape::bbox<point2d> baccu;
+    baccu.take(bbox_);
+    baccu.take(rhs.bbox());
+    bbox_ = baccu.to_result();
+
+    rhs.invalidate();
   }
 
   inline

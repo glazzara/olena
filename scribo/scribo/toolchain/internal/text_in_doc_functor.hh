@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_FUNCTOR_HH
 
+#  ifndef SCRIBO_NDEBUG
+#  include <mln/util/timer.hh>
+#  endif // ! SCRIBO_NDEBUG
+
 # include <scribo/core/def/lbl_type.hh>
 
 # include <scribo/primitive/extract/components.hh>
@@ -105,6 +109,19 @@ namespace scribo
 	std::string ocr_language;
 
 
+#  ifndef SCRIBO_NDEBUG
+	//=============
+	// DEBUG TOOLS
+	//=============
+	virtual void on_start();
+	virtual void on_end();
+	virtual void on_progress();
+
+	mln::util::timer t;
+	mln::util::timer gt;
+#  endif // ! SCRIBO_NDEBUG
+
+
 	// Results
 	line_set<L> output;
       };
@@ -119,6 +136,7 @@ namespace scribo
 	  enable_whitespace_seps(true),
 	  ocr_language("eng")
       {
+	verbose = false;
       }
 
 
@@ -404,6 +422,39 @@ namespace scribo
 	return 6 + enable_denoising + enable_line_seps
 	  + enable_whitespace_seps;
       }
+
+
+#  ifndef SCRIBO_NDEBUG
+
+      template <typename I>
+      void
+      text_in_doc_functor<I>::on_start()
+      {
+	gt.start();
+	t.start();
+      }
+
+      template <typename I>
+      void
+      text_in_doc_functor<I>::on_end()
+      {
+	gt.stop();
+	if (verbose)
+	  std::cout << "Total time: " << gt << std::endl;
+      }
+
+      template <typename I>
+      void
+      text_in_doc_functor<I>::on_progress()
+      {
+	t.stop();
+	if (verbose)
+	  std::cout << t << std::endl;
+	t.restart();
+      }
+
+
+#  endif // ! SCRIBO_NDEBUG
 
 
 # endif // ! MLN_INCLUDE_ONLY

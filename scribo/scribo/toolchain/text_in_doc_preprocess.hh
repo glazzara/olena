@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,14 +64,17 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg, double K);
+    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
+			   unsigned lambda, double K,
+			   bool verbose = false);
 
     /*! \overload
       K is set to 0.34.
     */
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg);
+    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
+			   bool verbose = false);
 
 
     /*! \brief Preprocess a document before looking for its content.
@@ -85,7 +89,8 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input, unsigned lambda);
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
+			   bool verbose = false);
 
     /*! \brief Preprocess a document before looking for its content.
 
@@ -102,7 +107,8 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   double K, bool enable_fg_bg, Image<I>& fg);
+			   double K, bool enable_fg_bg, Image<I>& fg,
+			   bool verbose = false);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -110,43 +116,48 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg)
+    text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
+			   bool verbose = false)
     {
-      return text_in_doc_preprocess(input, enable_fg_bg, 0.34);
+      return text_in_doc_preprocess(input, enable_fg_bg, 0.34, verbose);
     }
 
 
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg, double K)
+    text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg,
+			   unsigned lambda, double K,
+			   bool verbose = false)
     {
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
-      unsigned lambda = 0;
-      if (enable_fg_bg)
+      if (enable_fg_bg && lambda == 0)
 	lambda = 1.2 * (input.nrows() + input.ncols());
 
       mln_concrete(I) tmp_fg;
       mln_ch_value(I,bool)
-	output = text_in_doc_preprocess(input, lambda, K, enable_fg_bg, tmp_fg);
+	output = text_in_doc_preprocess(input, lambda, K,
+					enable_fg_bg, tmp_fg, verbose);
 
       return output;
     }
 
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input, unsigned lambda)
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
+			   bool verbose = false)
     {
       I tmp;
-      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp);
+      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, verbose);
     }
 
 
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
-			   double K, bool enable_fg_bg, Image<I>& fg)
+			   double K, bool enable_fg_bg, Image<I>& fg,
+			   bool verbose)
     {
       trace::entering("scribo::toolchain::text_in_doc_preprocess");
 
@@ -159,6 +170,7 @@ namespace scribo
       f.sauvola_K = K;
       f.enable_fg_extraction = enable_fg_bg;
       f.lambda = lambda;
+      f.verbose = verbose;
 
       // Get results.
       mln_ch_value(I,bool) output = f(input);

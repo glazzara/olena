@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,8 +67,6 @@ namespace scribo
 
       mln_concrete(I) output(input.domain().nrows() / sub_ratio,
 			     input.domain().ncols() / sub_ratio);
-
-      std::cout << "output domain = " << output.domain() << std::endl;
 
       mln_piter(I) p(output.domain());
       mln_value(I) pixels[4];

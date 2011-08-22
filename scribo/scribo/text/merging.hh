@@ -181,7 +181,7 @@ namespace scribo
 	l2 = my_find_root(parent, l2);
 	if (l1 == l2)
 	  {
-	    std::cerr << "what! in'do_union': already merged!!!" << std::endl;
+	    //std::cerr << "what! in'do_union': already merged!!!" << std::endl;
 	    return l1;
 	  }
 
@@ -863,8 +863,8 @@ namespace scribo
 	      if (lcand == 0) // Skip background.
 		continue;
 
-	      if (lines(lcand).type() != line::Text)
-		std::cerr << "again!" << std::endl;
+	      // if (lines(lcand).type() != line::Text)
+	      // 	std::cerr << "again!" << std::endl;
 
 
 	      if (lines(l_).type() == line::Text)

@@ -1,3 +1,40 @@
+2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Some cleanup and fixes.
+
+	* scribo/core/group_info.hh,
+	* scribo/core/object_groups.hh: Add merge method.
+
+	* scribo/draw/groups_bboxes.hh: Only consider valid groups.
+
+	* scribo/estim/components_features.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/merging.hh: Remove debug output.
+
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/regroup/from_single_left_link.hh,
+	* scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh:
+	Fix invalid result.
+
+	* scribo/toolchain/internal/content_in_doc_functor.hh: Remove comments.
+
+	* scribo/toolchain/internal/text_in_picture_functor.hh: New.
+
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/toolchain/internal/text_in_doc_functor.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh: Add verbose mode.
+
+	* scribo/toolchain/text_in_picture.hh: Make use of the new
+	functor.
+
+	* scribo/util/component_precise_outline.hh: Fix an include.
+
+	* scribo/src/contest/hdlac-2011/content_in_hdoc_hdlac.cc: Fix
+	parameters.
+
 2011-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo.

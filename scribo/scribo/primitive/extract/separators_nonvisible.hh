@@ -124,42 +124,42 @@ namespace scribo
 	  max_angle = 5,
 	  min_card = 3;
 
-	mln::util::timer t;
-	mln::util::timer gt;
+	// mln::util::timer t;
+	// mln::util::timer gt;
 
-	gt.start();
+	// gt.start();
 
 	bool _debug_ = logger().is_at_level(AuxiliaryResults);
 
 	// Closing structural - Connect characters.
-	t.start();
+	// t.start();
 
 	win::hline2d vl(17);
 	mln_concrete(I) input_clo = morpho::closing::structural(in, vl);
 
-	float t_ = t;
-	std::cout << "closing_structural - " << t_ << std::endl;
+	// float t_ = t;
+	// std::cout << "closing_structural - " << t_ << std::endl;
 
 	// Debug
 	logger().log_image(AuxiliaryResults, input_clo, "input_clo");
 
 	// Rotate (OK)
-	t.restart();
+	// t.restart();
 	input_clo = scribo::preprocessing::rotate_90(input_clo, false);
-	t_ = t;
-	std::cout << "rotate_90 - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "rotate_90 - " << t_ << std::endl;
 
 
 
 	/// Finding components.
 
-	t.restart();
+	// t.restart();
 	V ncomponents;
 	component_set<L>
 	  components = scribo::primitive::extract::components(input_clo, c8(),
 							      ncomponents);
-	t_ = t;
-	std::cout << "extract::components - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "extract::components - " << t_ << std::endl;
 
 	// Debug
 	logger().log_image(AuxiliaryResults,
@@ -168,7 +168,7 @@ namespace scribo
 			   "lbl");
 	unsigned dmax = 5;
 
-	t.restart();
+	// t.restart();
 	object_links<L> top_right, bot_right;
 
 	object_links<L> top_left, bot_left;
@@ -183,14 +183,14 @@ namespace scribo
 		    anchor::TopStrictLeft);
 	  top_right = primitive::link::compute(functor, anchor::TopStrictLeft);
 
-	  t.stop();
+	  // t.stop();
 
 	  // Debug
 	  logger().log_image(AuxiliaryResults, functor.debug_, "right_top");
 	  logger().log_image(AuxiliaryResults, functor.debug_angle_,
 			     "right_top_angle");
 
-	  t.resume();
+	  // t.resume();
 
 	  // Left
 	  link::internal::single_left_dmax_ratio_aligned_functor<L,Dmax_F>
@@ -199,7 +199,7 @@ namespace scribo
 	  top_left = primitive::link::compute(lfunctor, anchor::TopStrictLeft);
 
 
-	  t.stop();
+ 	  // t.stop();
 
 	  // Debug
 	  if (_debug_)
@@ -216,7 +216,7 @@ namespace scribo
 	    logger().log_image(AuxiliaryResults, output, "left_right_top");
 	  }
 
-	  t.resume();
+	  // t.resume();
 	}
 
 
@@ -227,7 +227,7 @@ namespace scribo
 	    functor(components, Dmax_F(dmax), min_angle, max_angle,
 		    anchor::BottomStrictRight);
 	  bot_right = primitive::link::compute(functor, anchor::BottomStrictRight);
-	  t.stop();
+	  // t.stop();
 
 	  // Debug
 	  if (_debug_)
@@ -237,14 +237,14 @@ namespace scribo
 			       "right_bot_angle");
 	  }
 
-	  t.resume();
+	  // t.resume();
 
 	  // Left
 	  link::internal::single_left_dmax_ratio_aligned_functor<L,Dmax_F>
 	    lfunctor(components, Dmax_F(dmax), min_angle, max_angle,
 		     anchor::BottomStrictRight);
 	  bot_left = primitive::link::compute(lfunctor, anchor::BottomStrictRight);
-	  t.stop();
+	  // t.stop();
 
 	  // Debug
 	  if (_debug_)
@@ -263,28 +263,28 @@ namespace scribo
 	}
 
 
-	t_ = t;
-	std::cout << "links - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "links - " << t_ << std::endl;
 
 	// Merge links and build CC groups
-	t.restart();
+	// t.restart();
 	object_groups<L>
 	  top_groups = primitive::group::from_double_link_any(top_left, top_right);
 	object_groups<L>
 	  bot_groups = primitive::group::from_double_link_any(bot_left, bot_right);
-	t_ = t;
-	std::cout << "group - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "group - " << t_ << std::endl;
 
 	// Filter CC groups
-	t.restart();
+	// t.restart();
 	top_groups = filter::object_groups_small(top_groups, min_card);
 	bot_groups = filter::object_groups_small(bot_groups, min_card);
-	t_ = t;
-	std::cout << "small groups - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "small groups - " << t_ << std::endl;
 
 	// Compute group bboxes
 
-	t.restart();
+	// t.restart();
 	mln_concrete(I) separators;
 	initialize(separators, input_clo);
 
@@ -292,10 +292,10 @@ namespace scribo
 	data::fill(separators, false);
 	extension::fill(separators, false);
 
-	t_ = t;
-	std::cout << "Initialize separators image - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "Initialize separators image - " << t_ << std::endl;
 
-	t.restart();
+	// t.restart();
 	for_all_groups(d, top_groups)
 	  if (top_groups(d).is_valid())
 	  {
@@ -318,8 +318,8 @@ namespace scribo
 	  }
 
 
-	t_ = t;
-	std::cout << "Drawing output image - " << t_ << std::endl;
+	// t_ = t;
+	// std::cout << "Drawing output image - " << t_ << std::endl;
 
 
 	if (_debug_)
@@ -365,7 +365,7 @@ namespace scribo
 	    logger().log_image(AuxiliaryResults, input_with_seps, "input_with_seps");
 	  }
 
-	  t.restart();
+	  // t.restart();
 	  unsigned length = 25;
 
 	  dpoint2d
@@ -373,7 +373,7 @@ namespace scribo
 	    dp2( 21, 0);
 
 	  // Adjusting extension.
-	  t.restart();
+	  // t.restart();
 	  extension::adjust_fill(input_clo, length / 2, 0);
 
 	  accu::count_value<bool> accu(true);
@@ -381,19 +381,19 @@ namespace scribo
 
 	  J tmp = accu::transform_line(accu, input_clo, length, 1);
 
-	  t_ = t;
-	  std::cout << "* accu::transform_line - " << t_ << std::endl;
+	  // t_ = t;
+	  // std::cout << "* accu::transform_line - " << t_ << std::endl;
 
 
-	  t.restart();
+	  // t.restart();
 	  value::int_u8 nlabels;
 	  mln_ch_value(I,value::int_u8)
 	    sep_lbl = labeling::value(separators, true, c8(), nlabels);
-	  t_ = t;
-	  std::cout << "* labeling seps - " << t_ << std::endl;
+	  // t_ = t;
+	  // std::cout << "* labeling seps - " << t_ << std::endl;
 
 
-	  t.restart();
+	  // t.restart();
 
 	  mln::util::array<bool> relbl(unsigned(nlabels) + 1, true);
 	  relbl(0) = false;
@@ -451,13 +451,13 @@ namespace scribo
 	  }
 
 
-	  t_ = t;
-	  std::cout << "* reading data - " << t_ << std::endl;
+	  // t_ = t;
+	  // std::cout << "* reading data - " << t_ << std::endl;
 
-	  t.restart();
+	  // t.restart();
 	  labeling::relabel_inplace(sep_lbl, nlabels, relbl);
-	  t_ = t;
-	  std::cout << "* relabel_inplace - " << t_ << std::endl;
+	  // t_ = t;
+	  // std::cout << "* relabel_inplace - " << t_ << std::endl;
 
 	  mln_concrete(I) output = data::convert(bool(), sep_lbl);
 
@@ -467,9 +467,9 @@ namespace scribo
 			       "separators_filtered");
 	  }
 
-	  gt.stop();
-	  t_ = gt;
-	  std::cout << "Non visible separators: " << t_ << std::endl;
+	  // gt.stop();
+	  // t_ = gt;
+	  // std::cout << "Non visible separators: " << t_ << std::endl;
 
 	  trace::exiting("scribo::primitive::extract::separators_nonvisible");
 	  return scribo::preprocessing::rotate_90(output, true);
