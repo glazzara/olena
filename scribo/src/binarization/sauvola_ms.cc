@@ -34,39 +34,41 @@
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
-#include <scribo/debug/usage.hh>
-
-bool check_args(int argc, char * argv[])
-{
-  if (argc < 3 || argc > 7)
-    return false;
-
-  if (argc >= 5)
-  {
-    int s = atoi(argv[4]);
-
-    if (s < 1 || s > 3)
-    {
-      std::cout << "s must be set to 2 or 3."
-		<< std::endl;
-      return false;
-    }
-  }
-
-  return true;
-}
+#include <scribo/debug/option_parser.hh>
+#include <scribo/debug/logger.hh>
 
 
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "out.pbm", "A binary image." },
-  { "w", "Window size at scale 1. (default: 101)" },
-  { "s", "First subsampling ratio (default: 3)." },
-  { "k",    "Sauvola's formuale parameter (default: 0.34)" },
-  { "scale.pgm", "Image of scales used for binarization." },
+  { "output.pbm", "A binary image." },
   {0, 0}
 };
+
+
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
+    scribo::debug::check_sauvola_first_subsampling, 1, "3" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
+  {0, 0, 0, 0, 0, 0}
+};
+
+
 
 
 
@@ -76,42 +78,37 @@ int main(int argc, char *argv[])
   using namespace mln;
   using namespace scribo;
 
-  if (!check_args(argc, argv))
-    return scribo::debug::usage(argv,
-				"Multi-Scale Binarization based on Sauvola's algorithm.",
-				"input.* output.pbm <w> <s> <k>",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
+
+  // Enable debug output.
+  if (options.is_set("debug-prefix"))
+  {
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+    scribo::debug::logger().set_level(scribo::debug::All);
+  }
 
   Magick::InitializeMagick(*argv);
 
   trace::entering("main");
 
+
+  bool verbose = options.is_set("verbose");
   // Window size
-  unsigned w_1;
-  if (argc >= 4)
-    w_1 = atoi(argv[3]);  // Scale 1
-  else
-    w_1 = 101u;
-
+  unsigned w_1 = atoi(options.opt_value("win-size").c_str());
   // First subsampling scale.
-  unsigned s;
-  if (argc >= 5)
-    s = atoi(argv[4]);
-  else
-    s = 3u;
+  unsigned s = atoi(options.opt_value("s").c_str());
+  double k = atof(options.opt_value("k").c_str());
 
-  double k;
-  if (argc >= 6)
-    k = atof(argv[5]);
-  else
-    k = 0.34f;
-
-  std::cout << "Using w_1=" << w_1 << " - s=" << s
-	    << " - k=" << k << std::endl;
+  if (verbose)
+    std::cout << "Using w_1=" << w_1 << " - s=" << s
+	      << " - k=" << k << std::endl;
 
   // Load
   image2d<value::rgb8> input_1;
-  io::magick::load(input_1, argv[1]);
+  io::magick::load(input_1, options.arg("input.*"));
 
   // Convert to Gray level image.
   image2d<value::int_u8>
@@ -122,5 +119,5 @@ int main(int argc, char *argv[])
   image2d<bool>
     output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
 
-  io::pbm::save(output, argv[2]);
+  io::pbm::save(output, options.arg("output.pbm"));
 }

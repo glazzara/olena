@@ -30,41 +30,41 @@
 #include <mln/io/pbm/save.hh>
 
 #include <scribo/binarization/sauvola_ms_split.hh>
-#include <scribo/debug/usage.hh>
+#include <scribo/debug/option_parser.hh>
+#include <scribo/debug/logger.hh>
 
-bool check_args(int argc, char * argv[])
-{
-  if (argc < 3 || argc > 7)
-    return false;
-
-  if (argc >= 5)
-  {
-    int s = atoi(argv[4]);
-
-    if (s < 1 || s > 3)
-    {
-      std::cout << "s must be set to 2 or 3."
-		<< std::endl;
-      return false;
-    }
-  }
-
-  return true;
-}
-
-
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
   { "output.pbm", "A binary image." },
-  { "w", "Window size at scale 1. (default: 101)" },
-  { "s", "First subsampling ratio (default: 3)." },
-  { "min_ntrue",   "The number of components in which a site must be set to 'True' in order to be set to 'True' in the output (Possible values: 1, 2, 3).  (default: 2)" },
-  { "K", "Sauvola's formula parameter (default: 0.34)." },
   {0, 0}
 };
 
 
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "min-ntrue", "The number of components in which a site must be set to 'True' in"
+    " order to be set to 'True' in the output (Possible values: 1, 2, 3).",
+    "<num>", scribo::debug::check_sauvola_split_ntrue, 1, "2" },
+  { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
+    scribo::debug::check_sauvola_first_subsampling, 1, "3" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
+  {0, 0, 0, 0, 0, 0}
+};
 
 
 int main(int argc, char *argv[])
@@ -72,53 +72,42 @@ int main(int argc, char *argv[])
   using namespace mln;
   using namespace scribo;
 
-  if (!check_args(argc, argv))
-    return scribo::debug::usage(argv,
-				"Multi-Scale Binarization of a color image based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
-				"input.* output.pbm <w> <s> <min_ntrue> <K>",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
+
+  // Enable debug output.
+  if (options.is_set("debug-prefix"))
+  {
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+    scribo::debug::logger().set_level(scribo::debug::All);
+  }
 
   trace::entering("main");
 
+  bool verbose = options.is_set("verbose");
   // Window size
-  unsigned w_1;
-  if (argc >= 4)
-    w_1 = atoi(argv[3]);  // Scale 1
-  else
-    w_1 = 101u;
+  unsigned w_1 = atoi(options.opt_value("win-size").c_str());  // Scale 1
 
   // First subsampling scale.
-  unsigned s;
-  if (argc >= 5)
-    s = atoi(argv[4]);
-  else
-    s = 3u;
+  unsigned s = atoi(options.opt_value("s").c_str());
+  double k = atof(options.opt_value("k").c_str());
+  unsigned min_ntrue = atoi(options.opt_value("min-ntrue").c_str());
 
-  // min_ntrue
-  unsigned min_ntrue;
-  if (argc >= 6)
-    min_ntrue = atoi(argv[5]);
-  else
-    min_ntrue = 2;
+  if (verbose)
+    std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
+	      << k << " - min_ntrue=" << min_ntrue << std::endl;
 
-  double k;
-  if (argc >= 7)
-    k = atof(argv[6]);
-  else
-    k = 0.34f;
-
-  std::cout << "Using w_1=" << w_1 << " - s=" << s
-	    << " - k=" << k << std::endl;
+  Magick::InitializeMagick(0);
 
   image2d<value::rgb8> input_1;
-  io::magick::load(input_1, argv[1]);
-
-  std::cout << "Using w=" << w_1 << " - s=" << s << " - min_ntrue=" << min_ntrue << " - k=" << k << std::endl;
+  io::magick::load(input_1, options.arg("input.*"));
 
   image2d<bool>
     output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
 
-  io::pbm::save(output, argv[2]);
+  io::pbm::save(output, options.arg("output.pbm"));
 }
 
 

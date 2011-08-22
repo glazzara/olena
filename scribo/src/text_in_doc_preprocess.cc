@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,19 +35,38 @@
 
 #include <mln/value/rgb8.hh>
 
-#include <scribo/debug/usage.hh>
+#include <scribo/debug/option_parser.hh>
 
 #include <scribo/toolchain/text_in_doc_preprocess.hh>
 
 
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "output.pbm", "A text file with all the recognized text" },
-  { "enable fg/bg", "If set to 1 enables foreground extraction. (disabled by default)" },
-  { "lambda", "Lambda used in remove fg/bg (Automaticaly deduced by default)." },
+  { "output.pbm", "Binary preprocess image." },
   {0, 0}
 };
+
+
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  { "fg-extraction", "Detect and slit foreground/background components. (default: disabled)", false },
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "lambda", "Set the maximum area of the background objects. It is only useful if fg-extraction is enabled.", "<size>",
+    0, 1, "0" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  {0, 0, 0, 0, 0, 0}
+};
+
 
 
 int main(int argc, char* argv[])
@@ -54,31 +74,24 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 3 && argc != 4 && argc != 5)
-    return scribo::debug::usage(argv,
-				"Find text in a color document.",
-				"input.* output.pbm <enable fg/bg> <lambda>",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
 
   Magick::InitializeMagick(*argv);
 
   image2d<value::rgb8> input_rgb;
-  io::magick::load(input_rgb, argv[1]);
+  io::magick::load(input_rgb, options.arg("input.*"));
 
-  unsigned lambda;
-  if (argc == 5)
-    lambda = atoi(argv[4]);
-
-  bool remove_bg = false;
-  if (argc >= 4)
-    remove_bg = (atoi(argv[3]) == 1);
+  unsigned lambda = atoi(options.opt_value("lambda").c_str());
+  bool fg_extraction = options.is_enabled("fg-extraction");
+  bool verbose = options.is_set("verbose");
 
   image2d<bool> output;
 
-  if (argc == 5 && remove_bg)
-    output = toolchain::text_in_doc_preprocess(input_rgb, lambda);
-  else
-    output = toolchain::text_in_doc_preprocess(input_rgb, remove_bg);
+  output = toolchain::text_in_doc_preprocess(input_rgb, fg_extraction,
+					     lambda, 0.34, verbose);
 
-  mln::io::pbm::save(output, argv[2]);
+  mln::io::pbm::save(output, options.arg("output.pbm"));
 }

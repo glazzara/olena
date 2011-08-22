@@ -32,59 +32,76 @@
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
 #include <scribo/binarization/sauvola.hh>
-#include <scribo/debug/usage.hh>
+#include <scribo/debug/option_parser.hh>
+#include <scribo/debug/logger.hh>
 
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
   { "output.pbm", "A binary image." },
-  { "w", "Window size (default 101)." },
-  { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
 };
+
+
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "win-size", "Window size", "<size>", 0, 1, "101" },
+  {0, 0, 0, 0, 0, 0}
+};
+
 
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 5 && argc != 4 && argc != 3)
-    return scribo::debug::usage(argv,
-				"Binarization based on Sauvola's algorithm.",
-				"input.* output.pbm <w> <k>",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
+
+  // Enable debug output.
+  if (options.is_set("debug-prefix"))
+  {
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+    scribo::debug::logger().set_level(scribo::debug::All);
+  }
 
   Magick::InitializeMagick(*argv);
 
   trace::entering("main");
 
-  unsigned w;
-  if (argc >= 4)
-    w = atoi(argv[3]);
-  else
-    w = 101;
+  bool verbose = options.is_set("verbose");
+  unsigned w = atoi(options.opt_value("win-size").c_str());
+  double k = atof(options.opt_value("k").c_str());
 
-  double k;
-  if (argc >= 5)
-    k = atof(argv[4]);
-  else
-    k = 0.34f;
-
-  std::cout << "Using w=" << w << " and k=" << k << std::endl;
+  if (verbose)
+    std::cout << "Using w=" << w << " and k=" << k << std::endl;
 
   image2d<value::rgb8> input;
-  io::magick::load(input, argv[1]);
+  io::magick::load(input, options.arg("input.*"));
 
   // Convert to Gray level image.
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
-
   image2d<bool> out = scribo::binarization::sauvola(input_1_gl, w, k);
 
-
-  io::pbm::save(out, argv[2]);
-
+  io::pbm::save(out, options.arg("output.pbm"));
 
   trace::exiting("main");
 }

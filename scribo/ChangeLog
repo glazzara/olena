@@ -1,5 +1,23 @@
 2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an option parser to some examples.
+
+	* scribo/debug/option_check.hh,
+	* scribo/debug/option_parser.hh: New.
+
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/content_in_doc.cc,
+	* src/pbm_text_in_doc.cc,
+	* src/text_in_doc_preprocess.cc,
+	* src/text_in_picture.cc,
+	* src/text_in_picture_neg.cc,
+	* src/text_recognition_in_picture.cc: Use the new option parser.
+
+2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Some cleanup and fixes.
 
 	* scribo/core/group_info.hh,

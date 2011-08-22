@@ -47,25 +47,47 @@
 
 #include <scribo/io/xml/save.hh>
 
+#include <scribo/debug/option_parser.hh>
 
-const char *args_desc[][2] =
+
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "out.xml", "Result of the document analysis." },
-  { "denoise_enabled", "1 enables denoising, 0 disables it. (enabled by default)" },
-  { "pmin_row", "Row index of the top left corner of the Region of interest." },
-  { "pmin_col", "Col index of the top left corner of the Region of interest." },
-  { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
-  { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
-  { "language", "Language to be used for the text recognition. [eng|fra] (Default: eng)."
-    "An empty language will disable OCR." },
-  { "find_lines", "Find vertical lines. (Default 1)" },
-  { "find_whitespaces", "Find whitespaces separators. (Default 1)" },
-  { "K", "Sauvola's binarization threshold parameter. (Default: 0.34)" },
-  { "debug_dir", "Output directory for debug image" },
+  { "out.xml", "Result of the document analysis" },
   {0, 0}
 };
 
+
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  { "denoising", "Performs a denoising. (default: enabled)", true },
+  { "find-delims", "Find text alignements and whitespaces "
+    "to improve layout detection. (default: enabled)", true },
+  { "find-seps", "Find separators in document (default: enabled)", true },
+  { "ocr", "Performs character recognition (default: enabled)", true },
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "crop", "Crop input image before processing it.",
+    "<pmin_row> <pmin_col> <pmax_row> <pmax_col>", 0, 4, 0 },
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "ocr-lang", "Set the language to be recognized by the OCR (Tesseract). "
+    "According to your system, you can choose between eng (default), "
+    "fra, deu, ita, nld, por, spa, vie",
+    "<lang>", scribo::debug::check_ocr_lang, 1, "eng" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "xml-format", "Choose betwen page, page-ext (default: page-ext).", "<format>",
+    scribo::debug::check_xml_format, 1, "page-ext" },
+  {0, 0, 0, 0, 0, 0}
+};
 
 
 int main(int argc, char* argv[])
@@ -73,19 +95,19 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 3 || argc > 14)
-    return scribo::debug::usage(argv,
-				"Find text lines and elements in a document",
-				"input.* out.xml <denoise_enabled> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] [language] [find_lines] [find_whitespaces] [K] [debug_dir]",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
 
   // Enable debug output.
-  if (argc == 9 || argc == 13)
+  if (options.is_set("debug-prefix"))
   {
-    scribo::debug::logger().set_filename_prefix(argv[argc - 1]);
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
     scribo::debug::logger().set_level(scribo::debug::All);
-    scribo::make::internal::debug_filename_prefix = argv[argc - 1];
   }
+
+  bool verbose = options.is_set("verbose");
 
   trace::entering("main");
 
@@ -93,36 +115,27 @@ int main(int argc, char* argv[])
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
-  mln::io::magick::load(input, argv[1]);
+  mln::io::magick::load(input, options.arg("input.*"));
 
   // Preprocess document
-  image2d<bool> input_preproc;
-  {
-    double K = 0.34;
-    if (argc == 8  || argc >= 12)
-    {
-      if (argc == 8)
-	K = atof(argv[7]);
-      else
-	K = atof(argv[argc - 2]);
-      std::cout << "Using K = " << K << std::endl;
-    }
-
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, K);
-  }
+  image2d<bool>
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0,
+						      0.34, verbose);
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
-  if (argc >= 12)
+  if (options.is_set("crop"))
   {
+    std::vector<const char *> values = options.opt_values("crop");
     mln::def::coord
-      minr = atoi(argv[4]),
-      minc = atoi(argv[5]),
-      maxr = atoi(argv[6]),
-      maxc = atoi(argv[7]);
+      minr = atoi(values[0]),
+      minc = atoi(values[1]),
+      maxr = atoi(values[2]),
+      maxc = atoi(values[3]);
 
-    std::cout << "> Image cropped from (" << minr << "," << minc << ")"
-	      << " to (" << maxr << "," << maxc << ")" << std::endl;
+    if (verbose)
+      std::cout << "> Image cropped from (" << minr << "," << minc << ")"
+		<< " to (" << maxr << "," << maxc << ")" << std::endl;
 
     box2d roi = mln::make::box2d(minr, minc, maxr, maxc);
     input_preproc = preprocessing::crop_without_localization(input_preproc, roi);
@@ -132,47 +145,39 @@ int main(int argc, char* argv[])
 				      "input_preproc_cropped.pbm");
   }
 
-  bool denoise = (argc > 3 && atoi(argv[3]) != 0);
+  bool denoise = options.is_enabled("denoising");
+  std::string language = options.opt_value("ocr-lang");
+  bool find_line_seps = options.is_enabled("find-seps");
+  bool find_whitespace_seps = options.is_enabled("find-delims");
+  bool enable_ocr = options.is_enabled("ocr");
 
-  std::string language = "eng";
-  if (argc >= 5 && argc < 13)
-    language = argv[4];
-  else if (argc >= 12)
-    language = argv[8];
-
-  bool find_line_seps = true;
-  if (argc >= 6 && argc < 13)
-    find_line_seps = (atoi(argv[5]) != 0);
-  else if (argc >= 12)
-    find_line_seps = (atoi(argv[9]) != 0);
-
-  bool find_whitespace_seps = true;
-  if (argc >= 7 && argc < 13)
-    find_whitespace_seps = (atoi(argv[6]) != 0);
-  else if (argc >= 12)
-    find_whitespace_seps = (atoi(argv[10]) != 0);
-
-  std::cout << "Running with the following options :"
-	    << " ocr_language = " << language
-	    << " | find_lines_seps = " << find_line_seps
-	    << " | find_whitespace_seps = " << find_whitespace_seps
-	    << " | debug = " << scribo::debug::logger().is_enabled()
-	    << std::endl;
+  if (verbose)
+    std::cout << "Running with the following options :"
+	      << " ocr_language = " << language
+	      << " | find_lines_seps = " << find_line_seps
+	      << " | find_whitespace_seps = " << find_whitespace_seps
+	      << " | debug = " << scribo::debug::logger().is_enabled()
+	      << std::endl;
 
   // Run document toolchain.
 
   // Text
-  std::cout << "Analysing document..." << std::endl;
+  if (verbose)
+    std::cout << "Analysing document..." << std::endl;
   document<L>
     doc = scribo::toolchain::content_in_doc(input, input_preproc, denoise,
 					    find_line_seps, find_whitespace_seps,
-					    !language.empty(), language);
+					    enable_ocr, language, verbose);
 
   // Saving results
-  std::cout << "Saving results..." << std::endl;
-  scribo::io::xml::save(doc, argv[2], scribo::io::xml::PageExtended);
-  scribo::io::xml::save(doc, "page.xml", scribo::io::xml::Page);
-  scribo::io::xml::save(doc, "full.xml", scribo::io::xml::Full);
+  if (verbose)
+    std::cout << "Saving results..." << std::endl;
+  if (options.opt_value("xml-format") == "page-ext")
+    scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::PageExtended);
+  else if (options.opt_value("xml-format") == "page")
+    scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Page);
+  else if (options.opt_value("xml-format") == "full")
+    scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Full);
 
   trace::exiting("main");
 }

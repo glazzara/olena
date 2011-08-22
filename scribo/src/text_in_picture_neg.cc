@@ -47,7 +47,6 @@
 
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
-#include <mln/value/label_16.hh>
 
 #include <mln/data/wrap.hh>
 
@@ -161,13 +160,13 @@ int main(int argc, char* argv[])
     multi_scale_bin = true;
 
 
-  typedef image2d<value::label_16> L;
+  typedef image2d<scribo::def::lbl_type> L;
   component_set<L>
     comps = toolchain::text_in_picture(input_rgb, bg_removal, multi_scale_bin,
 				       max_dim_size, lambda, out_base_dir);
 
 
-  typedef image2d<value::label_16> L;
+  typedef image2d<scribo::def::lbl_type> L;
   component_set<L>
     comps_neg = toolchain::text_in_picture(world::rgb::invert(input_rgb),
 					   bg_removal,

@@ -35,8 +35,6 @@
 #include <mln/core/image/imorph/tr_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/labeling/colorize.hh>
-
 #include <mln/data/stretch.hh>
 
 #include <mln/io/pbm/all.hh>
@@ -49,7 +47,6 @@
 
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
-#include <mln/value/label_16.hh>
 
 #include <mln/fun/v2v/rgb_to_luma.hh>
 
@@ -96,12 +93,13 @@
 
 #include <scribo/debug/decision_image.hh>
 
-#include <scribo/debug/usage.hh>
+#include <scribo/debug/option_parser.hh>
 
 #include <scribo/preprocessing/split_bg_fg.hh>
 #include <scribo/preprocessing/rotate_90.hh>
 
-#include <scribo/make/debug_filename.hh>
+#include <scribo/debug/logger.hh>
+#include <scribo/toolchain/text_in_picture.hh>
 
 #include <mln/util/timer.hh>
 #include <mln/core/var.hh>
@@ -118,86 +116,40 @@
 #include <scribo/io/text_boxes/save.hh>
 
 
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "ouput.ppm", "A color image where the text is highlighted." },
-  { "out.txt", "Text recognized text with its position." },
-  { "max_dim_size", "The highest dimension size of the image used for "
-    "computation. It is used to find a resize factor and impacts on the"
-    " performance. (1024 by default)" },
-  { "lambda", "Lambda value used for foreground extraction." },
-  { "lbl.ppm", "A color image with the labeled text components. (Considered"
-    " as optional debug)" },
+  { "output.ppm", "A color image where the text is highlighted." },
+  { "output.txt", "Recognized text with its position." },
   {0, 0}
 };
 
-
-namespace mln
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
 {
-
-  struct config
-  {
-    config()
-    {
-      min_size_ratio = 0.2f;
-      max_dim_size = 1024;
-
-      sauvola_s = 2u; // 3?
-      sauvola_min_w = 51u;
-
-      // Group Filtering
-      bbox_h_ratio = 1.60f;
-      bbox_overlap = 0.80f;
-      small_groups = 3;
-      v_thickness = 8;
-      regroup_dmax = 30;
-      group_min_holes = 3;
-    }
-
-    // Component filtering
-    double min_size_ratio;
-
-    // Image resizing factor
-    unsigned max_dim_size;
-
-    // Sauvola ms
-    unsigned sauvola_s;
-    unsigned sauvola_min_w;
-
-    // Group Filtering
-    float bbox_h_ratio;
-    float bbox_overlap;
-    unsigned small_groups;
-    unsigned v_thickness;
-    unsigned regroup_dmax;
-    unsigned group_min_holes;
-  };
-
-} // end of namespace mln
+  // name, description, default value
+  { "fg-extraction", "Detect and slit foreground/background components. (default: disabled)", false },
+  { "ms-bin", "Use a multi-scale binarization. (default: enabled)", true },
+  {0, 0, false}
+};
 
 
-// Global config variable.
-mln::config conf;
-
-
-
-namespace mln
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
 {
-
-  template <typename I>
-  unsigned get_factor(const I& ima)
-  {
-    unsigned
-      nrows = ima.nrows(),
-      ncols = ima.ncols(),
-      max_dim = std::max(nrows, ncols),
-      factor = max_dim / conf.max_dim_size;
-
-    return factor ? factor : 1;
-  }
-
-} // end of namespace mln
+  // name, description, arguments, check args function, number of args, default arg
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "lambda", "Set the maximum area of the background objects. It is only useful if fg-extraction is enabled.", "<size>",
+    0, 1, "0" },
+  { "max-dim-size", "Set the maximum size of the largest image dimension.", "<size>", 0, 1, "1024" },
+  { "ocr-lang", "Set the language to be recognized by the OCR (Tesseract). "
+    "According to your system, you can choose between eng (default), "
+    "fra, deu, ita, nld, por, spa, vie",
+    "<lang>", scribo::debug::check_ocr_lang, 1, "eng" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  {0, 0, 0, 0, 0, 0}
+};
 
 
 
@@ -208,176 +160,66 @@ int main(int argc, char* argv[])
   using namespace scribo::primitive;
   using namespace mln;
 
-  if (argc < 4 || argc > 7)
-    return scribo::debug::usage(argv,
-				"Find text in a photo.\n\n"
-				"Common usage: ./text_recognition_in_picture"
-				" input.* output.ppm out.txt [max_dim_size]"
-				" [lambda] [lbl.ppm]",
-				"input.* output.ppm out.txt [max_dim_size]"
-				" [lambda] [lbl.ppm]",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
 
+  if (!options.parse(argc, argv))
+    return 1;
+
+  if (options.is_set("debug-prefix"))
+  {
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+    scribo::debug::logger().set_level(scribo::debug::All);
+  }
 
   trace::entering("main");
 
   Magick::InitializeMagick(*argv);
 
-  image2d<value::rgb8> input_rgb;
+  typedef image2d<value::rgb8> I;
+  I input_rgb;
   mln::io::magick::load(input_rgb, argv[1]);
 
-  if (argc > 4)
-    conf.max_dim_size = atoi(argv[4]);
-
-  unsigned factor = get_factor(input_rgb);
-
-  std::cout << "Original domain: " << input_rgb.domain() << std::endl;
-
-  input_rgb = mln::subsampling::antialiased(input_rgb, factor);
-
-  std::cout << "Resized domain: " << input_rgb.domain() << std::endl;
-
-  unsigned lambda;
-
-  if (argc >= 6)
-    lambda = atoi(argv[5]);
-  else
-    lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
-
-  std::cout << "Using lambda = " << lambda << std::endl;
-
-  image2d<value::int_u8> intensity_ima;
-
-  // Extract foreground
-  image2d<value::rgb8>
-    fg = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
-  intensity_ima = data::transform(fg,
-				  mln::fun::v2v::rgb_to_luma<value::int_u8>());
-
-//   // Perform an initial rotation if needed.
-// //   input_rgb = geom::rotate(input_rgb, -45, literal::black);
-//   intensity_ima = geom::rotate(intensity_ima, -45);
-
-//   // Make sure the domain origin is set to (0,0).
-//   box2d rb = intensity_ima.domain();
-//   box2d b(geom::nrows(intensity_ima), geom::ncols(intensity_ima));
-// //   {
-// //     image2d<value::rgb8> tmp(b);
-// //     data::paste_without_localization(input_rgb, tmp);
-// //     input_rgb = tmp;
-// //   }
-//   {
-//     image2d<value::int_u8> tmp(b);
-//     data::paste_without_localization(intensity_ima, tmp);
-//     intensity_ima = tmp;
-//   }
 
 
+  bool verbose = options.is_set("verbose");
+  unsigned max_dim_size = atoi(options.opt_value("max-dim-size").c_str());
+  bool fg_extraction = options.is_enabled("fg-extraction");
+  bool multi_scale_bin = options.is_enabled("ms-bin");
+  unsigned lambda = atoi(options.opt_value("lambda").c_str());
 
-  // Binarize foreground to use it in the processing chain.
-  image2d<bool> input;
-  unsigned w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
-  if (! w % 2)
-    ++w;
-  w = std::min(w, conf.sauvola_min_w);
+  if (verbose)
+    std::cout << "Using max_dim_size = " << max_dim_size
+	      << " -  fg_extraction = "  << fg_extraction
+	      << " - multi_scale_bin = " << multi_scale_bin
+	      << " - lambda = " << lambda << std::endl;
 
-  input = scribo::binarization::sauvola_ms(intensity_ima, w, conf.sauvola_s);
+  typedef image2d<scribo::def::lbl_type> L;
 
-  logical::not_inplace(input);
+  toolchain::internal::text_in_picture_functor<I> f;
+  f.enable_bg_removal = fg_extraction;
+  f.enable_multi_scale_bin = multi_scale_bin;
+  f.max_dim_size = max_dim_size;
+  f.lambda = lambda;
+  f.verbose = verbose;
 
+  component_set<L> output = f(input_rgb);
 
-  typedef image2d<value::label_16> L;
+  // // Grouping groups together if possible.
+  // groups = regroup::from_single_left_link_wrt_h_ratio(filtered_thin_groups,
+  // 						      conf.regroup_dmax,
+  // 						      conf.bbox_h_ratio);
 
-  /// Finding components.
-  component_set<L> filtered_components;
-  {
-    mln::util::array<std::pair<box2d, std::pair<point2d, unsigned> > > attribs;
+  mln::io::ppm::save(scribo::debug::highlight_text_area(input_rgb, output),
+		     options.arg("output.ppm"));
 
-    value::label_16 ncomponents;
-    L components = extract_components(input, ncomponents, attribs);
-
-    filtered_components = component_set<L>(components, ncomponents, attribs);
-  }
-
-  filtered_components = filter::objects_size_ratio(filtered_components,
-						   conf.min_size_ratio);
-
-  /// linking potential components
-  mln::util::couple<object_links<L>, object_links<L> >
-    links = primitive::link::left_right(filtered_components);
-
-  object_links<L>& left_link = links.first();
-  object_links<L>& right_link = links.second();
-
-
-  // Validating left and right links.
-  object_links<L>
-    merged_links = primitive::link::merge_double_link(left_link, right_link);
-
-
-
-  // Remove links if bboxes have too different sizes.
-  object_links<L>
-    hratio_filtered_links = filter::object_links_bbox_h_ratio(merged_links,
-							      conf.bbox_h_ratio);
-
-
-
-  //Remove links if bboxes overlap too much.
-  object_links<L> overlap_filtered_links
-    = filter::object_links_bbox_overlap(hratio_filtered_links,
-					conf.bbox_overlap);
-
-
-  object_groups<L>
-    groups = primitive::group::from_single_link(overlap_filtered_links);
-
-
-  // Remove components part of groups with strictly less than 3 components.
-
-  object_groups<L> filtered_small_groups;
-
-  filtered_small_groups = filter::object_groups_small(groups,
-						      conf.small_groups);
-
-
-  // Remove components part of groups having a mean thickness lower than 8.
-  object_groups<L> filtered_thin_groups;
-  filtered_thin_groups
-    = filter::object_groups_mean_width(filtered_small_groups,
-				       conf.v_thickness);
-
-
-  // Grouping groups together if possible.
-  groups = regroup::from_single_left_link_wrt_h_ratio(filtered_thin_groups,
-						      conf.regroup_dmax,
-						      conf.bbox_h_ratio);
-
-  /// Filter grouped objects not having enough background components.
-  groups  = scribo::filter::object_groups_with_holes(groups,
-						     conf.group_min_holes);
-
-  component_set<L> comps = primitive::group::apply(groups);
-
-  if (argc > 6)
-    mln::io::ppm::save(mln::labeling::colorize(value::rgb8(),
-					       comps.labeled_image(),
-					       comps.nelements()),
-		       argv[6]);
-//   mln::io::ppm::save(scribo::debug::highlight_text_area_rotated(input_rgb,
-//  comps, -45, rb),
-// 		argv[2]);
-  mln::io::ppm::save(scribo::debug::highlight_text_area(input_rgb, comps),
-		     argv[2]);
-
-
-  scribo::line_set<L> lines = scribo::make::line_set(groups);
+  scribo::line_set<L> lines = scribo::make::line_set(f.groups);
   text::look_like_text_lines_inplace(lines);
-  text::recognition(lines, "fra");
+  text::recognition(lines, options.opt_value("ocr-lang").c_str());
+  scribo::io::text_boxes::save(lines, options.arg("output.txt"));
 
-  scribo::io::text_boxes::save(lines, argv[3]);
-
+  if (verbose)
+    std::cout << output.nelements() << " text lines found." << std::endl;
 
   trace::exiting("main");
-  return comps.nelements() != 0;
+  return 0;
 }

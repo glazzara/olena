@@ -35,34 +35,39 @@
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/preprocessing/split_bg_fg.hh>
-#include <scribo/debug/usage.hh>
+#include <scribo/debug/option_parser.hh>
+#include <scribo/debug/logger.hh>
 
-bool check_args(int argc, char * argv[])
-{
-  if (argc != 6)
-    return false;
-
-  int s = atoi(argv[4]);
-
-  if (s < 2 || s > 3)
-  {
-    std::cout << "s must be set to 2 or 3."
-	      << std::endl;
-    return false;
-  }
-
-  return true;
-}
-
-
-const char *args_desc[][2] =
+static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "lambda", "Lambda used to split bg/fg." },
-  { "w", "Window size at scale 1. (Common value: 101)" },
-  { "s", "First subsampling ratio (Common value: 3)." },
   { "output.pbm", "A binary image." },
   {0, 0}
+};
+
+
+// --enable/disable-<name>
+static const scribo::debug::toggle_data toggle_desc[] =
+{
+  // name, description, default value
+  {0, 0, false}
+};
+
+
+// --<name> <args>
+static const scribo::debug::opt_data opt_desc[] =
+{
+  // name, description, arguments, check args function, number of args, default arg
+  { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
+    "given prefix.", "<prefix>", 0, 1, 0 },
+  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "lambda", "Set the maximum area of the background objects. It is only "
+    "useful if fg-extraction is enabled.", "<size>", 0, 1, "1024" },
+  { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
+    scribo::debug::check_sauvola_first_subsampling, 1, "3" },
+  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
+  {0, 0, 0, 0, 0, 0}
 };
 
 
@@ -73,30 +78,39 @@ int main(int argc, char *argv[])
   using namespace mln;
   using namespace scribo;
 
-  if (!check_args(argc, argv))
-    return scribo::debug::usage(argv,
-				"Multi-Scale Binarization based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
-				"input.* output.pbm w s",
-				args_desc);
+  scribo::debug::option_parser options(arg_desc, toggle_desc, opt_desc);
+
+  if (!options.parse(argc, argv))
+    return 1;
+
+  // Enable debug output.
+  if (options.is_set("debug-prefix"))
+  {
+    scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+    scribo::debug::logger().set_level(scribo::debug::All);
+  }
 
   trace::entering("main");
 
-  unsigned lambda = atoi(argv[2]);
+  bool verbose = options.is_set("verbose");
+  unsigned lambda = atoi(options.opt_value("lambda").c_str());
 
   // Window size
-  unsigned w_1 = atoi(argv[3]);  // Scale 1
+  unsigned w_1 = atoi(options.opt_value("win-size").c_str());  // Scale 1
 
   // First subsampling scale.
-  unsigned s = atoi(argv[4]);
+  unsigned s = atoi(options.opt_value("s").c_str());
+  double k = atof(options.opt_value("k").c_str());
 
-
-  std::cout << "Using w_1=" << w_1 << " - s=" << s << std::endl;
+  if (verbose)
+    std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
+	      << k << " - lambda=" << lambda << std::endl;
 
   Magick::InitializeMagick(0);
 
   // Load
   image2d<value::rgb8> input_1;
-  io::magick::load(input_1, argv[1]);
+  io::magick::load(input_1, options.arg("input.*"));
 
   // Split foreground/background
   image2d<value::rgb8>
@@ -108,9 +122,9 @@ int main(int argc, char *argv[])
 
   // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(fg_gl, w_1, s, SCRIBO_DEFAULT_SAUVOLA_K);
+    output = scribo::binarization::sauvola_ms(fg_gl, w_1, s, k);
 
-  io::pbm::save(output, argv[5]);
+  io::pbm::save(output, options.arg("output.pbm"));
 }
 
 
