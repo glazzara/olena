@@ -37,7 +37,8 @@ namespace region
       // Separators
       // ----------
 
-      Separator,
+      HorizontalSeparator,
+      VerticalSeparator,
 
       // Extension
       WhitespaceSeparator,

@@ -60,7 +60,6 @@ Viewer::Viewer(int &argc, char** argv)
 
   key_map_[region::Image] = qMakePair(tr("Image"), QColor(255, 120, 0));
   key_map_[region::Noise] = qMakePair(tr("Noise"), QColor(43, 39, 128));
-  key_map_[region::Separator] = qMakePair(tr("Separator"), QColor(0, 0, 255));
   key_map_[region::Table] = qMakePair(tr("Table"), QColor(220, 246, 0));
   key_map_[region::LineDrawing] = qMakePair(tr("LineDrawing"),
 					    QColor(255, 198, 0));
@@ -69,6 +68,8 @@ Viewer::Viewer(int &argc, char** argv)
   key_map_[region::Maths] = qMakePair(tr("Maths"), QColor(170, 0, 255));
 
   // Extension
+  key_map_[region::HorizontalSeparator] = qMakePair(tr("HorizontalSeparator"), QColor(0, 0, 255));
+  key_map_[region::VerticalSeparator] = qMakePair(tr("VerticalSeparator"), QColor(0, 0, 255));
   key_map_[region::WhitespaceSeparator] = qMakePair(tr("Whitespace Separator"), QColor(0, 0, 128));
 
   // Extension
@@ -87,7 +88,6 @@ Viewer::Viewer(int &argc, char** argv)
 
   region_ids_["ImageRegion"] = region::Image;
   region_ids_["NoiseRegion"] = region::Noise;
-  region_ids_["SeparatorRegion"] = region::Separator;
   region_ids_["TableRegion"] = region::Table;
   region_ids_["Line_drawingRegion"] = region::LineDrawing;
   region_ids_["GraphicRegion"] = region::Graphic;
@@ -95,6 +95,8 @@ Viewer::Viewer(int &argc, char** argv)
   region_ids_["MathsRegion"] = region::Maths;
 
   // Extension
+  region_ids_["VerticalSeparatorRegion"] = region::VerticalSeparator;
+  region_ids_["HorizontalSeparatorRegion"] = region::HorizontalSeparator;
   region_ids_["WhitespaceSeparatorRegion"] = region::WhitespaceSeparator;
 
 

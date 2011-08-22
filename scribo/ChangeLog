@@ -1,5 +1,13 @@
 2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix object selector for separators in scribo-viewer.
+
+	* demo/viewer/common.hh: Add new values in enum.
+
+	* demo/viewer/viewer.cc: Bind XML tag to enum value.
+
+2011-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/scribo-cli.in: Make Binarization algorithms accessible to
 	scribo-cli.
 
