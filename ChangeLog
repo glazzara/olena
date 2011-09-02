@@ -1,5 +1,9 @@
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* build-aux/texi2dvi: Fix a regular expression.
+
+2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* NEWS: List changes for the next release.
 
 2011-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
