@@ -181,6 +181,9 @@ namespace mln
     /// Give the bounding box domain.
     const box3d& bbox() const;
 
+    /// virtual box, i.e., box including the virtual border
+    const box3d& vbbox() const;
+
     /// Give the border thickness.
     unsigned border() const;
 
@@ -426,6 +429,15 @@ namespace mln
   {
     mln_precondition(this->is_valid());
     return data_->b_;
+  }
+
+  template <typename T>
+  inline
+  const box3d&
+  image3d<T>::vbbox() const
+  {
+    mln_precondition(this->is_valid());
+    return data_->vb_;
   }
 
   template <typename T>

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -175,6 +176,9 @@ namespace mln
 
     /// Give the bounding box domain.
     const box2d& bbox() const;
+
+    // virtual box, i.e., box including the virtual border
+    const box2d& vbbox() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
@@ -430,6 +434,15 @@ namespace mln
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
+  }
+
+  template <typename T>
+  inline
+  const box2d&
+  image2d<T>::vbbox() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->vb_;
   }
 
   template <typename T>

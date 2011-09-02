@@ -1,5 +1,13 @@
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add vbbox() method.
+
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh: Here.
+
+2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename back nslices to nslis.
 
 	* mln/core/image/image3d.hh,
