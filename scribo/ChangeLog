@@ -1,5 +1,14 @@
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix Makefiles in Scribo.
+
+	* src/primitive/Makefile.am: Add a missing subdir.
+
+	* tests/primitive/extract/Makefile.am (EXTRA_DIST): Fix invalid
+	file names.
+
+2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Regen generated files in Scribo.
 
 	* headers.mk,

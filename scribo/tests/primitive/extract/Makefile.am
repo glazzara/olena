@@ -17,10 +17,10 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 				\
-	  alignment_1.ref.png		\
-	  alignment_2.ref.png		\
-	  alignment_3.ref.png		\
-	  alignment_4.ref.png
+	  alignment_1.ref.pbm		\
+	  alignment_2.ref.pbm		\
+	  alignment_3.ref.pbm		\
+	  alignment_4.ref.pbm
 
 check_PROGRAMS =
 
