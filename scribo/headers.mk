@@ -61,6 +61,8 @@ scribo/debug/links_image.hh \
 scribo/debug/logger.hh \
 scribo/debug/looks_like_a_text_line_image.hh \
 scribo/debug/mean_and_base_lines_image.hh \
+scribo/debug/option_check.hh \
+scribo/debug/option_parser.hh \
 scribo/debug/save_comp_diff.hh \
 scribo/debug/save_label_image.hh \
 scribo/debug/save_table_image.hh \
@@ -278,6 +280,7 @@ scribo/toolchain/internal/content_in_doc_functor.hh \
 scribo/toolchain/internal/content_in_hdoc_functor.hh \
 scribo/toolchain/internal/text_in_doc_functor.hh \
 scribo/toolchain/internal/text_in_doc_preprocess_functor.hh \
+scribo/toolchain/internal/text_in_picture_functor.hh \
 scribo/toolchain/internal/toolchain_functor.hh \
 scribo/toolchain/nepomuk/text_extraction.hh \
 scribo/toolchain/text_in_doc.hh \
