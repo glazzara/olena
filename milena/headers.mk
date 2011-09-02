@@ -486,6 +486,8 @@ mln/draw/dashed_line.hh \
 mln/draw/essential.hh \
 mln/draw/line.hh \
 mln/draw/plot.hh \
+mln/draw/polygon.hh \
+mln/draw/site_set.hh \
 mln/essential/1d.hh \
 mln/essential/2d.hh \
 mln/essential/3d.hh \
@@ -619,7 +621,7 @@ mln/geom/ncols.hh \
 mln/geom/ninds.hh \
 mln/geom/nrows.hh \
 mln/geom/nsites.hh \
-mln/geom/nslices.hh \
+mln/geom/nslis.hh \
 mln/geom/pmin_pmax.hh \
 mln/geom/rotate.hh \
 mln/geom/seeds2tiling.hh \

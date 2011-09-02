@@ -547,6 +547,8 @@ mln_draw_dashed_line \
 mln_draw_essential \
 mln_draw_line \
 mln_draw_plot \
+mln_draw_polygon \
+mln_draw_site_set \
 mln_essential_1d \
 mln_essential_2d \
 mln_essential_3d \
@@ -733,7 +735,7 @@ mln_geom_ncols \
 mln_geom_ninds \
 mln_geom_nrows \
 mln_geom_nsites \
-mln_geom_nslices \
+mln_geom_nslis \
 mln_geom_pmin_pmax \
 mln_geom_rotate \
 mln_geom_seeds2tiling \
@@ -1872,6 +1874,8 @@ mln_draw_dashed_line_SOURCES = mln_draw_dashed_line.cc
 mln_draw_essential_SOURCES = mln_draw_essential.cc
 mln_draw_line_SOURCES = mln_draw_line.cc
 mln_draw_plot_SOURCES = mln_draw_plot.cc
+mln_draw_polygon_SOURCES = mln_draw_polygon.cc
+mln_draw_site_set_SOURCES = mln_draw_site_set.cc
 mln_essential_1d_SOURCES = mln_essential_1d.cc
 mln_essential_2d_SOURCES = mln_essential_2d.cc
 mln_essential_3d_SOURCES = mln_essential_3d.cc
@@ -2058,7 +2062,7 @@ mln_geom_ncols_SOURCES = mln_geom_ncols.cc
 mln_geom_ninds_SOURCES = mln_geom_ninds.cc
 mln_geom_nrows_SOURCES = mln_geom_nrows.cc
 mln_geom_nsites_SOURCES = mln_geom_nsites.cc
-mln_geom_nslices_SOURCES = mln_geom_nslices.cc
+mln_geom_nslis_SOURCES = mln_geom_nslis.cc
 mln_geom_pmin_pmax_SOURCES = mln_geom_pmin_pmax.cc
 mln_geom_rotate_SOURCES = mln_geom_rotate.cc
 mln_geom_seeds2tiling_SOURCES = mln_geom_seeds2tiling.cc

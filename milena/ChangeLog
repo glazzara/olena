@@ -1,5 +1,12 @@
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Regen generated files in Milena.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Here.
+
+2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/debug/println_with_border.spe.hh: Improve output for 3D
 	images.
 
