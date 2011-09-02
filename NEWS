@@ -1,5 +1,83 @@
 * Olena 1.0a
 
+  	* Add compilation support with g++-4.5.
+
+  	* Improvements of accumulators:
+	  - Add properties,
+	  - New histo3d_rgb.hh,
+	  - Add new methods.
+
+	* Fix compilation with multiple files by introducing the
+          MLN_WO_GLOBAL_VARS macro.
+
+	* Extend type conversion:
+	  - New convert::from_to overloads,
+	  - New convert::to_qimage() and convert::to_qimage_nocopy()
+            (conversion towards Qt's QImage type),
+  	  - New conversion functions : fun::v2v::qt_rgb_to_int_u,
+            fun::v2v::rgb8_to_rgbn, fun::v2v::rgb_to_int_u,
+            fun::v2v::rgb_to_luma.
+
+	* Overall performance Improvement in morphological skeleton
+          computation.
+
+	* Add fast/fastest implementations:
+ 	  - arith::revert(),
+ 	  - data::paste(),
+ 	  - labeling::compute(),
+ 	  - morpho::skeleton_constrained(),
+ 	  - transform::influence_zone_geodesic().
+
+	* New algorithms:
+	  - clustering::kmean_rgb(),
+	  - data::split(),
+	  - histo::equalize(),
+	  - labeling::value_and_compute(),
+	  - subsampling::antialiased(),
+	  - world::rgb::invert(),
+	  - geom::horizontal_symmetry(),
+	  - geom::vertical_symmetry(),
+	  - geom::translate(),
+	  - morpho::tree::component_tree(),
+	  - morpho::tree::dual_input_tree(),
+	  - morpho::watershed::topological(),
+	  - transform::influence_zone_geodesic_saturated(),
+	  - upscaling::art::scaling2x(),
+	  - upscaling::art::scaling3x().
+
+	* New default 3D neighborhoods/windows.
+
+	* New debug tools:
+	  - debug::mosaic(),
+	  - debug::z_order().
+
+	* New drawing tools:
+	  - draw::box_plain(),
+	  - draw::dashed_line(),
+	  - draw::site_set(),
+	  - draw::polygon().
+
+	* New function concept: Function_n2v.
+
+	* I/O improvements:
+	  - Add raw data I/O functions,
+	  - Improve ImageMagick I/O performance,
+	  - Add support for FLD format.
+
+	* Make labeling::colorize() deterministic.
+
+	* New 3D window type: win::sline3d.
+
+	* New labeling canvas:
+	  - canvas::labeling::blobs (replace canvas::labeling),
+	  - canvas::labeling::sorted,
+	  - canvas::labeling::video.
+
+	* New graph image types supporting mixed site types (both
+          edges and vertices)
+
+	* Various bug fixes and improvements.
+
 
 * Olena 1.0	July 14, 2009
 
