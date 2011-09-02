@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -92,8 +93,11 @@ namespace mln
 	  {
 	    for (unsigned j = 0; j < real_len_r; ++j)
 	      {
+		for (unsigned l = 0; l < real_len_r - j; ++l)
+		  std::cout << ' ';
+
 		for (unsigned i = 0; i < real_len_c; ++i)
-		  std::cout << format(input.point_at_index(k * (real_len_r * real_len_c) + j * real_len_c + i))
+		  std::cout << format(input.buffer()[k * (real_len_r * real_len_c) + j * real_len_c + i])
 			    << ' ';
 		std::cout << std::endl;
 	      }
