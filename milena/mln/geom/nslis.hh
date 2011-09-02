@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_GEOM_NSLICES_HH
-# define MLN_GEOM_NSLICES_HH
+#ifndef MLN_GEOM_NSLIS_HH
+# define MLN_GEOM_NSLIS_HH
 
 /// \file
 ///
@@ -43,19 +43,19 @@ namespace mln
 
     /// Give the number of slices of an image.
     template <typename I>
-    unsigned nslices(const Image<I>& ima);
+    unsigned nslis(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    unsigned nslices(const Image<I>& ima)
+    unsigned nslis(const Image<I>& ima)
     {
       mln_precondition(exact(ima).is_valid());
-      unsigned nslices = geom::max_sli(ima) - geom::min_sli(ima) + 1;
+      unsigned nslis = geom::max_sli(ima) - geom::min_sli(ima) + 1;
 
-      return nslices;
+      return nslis;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -65,4 +65,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_NSLICES_HH
+#endif // ! MLN_GEOM_NSLIS_HH

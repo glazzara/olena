@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -114,10 +114,10 @@ namespace mln
       mlc_bool(S != 0 && R != 0 && C != 0)::check();
       mln::image3d<V> tmp(S, R, C);
       const def::coord
-	nslices = static_cast<def::coord>(S),
+	nslis = static_cast<def::coord>(S),
 	nrows = static_cast<def::coord>(R),
 	ncols = static_cast<def::coord>(C);
-      for (def::coord sli = 0; sli < nslices; ++sli)
+      for (def::coord sli = 0; sli < nslis; ++sli)
 	for (def::coord row = 0; row < nrows; ++row)
 	  for (def::coord col = 0; col < ncols; ++col)
 	    opt::at(tmp, sli, row, col) = values[sli][row][col];

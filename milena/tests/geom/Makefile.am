@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -32,7 +32,7 @@ ncols						\
 ninds						\
 nrows						\
 nsites						\
-nslices						\
+nslis						\
 pmin_pmax					\
 rotate	 					\
 seed2tiling					\
@@ -55,7 +55,7 @@ ncols_SOURCES = ncols.cc
 ninds_SOURCES = ninds.cc
 nrows_SOURCES = nrows.cc
 nsites_SOURCES = nsites.cc
-nslices_SOURCES = nslices.cc
+nslis_SOURCES = nslis.cc
 pmin_pmax_SOURCES = pmin_pmax.cc
 rotate_SOURCES = rotate.cc
 seed2tiling_SOURCES = seed2tiling.cc

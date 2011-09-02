@@ -1,3 +1,32 @@
+2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename back nslices to nslis.
+
+	* mln/core/image/image3d.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/site_set/box.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/geom/all.hh,
+	* mln/geom/size3d.hh,
+	* mln/linear/gaussian.hh,
+	* mln/linear/gaussian/impl.hh,
+	* mln/make/box3d.hh,
+	* mln/make/image.hh,
+	* mln/make/image3d.hh,
+	* mln/registration/icp.hh,
+	* tests/core/alias/box3d.cc,
+	* tests/core/image/image3d.cc,
+	* tests/geom/Makefile.am,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc: Rename nslices to nslis.
+
+	* mln/geom/nslices.hh,
+	* tests/geom/nslices.cc: Rename as...
+
+	* mln/geom/nslis.hh,
+	* tests/geom/nslis.cc: ...this.
+
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/figures/ima2d-rot-2.ppm: Regen.

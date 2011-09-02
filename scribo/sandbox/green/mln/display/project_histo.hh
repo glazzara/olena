@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -287,7 +287,7 @@ namespace mln
 	    unsigned   max = 0; // minimum as possible
 	    def::coord pos = -1;
 
-	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	    for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	    {
 	      if (max < opt::at(histo,blue,red,green))
 	      {
@@ -306,9 +306,9 @@ namespace mln
       }
       else if (1 == direction) // red
       {
-	image2d< value::int_u<n> > arg_max(histo.ncols(), histo.nslices());
+	image2d< value::int_u<n> > arg_max(histo.ncols(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -333,9 +333,9 @@ namespace mln
       }
       else // 2 == direction // green
       {
-	image2d< value::int_u<n> > arg_max(histo.nrows(), histo.nslices());
+	image2d< value::int_u<n> > arg_max(histo.nrows(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -380,7 +380,7 @@ namespace mln
 	    unsigned   max = 0; // minimum as possible
 	    def::coord pos = -1;
 
-	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	    for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	    {
 	      if (max < opt::at(histo,blue,red,green))
 	      {
@@ -399,9 +399,9 @@ namespace mln
       }
       else if (1 == direction) // red
       {
-	image2d<value::label_8> arg_max(histo.ncols(), histo.nslices());
+	image2d<value::label_8> arg_max(histo.ncols(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -426,9 +426,9 @@ namespace mln
       }
       else // 2 == direction // green
       {
-	image2d<value::label_8> arg_max(histo.nrows(), histo.nslices());
+	image2d<value::label_8> arg_max(histo.nrows(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -479,7 +479,7 @@ namespace mln
 	    unsigned   max = 0; // minimum as possible
 	    def::coord pos = -1;
 
-	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	    for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	    {
 	      if (max < opt::at(histo,blue,red,green))
 	      {
@@ -505,9 +505,9 @@ namespace mln
       }
       else if (1 == direction) // red
       {
-	image2d< value::rgb8 > arg_max(histo.ncols(), histo.nslices());
+	image2d< value::rgb8 > arg_max(histo.ncols(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -539,9 +539,9 @@ namespace mln
       }
       else // 2 == direction // green
       {
-	image2d< value::rgb8 > arg_max(histo.nrows(), histo.nslices());
+	image2d< value::rgb8 > arg_max(histo.nrows(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -593,7 +593,7 @@ namespace mln
 	    unsigned   max = 0; // minimum as possible
 	    def::coord pos = -1;
 
-	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	    for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	    {
 	      if (max < opt::at(histo,blue,red,green))
 	      {
@@ -612,9 +612,9 @@ namespace mln
       }
       else if (1 == direction) // red
       {
-	image2d< value::rgb<n> > arg_max(histo.ncols(), histo.nslices());
+	image2d< value::rgb<n> > arg_max(histo.ncols(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
@@ -639,9 +639,9 @@ namespace mln
       }
       else // 2 == direction // green
       {
-	image2d< value::rgb<n> > arg_max(histo.nrows(), histo.nslices());
+	image2d< value::rgb<n> > arg_max(histo.nrows(), histo.nslis());
 
-	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	for (def::coord blue = 0; blue < (signed)histo.nslis(); ++blue)
 	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible

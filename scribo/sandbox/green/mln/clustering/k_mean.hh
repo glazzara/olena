@@ -1,4 +1,4 @@
-// Copyright (C) 2007,2008,2009,2010 EPITA LRDE
+// Copyright (C) 2007,2008,2009,2010, 2011 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -582,7 +582,7 @@ namespace mln
       mln_precondition(input.is_valid());
       mln_precondition(n == input.nrows() * input.ncols());
       //mln_precondition(n == input.nrows());
-      //mln_precondition(n == input.nrows() * input.ncols() * input.nslices());
+      //mln_precondition(n == input.nrows() * input.ncols() * input.nslis());
 
       mln_piter(I) pi(input.domain());
       unsigned     i = -1;

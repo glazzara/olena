@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,5 +33,5 @@ int main()
   using namespace mln;
 
   box3d b = make::box3d(2, 6, 3);
-  mln_assertion(b.nslices() == 2 && b.nrows() == 6 && b.ncols() == 3);
+  mln_assertion(b.nslis() == 2 && b.nrows() == 6 && b.ncols() == 3);
 }

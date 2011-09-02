@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,7 +62,7 @@ int main()
     image3d<int_u8> ima3d;
     io::pgms::load(ima3d, files);
 
-    mln_assertion(ima3d.nslices() == 2);
+    mln_assertion(ima3d.nslis() == 2);
     mln_assertion(slice(ima3d, 0) == lena);
     mln_assertion(slice(ima3d, 1) == lena2);
   }

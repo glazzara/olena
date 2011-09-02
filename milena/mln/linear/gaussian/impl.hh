@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2008, 2009, 2010 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2008, 2009, 2010, 2011 EPITA
 // Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,7 +45,7 @@
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ninds.hh>
-# include <mln/geom/nslices.hh>
+# include <mln/geom/nslis.hh>
 # include <mln/data/paste.hh>
 # include <mln/data/stretch.hh>
 # include <mln/algebra/vec.hh>
@@ -246,11 +246,11 @@ namespace mln
 						 point3d(static_cast<def::coord>(-img.border()),
 							 static_cast<def::coord>(j),
 							 static_cast<def::coord>(k)),
-						 point3d(static_cast<def::coord>(geom::nslices(img) - 1 +
+						 point3d(static_cast<def::coord>(geom::nslis(img) - 1 +
 										 img.border()),
 							 static_cast<def::coord>(j),
 							 static_cast<def::coord>(k)),
-						 geom::nslices(img) + 2 *
+						 geom::nslis(img) + 2 *
 						 img.border(),
 						 dpoint3d(1, 0, 0));
 	    }
@@ -259,7 +259,7 @@ namespace mln
 	  if (dir == 1)
 	    {
 	      // Apply on rows.
-	      for (unsigned i = 0; i < geom::nslices(img); ++i)
+	      for (unsigned i = 0; i < geom::nslis(img); ++i)
 		for (unsigned k = 0; k < geom::ncols(img); ++k)
 		  recursivefilter_<mln_value(I)>(img, coef,
 						 point3d(static_cast<def::coord>(i),
@@ -277,7 +277,7 @@ namespace mln
 	  if (dir == 2)
 	    {
 	      // Apply on columns.
-	      for (unsigned i = 0; i < geom::nslices(img); ++i)
+	      for (unsigned i = 0; i < geom::nslis(img); ++i)
 		for (unsigned j = 0; j < geom::nrows(img); ++i)
 		  recursivefilter_<mln_value(I)>(img, coef,
 						 point3d(static_cast<def::coord>(i),

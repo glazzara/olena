@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,7 +26,7 @@
 
 #include <mln/core/image/image3d.hh>
 
-#include <mln/geom/nslices.hh>
+#include <mln/geom/nslis.hh>
 
 int main()
 {
@@ -34,5 +34,5 @@ int main()
 
   image3d<int> ima(3,4,5);
 
-  mln_assertion(geom::nslices(ima) == 3);
+  mln_assertion(geom::nslis(ima) == 3);
 }

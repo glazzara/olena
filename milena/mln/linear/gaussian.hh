@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010 EPITA
-// Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011
+// EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +51,7 @@
 # include <mln/geom/min_sli.hh>
 # include <mln/geom/max_sli.hh>
 # include <mln/geom/ninds.hh>
-# include <mln/geom/nslices.hh>
+# include <mln/geom/nslis.hh>
 # include <mln/data/paste.hh>
 # include <mln/data/stretch.hh>
 # include <mln/algebra/vec.hh>
@@ -442,11 +442,11 @@ namespace mln
                                              point3d(static_cast<def::coord>(-img.border()),
 						     static_cast<def::coord>(j),
 						     static_cast<def::coord>(k)),
-                                             point3d(static_cast<def::coord>(geom::nslices(img) - 1 +
+                                             point3d(static_cast<def::coord>(geom::nslis(img) - 1 +
 									     img.border()),
 						     static_cast<def::coord>(j),
 						     static_cast<def::coord>(k)),
-                                             geom::nslices(img) + 2 *
+                                             geom::nslis(img) + 2 *
                                              img.border(),
                                              dpoint3d(1, 0, 0));
         }

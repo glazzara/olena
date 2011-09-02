@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,12 +72,12 @@ namespace mln
       mlc_equal(mln_domain(I), mln::box2d)::check();
       mln_precondition(! ima.is_empty());
 
-      def::coord n_slices = ima.nelements();
+      def::coord n_slis = ima.nelements();
       mln::box2d b = ima[0].domain();
       mln::box3d b_ = make::box3d(0,            b.pmin().row(), b.pmin().col(),
-				  n_slices - 1, b.pmax().row(), b.pmax().col());
+				  n_slis - 1, b.pmax().row(), b.pmax().col());
       mln::image3d<mln_value(I)> output(b_);
-      for (def::coord sli = 0; sli < n_slices; ++sli)
+      for (def::coord sli = 0; sli < n_slis; ++sli)
 	{
 	  mln_assertion(ima[sli].domain() == b);
 	  data::paste(ima[sli], slice(output, sli).rw());

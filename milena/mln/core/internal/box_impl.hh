@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,7 +57,7 @@ namespace mln
     struct box_impl_<3, C, E>
     {
       /// Give the number of slis.
-      unsigned nslices() const;
+      unsigned nslis() const;
 
       /// Give the minimum sli.
       C min_sli() const;
@@ -144,7 +144,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    unsigned box_impl_<3, C, E>::nslices() const
+    unsigned box_impl_<3, C, E>::nslis() const
     {
       return internal::force_exact<E>(*this).bbox().len(0);
     }

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +60,7 @@ namespace mln
 # include <mln/geom/ninds.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/nsites.hh>
-# include <mln/geom/nslices.hh>
+# include <mln/geom/nslis.hh>
 # include <mln/geom/pmin_pmax.hh>
 # include <mln/geom/rotate.hh>
 # include <mln/geom/seeds2tiling.hh>

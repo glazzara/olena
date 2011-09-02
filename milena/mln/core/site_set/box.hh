@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -125,7 +125,7 @@ namespace mln
     /// (sizes) w.r.t. the dimension.
     explicit box(mln_coord(P) ninds);
     box(mln_coord(P) nrows, mln_coord(P) ncols);
-    box(mln_coord(P) nslices, mln_coord(P) nrows, mln_coord(P) ncols);
+    box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
     /// \}
 
     /*! \brief Test if \p p belongs to the box.
@@ -310,11 +310,11 @@ namespace mln
 
   template <typename P>
   inline
-  box<P>::box(mln_coord(P) nslices, mln_coord(P) nrows, mln_coord(P) ncols)
+  box<P>::box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 3)>::check();
     pmin_ = literal::origin;
-    pmax_ = P(nslices - 1, nrows - 1, ncols - 1);
+    pmax_ = P(nslis - 1, nrows - 1, ncols - 1);
     mln_postcondition(is_valid());
   }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,15 +32,15 @@ int main()
 {
   using namespace mln;
 
-  const unsigned nslices = 3;
+  const unsigned nslis = 3;
   const unsigned nrows = 4;
   const unsigned ncols = 5;
   const unsigned border = 4;
 
-  image3d<int> f(nslices, nrows, ncols, border);
+  image3d<int> f(nslis, nrows, ncols, border);
 
-  mln_assertion(f.nsites() == geom::nslices(f) * geom::nrows(f) * geom::ncols(f));
+  mln_assertion(f.nsites() == geom::nslis(f) * geom::nrows(f) * geom::ncols(f));
   mln_assertion(f.nelements()  == ((nrows + 2 * border)
 				* (ncols + 2 * border)
-				* (nslices + 2 * border)));
+				* (nslis + 2 * border)));
 }

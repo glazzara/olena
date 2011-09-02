@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,15 +42,15 @@ namespace mln
 
     /*! \brief Create an mln::box3d.
      *
-     * \param[in] nslices Number of slices.
+     * \param[in] nslis Number of slices.
      * \param[in] nrows Number of rows.
      * \param[in] ncols Number of columns.
      *
-     * \pre \p ninds != 0 and \p ncols != 0 and \p nslices != 0.
+     * \pre \p ninds != 0 and \p ncols != 0 and \p nslis != 0.
      *
      * \return A 3D box.
      */
-    mln::box3d box3d(unsigned nslices, unsigned nrows, unsigned ncols);
+    mln::box3d box3d(unsigned nslis, unsigned nrows, unsigned ncols);
 
 
     /*! \brief Create an mln::box3d.
@@ -77,11 +77,11 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    mln::box3d box3d(unsigned nslices, unsigned nrows, unsigned ncols)
+    mln::box3d box3d(unsigned nslis, unsigned nrows, unsigned ncols)
     {
-      mln_precondition(nrows != 0 && ncols != 0 && nslices != 0);
+      mln_precondition(nrows != 0 && ncols != 0 && nslis != 0);
       mln::box3d tmp(point3d(0, 0, 0),
-		     point3d(static_cast<def::coord>(nslices - 1),
+		     point3d(static_cast<def::coord>(nslis - 1),
 			     static_cast<def::coord>(nrows - 1),
 			     static_cast<def::coord>(ncols - 1)));
       return tmp;
