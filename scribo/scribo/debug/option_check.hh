@@ -26,7 +26,10 @@
 #ifndef SCRIBO_DEBUG_OPTION_CHECK_HH
 # define SCRIBO_DEBUG_OPTION_CHECK_HH
 
+# include <string.h>
+# include <cstdlib>
 # include <vector>
+# include <iostream>
 # include <mln/core/contract.hh>
 
 namespace scribo

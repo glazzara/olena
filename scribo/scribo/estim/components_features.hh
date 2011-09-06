@@ -77,10 +77,16 @@ namespace scribo
 
     template <typename I, typename J, typename L>
     component_set<L>
-    components_features(const Image<I>& input, const Image<J>& bin_input,
+    components_features(const Image<I>& input_, const Image<J>& bin_input_,
 			const component_set<L>& components)
     {
       trace::entering("scribo::estim::components_features");
+
+      const I& input = exact(input_);
+      const J& bin_input = exact(bin_input_);
+
+      mln_precondition(input.is_valid());
+      mln_precondition(bin_input.is_valid());
 
       component_set<L> output = components.duplicate();
 

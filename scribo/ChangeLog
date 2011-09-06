@@ -1,3 +1,12 @@
+2011-09-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* scribo/debug/option_check.hh,
+	* scribo/debug/option_parser.hh: Add missing includes.
+
+	* scribo/estim/components_features.hh: Add preconditions.
+
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Makefiles in Scribo.

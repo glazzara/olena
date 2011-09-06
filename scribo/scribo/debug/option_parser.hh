@@ -26,6 +26,7 @@
 #ifndef SCRIBO_DEBUG_OPTION_PARSER_HH
 # define SCRIBO_DEBUG_OPTION_PARSER_HH
 
+# include <map>
 # include <scribo/debug/option_check.hh>
 
 namespace scribo
