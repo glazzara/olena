@@ -32,6 +32,7 @@
 /// Compute a skeleton under constraints.
 ///
 /// \todo Add an extension handling policy for the user to set it.
+/// \fixme The fast version does not give the exact result!
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -93,6 +94,8 @@ namespace mln
 	  mlc_is(V, bool)::check();
 
 	  extension::adjust_duplicate(input, nbh);
+	  extension::adjust_duplicate(constraint, nbh);
+	  extension::adjust_duplicate(priority, nbh);
 
 	  // FIXME: Tests!
 
@@ -107,9 +110,9 @@ namespace mln
 	    output = duplicate(input);
 	    extension::adjust_duplicate(output, nbh);
 
-	    mln_piter(I) p(output.domain());
+	    mln_piter(I) p(input.domain());
 	    for_all(p)
-	      if (output(p) == false &&
+	      if (input(p) == false &&
 		  is_simple.check(input, p)) // <-- is_simple.check
                                       // p is a simple point of the background.
 	      {
@@ -120,7 +123,8 @@ namespace mln
 	  // Propagation.
 	  {
 	    P p;
-	    mln_niter(N) n(nbh.foreground(), p);
+
+	    mln_niter(N) n(nbh, p);
 	    while (! q.is_empty())
 	    {
 	      p = q.pop_front();
@@ -189,13 +193,13 @@ namespace mln
 	    output = duplicate(input);
 	    extension::adjust_fill(output, nbh, false);
 
-	    mln_pixter(I) p_out(output);
-	    for_all(p_out)
-	      if (p_out.val() == false &&
-		  is_simple.check__(input, p_out)) // <-- is_simple.check
-		                                   // p is a simple point of the background.
+	    mln_pixter(I) p_in(input);
+	    for_all(p_in)
+	      if (p_in.val() == false &&
+		  is_simple.check__(input, p_in)) // <-- is_simple.check
+		                                  // p is a simple point of the background.
 	      {
-		q.push(priority.element(p_out.offset()), p_out);
+		q.push(priority.element(p_in.offset()), p_in);
 	      }
 	  }
 
