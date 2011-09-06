@@ -193,7 +193,7 @@ namespace mln
 	    output = duplicate(input);
 	    extension::adjust_fill(output, nbh, false);
 
-	    mln_pixter(I) p_in(input);
+	    mln_pixter(const I) p_in(input);
 	    for_all(p_in)
 	      if (p_in.val() == false &&
 		  is_simple.check__(input, p_in)) // <-- is_simple.check

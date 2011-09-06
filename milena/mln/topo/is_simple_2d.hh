@@ -161,6 +161,7 @@ namespace mln
 
       unsigned res = 0;
 
+      // Note: fwd here but bkd in is_simple_point.hh...
       mln_fwd_niter(N2) n(c8(), p);
       for_all(n)
       {

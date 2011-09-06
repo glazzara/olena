@@ -1,5 +1,21 @@
 2011-09-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Milena.
+
+	* mln/draw/site_set.hh: Remove call to exact().
+
+	* mln/morpho/skeleton_constrained.hh: Add a missing const in fast
+	implementation.
+
+	* mln/topo/is_simple_2d.hh: Add a comment.
+
+	* mln/topo/skeleton/is_simple_point.hh: Fix a wrong neighborhood
+	type.
+
+	* tests/topo/skeleton/is_simple_point.cc: Fix compilation.
+
+2011-09-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/morpho/skeleton_constrained.hh: Fix algorithm.
 
 2011-09-02  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -67,11 +67,11 @@ namespace mln
 		  const mln_value(I)& v,
 		  unsigned output_ratio)
     {
-      mln_precondition(exact(ima).is_valid());
-      mln_precondition(exact(ima).domain() >= exact(s));
-
       I& ima = exact(ima_);
       const S& s = exact(s_);
+
+      mln_precondition(ima.is_valid());
+      mln_precondition(ima.domain() >= s);
 
       mln_piter(S) p(s);
       for_all(p)

@@ -27,6 +27,7 @@
 #include <mln/make/image2d.hh>
 #include <mln/topo/skeleton/is_simple_point.hh>
 #include <mln/make/image.hh>
+#include <mln/make/dual_neighb.hh>
 
 static const unsigned ref[] = { 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0 };
 
@@ -40,8 +41,14 @@ int main()
   typedef image2d<bool> I;
   I ima = make::image(vals);
 
+  typedef
+    neighb<win::multiple_size<2u, window<dpoint<grid::square, short int> >,
+           pw::value_<image2d<bool> > > >
+    nbh_t;
+  nbh_t nbh = make::dual_neighb(ima, c8(), c4());
+
   unsigned i = 0;
-  topo::skeleton::is_simple_point<neighb2d> is_simple(c8());
+  topo::skeleton::is_simple_point<nbh_t> is_simple(nbh);
 
   // Test generic version.
   {

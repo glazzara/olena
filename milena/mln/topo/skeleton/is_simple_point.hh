@@ -159,7 +159,8 @@ namespace mln
       {
 	unsigned res = 0;
 
-	mln_bkd_niter(N) n(c8(), p);
+	// Note: bkd here but fwd in is_simple_2d.hh...
+	mln_bkd_niter(N2) n(c8(), p);
 	for_all(n)
 	{
 	  res = (res << 1);
