@@ -351,8 +351,6 @@ AC_CONFIG_FILES([
     scribo/tests/core/Makefile
     scribo/tests/estim/Makefile
     scribo/tests/filter/Makefile
-    scribo/tests/io/Makefile
-    scribo/tests/io/xml/Makefile
     scribo/tests/preprocessing/Makefile
     scribo/tests/primitive/Makefile
     scribo/tests/primitive/extract/Makefile
