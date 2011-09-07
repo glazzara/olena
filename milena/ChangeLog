@@ -1,3 +1,7 @@
+2011-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/border/mirror.cc: Revamp test.
+
 2011-09-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Milena.

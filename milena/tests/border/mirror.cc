@@ -51,51 +51,35 @@ main (void)
   }
 
 
-  image2d<int> ima(2, 3, 2);
+  // Image2d
+  {
+    image2d<unsigned> input(2, 2, 4);
+    debug::iota(input, 0);
+    border::mirror(input);
+    debug::println_with_border(input);
+  }
 
-  debug::iota(ima);
-  border::mirror(ima);
 
-  mln_assertion(opt::element(ima, 0) == 1);
-  mln_assertion(opt::element(ima, 1) == 1);
-  mln_assertion(opt::element(ima, 2) == 4);
-  mln_assertion(opt::element(ima, 3) == 5);
-  mln_assertion(opt::element(ima, 4) == 6);
-  mln_assertion(opt::element(ima, 5) == 3);
-  mln_assertion(opt::element(ima, 6) == 3);
-  mln_assertion(opt::element(ima, 7) == 1);
-  mln_assertion(opt::element(ima, 8) == 1);
-  mln_assertion(opt::element(ima, 9) == 1);
-  mln_assertion(opt::element(ima, 10) == 2);
-  mln_assertion(opt::element(ima, 11) == 3);
-  mln_assertion(opt::element(ima, 12) == 3);
-  mln_assertion(opt::element(ima, 13) == 3);
-  mln_assertion(opt::element(ima, 14) == 2);
-  mln_assertion(opt::element(ima, 15) == 1);
-  mln_assertion(opt::element(ima, 16) == 1);
-  mln_assertion(opt::element(ima, 17) == 2);
-  mln_assertion(opt::element(ima, 18) == 3);
-  mln_assertion(opt::element(ima, 19) == 3);
-  mln_assertion(opt::element(ima, 20) == 2);
-  mln_assertion(opt::element(ima, 21) == 5);
-  mln_assertion(opt::element(ima, 22) == 4);
-  mln_assertion(opt::element(ima, 23) == 4);
-  mln_assertion(opt::element(ima, 24) == 5);
-  mln_assertion(opt::element(ima, 25) == 6);
-  mln_assertion(opt::element(ima, 26) == 6);
-  mln_assertion(opt::element(ima, 27) == 5);
-  mln_assertion(opt::element(ima, 28) == 4);
-  mln_assertion(opt::element(ima, 29) == 4);
-  mln_assertion(opt::element(ima, 30) == 4);
-  mln_assertion(opt::element(ima, 31) == 5);
-  mln_assertion(opt::element(ima, 32) == 6);
-  mln_assertion(opt::element(ima, 33) == 6);
-  mln_assertion(opt::element(ima, 34) == 6);
-  mln_assertion(opt::element(ima, 35) == 4);
-  mln_assertion(opt::element(ima, 36) == 4);
-  mln_assertion(opt::element(ima, 37) == 1);
-  mln_assertion(opt::element(ima, 38) == 2);
-  mln_assertion(opt::element(ima, 39) == 3);
-  mln_assertion(opt::element(ima, 40) == 6);
-  mln_assertion(opt::element(ima, 41) == 6);
+  // Image2d
+  {
+    unsigned ref_data[6][7] = {
+      { 1, 1, 4, 5, 6, 3, 3 },
+      { 1, 1, 1, 2, 3, 3, 3 },
+      { 2, 1, 1, 2, 3, 3, 2 },
+      { 5, 4, 4, 5, 6, 6, 5 },
+      { 4, 4, 4, 5, 6, 6, 6 },
+      { 4, 4, 1, 2, 3, 6, 6 }
+    };
+
+
+    image2d<unsigned> ref = make::image(ref_data);
+    image2d<unsigned> input(2, 3, 2);
+    image2d<unsigned> res(6, 7, 0);
+    debug::iota(input, 0);
+    border::mirror(input);
+
+    data::paste_without_localization(extended_to(input, input.vbbox()), res);
+
+    mln_assertion(res == ref);
+  }
 }
