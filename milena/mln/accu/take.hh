@@ -34,6 +34,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/util/pix.hh>
 
+// FIXME: to be removed? Seems to duplicate data::compute and
+// set::compute. Moreover it does not work...
 
 namespace mln
 {

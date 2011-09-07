@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,10 @@
 /// Define function that fills border using nearer pixels with a
 /// mirroring effect.
 ///
-/// \todo Awful code: rewrite it!
+/// \fixme 2D version is not correct if the border is larger than the
+/// image domain.
+///
+///  \todo Awful code: rewrite it!
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
@@ -193,6 +197,8 @@ namespace mln
       inline
       void mirror_(const box3d&, const I& ima)
       {
+	trace::warning("border::mirror for 3D image is not implemented,"
+		       " so image borders have not been mirrored!");
 	mln::internal::fixme();
       }
 
