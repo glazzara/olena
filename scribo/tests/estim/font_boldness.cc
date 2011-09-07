@@ -38,9 +38,11 @@ int main()
   image2d<bool> input;
   io::pbm::load(input, SCRIBO_IMG_DIR "/phillip.pbm");
 
-  float val = scribo::estim::font_boldness(input);
+  volatile float val = scribo::estim::font_boldness(input);
+  val = ((int)(val * 100) / 100.f);
 
-  mln_assertion(((int)(val * 100) / 100.f) == 18.44f);
+  volatile float ref = 18.44f;
+  mln_assertion(val == ref);
 
   return 0;
 }
