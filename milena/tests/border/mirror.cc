@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,13 +24,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/extended.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/mirror.hh>
 #include <mln/opt/element.hh>
-
-#include <mln/debug/println_with_border.hh>
+#include <mln/data/paste_without_localization.hh>
+#include <mln/data/compare.hh>
 
 using namespace mln;
 
@@ -48,15 +52,6 @@ main (void)
     mln_assertion(opt::element(ima, 5) == 2);
     mln_assertion(opt::element(ima, 6) == 1);
     mln_assertion(opt::element(ima, 7) == 1);
-  }
-
-
-  // Image2d
-  {
-    image2d<unsigned> input(2, 2, 4);
-    debug::iota(input, 0);
-    border::mirror(input);
-    debug::println_with_border(input);
   }
 
 
