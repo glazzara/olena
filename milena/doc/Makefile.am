@@ -137,7 +137,7 @@ regen-examples-mk:
 	mv -f $(srcdir)/examples.mk.tmp $(srcdir)/examples.mk
 	chmod -w $(srcdir)/examples.mk
 
-# Examples used in the technical documentation. 
+# Examples used in the technical documentation.
 TECHNICAL_EXAMPLES =				\
   examples/devel/dispatch.cc.raw		\
   examples/devel/facade.cc.raw			\
@@ -276,7 +276,7 @@ regen-devel-doc:
 DOXYFILE_DEVEL = Doxyfile_devel
 
 edit_devel = sed							      \
-  -e 's,OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp/,OUTPUT_DIRECTORY       = @builddir@/devel-refman.tmp/,' \
+  -e 's,OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp,OUTPUT_DIRECTORY       = @builddir@/devel-refman.tmp,' \
   -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
   -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
   -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
