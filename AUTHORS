@@ -65,6 +65,8 @@ Interns.
 * Arthur Crépin-Leblond
   - SCRIBO structured outputs (XML, HTML, PDF).
 
+* Raphaël Boissel
+  - Graph implementation of a DIA toolchain in SCRIBO.
 
 =========================
 Students from Class 2012.
@@ -74,6 +76,8 @@ Students from Class 2012.
   - Prototype of the upcoming functions system.
 
 * Julien Marquegnies	julien.marquegnies@lrde.epita.fr
+  - Fast implementation of the Hough transform.
+  - Many improvements in SCRIBO layout analysis.
 
 =========================
 Students from Class 2011.
@@ -102,7 +106,7 @@ Students from Class 2009.
   - Data routines.
 
 * Matthieu Garrigues
-  - Value types and i/o. 
+  - Value types and i/o.
   - Draft of the FLLT.
 
 * Ugo Jardonnet
