@@ -1,5 +1,21 @@
 2011-09-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix doc generation.
+
+	* doc/Doxyfile.in: Enable source code parsing and listing. Fix
+	include directories.
+
+	* doc/ref-guide.tex,
+	* doc/technical.tex: Use .sty files as input files instead of
+	packages.
+
+	* doc/tutorial.tex: Use .sty files as input files instead of
+	packages. Fix references.
+
+	* mln/core/concept/object.hh: Fix copyright.
+
+2011-09-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/image/vertex_image.hh: Fix invalid construction.
 
 2011-09-07  Guillaume Lazzara  <z@lrde.epita.fr>

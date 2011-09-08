@@ -1,5 +1,5 @@
-%% Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-%% (LRDE)
+%% Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+%% Laboratory (LRDE)
 %%
 %% This file is part of Olena.
 %%
@@ -32,8 +32,6 @@
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{pgf}
-\usepackage{doxyfuns}
-\usepackage{milena}
 
 % FIXME: Consider using the package FiXme from Didier Verna instead.
 %\newcommand{\tofix}[1]{{\color{red}(FIXME: #1)}}
@@ -45,9 +43,11 @@
 \date{}
 \makeindex
 
-
+\input{doxyfuns.sty}
+\input{milena.sty}
 
 \begin{document}
+
 
 % Doxygen use only - Generate the left menu.
 %Write foreword below.
@@ -233,11 +233,11 @@ $ cd trunk
 \end{verbatim}
 
 You are now ready to configure the directory and install Milena as described
-in section \ref{tuto2}.
+in section \doxyref{tuto2}.
 We invite you to take a look at the description of the directory structure
-(section \ref{tuto1dirstruct}).
+(section \doxyref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
-question, do not forget to join the mailing lists (section \ref{tuto1mailinglists})
+question, do not forget to join the mailing lists (section \doxyref{tuto1mailinglists})
 and/or use the other documentations resources (section ref{tuto1documentation}).
 
 
@@ -275,13 +275,13 @@ $ cd olena
 
 
 You are now ready to configure the directory and install Milena as described
-in section \ref{tuto2}.
+in section \doxyref{tuto2}.
 We invite you to take a look at the description of the directory structure
-(section \ref{tuto1dirstruct}).
+(section \doxyref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
 question, do not forget to join the mailing lists (section
-\ref{tuto1mailinglists}) and/or use the other documentations resources
-(section \ref{tuto1documentation})).
+\doxyref{tuto1mailinglists}) and/or use the other documentations resources
+(section \doxyref{tuto1documentation})).
 
 
 
@@ -467,7 +467,7 @@ for new contributors.
   Did you find what you wanted? Do you miss something?
 
   \item Please report bugs and defects in the API. Mailing lists are the best
-  way for reporting that (section \ref{tuto1mailinglists}).
+  way for reporting that (section \doxyref{tuto1mailinglists}).
 
   \item Developers, if you write cool open source programs or algorithms with Milena,
   send them to us. We may ship your code with Olena and/or add it to
@@ -477,7 +477,7 @@ for new contributors.
   share your materials, you can send it to us through our mailing-lists.
 
   \item We are also interested in partnership or commercial use of Milena.
-  If you are interested, contact us directly (\ref{tuto1contacts}).
+  If you are interested, contact us directly (\doxyref{tuto1contacts}).
 
 \end{itemize}
 
@@ -486,7 +486,7 @@ for new contributors.
 \doxysection{tuto1projectstatus}{Project status}
 
 If you want to stay tuned to Milena's development, the best way is probably
-the mailing-lists (section \ref{tuto1mailinglists}).
+the mailing-lists (section \doxyref{tuto1mailinglists}).
 
 There are other ways to get to know what is the status of the project.
 
@@ -604,7 +604,7 @@ your system, generating the doc and compiling the test suite and the examples.
 \doxysection{tuto2bootstrap}{Bootstrap (SVN Sources)}
 
 If you got the sources from a package/tarball, you can skip this section. Go
-to section \ref{tuto2configure}.
+to section \doxyref{tuto2configure}.
 
 If you downloaded the sources from the SVN repository, you must launch a
 script before configuring the build directory.
@@ -704,10 +704,10 @@ $ make install
 
 When the installation is finished, you are done. Milena is installed on your
 system. But maybe you would like to build the examples? This is described
-in section \ref{tuto2optionalcomp}.
+in section \doxyref{tuto2optionalcomp}.
 
 A description of the installation content is also available in section
-\ref{tuto2installcontent}.
+\doxyref{tuto2installcontent}.
 
 
 
@@ -894,7 +894,7 @@ The important point to remember is that a generic function should not return
 
 \doxycode[3]{tuto3_first_routine}
 Like any Milena's routine, note that we use \code{trace}. This debugging tool
-will be detailed in section \ref{tuto3debughints}.
+will be detailed in section \doxyref{tuto3debughints}.
 
 
 \doxycode[4]{tuto3_first_routine}
@@ -1187,7 +1187,7 @@ sites in an image, consequently they do not store any values.
 
 Site sets can used as standalone containers.
 
-A list of available site sets is available in section \ref{siteset}.
+A list of available site sets is available in section \doxyref{siteset}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MOVE PARTS OF THE NEXT CHAPTERS RIGHT HERE. %

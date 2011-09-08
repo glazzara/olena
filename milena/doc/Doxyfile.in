@@ -36,7 +36,6 @@ STRIP_FROM_INC_PATH    =
 SHORT_NAMES            = YES
 JAVADOC_AUTOBRIEF      = YES
 MULTILINE_CPP_IS_BRIEF = NO
-DETAILS_AT_TOP         = NO
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 8
@@ -101,8 +100,8 @@ EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/trash			\
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
                          @top_srcdir@/milena/doc/examples/trash		\
-                         @top_srcdir@/milena/doc/user-refman
-                         @top_srcdir@/milena/doc/devel-refman
+                         @top_srcdir@/milena/doc/user-refman 		\
+                         @top_srcdir@/milena/doc/devel-refman		\
                          @top_srcdir@/milena/tests/unit_test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
@@ -115,8 +114,7 @@ EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
 			 *.txt
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/milena/doc/devel/figures \
-			 @top_srcdir@/milena/doc/img	       \
+IMAGE_PATH             = @top_srcdir@/milena/doc/img	       \
 			 @top_srcdir@/milena/doc/figures
 INPUT_FILTER           =
 FILTER_PATTERNS        =
@@ -126,7 +124,7 @@ INPUT_ENCODING         = ISO-8859-1
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = YES
