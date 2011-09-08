@@ -71,6 +71,7 @@ namespace scribo
       {
       }
 
+      inline
       Toolchain_Functor::~Toolchain_Functor()
       {
       }
