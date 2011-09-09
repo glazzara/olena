@@ -87,6 +87,34 @@ LRDE_NODIST_FILES =					\
   $(distdir)/milena/tests/registration/registration.cc	\
   $(distdir)/milena/tests/value/stack.cc
 
+PORTFILE=distrib/macports/Portfile
+
+TARBALL_GZ=$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz
+do_subst = sed -e 's|@packagename[@]|$(PACKAGE_TARNAME)|g'				\
+	       -e 's|@version[@]|$(PACKAGE_VERSION)|g'					\
+	       -e "s|@package_md5[@]|`md5sum $(TARBALL_GZ) | cut -d ' ' -f 1`|g" 	\
+	       -e "s|@package_sha1[@]|`openssl sha1 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"	\
+	       -e "s|@package_rmd160[@]|`openssl rmd160 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"
+
+$(PORTFILE): dist $(top_srcdir)/distrib/macports/Portfile.in Makefile
+	rm -f $@ $@.tmp
+	rm -Rf distrib
+	srcdir=''; \
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(mkdir_p) distrib/macports
+	md5=`md5sum $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
+	sha1=`openssl sha1 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
+	rmd160=`openssl rmd160 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`;
+	$(do_subst) $(srcdir)/$@.in >$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+CLEANFILES = $(PORTFILE)
+
+
+port: $(PORTFILE)
+
 ## FIXME: Running `build-aux/build_unit_test.sh' just to update
 ## `milena/tests/unit_test/unit-tests.mk' is overkill:
 ##
