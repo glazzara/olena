@@ -38,5 +38,3 @@ DEST=/lrde/dload/olena/stats/
 
 gitstats . $DEST
 
-# Expose updated files.
-chmod -R a+rX $DEST
