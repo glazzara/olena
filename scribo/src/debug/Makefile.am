@@ -23,7 +23,6 @@ noinst_PROGRAMS = 				\
   show_groups_bboxes_filtered			\
   show_info_x_height 				\
   show_info_median_inter_characters		\
-  show_lines_boldness 				\
   show_separators				\
   show_links_left_right_links_validation 	\
   show_links_bbox_h_ratio 			\
@@ -40,7 +39,7 @@ noinst_PROGRAMS = 				\
   show_links_single_left_dmax_ratio		\
   show_links_single_right 			\
   show_links_single_right_dmax_ratio		\
-  show_links_single_up 	 			\
+  show_links_single_up 				\
   show_links_single_up_left_aligned		\
   show_links_single_up_right_aligned		\
   show_links_top_aligned 			\
@@ -57,7 +56,6 @@ show_groups_bboxes_SOURCES = show_groups_bboxes.cc
 show_groups_bboxes_filtered_SOURCES = show_groups_bboxes_filtered.cc
 show_info_x_height_SOURCES = show_info_x_height.cc
 show_info_median_inter_characters_SOURCES = show_info_median_inter_characters.cc
-show_lines_boldness_SOURCES = show_lines_boldness.cc
 show_separators_SOURCES = show_separators.cc
 show_links_left_right_links_validation_SOURCES = show_links_left_right_links_validation.cc
 show_links_bbox_h_ratio_SOURCES = show_links_bbox_h_ratio.cc
@@ -85,6 +83,7 @@ show_objects_small_SOURCES = show_objects_small.cc
 show_objects_thick_SOURCES = show_objects_thick.cc
 show_objects_thin_SOURCES = show_objects_thin.cc
 
+
 if HAVE_MAGICKXX
 
   noinst_PROGRAMS +=  show_components_color
@@ -101,6 +100,16 @@ if HAVE_MAGICKXX
   show_components_boldness_LDFLAGS  = $(AM_LDFLAGS) \
 				      $(MAGICKXX_LDFLAGS)
 
+if HAVE_TESSERACT
+  noinst_PROGRAMS += show_lines_boldness
+  show_lines_boldness_SOURCES = show_lines_boldness.cc
+  show_lines_boldness_CPPFLAGS = $(AM_CPPFLAGS) \
+				 $(MAGICKXX_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS)
+  show_lines_boldness_LDFLAGS  = $(AM_LDFLAGS) \
+				 $(MAGICKXX_LDFLAGS)
+endif HAVE_TESSERACT
+
 if HAVE_QT
 
   noinst_PROGRAMS +=  show_paragraph_blocks
@@ -116,41 +125,44 @@ if HAVE_QT
   show_paragraph_blocks_LDADD    = $(LDADD) \
 				   $(QT_LIBS)
 
-  noinst_PROGRAMS  	  += show_text_lines
+if HAVE_TESSERACT
+  noinst_PROGRAMS	  += show_text_lines
   show_text_lines_SOURCES  = show_text_lines.cc
   show_text_lines_CPPFLAGS = $(AM_CPPFLAGS) \
-		  	     $(MAGICKXX_CPPFLAGS) \
+			     $(MAGICKXX_CPPFLAGS) \
+			     $(TESSERACT_CPPFLAGS) \
 			     $(QT_CPPFLAGS) -DHAVE_QT
   show_text_lines_CXXFLAGS = $(AM_CXXFLAGS) \
-		  	     $(QT_CXXFLAGS)
+			     $(QT_CXXFLAGS)
   show_text_lines_LDFLAGS  = $(AM_LDFLAGS) \
 			     $(MAGICKXX_LDFLAGS) \
 			     $(QT_LDFLAGS)
   show_text_lines_LDADD    = $(LDADD) \
 			     $(QT_LIBS)
 
-  noinst_PROGRAMS  	  += show_text_lines_wo_seps
+  noinst_PROGRAMS	  += show_text_lines_wo_seps
   show_text_lines_wo_seps_SOURCES  = show_text_lines_wo_seps.cc
   show_text_lines_wo_seps_CPPFLAGS = $(AM_CPPFLAGS) \
-		  	     $(MAGICKXX_CPPFLAGS) \
+			     $(MAGICKXX_CPPFLAGS) \
+			     $(TESSERACT_CPPFLAGS) \
 			     $(QT_CPPFLAGS) -DHAVE_QT
   show_text_lines_wo_seps_CXXFLAGS = $(AM_CXXFLAGS) \
-		  	     $(QT_CXXFLAGS)
+			     $(QT_CXXFLAGS)
   show_text_lines_wo_seps_LDFLAGS  = $(AM_LDFLAGS) \
 			     $(MAGICKXX_LDFLAGS) \
 			     $(QT_LDFLAGS)
   show_text_lines_wo_seps_LDADD    = $(LDADD) \
 			     $(QT_LIBS)
-
+endif HAVE_TESSERACT
 
 
   noinst_PROGRAMS       += show_stoppers
   show_stoppers_SOURCES  = show_stoppers.cc
   show_stoppers_CPPFLAGS = $(AM_CPPFLAGS) \
-		  	   $(MAGICKXX_CPPFLAGS) \
+			   $(MAGICKXX_CPPFLAGS) \
 			   $(QT_CPPFLAGS)
   show_stoppers_CXXFLAGS = $(AM_CXXFLAGS) \
-		  	   $(QT_CXXFLAGS)
+			   $(QT_CXXFLAGS)
   show_stoppers_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(MAGICKXX_LDFLAGS) \
 			   $(QT_LDFLAGS)
@@ -161,7 +173,7 @@ if HAVE_QT
 endif HAVE_QT
 
 
-  noinst_PROGRAMS 	      += highlight_text_area
+  noinst_PROGRAMS	      += highlight_text_area
   highlight_text_area_SOURCES  = highlight_text_area.cc
   highlight_text_area_CPPFLAGS = $(AM_CPPFLAGS) \
 				 $(MAGICKXX_CPPFLAGS)

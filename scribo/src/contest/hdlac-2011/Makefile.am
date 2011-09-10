@@ -28,10 +28,11 @@ noinst_PROGRAMS += content_in_hdoc_hdlac
 
 content_in_hdoc_hdlac_SOURCES = content_in_hdoc_hdlac.cc
 content_in_hdoc_hdlac_CPPFLAGS = $(AM_CPPFLAGS) \
-	  		         $(TESSERACT_CPPFLAGS) \
-	  		    	 -I$(top_builddir)
+				 $(MAGICKXX_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS) \
+				 -I$(top_builddir)
 content_in_hdoc_hdlac_LDFLAGS  = $(AM_LDFLAGS) \
-		      	       	 -lpthread \
-			   	 $(MAGICKXX_LDFLAGS)
+				 -lpthread \
+				 $(MAGICKXX_LDFLAGS)
 
 endif HAVE_MAGICKXX

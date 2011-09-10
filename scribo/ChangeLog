@@ -1,3 +1,25 @@
+2011-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix compilation dependencies in Scribo.
+
+	* src/contest/DAE-2011/Makefile.am
+	(content_in_hdoc_dae_CPPFLAGS, content_in_doc_dae_CPPFLAGS)
+	* src/contest/hdlac-2011/Makefile.am
+	(content_in_hdoc_hdlac_CPPFLAGS):
+	Add $(MAGICKXX_CPPFLAGS).
+	* src/debug/Makefile.am
+	(noinst_PROGRAMS): Move show_lines_boldness...
+	(noinst_PROGRAMS) [HAVE_MAGICKXX, HAVE_TESSERACT]: ...here.
+	(show_lines_boldness_SOURCES): Remove.
+	(show_lines_boldness_SOURCES)
+	(show_lines_boldness_CPPFLAGS)
+	(show_lines_boldness_LDFLAGS)
+	[HAVE_MAGICKXX, HAVE_TESSERACT]: New.
+	(show_text_lines_CPPFLAGS)
+	(show_text_lines_wo_seps_CPPFLAGS)
+	[HAVE_MAGICKXX, HAVE_QT, HAVE_TESSERACT]:
+	Add $(TESSERACT_CPPFLAGS).
+
 2011-09-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/toolchain/internal/toolchain_functor.hh: Add a missing

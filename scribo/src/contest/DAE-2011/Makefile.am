@@ -28,19 +28,21 @@ noinst_PROGRAMS += content_in_hdoc_dae content_in_doc_dae
 
 content_in_hdoc_dae_SOURCES = content_in_hdoc_dae.cc
 content_in_hdoc_dae_CPPFLAGS = $(AM_CPPFLAGS) \
-	  		         $(TESSERACT_CPPFLAGS) \
-	  		    	 -I$(top_builddir)
+				 $(MAGICKXX_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS) \
+				 -I$(top_builddir)
 content_in_hdoc_dae_LDFLAGS  = $(AM_LDFLAGS) \
-		      	       	 -lpthread \
-			   	 $(MAGICKXX_LDFLAGS)
+				 -lpthread \
+				 $(MAGICKXX_LDFLAGS)
 
 content_in_doc_dae_SOURCES = content_in_doc_dae.cc
 content_in_doc_dae_CPPFLAGS = $(AM_CPPFLAGS) \
-	  		         $(TESSERACT_CPPFLAGS) \
-	  		    	 -I$(top_builddir)
+				 $(MAGICKXX_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS) \
+				 -I$(top_builddir)
 content_in_doc_dae_LDFLAGS  = $(AM_LDFLAGS) \
-		      	       	 -lpthread \
-			   	 $(MAGICKXX_LDFLAGS)
+				 -lpthread \
+				 $(MAGICKXX_LDFLAGS)
 
 
 endif HAVE_MAGICKXX
