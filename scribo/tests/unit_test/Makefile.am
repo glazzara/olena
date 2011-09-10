@@ -17,10 +17,19 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-COND_TESTS = cond_tests_magickxx_tesseract_tiff 	\
+# FIXME: Make this Makefile machinery more robust.  For instance,
+# `build_unit_test.sh' should be passed the file names in
+# $(COND_TESTS) instead of looking for them on its own, as it consider
+# wrong files (e.g. stray Emacs backup files ending in `~').
+# Moreover, maintaining these files by hand is really painful.  How
+# could we automate their creation and update?
+
+COND_TESTS = cond_tests_magickxx			\
+	     cond_tests_magickxx_qt			\
 	     cond_tests_magickxx_qt_tesseract_tiff 	\
+	     cond_tests_magickxx_tesseract	 	\
+	     cond_tests_magickxx_tesseract_tiff 	\
 	     cond_tests_qt 				\
-	     cond_tests_qt_tesseract_tiff		\
 	     cond_tests_tesseract_tiff
 
 EXTRA_DIST = disabled_tests \

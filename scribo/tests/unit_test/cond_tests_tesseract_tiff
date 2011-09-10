@@ -1,4 +1,3 @@
 scribo/text/recognition.hh
 scribo/toolchain/internal/text_in_doc_functor.hh
-scribo/toolchain/content_in_doc.hh
 scribo/toolchain/text_in_doc.hh

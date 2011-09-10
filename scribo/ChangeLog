@@ -1,5 +1,30 @@
 2011-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix compilation dependencies of unit tests in Scribo.
+
+	* tests/unit_test/Makefile.am (COND_TESTS):
+	Add cond_tests_magickxx, cond_tests_magickxx_qt and
+	cond_tests_magickxx_tesseract.
+	Remove cond_tests_qt_tesseract_tiff.
+	* tests/unit_test/cond_tests_magickxx,
+	* tests/unit_test/cond_tests_magickxx_qt,
+	* tests/unit_test/cond_tests_magickxx_tesseract:
+	New.
+	* tests/unit_test/cond_tests_qt_tesseract_tiff: Remove (empty)
+	file.
+	* tests/unit_test/cond_tests_magickxx_tesseract_tiff: Add
+	scribo/toolchain/content_in_doc.hh.
+	* tests/unit_test/cond_tests_qt: Remove
+	scribo/io/xml/internal/full_xml_visitor.hh and
+	scribo/io/xml/load.hh.
+	* tests/unit_test/cond_tests_tesseract_tiff: Remove.
+	scribo/toolchain/content_in_doc.hh.
+	* tests/unit_test/cond_tests_magickxx_qt_tesseract_tiff:
+	Remove empty line.
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix compilation dependencies in Scribo.
 
 	* src/contest/DAE-2011/Makefile.am
