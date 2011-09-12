@@ -34,8 +34,6 @@
 #include <mln/data/convert.hh>
 #include <mln/literal/colors.hh>
 
-#include <scribo/text/recognition.hh>
-
 #include <scribo/debug/usage.hh>
 
 #include <scribo/core/document.hh>

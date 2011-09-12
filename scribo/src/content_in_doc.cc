@@ -80,7 +80,7 @@ static const scribo::debug::opt_data opt_desc[] =
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "ocr-lang", "Set the language to be recognized by the OCR (Tesseract). "
-    "According to your system, you can choose between eng (default), "
+    "Depending on your system, you can choose between eng (default), "
     "fra, deu, ita, nld, por, spa, vie",
     "<lang>", scribo::debug::check_ocr_lang, 1, "eng" },
   { "verbose", "Enable verbose mode", 0, 0, 0, 0 },

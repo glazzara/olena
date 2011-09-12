@@ -34,11 +34,8 @@
 #include <mln/data/convert.hh>
 #include <mln/literal/colors.hh>
 
-#include <scribo/text/recognition.hh>
-
 #include <scribo/debug/usage.hh>
 
-#include <scribo/core/document.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/core/object_links.hh>
 #include <scribo/core/object_groups.hh>

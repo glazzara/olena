@@ -83,7 +83,7 @@ namespace scribo
 	      if (last_pixel_value)
 	      {
 		unsigned k = j + 1;
-		for (; !(input.at_(i, k)) && (k < ncols); ++k);
+		for ( ; !(input.at_(i, k)) && (k < ncols); ++k);
 
 		count = k - j;
 		const int threshold = deltas(last_pixel_value);
@@ -133,7 +133,7 @@ namespace scribo
 	      if (last_pixel_value)
 	      {
 		unsigned k = i + 1;
-		for (; !(input.at_(k, j)) && (k < nrows); ++k);
+		for ( ; !(input.at_(k, j)) && (k < nrows); ++k);
 
 		count = k - i;
 		const int threshold = deltas(last_pixel_value);

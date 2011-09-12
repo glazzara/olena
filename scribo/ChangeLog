@@ -1,5 +1,22 @@
 2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* demo/viewer/icons/olena_smaller.jpg,
+	* demo/viewer/viewer.qrc: Change icon location.
+
+	* scribo/text/paragraphs_closing.hh: Avoid a warning.
+
+	* src/content_in_doc.cc: Fix a parameter description.
+
+	* src/debug/show_lines_boldness.cc,
+	* src/debug/show_text_lines.cc,
+	* src/debug/show_text_lines_wo_seps.cc: Remove useless includes.
+
+	* src/scribo-cli.in: Pass arguments correctly.
+
+2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	More fixes in Scribo build system.
 
 	* demo/viewer/Makefile.am: Add missing distributed files.
