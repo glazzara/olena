@@ -1,3 +1,11 @@
+2011-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop warning about Debian's g++ 4.2 compiler issues.
+
+	* mln/data/memcpy_.hh
+	(mln::data::impl_::memcpy__<Pd, Ps>(Pd&, const Ps&, std::size_t)):
+	Here.
+
 2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/value/builtin/carrays.hh: Fix a compilation error with
