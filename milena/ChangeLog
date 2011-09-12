@@ -1,5 +1,11 @@
 2011-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the return type of mln::Function<E>::operator=.
+
+	* mln/core/concept/function.hh: Here.
+
+2011-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop warning about Debian's g++ 4.2 compiler issues.
 
 	* mln/data/memcpy_.hh
