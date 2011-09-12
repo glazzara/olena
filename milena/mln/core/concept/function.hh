@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,6 +71,13 @@ namespace mln
   protected:
     Function();
     Function(const Function&);
+
+    /* Workaround for Apple's llvm-gcc 4.2.1 (Mac OS Lion 10.7.1)
+
+       Apple's llvm-gcc has a bug causing memmove() errors if the copy
+       constructor is not declared along with operator=().
+     */
+    Function& operator=(const Function&);
   };
 
 
@@ -221,6 +229,13 @@ namespace mln
   {
   }
 
+  template <typename E>
+  inline
+  Function&
+  Function<E>::operator=(const Function&)
+  {
+    return *this;
+  }
 
   // Function_n2v.
 
