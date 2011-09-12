@@ -1,5 +1,10 @@
 2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/value/builtin/carrays.hh: Fix a compilation error with
+	Apple's clang 2.1.
+
+2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Workaround for Apple's llvm-gcc 4.2.1 on Mac OS Lion 10.7.1
 
 	* mln/core/concept/function.hh: Add operator=() in Function
