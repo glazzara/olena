@@ -96,7 +96,7 @@ do_subst = sed -e 's|@packagename[@]|$(PACKAGE_TARNAME)|g'				\
 	       -e "s|@package_sha1[@]|`openssl sha1 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"	\
 	       -e "s|@package_rmd160[@]|`openssl rmd160 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"
 
-$(PORTFILE): dist $(top_srcdir)/distrib/macports/Portfile.in Makefile
+$(PORTFILE): $(top_srcdir)/distrib/macports/Portfile.in Makefile dist
 	rm -f $@ $@.tmp
 	rm -Rf distrib
 	srcdir=''; \
