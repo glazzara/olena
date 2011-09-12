@@ -1,3 +1,13 @@
+2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	More fixes in Scribo build system.
+
+	* demo/viewer/Makefile.am: Add missing distributed files.
+
+	* src/contest/DAE-2011/Makefile.am,
+	* src/contest/hdlac-2011/Makefile.am,
+	* src/debug/Makefile.am: Fix dependencies.
+
 2011-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix compilation dependencies of unit tests in Scribo.

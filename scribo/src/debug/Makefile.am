@@ -86,6 +86,14 @@ show_objects_thin_SOURCES = show_objects_thin.cc
 
 if HAVE_MAGICKXX
 
+  noinst_PROGRAMS += show_lines_boldness
+  show_lines_boldness_SOURCES  = show_lines_boldness.cc
+  show_lines_boldness_CPPFLAGS = $(AM_CPPFLAGS) \
+				 $(MAGICKXX_CPPFLAGS)
+  show_lines_boldness_LDFLAGS  = $(AM_LDFLAGS) \
+				 $(MAGICKXX_LDFLAGS)
+
+
   noinst_PROGRAMS +=  show_components_color
   show_components_color_SOURCES  = show_components_color.cc
   show_components_color_CPPFLAGS = $(AM_CPPFLAGS) \
@@ -99,16 +107,6 @@ if HAVE_MAGICKXX
 				      $(MAGICKXX_CPPFLAGS)
   show_components_boldness_LDFLAGS  = $(AM_LDFLAGS) \
 				      $(MAGICKXX_LDFLAGS)
-
-if HAVE_TESSERACT
-  noinst_PROGRAMS += show_lines_boldness
-  show_lines_boldness_SOURCES = show_lines_boldness.cc
-  show_lines_boldness_CPPFLAGS = $(AM_CPPFLAGS) \
-				 $(MAGICKXX_CPPFLAGS) \
-				 $(TESSERACT_CPPFLAGS)
-  show_lines_boldness_LDFLAGS  = $(AM_LDFLAGS) \
-				 $(MAGICKXX_LDFLAGS)
-endif HAVE_TESSERACT
 
 if HAVE_QT
 

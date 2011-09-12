@@ -133,5 +133,7 @@ EXTRA_DIST =			\
 	segmentation_options.ui	\
 	ocr_options.ui		\
 	help_dialog.ui 		\
-	demodir.hh.in
+	demodir.hh.in		\
+	viewer.qrc		\
+	icons/olena_smaller.jpg
 
