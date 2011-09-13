@@ -76,7 +76,7 @@ namespace mln
 
        Apple's llvm-gcc has a bug causing memmove() errors if the copy
        constructor is not declared along with operator=().  */
-    Function& operator=(const Function&);
+    Function<E>& operator=(const Function<E>&);
   };
 
 
@@ -231,7 +231,7 @@ namespace mln
   template <typename E>
   inline
   Function<E>&
-  Function<E>::operator=(const Function&)
+  Function<E>::operator=(const Function<E>&)
   {
     return *this;
   }
