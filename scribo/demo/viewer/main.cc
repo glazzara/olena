@@ -18,6 +18,10 @@
 #include <QtGui>
 #include <iostream>
 
+# ifdef HAVE_TESSERACT_2
+#include <clocale>
+# endif // ! HAVE_TESSERACT_2
+
 #undef MLN_WO_GLOBAL_VARS
 #include "viewer.hh"
 #include <mln/labeling/colorize.hh>
@@ -44,6 +48,16 @@ int main(int argc, char** argv)
 
   if (!viewer)
     return -1;
+
+
+# ifdef HAVE_TESSERACT_2
+  // Tesseract 2.x is known to have issues while reading training data
+  // depending on the current locales in use. Training data files use
+  // float data and the decimal separator can be either '.' or ','
+  // causing errors.
+  // Setting locale to "C" fix that issue.
+  setlocale(LC_ALL, "C");
+# endif // ! HAVE_TESSERACT_2
 
   return viewer->exec();
 }
