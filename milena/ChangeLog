@@ -1,3 +1,11 @@
+2011-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prevent g++ 4.2 from issuing bad code for constrained-connectivity.
+
+	* apps/constrained-connectivity/Makefile.am
+	(constrained_connectivity_CXXFLAGS): New.
+	Append $(STRICT_ALIASING_CXXFLAGS).
+
 2011-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the return type of mln::Function<E>::operator=.

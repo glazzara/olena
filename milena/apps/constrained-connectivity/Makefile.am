@@ -22,6 +22,7 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS = constrained-connectivity
 constrained_connectivity_SOURCES = constrained-connectivity.cc
+constrained_connectivity_CXXFLAGS = $(AM_CXXFLAGS) $(STRICT_ALIASING_CXXFLAGS)
 
 TESTS = test-constrained-connectivity
 
