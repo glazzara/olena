@@ -1,3 +1,11 @@
+2011-09-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix text justification in HTML document reconstruction.
+
+	* demo/xml2doc/templates/html/css.css,
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl: Add new CSS rules.
+
 2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo.

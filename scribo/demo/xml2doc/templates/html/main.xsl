@@ -10,26 +10,40 @@
 	  .line
 	  {
 	  position:absolute;
+	  background-color:white;
 	  z-index:7;
-	  display:inline;
-	  white-space:pre;
+	  /*white-space:pre;*/
 
-	  <!-- FIXME -->
+	  /* FIXME */
 	  letter-spacing:-2px;
 
 	  padding:0px;
 	  margin:0px;
+	  filter:alpha(opacity=100);
 	  font-family:"Times New Roman", Times, serif;
+
+	  text-align: justify;
+	  display: block;
+	  }
+	  .para
+	  {
+	  position:absolute;
+	  z-index:6;
 	  }
 	  .region
 	  {
 	  position:absolute;
-	  z-index:6;
+	  z-index:5;
 	  }
 	  .image
 	  {
 	  position:absolute;
 	  border:0;
+	  }
+	  .line noop
+	  {
+	  width:1000px;
+	  display: inline-block;
 	  }
 	</style>
       </head>
@@ -222,6 +236,7 @@
 	      color:<xsl:value-of select="$color" />;
 	    </xsl:attribute>
 	    <xsl:value-of select="@text"/>
+	    <noop />
 	  </span>
 	  <!-- ENF OF TEXT LINE -->
   </xsl:template>

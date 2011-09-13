@@ -7,13 +7,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SCRIBO</title>
 	<style type="text/css">
-     	  .line
+	  .line
 	  {
 	  position:absolute;
 	  background-color:white;
 	  z-index:7;
-	  display:inline;
-	  white-space:pre;
+
+	  /* white-space:pre; */
 
 	  /* FIXME */
 	  letter-spacing:-2px;
@@ -22,6 +22,9 @@
 	  margin:0px;
 	  filter:alpha(opacity=100);
 	  font-family:"Times New Roman", Times, serif;
+
+	  text-align: justify;
+	  display: block;
 	  }
 	  .para
 	  {
@@ -37,6 +40,11 @@
 	  {
 	  position:absolute;
 	  border:0;
+	  }
+	  .line noop
+	  {
+	  width:1000px;
+	  display: inline-block;
 	  }
 	</style>
 	<!--	<link rel="stylesheet" type="text/css" href="css.css" /> -->
@@ -237,6 +245,7 @@
 	color:<xsl:value-of select="$color" />;
       </xsl:attribute>
       <xsl:value-of select="@text"/>
+      <noop />
     </span>
     <!-- ENF OF TEXT LINE -->
   </xsl:template>
@@ -376,6 +385,7 @@
 	  color:<xsl:value-of select="$color" />;
 	</xsl:attribute>
 	<xsl:value-of select="@text"/>
+	<noop />
       </div>
     </xsl:if>
     <!-- ENF OF TEXT LINE -->
