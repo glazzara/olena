@@ -1,3 +1,12 @@
+2011-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution w.r.t. Scribo's test images.
+
+	* tests/Makefile.am (EXTRA_DIST): Add img/comp_on_borders.pbm,
+	img/multi_scale.png, img/phillip.pbm, img/several_objects.pgm,
+	img/single_object.pbm and img/the_valleys.pbm.
+	Aesthetic changes.
+
 2011-09-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix text justification in HTML document reconstruction.

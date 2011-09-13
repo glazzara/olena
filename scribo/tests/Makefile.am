@@ -17,32 +17,38 @@
 
 include $(srcdir)/tests.mk
 
-EXTRA_DIST = 				\
-  img/alignment_1.pbm 			\
+EXTRA_DIST =				\
+  img/alignment_1.pbm			\
   img/alignment_2.pbm			\
   img/alignment_3.pbm			\
   img/alignment_4.pbm			\
-  img/phillip.ppm 			\
-  img/pixels.pbm 			\
+  img/comp_on_borders.pbm		\
+  img/multi_scale.png			\
+  img/phillip.pbm			\
+  img/phillip.ppm			\
+  img/pixels.pbm			\
+  img/several_objects.pgm		\
+  img/single_object.pbm			\
   img/table_to_be_repaired.pbm		\
   img/table_to_be_repaired2.pbm		\
   img/table_to_be_repaired3.pbm		\
   img/text_to_group.pbm			\
   img/text_to_group.pgm			\
   img/text_to_group_and_clean.pbm	\
+  img/the_valleys.pbm			\
   img/wildly.pbm
 
-SUBDIRS = 		\
-  binarization 		\
-  convert 		\
-  core 			\
-  estim 		\
-  filter 		\
-  preprocessing 	\
-  primitive 		\
-  table 		\
-  text 			\
-  toolchain 		\
+SUBDIRS =		\
+  binarization		\
+  convert		\
+  core			\
+  estim			\
+  filter		\
+  preprocessing		\
+  primitive		\
+  table			\
+  text			\
+  toolchain		\
   unit_test		\
   util
 
