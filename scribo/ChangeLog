@@ -1,3 +1,10 @@
+2011-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distcleancheck target.
+
+	* tests/binarization/Makefile.am (MOSTLYCLEANFILES): New.
+	Add res.pbm.
+
 2011-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution w.r.t. Scribo's test images.

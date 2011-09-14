@@ -37,3 +37,5 @@ sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc
 
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES = res.pbm
