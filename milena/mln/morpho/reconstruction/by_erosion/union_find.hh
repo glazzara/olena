@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,7 +27,11 @@
 #ifndef MLN_MORPHO_RECONSTRUCTION_BY_EROSION_UNION_FIND_HH
 # define MLN_MORPHO_RECONSTRUCTION_BY_EROSION_UNION_FIND_HH
 
+# include <cstdlib>
+
+# include <iostream>
 # include <vector>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
@@ -219,6 +224,16 @@ namespace mln
 			      const Neighborhood<N>& nbh)
 	  {
 	    // FIXME: Not yet implemented.
+	    std::cerr
+	      << __FILE__ << ":" << __LINE__ << ": error:\n"
+	      "mln::morpho::reconstruction::by_erosion::internal::\n"
+	      "  union_find_dispatch(mln::trait::image::kind::logic,\n"
+	      "                      const mln::Image<I>&,\n"
+	      "                      const mln::Image<J>&,\n"
+	      "                      const mln::Neighborhood<N>&)\n"
+	      "not implemented."
+	      << std::endl;
+	    std::abort();
 	  }
 
 	  template <typename I, typename J, typename N>

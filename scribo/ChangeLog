@@ -4679,9 +4679,9 @@ v	* tests/filter/objects_on_border.cc,
 	  arguments.
 
 	* src/binarization/fg_sauvola_ms.cc,
-        * src/binarization/sauvola.cc,
-        * src/binarization/sauvola_ms.cc,
-        * src/binarization/sauvola_ms_split.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_split.cc,
 	* src/binarization/sauvola_debug.cc: New.
 
 2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>

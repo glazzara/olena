@@ -50,6 +50,7 @@ int main()
     mln_assertion(out == lena);
   }
 
+  // FIXME: Is this part really meaningful as-is?
   {
     initialize(lena_2, lena);
     data::fill(lena_2, lena);

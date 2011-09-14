@@ -1,3 +1,32 @@
+2011-05-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/dicom/load.hh: Fix invalid data while loading large
+	image.
+
+2010-12-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ensure non implemented reconstructions on sets abort at run time.
+
+	* mln/morpho/reconstruction/by_dilation/union_find.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh
+	(union_find_dispatch(image::kind::logic, Image, Image, Neighborhood)):
+	Here.
+	* tests/morpho/reconstruction/by_dilation/union_find.cc,
+	* tests/morpho/reconstruction/by_erosion/union_find.cc:
+	Rename as...
+	* tests/morpho/reconstruction/by_dilation/union_find_on_functions.cc,
+	* tests/morpho/reconstruction/by_erosion/union_find_on_functions.cc:
+	...these.
+	* tests/morpho/reconstruction/by_dilation/union_find_on_sets.cc,
+	* tests/morpho/reconstruction/by_erosion/union_find_on_sets.cc:
+	New tests.
+	* tests/morpho/reconstruction/by_dilation/Makefile.am,
+	* tests/morpho/reconstruction/by_erosion/Makefile.am:
+	Adjust.
+	(check_PROGRAMS): Add union_find_on_sets.
+	(union_find_on_sets_SOURCES): New.
+	(XFAIL_TESTS): New.  Add union_find_on_sets.
+
 2011-05-20  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
 	* img/lena.pgm: Replace by official version;

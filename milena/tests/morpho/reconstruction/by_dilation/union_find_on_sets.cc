@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,11 +27,10 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/pw/all.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/io/pbm/load.hh>
 #include <mln/data/compare.hh>
 
-#include <mln/morpho/reconstruction/by_erosion/union_find.hh>
+#include <mln/morpho/reconstruction/by_dilation/union_find.hh>
 
 #include "tests/data.hh"
 
@@ -40,17 +39,18 @@
 int main()
 {
   using namespace mln;
-  using namespace morpho::reconstruction::by_erosion;
+  using namespace morpho::reconstruction::by_dilation;
 
-  image2d<value::int_u8> lena, lena_2, out;
-  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+  image2d<bool> lena, lena_2, out;
+  io::pbm::load(lena, MLN_IMG_DIR "/tiny.pbm");
 
   {
     out = union_find(lena, lena, c4());
     mln_assertion(out == lena);
   }
 
-  {
+  // FIXME: Is this part really meaningful as-is?
+ {
     initialize(lena_2, lena);
     data::fill(lena_2, lena);
     out = union_find(lena_2, lena, c4());
