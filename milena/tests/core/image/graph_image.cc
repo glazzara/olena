@@ -133,29 +133,24 @@ int main()
     box2d bbox = a.to_result();
     mln_assertion(bbox == make::box2d(5, 5));
 
-  // Print the image.
-  /* FIXME: Unfortunately, displaying graph images is not easy right
-     now(2008-02-05).  We could use
+    // Print the image.
+    /* FIXME: Unfortunately, displaying graph images is not easy right
+       now (2008-02-05).  We could use
 
-       debug::println(ima);
+         debug::println(ima);
 
-     but there's not specialization working for graph_image; the one
-     selected by the compiler is based on a 2-D bbox, and expects the
-     interface of graph_image to work with points(not psites).
-     Moreover, this implementation only shows *values*, not the graph
-     itslef.
+       but there's not specialization working for graph_image; the one
+       selected by the compiler is based on a 2-D bbox, and expects
+       the interface of graph_image to work with points (not psites).
 
-     An alternative is to use debug::graph,
-     but it doesn't show the values, only the vertices and edges of the
-     graph.
+       An alternative is to use debug::draw_graph, but it doesn't show
+       the values, only the vertices and edges of the graph.
 
-     The current solution is a mix between debug::graph and hand-made
-     iterations.  */
+       The current solution is a mix between debug::draw_graph and
+       hand-made iterations.  */
     image2d<int> ima_rep(bbox);
-
-  // We use the value 9 in debug::graph to represent edges to distinguish it
-  // from vertices holding a value of 1.
     debug::draw_graph(ima_rep, pv, 1, 9);
+    debug::println(ima_rep);
   }
 
   /*------------.

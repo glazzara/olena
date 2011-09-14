@@ -1,3 +1,11 @@
+2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update tests/core/image/graph_image.
+
+	* tests/core/image/graph_image.cc (main): Actually print the
+	graph.
+	Update comments.
+
 2011-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make Milena's copyright headers uniform.
