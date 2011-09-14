@@ -1,3 +1,8 @@
+2011-05-20  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
+
+	* img/lena.pgm: Replace by official version;
+	see http://www.ece.rice.edu/~wakin/images/
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address some errors reported by clang.
