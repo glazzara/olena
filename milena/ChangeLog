@@ -1,5 +1,12 @@
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Address some errors reported by clang.
+
+	* mln/data/fill.hh (mln::data::internal::fill_dispatch): Move this
+	function after the routines it calls.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address clang's warnings.
 
 	* mln/algebra/h_vec.hh,
