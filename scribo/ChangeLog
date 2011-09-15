@@ -1,3 +1,11 @@
+2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update SCRIBO tests w.r.t. the new version of lena.pgm.
+
+	* tests/binarization/sauvola.ref.pbm,
+	* tests/binarization/sauvola_ms.ref.pbm:
+	Update reference outputs.
+
 2011-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make SCRIBO's copyright headers uniform.
