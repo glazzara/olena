@@ -25,6 +25,12 @@
       </xsl:variable>
 
 
+    <!-- char_width -->
+    <xsl:variable name="char_width">
+      <xsl:value-of select="@charWidth" />
+    </xsl:variable>
+
+
     <xsl:for-each select="Line">
 
       <!-- x_height -->
@@ -143,6 +149,18 @@
 	  <xsl:value-of select="$colour" />
 	</xsl:attribute>
 
+	<!-- Adjusting height if font is different from Times. -->
+	<xsl:variable name="fsize">
+	  <xsl:choose>
+	    <xsl:when test="($a + $d) &gt; (1.16 * (37 * $char_width) div 17)">
+	      <xsl:value-of select="((37 * $char_width) div 17)" />
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="($a + $d)" />
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+
 	<!-- if necessary, put letter-spacing="-Npt"  ~ -3 <= N <= -1
 	     in fo:block-->
 
@@ -177,14 +195,7 @@
 		<fo:block font-family="Times" wrap-option="no-wrap" white-space-collapse="true" text-align-last="justify" text-align="justify">
 
 		  <xsl:attribute name="font-size">
-		    <xsl:choose>
-		      <xsl:when test="($a + $d) > 50">
-			<xsl:value-of select="0.82 * ($a + $d)" />px
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:value-of select="0.95 * ($a + $d)" />px
-		      </xsl:otherwise>
-		    </xsl:choose>
+		    <xsl:value-of select="$fsize" />px
 		  </xsl:attribute>
 
 		  <xsl:value-of select="@text"/>

@@ -10,7 +10,7 @@
 	  .line
 	  {
 	  position:absolute;
-	  background-color:white;
+	  /*background-color:white;*/
 	  z-index:7;
 
 	  /* white-space:pre; */
