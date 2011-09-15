@@ -1,3 +1,7 @@
+2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Fix the initialization of Magick++ flags.
+
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* distrib/macports/Portfile.in: Force the use of GraphicsMagick.

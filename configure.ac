@@ -218,10 +218,11 @@ OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [Magick++],
 # If both ImageMagick and GraphicsMagic are available, choose the
 # former by default.  (Use `--with-imagemagickxx=no' to ignore an
 # installation of ImageMagick and let configure try GraphicsMagick).
-if test "x$oln_have_imagemagickxx"; then
+if test "x$with_imagemagickxx" != xno \
+   && test "x$oln_have_imagemagickxx" = xyes; then
   MAGICKXX_CPPFLAGS=$IMAGEMAGICKXX_CPPFLAGS
   MAGICKXX_LDFLAGS=$IMAGEMAGICKXX_LDFLAGS
-else
+elif test "x$oln_have_graphicsmagickxx" = xyes; then
   MAGICKXX_CPPFLAGS=$GRAPHICSMAGICKXX_CPPFLAGS
   MAGICKXX_LDFLAGS=$GRAPHICSMAGICKXX_LDFLAGS
 fi
