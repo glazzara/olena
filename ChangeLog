@@ -1,5 +1,10 @@
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* distrib/macports/Portfile.in: Use -fno-strict-aliasing flag for
+	Mac OS X Lion.
+
+2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix Portfile dependencies.
 
 	* distrib/macports/Portfile.in: Set fop as run dependency.
