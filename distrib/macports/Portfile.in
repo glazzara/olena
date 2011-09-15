@@ -25,6 +25,8 @@ depends_lib         port:GraphicsMagick \
 
 supported_archs     i386 x86_64
 
+configure.args-append --with-imagemagickxx=no
+
 variant scribo description {Add a DIA framework} {
     depends_lib-append port:tesseract \
                        port:qt4-mac   \
