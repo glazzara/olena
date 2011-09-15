@@ -209,8 +209,27 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 # Magick++.  #
 # ---------- #
 
-OLN_WITH_LIB_PKG_CONFIG([Magick++], [Magick++.h], [Magick++], [magickxx],
-                        [MAGICKXX], [], [ImageMagick++])
+OLN_WITH_LIB_PKG_CONFIG([ImageMagick++], [Magick++.h], [Magick++],
+                        [imagemagickxx], [IMAGEMAGICKXX])
+
+OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [Magick++],
+                        [graphicsmagickxx], [GRAPHICSMAGICKXX])
+
+# If both ImageMagick and GraphicsMagic are available, choose the
+# former by default.  (Use `--with-imagemagickxx=no' to ignore an
+# installation of ImageMagick and let configure try GraphicsMagick).
+if test "x$oln_have_imagemagickxx"; then
+  MAGICKXX_CPPFLAGS=$IMAGEMAGICKXX_CPPFLAGS
+  MAGICKXX_LDFLAGS=$IMAGEMAGICKXX_LDFLAGS
+else
+  MAGICKXX_CPPFLAGS=$GRAPHICSMAGICKXX_CPPFLAGS
+  MAGICKXX_LDFLAGS=$GRAPHICSMAGICKXX_LDFLAGS
+fi
+AC_SUBST([MAGICKXX_CPPFLAGS])
+AC_SUBST([MAGICKXX_LDFLAGS])
+AM_CONDITIONAL([HAVE_MAGICKXX],
+               [test "x$oln_have_imagemagickxx" = xyes \
+                || test "x$oln_have_graphicsmagickxx" = xyes])
 
 # ---- #
 # Qt.  #
