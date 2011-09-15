@@ -1,4 +1,5 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,13 +17,13 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS =
+noinst_PROGRAMS =
 
 if HAVE_QT
 if HAVE_MAGICKXX
 if HAVE_TESSERACT
 
-bin_PROGRAMS +=		\
+noinst_PROGRAMS +=		\
 text_extraction
 
 text_extraction_SOURCES = text_extraction.cc

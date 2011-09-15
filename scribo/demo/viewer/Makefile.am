@@ -50,7 +50,8 @@ scribo_viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir) 	\
 			 $(TESSERACT_CPPFLAGS) 				\
 		         $(TIFF_CPPFLAGS) 				\
 			 -DNDEBUG -DMLN_WO_GLOBAL_VARS
-scribo_viewer_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
+scribo_viewer_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) 			\
+			 $(STRICT_ALIASING_CXXFLAGS) -O3
 scribo_viewer_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) 			\
 			 $(MAGICKXX_LDFLAGS)				\
 			 $(TESSERACT_LDFLAGS)				\

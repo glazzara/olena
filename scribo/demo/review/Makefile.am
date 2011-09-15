@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/build-aux/autotroll.mk
 
-bin_PROGRAMS = scribo-review
+noinst_PROGRAMS = scribo-review
 
 BUILT_SOURCES = src/mainwindow.moc.cc \
 		mainwindow.ui.h
