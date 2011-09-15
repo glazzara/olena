@@ -1,5 +1,9 @@
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* bootstrap: Fix minimum required version for convert.
+
+2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Handle both GraphicsMagick and ImageMagick.
 
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
