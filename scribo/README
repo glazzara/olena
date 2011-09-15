@@ -1,4 +1,5 @@
-Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+Laboratory (LRDE)
 
 This file is part of Scribo.
 
@@ -33,20 +34,50 @@ Scribo aims to provide tools for Document Image Analysis (DIA).
 
 demo/
 
-  demat
-     Sample GUI used to retrieve text from a whole document or a
-     region of interest.
+  viewer/
+	GUI for analyzing a document and save it as PDF or HTML.
 
-  wizard
-     Sample GUI used to retrieve text from a whole document or a
-     region of interest.
-
-  tip
-     Sample GUI used to display text localization in picture results.
-
+  xml2doc/
+  	Command line tool to convert a document image and its
+	content analysis to PDF or HTML.
 
 scribo/
      The C++ headers of Scribo.
 
 src/
      Various small tools related to DIA. See src/README.
+
+
+============
+Dependencies
+============
+
+In order to use all the features provided by Scribo, the following
+dependencies should be installed :
+
+- Qt 4.x
+- xsltproc
+- fop
+- GraphicsMagick++ or ImageMagick++
+- Tesseract 2.x or 3.x (strongly recommended)
+
+Warning: Tesseract 2.x is still supported however, you may encounter
+crashes because of bugs with Tesseract and specific locales. Moreover,
+results quality is far from what it can be expected with version
+3.x. Thus, we strongly advise you to use Tesseract 3.x if possible.
+
+
+============
+KNOWN ISSUES
+============
+
+- Tesseract 2.x may cause crashes with specific system locales. It is
+  fixed in Tesseract 3.x
+
+- Apple's GCC (llvm-{gcc,g++} 4.2) compiler provided with Mac OS X
+  Lion (10.7.0) has some trouble with strict aliasing and our code. If
+  you encounter any crashes or strange behaviors, try compiling with
+  -fno-strict-aliasing flag.
+
+- On Mac OS X Lion (10.7.0) prefer using GraphicsMagick++ instead of
+  ImageMagick++. The latter may cause crashes.

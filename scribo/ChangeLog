@@ -1,5 +1,9 @@
 2011-09-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* README: Add more information.
+
+2011-09-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/viewer/main.cc: Fix an issue with Tesseract 2.x and
 	specific locales.
 
