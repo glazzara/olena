@@ -1,80 +1,85 @@
 * Olena 1.0a
 
-  	* Add compilation support with g++-4.5.
+	* This release includes for the first time the SCRIBO module
+	  for Document Image Analysis (DIA).
 
-  	* Improvements of accumulators:
-	  - Add properties,
-	  - New histo3d_rgb.hh,
-	  - Add new methods.
+	* Add compilation support for g++ 4.5 and some limited support
+          for clang.
 
-	* Fix compilation with multiple files by introducing the
-          MLN_WO_GLOBAL_VARS macro.
+	* Compilation with multiple files is now possible using the
+	  MLN_WO_GLOBAL_VARS macro.
 
-	* Extend type conversion:
-	  - New convert::from_to overloads,
-	  - New convert::to_qimage() and convert::to_qimage_nocopy()
-            (conversion towards Qt's QImage type),
-  	  - New conversion functions : fun::v2v::qt_rgb_to_int_u,
-            fun::v2v::rgb8_to_rgbn, fun::v2v::rgb_to_int_u,
-            fun::v2v::rgb_to_luma.
+	* New algorithms.
+	  - clustering::kmean_rgb.
+	  - data::split.
+	  - histo::equalize.
+	  - labeling::value_and_compute.
+	  - subsampling::antialiased.
+	  - world::rgb::invert.
+	  - geom::horizontal_symmetry.
+	  - geom::vertical_symmetry.
+	  - geom::translate.
+	  - morpho::tree::component_tree.
+	  - morpho::tree::dual_input_tree.
+	  - morpho::watershed::topological.
+	  - transform::influence_zone_geodesic_saturated.
+	  - upscaling::art::scaling2x.
+	  - upscaling::art::scaling3x.
 
-	* Overall performance Improvement in morphological skeleton
-          computation.
+	* Add fast/fastest implementations for various algorithms.
+	  - arith::revert.
+	  - data::paste.
+	  - labeling::compute.
+	  - morpho::skeleton_constrained.
+	  - transform::influence_zone_geodesic.
 
-	* Add fast/fastest implementations:
- 	  - arith::revert(),
- 	  - data::paste(),
- 	  - labeling::compute(),
- 	  - morpho::skeleton_constrained(),
- 	  - transform::influence_zone_geodesic().
+	* Overall performance improvements in morphological skeleton
+	  computation.
 
-	* New algorithms:
-	  - clustering::kmean_rgb(),
-	  - data::split(),
-	  - histo::equalize(),
-	  - labeling::value_and_compute(),
-	  - subsampling::antialiased(),
-	  - world::rgb::invert(),
-	  - geom::horizontal_symmetry(),
-	  - geom::vertical_symmetry(),
-	  - geom::translate(),
-	  - morpho::tree::component_tree(),
-	  - morpho::tree::dual_input_tree(),
-	  - morpho::watershed::topological(),
-	  - transform::influence_zone_geodesic_saturated(),
-	  - upscaling::art::scaling2x(),
-	  - upscaling::art::scaling3x().
-
-	* New default 3D neighborhoods/windows.
-
-	* New debug tools:
-	  - debug::mosaic(),
-	  - debug::z_order().
-
-	* New drawing tools:
-	  - draw::box_plain(),
-	  - draw::dashed_line(),
-	  - draw::site_set(),
-	  - draw::polygon().
+	* New labeling canvas.
+	  - canvas::labeling::blobs (replace canvas::labeling).
+	  - canvas::labeling::sorted.
+	  - canvas::labeling::video.
 
 	* New function concept: Function_n2v.
 
-	* I/O improvements:
-	  - Add raw data I/O functions,
-	  - Improve ImageMagick I/O performance,
-	  - Add support for FLD format.
+	* The routine labeling::colorize is now deterministic with
+	  respect to an execution run.
 
-	* Make labeling::colorize() deterministic.
+	* New type conversions.
+	  - New convert::from_to overloads.
+	  - New convert::to_qimage and convert::to_qimage_nocopy
+	    (conversion towards Qt's QImage type).
+	  - New conversion functions : fun::v2v::qt_rgb_to_int_u,
+	    fun::v2v::rgb8_to_rgbn, fun::v2v::rgb_to_int_u,
+	    fun::v2v::rgb_to_luma.
+
+	* New graph image types supporting mixed site types (both
+	  edges and vertices).
+
+	* Improvements in accumulators.
+	  - New properties.
+	  - New RGB 3D histrogram (accu::stat::histo3d_rgb)
+	  - Add new methods.
+
+	* New default 3D neighborhoods/windows.
 
 	* New 3D window type: win::sline3d.
 
-	* New labeling canvas:
-	  - canvas::labeling::blobs (replace canvas::labeling),
-	  - canvas::labeling::sorted,
-	  - canvas::labeling::video.
+	* New debug tools.
+	  - debug::mosaic.
+	  - debug::z_order.
 
-	* New graph image types supporting mixed site types (both
-          edges and vertices)
+	* New drawing tools.
+	  - draw::box_plain.
+	  - draw::dashed_line.
+	  - draw::site_set.
+	  - draw::polygon.
+
+	* I/O improvements.
+	  - New raw data I/O functions.
+	  - Improved ImageMagick/GraphicsMagick I/O performances.
+	  - Support for FLD format.
 
 	* Various bug fixes and improvements.
 
@@ -133,7 +138,7 @@
 	  Now any comment should use Doxygen style (i.e. /*! ... */).
 	  You can also write some programs inside the comments. They are
 	  compiled at documentation generation time. It is useful to
-          illustrate some algorithms with concrete input and output. To
+	  illustrate some algorithms with concrete input and output. To
 	  use this feature the program has to be between \code and \endcode
 	  tags. If you produce an image, you can include it in the comments
 	  with the \image command, using the same name you used to produce
@@ -145,13 +150,13 @@
 
 	* Border behavior can be controlled with the behavior hierarchy.
 	  If an algorithm support it, you can choose the way the image
-          border will be seen. Three behaviors are available: mirror,
+	  border will be seen. Three behaviors are available: mirror,
 	  replicate or user defined value.
 
 	* Attribute opening/closing enhancement
 	  - Make the algorithm more generic.
 	  - Add a lot of attributes (area, disk, square, dist,
-            rectangle, volume, height, maxvalue, minvalue).
+	    rectangle, volume, height, maxvalue, minvalue).
 
 	* Change the color conversion system
 	  - CIE RGB is the main color system i.e. it can be converted
@@ -284,18 +289,18 @@
 
 	* Color:
 	  - nrgb_8, nrgb_16, nrgb_32: new types for NTSC RGB.  The
-            conversion from and to YIQ and HSI which assumed NTSC RGB
+	    conversion from and to YIQ and HSI which assumed NTSC RGB
 	    has been adjusted to actually use nrgb_* (instead of rgb_*)
 	    and renamed accordingly.
 	  - yuv_8, yuv_16, yuv_32: New types.
 
 	  The currently available conversions are
 
-	            hsi   yuv
-	              \  /
+		    hsi   yuv
+		      \  /
 	       rgb -- nrgb
-	        \     /  \
-	          xyz     yiq
+		\     /  \
+		  xyz     yiq
 
 	* Various cleanups and bug fixes.  Especially:
 	  - border handling (mirroring, copying) simplified and fixed.
@@ -320,7 +325,7 @@
 	* Casts:
 	  - `cast::round': similar to C's round()
 	  - `cast::rbound': ditto, but constrained to fit the
-            output type's range.
+	    output type's range.
 
 	* I/O:
 	  - Support for `image_3d<int_u<N> >' (as PNM P2 & P5).
@@ -332,7 +337,7 @@
 	  - `level::connected_component': Number connected components.
 	  - `morpho::geodesic_dilation', `morpho::simple_geodesic_dilation'.
 	  - `morpho::geodesic_erosion', `morpho::simple_geodesic_erosion'.
-          - `morpho::get_plus_se_only', `morpho::get_plus_se_p',
+	  - `morpho::get_plus_se_only', `morpho::get_plus_se_p',
 	    `morpho::get_minus_se_only', `morpho::get_minus_se_p': Split
 	    a structural element in a `plus' (lexically before than the center)
 	    and `minus' (after).
@@ -351,7 +356,7 @@
 
 	* Types:
 	  - `vec<N,T>' uses an array to store its elements
-            and accepts builtin types.
+	    and accepts builtin types.
 	  - `rgb<T>' has been replaced by `rgb_8', `rgb_16', `rgb_32'
 	  - `xyz_8', `xyz_16', `xyz_32' are new types.
 	  - the latter six types are instances of the `color' type.
@@ -390,11 +395,11 @@
 	* Conversion are organized in the following hierarchy
 
 	    conversion<Inferior>
-                  ^
-	          |
+		  ^
+		  |
 	    conversion_to_type<To,Inferior>
-                  ^
-	          |
+		  ^
+		  |
 	    conversion_from_type_to_type<From,To,Inferior>
 
 	  All children of conversion_from_type_to_type are models of

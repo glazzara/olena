@@ -15,7 +15,7 @@ Active LRDE Staff.
   - Numerous hours spent thinking about Olena.
 
 * Guillaume Lazzara	z@lrde.epita.fr
-  - Work on Scribo
+  - SCRIBO module main author and maintainer.
   - Library improvements.
 
 * Roland Levillain	roland@lrde.epita.fr
@@ -56,6 +56,7 @@ Past contributors of LRDE Staff.
   - Library improvements.
 
 * Yann Jacquelet	jacquelet@lrde.epita.fr
+  - SCRIBO-related work.
 
 
 ========
@@ -91,6 +92,9 @@ Students from Class 2011.
 Students from Class 2010.
 =========================
 
+* Florent D'Halluin
+  - Document layout viewer.
+
 * Etienne Folio
   - Color type traits.
 
@@ -99,14 +103,18 @@ Students from Class 2009.
 =========================
 
 * Alexandre Abraham
-  - R/w functions.
+  - R/W functions.
+  - Topological watershed transform.
 
 * Nicolas Ballas
   - Image properties.
   - Data routines.
 
+* Vivien Delmon
+  - Misc. corrections.
+
 * Matthieu Garrigues
-  - Value types and i/o.
+  - Value types and I/Os.
   - Draft of the FLLT.
 
 * Ugo Jardonnet

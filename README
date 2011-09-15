@@ -283,11 +283,33 @@ prefix, e.g.::
 
        ./configure --with-gdcm=/usr/local
 
-Olena use Magick++ to read and write images in common formats.  As for
-other optional dependencies, you can specify where it is located (if
-needed) at configuration time::
+Olena uses the Magick++ API provided by ImageMagick or GraphicsMagick
+to read and write images in common formats.  As for other optional
+dependencies, you can specify where such a package is located (if
+needed) at configuration time, using either::
 
-       ./configure --with-magickxx=/usr/local/
+       ./configure --with-imagemagickxx=/usr/local/
+
+or
+
+       ./configure --with-graphicsmagickxx=/usr/local/
+
+respectively.
+
+If ``configure`` finds both ImageMagick and GraphicsMagick in your
+system (either automatically or because you used one of the above
+flags), the former is chosen by default.  If you want to select
+GraphicsMagick instead, tell configure explicitly that you do not want
+to use ImageMagick.  For instance, in the case where configure is able
+to discover GraphicsMagick by itself, the following command line is
+enough::
+
+       ./configure --with-imagemagickxx=no
+
+Otherwise, it suffices to combine it with the option telling where
+GraphicsMagick is located::
+
+       ./configure --with-imagemagickxx=no --with-graphicsmagickxx=/usr/local
 
 Other libraries
 ---------------
