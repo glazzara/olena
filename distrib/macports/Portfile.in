@@ -20,7 +20,7 @@ checksums           md5     @package_md5@ \
                     sha1    @package_sha1@ \
                     rmd160  @package_rmd160@
 
-depends_lib         port:ImageMagick \
+depends_lib         port:GraphicsMagick \
                     port:tiff
 
 supported_archs     i386 x86_64
@@ -28,8 +28,9 @@ supported_archs     i386 x86_64
 variant scribo description {Add a DIA framework} {
     depends_lib-append port:tesseract \
                        port:qt4-mac   \
-                       port:fop       \
                        port:libxslt
+
+    depends_run-append port:fop
 
     configure.args-append --enable-scribo
 }

@@ -1,3 +1,10 @@
+2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Portfile dependencies.
+
+	* distrib/macports/Portfile.in: Set fop as run dependency.
+	(depends_lib): Use GraphicsMagick instead of ImageMagick.
+
 2011-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Portfile related dependencies.
