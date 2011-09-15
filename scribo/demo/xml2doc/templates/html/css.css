@@ -32,8 +32,9 @@
     position:absolute;
     border:0;
 }
-.line noop
+.line:after
 {
-    width:1000px;
+    content: "";
     display: inline-block;
+    width: 100%;
 }

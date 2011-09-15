@@ -41,10 +41,11 @@
 	  position:absolute;
 	  border:0;
 	  }
-	  .line noop
+	  .line:after
 	  {
-	  width:1000px;
+	  content: "";
 	  display: inline-block;
+	  width: 100%;
 	  }
 	</style>
 	<!--	<link rel="stylesheet" type="text/css" href="css.css" /> -->
@@ -114,7 +115,19 @@
 
     <!-- END OF Regions Coordinates -->
 
-    <xsl:apply-templates select="Line"/>
+
+    <!-- char_width -->
+    <xsl:variable name="char_width">
+      <xsl:value-of select="@charWidth" />
+    </xsl:variable>
+
+
+    <xsl:apply-templates select="Line">
+      <!-- Passing parameters -->
+      <xsl:with-param name="par_char_width" select="$char_width"/>
+    </xsl:apply-templates>
+
+
 
   </xsl:template>
 
@@ -126,6 +139,10 @@
   ==========
   -->
   <xsl:template match="Line">
+
+    <!-- Getting parameter values -->
+    <xsl:param name="par_char_width"/>
+
 
     <!-- Regions Coordinates -->
 
@@ -183,6 +200,11 @@
       </xsl:choose>
     </xsl:variable>
 
+    <!-- char_width -->
+    <xsl:variable name="char_width">
+      <xsl:value-of select="@charWidth" />
+    </xsl:variable>
+
     <!-- x_height -->
     <xsl:variable name="x_height">
       <xsl:value-of select="@xHeight" />
@@ -235,17 +257,29 @@
       </xsl:choose>
     </xsl:variable>
 
+    <!-- Adjusting height if font is different from Times. -->
+    <xsl:variable name="fsize">
+      <xsl:choose>
+	<xsl:when test="($a + $d) &gt; (1.16 * (37 * $par_char_width) div 17)">
+	  <xsl:value-of select="((37 * $par_char_width) div 17)" />
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="($a + $d)" />
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
     <span class="line">
       <xsl:attribute name="style">
 	height:auto;
-	font-size:<xsl:value-of select="$a + $d" />px;
+	font-size:<xsl:value-of select="$fsize" />px;
 	width:<xsl:value-of select="$x2 - $x1" />px;
 	left:<xsl:value-of select="$x1 " />px;
 	top:<xsl:value-of select="$y1 " />px;
 	color:<xsl:value-of select="$color" />;
       </xsl:attribute>
       <xsl:value-of select="@text"/>
-      <noop />
     </span>
     <!-- ENF OF TEXT LINE -->
   </xsl:template>
@@ -321,6 +355,11 @@
 	</xsl:choose>
       </xsl:variable>
 
+      <!-- char_width -->
+      <xsl:variable name="char_width">
+	<xsl:value-of select="@charWidth" />
+      </xsl:variable>
+
       <!-- x_height -->
       <xsl:variable name="x_height">
 	<xsl:value-of select="../../@x_height" />
@@ -373,19 +412,31 @@
 	</xsl:choose>
       </xsl:variable>
 
+      <!-- Adjusting height if font is different from Times. -->
+      <xsl:variable name="fsize">
+	<xsl:choose>
+	  <xsl:when test="($a + $d) &gt; (1.16 * (37 * $par_char_width) div 17)">
+	    <xsl:value-of select="((37 * $par_char_width) div 17)" />
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="($a + $d)" />
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+
+
       <div class="line" onmouseover="this.style.opacity=0.2;this.filters.alpha.opacity=20"
 	   onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100">
 	<xsl:attribute name="style">
 	  opacity:1;
 	  height:auto;
-	  font-size:<xsl:value-of select="$a+$d" />px;
+	  font-size:<xsl:value-of select="$fsize" />px;
 	  width:<xsl:value-of select="$x2 - $x1" />px;
 	  left:<xsl:value-of select="$x1 " />px;
 	  top:<xsl:value-of select="$y1 " />px;
 	  color:<xsl:value-of select="$color" />;
 	</xsl:attribute>
 	<xsl:value-of select="@text"/>
-	<noop />
       </div>
     </xsl:if>
     <!-- ENF OF TEXT LINE -->

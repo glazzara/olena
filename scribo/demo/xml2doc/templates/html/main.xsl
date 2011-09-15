@@ -40,10 +40,11 @@
 	  position:absolute;
 	  border:0;
 	  }
-	  .line noop
+	  .line:after
 	  {
-	  width:1000px;
+	  content: "";
 	  display: inline-block;
+	  width: 100%;
 	  }
 	</style>
       </head>
@@ -174,6 +175,12 @@
 	    </xsl:choose>
 	  </xsl:variable>
 
+	  <!-- char_width -->
+	  <xsl:variable name="char_width">
+	    <xsl:value-of select="@charWidth" />
+	  </xsl:variable>
+
+
 	  <!-- x_height -->
 	  <xsl:variable name="x_height">
 	    <xsl:value-of select="@xHeight" />
@@ -226,17 +233,29 @@
 	    </xsl:choose>
 	  </xsl:variable>
 
+	  <!-- Adjusting height if font is different from Times. -->
+	  <xsl:variable name="fsize">
+	    <xsl:choose>
+	      <xsl:when test="($a + $d) &gt; (1.16 * (37 * $char_width) div 17)">
+		<xsl:value-of select="((37 * $char_width) d ( 17)" />
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="($a + $d)" />
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+
+
 	  <span class="line">
 	    <xsl:attribute name="style">
 	      height:auto;
-	      font-size:<xsl:value-of select="$a + $d" />px;
+	      font-size:<xsl:value-of select="$fsize" />px;
 	      width:<xsl:value-of select="$x2 - $x1" />px;
 	      left:<xsl:value-of select="$x1 " />px;
 	      top:<xsl:value-of select="$y1 " />px;
 	      color:<xsl:value-of select="$color" />;
 	    </xsl:attribute>
 	    <xsl:value-of select="@text"/>
-	    <noop />
 	  </span>
 	  <!-- ENF OF TEXT LINE -->
   </xsl:template>
