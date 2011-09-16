@@ -1,0 +1,69 @@
+The Olena Team is proud to announce the release of Olena 2.0.
+
+Olena is a platform dedicated to image processing and pattern
+recognition.  Its core component is a generic and efficient C++
+library called Milena.  Milena provides a framework to implement
+simple, fast, safe, reusable and extensible image processing tool
+chains.  The library provides many ready-to-use image data structures
+(regular 1D, 2D, 3D images, graph-based images, etc.) and algorithms.
+Milena's algorithms are built upon classical entities from the image
+processing field (images, points/sites, domains, neighborhoods, etc.).
+This design allows image processing developers and practitioners to
+easily understand, modify, develop and extend new algorithms while
+retaining the core traits of Milena: genericity and efficiency.
+
+On top of Milena, the Olena platform also features optional modules
+such as Swilena, a component exposing Milena to other languages thanks
+to the Simplified Wrapper and Interface Generator (SWIG); and the
+SCRIBO module for Document Image Analysis (see below).
+
+The Olena platform is Free Software.  It is distributed under the
+conditions of the GNU General Public License (GPL) version 2.  See the
+file COPYING shipped with the Olena distribution.
+
+Release notes are available at:
+  http://olena.lrde.epita.fr/Olena200
+
+You can download packages of the Olena 2.0 distribution here:
+  http://www.lrde.epita.fr/dload/olena/2.0/olena-2.0.tar.gz    (38 MB)
+  http://www.lrde.epita.fr/dload/olena/2.0/olena-2.0.tar.bz2   (32 MB)
+
+The SHA1 digests of theses packages are:
+  d3a829fa56bff4edbca58af0c9a39c9569820c60  olena-2.0.tar.gz
+  0abae2a9bc751a8fb33acacd2dbe70635d5dd00b  olena-2.0.tar.bz2
+
+Here is a list of major changes since Olena 1.0:
+
+  * The biggest addition to Olena available in this new version is the
+    SCRIBO module for Document Image Analysis (DIA).  This module has
+    been developed in the context of the SCRIBO project (see
+    http://www.scribo.ws).  The SCRIBO module provides software
+    building blocks to create DIA tool chains, including routines for
+    preprocessing steps (such as binarization, show-through removal,
+    deskew and denoising), text lines identification, non-text objects
+    retrieval (tables, pictures, separators, etc.), line
+    reconstruction (rebuilding separators and tables), Optical
+    Character Recognition (OCR) integration and document
+    reconstruction (converting a document to XML, PDF and/or HTML
+    outputs).  Dedicated data structures are also provided to handle
+    intermediate results.  Some Graphical User Interface (GUI)
+    programs based on the Qt toolkit are also proposed.
+
+  * Several compilation issues have been addressed.
+
+  * New algorithms (especially in mathematical morphology), canvases
+    (or algorithmic patterns) and efficient algorithm variants have
+    been added to Milena, as well as some new data types (see NEWS for
+    more details).
+
+  * More conversion routines, especially regarding color values.
+
+  * Support for I/O routines (both built-in and depending on
+    third-party packages) has been improved.
+
+  * Various bug fixes and improvements.
+
+The file NEWS, included in the archive, contains a more complete list
+of user-visible changes.
+
+Please report any problem by mail to <olena-bugs@lrde.epita.fr>.
