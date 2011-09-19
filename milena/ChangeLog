@@ -13,9 +13,9 @@
 
 	Improve text justification in HTML document reconstruction.
 
-    	* demo/xml2doc/templates/html/css.css,
-    	* demo/xml2doc/templates/html/main.xsl,
-    	* demo/xml2doc/templates/html/main_base64.xsl: Add new CSS rules.
+	* demo/xml2doc/templates/html/css.css,
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl: Add new CSS rules.
 
 2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
 

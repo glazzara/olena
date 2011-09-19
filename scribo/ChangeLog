@@ -1,7 +1,7 @@
 2011-09-15  Guillaume Lazzara  <lazzara@caroussel.lrde.epita.fr>
 
 	Adjust font size in PDF reconstruction.
-	
+
 	* demo/xml2doc/templates/html/main.xsl,
 	* demo/xml2doc/templates/html/main_base64.xsl,
 	* demo/xml2doc/templates/pdf/line.xsl: Here.
