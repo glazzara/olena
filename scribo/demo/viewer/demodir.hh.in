@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +27,7 @@
 # define SCRIBO_DEMO_DEMODIR_HH
 
 
-# define SCRIBO_PREFIX_BINDIR "@bindir@"
+# define SCRIBO_PREFIX_LIBEXECDIR "@libexecdir@"
 
 # define SCRIBO_LOCAL_DEMODIR "@abs_demodir@"
 

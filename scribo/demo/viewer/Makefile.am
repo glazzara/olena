@@ -113,7 +113,7 @@ noinst_HEADERS = viewer.hh		\
 
 # Generated files
 do_subst = sed  					\
-	   -e 's|@bindir[@]|$(bindir)|g'		\
+	   -e 's|@libexecdir[@]|$(libexecdir)|g'		\
 	   -e 's|@abs_demodir[@]|$(abs_top_builddir)/scribo/demo|g'
 
 demodir.hh: $(srcdir)/demodir.hh.in Makefile

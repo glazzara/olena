@@ -41,9 +41,9 @@ QString get_pathto(const QString& file,
   if (f.exists())
     return SCRIBO_LOCAL_DEMODIR "/" + localdirsuffix;
 
-  f.setFileName(SCRIBO_PREFIX_BINDIR "/" + file);
+  f.setFileName(SCRIBO_PREFIX_LIBEXECDIR "/" + file);
   if (f.exists())
-    return SCRIBO_PREFIX_BINDIR;
+    return SCRIBO_PREFIX_LIBEXECDIR;
 
   qDebug() << "FATAL ERROR: Can't locate file: " + file;
 
