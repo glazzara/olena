@@ -1,5 +1,20 @@
 2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Import the WST-based classification in apps/papers/levillain.09.ismm.
+
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS): Add classif.
+	(classif_SOURCES): Add classif.cc
+	(dist_noinst_DATA): Add classseedsi.pbm.
+	(noinst_DATA): Add classwst.pnm.
+	(classwst.pnm): New target.
+	* apps/papers/levillain.09.ismm/classif.cc: New.
+	Copied and adapted from
+	sandbox/theo/esiee/laurent/presentation/classif.cc.
+	* apps/papers/levillain.09.ismm/classseedsi.pbm: New.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Split apps/papers/levillain.09.ismm/graph.cc.
 
 	* apps/papers/levillain.09.ismm/graph.cc: Misc. changes.
