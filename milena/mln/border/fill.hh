@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -95,16 +96,18 @@ namespace mln
 	unsigned st = 0;
 
 	for_all (pl)
-	  {
-	    unsigned end = ima.index_of_point (pl);
+	{
+	  unsigned end = ima.index_of_point (pl);
+	  if (st < end)
 	    std::memset((void*)&opt::element(ima, st),
 			*(const int*)(&v),
 			end - st);
-	    st = end + len_r;
-	  }
-	std::memset((void*)&opt::element(ima, st),
-		    *(const int*)(&v),
-		    opt::nelements(ima) - st);
+	  st = end + len_r;
+	}
+	if (st < opt::nelements(ima))
+	  std::memset((void*)&opt::element(ima, st),
+		      *(const int*)(&v),
+		      opt::nelements(ima) - st);
 
 	trace::exiting("border::impl::fill_size_1");
       }
@@ -125,12 +128,12 @@ namespace mln
 	unsigned st = 0;
 
 	for_all (pl)
-	  {
-	    unsigned end = ima.index_of_point (pl);
-	    for (unsigned i = st; i < end; ++i)
-              opt::element(ima, i) = v;
-	    st = end + len_r;
-	  }
+	{
+	  unsigned end = ima.index_of_point (pl);
+	  for (unsigned i = st; i < end; ++i)
+	    opt::element(ima, i) = v;
+	  st = end + len_r;
+	}
 	for (unsigned i = st; i < opt::nelements(ima); ++i)
           opt::element(ima, i) = v;
 

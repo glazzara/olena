@@ -146,6 +146,8 @@ namespace mln
   box_runstart_piter<P>::next_()
   {
     // Do we want this run for image in 3d?
+    /* FIXME: `dim - 2' is probably the wrong (= not generic) way to
+       express the manipulated dimension anyway.  */
     for (int c = dim - 2; c >= 0; --c)
     {
       if (p_[c] != s_->pmax()[c])
