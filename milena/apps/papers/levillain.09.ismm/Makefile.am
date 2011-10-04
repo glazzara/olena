@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -22,7 +23,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-noinst_HEADERS = chain.hh
+noinst_HEADERS = chain.hh io.hh influence_zones.hh
 
 noinst_PROGRAMS = image2d graph complex
 image2d_SOURCES = image2d.cc
@@ -36,6 +37,8 @@ dist_noinst_DATA = seeds.pgm m283-c.off
 # Output images.
 noinst_DATA = lena-s.ppm graph-s.png m283-s.off
 MOSTLYCLEANFILES = $(noinst_DATA) graph-s.neato
+
+# FIXME: Also generate intermediate images (gradients, etc.).
 
 lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
 	./image2d$(EXEEXT) $< 1000 $@

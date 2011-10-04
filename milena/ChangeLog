@@ -1,5 +1,19 @@
 2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Split apps/papers/levillain.09.ismm/graph.cc.
+
+	* apps/papers/levillain.09.ismm/graph.cc: Misc. changes.
+	(mln::influence_zones)
+	(mln::io::neato::save):
+	Move functions...
+	* apps/papers/levillain.09.ismm/influence_zones.hh,
+	* apps/papers/levillain.09.ismm/io.hh:
+	...here (new files).
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_HEADERS):
+	Add io.hh and influence_zones.hh
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Handle the case of filling an empty border.
 
 	* mln/border/fill.hh (mln::border::impl::fill_size_1): Here.
