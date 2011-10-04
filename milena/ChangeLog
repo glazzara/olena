@@ -1,22 +1,3 @@
-2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Fix Scribo build system.
-
-	* demo/viewer/Makefile.am: Take into account no-strict-aliasing
-	flag.
-
-	* demo/review/Makefile.am,
-	* src/toolchain/nepomuk/Makefile.am: Do not distribute some
-	examples.
-
-2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Improve text justification in HTML document reconstruction.
-
-	* demo/xml2doc/templates/html/css.css,
-	* demo/xml2doc/templates/html/main.xsl,
-	* demo/xml2doc/templates/html/main_base64.xsl: Add new CSS rules.
-
 2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update Milena tests w.r.t. the new version of lena.pgm.
