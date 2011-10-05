@@ -56,4 +56,4 @@ m283-s.off: m283-c.off complex$(EXEEXT)
 
 # FIXME: Adjust the lambda parameter.
 classwst.pnm: classseedsi.pbm classif$(EXEEXT)
-	./classif$(EXEEXT) $< 5 $@
+	./classif$(EXEEXT) $< 4 $@

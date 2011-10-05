@@ -1,3 +1,15 @@
+2011-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and clean up apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc (main): Actually use
+	the chain() routine from chain.hh instead of ad hoc code.
+	Move code related to the construction of the 1-complex (graph)
+	image on which the processing chain is run...
+	(make_complex_image): ...here.
+	* apps/papers/levillain.09.ismm/Makefile.am (classwst.pnm): Change
+	the lambda (area) parameter to 4.
+
 2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Import the WST-based classification in apps/papers/levillain.09.ismm.
