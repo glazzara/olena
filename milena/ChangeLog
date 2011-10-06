@@ -1,5 +1,15 @@
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests/core/image/line_graph_image.cc.
+
+	* tests/core/image/line_graph_image.cc: Actually use an image
+	based on the edges of a graph, not on its vertices.
+	Adjust test.
+	Aesthetic changes.
+	* tests/core/image/edge_image.cc: Aesthetic changes.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use mln::edge_image to implement line graph images in morpho tests.
 
 	* tests/morpho/line_graph_image_morpho.cc,

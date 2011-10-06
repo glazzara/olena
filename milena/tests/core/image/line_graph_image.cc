@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,50 +23,25 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+/// \brief Exercise mln::vertex_image and mln::util::line_graph.
+///
+/// The line graph is built using the mln::util::line_graph graph
+/// adapter, representing the dual graph of the underlying graph.
+/// Therefore, vertices of the image built on top of this line graph
+/// structure correspong to edges of the original graph.
+///
+/// This test is similar to tests/core/image/edge_image.cc (apart from
+/// tge visualisation part).  (We might want to factor them.)
+
 #include <mln/core/alias/point2d.hh>
 
-/// Required for line graph images.
-#include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/graph_elt_window.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
-#include <mln/core/image/vertex_image.hh>
-#include <mln/core/neighb.hh>
-#include <mln/core/var.hh>
-#include <mln/pw/all.hh>
-#include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/util/line_graph.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/site_pair.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/make/vertex_image.hh>
-
-
-/* The graph and its corresponding line graph are as follows:
-
-            0 1 2 3 4               0 1 2 3 4
-         .-----------	         .-----------
-         |		         |
-       0 |  0       2	       0 |  *       *
-       1 |    \   / |	       1 |    0   1 |
-       2 |      1   |	       2 |      *   4
-       3 |       \  |	       3 |       2  |
-       4 |        3-4	       4 |        *3*
-
-*/
-
-
-static const unsigned X = mln_max(unsigned); // Invalid id.
-
-
-// Expected neighbors for forward and backward iteration.
-static unsigned expected_fwd_nbh[5][3] = { { 1, X, X },
-					   { 0, 2, 3 },
-					   { 1, 4, X },
-					   { 1, 4, X },
-					   { 3, 2, X } };
-
-static unsigned expected_bkd_nbh[5][3] = { { 1, 0, X },
-					   { 3, 2, 0 },
-					   { 4, 1, X },
-					   { 4, 1, X },
-					   { 2, 3, X } };
 
 
 int main()
@@ -77,19 +52,25 @@ int main()
   | Graph.  |
   `--------*/
 
-  // Sites associated to edges.
-  typedef fun::i2v::array<point2d> fsite_t;
-  fsite_t sites(5);
-  sites(0) = point2d(0,0); // Point associated to edge 0.
-  sites(1) = point2d(2,2); // Point associated to edge 1.
-  sites(2) = point2d(0,4); // Point associated to edge 2.
-  sites(3) = point2d(4,3); // Point associated to edge 3.
-  sites(4) = point2d(4,4); // Point associated to edge 4.
+  /* The graph and its corresponding line graph are as follows:
 
+            0 1 2 3 4               0 1 2 3 4
+         .-----------	         .-----------
+         |		         |
+       0 |  0       2	       0 |  *       *
+       1 |    \   / |	       1 |    0   1 |
+       2 |      1   |	       2 |      *   4
+       3 |       \  |	       3 |       2  |
+       4 |        3-4	       4 |        *3*
+
+     Numbers in the graph represent the vertices and edges identifers
+     (resp.).  */
+
+  // Graph.
   util::graph g;
 
-  // Populate the graph with vertices.
-  g.add_vertices(sites.size());
+  // Populate the graph with 5 vertices.
+  g.add_vertices(5);
 
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -97,6 +78,23 @@ int main()
   g.add_edge(1, 3);
   g.add_edge(3, 4);
   g.add_edge(4, 2);
+
+  // Sites (points) associated to edges.
+  /* FIXME: It would be nicer to deduce these pairs from points
+     attached to a vertex graph (image) rather than building them
+     manually.  */
+  typedef util::site_pair<point2d> site_t;
+  typedef fun::i2v::array<site_t> fsite_t;
+  fsite_t sites(5);
+  sites(0) = site_t(point2d(0,0), point2d(2,2)); // Site associated to edge 0.
+  sites(1) = site_t(point2d(2,2), point2d(0,4)); // Site associated to edge 1.
+  sites(2) = site_t(point2d(2,2), point2d(4,3)); // Site associated to edge 2.
+  sites(3) = site_t(point2d(4,3), point2d(4,4)); // Site associated to edge 3.
+  sites(4) = site_t(point2d(4,4), point2d(0,4)); // Site associated to edge 4.
+
+  // Line graph based on the graph G.
+  typedef util::line_graph<util::graph> line_graph_t;
+  line_graph_t lg(g);
 
   /*-------------------.
   | Line graph image.  |
@@ -108,28 +106,42 @@ int main()
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  // Create line graph image.
-  typedef vertex_image<point2d,unsigned> ima_t;
-  ima_t ima = make::vertex_image(g, sites, iota);
+  typedef vertex_image<site_t, unsigned, line_graph_t> ima_t;
+  ima_t ima = make::vertex_image(lg, sites, iota);
 
   /*------------.
   | Iterators.  |
   `------------*/
 
-  mln_edge_iter_(util::graph) ei(g);
-  mln_edge_nbh_edge_iter_(util::graph) en(ei);
+  // Invalid identifier.
+  const unsigned X = mln_max(unsigned);
 
-  // Manual iteration over the domain of IMA.
+  // Expected neighbors for forward and backward iterations on an
+  // elementary window.
+  const unsigned expected_fwd_nbh[5][3] = { { 1, 2, X },
+					    { 0, 2, 4 },
+					    { 0, 1, 3 },
+					    { 2, 4, X },
+					    { 1, 3, X } };
+
+  const unsigned expected_bkd_nbh[5][3] = { { 2, 1, X },
+					    { 4, 2, 0 },
+					    { 3, 1, 0 },
+					    { 4, 2, X },
+					    { 3, 1, X } };
+
+  // Iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   unsigned i = 10;
   for_all(p)
     mln_assertion(ima(p) == i++);
 
+  // Elementary window.
   typedef ima_t::win_t win_t;
   win_t win;
 
   {
-    // Window - Forward iteration
+    // Window -- Forward iteration.
     mln_fwd_qiter_(win_t) q(win, p);
     for_all(p)
     {
@@ -143,7 +155,7 @@ int main()
   }
 
   {
-    // Window - Backward iteration
+    // Window -- Backward iteration.
     mln_bkd_qiter_(win_t) q(win, p);
     for_all(p)
     {
@@ -157,12 +169,13 @@ int main()
   }
 
 
-  typedef ima_t::nbh_t neighb_t;
-  neighb_t neigh;
+  // Elementary neighborhood.
+  typedef ima_t::nbh_t nbh_t;
+  nbh_t nbh;
 
   {
-    // Neighborhood - Forward iteration
-    mln_fwd_niter_(neighb_t) n(neigh, p);
+    // Neighborhood -- Forward iteration.
+    mln_fwd_niter_(nbh_t) n(nbh, p);
     for_all(p)
     {
       i = 0;
@@ -175,8 +188,8 @@ int main()
   }
 
   {
-    // Neighborhood - Backward iteration
-    mln_bkd_niter_(neighb_t) n(neigh, p);
+    // Neighborhood -- Backward iteration.
+    mln_bkd_niter_(nbh_t) n(nbh, p);
     for_all(p)
     {
       i = 0;
@@ -187,5 +200,4 @@ int main()
       }
     }
   }
-
 }
