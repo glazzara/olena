@@ -544,6 +544,13 @@ papers.
 
 About Image Processing Programming:
 
+   * `Une approche générique du logiciel pour le traitement d'images
+     préservant les performances`.  Roland Levillain, Thierry Géraud,
+     Laurent Najman.  In the proceedings of the 23rd Symposium on
+     Signal and Image Processing (GRETSI)
+     http://www.gretsi2011.org/
+     Bordeaux, France, September 5 - 8, 2011.
+
    * `Why and How to Design a Generic and Efficient Image Processing
      Framework: The Case of the Milena Library`.  Roland Levillain,
      Thierry Géraud, Laurent Najman.  In the proceedings of the 2010
@@ -618,8 +625,8 @@ About Generic Programming Paradigm:
      2000.
 
 
-   You can download these papers and related materials from
-<http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications>
+   You can download these papers and related material from
+<http://publications.lrde.epita.fr>.
 
 
 
