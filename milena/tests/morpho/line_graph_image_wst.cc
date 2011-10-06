@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,23 +26,17 @@
 
 /// \file tests/morpho/line_graph_image_wst.cc
 ///
-/// Tests on the Watershed Transform on a line graph-based image.
+/// Tests on the Watershed Transform on a line-graph-based image.
 
 #include <mln/core/alias/point2d.hh>
 
-/// Required for line graph images.
-#include <mln/core/image/vertex_image.hh>
-#include <mln/pw/all.hh>
-#include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
-#include <mln/util/line_graph.hh>
+#include <mln/fun/i2v/array.hh>
 #include <mln/util/site_pair.hh>
-#include <mln/make/vertex_image.hh>
+#include <mln/core/image/edge_image.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
 
-static const unsigned ima_ref[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
-static const unsigned ima_wst[] = { 2, 0, 1, 2, 2, 1, 1, 2, 0, 1 };
 
 int main()
 {
@@ -51,7 +46,7 @@ int main()
   | Line graph.  |
   `-------------*/
 
-  /* Actually this graph is from Jean Cousty's PhD thesis, page 76.
+  /* This graph is from Jean Cousty's PhD thesis, page 76.
 
                0     1     2     3  (rows)
          ,------------------------
@@ -64,11 +59,11 @@ int main()
                   3     5     2
     (cols)
 
-    In G, vertices and egdes are numbered following in the classical
+    In G, vertices and edges are numbered following in the classical
     foward order.  */
   util::graph g;
 
-  // Populate the graph with vertices.
+  // Populate the graph with 8 vertices.
   g.add_vertices(8);
 
   // Populate the graph with edges.
@@ -85,22 +80,20 @@ int main()
   g.add_edge(5, 6);
   g.add_edge(6, 7);
 
-  util::line_graph<util::graph> lg(g);
-
-  // Sites associated to vertices.
+  // Sites associated to edges.
   typedef util::site_pair<point2d> P;
   typedef fun::i2v::array<P> fsite_t;
   fsite_t sites(10);
-  sites(0) = P(point2d(0,0), point2d(0,1)); // Site associated to vertex 0.
-  sites(1) = P(point2d(0,1), point2d(0,2)); // Site associated to vertex 1.
-  sites(2) = P(point2d(0,2), point2d(0,3)); // Site associated to vertex 2.
-  sites(3) = P(point2d(0,0), point2d(1,0)); // Site associated to vertex 7.
-  sites(4) = P(point2d(0,1), point2d(1,1)); // Site associated to vertex 8.
-  sites(5) = P(point2d(0,2), point2d(1,2)); // Site associated to vertex 9.
-  sites(6) = P(point2d(0,3), point2d(1,3)); // Site associated to vertex 3.
-  sites(7) = P(point2d(1,0), point2d(1,1)); // Site associated to vertex 4.
-  sites(8) = P(point2d(1,1), point2d(1,2)); // Site associated to vertex 5.
-  sites(9) = P(point2d(1,2), point2d(1,3)); // Site associated to vertex 6.
+  sites(0) = P(point2d(0,0), point2d(0,1)); // Site associated to edge 0.
+  sites(1) = P(point2d(0,1), point2d(0,2)); // Site associated to edge 1.
+  sites(2) = P(point2d(0,2), point2d(0,3)); // Site associated to edge 2.
+  sites(3) = P(point2d(0,0), point2d(1,0)); // Site associated to edge 7.
+  sites(4) = P(point2d(0,1), point2d(1,1)); // Site associated to edge 8.
+  sites(5) = P(point2d(0,2), point2d(1,2)); // Site associated to edge 9.
+  sites(6) = P(point2d(0,3), point2d(1,3)); // Site associated to edge 3.
+  sites(7) = P(point2d(1,0), point2d(1,1)); // Site associated to edge 4.
+  sites(8) = P(point2d(1,1), point2d(1,2)); // Site associated to edge 5.
+  sites(9) = P(point2d(1,2), point2d(1,3)); // Site associated to edge 6.
 
   // Edge values.
   typedef fun::i2v::array<unsigned> edge_values_t;
@@ -110,13 +103,17 @@ int main()
   for (unsigned i = 0; i < edge_values.size(); ++i)
     edge_values(i) = values[i];
 
-  typedef vertex_image< P, unsigned, util::line_graph<util::graph> > ima_t;
-  ima_t ima = make::vertex_image(lg, sites, edge_values);
+  typedef edge_image< P, unsigned, util::graph > ima_t;
+  ima_t ima(g, sites, edge_values);
 
 
   /*------------.
   | Iterators.  |
   `------------*/
+
+  // Reference values.
+  const unsigned ima_ref[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
+  const unsigned ima_wst[] = { 2, 0, 1, 2, 2, 1, 1, 2, 0, 1 };
 
   unsigned i = 0;
 
@@ -125,10 +122,12 @@ int main()
   for_all (p)
     mln_assertion(ima_ref[i++] == ima(p));
 
+  // Elementary neighborhood of an edge.
   typedef ima_t::nbh_t nbh_t;
   nbh_t nbh;
+
   unsigned nbasins;
-  typedef mln_ch_value_(ima_t,unsigned) wshed_t;
+  typedef mln_ch_value_(ima_t, unsigned) wshed_t;
   wshed_t wshed = morpho::watershed::flooding(ima, nbh, nbasins);
   mln_assertion(nbasins == 2);
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,23 +26,20 @@
 
 /// \file
 ///
-/// Tests on line a graph-based image with morphological filters.
+/// Tests on a line-graph-based image with morphological filters.
+
+// FIXME: Rename as edge_image_morpho.hh.
 
 #include <mln/core/alias/point2d.hh>
 
-/// Required for line graph images.
-#include <mln/core/image/vertex_image.hh>
-#include <mln/fun/i2v/array.hh>
-#include <mln/util/line_graph.hh>
 #include <mln/util/graph.hh>
+#include <mln/fun/i2v/array.hh>
 #include <mln/util/site_pair.hh>
-#include <mln/make/vertex_image.hh>
+#include <mln/core/image/edge_image.hh>
 
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/dilation.hh>
 
-static const unsigned dil_ref[] = { 12, 14, 13, 14, 13 };
-static const unsigned ero_ref[] = { 11, 10, 10, 12, 11 };
 
 int main()
 {
@@ -62,12 +60,13 @@ int main()
        3 |       \  |	       3 |       2  |
        4 |        3-4	       4 |        *3*
 
-  */
+    Numbers in the graph represent the vertices and edges identifers
+    (resp.).  */
 
   // Graph.
   util::graph g;
 
-  // Populate the graph with vertices.
+  // Populate the graph with 5 vertices.
   g.add_vertices(5);
 
   // Populate the graph with edges.
@@ -77,19 +76,15 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  // Create the corresponding line graph.
-  // Edges are now considered as vertices.
-  util::line_graph<util::graph> lg(g);
-
-  // Points associated to the line graph vertices (edges in the graph).
+  // Sites (points) associated to edges.
   typedef util::site_pair<point2d> P;
   typedef fun::i2v::array<P> fsite_t;
   fsite_t sites(5);
-  sites(0) = P(point2d(0,0), point2d(2,2)); // Site associated to vertex 0.
-  sites(1) = P(point2d(2,2), point2d(0,4)); // Site associated to vertex 1.
-  sites(2) = P(point2d(2,2), point2d(4,3)); // Site associated to vertex 2.
-  sites(3) = P(point2d(4,3), point2d(4,4)); // Site associated to vertex 3.
-  sites(4) = P(point2d(0,4), point2d(4,4)); // Site associated to vertex 4.
+  sites(0) = P(point2d(0,0), point2d(2,2)); // Site associated to edge 0.
+  sites(1) = P(point2d(2,2), point2d(0,4)); // Site associated to edge 1.
+  sites(2) = P(point2d(2,2), point2d(4,3)); // Site associated to edge 2.
+  sites(3) = P(point2d(4,3), point2d(4,4)); // Site associated to edge 3.
+  sites(4) = P(point2d(0,4), point2d(4,4)); // Site associated to edge 4.
 
   /*-------------------.
   | Line graph image.  |
@@ -97,20 +92,24 @@ int main()
 
   // Line graph values.
   typedef fun::i2v::array<unsigned> viota_t;
-  viota_t iota(lg.v_nmax());
+  viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  typedef vertex_image< P, unsigned, util::line_graph<util::graph> > ima_t;
-  ima_t ima = make::vertex_image(lg, sites, iota);
-
+  typedef edge_image< P, unsigned, util::graph> ima_t;
+  ima_t ima(g, sites, iota);
 
   /*-------------------------------.
   | Processing line graph images.  |
   `-------------------------------*/
 
+  // Elementary window of an edge.
   ima_t::win_t win;
   unsigned i = 0;
+
+  // Reference values.
+  const unsigned dil_ref[] = { 12, 14, 13, 14, 13 };
+  const unsigned ero_ref[] = { 11, 10, 10, 12, 11 };
 
   ima_t ima_dil = morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.

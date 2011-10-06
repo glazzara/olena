@@ -1,3 +1,13 @@
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use mln::edge_image to implement line graph images in morpho tests.
+
+	* tests/morpho/line_graph_image_morpho.cc,
+	* tests/morpho/line_graph_image_wst.cc:
+	Here, instead of mln::vertex_image based on an
+	mln::util::line_graph adapter.
+	Aesthetic changes.
+
 2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address more compiler warnings.
