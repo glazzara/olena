@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,9 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <iostream>
+
 #include <mln/util/graph.hh>
 #include <mln/util/line_graph.hh>
-#include <iostream>
 
 int main()
 {
@@ -103,7 +104,8 @@ int main()
       unsigned i = v.nmax_nbh_edges();
       for_all(e)
 	mln_assertion(--i == e.index());
-      mln_assertion((v.nmax_nbh_edges() == 0 && i == 0) || i != v.nmax_nbh_edges());
+      mln_assertion((v.nmax_nbh_edges() == 0 && i == 0)
+		    || i != v.nmax_nbh_edges());
     }
   }
   {
@@ -114,9 +116,10 @@ int main()
       unsigned i = 0;
       for_all(n)
 	++i;
-      // we check i == e.nmax_nbh_edges() - 2 since e is it's own neighboor and the
-      // iterator skip it.
-      mln_assertion((i == 0 && e.nmax_nbh_edges() < 2) || i == e.nmax_nbh_edges() - 2);
+      // we check i == e.nmax_nbh_edges() - 2 since e is it's own
+      // neighboor and the iterator skip it.
+      mln_assertion((i == 0 && e.nmax_nbh_edges() < 2)
+		    || i == e.nmax_nbh_edges() - 2);
     }
   }
   {
@@ -128,9 +131,10 @@ int main()
       unsigned i = e.nmax_nbh_edges();
       for_all(n)
 	--i;
-      // we check i == e.nmax_nbh_edges() - 2 since e is it's own neighboor and the
-      // iterator skip it.
-      mln_assertion((i == e.nmax_nbh_edges() && e.nmax_nbh_edges() < 2) || i == 2);
+      // we check i == e.nmax_nbh_edges() - 2 since e is it's own
+      // neighboor and the iterator skip it.
+      mln_assertion((i == e.nmax_nbh_edges() && e.nmax_nbh_edges() < 2)
+		    || i == 2);
 
     }
   }

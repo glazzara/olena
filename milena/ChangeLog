@@ -1,5 +1,9 @@
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/util/line_graph.cc: Wrap long lines.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use Doxygen grouping commands uniformly in Milena.
 
 	* mln/core/image/graph_elt_neighborhood_if.hh,
