@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,16 +29,13 @@
 
 #include <vector>
 
-#include <mln/core/alias/point2d.hh>
-
-/// Required for graph images.
-#include <mln/core/image/vertex_image.hh>
-#include <mln/core/var.hh>
-#include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/make/vertex_image.hh>
 
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 
 int main()
@@ -100,11 +98,12 @@ int main()
   | WST.  |
   `------*/
 
+  // Elementary neighborhood of a vertex.
   typedef ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
   unsigned nbasins;
-  ima_t wshed = morpho::meyer_wst(ima, nbh, nbasins);
+  ima_t wshed = morpho::watershed::flooding(ima, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Manual iteration over the domain of WSHED.

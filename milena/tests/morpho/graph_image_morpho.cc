@@ -137,7 +137,7 @@ int main()
   | Processing graph images.  |
   `--------------------------*/
 
-
+  // Elementary window of a vertex.
   ima_t::win_t win;
 
   ima_t ima_dil = morpho::dilation(ima, win);

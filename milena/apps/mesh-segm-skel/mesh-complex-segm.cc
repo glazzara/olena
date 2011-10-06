@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,7 +39,7 @@
 #include <mln/core/image/complex_neighborhoods.hh>
 
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/literal/white.hh>
 
@@ -123,7 +124,7 @@ int main(int argc, char* argv[])
   wst_val_t nbasins;
   typedef mln::unsigned_2complex_image3df wst_ima_t;
   wst_ima_t wshed =
-    mln::morpho::meyer_wst(closed_input, adj_edges_nbh, nbasins);
+    mln::morpho::watershed::flooding(closed_input, adj_edges_nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Label polygons (i.e., propagate labels from edges to polygons).

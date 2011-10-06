@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -53,16 +53,14 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-/// Required for line graph images.
-#include <mln/core/image/edge_image.hh>
-#include <mln/core/var.hh>
-#include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/site_pair.hh>
+#include <mln/core/image/edge_image.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing/area_on_vertices.hh>
-#include <mln/morpho/meyer_wst.hh>
-#include <mln/data/stretch.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
@@ -73,11 +71,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/math/max.hh>
-#include <mln/math/abs.hh>
-
 #include "tests/data.hh"
-
 
 
 int main()
@@ -107,6 +101,7 @@ int main()
   | Simplification.  |
   `-----------------*/
 
+  // Elementary neighborhood of an edge.
   typedef lg_ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
@@ -119,7 +114,7 @@ int main()
   // Perform a Watershed Transform.
   unsigned nbasins;
   typedef edge_image<util::site_pair<point2d>,unsigned,util::graph> wshed_t;
-  wshed_t wshed = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
+  wshed_t wshed = morpho::watershed::flooding(closed_lg_ima, nbh, nbasins);
   mln_assertion(nbasins == 46);
 
   /*---------.

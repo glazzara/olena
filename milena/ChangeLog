@@ -1,5 +1,21 @@
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Replace uses morpho::meyer_wst by morpho::watershed::flooding.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-segm.cc:
+	Here.
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc:
+	Likewise.
+	Tidy headers inclusions.
+	* mln/make/region_adjacency_graph.hh: Adjust documentation.
+	* tests/morpho/graph_image_morpho.cc: Add a comment.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix tests/core/image/line_graph_image.cc.
 
 	* tests/core/image/line_graph_image.cc: Actually use an image
