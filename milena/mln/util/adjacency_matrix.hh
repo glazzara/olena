@@ -143,16 +143,17 @@ namespace mln
       typedef typename impl_t::adj_t adj_t;
 
     public:
-      /// Constructors.
-      /// \@{
-      ///
-      /// Default
+      /// \name Constructors.
+      /// \{
+
+      /// Default constructor.
       adjacency_matrix();
+
       /// Construct an adjacency matrix with \p nelements elements
       /// maximum.
       adjacency_matrix(const V& nelements);
-      ///
-      /// \@}
+
+      /// \}
 
       /// Hook member used to retrieve the underlying data structure.
       const adj_t& hook_data_() const;

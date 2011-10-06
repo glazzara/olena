@@ -83,13 +83,15 @@ namespace mln
       /// \invariant Pointer proxy exists.
       T* operator->();
 
-      /// Constructors.
-      /// @{
+      /// \name Constructors.
+      /// \{
+
       tracked_ptr();
       tracked_ptr(T* ptr);
       /// Copy constructor.
       tracked_ptr(const tracked_ptr<T>& rhs);
-      /// @}
+
+      /// \}
 
       /// Assignment.
       tracked_ptr<T>& operator=(const tracked_ptr<T>& rhs);

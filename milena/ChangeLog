@@ -1,3 +1,20 @@
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use Doxygen grouping commands uniformly in Milena.
+
+	* mln/core/image/graph_elt_neighborhood_if.hh,
+	* mln/core/image/graph_elt_window_if.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/core/site_set/p_edges.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/util/adjacency_matrix.hh,
+	* mln/util/array.hh,
+	* mln/util/object_id.hh,
+	* mln/util/tracked_ptr.hh,
+	* mln/value/lut_vec.hh:
+	Here.
+
 2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/data/transform.cc: Aesthetic changes.

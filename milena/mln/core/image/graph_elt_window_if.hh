@@ -119,8 +119,9 @@ namespace mln
     /// The type of the image used as mask.
     typedef I mask_t;
 
-    /// Constructor.
-    /// \@{
+    /// \name Constructors.
+    /// \{
+
     /// Default. Construct an invalid window.
     graph_elt_window_if();
 
@@ -128,9 +129,10 @@ namespace mln
     ///
     /// \sa vertex_image, edge_image.
     graph_elt_window_if(const Image<I>& mask);
-    /// \@}
 
-    /// Associated types.
+    /// \}
+
+    /// \name Associated types.
     /// \{
 
     /// The image domain on which this window iterates on.

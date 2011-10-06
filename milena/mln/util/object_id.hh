@@ -54,8 +54,9 @@ namespace mln
 	typedef unsigned equiv;
 	typedef V enc;
 
-	/// Constructors
-	/// @{
+	/// \name Constructors.
+	/// \{
+
 	object_id();
 
 	template <typename V2>
@@ -63,7 +64,8 @@ namespace mln
 
 	template <typename Tag2, typename V2>
 	  object_id(const object_id<Tag2,V2>& other);
-	/// @}
+
+	/// \}
 
 	template <typename V2>
 	  object_id<Tag,V>& operator=(const V2& e);

@@ -89,8 +89,9 @@ namespace mln
     /// Type of graph element this site set focuses on.
     typedef util::edge<G> graph_element;
 
-    /// Constructors
-    /// @{
+    /// \name Constructors.
+    /// \{
+
     /// Default constructor.
     p_edges();
 
@@ -112,10 +113,12 @@ namespace mln
     ///		 It must be convertible towards the function type \c F.
     template <typename F2>
     p_edges(const Graph<G>& gr, const Function<F2>& f);
-    ///@}
 
-    /// Associated types.
+    /// \}
+
+    /// \name Associated types.
     /// \{
+
     /// Element associated type.
     typedef mln_site(super_) element;
 
@@ -130,6 +133,7 @@ namespace mln
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
+
     /// \}
 
     /// Return The number of points (sites) of the set, i.e.,
@@ -158,12 +162,14 @@ namespace mln
     // FIXME: Dummy.
     std::size_t memory_size() const;
 
-    /// Accessors.
+    /// \name Accessors.
     /// \{
+
     /// Return the graph associated to this site set
     const G& graph() const;
     /// Return the mapping function.
     const F& function() const;
+
     /// \}
 
   private:

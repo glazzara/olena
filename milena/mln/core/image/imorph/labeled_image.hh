@@ -115,8 +115,9 @@ namespace mln
     /// Skeleton.
     typedef labeled_image< tag::image_<I> > skeleton;
 
-    /// Constructors
-    /// @{
+    /// \name Constructors
+    /// \{
+
     /// Constructor without argument.
     labeled_image();
 
@@ -127,7 +128,8 @@ namespace mln
     /// nlabels and the object bounding boxes.
     labeled_image(const I& ima, const mln_value(I)& nlabels,
 		  const util::array<mln_box(I)>& bboxes);
-    /// @}
+
+    /// \}
 
     /// \cond INTERNAL_API
     /// Deferred initialization from a labeled image \p ima and the number

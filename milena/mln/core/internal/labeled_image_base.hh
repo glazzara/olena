@@ -125,28 +125,31 @@ namespace mln
     /// Type of the bounding component bounding boxes.
     typedef mln_result(accu::shape::bbox<mln_psite(I)>) bbox_t;
 
-    /// Constructors
-    /// @{
+    /// \name Constructors.
+    /// \{
+
     /// Constructor without argument.
     labeled_image_base();
-    /// @}
 
-    /// Relabel according to a function.
-    /// @{
-    //
-    /// Merge or delete labels according to the given function.
-    /// This method ensures that the labeling remains contiguous.
+    /// \}
+
+    /// \name Relabel according to a function.
     ///
+    /// Merge or delete labels according to the given function.  These
+    /// methods ensure that the labeling remains contiguous.
+    /// \{
+
     // FIXME: currently the label is kept contiguous for
     // performance reasons. Do we want to be less restrictive?
     template <typename F>
     void relabel(const Function_v2v<F>& f);
-    //
-    /// Labels may be removed. This overload make sure the labeling is still
-    /// contiguous.
+
+    /// Labels may be removed.  This overload make sure the labeling
+    /// is still contiguous.
     template <typename F>
     void relabel(const Function_v2b<F>& f);
-    /// @}
+
+    /// \}
 
     /// Return the number of labels;
     mln_value(I) nlabels() const;
@@ -172,13 +175,15 @@ namespace mln
     template <typename F>
     void relabel_(const Function_v2b<F>& f);
 
-    /// Called during relabeling.
-    /// @{
+    /// \name Methods called during relabeling.
+    /// \{
+
     void init_update_data_();
     void prepare_update_data_(const mln_value(I)& lbl,
 			      const mln_value(I)& new_lbl);
     void update_data_(const fun::i2v::array<mln_value(I)>& relabel_fun);
-    /// @}
+
+    /// \}
   };
 
 

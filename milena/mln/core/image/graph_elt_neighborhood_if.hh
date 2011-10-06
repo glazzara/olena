@@ -45,13 +45,15 @@ namespace mln
   {
     typedef neighb< graph_elt_window_if<G,S,I> > super_;
 
-    ///Constructors
-    /// \@{
+    /// \name Constructors.
+    /// \{
+
     /// Construct an invalid neighborhood.
     graph_elt_neighborhood_if();
     /// \param[in] mask A graph image of Boolean.
     graph_elt_neighborhood_if(const Image<I>& mask);
-    /// \@}
+
+    /// \}
 
     /// Return the graph image used as mask.
     const I& mask() const;

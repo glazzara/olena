@@ -87,17 +87,21 @@ namespace mln
       /// Element associated type.
       typedef T element;
 
-      /// Returned value types.
+      /// \name Returned value types.
+      ///
       /// Related to the Function_v2v concept.
-      /// @{
+      /// \{
+
       typedef T result;
       typedef typename std::vector<T>::const_reference ro_result;
       typedef typename std::vector<T>::reference mutable_result;
-      /// @}
+
+      /// \}
 
 
-      /// Iterator types
-      /// @{
+      /// \name Iterator types
+      /// \{
+
       /// Forward iterator associated type.
       typedef array_fwd_iter<T> fwd_eiter;
 
@@ -106,12 +110,14 @@ namespace mln
 
       /// Iterator associated type.
       typedef fwd_eiter eiter;
-      /// @}
+
+      /// \}
 
 
-      /// Constructors
-      /// @{
-      /// Constructor without arguments.
+      /// \name Constructors
+      /// \{
+
+      /// Constructor without argument.
       array();
 
       /// Construct a new array and resize it to \n elements.
@@ -120,7 +126,8 @@ namespace mln
       /// Construct a new array, resize it to \n elements and fill it
       /// with \p default_value.
       array(unsigned n, const T& value);
-      /// @}
+
+      /// \}
 
       /// Reserve memory for \p n elements.
       void reserve(unsigned n);
@@ -241,14 +248,16 @@ namespace mln
     public:
       typedef typename array<T>::ro_result subj_t;
 
-      /// Constructors
-      /// @{
+      /// \name Constructors.
+      /// \{
+
       /// Constructor without argument.
       array_fwd_iter();
 
       /// Constructor from an array \p a.
       array_fwd_iter(const array<T>& a);
-      /// @}
+
+      /// \}
 
       /// Change the array it iterates on to \p a.
       void change_target(const array<T>& a);
@@ -292,14 +301,16 @@ namespace mln
     public:
       typedef typename array<T>::ro_result subj_t;
 
-      /// Constructors
-      /// @{
+      /// \name Constructors.
+      /// \{
+
       /// Constructor without argument.
       array_bkd_iter();
 
       /// Constructor from an array \p a.
       array_bkd_iter(const array<T>& a);
-      /// @}
+
+      /// \}
 
       /// Change the array it iterates on to \p a.
       void change_target(const array<T>& a);

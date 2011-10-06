@@ -94,8 +94,9 @@ namespace mln
       /// Give the index of value \p v in this set.
       unsigned index_of(const value& v) const;
 
-      /// Constructors
-      /// @{
+      /// \name Constructors
+      /// \{
+
       /// Constructor from a value set and any Function_v2v.
       template <typename F>
       lut_vec(const S& vset, const Function_v2v<F>& f);
@@ -107,7 +108,8 @@ namespace mln
       /// Constructor from a value set and any util::array.
       template <typename V>
       lut_vec(const S& vset, const Function_v2v< util::array<V> >& f);
-      /// @}
+
+      /// \}
 
     protected:
 
