@@ -344,6 +344,7 @@ AC_CONFIG_FILES([
     scribo/demo/Makefile
       scribo/demo/viewer/Makefile
       scribo/demo/xml2doc/Makefile
+    scribo/doc/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
       scribo/src/contest/Makefile
@@ -412,6 +413,8 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
+    doc/Makefile
+    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/mesh/Makefile

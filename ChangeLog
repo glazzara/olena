@@ -1,3 +1,21 @@
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of common documentation.
+
+	* configure.ac: Add new makefiles.
+
+	* doc/.gitignore,
+	* doc/Doxyfile.in,
+	* doc/DoxygenLayout.xml,
+	* doc/Makefile.am,
+	* doc/doxygen.css,
+	* doc/footer.html,
+	* doc/header.html,
+	* doc/logo.jpg,
+	* doc/mainpage.hh,
+	* doc/olena.qhcp,
+	* doc/subdoc_footer.html: New.
+
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/tests/layout directory.

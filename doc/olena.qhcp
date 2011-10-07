@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QHelpCollectionProject version="1.0">
+  <assistant>
+    <startPage>qthelp://fr.epita.lrde.olena/milena-2.0/index.html</startPage>
+  </assistant>
+  <docFiles>
+    <register>
+      <file>../milena/doc/user-refman/html/milena.qch</file>
+      <file>../scribo/doc/user-refman/html/scribo.qch</file>
+    </register>
+  </docFiles>
+</QHelpCollectionProject>
