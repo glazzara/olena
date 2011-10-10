@@ -37,7 +37,6 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/debug/println.hh>
 #include <mln/draw/line.hh>
-#include <mln/pw/all.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/core/alias/point2d.hh>
@@ -49,7 +48,6 @@
 #include <mln/core/image/complex_neighborhoods.hh>
 #include <mln/core/image/complex_neighborhood_piter.hh>
 
-#include <mln/debug/iota.hh>
 #include <mln/data/fill.hh>
 #include <mln/norm/l2.hh>
 
@@ -166,14 +164,14 @@ make_complex_image(const mln::image2d<bool>& seeds)
 	for (unsigned ll = l + 1; ll <= nlabels; ++ll)
 	  if (adj[l][ll])
 	    // Create an edge as an oriented (``algebraic'') face.
-	    e.push_back( c.add_face(-v[l-1] + v[ll-1]) );
+	    e.push_back(c.add_face(-v[l-1] + v[ll-1]));
     }
     std::cout << "e size = " << e.size() << std::endl;
   }
 
-  /*---------------------.
-  | Complex-based pset.  |
-  `---------------------*/
+  /*-------------------------.
+  | Complex-based site set.  |
+  `-------------------------*/
 
   p_complex<D, G> pc(c, geom);
 
@@ -199,11 +197,14 @@ make_complex_image(const mln::image2d<bool>& seeds)
   image2d<int_u8> canvas(seeds.domain());
   data::fill(canvas, 0);
 
-  // For each edge (1-face), compute the distance between the two
-  // adjacent vertices (0-faces).
+  // Iterator on the edges of DIST_IMA.
   p_n_faces_fwd_piter<D, G> e(dist_ima.domain(), 1);
+  // n-face to (n-1)-faces neighborhood (here, the pair of vertices
+  // adjacent to an edge).
   typedef complex_lower_neighborhood<D, G> v_nbh_t;
   v_nbh_t v_nbh;
+  // For each edge (1-face), compute the distance between the two
+  // adjacent vertices (0-faces).
   mln_niter_(v_nbh_t) v(v_nbh, e);
   for_all(e)
   {

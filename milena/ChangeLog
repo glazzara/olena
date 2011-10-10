@@ -1,3 +1,11 @@
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes in apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Here.
+	Remove useless headers inclusions.
+	Adjust comments.
+
 2011-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix and clean up apps/papers/levillain.09.ismm/classif.cc.
