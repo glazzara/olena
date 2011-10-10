@@ -1,5 +1,16 @@
 2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Rename as...
+	* apps/papers/levillain.09.ismm/classif-1complex.cc: ...this.
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS, noinst_DATA): s/classif/classif-1complex/.
+	(classif_SOURCES, classwst.pnm): Replace by...
+	(classif_1complex_SOURCES, classwst-1complex.ppm): ...these.
+
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes in apps/papers/levillain.09.ismm/classif.cc.
 
 	* apps/papers/levillain.09.ismm/classif.cc: Here.
