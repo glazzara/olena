@@ -1,3 +1,14 @@
+2011-10-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Graph-based version of the classification example.
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc: New.
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_PROGRAMS):
+	Add classif-graph.
+	(classif_graph_SOURCES): New.
+	(noinst_DATA): Add classwst-graph.ppm.
+	(classwst-graph.ppm): New target.
+
 2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename apps/papers/levillain.09.ismm/classif.cc.
