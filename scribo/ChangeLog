@@ -1,3 +1,11 @@
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Mention the ICDAR 2011 paper in SCRIBO's README.
+
+	* README (Bibliography): Here.
+	Fix copyright header.
+	* src/README: Fix copyright header.
+
 2011-09-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix paths in the SCRIBO viewer.
