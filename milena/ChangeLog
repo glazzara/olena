@@ -1,5 +1,11 @@
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Invert threshold function test.
+
+	* mln/fun/v2b/threshold.hh: Here.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new crop routines.
 
 	* mln/geom/crop.hh,

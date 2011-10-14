@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,7 +70,10 @@ namespace mln
       bool
       threshold<V>::operator()(const V& v) const
       {
-	return v >= a;
+	// Here the test seems to be inversed compared to the usual
+	// use. Indeed, we want to preserve the following convention:
+	// True for foreground and False for background.
+	return v <= a;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
