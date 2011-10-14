@@ -41,6 +41,7 @@ ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
 if HAVE_MAGICKXX
 
   noinst_PROGRAMS +=  			\
+   global_threshold			\
    sauvola_debug 			\
    sauvola_ms_debug
 
@@ -51,6 +52,12 @@ if HAVE_MAGICKXX
    sauvola_ms_fg 			\
    sauvola_ms_split
 
+
+  global_threshold_SOURCES  = global_threshold.cc
+  global_threshold_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  	      $(MAGICKXX_CPPFLAGS)
+  global_threshold_LDFLAGS  = $(AM_LDFLAGS) 		\
+		              $(MAGICKXX_LDFLAGS)
 
 
   otsu_SOURCES  = otsu.cc

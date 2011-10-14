@@ -1,5 +1,13 @@
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new tool for global thresholding.
+
+	* src/binarization/Makefile.am: Add a new target.
+
+	* src/binarization/global_threshold.cc: New.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/binarization/global_threshold.cc: Fix test.
 
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
