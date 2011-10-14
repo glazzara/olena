@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -131,7 +132,7 @@ namespace mln
       typedef double                        sum;
 
       static const char* name()
-      { return "float"; }
+      { return "double"; }
 
     };
 

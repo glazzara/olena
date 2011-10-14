@@ -1,3 +1,8 @@
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/value/builtin/floatings.hh: Fix string name for builtin
+	double type.
+
 2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Scribo build system.
