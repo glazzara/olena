@@ -1,5 +1,9 @@
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/binarization/global_threshold.cc: Fix test.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Otsu's binarization implementation.
 
 	* scribo/binarization/otsu.hh: New routine.

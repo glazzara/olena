@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,8 +39,8 @@ int main(int argc, char *argv[])
   unsigned data[2][2] = { { 12, 24 },
 			  {  2,  6 } };
 
-  bool data_ref[2][2] = { { 1, 1 },
-			  { 0, 0 } };
+  bool data_ref[2][2] = { { 0, 0 },
+			  { 1, 1 } };
 
   image2d<unsigned> input = make::image(data);
   image2d<bool> ref = make::image(data_ref);
