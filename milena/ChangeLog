@@ -1,5 +1,12 @@
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new crop routines.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh: New.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/value/builtin/floatings.hh: Fix string name for builtin
 	double type.
 
