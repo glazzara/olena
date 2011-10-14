@@ -1,3 +1,16 @@
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Otsu's binarization implementation.
+
+	* scribo/binarization/otsu.hh: New routine.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/otsu.cc: New tool.
+
+	* tests/binarization/Makefile.am,
+	* tests/binarization/otsu.cc,
+	* tests/binarization/otsu.ref.pbm: New test data.
+
 2011-09-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix paths in the SCRIBO viewer.

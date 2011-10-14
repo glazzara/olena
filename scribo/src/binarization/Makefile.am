@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -45,11 +45,19 @@ if HAVE_MAGICKXX
    sauvola_ms_debug
 
   utilexec_PROGRAMS =                   \
+   otsu					\
    sauvola 				\
    sauvola_ms                           \
    sauvola_ms_fg 			\
    sauvola_ms_split
 
+
+
+  otsu_SOURCES  = otsu.cc
+  otsu_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  $(MAGICKXX_CPPFLAGS)
+  otsu_LDFLAGS  = $(AM_LDFLAGS) 		\
+		  $(MAGICKXX_LDFLAGS)
 
   sauvola_ms_fg_SOURCES  = sauvola_ms_fg.cc
   sauvola_ms_fg_CPPFLAGS = $(AM_CPPFLAGS) 	\

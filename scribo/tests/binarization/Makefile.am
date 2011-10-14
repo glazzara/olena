@@ -22,17 +22,20 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
   sauvola_ms.ref.pbm				\
-  sauvola.ref.pbm
+  sauvola.ref.pbm				\
+  otsu.ref.pbm
 
 check_PROGRAMS =				\
   global_threshold 				\
   local_threshold	 			\
+  otsu						\
   sauvola 					\
   sauvola_ms
 
 
 global_threshold_SOURCES = global_threshold.cc
 local_threshold_SOURCES = local_threshold.cc
+otsu_SOURCES = otsu.cc
 sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc
 
