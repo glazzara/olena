@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,13 +24,13 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_COMPUTE_SAUVOLA_THRESHOLD_HH
-# define SCRIBO_BINARIZATION_INTERNAL_COMPUTE_SAUVOLA_THRESHOLD_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_COMPUTE_LOCAL_THRESHOLD_HH
+# define SCRIBO_BINARIZATION_INTERNAL_COMPUTE_LOCAL_THRESHOLD_HH
 
 
 /// \file
 ///
-/// \brief Compute a threshold with Sauvola's binarization formula.
+/// \brief Compute a threshold with Local's binarization formula.
 
 # include <algorithm>
 # include <cmath>
@@ -37,21 +38,11 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
 
-# include <scribo/binarization/internal/sauvola_debug.hh>
+# include <scribo/binarization/internal/local_threshold_debug.hh>
 
 
-// Setup default Sauvola's formulae parameters values.
-// These macros may be used in other variant of Sauvola's algorithm.
-//
-// Values are set according to the following reference: "Automatic
-// Evaluation of Document Binarization Results", Badekas and al, 2005
-//
-// Badekas et al. said 0.34 was best.
-# define SCRIBO_DEFAULT_SAUVOLA_K 0.34
-//
-// 128 is best for grayscale documents.
-# define SCRIBO_DEFAULT_SAUVOLA_R 128
 
+// extern mln::image2d<double> skewness;
 
 namespace scribo
 {
@@ -65,8 +56,8 @@ namespace scribo
       using namespace mln;
 
 
-      /*! \brief Compute a point wise threshold according Sauvola's
-          binarization.
+      /*! \brief Compute a point wise threshold according to a local
+          binarization formula.
 
           \param[in] p A site.
           \param[in] simple An integral image of mean values.
@@ -77,72 +68,31 @@ namespace scribo
                        form the local mean m(x, y).
           \param[in] R Maximum value of the standard deviation (128
                        for grayscale documents).
+	  \param[in] formula The function to use to compute the local
+	                     threshold.
 
 	  \return A threshold.
       */
-      template <typename P, typename J>
+      template <typename P, typename J, typename F>
       double
-      compute_sauvola_threshold(const P& p,
-				const J& simple,
-				const J& squared,
-				int win_width, double K, double R);
-
-      /// \overload
-      /// K is set to 0.34 and R to 128.
-      //
-      template <typename P, typename J>
-      double
-      compute_sauvola_threshold(const P& p,
-				const J& simple,
-				const J& squared,
-				int win_width);
+      compute_local_threshold(const P& p,
+			      const J& simple,
+			      const J& squared,
+			      int win_width, double K, double R,
+			      const F& formula);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-
-      /*! \brief compute Sauvola's threshold applying directly the formula.
-
-	\param[in] m_x_y Mean value.
-	\param[in] s_x_y Standard deviation.
-        \param[in] k Control the threshold value in the local
-                     window. The higher, the lower the threshold
-                     form the local mean m(x, y).
-        \param[in] R Maximum value of the standard deviation (128
-                     for grayscale documents).
-
-	\return A threshold.
-       */
-      inline
+      template <typename P, typename J, typename F>
       double
-      sauvola_threshold_formula(const double m_x_y, const double s_x_y,
-				const double K, const double R)
-      {
-	return m_x_y * (1.0 + K * ((s_x_y / R) - 1.0));
-      }
-
-      /// \overload
-      /// K is set to 0.34 and R to 128.
-      //
-      inline
-      double
-      sauvola_threshold_formula(double m_x_y, double s_x_y)
-      {
- 	return sauvola_threshold_formula(m_x_y, s_x_y,
- 					 SCRIBO_DEFAULT_SAUVOLA_K,
- 					 SCRIBO_DEFAULT_SAUVOLA_R);
-      }
-
-
-
-      template <typename P, typename J>
-      double
-      compute_sauvola_threshold(const P& p,
-				const J& simple,
-				const J& squared,
-				int win_width, double K, double R)
+      compute_local_threshold(const P& p,
+			      const J& simple,
+			      const J& squared,
+			      int win_width, double K, double R,
+			      const F& formula)
       {
 	mln_precondition(simple.nrows() == squared.nrows());
 	mln_precondition(simple.ncols() == squared.ncols());
@@ -169,10 +119,10 @@ namespace scribo
 
 	double m_x_y = m_x_y_tmp / wh;
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local mean
 	debug_mean(p) = m_x_y * mean_debug_factor;
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	// Standard deviation.
 	double s_x_y_tmp = (squared.at_(row_max, col_max)
@@ -182,30 +132,33 @@ namespace scribo
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local standard deviation
 	debug_stddev(p) = s_x_y * stddev_debug_factor;
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	// Thresholding.
-	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R);
+	// skewness_ = skewness(p);
+	// b = (p == point2d(5,5));
+	double t_x_y = formula(m_x_y, s_x_y, K, R);
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	double alpha = K * (1 - s_x_y / R);
 	debug_alpham(p) = alpha * m_x_y * alpham_debug_factor;
 	debug_alphacond(p) = (s_x_y < (alpha * m_x_y / 2.));
-#  endif // !SCRIBO_SAUVOLA_DEBUG
+#  endif // !SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	return t_x_y;
       }
 
 
-      template <typename P, typename J>
+      template <typename P, typename J, typename F>
       double
-      compute_sauvola_threshold_single_image(const P& p,
+      compute_local_threshold_single_image(const P& p,
 					     const J& integral,
 					     int win_width,
-					     double K, double R)
+					     double K, double R,
+					     const F& formula)
       {
 	// Window half width.
 	int w_2 = win_width >> 1;
@@ -229,10 +182,10 @@ namespace scribo
 
 	double m_x_y = m_x_y_tmp / wh;
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local mean
 	debug_mean(p) = m_x_y * mean_debug_factor;
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	// Standard deviation.
 	double s_x_y_tmp = (integral.at_(row_max, col_max).second()
@@ -242,35 +195,21 @@ namespace scribo
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local standard deviation
 	debug_stddev(p) = s_x_y * stddev_debug_factor;
-#  endif // !SCRIBO_SAUVOLA_DEBUG
+#  endif // !SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	// Thresholding.
-	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R);
+	double t_x_y = formula(m_x_y, s_x_y, K, R);
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	double alpha = K * (1 - s_x_y / R);
 	debug_alpham(p) = alpha * m_x_y * alpham_debug_factor;
 	debug_alphacond(p) = (s_x_y < (alpha * m_x_y / 2.));
-#  endif // !SCRIBO_SAUVOLA_DEBUG
+#  endif // !SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	return t_x_y;
-      }
-
-
-
-      template <typename P, typename J>
-      double
-      compute_sauvola_threshold(const P& p,
-				const J& simple,
-				const J& squared,
-				int win_width)
-      {
-	return compute_sauvola_threshold(p, simple, squared, win_width,
-					 SCRIBO_DEFAULT_SAUVOLA_K,
-					 SCRIBO_DEFAULT_SAUVOLA_R);
       }
 
 
@@ -282,4 +221,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_BINARIZATION_INTERNAL_COMPUTE_SAUVOLA_THRESHOLD_HH
+#endif // ! SCRIBO_BINARIZATION_INTERNAL_COMPUTE_LOCAL_THRESHOLD_HH

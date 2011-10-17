@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,14 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_SAUVOLA_THRESHOLD_IMAGE_HH
-# define SCRIBO_BINARIZATION_SAUVOLA_THRESHOLD_IMAGE_HH
+#ifndef SCRIBO_BINARIZATION_NIBLACK_THRESHOLD_HH
+# define SCRIBO_BINARIZATION_NIBLACK_THRESHOLD_HH
 
 /// \file
 ///
-/// Compute an image of local threshold using Sauvola algorithm.
+/// Compute an image of local threshold using Niblack algorithm.
 
 /// \fixme return type too restrictive!
+/// \fixme Revamp code and merge with sauvola_threshold.hh.
 
 # include <algorithm>
 # include <cmath>
@@ -41,7 +41,8 @@
 # include <mln/value/int_u8.hh>
 
 # include <scribo/core/init_integral_image.hh>
-# include <scribo/binarization/internal/compute_sauvola_threshold.hh>
+# include <scribo/binarization/internal/compute_local_threshold.hh>
+# include <scribo/binarization/internal/niblack_formula.hh>
 
 
 
@@ -53,9 +54,9 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Compute an image of local threshold using Sauvola algorithm.
+    /*! \brief Compute an image of local threshold using Niblack algorithm.
 
-      \input[in]  input       An image.
+      \input[in]  input       A gray level image.
       \input[in]  window_size The window size.
       \input[out] simple      The sum of all intensities of \p input.
       \input[out] squared     The sum of all squared intensities of \p
@@ -66,22 +67,22 @@ namespace scribo
      */
     template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size,
-			    double K,
-			    Image<J>& simple,
-			    Image<J>& squared);
+    niblack_threshold(const Image<I>& input, unsigned window_size,
+		      double K,
+		      Image<J>& simple,
+		      Image<J>& squared);
 
     /// \overload
     template <typename I>
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size,
-			    double K);
+    niblack_threshold(const Image<I>& input, unsigned window_size,
+		      double K);
 
     /// \overload
     /// K is set to 0.34
     template <typename I>
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size);
+    niblack_threshold(const Image<I>& input, unsigned window_size);
 
 
     /// \overload
@@ -89,7 +90,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input);
+    niblack_threshold(const Image<I>& input);
 
 
 
@@ -108,12 +109,12 @@ namespace scribo
 	template <typename I, typename J>
 	inline
 	mln_concrete(I)
-	sauvola_threshold_image(const Image<I>& input_, unsigned window_size,
-				double K,
-				Image<J>& simple_,
-				Image<J>& squared_)
+	niblack_threshold(const Image<I>& input_, unsigned window_size,
+			  double K,
+			  Image<J>& simple_,
+			  Image<J>& squared_)
 	{
-	  trace::entering("scribo::binarization::impl::generic::sauvola_threshold_image");
+	  trace::entering("scribo::binarization::impl::generic::niblack_threshold");
 
 	  const I& input = exact(input_);
 	  J& simple = exact(simple_);
@@ -126,15 +127,13 @@ namespace scribo
 	  typedef mln_value(I) V;
 	  typedef mln_site(I) P;
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  initialize(internal::debug_mean, input);
 	  initialize(internal::debug_stddev, input);
 	  initialize(internal::debug_threshold, input);
 	  initialize(internal::debug_alpham, input);
 	  initialize(internal::debug_alphacond, input);
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
-
-	  // Sauvola Algorithm with I.I.
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -144,28 +143,27 @@ namespace scribo
 	    ncols = static_cast<mln::def::coord>(input.ncols());
 
 
+	  internal::niblack_formula formula;
 	  for(mln::def::coord row = 0; row < nrows; ++row)
 	    for(mln::def::coord col = 0; col < ncols; ++col)
 	    {
-#  ifdef SCRIBO_SAUVOLA_DEBUG
-
-	      double t = internal::compute_sauvola_threshold(P(row, col), simple,
-							     squared, window_size,
-							     K,
-							     SCRIBO_DEFAULT_SAUVOLA_R);
+	      // FIXME: Setting R parameter to 128 should not be
+	      // hard-coded.  Even though it is not used in Niblack's
+	      // formula, this parameter is used for debug images and
+	      // should be adapted to the data range values.
+	      double t = internal::compute_local_threshold(P(row, col), simple,
+							   squared, window_size,
+							   K,
+							   128,
+							   formula);
 	      mln::convert::from_to(t, output.at_(row, col));
+
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	      internal::debug_threshold.at_(row, col) = t;
-#  else
-	      mln::convert::from_to(
-		internal::compute_sauvola_threshold(P(row, col), simple,
-						    squared, window_size,
-						    K,
-						    SCRIBO_DEFAULT_SAUVOLA_R),
-		output.at_(row, col));
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 	    }
 
-	  trace::exiting("scribo::binarization::impl::generic::sauvola_threshold");
+	  trace::exiting("scribo::binarization::impl::generic::niblack_threshold");
 	  return output;
 	}
 
@@ -176,13 +174,13 @@ namespace scribo
       template <typename I, typename J>
       inline
       mln_concrete(I)
-      sauvola_threshold_image_gl(const I& input, unsigned window_size,
-				 double K,
-				 Image<J>& simple,
-				 Image<J>& squared)
+      niblack_threshold_gl(const I& input, unsigned window_size,
+			   double K,
+			   Image<J>& simple,
+			   Image<J>& squared)
       {
-	return impl::generic::sauvola_threshold_image(input, window_size, K,
-						      simple, squared);
+	return impl::generic::niblack_threshold(input, window_size, K,
+						simple, squared);
       }
 
 
@@ -199,25 +197,25 @@ namespace scribo
       template <unsigned n, typename I, typename J>
       inline
       mln_ch_value(I, value::int_u<n>)
-      sauvola_threshold_image_dispatch(const value::int_u<n>&, const I& input,
-				       unsigned window_size,
-				       double K,
-				       J& simple,
-				       J& squared)
+      niblack_threshold_dispatch(const value::int_u<n>&, const I& input,
+				 unsigned window_size,
+				 double K,
+				 J& simple,
+				 J& squared)
       {
-	return impl::sauvola_threshold_image_gl(input, window_size, K,
-						simple, squared);
+	return impl::niblack_threshold_gl(input, window_size, K,
+					  simple, squared);
       }
 
 
       template <typename I, typename J>
       inline
       mln_ch_value(I, value::int_u8)
-      sauvola_threshold_image_dispatch(const mln_value(I)&, const I& input,
-				       unsigned window_size,
-				       double K,
-				       J& simple,
-				       J& squared)
+      niblack_threshold_dispatch(const mln_value(I)&, const I& input,
+				 unsigned window_size,
+				 double K,
+				 J& simple,
+				 J& squared)
       {
 	// No dispatch for this kind of value type.
 	mlc_abort(I)::check();
@@ -233,24 +231,24 @@ namespace scribo
 
     template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size,
-			    double K,
-			    Image<J>& simple,
-			    Image<J>& squared)
+    niblack_threshold(const Image<I>& input, unsigned window_size,
+		      double K,
+		      Image<J>& simple,
+		      Image<J>& squared)
     {
-      trace::entering("scribo::binarization::sauvola_threshold_image");
+      trace::entering("scribo::binarization::niblack_threshold");
 
       mln_precondition(mln_site_(I)::dim == 2);
       mln_precondition(exact(input).is_valid());
 
       typedef mln_value(I) value_t;
       mln_ch_value(I, value::int_u8)
-	output = internal::sauvola_threshold_image_dispatch(value_t(),
-							    exact(input),
-							    window_size,
-							    K,
-							    exact(simple),
-							    exact(squared));
+	output = internal::niblack_threshold_dispatch(value_t(),
+						      exact(input),
+						      window_size,
+						      K,
+						      exact(simple),
+						      exact(squared));
 
       trace::exiting("scribo::text::ppm2pbm");
       return output;
@@ -260,34 +258,34 @@ namespace scribo
     template <typename I>
     inline
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size,
-			    double K)
+    niblack_threshold(const Image<I>& input, unsigned window_size,
+		      double K)
     {
       mln_ch_value(I, double)
 	simple = init_integral_image(input, scribo::internal::identity_),
 	squared = init_integral_image(input, scribo::internal::square_);
 
-      return sauvola_threshold_image(input, window_size,
-				     K, simple, squared);
+      return niblack_threshold(input, window_size,
+			       K, simple, squared);
     }
 
 
     template <typename I>
     inline
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input, unsigned window_size)
+    niblack_threshold(const Image<I>& input, unsigned window_size)
     {
-      return sauvola_threshold_image(input, window_size,
-				     SCRIBO_DEFAULT_SAUVOLA_K);
+      return niblack_threshold(input, window_size,
+			       SCRIBO_DEFAULT_NIBLACK_K);
     }
 
 
     template <typename I>
     inline
     mln_ch_value(I, value::int_u8)
-    sauvola_threshold_image(const Image<I>& input)
+    niblack_threshold(const Image<I>& input)
     {
-      return sauvola_threshold_image(input, 11);
+      return niblack_threshold(input, 11);
     }
 
 
@@ -298,4 +296,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_SAUVOLA_THRESHOLD_IMAGE_HH
+#endif // ! SCRIBO_BINARIZATION_NIBLACK_THRESHOLD_HH

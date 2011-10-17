@@ -1,3 +1,34 @@
+2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Niblack's binarization algorithm.
+
+	* scribo/binarization/all.hh: Update includes.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/compute_sauvola_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_debug.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/binarization/sauvola_threshold_image.hh: Revamp code in
+	order to share some parts with Niblack's algorithm.
+
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh: New.
+
+	* src/binarization/Makefile.am
+	* tests/binarization/Makefile.am: Add new targets.
+
+	* src/binarization/niblack.cc: New tool.
+
+	* tests/binarization/niblack.cc: New test.
+
+	* tests/binarization/niblack.ref.pbm: New test data.
+
 2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new tool for global thresholding.

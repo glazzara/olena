@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,19 +24,19 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_DEBUG_HH
-# define SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_DEBUG_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_DEBUG_HH
+# define SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_DEBUG_HH
 
 /// \file
 ///
-/// \brief Declare all debug related variables for Sauvola*
+/// \brief Declare all debug related variables for local based
 /// algorithms.
 
 
 /// FIXME: A struct may be a bit better...
 
 
-# ifdef SCRIBO_SAUVOLA_DEBUG
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 #  ifndef MLN_INCLUDE_ONLY
 
@@ -81,7 +82,7 @@ namespace scribo
 
 #  endif // ! MLN_INCLUDE_ONLY
 
-# endif // ! SCRIBO_SAUVOLA_DEBUG
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 
-#endif // ! SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_DEBUG_HH
+#endif // ! SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_DEBUG_HH

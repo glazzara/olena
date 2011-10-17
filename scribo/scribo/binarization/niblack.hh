@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_SAUVOLA_HH
-# define SCRIBO_BINARIZATION_SAUVOLA_HH
+#ifndef SCRIBO_BINARIZATION_NIBLACK_HH
+# define SCRIBO_BINARIZATION_NIBLACK_HH
 
 /// \file
 ///
@@ -35,7 +34,7 @@
 # include <mln/data/transform.hh>
 # include <mln/value/int_u8.hh>
 
-# include <scribo/binarization/sauvola_threshold.hh>
+# include <scribo/binarization/niblack_threshold.hh>
 # include <scribo/binarization/local_threshold.hh>
 # include <scribo/binarization/internal/local_threshold_debug.hh>
 
@@ -58,20 +57,20 @@ namespace scribo
 
       \input[in]  input       An image.
       \input[in]  window_size The window size.
-      \input[in]  K           Sauvola's formulae constant.
+      \input[in]  K           Niblack's formulae constant.
 
       \return A binary image.
 
      */
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola(const Image<I>& input, unsigned window_size, double K);
+    niblack(const Image<I>& input, unsigned window_size, double K);
 
 
 
     /*! \brief Convert an image into a binary image.
 
-      Sauvola's formulae constant K is set to 0.34.
+      Niblack's formulae constant K is set to 0.34.
 
       \input[in]  input       An image.
       \input[in]  window_size The window size.
@@ -81,7 +80,7 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola(const Image<I>& input, unsigned window_size);
+    niblack(const Image<I>& input, unsigned window_size);
 
 
     /// \overload
@@ -89,7 +88,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola(const Image<I>& input);
+    niblack(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -105,18 +104,18 @@ namespace scribo
 
 	template <typename I>
 	mln_ch_value(I, bool)
-	sauvola(const Image<I>& input, unsigned window_size, double K)
+	niblack(const Image<I>& input, unsigned window_size, double K)
 	{
-	  trace::entering("scribo::binarization::impl::generic::sauvola");
+	  trace::entering("scribo::binarization::impl::generic::niblack");
 	  mln_precondition(exact(input).is_valid());
 
 	  mln_ch_value(I,value::int_u8)
-	    threshold_image = binarization::sauvola_threshold(input, window_size, K);
+	    threshold_image = binarization::niblack_threshold(input, window_size, K);
 
 	  mln_ch_value(I, bool)
 	    output = local_threshold(input, threshold_image);
 
-	  trace::exiting("scribo::binarization::impl::generic::sauvola");
+	  trace::exiting("scribo::binarization::impl::generic::niblack");
 	  return output;
 	}
 
@@ -134,21 +133,21 @@ namespace scribo
 
       template <typename I>
       mln_ch_value(I, bool)
-	sauvola_dispatch(const mln_value(I)&,
+	niblack_dispatch(const mln_value(I)&,
 			 const Image<I>& input, unsigned window_size,
 			 double K)
       {
-	return impl::generic::sauvola(input, window_size, K);
+	return impl::generic::niblack(input, window_size, K);
       }
 
 
       template <typename I>
       mln_ch_value(I, bool)
-      sauvola_dispatch(const Image<I>& input, unsigned window_size,
+      niblack_dispatch(const Image<I>& input, unsigned window_size,
 		       double K)
       {
 	typedef mln_value(I) V;
-	return sauvola_dispatch(V(), input, window_size, K);
+	return niblack_dispatch(V(), input, window_size, K);
       }
 
     } // end of namespace scribo::binarization::internal
@@ -159,14 +158,14 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I, bool)
-      sauvola(const Image<I>& input, unsigned window_size, double K)
+      niblack(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::sauvola");
+      trace::entering("scribo::binarization::niblack");
 
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, bool)
-	output = internal::sauvola_dispatch(input, window_size, K);
+	output = internal::niblack_dispatch(input, window_size, K);
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
       if (internal::stddev_image_output)
@@ -187,24 +186,24 @@ namespace scribo
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 
-      trace::exiting("scribo::binarization::sauvola");
+      trace::exiting("scribo::binarization::niblack");
       return output;
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola(const Image<I>& input, unsigned window_size)
+    niblack(const Image<I>& input, unsigned window_size)
     {
-      return sauvola(input, window_size, SCRIBO_DEFAULT_SAUVOLA_K);
+      return niblack(input, window_size, SCRIBO_DEFAULT_NIBLACK_K);
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola(const Image<I>& input)
+    niblack(const Image<I>& input)
     {
-      return sauvola(input, 11);
+      return niblack(input, 11);
     }
 
 
@@ -216,4 +215,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_SAUVOLA_HH
+#endif // ! SCRIBO_BINARIZATION_NIBLACK_HH

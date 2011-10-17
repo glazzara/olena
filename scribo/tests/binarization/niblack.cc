@@ -1,5 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,33 +23,30 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_ALL_HH
-# define SCRIBO_BINARIZATION_ALL_HH
-
 /// \file
-///
-/// Include all headers located in scribo/binarization.
 
-namespace scribo
+#include <mln/core/image/image2d.hh>
+#include <mln/data/compare.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
+
+#include <scribo/binarization/niblack.hh>
+
+#include "tests/data.hh"
+
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of binarization routines.
-  namespace binarization
-  {
+  image2d<value::int_u8> input;
+  io::pgm::load(input, MILENA_IMG_DIR "/lena.pgm");
 
-  } // end of namespace scribo::binarization
+  image2d<bool> bin = scribo::binarization::niblack(input, 101);
 
-} // end of namespace scribo
+  image2d<bool> ref;
+  io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/niblack.ref.pbm");
 
-
-# include <scribo/binarization/global_threshold.hh>
-# include <scribo/binarization/global_threshold_auto.hh>
-
-# include <scribo/binarization/local_threshold.hh>
-
-# include <scribo/binarization/sauvola.hh>
-# include <scribo/binarization/sauvola_ms.hh>
-# include <scribo/binarization/sauvola_ms_split.hh>
-# include <scribo/binarization/sauvola_threshold.hh>
-
-#endif // ! SCRIBO_BINARIZATION_ALL_HH
+  mln_assertion(bin == ref);
+}

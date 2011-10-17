@@ -37,7 +37,11 @@
 # include <mln/value/int_u8.hh>
 # include <mln/data/fill.hh>
 
-# include <scribo/binarization/sauvola_threshold_image.hh>
+# include <scribo/binarization/internal/sauvola_formula.hh>
+
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+#  include <scribo/binarization/internal/local_threshold_debug.hh>
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 
 namespace scribo
@@ -67,8 +71,11 @@ namespace scribo
 	mln::util::array<int> dp;
 
 	double K_;
+	double R_;
 
-	first_pass_functor(const I& input, double K);
+	sauvola_formula formula_;
+
+	first_pass_functor(const I& input, double K, double R);
 
 	void exec(double mean, double stddev);
 	void finalize();
@@ -88,10 +95,11 @@ namespace scribo
 
 
       template <typename I>
-      first_pass_functor<I>::first_pass_functor(const I& input, double K)
+      first_pass_functor<I>::first_pass_functor(const I& input, double K, double R)
 	: input(input),
 	  pxl(input),
-	  K_(K)
+	  K_(K),
+	  R_(R)
       {
 	res = 0;
 	pxl.start();
@@ -100,10 +108,10 @@ namespace scribo
 	initialize(parent, input);
 	initialize(msk, input);
 
-# ifdef SCRIBO_SAUVOLA_DEBUG
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	initialize(debug_mean, input);
 	initialize(debug_stddev, input);
-# endif // ! SCRIBO_SAUVOLA_DEBUG
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	mln::extension::fill(msk, false);
 
@@ -124,9 +132,7 @@ namespace scribo
 	unsigned p = pxl.offset();
 
 	value::int_u8 t_p;
-	mln::convert::from_to(sauvola_threshold_formula(mean, stddev,
-							K_,
-							SCRIBO_DEFAULT_SAUVOLA_R),
+	mln::convert::from_to(formula_(mean, stddev, K_, R_),
 			      t_p);
 
 	msk.element(p) = input.element(p) < t_p;

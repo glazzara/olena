@@ -60,16 +60,15 @@
 
 # include <scribo/core/macros.hh>
 
-# include <scribo/binarization/sauvola_threshold_image.hh>
 # include <scribo/binarization/internal/first_pass_functor.hh>
 
 # include <scribo/canvas/integral_browsing.hh>
 
-# ifdef SCRIBO_SAUVOLA_DEBUG
-#  include <scribo/binarization/internal/sauvola_debug.hh>
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+#  include <scribo/binarization/internal/local_threshold_debug.hh>
 #  include <mln/io/pgm/save.hh>
 #  include <scribo/make/debug_filename.hh>
-# endif // ! SCRIBO_SAUVOLA_DEBUG
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 
 
@@ -179,7 +178,7 @@ namespace scribo
 
 	// 1st pass
 	scribo::binarization::internal::first_pass_functor< image2d<int_u8> >
-	  f(sub, K);
+	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R);
 	scribo::canvas::integral_browsing(integral_sum_sum_2,
 					  ratio,
 					  w_local_w, w_local_h,
@@ -259,10 +258,10 @@ namespace scribo
 	} // end of 2nd pass
 
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	io::pbm::save(f.msk,
 		      scribo::make::debug_filename(internal::threshold_image_output).c_str());
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	return f.t_sub;
       }
@@ -923,18 +922,18 @@ namespace scribo
 	  }
 
 
-#  ifdef SCRIBO_SAUVOLA_DEBUG
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  if (internal::scale_image_output)
 	    io::pgm::save(e_2, internal::scale_image_output);
-#  endif // ! SCRIBO_SAUVOLA_DEBUG
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
-// #  ifdef SCRIBO_SAUVOLA_DEBUG
+// #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 // 	  if (internal::scale_image_output)
 // 	    io::pgm::save(e_2, internal::scale_image_output);
-// #  endif // ! SCRIBO_SAUVOLA_DEBUG
+// #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Binarize
 	  image2d<bool>

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,7 +26,7 @@
 
 #include <mln/io/pgm/all.hh>
 
-#include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/sauvola_threshold.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
   image2d<value::int_u8> input;
   io::pgm::load(input, argv[1]);
 
-  image2d<value::int_u8> out = scribo::binarization::sauvola_threshold_image(input, w, k);
+  image2d<value::int_u8> out = scribo::binarization::sauvola_threshold(input, w, k);
 
 
   io::pgm::save(out, argv[2]);

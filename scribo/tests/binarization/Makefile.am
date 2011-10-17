@@ -21,6 +21,7 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
+  niblack.res.pbm				\
   sauvola_ms.ref.pbm				\
   sauvola.ref.pbm				\
   otsu.ref.pbm
@@ -28,6 +29,7 @@ EXTRA_DIST = 					\
 check_PROGRAMS =				\
   global_threshold 				\
   local_threshold	 			\
+  niblack					\
   otsu						\
   sauvola 					\
   sauvola_ms
@@ -35,6 +37,7 @@ check_PROGRAMS =				\
 
 global_threshold_SOURCES = global_threshold.cc
 local_threshold_SOURCES = local_threshold.cc
+niblack_SOURCES = niblack.cc
 otsu_SOURCES = otsu.cc
 sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc

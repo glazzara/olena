@@ -46,6 +46,7 @@ if HAVE_MAGICKXX
    sauvola_ms_debug
 
   utilexec_PROGRAMS =                   \
+   niblack				\
    otsu					\
    sauvola 				\
    sauvola_ms                           \
@@ -58,6 +59,13 @@ if HAVE_MAGICKXX
 		  	      $(MAGICKXX_CPPFLAGS)
   global_threshold_LDFLAGS  = $(AM_LDFLAGS) 		\
 		              $(MAGICKXX_LDFLAGS)
+
+
+  niblack_SOURCES  = niblack.cc
+  niblack_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		     $(MAGICKXX_CPPFLAGS)
+  niblack_LDFLAGS  = $(AM_LDFLAGS) 		\
+		     $(MAGICKXX_LDFLAGS)
 
 
   otsu_SOURCES  = otsu.cc
@@ -80,7 +88,7 @@ if HAVE_MAGICKXX
 
   sauvola_debug_SOURCES  = sauvola_debug.cc
   sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	  \
-			   -DSCRIBO_SAUVOLA_DEBUG \
+			   -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			   $(MAGICKXX_CPPFLAGS)
   sauvola_debug_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
@@ -94,7 +102,7 @@ if HAVE_MAGICKXX
 
   sauvola_ms_debug_SOURCES  = sauvola_ms_debug.cc
   sauvola_ms_debug_CPPFLAGS = $(AM_CPPFLAGS) 		\
-			      -DSCRIBO_SAUVOLA_DEBUG 	\
+			      -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			      $(MAGICKXX_CPPFLAGS)
   sauvola_ms_debug_LDFLAGS  = $(AM_LDFLAGS) 		\
 		              $(MAGICKXX_LDFLAGS)
