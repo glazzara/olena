@@ -27,12 +27,8 @@
 # define SCRIBO_BINARIZATION_OTSU_HH
 
 # include <mln/core/concept/image.hh>
-# include <mln/util/array.hh>
-# include <mln/geom/nsites.hh>
-# include <mln/geom/ncols.hh>
-# include <mln/geom/nrows.hh>
-# include <mln/histo/compute.hh>
 
+# include <scribo/binarization/otsu_threshold.hh>
 # include <scribo/binarization/global_threshold.hh>
 
 namespace scribo
@@ -72,55 +68,7 @@ namespace scribo
       mlc_is_a(mln_value(I), value::Scalar)::check();
       // FIXME: Check that input value is gray level.
 
-      mln_value(I) maxval = mln_max(mln_value(I));
-      unsigned nsites = geom::nsites(input);
-
-      /* Histogram generation */
-      histo::array<mln_value(I)> hist = mln::histo::compute(input);
-
-
-      /* calculation of probability density */
-      util::array<double> pdf(hist.nvalues());  //probability distribution
-      for(int i = 0; i< maxval; ++i)
-	pdf[i] = (double)hist[i] / nsites;
-
-
-      util::array<double> cdf(hist.nvalues()); //cumulative probability distribution
-      util::array<double> myu(hist.nvalues()); // mean value for separation
-
-      /* cdf & myu generation */
-      cdf[0] = pdf[0];
-      myu[0] = 0.0;       /* 0.0 times prob[0] equals zero */
-
-      for(int i = 1; i < maxval; ++i)
-      {
-	cdf[i] = cdf[i-1] + pdf[i];
-	myu[i] = myu[i-1] + i*pdf[i];
-      }
-
-      /* sigma maximization
-	 sigma stands for inter-class variance
-	 and determines optimal threshold value */
-      int threshold = 0;
-      double max_sigma = 0.0;
-      util::array<double> sigma(hist.nvalues()); // inter-class variance
-
-      for(int i = 0; i < maxval - 1; ++i)
-      {
-	if(cdf[i] != 0.0 && cdf[i] != 1.0)
-	{
-	  double p1p2 = cdf[i] * (1.0 - cdf[i]);
-	  double mu1mu2diff = myu[maxval - 1] * cdf[i] - myu[i];
-	  sigma[i] = mu1mu2diff * mu1mu2diff / p1p2;
-	}
-	else
-	  sigma[i] = 0.0;
-	if(sigma[i] > max_sigma)
-	{
-	  max_sigma = sigma[i];
-	  threshold = i;
-	}
-      }
+      mln_value(I) threshold = otsu_threshold(input);
 
       // Computing final result.
       mln_ch_value(I,bool) output = global_threshold(input, threshold);

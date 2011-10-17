@@ -1,5 +1,13 @@
 2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move Otsu's threshold computation in a separate routine.
+
+	* scribo/binarization/otsu.hh,
+	* scribo/binarization/otsu_threshold.hh: Move threshold
+	computation in a separate routine.
+
+2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Niblack's binarization algorithm.
 
 	* scribo/binarization/all.hh: Update includes.
