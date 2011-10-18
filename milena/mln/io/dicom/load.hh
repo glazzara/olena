@@ -182,7 +182,7 @@ namespace mln
 	  ima(p) = v;
 	}
 
-	delete(dataBuffer);
+	delete[] dataBuffer;
 
 	trace::exiting("mln::io::dicom::load");
       }
