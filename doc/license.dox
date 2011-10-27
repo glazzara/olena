@@ -1,0 +1,15 @@
+/*! \page gplv2 "GNU General Public License (GPL)"
+
+Olena and its modules are Copyright (C) 2011 EPITA Research and
+Development Laboratory (LRDE).
+<br>Olena and its modules are released under GNU GPL v2.
+
+
+\section gplv2sec "The GNU General Public License (Version 2)"
+
+Reference : <a href="http://www.gnu.org/licenses/gpl.html">GNU General
+Public License</a>
+
+\verbinclude COPYING
+
+*/

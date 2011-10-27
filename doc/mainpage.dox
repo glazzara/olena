@@ -42,8 +42,8 @@
 	\li Online Resources
       </td>
       <td>
-	\li GNU GPL
-	\li Commercial Use
+	\li \ref gplv2 "GNU GPL"
+	\li \ref commercial "Commercial Use"
       </td>
       <td>&nbsp;</td>
     </tr>

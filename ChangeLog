@@ -1,5 +1,15 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add details about licensing.
+
+	* doc/Doxyfile.in
+	* doc/Makefile.am
+	* doc/license.dox
+	* doc/license_commercial.dox
+	* doc/mainpage.dox
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Do not warn if undocumented.
 
 2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -62,6 +62,8 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/olena.bib	  	\
 	      $(srcdir)/contributors.dox  	\
 	      $(srcdir)/bibliography.dox  	\
+	      $(srcdir)/license.dox 	 	\
+	      $(srcdir)/license_commercial.dox 	\
 	      contributors.html			\
 	      lrde_olena.html
 

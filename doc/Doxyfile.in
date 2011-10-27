@@ -100,7 +100,8 @@ EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
 EXAMPLE_PATH           = @top_srcdir@/doc/ 	\
-			 @builddir@
+			 @builddir@		\
+			 @top_srcdir@
 EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
 			 *.txt
