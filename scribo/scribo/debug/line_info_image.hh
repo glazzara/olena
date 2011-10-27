@@ -53,6 +53,10 @@ namespace scribo
     using namespace mln;
 
 
+    /*! \brief Draw typographic information from lines.
+
+      \ingroup grpalgodebug
+     */
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     line_info_image(const Image<I>& input, const line_set<L>& line);

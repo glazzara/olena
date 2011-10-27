@@ -53,6 +53,8 @@ namespace scribo
     /// \param[in] min_thinness the minimum thinness value.
     ///
     /// \result A binary image without h_thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -68,6 +70,8 @@ namespace scribo
     /// \param[in] min_thinness the minimum thinness value.
     ///
     /// \result An object image without too thin vertical components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline

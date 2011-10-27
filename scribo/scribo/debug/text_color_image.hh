@@ -49,6 +49,10 @@ namespace scribo
   {
     using namespace mln;
 
+    /*! \brief Draw text components with their respective colors.
+
+      \ingroup grpalgodebug
+     */
     template <typename L>
     image2d<value::rgb8>
     text_color_image(const document<L>& doc);

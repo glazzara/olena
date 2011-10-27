@@ -26,6 +26,10 @@
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
 
+/// \file
+///
+///
+
 # include <iostream>
 
 # include <mln/core/image/image2d.hh>
@@ -112,21 +116,24 @@ namespace scribo
 	This method handles skewed alignments and draw skew lines if
 	possible. Examples :
 
+	\verbatim
 	 |x              |x
 	 | x              \x
 	 |  x       ->     \x
 	 |   x              \x
+	\endverbatim
 
-
-	 \fixme Because the first link step at step 2.a check aligment
+	 \todo Because the first link step at step 2.a check aligment
 	between only 2 components and not the whole group, we may
 	retrieve alignment patterns such this one :
 
+	\verbatim
 	|x
 	| x
 	|  x
 	| x
 	|x
+	\endverbatim
 
 	Here, the 'x' are aligned pair by pair but globally they are
 	not. Here we cannot draw skewed lines without processing every
@@ -137,12 +144,13 @@ namespace scribo
 	with that line.  Here, we would like to split links/alignement
 	in two groups in order to get something like that :
 
+	\verbatim
 	 \x
 	  \x
 	   \x
 	  /x
 	 /x
-
+	 \endverbatim
 
 
 	\param[in] doc A document information with text lines.

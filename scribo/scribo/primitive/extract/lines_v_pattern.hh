@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Extract vertical lines matching a specific pattern.
+/// \brief Extract vertical lines matching a specific pattern.
 
 # include <cmath>
 
@@ -56,10 +56,12 @@ namespace scribo
       using namespace mln;
 
 
-      /// Extract vertical lines matching a specific pattern.
+      /// \brief Extract vertical lines matching a specific pattern.
       ///
       /// \param[in] input  A binary image.
       /// \param[in] length The minimum line length.
+      /// \param[in] delta space between the first background pixels
+      ///                  and the line pixels (usually 2 or 3).
       ///
       /// \result An image of vertical lines.
       //

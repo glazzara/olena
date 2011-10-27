@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,19 +61,20 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract canvas cells from a binary image.
+      /// \brief Extract canvas cells from a binary image.
       /// Use arbitrary criterions.
       ///
-      /// \param[in] input_      A binary image.
-      /// \param[in,out] ncells  Will store the number of cells found.
+      /// \param[in] input      A binary image.
+      /// \param[in] nbh      A neighborhood.
+      /// \param[in,out] label_type  Type of the labeled image.
       ///
       /// \return A list of cell bounding boxes.
       //
       template <typename I, typename N, typename V>
       mln::util::couple<mln::util::array<box<mln_site(I)> >,
 			mln::util::array<box<mln_site(I)> > >
-      cells(const Image<I>& input_,
-	    const Neighborhood<N>& nbh_, const V& label_type);
+      cells(const Image<I>& input,
+	    const Neighborhood<N>& nbh, const V& label_type);
 
 
 # ifndef MLN_INCLUDE_ONLY

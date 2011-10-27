@@ -55,13 +55,18 @@ namespace scribo
 
       \param[in] input An image.
       \param[in] enable_fg_bg Enable/Disable background removal.
+      \param[in] lambda Parameter to the background removal. Maximum
+                        area of foreground objects.
       \param[in] K Binarization threshold parameter. Use the same
-      value for all scales. (Default 0.34)
+                   value for all scales.(Default 0.34)
+      \param[in] enable_deskew Deskew document.
+      \param[in] verbose Enable/Disable debug output on std::cout.
 
       If \p enable_fg_bg is set to 'True' then a background removal is
       performed. Its parameter lambda is automatically set according
       to the input image size.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
@@ -71,6 +76,8 @@ namespace scribo
 
     /*! \overload
       K is set to 0.34.
+
+      \ingroup grptoolchaindocpreproc
     */
     template <typename I>
     mln_ch_value(I,bool)
@@ -82,11 +89,14 @@ namespace scribo
 
       \param[in] input An image.
       \param[in] lambda Parameter to the background removal.
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
 
       If lambda is set to '0' no background removal is
       performed. Otherwise, a background removal is performed with the
       given \p lambda value.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
@@ -102,12 +112,18 @@ namespace scribo
       \param[in] k2 Binarization threshold parameter for scale 2. (Default 0.34)
       \param[in] k3 Binarization threshold parameter for scale 3. (Default 0.34)
       \param[in] k4 Binarization threshold parameter for scale 4. (Default 0.34)
+      \param[in] enable_fg_bg If set to True tries to identify
+                              background components and remove them.
       \param[in,out] fg The foreground layer of \p input.
+      \param[in] enable_deskew Deskew document.
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
 
       If lambda is set to '0' no background removal is
       performed. Otherwise, a background removal is performed with the
       given \p lambda value.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
@@ -115,6 +131,10 @@ namespace scribo
 			   double k2, double k3, double k4, bool enable_fg_bg,
 			   Image<I>& fg, bool enable_deskew, bool verbose);
 
+    /*! \overload
+
+      \ingroup grptoolchaindocpreproc
+    */
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,

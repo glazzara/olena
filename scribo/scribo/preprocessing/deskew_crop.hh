@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,16 +41,14 @@ namespace scribo
 
     /*! \brief Deskew a region of interest.
 
-      \param[in] input_bin  A binary image.
-      \param[in] input_gray A gray-level image.
+      \param[in] crop_gl  A gray-level image.
+      \param[in] input_gl A gray-level image.
 
       \return A deskewed binary image.
 
-
-
       Handles skew angles from -25 to +25 degrees.
 
-      \p input_bin and \p input_gray must be 2D images and must be
+      \p crop_gl and \p input_gl must be 2D images and must be
       identical (e.g. only the value differs).
 
       This algorithm is designed for images created from a region of
@@ -58,7 +57,7 @@ namespace scribo
      */
     template <typename I, typename J>
     mln_concrete(I)
-    deskew(const Image<I>& crop_gl_, const Image<I>& input_gl_);
+    deskew(const Image<I>& crop_gl, const Image<I>& input_gl);
 
 # ifndef MLN_INCLUDE_ONLY
 

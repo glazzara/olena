@@ -28,7 +28,7 @@
 
 /*! \brief try to determine the type of a component.
 
-\fixme Write it and add support for component type (graphic, images,
+\todo Write it and add support for component type (graphic, images,
 ...)
  */
 

@@ -46,12 +46,13 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-      \input[in]  K           Sauvola's formulae constant.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
+      \param[in]  K           Sauvola's formulae constant.
 
       \return A binary image.
 
+      \ingroup grpalgobinsauvola
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -61,22 +62,27 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
+      \overload
+
       Sauvola's formulae constant K is set to 0.34.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
 
       \return A binary image.
 
+      \ingroup grpalgobinsauvola
      */
     template <typename I>
     mln_ch_value(I, bool)
     sauvola(const Image<I>& input, unsigned window_size);
 
 
-    /// \overload
-    /// The window size is set to 11.
-    //
+    /*! \overload
+      The window size is set to 11.
+
+      \ingroup grpalgobinsauvola
+    */
     template <typename I>
     mln_ch_value(I, bool)
     sauvola(const Image<I>& input);

@@ -29,6 +29,7 @@
 
 /// \file
 ///
+/// \brief Invalidates groups with too much thin and high components.
 
 
 # include <mln/util/array.hh>
@@ -44,6 +45,21 @@ namespace scribo
 
     using namespace mln;
 
+    /*! \brief Invalidates groups with too much thin and high
+        components.
+
+	For each components in the group, it computes the height/width
+	ratio. If it is higher or equal to \p max_size_ratio, the
+	component is counted as invalid.
+
+	If there are \p max_invalid_ratio_per_group invalid
+	components, the group is invalidated.
+
+	\return An object_group structure potentially with invalided
+	groups.
+
+      \ingroup grpalgofiltercompgroup
+     */
     template <typename L>
     object_groups<L>
     object_groups_size_ratio(const object_groups<L>& groups,

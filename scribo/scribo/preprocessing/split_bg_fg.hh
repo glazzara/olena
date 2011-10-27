@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,7 @@
 
 /// \file
 ///
-/// Split the background and the foreground.
+/// \brief Split the background and the foreground.
 
 # include <mln/core/macros.hh>
 # include <mln/core/image/image2d.hh>
@@ -89,7 +89,7 @@ namespace scribo
      */
     template <typename I>
     mln::util::couple<mln_concrete(I), mln_concrete(I)>
-    split_bg_fg(const Image<I>& input_, unsigned lambda, unsigned delta);
+    split_bg_fg(const Image<I>& input, unsigned lambda, unsigned delta);
 
 
 

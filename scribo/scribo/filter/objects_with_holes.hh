@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,8 +81,17 @@ namespace scribo
 
     /*! \brief Remove components having a minimum number of holes.
 
+      \param[in] components A component set.
+      \param[in] min_holes_count If a component have at least \p
+                                 min_holes_count holes it is
+                                 invalidated.
+      \param[in] min_size The minimum hole area to take a hole into
+                          account.
 
+      \return A component where the component having too much holes
+	      are invalidated.
 
+      \ingroup grpalgofiltercomp
      */
     template <typename L>
     component_set<L>
@@ -90,7 +99,20 @@ namespace scribo
 		       unsigned min_holes_count,
 		       unsigned min_size);
 
+    /*! \brief Remove components having at least two holes.
 
+      This is a fastest version since it is optimized for 2 holes
+      detection.
+
+      \param[in] components A component set.
+      \param[in] min_size The minimum hole area to take a hole into
+                          account.
+
+      \return A component where the component having at least two
+	      holes are invalidated.
+
+      \ingroup grpalgofiltercomp
+     */
     template <typename L>
     inline
     component_set<L>

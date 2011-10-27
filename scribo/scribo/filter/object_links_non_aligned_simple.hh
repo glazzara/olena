@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two non aligned components.
+/// \brief Invalidate links between two non aligned components.
 
 
 # include <mln/util/array.hh>
@@ -52,6 +52,7 @@ namespace scribo
 	Alignment is based on a given anchor of object bounding boxes.
 
 	\param[in] links        Object links information.
+	\param[in] anchor       Anchor from where the links are made.
         \param[in] max_alpha    Maximum angle value (degrees).
 
 
@@ -79,6 +80,7 @@ namespace scribo
 
 	The angle between the two bottoms must be lower than \p alpha.
 
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

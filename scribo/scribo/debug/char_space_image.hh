@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,6 +54,8 @@ namespace scribo
 
 
     /// \brief Draw inter character space.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,6 +60,7 @@ namespace scribo
 
     /*! \brief Compute an image including detected text areas only.
 
+      \ingroup grpalgodebug
      */
     template <typename I, typename L>
     mln_concrete(I)

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -52,22 +52,22 @@ namespace scribo
 
     /*! \brief Compute an image of local threshold using Sauvola algorithm.
 
-      \input[in]  input       A gray level image.
-      \input[in]  window_size The window size.
-      \input[out] simple      The sum of all intensities of \p input.
-      \input[out] squared     The sum of all squared intensities of \p
-                              input.
+      \param[in]  input       A gray level image.
+      \param[in]  window_size The window size.
+      \param[in] K Controls the threshold value in the local window.
 
       \return An image of local thresholds.
 
+      \ingroup grpalgobinsauvola
      */
     template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
     sauvola_threshold(const Image<I>& input, unsigned window_size,
-			    double K);
+		      double K);
 
     /// \overload
     /// K is set to 0.34
+    /// \ingroup grpalgobinsauvola
     template <typename I>
     mln_ch_value(I, value::int_u8)
     sauvola_threshold(const Image<I>& input, unsigned window_size);
@@ -75,6 +75,7 @@ namespace scribo
 
     /// \overload
     /// The window size is set to 11.
+    /// \ingroup grpalgobinsauvola
     //
     template <typename I>
     mln_ch_value(I, value::int_u8)

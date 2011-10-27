@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Save a color image showing the difference between to object groups.
+/// \brief Save a color image showing the difference between to object groups.
 
 # include <mln/core/concept/image.hh>
 # include <mln/data/convert.hh>
@@ -49,7 +49,11 @@ namespace scribo
 
     using namespace mln;
 
-    /// FIXME: DOC!
+    /*! \brief Save a color image showing the difference between to
+        object groups.
+
+      \ingroup grpalgodebug
+     */
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     links_decision_image(const Image<I>& input_,

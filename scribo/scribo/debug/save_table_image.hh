@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Save table line bounding boxes in an image.
+/// \brief Save table line bounding boxes in an image.
 
 # include <string>
 
@@ -54,6 +54,9 @@ namespace scribo
 
     /// Save lines bounding boxes in a copy of \p input_.
     /// Bounding boxes are displayed with \p bbox_color.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I>
     void
     save_table_image(const Image<I>& input_,
@@ -65,6 +68,9 @@ namespace scribo
     /// Save lines bounding boxes in an image defined on \p input_domain
     /// filled with \p bg_color.
     /// Bounding boxes are displayed with \p bbox_color.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename S>
     void
     save_table_image(const Site_Set<S>& input_domain,

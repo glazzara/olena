@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,15 +55,16 @@ namespace scribo
 
     /*! \brief Show the difference between two object images.
 
-      \param[in] lbl      A component set.
-      \param[in] lbl_2    Another component set.
+      \param[in] comps_ref   A component set.
+      \param[in] comps_new   Another component set.
       \param[in] filename The output filename.
 
+      \ingroup grpalgodebug
     */
     template <typename L, typename L2>
     void
-    save_comp_diff(const component_set<L>& cset_1,
-		   const component_set<L2>& cset_2,
+    save_comp_diff(const component_set<L>& comps_ref,
+		   const component_set<L2>& comps_new,
 		   const std::string& filename);
 
 
@@ -72,22 +73,26 @@ namespace scribo
 
   template <typename L, typename L2>
   void
-  save_comp_diff(const component_set<L>& cset_1,
-		 const component_set<L2>& cset_2,
+  save_comp_diff(const component_set<L>& comps_ref,
+		 const component_set<L2>& comps_new,
 		 const std::string& filename)
   {
     trace::entering("scribo::debug::save_comp_diff");
 
     image2d<value::rgb8> output;
-    initialize(output, cset_1.labeled_image());
+    initialize(output, comps_ref.labeled_image());
 
     data::fill(output, literal::black);
 
-    for_all_comps(i, cset_1)
-      data::fill(((output | cset_1(i).bbox()).rw() | (pw::value(cset_1.labeled_image()) == i)).rw(), literal::red);
+    for_all_comps(i, comps_ref)
+      data::fill(((output | comps_ref(i).bbox()).rw()
+		  | (pw::value(comps_ref.labeled_image()) == i)).rw(),
+		 literal::red);
 
-    for_all_comps(i, cset_2)
-      data::fill(((output | cset_2(i).bbox()).rw() | (pw::value(cset_2.labeled_image()) == i)).rw(), literal::green);
+    for_all_comps(i, comps_new)
+      data::fill(((output | comps_new(i).bbox()).rw()
+		  | (pw::value(comps_new.labeled_image()) == i)).rw(),
+		 literal::green);
 
     io::ppm::save(output, filename);
 

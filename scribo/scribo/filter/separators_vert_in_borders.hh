@@ -28,8 +28,9 @@
 
 /// \file
 ///
-/// Invalidate false positive separators.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate vertical separators located close to the image
+/// borders.
+///  \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -47,7 +48,8 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate separators located close to the image borders.
+    /// \brief Invalidate vertical separators located close to the image
+    /// borders.
     ///
     /// \param[in,out] doc A document structure.
     ///
@@ -67,6 +69,8 @@ namespace scribo
     ///  -----------
     ///
     /// \endverbatim
+    ///
+    /// \ingroup grpalgofilterelt
     //
     template <typename L>
     void

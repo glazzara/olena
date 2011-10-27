@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Fast Extraction of single horizontal thick lines.
+/// \brief Fast Extraction of single horizontal thick lines.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -50,16 +50,16 @@ namespace scribo
 
       using namespace mln;
 
-      /// Fast Extraction of single horizontal thick lines.
-      /*!
+      /*! \brief Fast Extraction of single horizontal thick lines.
+       *
        * Only single non discontinued lines are correctly extracted
        * with this routine.
        *
-       * \param[in]     input_	    A binary image.
-       * \param[in]     nbh_	    The neighborhood used for labeling image
+       * \param[in]     input	    A binary image.
+       * \param[in]     nbh	    The neighborhood used for labeling image
        *			    components.
        * \param[in,out] nlines	    Type used for labeling.
-       * \param[in]     line_length The minimum line length.
+       * \param[in]     min_line_length The minimum line length.
        * \param[in]     w_h_ratio   The minimum ratio width/height object
        *                            bounding boxes to consider an
        *                            object as a single line.
@@ -75,13 +75,13 @@ namespace scribo
 		     float w_h_ratio);
 
 
-      /// Fast Extraction of single horizontal thick lines.
-      /*!
+      /*! \brief Fast Extraction of single horizontal thick lines.
+       *
        * Only single non discontinued lines are correctly extracted
        * with this routine.
        *
        * \param[in]     components     A labeled image.
-       * \param[in]     line_length The minimum line length.
+       * \param[in]     min_line_length The minimum line length.
        * \param[in]     w_h_ratio   The minimum ratio width/height object
        *                            bounding boxes to consider an
        *                            object as a single line.

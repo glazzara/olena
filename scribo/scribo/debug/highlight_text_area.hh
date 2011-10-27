@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,10 +63,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const mln::util::array<box<mln_site(I)> >& bbox);
 
 
@@ -76,10 +78,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const line_set<L>& lines);
 
     /*! \brief Darken an image and highlight valid lines.
@@ -92,10 +95,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const scribo::component_set<L>& components);
 
 

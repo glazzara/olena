@@ -28,8 +28,8 @@
 
 /// \file
 ///
-/// Invalidate false positive paragraphs.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate false positive paragraphs.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -46,7 +46,7 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate paragraphs located close to the image borders.
+    /// \brief Invalidate paragraphs located close to the image borders.
     ///
     /// \param[in,out] doc A document structure.
     ///
@@ -66,6 +66,8 @@ namespace scribo
     ///  -----------
     ///
     /// \endverbatim
+    ///
+    /// \ingroup grpalgofilterpar
     //
     template <typename L>
     void

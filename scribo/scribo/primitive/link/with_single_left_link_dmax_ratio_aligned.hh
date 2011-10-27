@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Link text objects with their left neighbor according to a maximum
-/// distance.
+/// \brief Link text objects with their left neighbor according to a
+/// maximum distance.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -67,6 +67,10 @@ namespace scribo
 	  \param[in] components A component set.
 	  \param[in] dmax_ratio Size ratio defining the maximum lookup
 	                        distance.
+	  \param[in] min_angle Minimum difference allowed for
+	                       alignement angle.
+	  \param[in] max_angle Maximum difference allowed for
+	                       alignement angle.
 	  \param[in] anchor Starting point for the neighbor lookup.
 
 	  \return Object links data.
@@ -90,6 +94,7 @@ namespace scribo
 
       /// \overload
       /// anchor is set to MassCenter.
+      //
       template <typename L>
       inline
       object_links<L>
@@ -102,6 +107,7 @@ namespace scribo
       /// \overload
       /// dmax_ratio is set to 3.
       /// anchor is set to MassCenter.
+      //
       template <typename L>
       inline
       object_links<L>

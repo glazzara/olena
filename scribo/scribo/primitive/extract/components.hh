@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Extract components in a binary image.
+/// \brief Extract components in a binary image.
 
 
 # include <mln/core/concept/neighborhood.hh>
@@ -63,10 +63,10 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract components in a binary image.
+      /// \brief Extract components in a binary image.
       ///
-      /// \param[in]	 input	  A binary image. Components are must be set
-      ///                         to 'true'
+      /// \param[in]	 input	  A RGB image.
+      /// \param[in] binary_input A binary image. Components must be set to 'True'.
       ///			  and background to 'false'.
       /// \param[in]	 nbh	  A neighborhood to be used for labeling.
       /// \param[in,out] ncomponents Will store the numbers of components found.

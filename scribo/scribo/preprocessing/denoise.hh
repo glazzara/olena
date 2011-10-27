@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,10 +49,12 @@ namespace scribo
     /// \param[in] input    A binary image. True for objects, False for
     ///                     background.
     /// \param[in] nbh      Neighborhood to use for denoising.
-    /// \param[in] min_card Minimum component cardinality to not be
-    ///                     considered as noise.
+    /// \param[in] fg_min_card Minimum component cardinality to not be
+    ///                        considered as noise in the foreground.
+    /// \param[in] bg_min_card Minimum component cardinality to not be
+    ///                        considered as noise in the foreground.
     ///
-    /// \output A binary image with the same domain as \p input. All
+    /// \return A binary image with the same domain as \p input. All
     /// small components have been removed.
     //
     template <typename I, typename N>

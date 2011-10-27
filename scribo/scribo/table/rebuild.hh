@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Rebuild a table from its line bounding boxes.
+/// \brief Rebuild a table from its line bounding boxes.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/neighb2d.hh>
@@ -57,11 +57,13 @@ namespace scribo
   {
 
 
-    /// Rebuild a table from its line bounding boxes.
-    /*!
-    ** \param[in] input_	  A binary image.
-    ** \param[in] linebboxes_	  A couple of vertical and horizontal
-    **				  line bounding boxes.
+    /*! \brief Rebuild a table from its line bounding boxes.
+    **
+    ** \param[in] input	          A binary image.
+    ** \param[in] vlines Component set corresponding to vertical
+    **                   lines.
+    ** \param[in] hlines Component set corresponding to horizontal
+    **                   lines.
     ** \param[in] max_dist_lines  The maximum distance allowed between
     **				  vertical and horizontal lines to connect
     **				  them eachother.
@@ -76,7 +78,7 @@ namespace scribo
     mln::util::couple<L,
 		      mln::util::couple<component_set<L>,
 					component_set<L> > >
-    rebuild(const Image<I>& input_,
+    rebuild(const Image<I>& input,
 	    const component_set<L>& vlines,
 	    const component_set<L>& hlines,
 	    unsigned max_dist_lines,

@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Extract line of text bounding boxes.
+/// \brief Extract line of text bounding boxes.
 
 
 # include <mln/core/concept/image.hh>
@@ -62,17 +62,17 @@ namespace scribo
 
     using namespace mln;
 
-    /// Extract lines of text in a binary image.
+    /// \brief Extract lines of text in a binary image.
     /*!
     ** \param[in]     input  A binary image.
     ** \param[in]     nbh    A neighborhood used for labeling.
-    ** \param[in]     seps   A binary image with separator information.
+    ** \param[in]     separators A binary image with separator information.
     **
     ** \return A set of lines.
     */
     template <typename I, typename N>
     line_set<mln_ch_value(I,scribo::def::lbl_type)>
-    extract_lines_wo_merge(const Image<I>& input_, const Neighborhood<N>& nbh_,
+    extract_lines_wo_merge(const Image<I>& input, const Neighborhood<N>& nbh,
 			   const mln_ch_value(I,bool)& separators);
 
     /// \overload

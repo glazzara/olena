@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Save a labeled image in a color image.
+/// \brief Save a labeled image in a color image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/labeling/colorize.hh>
@@ -43,11 +44,13 @@ namespace scribo
 
     using namespace mln;
 
-    /// Save a labeled image in a color image.
+    /// \brief Save a labeled image in a color image.
     ///
     /// \param[in] lbl A label image.
     /// \param[in] nlabels The number of labels.
     /// \param[in] filename The output file name.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I>
     void

@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove small objects groups.
+/// \brief Invalidate groups with few components.
 
 
 # include <mln/util/array.hh>
@@ -45,14 +45,15 @@ namespace scribo
     using namespace mln;
 
 
-    /*!  \brief Remove objects within a group with less than \p n
-      links.
+    /*!  \brief Invalidate groups with few components.
 
       \param[in] groups Information about object groups.
       \param[in] n_links The minimum number of links per group.
 
       \return A copy of object group in which small groups have been
-      removed.
+      invalidated.
+
+      \ingroup grpalgofiltercompgroup
     */
     template <typename L>
     object_groups<L>

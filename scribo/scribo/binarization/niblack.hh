@@ -46,12 +46,13 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-      \input[in]  K           Sauvola's formulae constant.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
+      \param[in]  K           Niblack's formulae constant.
 
       \return A binary image.
 
+      \ingroup grpalgobinniblack
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -64,11 +65,12 @@ namespace scribo
       Sauvola's formulae constant K is set to
       SCRIBO_DEFAULT_NIBLACK_K.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
 
       \return A binary image.
 
+      \ingroup grpalgobinniblack
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -77,6 +79,7 @@ namespace scribo
 
     /// \overload
     /// The window size is set to 11.
+    /// \ingroup grpalgobinniblack
     //
     template <typename I>
     mln_ch_value(I, bool)

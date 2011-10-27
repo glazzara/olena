@@ -48,6 +48,8 @@ namespace scribo
 
       \return A binary image. True for foreground, False for
       background.
+
+      \ingroup grpalgobinotsu
      */
     template <typename I>
     mln_ch_value(I,bool)

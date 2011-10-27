@@ -28,8 +28,8 @@
 
 /// \file
 ///
-/// Remove invalid paragraphs.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Remove invalid paragraphs.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -52,12 +52,15 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove invalid paragraphs.
+    /// \brief Remove invalid paragraphs.
     ///
-    /// \param[in] paragraphs    A paragraph set.
+    /// \param[in] parset    A paragraph set.
     ///
     /// \return A paragraph set with invalid paragraphs tag set to
     /// Paragraph::Ignored.
+    ///
+    /// \ingroup grpalgofilterpar
+    //
     template <typename L>
     paragraph_set<L>
     paragraphs_bbox_overlap(const paragraph_set<L>& parset);

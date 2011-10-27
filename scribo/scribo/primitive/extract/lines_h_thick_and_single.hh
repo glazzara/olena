@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Extract horizontal thick lines in a binary image.
+/// \brief Extract horizontal thick lines in a binary image.
 
 
 # include <mln/core/concept/image.hh>
@@ -56,18 +56,19 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract horizontal thick lines in a binary image.
-      /*!
+
+      /*! \brief Extract horizontal thick lines in a binary image.
+       *
        * Only non discontinued lines are correctly extracted with this
        * routine.  Only lines matching the given criterions are kept
        * in the result.
        *
-       * \param[in]     input_	  A binary image.
-       * \param[in]     nbh_	  The neighborhood used for labeling image
+       * \param[in]     input	  A binary image.
+       * \param[in]     nbh	  The neighborhood used for labeling image
        *				  components.
        * \param[in,out] nlines	  Type used for labeling.
-       * \param[in]     line_length The minimum line length.
-       * \param[in]     w_h_ratio   The minimum ratio width/height object
+       * \param[in]     min_line_length The minimum line length.
+       * \param[in]     h_w_ratio   The minimum ratio width/height object
        *                            bounding boxes to consider an
        *                            object as a single line.
        *
@@ -75,8 +76,8 @@ namespace scribo
        */
       template <typename I, typename N, typename V>
       component_set<mln_ch_value(I,V)>
-      lines_h_thick_and_single(const Image<I>& input_,
-			       const Neighborhood<N>& nbh_,
+      lines_h_thick_and_single(const Image<I>& input,
+			       const Neighborhood<N>& nbh,
 			       V& nlines,
 			       unsigned min_line_length,
 			       float h_w_ratio);

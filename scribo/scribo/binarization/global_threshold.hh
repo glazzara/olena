@@ -55,8 +55,8 @@ namespace scribo
     ///
     /// output(p) = input(p) >= threshold
     ///
-    /// \input[in] input A grayscale image.
-    /// \input[in] threshold A value.
+    /// \param[in] input A grayscale image.
+    /// \param[in] threshold A value.
     ///
     /// \return A boolean image.
     //

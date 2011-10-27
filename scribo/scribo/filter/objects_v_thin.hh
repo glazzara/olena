@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too thin components.
+/// \brief Remove too thin components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -46,34 +46,39 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components thinner or equal to \p min_thinness.
+    /// \brief Remove components thinner or equal to \p min_thinness.
     ///
-    /// \param[in] input_ a binary image.
-    /// \param[in] nbh_ a neighborhood used in labeling algorithms.
+    /// \param[in] input a binary image.
+    /// \param[in] nbh a neighborhood used in labeling algorithms.
     /// \param[in] label_type the label type used for labeling.
     /// \param[in] min_thinness the minimum thinness value.
     ///
     /// \result A binary image without v_thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    objects_v_thin(const Image<I>& input_,
-		   const Neighborhood<N>& nbh_,
+    objects_v_thin(const Image<I>& input,
+		   const Neighborhood<N>& nbh,
 		   const V& label_type,
 		   unsigned min_thinness);
 
-    /// Remove lines of text thinner or equal to \p min_thinness.
+    /// \brief Remove lines of text thinner or equal to \p
+    /// min_thinness.
     ///
     /// \param[in] comps A component set.
     /// \param[in] min_thinness the minimum thinness value.
     ///
     /// \result An object image without too thin vertical components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline
     component_set<L>
-    components_v_thin(const component_set<L>& text,
+    components_v_thin(const component_set<L>& comps,
 		      unsigned min_thinness);
 
 

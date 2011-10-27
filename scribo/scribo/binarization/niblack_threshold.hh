@@ -51,14 +51,16 @@ namespace scribo
 
     /*! \brief Compute an image of local threshold using Niblack algorithm.
 
-      \input[in]  input       A gray level image.
-      \input[in]  window_size The window size.
-      \input[out] simple      The sum of all intensities of \p input.
-      \input[out] squared     The sum of all squared intensities of \p
+      \param[in]  input       A gray level image.
+      \param[in]  window_size The window size.
+      \param[in] K Controls the threshold value in the local window.
+      \param[out] simple      The sum of all intensities of \p input.
+      \param[out] squared     The sum of all squared intensities of \p
                               input.
 
       \return An image of local thresholds.
 
+      \ingroup grpalgobinniblack
      */
     template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
@@ -67,6 +69,8 @@ namespace scribo
 
     /// \overload
     /// K is set to 0.34
+    /// \ingroup grpalgobinniblack
+    //
     template <typename I>
     mln_ch_value(I, value::int_u8)
     niblack_threshold(const Image<I>& input, unsigned window_size);
@@ -74,6 +78,7 @@ namespace scribo
 
     /// \overload
     /// The window size is set to 11.
+    /// \ingroup grpalgobinniblack
     //
     template <typename I>
     mln_ch_value(I, value::int_u8)

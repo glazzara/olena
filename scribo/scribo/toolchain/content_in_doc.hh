@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Analyse a document.
+/// \brief Analyse and extract document image content.
 
 # include <scribo/toolchain/internal/content_in_doc_functor.hh>
 
@@ -41,6 +41,27 @@ namespace scribo
     using namespace mln;
 
 
+    /*! \brief Analyse and extract document image content.
+
+      \input[in] input A RGB image.
+      \input[in] input_preproc A Binary image.
+      \param[in] denoise Remove too small components (<= 2 pixels).
+      \param[in] find_line_seps Enable/Disable lookup for
+                                vertical/horizontal separators.
+      \param[in] find_whitespace_seps Enable/Disable lookup for
+                                      vertical alignments and
+                                      whitespaces. Helps finding text
+                                      layout.
+      \param[in] enable_ocr Enable/Disable text recognition.
+      \param[in] language Main language used in the input
+                          document. (OCR settings)
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
+
+      \return A document structure.
+
+      \ingroup grptoolchaindocproc
+     */
     template <typename I, typename J>
     document<mln_ch_value(I, def::lbl_type)>
     content_in_doc(const Image<I>& input, const Image<J>& input_preproc,

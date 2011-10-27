@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Link components with their right neighbor.
+/// \brief Link components with their right neighbor.
 
 
 # include <mln/core/concept/image.hh>
@@ -64,7 +64,10 @@ namespace scribo
       /// Lookup startup point is the object mass center.
       ///
       /// \param[in] components An object image.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
+      /// \param[in] neighb_max_distance The maximum distance allowed
+      ///                                to seach a neighbor object.
+      /// \param[in] anchor Anchor from where the neighbor lookup is
+      ///                   performed.
       ///
       /// \return Object links data.
       //
@@ -78,6 +81,7 @@ namespace scribo
 
       /// \overload
       /// Max distance is set to mln_max(unsigned).
+      //
       template <typename L>
       inline
       object_links<L>

@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Invalidate links between two components if their not aligned
+/// \brief Invalidate links between two components if their not aligned
 /// according to an anchor.
 
 # include <scribo/core/macros.hh>
@@ -44,7 +44,8 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two components according to a specific anchor.
+    /*! \brief Invalidate links between two components according to a
+        specific anchor.
 
 	\param[in] links        Object links information.
         \param[in] max_alpha    Maximum angle value (degrees).
@@ -74,6 +75,7 @@ namespace scribo
 	Example with an anchor set to the bottom right :
 	The angle between the two bottoms must be lower than \p max_alpha.
 
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

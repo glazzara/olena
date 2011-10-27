@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,6 +71,8 @@ namespace scribo
     ///                           a text line.
     ///
     /// \return A color image.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -81,6 +84,9 @@ namespace scribo
     /// \overload
     /// text_value is set to literal::green.
     /// non_text_value is set to literal::red.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     bboxes_enlarged_image(const Image<I>& input,

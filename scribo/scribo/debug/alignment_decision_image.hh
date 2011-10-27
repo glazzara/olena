@@ -55,18 +55,21 @@ namespace scribo
     /*! \brief Save a color image showing the difference between to
         object links.
 
-	\input[in] input An image. It's value type must be convertible
+	\param[in] input An image. It's value type must be convertible
                          towards rgb8.
-	\input[in] links          Object links information.
-	\input[in] filtered_links A copy of \p links which have been
+	\param[in] links          Object links information.
+	\param[in] filtered_links A copy of \p links which have been
 	                           filtered.
+	\param[in] anchor Anchor from where the links are drawn.
 
 	\return A color image. Non filtered links are drawn in
 	        green. Others are drawn in red.
-     */
+
+	\ingroup grpalgodebug
+    */
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
-    alignment_decision_image(const Image<I>& input_,
+    alignment_decision_image(const Image<I>& input,
 			     const object_links<L>& links,
 			     const object_links<L>& filtered_links,
 			     const anchor::Type& anchor);

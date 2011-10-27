@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -67,6 +67,8 @@ namespace scribo
       original size.
 
       \return A Boolean image.
+
+      \ingroup grpalgobinsauvola
     */
     template <typename I>
     mln_ch_value(I, bool)
@@ -84,6 +86,9 @@ namespace scribo
 
     /// \overload
     /// k2, k3 and k4 are set to 0.34.
+    ///
+    /// \ingroup grpalgobinsauvola
+    //
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,

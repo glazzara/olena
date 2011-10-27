@@ -49,6 +49,7 @@ DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
 INLINE_GROUPED_CLASSES = NO
 SORT_GROUP_NAMES       = YES
+TYPEDEF_HIDES_STRUCT   = YES
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
@@ -85,7 +86,7 @@ FILE_VERSION_FILTER    =
 #---------------------------------------------------------------------------
 QUIET                  = YES
 WARNINGS               = YES
-WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_UNDOCUMENTED   = NO
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO
 WARN_FORMAT            = "$file:$line: $text"
@@ -107,7 +108,7 @@ EXCLUDE                = @top_srcdir@/scribo/demo			\
                          @top_srcdir@/scribo/tests/unit_test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
-EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
+EXCLUDE_SYMBOLS	       = *_ mln::trait::*
 EXAMPLE_PATH           = @top_srcdir@/scribo/doc/examples	    \
 			 @top_srcdir@/scribo/doc/outputs	    \
 			 @top_srcdir@/scribo/doc/examples/split	    \
@@ -260,7 +261,6 @@ PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
                          "mln_trait_op_plus(L, R)=typename mln::trait::op::plus< L , R >::ret" \
                          "mln_trait_op_times(L, R)=typename mln::trait::op::times< L , R >::ret" \
                          "mln_trait_op_uminus(T)=typename mln::trait::op::uminus< T >::ret" \
-			 "mln_ch_value(I, V)=typename mln::trait::ch_value< I, V >::ret" \
 			 "mlc_unqualif_(T)=mln::metal::unqualif<T>::ret" \
                          "mln_piter_(T)=T::piter" \
                          "mln_fwd_piter_(T)=T::fwd_piter" \
@@ -295,8 +295,8 @@ PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
                          "mln_trait_op_div_(L, R)=mln::trait::op::div< L , R >::ret" \
                          "mln_trait_op_mod_(L, R)=mln::trait::op::mod< L , R >::ret" \
                          "mln_trait_op_uminus_(T)=mln::trait::op::uminus< T >::ret" \
-			 "mln_ch_value_(I, V)=typename mln::trait::ch_value< I, V >::ret" \
-			 "mln_ch_value(I, V)_=mln::trait::ch_value< I, V >::ret" \
+			 "mln_ch_value_(I, V)=mln::trait::ch_value< I, V >::ret" \
+			 "mln_ch_value(I, V)=typename mln::trait::ch_value< I, V >::ret" \
 			 "mln_morpher_lvalue(I)=typename internal::morpher_lvalue_<I>::ret" \
 			 "mln_concrete(I)=typename mln::trait::concrete< I >::ret" \
 			 "mln_concrete_ch_value(I, V)=typename mln::trait::ch_value< typename mln::trait::concrete< I >::ret, V >::ret" \

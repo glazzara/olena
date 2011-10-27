@@ -100,11 +100,13 @@ namespace scribo
       \param[out] integral_sum_sum_2 Integral image of sum and squared
                                      sum.
 
-      Sauvola's formula parameter K is set to 0.34.
-      \p w_1 and \p lambda_min_1 are expressed according to the image
-      at scale 0, i.e. the original size.
+      Sauvola's formula parameter K is set to 0.34.  \p w_1 and \p
+      lambda_min_1 are expressed according to the image at scale 0,
+      i.e. the original size.
 
       \return A Boolean image.
+
+      \ingroup grpalgobinsauvola
      */
     template <typename I>
     mln_ch_value(I,bool)
@@ -115,6 +117,8 @@ namespace scribo
     /// \overload
     /// The integral image is not returned.
     /// K is set to 0.34.
+    ///
+    /// \ingroup grpalgobinsauvola
     //
     template <typename I>
     mln_ch_value(I,bool)

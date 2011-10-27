@@ -55,6 +55,7 @@ namespace scribo
 
       \return Filtered object group information.
 
+      \ingroup grpalgofiltercompgroup
      */
     template <typename L>
     object_groups<L>

@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different height or
-/// width.
+/// \brief Invalidate links between two objects with too different
+/// height or width.
 
 
 # include <mln/util/array.hh>
@@ -56,6 +56,8 @@ namespace scribo
 	                     bounding boxes.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two components if their bottom are not
-/// aligned.
+/// \brief Invalidate links between two components if their bottom are
+/// not aligned.
 
 
 # include <mln/util/array.hh>
@@ -77,6 +77,7 @@ namespace scribo
 
 	The angle between the two bottoms must be lower than \p max_alpha.
 
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

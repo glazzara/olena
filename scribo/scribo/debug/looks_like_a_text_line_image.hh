@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,8 @@
 
 /// \file
 ///
-/// Compute an image where components are drawn differently whether
-/// they look like a line or not.
+/// \brief Compute an image where components are drawn differently
+/// whether they look like a line or not.
 
 
 # include <mln/core/concept/image.hh>
@@ -64,6 +65,8 @@ namespace scribo
     ///                           a text line.
     ///
     /// \return A color image.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -75,6 +78,9 @@ namespace scribo
     /// \overload
     /// text_value is set to literal::green.
     /// non_text_value is set to literal::red.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     looks_like_a_text_line_image(const Image<I>& input,

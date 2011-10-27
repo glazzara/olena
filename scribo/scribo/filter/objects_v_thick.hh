@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too verticaly thick components.
+/// \brief Remove too verticaly thick components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -46,7 +46,8 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components verticaly thicker or equal to \p max_thickness.
+    /// \brief Remove components verticaly thicker or equal to \p
+    /// max_thickness.
     ///
     /// \param[in] input_ A binary image.
     /// \param[in] nbh_ A neighborhood used in labeling algorithms.
@@ -54,6 +55,8 @@ namespace scribo
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result A binary image without thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -64,12 +67,15 @@ namespace scribo
 		    unsigned max_thickness);
 
 
-    /// Remove components verticaly thicker or equal to \p max_thickness.
+    /// \brief Remove components verticaly thicker or equal to \p
+    /// max_thickness.
     ///
     /// \param[in] comps A component set.
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result An object image without too thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline

@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two objects if their top are not
+/// \brief Invalidate links between two objects if their top are not
 /// aligned.
 
 
@@ -48,8 +48,8 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects if their top are not
-               aligned.
+    /*! \brief Invalidate links between two objects if their top are
+               not aligned.
 
 	\param[in] links     Object links information.
         \param[in] max_alpha Maximum angle value (degrees).
@@ -77,6 +77,8 @@ namespace scribo
 	\endverbatim
 
 	The angle between the two tops must be lower than \p max_alpha.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

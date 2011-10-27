@@ -50,6 +50,8 @@ namespace scribo
       \param[in] input A gray-scale image.
 
       \return A global threshold value.
+
+      \ingroup grpalgobinotsu
      */
     template <typename I>
     mln_value(I)

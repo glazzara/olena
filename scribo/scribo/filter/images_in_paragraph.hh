@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Invalidate false positive separators.
+/// Invalidate false positive images.
 /// \fixme Share same test canvas as text::merging.
 
 
@@ -47,16 +47,12 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate false positive separators.
+    /// Invalidate false positive images.
     ///
-    /// \param[in] separators    A paragraph set.
+    /// \param[in,out] doc    A document structure.
     ///
-    /// \return A doc with invalidated separators.
-    ///
-    /// Warning: it does not remove separators from separator
-    /// image. It only invalidate separator components in their
-    /// respective component_set.
-    ///
+    /// \ingroup grpalgofilterelt
+    //
     template <typename L>
     void
     images_in_paragraph(document<L>& doc);

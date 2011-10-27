@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,6 +50,8 @@ namespace scribo
       /*! \brief Compute links between objects according a given functor.
 
 	  \param[in,out] functor Linking policy.
+	  \param[in] anchor Lookup anchor. Starts looking for
+	                    neighbors from there.
 
 	  \return Object links.
 

@@ -52,14 +52,14 @@ namespace scribo
     /// \param[in] input    A gray-level image.
     /// \param[in] h        Height attribute value for leveling closing.
     ///
-    /// \output A gray-level image with better contrast homogeneity.
+    /// \return A gray-level image with better contrast homogeneity.
     //
     template <typename I>
     mln_concrete(I)
     homogeneous_contrast(const Image<I>& input, unsigned h);
 
 
-    /// \overload.
+    /// \overload
     /// Default height attribute value is set to 75.
     //
     template <typename I>

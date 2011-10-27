@@ -29,10 +29,10 @@
 
 /// \file
 ///
-/// Invalidate links between two objects if their left are not
+/// \brief Invalidate links between two objects if their left are not
 /// aligned.
 ///
-/// \fixme UPDATE DOC!
+/// \todo UPDATE DOC!
 
 # include <mln/util/array.hh>
 
@@ -49,8 +49,8 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects if their left are not
-               aligned.
+    /*! \brief Invalidate links between two objects if their left are
+               not aligned.
 
 	\param[in] links     Object links information.
         \param[in] max_alpha Maximum angle value (degrees).
@@ -77,6 +77,8 @@ namespace scribo
 	\endverbatim
 
 	The angle between the two lefts must be lower than \p max_alpha.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

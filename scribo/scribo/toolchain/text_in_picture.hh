@@ -30,7 +30,7 @@
 
 /// \file
 ///
-/// Localize text in a picture.
+/// \brief Localize text in a picture.
 
 # include <scribo/toolchain/internal/text_in_picture_functor.hh>
 
@@ -42,7 +42,26 @@ namespace scribo
 
     using namespace mln;
 
+    /*! \brief Localize text in pictures.
 
+      \param[in] input_rgb_orig A RGB image.
+      \param[in] bg_removal If set to True tries to identify
+                            background components and remove them.
+      \param[in] multi_scale_bin Sauvola's binarization is used. Tells
+                                 whether to use a multi-scale version
+                                 or not.
+      \param[in] max_dim_size The maximum height or width allowed for
+                              the input image. If larger, it is
+                              resized.
+      \param[in] lambda Maximum area of components considered as
+                        foreground objects. If set to '0' (default),
+                        it is fixed automatically.
+      \param[in] verbose Enable/Disable debug output on std::cout.
+
+      \return A component set corresponding to the text components.
+
+      \ingroup grptoolchainpicproc
+    */
     template <typename I>
     component_set<mln_ch_value(I, def::lbl_type)>
     text_in_picture(const Image<I>& input_rgb_orig,

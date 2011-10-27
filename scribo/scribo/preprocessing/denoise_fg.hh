@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Denoise image foreground.
+/// \brief Denoise image foreground.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -56,7 +57,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Denoise image foreground.
+    /// \brief Denoise image foreground.
     ///
     /// \param[in] input    A binary image. True for objects, False for
     ///                     background.
@@ -64,7 +65,7 @@ namespace scribo
     /// \param[in] min_card Minimum component cardinality to not be
     ///                     considered as noise.
     ///
-    /// \output A binary image with the same domain as \p input. All
+    /// \return A binary image with the same domain as \p input. All
     /// small components have been removed and merged with the
     /// background.
     //

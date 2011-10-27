@@ -62,7 +62,6 @@ namespace scribo
 	  validate These links. A link must exist in both ways to be
 	  validated.
 
-	  \param[in] components  A component set.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
 

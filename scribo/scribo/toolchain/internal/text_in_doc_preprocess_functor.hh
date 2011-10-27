@@ -27,6 +27,11 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_PREPROCESS_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_PREPROCESS_FUNCTOR_HH
 
+/// \file
+///
+/// \brief Functor performing custom preprocessing algorithms on
+///        documents.
+
 #include <mln/core/concept/image.hh>
 #include <mln/data/transform.hh>
 #include <mln/data/convert.hh>

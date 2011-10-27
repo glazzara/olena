@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too thin components.
+/// \brief Remove too thin components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -52,7 +52,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components thinner or equal to \p min_thickness.
+    /// \brief Remove components thinner or equal to \p min_thickness.
     ///
     /// \param[in] input_ a binary image.
     /// \param[in] nbh_ a neighborhood used in labeling algorithms.
@@ -60,6 +60,8 @@ namespace scribo
     /// \param[in] min_thickness the minimum thickness value.
     ///
     /// \result A binary image without thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -69,12 +71,15 @@ namespace scribo
 		    const V& label_type,
 		    unsigned min_thickness);
 
-    /// Remove lines of text thinner or equal to \p min_thickness.
+    /// \brief Remove lines of text thinner or equal to \p
+    /// min_thickness.
     ///
     /// \param[in] components An object image.
     /// \param[in] min_thickness the minimum thickness value.
     ///
     /// \result An object image without too thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline

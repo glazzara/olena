@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove small components in a binary image.
+/// \brief Remove small components in a binary image.
 
 
 # include <mln/core/concept/image.hh>
@@ -57,7 +57,8 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove small components in a binary image.
+    /// \brief Remove small components in a binary image.
+    ///
     /// Set to 'false' all the removed components.
     ///
     /// \param[in] input_     A binary image.
@@ -66,6 +67,9 @@ namespace scribo
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
     /// \return A binary image without small components.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename I, typename N, typename V>
     mln_concrete(I)
     components_small(const Image<I>& input_,
@@ -74,13 +78,16 @@ namespace scribo
 		     unsigned min_size);
 
 
-    /// Remove too small components.
+    /// \brief Remove too small components.
     ///
     /// \param[in] components    An object image.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
     /// \return A component set with small components set to
     /// component::Ignored.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename L>
     component_set<L>
     components_small(const component_set<L>& components,

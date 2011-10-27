@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,8 +70,16 @@ namespace scribo
     using namespace mln;
 
     /*! \brief Remove groups not having at least two background
-     *  components of \p min_size pixels.
+        components of \p min_size pixels.
 
+	In order to verify the property of "having two background
+	components", a component group must have at least one
+	component with a hole.
+
+	Example: the letter 'o' has two background components: outside
+	and inside the letter.
+
+	\ingroup grpalgofiltercompgroup
      */
     template <typename L>
     inline

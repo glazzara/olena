@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Passes the text bounding boxes to an OCR (Tesseract).
+/// \brief Recognize text using an OCR (Tesseract).
 ///
 /// \todo For each text bbox, we create a new image. We may like to avoid that.
 /// \todo Do not store the result in an image?
@@ -81,20 +81,25 @@ namespace scribo
 
     using namespace mln;
 
-    /// Passes the text bboxes to Tesseract (OCR).
+    /// \brief Passes the text bboxes to Tesseract (OCR).
     ///
     /// \param[in] lines       The lines of text.
     /// \param[in] language    The language which should be recognized by
     ///		               Tesseract. (fra, en, ...)
-    /// \param[in] output_file If set, store the recognized text in
-    ///                        this file.
     //
     template <typename L>
     void
     recognition(line_set<L>& lines, const char *language);
 
 
-    /// Recognize text from an image.
+    /// \brief Recognize text from an image.
+    ///
+    /// \param[in] line        Image of text line.
+    /// \param[in] language    The language which should be recognized by
+    ///		               Tesseract. (fra, en, ...)
+    /// \param[in] output_file If set, store the recognized text in
+    ///                        this file.
+    //
     template <typename I>
     void
     recognition(const Image<I>& line,

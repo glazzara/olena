@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Link text components with their right neighbor.
+/// \brief Link text components with their right neighbor.
 
 
 # include <mln/core/concept/image.hh>
@@ -63,7 +63,8 @@ namespace scribo
       /// Lookup startup point is the object bottom center.
       ///
       /// \param[in] components A component set.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
+      /// \param[in] neighb_max_distance The maximum distance allowed
+      ///                                to seach a neighbor object.
       ///
       /// \return Object links data.
       //
@@ -76,6 +77,7 @@ namespace scribo
 
       /// \overload
       /// Max distance is set to mln_max(unsigned).
+      //
       template <typename L>
       inline
       object_links<L>

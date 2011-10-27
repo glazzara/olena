@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Save a color image showing components links.
+/// \brief Save a color image showing components links.
 
 # include <mln/core/concept/image.hh>
 # include <mln/accu/center.hh>
@@ -50,7 +50,10 @@ namespace scribo
 
     using namespace mln;
 
-    /// FIXME: DOC!
+    /*! \brief Save a color image showing components links.
+
+      \ingroup grpalgodebug
+     */
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     links_image(const Image<I>& input_,

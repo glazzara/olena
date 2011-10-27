@@ -41,6 +41,15 @@ namespace scribo
   namespace filter
   {
 
+    /*! \brief Filter line links according to character x height.
+
+      \param[in] links Line links information.
+
+      \return A new line_links structure where some links may have
+      been invalidated.
+
+      \ingroup grpalgofilterlinelink
+     */
     template <typename L>
     line_links<L>
     line_links_x_height(const line_links<L>& links);

@@ -52,8 +52,8 @@ namespace scribo
     ///
     /// \pre input.domain() == threshold.domain()
     ///
-    /// \input[in] input A grayscale image.
-    /// \input[in] threshold A grayscale image.
+    /// \param[in] input A grayscale image.
+    /// \param[in] threshold A grayscale image.
     ///
     /// \return A boolean image.
     //

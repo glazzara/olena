@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_DOC_FUNCTOR_HH
 
+/// \file
+///
+/// \brief Functor analysing and extracting document image content.
+
 #  ifndef SCRIBO_NDEBUG
 #  include <mln/util/timer.hh>
 #  endif // ! SCRIBO_NDEBUG
@@ -92,7 +96,9 @@ namespace scribo
     namespace internal
     {
 
+      /*! \brief Functor analysing and extracting document image content.
 
+       */
       template <typename I>
       struct content_in_doc_functor
 	: public Toolchain_Functor

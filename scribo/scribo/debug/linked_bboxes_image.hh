@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Compute the bounding box links image.
+/// \brief Compute the bounding box links image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
@@ -59,10 +59,12 @@ namespace scribo
     /// Compute the line of components links image.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
-    /// \param[in] link_array Lines of components links.
+    /// \param[in] array Components links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
     /// \param[in] anchor Anchor from where the links are drawn.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -74,6 +76,8 @@ namespace scribo
 
     /// \overload
     /// The default anchor type is set to anchor::Center.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -85,10 +89,13 @@ namespace scribo
     /// Compute the line of components left and right links image.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
-    /// \param[in] left_link Lines of components left links.
-    /// \param[in] right_link Lines of components right links.
+    /// \param[in] left_link Components left links.
+    /// \param[in] right_link Components right links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -103,12 +110,15 @@ namespace scribo
     /// Draw also validated links.
     ///
     /// \param[in,out] input The binary from where the components are extracted.
-    /// \param[in] left_link Lines of components left links.
-    /// \param[in] right_link Lines of components right links.
+    /// \param[in] left_link Components left links.
+    /// \param[in] right_link Components right links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] left_link_value Value used to draw line left links.
     /// \param[in] right_link_value Value used to draw line left links.
     /// \param[in] validated_link_value Value used to draw line validated links.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     inline
@@ -129,6 +139,9 @@ namespace scribo
     /// \param[in] g The link graph.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L, typename G>
     mln_ch_value(I,value::rgb8)

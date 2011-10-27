@@ -51,14 +51,20 @@ namespace scribo
     using namespace mln;
 
 
-    /// Draw a list of bounding boxes
+    /// \brief Draw a list of bounding boxes
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I>
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
 		 const mln::util::array< box<mln_site(I)> >& bboxes,
 		 const value::rgb8& value);
 
-
+    /// \overload
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
     bboxes_image(const Image<I>& input,
@@ -67,6 +73,8 @@ namespace scribo
 
     /// \overload
     /// value is set to literal::red.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     inline
@@ -74,7 +82,10 @@ namespace scribo
     bboxes_image(const Image<I>& input,
 		 const line_set<L>& lines);
 
-    /// \overload.
+    /// \overload
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I, typename L>
     inline
     mln_ch_value(I, value::rgb8)

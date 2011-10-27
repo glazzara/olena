@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +23,10 @@
 // executable to be covered by the GNU General Public License.  This
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
+
+/// \file
+///
+/// \brief Logger class used to save debug images.
 
 #ifndef SCRIBO_CORE_LOGGER_HH
 # define SCRIBO_CORE_LOGGER_HH
@@ -212,7 +216,10 @@ namespace scribo
     } // end of namespace scribo::debug::internal
 
 
-    // Return a reference to the logger.
+    /*! \brief Return a reference to the logger.
+
+      \ingroup grpalgodebug
+     */
     scribo::debug::internal::logger_& logger();
 
 

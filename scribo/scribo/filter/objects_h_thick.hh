@@ -54,6 +54,8 @@ namespace scribo
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result A binary image without thick objects.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -70,6 +72,8 @@ namespace scribo
     /// \param[in] max_thickness The minimum thickness value.
     ///
     /// \result A component data set without too thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline

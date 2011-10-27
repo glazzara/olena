@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two components having their bounding box
-/// overlapping too much.
+/// \brief Invalidate links between two components having their
+/// bounding box overlapping too much.
 
 
 # include <mln/math/min.hh>
@@ -59,6 +59,8 @@ namespace scribo
 	                             areas.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>

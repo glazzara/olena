@@ -56,7 +56,7 @@ namespace scribo
 
 	  \param[in] m_x_y Mean value.
 	  \param[in] s_x_y Standard deviation.
-	  \param[in] k Control the threshold value in the local
+	  \param[in] K Control the threshold value in the local
 	  window. The higher, the lower the threshold
 	  form the local mean m(x, y).
 
@@ -66,7 +66,8 @@ namespace scribo
 			  const double K) const;
 
 	/*!
-	  \overload K = -0.2.
+	  \overload
+	  K is set to -0.2.
 	 */
 	double operator()(const double m_x_y, const double s_x_y) const;
 

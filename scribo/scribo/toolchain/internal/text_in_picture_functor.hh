@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Localize text in a picture.
+/// \brief Localize text in a picture.
 
 
 # include <libgen.h>
@@ -107,7 +107,7 @@ namespace scribo
 
       using namespace mln;
 
-
+      /// \brief Localize text in a picture.
       template <typename I>
       struct text_in_picture_functor
 	: public Toolchain_Functor

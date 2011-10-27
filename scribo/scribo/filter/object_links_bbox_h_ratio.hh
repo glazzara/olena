@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different height.
+/// \brief Invalidate links between two objects with too different
+/// height.
 ///
 /// \todo rename to object_links_bbox_v_ratio (v for vertical) to be
 /// consistent with other routine names.
@@ -57,6 +59,8 @@ namespace scribo
 	                       bounding boxes.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
