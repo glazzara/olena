@@ -1,3 +1,16 @@
+2011-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more content in general documentation.
+
+	* doc/Makefile.am: New dependencies.
+
+	* doc/license_commercial.dox,
+	* doc/mainpage.dox,
+	* doc/modules_list.dox: More content.
+
+	* doc/get_sources.dox,
+	* doc/online_resources.dox: New.
+
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add details about licensing.

@@ -38,8 +38,8 @@
     <tr>
       <td>
         \li Report Bugs and Make Suggestions
-	\li Get the Sources
-	\li Online Resources
+	\li \ref getsources
+	\li \ref onlineres
       </td>
       <td>
 	\li \ref gplv2 "GNU GPL"

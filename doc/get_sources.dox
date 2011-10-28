@@ -1,0 +1,37 @@
+/*! \page getsources Get the Sources
+
+If you are interested in developping for Olena, you are definitely
+interested in using the development version from our Git Repository.
+
+To successfuly compile and use the development version, you will need the following additional tools:
+
+\li Git 1.5 or higher
+\li Autoconf 2.61 or higher
+\li Automake 1.10 or higher
+\li Libtool 1.5.22 or higher
+\li Doxygen 1.5.6 or higher
+\li ImageMagick 6.3.7 or higher
+\li HeVeA 1.10
+\li LaTeX2HTML (or at minimum, its html.sty style file)
+
+The Git repository is located at git://git.lrde.epita.fr/olena.
+
+For those who are not used to Git, here are the required commands to get and build a fresh source tree:
+\verbatim
+   git clone git://git.lrde.epita.fr/olena
+   cd olena
+   ./bootstrap
+   mkdir _build
+   cd _build
+   ../configure
+   make
+\endverbatim
+
+The last command may take some time.
+
+If you want to install Olena, type thereafter (as root):
+\verbatim
+   make install
+\endverbatim
+
+*/
