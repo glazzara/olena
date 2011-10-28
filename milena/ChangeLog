@@ -1,3 +1,8 @@
+2011-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/image/dmorph/slice_image.hh: Add operator=() for
+	image2d.
+
 2011-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/io/dicom/load.hh: Fix memory leak.

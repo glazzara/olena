@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,8 @@
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/alias/box3d.hh>
-# include <mln/core/alias/box2d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/data/paste.hh>
 
 
 namespace mln
@@ -107,6 +109,8 @@ namespace mln
 
     void init_(I& ima, def::coord sli);
 
+    template <typename V>
+    void operator=(const image2d<V>& rhs);
 
     /// Give the definition domain.
     const box2d& domain() const;
@@ -208,6 +212,14 @@ namespace mln
   {
     mln_precondition(! this->is_valid());
     this->data_ = new internal::data< slice_image<I> >(ima, sli);
+  }
+
+  template <typename I>
+  template <typename V>
+  void
+  slice_image<I>::operator=(const image2d<V>& rhs)
+  {
+    data::paste(rhs, *this);
   }
 
   template <typename I>
