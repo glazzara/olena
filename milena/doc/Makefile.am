@@ -693,14 +693,14 @@ regen-am:
 EXTRA_DIST +=					\
   $(DATA_html_dirs)				\
   $(DOXYFILE).in				\
-  groups/accu.hh				\
-  groups/graph.hh				\
-  groups/images.hh				\
-  groups/main.hh				\
-  groups/neighb.hh				\
-  groups/site_set.hh				\
-  groups/util.hh				\
-  groups/win.hh					\
+  groups/accu.dox				\
+  groups/graph.dox				\
+  groups/images.dox				\
+  groups/main.dox				\
+  groups/neighb.dox				\
+  groups/site_set.dox				\
+  groups/util.dox				\
+  groups/win.dox				\
   img/small-enlarged.png			\
   img/small.png					\
   doxyfuns.sty					\
@@ -708,7 +708,8 @@ EXTRA_DIST +=					\
   tools/clearbanner.sh				\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
-  tools/todoxygen.sh
+  tools/todoxygen.sh				\
+  mainpage.dox
 
 
 ## ---------- ##

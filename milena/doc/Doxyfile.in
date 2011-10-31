@@ -84,7 +84,7 @@ FILE_VERSION_FILTER    =
 #---------------------------------------------------------------------------
 QUIET                  = YES
 WARNINGS               = YES
-WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_UNDOCUMENTED   = NO
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO
 WARN_FORMAT            = "$file:$line: $text"
@@ -96,7 +96,8 @@ INPUT                  = @top_srcdir@/milena
 FILE_PATTERNS          = *.cc	\
                          *.hh	\
                          *.hxx	\
-                         *.hcc
+                         *.hcc	\
+			 *.dox
 RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/trash			\
