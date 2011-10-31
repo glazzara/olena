@@ -7,6 +7,11 @@ image processing as well as algorithms, in particular in the field of
 mathematical morphology.  It is used as the base image processing
 library in all Olena modules.
 
+<center><h2>Write once, run on many kinds of images.</h2></center>
+\image html genericity.png
+\image latex genericity.png
+
+
 \subsection mlnimagestruct Images and Structures
 
 Milena can be used on:
@@ -57,49 +62,51 @@ image.
 
    \section mln_sec Overview of Milena.
 
-   <UL>
-   <LI> \ref mln
-   <LI> \ref mln::accu
-   <LI> \ref mln::algebra
-   <LI> \ref mln::arith
-   <LI> \ref mln::binarization
-   <LI> \ref mln::border
-   <LI> \ref mln::canvas
-   <LI> \ref mln::convert
-   <LI> \ref mln::data
-   <LI> \ref mln::debug
-   <LI> \ref mln::display
-   <LI> \ref mln::draw
-   <LI> \ref mln::estim
-   <LI> \ref mln::extension
-   <LI> \ref mln::fun
-   <LI> \ref mln::geom
-   <LI> \ref mln::graph
-   <LI> \ref mln::histo
-   <LI> \ref mln::io
-   <LI> \ref mln::labeling
-   <LI> \ref mln::data
-   <LI> \ref mln::linear
-   <LI> \ref mln::literal
-   <LI> \ref mln::logical
-   <LI> \ref mln::make
-   <LI> \ref mln::math
-   <LI> \ref mln::metal
-   <LI> \ref mln::morpho
-   <LI> \ref mln::norm
-   <LI> \ref mln::opt
-   <LI> \ref mln::pw
-   <LI> \ref mln::registration
-   <LI> \ref mln::set
-   <LI> \ref mln::tag
-   <LI> \ref mln::test
-   <LI> \ref mln::topo
-   <LI> \ref mln::trace
-   <LI> \ref mln::trait
-   <LI> \ref mln::transform
-   <LI> \ref mln::util
-   <LI> \ref mln::value
-   <LI> \ref mln::win
+   Here is a list of the different namespaces/categories of algorithms
+   provided in Milena.
+
+   \li \ref mln
+   \li \ref mln::accu
+   \li \ref mln::algebra
+   \li \ref mln::arith
+   \li \ref mln::binarization
+   \li \ref mln::border
+   \li \ref mln::canvas
+   \li \ref mln::convert
+   \li \ref mln::data
+   \li \ref mln::debug
+   \li \ref mln::display
+   \li \ref mln::draw
+   \li \ref mln::estim
+   \li \ref mln::extension
+   \li \ref mln::fun
+   \li \ref mln::geom
+   \li \ref mln::graph
+   \li \ref mln::histo
+   \li \ref mln::io
+   \li \ref mln::labeling
+   \li \ref mln::data
+   \li \ref mln::linear
+   \li \ref mln::literal
+   \li \ref mln::logical
+   \li \ref mln::make
+   \li \ref mln::math
+   \li \ref mln::metal
+   \li \ref mln::morpho
+   \li \ref mln::norm
+   \li \ref mln::opt
+   \li \ref mln::pw
+   \li \ref mln::registration
+   \li \ref mln::set
+   \li \ref mln::tag
+   \li \ref mln::test
+   \li \ref mln::topo
+   \li \ref mln::trace
+   \li \ref mln::trait
+   \li \ref mln::transform
+   \li \ref mln::util
+   \li \ref mln::value
+   \li \ref mln::win
 
    \section copyright Copyright and License.
    Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and

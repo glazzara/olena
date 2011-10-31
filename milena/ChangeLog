@@ -1,5 +1,14 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new figure on the main page.
+
+	* doc/img/genericity.png,
+	* doc/img/src/genericity.svg: New.
+
+	* doc/mainpage.dox: Include this figure.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new documentation groups.
 
 	* doc/Doxyfile.in: Use .dox file.
