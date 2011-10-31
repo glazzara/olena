@@ -1,0 +1,79 @@
+/*! \mainpage Documentation of Scribo
+
+\section Introduction
+
+Scribo, a framework for Document Image Analysis.
+
+Its initial release has been developed in the context of the SCRIBO
+project of the Free Software Thematic Group, part of the "Systematic
+Paris-Région" Cluster (France). This project was partially funded by
+the French government, its economic development agencies and by the
+Paris-Région institutions.
+
+It aims at providing the following features:
+
+\li routines for DIA,
+\li DIA toolchains,
+\li text detection in document,
+\li document layout analysis,
+\li high-level data structures,
+\li novel algorithms and techniques,
+\li standard I/O,
+\li graphical user interfaces,
+\li and command Line Interfaces.
+
+Its code is based on Milena, the generic and efficient c++ image
+processing library of Olena.
+
+It is integrated in the <a href="http://www.kde.org">KDE</a> semantic
+desktop, <a href="http://nepomuk.kde.org">Nepomuk</a>, in the current
+<a href="http://www.mandriva.com">Mandriva Linux</a> distribution.
+
+
+\section Quickstart
+
+No tutorial nor quick reference guide are written for now. But a good
+start is to read the code of existing processing chain. You can take a
+look at the following files :
+
+\li \ref text_in_doc_preprocess.hh
+\li \ref content_in_doc_functor.hh
+\li \ref text_in_picture.hh
+
+Take also a look at the <a href="modules.html">Modules section</a>.
+
+<center>
+<table border=0 cellpadding=5>
+<tr>
+<td>\image html olena_mp00419c.png "A document image."</td>
+<td style="vertical-align:center;">\htmlonly<font size="300%">&rarr;&nbsp;</font>\endhtmlonly<td>
+<td style="vertical-align:bottom;">\image html olena_viewer1.png "A GUI for analyzing the content and reconstruct the document."</td>
+<td style="vertical-align:center;">\htmlonly<font size="300%">&rarr;&nbsp;</font>\endhtmlonly<td>
+<td>\image html olena_mp00419c_demat.png "The reconstructed document in PDF."</td>
+</tr>
+</table>
+</center>
+
+\image latex olena_mp00419c.png
+\image latex olena_viewer1.png
+\image latex olena_mp00419c_demat.png
+
+\section copyright Copyright and License
+
+Copyright (C) 2011 EPITA Research and Development (LRDE)
+
+This documentation is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena. If not, see <http://www.gnu.org/licenses/>.
+
+*/

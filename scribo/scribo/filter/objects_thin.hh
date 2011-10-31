@@ -84,7 +84,7 @@ namespace scribo
     template <typename L>
     inline
     component_set<L>
-    components_thin(const component_set<L>& text,
+    components_thin(const component_set<L>& components,
 		    unsigned min_thickness);
 
 

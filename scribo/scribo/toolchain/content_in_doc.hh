@@ -43,8 +43,8 @@ namespace scribo
 
     /*! \brief Analyse and extract document image content.
 
-      \input[in] input A RGB image.
-      \input[in] input_preproc A Binary image.
+      \param[in] input A RGB image.
+      \param[in] input_preproc A Binary image.
       \param[in] denoise Remove too small components (<= 2 pixels).
       \param[in] find_line_seps Enable/Disable lookup for
                                 vertical/horizontal separators.

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Repair lines which have small discontinuities.
+/// \brief Repair lines which have small discontinuities.
 
 # include <vector>
 
@@ -76,7 +77,7 @@ namespace scribo
 
       using namespace mln;
 
-      /// Repair lines which have small discontinuities.
+      /// \brief Repair lines which have small discontinuities.
       /// FIXME: buggy. Sometimes few lines move or shrink!
       ///
       /// \param[in] input		A binary image.
@@ -86,7 +87,7 @@ namespace scribo
       //
       template <unsigned axis, typename I>
       void
-      repair_lines(const Image<I>& input_,
+      repair_lines(const Image<I>& input,
 		   mln::util::array<box<mln_site(I)> >& tableboxes,
 		   unsigned max_discontinuity);
 

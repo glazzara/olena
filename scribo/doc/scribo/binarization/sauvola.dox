@@ -1,0 +1,84 @@
+/*! \defgroup grpalgobinsauvola Sauvola
+
+  \brief Sauvola's Binarization implementations.
+
+  \ingroup grpalgobin
+
+  It is well suited for classical document image binarization.
+
+  Scribo provides three variants of Sauvola's binarization algorithm :
+
+  \li \ref scribo::binarization::sauvola , the standard implementation.
+  \li \ref scribo::binarization::sauvola_ms , a multi-scale implementation.
+  \li \ref scribo::binarization::sauvola_ms_split , a multi-scale implementation running on
+  each channel of a RGB image and merging the results into a single
+  binary image.
+
+  These algorithms are based on the following article: \cite sauvola00pr .
+  All of them are implemented using integral images for best
+  performance \cite shafait2008drr.
+
+  Sauvola's algorithm is a local thresholding method. Based on the
+  mean and the standard deviation of a sliding centered window, it
+  computes a local threshold for each pixel.
+
+  The following formula is used:
+  \f[T(p) = m(p) + [1 + k * (s(p)/R - 1)]\f]
+
+  Where \a p is the central window point, \a m(p) and \a s(p) are,
+  respectively, the mean and the standard deviation of the window
+  centered to point \a p.
+
+  \a k is user-defined parameter. According to \cite badekas2005ppriaa,
+  this parameter is set to \a 0.34. However, it is possible to pass a
+  different value and change the object sharpness.
+
+  The window size is also a user-defined parameter. In
+  scribo::binarization::sauvola, it has to be adapted to the size of
+  the binarized objects.  In case of a document image with mixed
+  objects of various size, we advice you to use the multi-scale
+  version scribo::binarization::sauvola_ms. In this version, the
+  window size parameter is adapted at each scale and both large and
+  small objects are correctly retrieved at the same time.
+
+  <center>
+  <table border=0>
+  <tr>
+  <td>\image html input_sauvola_sharpness.png "Input image."</td>
+  <td>\image html output_k_0_03.png "scribo::binarization::sauvola_ms with \a k=0.03."</td>
+  <td>\image html output_k_0_34.png "scribo::binarization::sauvola_ms with \a k=0.34."</td>
+  <td>\image html output_k_0_60.png "scribo::binarization::sauvola_ms with \a k=0.60."</td>
+  </tr>
+  </table>
+  </center>
+
+
+  scribo::binarization::sauvola_threshold variants return an image of
+  thresholds. The latter can be used afterwards to binarize the input
+  image.
+
+  <br>
+
+  \sa src/binarization/sauvola.cc src/binarization/sauvola_ms.cc sauvola_ms_split.cc
+
+  <br>
+
+  \section Result comparison
+
+  Compare results between all Sauvola's implementations. The window
+  size is set to \a 51 and \a k is set to \a 0.34.
+
+  <center>
+  <table border=0>
+  <tr>
+  <td>\image html input_sauvola_bench.png "Input image."</td>
+  <td>\image html output_sauvola.png "Binarization using scribo::binarization::sauvola"</td>
+  </tr>
+  <tr>
+  <td>\image html output_sauvola_ms.png "Binarization using scribo::binarization::sauvola_ms"</td>
+  <td>\image html output_sauvola_ms_split.png "Binarization using scribo::binarization::sauvola_split"</td>
+  </tr>
+  </table>
+  </center>
+
+ */

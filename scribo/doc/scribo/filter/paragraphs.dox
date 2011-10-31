@@ -1,0 +1,6 @@
+/*! \defgroup grpalgofilterpar Paragraphs
+ *
+ * \brief Paragraphs filtering routines.
+ *
+ * \ingroup grpalgofilter
+ */

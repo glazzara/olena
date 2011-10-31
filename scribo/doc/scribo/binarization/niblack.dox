@@ -1,0 +1,6 @@
+/*! \defgroup grpalgobinniblack Niblack
+ *
+ * \brief Niblack's Binarization implementations.
+ *
+ * \ingroup grpalgobin
+ */

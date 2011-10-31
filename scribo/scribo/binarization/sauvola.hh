@@ -46,7 +46,7 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      \param[in]  input       An image.
+      \param[in]  input       A greyscale image.
       \param[in]  window_size The window size.
       \param[in]  K           Sauvola's formulae constant.
 
@@ -66,7 +66,7 @@ namespace scribo
 
       Sauvola's formulae constant K is set to 0.34.
 
-      \param[in]  input       An image.
+      \param[in]  input       A grayscale image.
       \param[in]  window_size The window size.
 
       \return A binary image.

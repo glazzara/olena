@@ -93,10 +93,10 @@ namespace scribo
     /*! \brief Binarize an image using a multi-scale implementation of
         Sauvola's algoritm.
 
-      \param[in] input_1 A grayscale or a color image.
+      \param[in] input_1 A grayscale image.
       \param[in] w_1 The window size used to compute stats.
-      \param[in] s The scale factor used for the first subscaling.
-      \param[in] lambda_min_1 Size of the objects kept at scale 1.
+      \param[in] s The scale factor used for the first subscaling
+      (usually 2 or 3 is enough).
       \param[out] integral_sum_sum_2 Integral image of sum and squared
                                      sum.
 
@@ -107,10 +107,26 @@ namespace scribo
       \return A Boolean image.
 
       \ingroup grpalgobinsauvola
+
+      In this implementation, the input image is subscaled at three
+      different scales.  For each subscale image, Sauvola's is applied
+      and relevant objects are preserved. The results of the three
+      scales is merged and areas of the input image are marked with
+      the appropriate scale to use for final binarization.  Finally,
+      the input image is binarized, using, for each pixel, the correct
+      window size of the scale where it has been retrieved.
+
+      This implementation is very useful for document image with
+      heterogeneous object sizes.
+
+      Its implementation is meant to be the fastest as possible. For
+      instance, statistics computation is based on integral images
+      \cite shafait2008drr.
+
      */
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
+    sauvola_ms(const Image<I>& input_1, unsigned w_1,
 	       unsigned s,
 	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2);
 
@@ -122,7 +138,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s);
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s);
 
     /// \overload
     /// Allow to specify a different k parameter for each scale.

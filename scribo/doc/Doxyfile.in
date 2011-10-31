@@ -112,18 +112,21 @@ EXCLUDE_SYMBOLS	       = *_ mln::trait::*
 EXAMPLE_PATH           = @top_srcdir@/scribo/doc/examples	    \
 			 @top_srcdir@/scribo/doc/outputs	    \
 			 @top_srcdir@/scribo/doc/examples/split	    \
-			 @top_srcdir@/scribo/doc/outputs/split
+			 @top_srcdir@/scribo/doc/outputs/split	    \
+			 @top_srcdir@/scribo/src
 EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
 			 *.txt
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/scribo/doc/img	       \
+IMAGE_PATH             = @top_srcdir@/scribo/doc/images	       \
 			 @top_srcdir@/scribo/doc/figures
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 INPUT_ENCODING         = ISO-8859-1
-
+CITE_BIB_FILES 	       = @top_srcdir@/doc/doc 		\
+			 @top_srcdir@/doc/olena
+LATEX_BIB_STYLE	       = plain
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------

@@ -1,3 +1,51 @@
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Scribo documentation.
+
+	* doc/Doxyfile.in: Setup PATHs.
+
+	* doc/images/comp2doc_structs.png,
+	* doc/images/input_sauvola_bench.png,
+	* doc/images/input_sauvola_sharpness.png,
+	* doc/images/olena_mp00419c.png,
+	* doc/images/olena_mp00419c_demat.png,
+	* doc/images/olena_viewer1.png,
+	* doc/images/output_k_0_03.png,
+	* doc/images/output_k_0_34.png,
+	* doc/images/output_k_0_50.png,
+	* doc/images/output_k_0_60.png,
+	* doc/images/output_sauvola.png,
+	* doc/images/output_sauvola_ms.png,
+	* doc/images/output_sauvola_ms_split.png,
+	* doc/images/src/comp2doc_structs.svg: New.
+
+	* doc/groups.dox,
+	* doc/mainpage.dox,
+	* doc/scribo/binarization/binarization.dox,
+	* doc/scribo/binarization/niblack.dox,
+	* doc/scribo/binarization/otsu.dox,
+	* doc/scribo/binarization/sauvola.dox,
+	* doc/scribo/core/datastructures.dox,
+	* doc/scribo/debug/debug.dox,
+	* doc/scribo/filter/component_groups.dox,
+	* doc/scribo/filter/component_links.dox,
+	* doc/scribo/filter/components.dox,
+	* doc/scribo/filter/elements.dox,
+	* doc/scribo/filter/filter.dox,
+	* doc/scribo/filter/line_links.dox,
+	* doc/scribo/filter/paragraphs.dox,
+	* doc/scribo/routines.dox,
+	* doc/scribo/toolchain/toolchain.dox,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/toolchain/content_in_hdoc.hh: Add documentation groups.
+
 2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix and improve documentation in Scribo.

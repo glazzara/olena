@@ -1,0 +1,50 @@
+/*! \defgroup grptoolchain Toolchains
+ *
+ * \brief Full toolchains performing content analysis and extraction.
+ *
+ * \ingroup grproutine
+ */
+
+/*! \defgroup grptoolchainpic Pictures
+ *
+ * \brief Full toolchains performing content analysis and extraction
+ *  in pictures.
+ *
+ * \ingroup grptoolchain
+ */
+
+/*! \defgroup grptoolchaindoc Documents
+ *
+ * \brief Full toolchains performing content analysis and extraction
+ *  in document images.
+ *
+ * \ingroup grptoolchain
+ */
+
+/*! \defgroup grptoolchainpicpreproc Preprocessing
+ *
+ * \brief Classical preprocessing toolchains for pictures.
+ *
+ * \ingroup grptoolchainpic
+ */
+
+/*! \defgroup grptoolchaindocpreproc Preprocessing
+ *
+ * \brief Classical preprocessing toolchains for document image.
+ *
+ * \ingroup grptoolchaindoc
+ */
+
+/*! \defgroup grptoolchainpicproc Processing
+ *
+ * \brief Classical processing toolchains for pictures.
+ *
+ * \ingroup grptoolchainpic
+ */
+
+/*! \defgroup grptoolchaindocproc Processing
+ *
+ * \brief Classical processing toolchains for document image.
+ *
+ * \ingroup grptoolchaindoc
+ */

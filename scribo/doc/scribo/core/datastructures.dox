@@ -1,0 +1,27 @@
+/*! \defgroup grpstruct Data structures
+
+  \brief Scribo high level data structures.
+
+  For the moment, Scribo provides bottom-up approaches to extract data
+  from a document. From connected components, thanks to different
+  algorithms, lines and paragraphs are reconstructed. It implies the
+  following workflow (see figure below).
+
+  At each level, it is usually possible to "filter" the current
+  results using routines in namespace scribo::filter. False positive
+  can then be invalidated.
+
+  Data structures at a specific step, usually keep track of previous
+  parent structures. For instance, object_links keeps a reference to
+  the component_set it is based on.
+
+  These structures are iterable and usually store several attributes
+  for their corresponding elements.
+
+  <br>
+
+  \image html comp2doc_structs.png "Data structure construction workflow and useful routines/namespaces for text extraction."
+
+  \image latex comp2doc_structs.png "Data structure construction workflow and useful routines/namespaces for text extraction." width=8cm
+
+ */

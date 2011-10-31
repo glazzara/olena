@@ -61,9 +61,10 @@ namespace scribo
     ///
     /// Set to 'false' all the removed components.
     ///
-    /// \param[in] input_     A binary image.
-    /// \param[in] nbh_	      A neighborhood used for labeling \p input_.
-    /// \param[in] label_type The label type used for labeling.
+    /// \param[in] input      A binary image.
+    /// \param[in] nbh	      A neighborhood used for labeling \p input_.
+    /// \param[out] nlabels Return the number of components. Defines
+    ///                     also the type used for labeling.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
     /// \return A binary image without small components.
@@ -72,8 +73,8 @@ namespace scribo
     //
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    components_small(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_,
+    components_small(const Image<I>& input,
+		     const Neighborhood<N>& nbh,
 		     V& nlabels,
 		     unsigned min_size);
 

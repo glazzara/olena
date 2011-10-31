@@ -1,0 +1,6 @@
+/*! \defgroup grpalgobinotsu Otsu
+ *
+ * \brief Otsu's Binarization implementations.
+ *
+ * \ingroup grpalgobin
+ */

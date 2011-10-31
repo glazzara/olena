@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,7 +61,8 @@ namespace scribo
       /// \param[in] nsites Number of sites in the given dimension \p dim.
       /// \param[in] min_coord The minimal coordinate in the dimension \p dim.
       /// \param[in] max_coord The maximal coordinate in the dimension \p dim.
-      /// \param[in] line_bboxes Line bounding boxes.
+      /// \param[in] lines The line components.
+      /// \param[out] aligned_lines The components of the aligned lines.
       /// \param[in] dim The dimension according which the lines are aligned.
       /// \param[in] max_alignment_diff Maximum alignment difference.
       ///

@@ -80,7 +80,7 @@ namespace scribo
     /// k2, k3 and k4 are set to \p K.
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
+    sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
 		     unsigned s, unsigned min_ntrue, double K);
 
 
@@ -91,7 +91,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
+    sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
 		     unsigned s, unsigned min_ntrue);
 
 
