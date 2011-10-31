@@ -53,6 +53,12 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
+
+# Images
+REFMAN_IMAGES = $(srcdir)/images/olena_layers.png
+EXTRA_DIST = $(REFMAN_IMAGES)
+
+# Documentation content
 REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/header.html 	  	\
 	      $(srcdir)/doxygen.css 	  	\
@@ -67,7 +73,8 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/online_resources.dox	\
 	      $(srcdir)/get_sources.dox		\
 	      contributors.html			\
-	      lrde_olena.html
+	      lrde_olena.html	 		\
+	      $(REFMAN_IMAGES)
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
@@ -93,7 +100,7 @@ USER_REFMAN = user-refman
 
 
 # HTML.
-EXTRA_DIST = $(srcdir)/user-refman.stamp
+EXTRA_DIST += $(srcdir)/user-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/user-refman.stamp
 $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	@rm -f $@.tmp

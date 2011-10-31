@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="783.75262"
+   height="786.33826"
+   id="svg5663"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="olena_layers.png">
+  <defs
+     id="defs5665">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path11891"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="191.42857 : -725.24748 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="921.23734 : -648.10462 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective5671" />
+    <inkscape:perspective
+       id="perspective5620"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5430"
+       id="linearGradient5446"
+       gradientUnits="userSpaceOnUse"
+       x1="1765.6388"
+       y1="84.601952"
+       x2="2334.2168"
+       y2="84.601952" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5430">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop5432" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop5434" />
+    </linearGradient>
+    <inkscape:perspective
+       id="perspective10885"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective11022"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective11679"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective11679-9"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective11708"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective11729"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective12619"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="379.83489"
+     inkscape:cy="193.79466"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="968"
+     inkscape:window-height="805"
+     inkscape:window-x="302"
+     inkscape:window-y="265"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="true" />
+  <metadata
+     id="metadata5668">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(23.332153,-163.39523)">
+    <text
+       id="text5361"
+       y="279.38019"
+       x="669.5874"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="279.38019"
+         x="669.5874"
+         id="tspan5363"
+         sodipodi:role="line"
+         style="fill:#000000;fill-opacity:1">`</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot11041"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       transform="translate(-29.759501,70.733897)"><flowRegion
+         id="flowRegion11043"><rect
+           id="rect11045"
+           width="354.28571"
+           height="14.285714"
+           x="174.28572"
+           y="831.828" /></flowRegion><flowPara
+         id="flowPara11047" /></flowRoot>    <g
+       id="g12633">
+      <rect
+         style="opacity:0.67790264;color:#000000;fill:#effcea;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:4.09148645;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5292"
+         width="779.66113"
+         height="270.79654"
+         x="-21.286409"
+         y="676.89117" />
+      <text
+         id="text10963"
+         y="759.70477"
+         x="368.92697"
+         style="font-size:12px;font-style:normal;font-weight:normal;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           style="font-size:56px;font-style:italic;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Bitstream Vera Sans Bold Oblique"
+           y="759.70477"
+           x="368.92697"
+           id="tspan10965"
+           sodipodi:role="line">Image Processing</tspan><tspan
+           id="tspan11039"
+           style="font-size:56px;font-style:italic;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Bitstream Vera Sans Bold Oblique"
+           y="829.70477"
+           x="368.92697"
+           sodipodi:role="line"> C++ Library</tspan></text>
+      <text
+         id="text11051"
+         y="913.99048"
+         x="256.60666"
+         style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           style="font-size:48px;font-style:normal;font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
+           y="913.99048"
+           x="256.60666"
+           id="tspan11053"
+           sodipodi:role="line">(Milena)</tspan></text>
+    </g>
+    <g
+       id="g3086">
+      <g
+         transform="translate(-1.3471178,19.316265)"
+         id="g12641">
+        <rect
+           style="opacity:0.67790264;color:#000000;fill:#f7efe8;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.14199305;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect5294"
+           width="550.55963"
+           height="226.127"
+           x="-16.004351"
+           y="399.29413" />
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+           x="136.32234"
+           y="579.04132"
+           id="text5341"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan5343"
+             x="136.32234"
+             y="579.04132"
+             style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans Bold">(SCRIBO)</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+           x="21.480543"
+           y="484.03006"
+           id="text10991"><tspan
+             sodipodi:role="line"
+             id="tspan10993"
+             x="21.480543"
+             y="484.03006"
+             style="font-size:56px;font-style:italic;font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold Oblique">DIA framework</tspan></text>
+      </g>
+      <g
+         transform="translate(10.327175,22.857142)"
+         id="g12669">
+        <rect
+           y="395.1326"
+           x="548.69751"
+           height="227.3683"
+           width="200.37236"
+           id="rect12650"
+           style="opacity:0.67790264;color:#000000;fill:#f7efe8;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.90068746;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+           x="631.42859"
+           y="447.61859"
+           id="text12665"
+           transform="translate(-33.978474,66.489174)"><tspan
+             sodipodi:role="line"
+             id="tspan12667"
+             x="631.42859"
+             y="447.61859"
+             style="font-size:56px;font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold">. . .</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g3056">
+      <g
+         id="g3041">
+        <g
+           id="g3025">
+          <rect
+             y="164.45264"
+             x="254.95554"
+             height="224.35983"
+             width="251.51389"
+             id="rect5300"
+             style="opacity:0.67790264;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.11477399;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <text
+             xml:space="preserve"
+             style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000080;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+             x="347.98691"
+             y="347.86737"
+             id="text5357"
+             sodipodi:linespacing="125%"><tspan
+               sodipodi:role="line"
+               id="tspan5359"
+               x="347.98691"
+               y="347.86737"
+               style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans">GUI</tspan></text>
+        </g>
+        <g
+           id="g3036">
+          <rect
+             style="opacity:0.67790264;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.02970839;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             id="rect12725"
+             width="231.59895"
+             height="224.44492"
+             x="527.73358"
+             y="164.41008" />
+          <text
+             sodipodi:linespacing="125%"
+             id="text5388"
+             y="347.86734"
+             x="604.16968"
+             style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;fill:#000080;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000080;fill-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+               y="347.86734"
+               x="604.16968"
+               id="tspan5390"
+               sodipodi:role="line">CLI</tspan></text>
+        </g>
+        <g
+           id="g3030">
+          <rect
+             style="opacity:0.67790264;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.11477399;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             id="rect12723"
+             width="251.51389"
+             height="224.35983"
+             x="-17.865078"
+             y="164.45264" />
+          <text
+             sodipodi:linespacing="125%"
+             id="text5392"
+             y="306.07605"
+             x="102.67558"
+             style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;text-anchor:middle;fill:#000080;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000080;fill-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+               y="306.07605"
+               x="102.67558"
+               id="tspan5394"
+               sodipodi:role="line">Web</tspan><tspan
+               id="tspan12708"
+               style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000080;fill-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+               y="356.07605"
+               x="102.67558"
+               sodipodi:role="line">services</tspan></text>
+        </g>
+      </g>
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot5349"
+         style="font-size:12px;font-style:normal;font-weight:normal;fill:#241c1c;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         transform="translate(-1579.3038,-1749.8142)"><flowRegion
+           style="fill:url(#linearGradient5446);fill-opacity:1"
+           id="flowRegion5351"><rect
+             style="fill:#241c1c;fill-opacity:1"
+             id="rect5353"
+             width="560.05524"
+             height="110.27995"
+             x="1765.7467"
+             y="1933.4031" /></flowRegion><flowPara
+           id="flowPara5355"
+           style="font-size:56px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#241c1c;fill-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans Bold">Applications</flowPara></flowRoot>    </g>
+  </g>
+</svg>

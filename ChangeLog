@@ -1,3 +1,20 @@
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a description about Olena.
+
+	* doc/Doxyfile.in: Add IMAGE_PATH entry.
+
+	* doc/Makefile.am: Add image dependency.
+
+	* doc/about.dox: New.
+
+	* doc/doc.bib: New reference.
+
+	* doc/images/olena_layers.png,
+	* doc/images/olena_layers.svg: New.
+
+	* doc/mainpage.dox: Rename section.
+
 2011-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add more content in general documentation.

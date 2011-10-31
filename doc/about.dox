@@ -1,0 +1,13 @@
+/*! \page about What is Olena ?
+
+    Olena is a Free Software platform dedicated to efficient and generic image processing.
+
+    It tends to provide :
+    \li an image processing library (<a href="/milena/doc/user-refman/html/index.html">Milena</a>),
+    \li various modules for dedicated types of image processing,
+    \li a set of applications,
+    \li language bindings (e.g. Python),
+
+    \image html olena_layers.png "The Olena Platform Architecture."
+    \image latex olena_layers.png "The Olena platform" width=5cm
+*/

@@ -106,7 +106,7 @@ EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
 			 *.txt
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             =
+IMAGE_PATH             = @top_srcdir@/doc/images
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
