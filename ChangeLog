@@ -1,5 +1,14 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix titles.
+
+	* doc/contributors.dox,
+	* doc/license.dox,
+	* doc/license_commercial.dox,
+	* doc/mainpage.dox: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a description about Olena.
 
 	* doc/Doxyfile.in: Add IMAGE_PATH entry.
