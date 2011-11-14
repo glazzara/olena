@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,7 +17,7 @@
 #
 
 # Applied examples of Milena.
-SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity
+SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity morphers
 
 # Examples from papers.
 SUBDIRS += papers

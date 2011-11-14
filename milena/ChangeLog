@@ -1,3 +1,14 @@
+2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add examples of morphers.
+
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	New.
+	* apps/morphers/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add morphers.
+
 2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Handle the case of filling an empty border.
