@@ -1,3 +1,7 @@
+2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/apps/morphers/Makefile.
+
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	* README (Bibliography): Mention the GRETSI 2011 paper.
