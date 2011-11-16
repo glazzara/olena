@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -84,7 +85,7 @@ namespace mln
   {
     typedef mln_value(E) value;
     value (E::*m)() const = & E::operator value;
-    m = 0;
+    (void) m;
   }
 
   template <typename E>

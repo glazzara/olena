@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -162,19 +163,19 @@ namespace mln
     typedef mln_q_result(E) q_result;
 
     void (E::*m1)() = & E::init;
-    m1 = 0;
+    (void) m1;
     void (E::*m2)(const argument&) = & E::take;
-    m2 = 0;
+    (void) m2;
     void (E::*m3)(const E&) = & E::take;
-    m3 = 0;
+    (void) m3;
 
     q_result (E::*m4)() const = & E::to_result;
-    m4 = 0;
+    (void) m4;
     q_result (E::*m5)() const = & E::operator q_result;
-    m5 = 0;
+    (void) m5;
 
     bool (E::*m6)() const = & E::is_valid;
-    m6 = 0;
+    (void) m6;
   }
 
 

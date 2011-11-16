@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -110,13 +111,13 @@ namespace mln
   Iterator<E>::Iterator()
   {
     bool (E::*m1)() const = & E::is_valid;
-    m1 = 0;
+    (void) m1;
     void (E::*m2)() = & E::invalidate;
-    m2 = 0;
+    (void) m2;
     void (E::*m3)() = & E::start;
-    m3 = 0;
+    (void) m3;
     void (E::*m4)() = & E::next_;
-    m4 = 0;
+    (void) m4;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

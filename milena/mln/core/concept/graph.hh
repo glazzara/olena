@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -113,38 +113,38 @@ namespace mln
 
     // Check methods
     const void* (E::*m1)() const = & E::id;
-    m1 = 0;
+    (void) m1;
     util::vertex_id_t (E::*m2)(const util::edge_id_t& id_e, const util::vertex_id_t& id_v) const = & E::v_other;
-    m2 = 0;
+    (void) m2;
     size_t (E::*m4)() const = & E::v_nmax;
-    m4 = 0;
+    (void) m4;
     bool (E::*m5)(const util::vertex_id_t& id_v) const = & E::has_v;
-    m5 = 0;
+    (void) m5;
     size_t (E::*m6)(const util::vertex_id_t& id_v) const = & E::v_nmax_nbh_edges;
-    m6 = 0;
+    (void) m6;
     util::edge_id_t (E::*m7)(const util::vertex_id_t& id_v, unsigned i) const = & E::v_ith_nbh_edge;
-    m7 = 0;
+    (void) m7;
     size_t (E::*m8)() const = & E::e_nmax;
-    m8 = 0;
+    (void) m8;
     bool (E::*m9)(const util::edge_id_t& id_e) const = & E::has_e;
-    m9 = 0;
+    (void) m9;
     util::vertex_id_t (E::*m10)(const util::edge_id_t& id_e) const = & E::v1;
-    m10 = 0;
+    (void) m10;
     util::vertex_id_t (E::*m11)(const util::edge_id_t& id_e) const = & E::v2;
-    m11 = 0;
+    (void) m11;
     size_t (E::*m12)(const util::edge_id_t& id_e) const = & E::e_nmax_nbh_edges;
-    m12 = 0;
+    (void) m12;
     util::edge_id_t (E::*m13)(const util::edge_id_t& id_e, unsigned i) const = & E::e_ith_nbh_edge;
-    m13 = 0;
+    (void) m13;
 
     bool (E::*m14)() const = & E::is_valid;
-    m14 = 0;
+    (void) m14;
     void (E::*m15)() = & E::invalidate;
-    m15 = 0;
+    (void) m15;
     //FIXME: enable this test. Currently does not work because this is
     // a templated method.
     //bool (E::*m14)(...) = & E::is_subgraph_of;
-    //m14 = 0;
+    //(void) m14;
   }
 
 

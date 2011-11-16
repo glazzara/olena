@@ -1,3 +1,39 @@
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation Warnings with latest g++ versions.
+
+	* apps/papers/levillain.09.ismm/io.hh: Remove unused variable.
+
+	* mln/canvas/labeling/sorted.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* tests/metal/unconst.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* tests/trait/super.cc: Fix unused variable warnings.
+
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify more Milena Makefiles thanks to AM_DEFAULT_SOURCE_EXT.

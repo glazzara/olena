@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2007, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -91,11 +91,11 @@ namespace mln
     typedef mln_bkd_viter(E) bkd_viter;
     
     bool (E::*m1)(const value&) const = & E::has;
-    m1 = 0;
+    (void) m1;
     value (E::*m2)(unsigned) const = & E::operator[];
-    m2 = 0;
+    (void) m2;
     unsigned (E::*m3)() const = & E::nvalues;
-    m3 = 0;
+    (void) m3;
   }
 
   template <typename E>

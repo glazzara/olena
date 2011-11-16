@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -113,10 +114,10 @@ namespace mln
     typedef mln_bkd_qiter(E) bkd_qiter;
 
     void (E::*m1)() = & E::sym;
-    m1 = 0;
+    (void) m1;
 
     const window& (E::*m2)() const = & E::win;
-    m2 = 0;
+    (void) m2;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

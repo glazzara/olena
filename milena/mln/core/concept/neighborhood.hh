@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -121,16 +122,16 @@ namespace mln
 
     typedef mln_window(E) window;
     bool m = (& E::win) == (& E::win);
-    m = 0;
+    (void) m;
     bool (E::*m2)() const = &E::is_valid;
-    m2 = 0;
+    (void) m2;
 
 # if 0
     /* FIXME: Disabled, as win() can either return a const reference
        or a copy of the window (see documentation above).  Hence the
        simpler, relaxed check above (m0).  */
     const window& (E::*m1)() const = & E::win;
-    m = m1;
+    (void) m1;
 # endif
   }
 

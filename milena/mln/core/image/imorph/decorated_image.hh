@@ -210,11 +210,11 @@ namespace mln
   decorated_image<I,D>::~decorated_image()
   {
     void (D::*mr)(const I&, const mln_psite(I)&) const = & D::reading;
-    mr = 0;
+    (void) mr;
     typedef mlc_unconst(I) I_;
     void (D::*mw)(I_&, const mln_psite(I_)&, const mln_value(I_)&) =
       & D::writing;
-    mw = 0;
+    (void) mw;
   }
 
   template <typename I, typename D>

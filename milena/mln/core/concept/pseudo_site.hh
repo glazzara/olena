@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -98,9 +99,9 @@ namespace mln
     typedef mln_target(E) target;
 
     void (E::*m1)(const target&) = & E::change_target;
-    m1 = 0;
+    (void) m1;
     const target* (E::*m2)() const = & E::target_;
-    m2 = 0;
+    (void) m2;
   }
 
   template <typename E>

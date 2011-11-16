@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -302,7 +303,7 @@ namespace mln
     typedef mln_delta(E) delta;
     typedef mln_vec(E)   vec;
     vec (E::*m)() const = & E::to_vec;
-    m = 0;
+    (void) m;
   }
 
 

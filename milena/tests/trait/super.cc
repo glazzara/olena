@@ -134,6 +134,7 @@ int main()
 
   mln_trait_op_uminus_(my::test) tmp;
   tmp = true;
+  (void) tmp;
 
 //   int i;
 //   my::foo<int>(i);

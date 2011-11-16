@@ -297,9 +297,11 @@ int main()
     v.start();
     topo::face<1> v1 = v.unproxy_().face();
     point2d p1 = v.to_site().front();
+    (void) p1;
     v.next();
     topo::face<1> v2 = v.unproxy_().face();
     point2d p2 = v.to_site().front();
+    (void) p2;
     v.next();
     mln_invariant(!v.is_valid());
 
