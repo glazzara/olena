@@ -1,7 +1,7 @@
 #                                                       -*- Autoconf -*-
 
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE)
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -83,19 +83,27 @@ AC_DEFUN([OLN_WITH_TESSERACT],
  TESSERACT_LDFLAGS=''
 
  if test "x$with_tesseract" != xno; then
-   # Checking for Tesseract 3.x
-   _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_api],
+   # Checking for Tesseract 3.x (single lib)
+   _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract],
 	       		     [tesseract], [TESSERACT_3], [])
 
    if test x$oln_have_tesseract != xyes; then
-      # Tesseract 2.x not found, checking for Tesseract 2.x
-      _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
+      # Checking for Tesseract 3.x (multiple lib)
+      _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_api],
+     	       		        [tesseract], [TESSERACT_3], [])
+      if test x$oln_have_tesseract != xyes; then
+      	 # Tesseract 3.x not found, checking for Tesseract 2.x
+     	  _OLN_WITH_LIB_SHARED_IMPL([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
 	       		        [tesseract], [TESSERACT_2], [])
-      TESSERACT_CPPFLAGS="$TESSERACT_2_CPPFLAGS -DHAVE_TESSERACT_2"
-      TESSERACT_LDFLAGS=$TESSERACT_2_LDFLAGS
+      	  TESSERACT_CPPFLAGS="$TESSERACT_2_CPPFLAGS -DHAVE_TESSERACT_2"
+      	  TESSERACT_LDFLAGS=$TESSERACT_2_LDFLAGS
+      else
+          TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
+     	  TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
+      fi
    else
-     TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
-     TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
+      TESSERACT_CPPFLAGS="$TESSERACT_3_CPPFLAGS -DHAVE_TESSERACT_3"
+      TESSERACT_LDFLAGS=$TESSERACT_3_LDFLAGS
    fi
  fi
 

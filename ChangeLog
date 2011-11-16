@@ -1,3 +1,8 @@
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries
+	while checking Tesseract availability.
+
 2011-11-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update lrde-scmstats.sh.
