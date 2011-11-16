@@ -1,3 +1,8 @@
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix code for Tesseract 3.01
+	compatibility.
+
 2012-09-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/src/content_in_doc.cc: Add more debug images.

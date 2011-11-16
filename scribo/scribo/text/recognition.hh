@@ -115,7 +115,6 @@ namespace scribo
 
 
       // Initialize Tesseract.
-
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
       typedef mln_ch_value(L,bool) I;
 
