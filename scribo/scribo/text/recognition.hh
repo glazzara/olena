@@ -112,7 +112,7 @@ namespace scribo
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
 #  else // HAVE_TESSERACT_3
       tesseract::TessBaseAPI tess;
-      if (tess.Init(NULL, language, NULL, 0, false) == -1)
+      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
       {
 	std::cout << "Error: cannot initialize tesseract!" << std::endl;
 	abort();
@@ -220,7 +220,7 @@ namespace scribo
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
 #  else // HAVE_TESSERACT_3
       tesseract::TessBaseAPI tess;
-      if (tess.Init(NULL, language, NULL, 0, false) == -1)
+      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
       {
 	std::cout << "Error: cannot initialize tesseract!" << std::endl;
 	abort();

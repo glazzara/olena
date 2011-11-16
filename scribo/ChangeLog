@@ -1,3 +1,8 @@
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix code for Tesseract 3.01
+	compatibility.
+
 2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Move Otsu's threshold computation in a separate routine.
