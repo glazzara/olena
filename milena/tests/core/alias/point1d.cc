@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +38,7 @@ int main()
 
   p[0] = 4;
   algebra::vec<1,float> v = p;
+  (void) v;
 
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);

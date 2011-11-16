@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -211,7 +212,7 @@ namespace mln
 	  // Concept checking.
 	  void (E::*m1)(std::ostream&, const value&) const =
 	    &E::write_face_data;
-	  m1 = 0;
+	  (void) m1;
 	}
 
 

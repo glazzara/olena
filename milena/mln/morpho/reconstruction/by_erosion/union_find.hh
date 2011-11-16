@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -224,6 +224,7 @@ namespace mln
 			      const Neighborhood<N>& nbh)
 	  {
 	    // FIXME: Not yet implemented.
+	    (void) nbh;
 	    std::cerr
 	      << __FILE__ << ":" << __LINE__ << ": error:\n"
 	      "mln::morpho::reconstruction::by_erosion::internal::\n"

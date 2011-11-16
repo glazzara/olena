@@ -96,7 +96,7 @@ namespace mln
 
 	  // Output.
 	  mln_ch_value(I, L) output;
-	  bool status;
+	  bool status; // FIXME: Is-it useful?
 
 	  // Initialization.
 	  {

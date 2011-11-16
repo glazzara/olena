@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -131,17 +132,17 @@ namespace mln
   Site_Iterator<E>::Site_Iterator()
   {
     bool m0 = (& E::target_) == (& E::target_); // FIXME: Find a better test.
-    m0 = 0;
+    (void) m0;
     bool (E::*m1)() const = & E::is_valid_;
-    m1 = 0;
+    (void) m1;
     void (E::*m2)() = & E::invalidate_;
-    m2 = 0;
+    (void) m2;
     void (E::*m3)() = & E::start_;
-    m3 = 0;
+    (void) m3;
     void (E::*m4)() = & E::next_;
-    m4 = 0;
+    (void) m4;
     bool m5 = (& E::change_target) == (& E::change_target);
-    m5 = 0;
+    (void) m5;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

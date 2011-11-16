@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,33 +95,33 @@ namespace mln
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
 	int (E::*m1)(const dpsite&) const = & E::delta_index;
-	m1 = 0;
+	(void) m1;
 	site (E::*m2)(unsigned) const = & E::point_at_index;
-	m2 = 0;
+	(void) m2;
 	unsigned (E::*m3)() const = & E::border;
-	m3 = 0;
+	(void) m3;
 
 	typedef mln_value(E) value;
 
 	mln_qlf_value(E)* (E::*m4)() = & E::buffer;
-	m4 = 0;
+	(void) m4;
 	const value* (E::*m5)() const = & E::buffer;
-	m5 = 0;
+	(void) m5;
 
 	typedef mln_rvalue(E) rvalue;
 	typedef mln_lvalue(E) lvalue;
 
 	rvalue (E::*m6)(unsigned) const = & E::element;
-	m6 = 0;
+	(void) m6;
 	lvalue (E::*m7)(unsigned) = & E::element;
-	m7 = 0;
+	(void) m7;
 
 	unsigned (E::*m8)() const = & E::nelements;
-	m8 = 0;
+	(void) m8;
 
 #  if (defined(__GNUC__) && __GNUC__ >= 3) && !defined(__INTEL_COMPILER)
 	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
-	m9 = 0;
+	(void) m9;
 #  endif
 
 	// FIXME: how to check that qixter are defined when W is unknown!

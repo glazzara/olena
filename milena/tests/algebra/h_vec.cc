@@ -48,6 +48,7 @@ int main()
 
   algebra::vec<3, def::coord> x;
   algebra::h_vec<3, def::coord> w = x.to_h_vec();
+  (void) w;
 
   typedef algebra::h_vec<3, def::coord> p3d;
   p3d p;

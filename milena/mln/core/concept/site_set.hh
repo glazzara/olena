@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -185,7 +186,7 @@ namespace mln
       static void run()
       {
 	unsigned (E::*m)() const = & E::nsites;
-	m = 0;
+	(void) m;
       }
     };
 
@@ -198,7 +199,7 @@ namespace mln
       {
 	typedef typename E::q_box q_box;
 	q_box (E::*m)() const = & E::bbox;
-	m = 0;
+	(void) m;
       }
     };
 
@@ -227,9 +228,9 @@ namespace mln
 	typedef typename E::i_element i_element;
 	mlc_equal(mlc_unqualif(i_element), i_element)::check();
 	void (E::*m1)(const i_element&) = & E::insert;
-	m1 = 0;
+	(void) m1;
 	void (E::*m2)() = & E::clear;
-	m2 = 0;
+	(void) m2;
       }
     };
 
@@ -241,13 +242,13 @@ namespace mln
 	typedef typename E::i_element i_element;
 	mlc_equal(mlc_unqualif(i_element), i_element)::check();
 	void (E::*m1)(const i_element&) = & E::insert;
-	m1 = 0;
+	(void) m1;
 	typedef typename E::r_element r_element;
 	mlc_equal(mlc_unqualif(r_element), r_element)::check();
 	void (E::*m2)(const r_element&) = & E::remove;
-	m2 = 0;
+	(void) m2;
 	void (E::*m3)() = & E::clear;
-	m3 = 0;
+	(void) m3;
       }
     };
 
@@ -280,11 +281,11 @@ namespace mln
 
     // Check methods.
     bool (E::*m1)(const psite& p) const = & E::has;
-    m1 = 0;
+    (void) m1;
     bool (E::*m2)() const = & E::is_valid;
-    m2 = 0;
+    (void) m2;
     std::size_t (E::*m3)() const = & E::memory_size;
-    m3 = 0;
+    (void) m3;
 
     // Check methods depending upon properties.
     internal::site_set_nsites_check  < mln_trait_site_set_nsites(E),   E >::run();

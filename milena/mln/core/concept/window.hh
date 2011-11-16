@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -161,7 +162,7 @@ namespace mln
       static void run()
       {
 	unsigned (E::*m)() const = & E::size;
-	m = 0;
+	(void) m;
       }
     };
 
@@ -183,24 +184,24 @@ namespace mln
 
 	// Methods.
 	bool (E::*m1)() const = &E::is_centered;
-	m1 = 0;
+	(void) m1;
 	bool (E::*m2)() const = &E::is_symmetric;
-	m2 = 0;
+	(void) m2;
 	void (E::*m3)() = &E::sym;
-	m3 = 0;
+	(void) m3;
 	unsigned (E::*m4)() const = &E::delta;
-	m4 = 0;
+	(void) m4;
 	bool (E::*m5)() const = &E::is_valid;
-	m5 = 0;
+	(void) m5;
       }
 
       static void run(mln::trait::window::definition::unique)
       {
 	typedef mln_dpsite(E) D;
 	const D& (E::*m1)(unsigned) const = &E::dp;
-	m1 = 0;
+	(void) m1;
 	bool (E::*m2)(const D&) const = &E::has;
-	m2 = 0;
+	(void) m2;
 	run_extra();
       }
 
@@ -235,11 +236,11 @@ namespace mln
       {
 	typedef mln_element(E) W;
 	void (E::*m1)(unsigned, const W&) = &E::set_window;
-	m1 = 0;
+	(void) m1;
 	const W& (E::*m2)(unsigned) const = &E::window;
-	m2 = 0;
+	(void) m2;
 	unsigned (E::*m3)() const = &E::nwindows;
-	m3 = 0;
+	(void) m3;
       }
     };
 

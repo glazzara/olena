@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -331,7 +332,7 @@ namespace mln
     typedef typename E::q_subject q_subject;
 
     q_subject (E::*m_)() = & E::subj_;
-    m_ = 0;
+    (void) m_;
   }
 
 

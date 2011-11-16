@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -216,24 +216,24 @@ namespace mln
     typedef mln_bkd_piter(E) bkd_piter;
 
     bool (E::*m1)(const psite& p) const = & E::has;
-    m1 = 0;
+    (void) m1;
 
     // Only some image types feature the 'nsites' method.
 //     unsigned (E::*m2)() const = & E::nsites;
-//     m2 = 0;
+//     (void) m2;
 
     bool (E::*m3)() const = & E::is_valid;
-    m3 = 0;
+    (void) m3;
 
     typedef typename E::t_eligible_values_set t_eligible_values_set;
 
     const t_eligible_values_set& (E::*m4)() const = & E::values_eligible;
-    m4 = 0;
+    (void) m4;
 
     typedef typename E::t_values_space t_values_space;
 
     const t_values_space& (E::*m5)() const = & E::values_space;
-    m5 = 0;
+    (void) m5;
 
     // to be provided in concrete image classes:
 
@@ -246,15 +246,16 @@ namespace mln
     // FIXME Doc
     //typedef mln_vset(E) vset;
     //const vset& (E::*m5)() const = & E::values;
-    //m5 = 0;
+    //(void) m5;
 
     rvalue (E::*m6)(const psite& p) const = & E::operator();
-    m6 = 0;
+    (void) m6;
+
     lvalue (E::*m7)(const psite& p) = & E::operator();
-    m7 = 0;
+    (void) m7;
 
     const domain_t& (E::*m8)() const = & E::domain;
-    m8 = 0;
+    (void) m8;
 
     typedef typename E::skeleton skeleton;
 

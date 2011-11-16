@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,32 +39,38 @@ int main()
   {
     mlc_unconst_(int) var; // int
     var = 0;
+    (void) var;
     // void* v = var;
   }
   {
     mlc_unconst_(const int) var; // int
     var = 0;
+    (void) var;
     // void* v = var;
   }
 
   {
     mlc_unconst_(int*) var; // int*
     var = 0;
+    (void) var;
     // void v = var;
   }
   {
     mlc_unconst_(const int*) var; // const int*
     var = 0;
+    (void) var;
     // void v = var;
   }
   {
     mlc_unconst_(int *const) var; // int*
     var = 0;
+    (void) var;
     // void v = var;
   }
   {
     mlc_unconst_(const int *const) var; // const int*
     var = 0;
+    (void) var;
     // void v = var;
   }
 

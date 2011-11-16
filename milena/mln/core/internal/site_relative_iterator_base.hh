@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -128,11 +128,11 @@ namespace mln
       : c_(0)
     {
       void (E::*m1)() = & E::do_start_;
-      m1 = 0;
+      (void) m1;
       void (E::*m2)() = & E::do_next_;
-      m2 = 0;
+      (void) m2;
       mln_psite(S) (E::*m3)() const = & E::compute_p_;
-      m3 = 0;
+      (void) m3;
     }
 
     template <typename S, typename E, typename C>

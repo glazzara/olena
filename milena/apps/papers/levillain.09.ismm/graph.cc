@@ -189,10 +189,8 @@ namespace mln
 	  // Adjacent vertices.
 	  adj_v.start();
 	  topo::face<1> v1 = adj_v.unproxy_().face();
-	  point2d p1 = adj_v.to_site().front();
 	  adj_v.next();
 	  topo::face<1> v2 = adj_v.unproxy_().face();
-	  point2d p2 = adj_v.to_site().front();
 	  adj_v.next();
 	  mln_invariant(!adj_v.is_valid());
 
@@ -279,10 +277,8 @@ namespace mln
 	  // Adjacent vertices.
 	  adj_v.start();
 	  topo::face<1> v1 = adj_v.unproxy_().face();
-	  point2d p1 = adj_v.to_site().front();
 	  adj_v.next();
 	  topo::face<1> v2 = adj_v.unproxy_().face();
-	  point2d p2 = adj_v.to_site().front();
 	  adj_v.next();
 	  mln_invariant(!adj_v.is_valid());
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,15 +84,15 @@ namespace mln
     typedef mln_rvalue(E) rvalue;
 
     rvalue (E::*m1)() const = & E::val;
-    m1 = 0;
+    (void) m1;
 
     typedef mln_image(E) image;
     // FIXME: check "without &"
     image& (E::*m2)() const = & E::ima;
-    m2 = 0;
+    (void) m2;
 
     mln_qlf_value(image)** (E::*m3)() const = & E::address_;
-    m3 = 0;
+    (void ) m3;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -239,7 +240,7 @@ namespace mln
       {
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
-	m = 0;
+	(void) m;
 
  	exact(this)->invalidate();
       }
@@ -251,7 +252,7 @@ namespace mln
       {
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
-	m = 0;
+	(void) m;
 
 	center_at(f_ref);
       }

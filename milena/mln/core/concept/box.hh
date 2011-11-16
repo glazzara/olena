@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -142,9 +143,9 @@ namespace mln
   {
     typedef mln_site(E) site;
     site (E::*m1)() const = & E::pmin;
-    m1 = 0;
+    (void) m1;
     site (E::*m2)() const = & E::pmax;
-    m2 = 0;
+    (void) m2;
   }
 
   template <typename E>
