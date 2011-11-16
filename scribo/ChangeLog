@@ -1,3 +1,8 @@
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix code for Tesseract 3.01
+	compatibility.
+
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Mention the ICDAR 2011 paper in SCRIBO's README.
