@@ -33,11 +33,12 @@
 #include <string>
 
 #include <mln/core/image/image2d.hh>
+#include <mln/make/box2d.hh>
 #include <mln/core/image/dmorph/image_if.hh>
-#include <mln/fun/component/green.hh>
 
 #include <mln/value/rgb8.hh>
 
+#include <mln/fun/component/green.hh>
 /* FIXME: We wanted to use `fun_image' and `operator<<' from
    <mln/core/image/vmorph/fun_image.hh, but they only create read-only
    images.  Use `thru_image' instead.  */
@@ -63,7 +64,7 @@ int main()
   /* FIXME: Cheat: use generic fill as mln::decorated_image does not
      define properly its properties.  */
   data::impl::generic::fill_with_value((thru(green, lena).rw() |
-					box2d(point2d(5,5), point2d(10,10))).rw(),
+					make::box2d(5,5, 10,10)).rw(),
 				       255);
   io::ppm::save(lena, "lena-mask-channel.ppm");
 }

@@ -1,5 +1,13 @@
 2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify some apps/morpher programs using mln::make::box2d.
+
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/mask+channel.cc:
+	Here.
+
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Refactor apps/morphers.
 
 	* apps/morphers/recorder.cc,

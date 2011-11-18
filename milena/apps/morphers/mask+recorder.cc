@@ -37,6 +37,7 @@
 #include <string>
 
 #include <mln/core/image/image2d.hh>
+#include <mln/make/box2d.hh>
 #include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/value/rgb8.hh>
@@ -60,8 +61,7 @@ int main()
   decorated_image< I, recorder<I> > lena_rec = record(lena);
   /* FIXME: Cheat: use generic fill as mln::decorated_image does not
      define properly its properties.  */
-  data::impl::generic::fill_with_value((lena_rec | box2d(point2d(5,5),
-							 point2d(10,10))).rw(),
+  data::impl::generic::fill_with_value((lena_rec | make::box2d(5,5, 10,10)).rw(),
 				       literal::green);
   ppm::save(lena_rec, "lena-roi-fill");
 }
