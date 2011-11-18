@@ -1,3 +1,14 @@
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Refactor apps/morphers.
+
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	Factor common parts...
+	* apps/morphers/recorder.hh: ...here (new file).
+	* apps/morphers/Makefile.am
+	(recorder_SOURCES, mask_recorder_SOURCES): Add recorder.hh.
+
 2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add examples of morphers.

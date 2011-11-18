@@ -28,8 +28,8 @@ noinst_PROGRAMS =				\
   mask+recorder
 
 mask_channel_SOURCES = mask+channel.cc
-recorder_SOURCES = recorder.cc
-mask_recorder_SOURCES = mask+recorder.cc
+recorder_SOURCES = recorder.cc recorder.hh
+mask_recorder_SOURCES = mask+recorder.cc recorder.hh
 
 MOSTLYCLEANFILES =				\
   lena-mask-channel.ppm				\
