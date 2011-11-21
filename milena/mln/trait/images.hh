@@ -118,7 +118,7 @@ namespace mln
   // Morphers.
   template <typename I, typename F> struct image_if_base;
   template <typename I, typename D> struct decorated_image;
-  template <typename I, typename S> struct sub_image;
+  template <typename I, typename S> class sub_image;
   template <typename I> class safe_image;
   template <typename T, typename I> struct cast_image_;
   namespace value { template <unsigned n, typename I> struct stack_image; }

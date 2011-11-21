@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,6 +72,10 @@ namespace mln
        */
       struct fwd_t : public Browsing< fwd_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	fwd_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -80,6 +85,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       const fwd_t fwd;
+
+      fwd_t::fwd_t()
+      {
+      }
 
       template <typename F>
       inline

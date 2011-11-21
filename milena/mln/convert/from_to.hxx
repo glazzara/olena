@@ -69,7 +69,7 @@ namespace mln
 
   namespace algebra {
     template <unsigned n, typename T> class vec;
-    template <unsigned d, typename C> struct h_vec;
+    template <unsigned d, typename C> class h_vec;
   }
 
   namespace fun {

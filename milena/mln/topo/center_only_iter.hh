@@ -45,7 +45,7 @@ namespace mln
   {
 
     // Forward declaration.
-    template <unsigned D> struct face;
+    template <unsigned D> class face;
 
 
     /*----------------------------.

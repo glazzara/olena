@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,6 +74,10 @@ namespace mln
        */
       struct hyper_directional_t : public Browsing< hyper_directional_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	hyper_directional_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -82,6 +87,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       const hyper_directional_t hyper_directional;
+
+      hyper_directional_t::hyper_directional_t()
+      {
+      }
 
       template <typename F>
       inline

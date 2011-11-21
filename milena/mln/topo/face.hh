@@ -49,7 +49,7 @@ namespace mln
     template <unsigned D> class complex;
     template <unsigned N, unsigned D> class n_face;
     template <unsigned N, unsigned D> class face_data;
-    template <unsigned N> struct algebraic_face;
+    template <unsigned N> class algebraic_face;
 
 
     /*-------.

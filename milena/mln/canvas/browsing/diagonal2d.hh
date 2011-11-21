@@ -81,6 +81,10 @@ namespace mln
        */
       struct diagonal2d_t : public Browsing< diagonal2d_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	diagonal2d_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -94,6 +98,10 @@ namespace mln
       const diagonal2d_t diagonal2d;
 
 #  endif // ! MLN_WO_GLOBAL_VARS
+
+      diagonal2d_t::diagonal2d_t()
+      {
+      }
 
 
       template <typename F>

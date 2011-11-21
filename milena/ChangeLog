@@ -1,3 +1,38 @@
+2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues with g++ 4.6.1 and clang++.
+
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/face.hh,
+	* mln/trait/images.hh,
+	* mln/convert/from_to.hxx,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/routine/init.hxx,
+	* mln/algebra/vec.hh: Make declaration and forward declarations
+	consistent.
+
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/breadth_first_search.hh,
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/white.hh: Add a default constructor for global
+	variable types.
+
+	* mln/canvas/browsing/internal/graph_first_search.hh: Avoid a
+	warning for an unused variable.
+
+	* mln/data/was.median.hh: Fix type of the reference.
+
 2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Handle the case of filling an empty border.

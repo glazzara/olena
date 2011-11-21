@@ -37,7 +37,7 @@ namespace mln
 
   // Forward declarations.
   namespace fun { namespace i2v { template <typename T> class array; } }
-  namespace pw { namespace internal { template <typename F, typename S, typename E> struct image_base; } }
+  namespace pw { namespace internal { template <typename F, typename S, typename E> class image_base; } }
   namespace pw { template <typename F, typename S> class image; }
   template <typename I, typename F> struct image_if;
 

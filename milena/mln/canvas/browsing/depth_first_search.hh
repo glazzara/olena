@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -79,7 +79,11 @@ namespace mln
       /// Breadth-first search algorithm for graph, on vertices.
       struct depth_first_search_t :
         public internal::graph_first_search_t<depth_first_search_t, std::stack>
-      {};
+      {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	depth_first_search_t();
+      };
 
       extern const depth_first_search_t depth_first_search;
 
@@ -92,6 +96,10 @@ namespace mln
       const depth_first_search_t depth_first_search;
 
 #  endif // ! MLN_WO_GLOBAL_VARS
+
+      depth_first_search_t::depth_first_search_t()
+      {
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -42,6 +42,10 @@ namespace mln
     /// Type of literal white.
     struct white_t : public Literal<white_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      white_t();
+
 # ifdef MLN_NEW_VALUE_TYPES
       operator float()  const;
       operator double() const;
@@ -50,16 +54,20 @@ namespace mln
 
 
     /// Literal white.
-    extern const white_t& white;
+    extern const white_t white;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const white_t& white = white_t();
+    const white_t white;
 
 #  endif
+
+    white_t::white_t()
+    {
+    }
 
 #  ifdef MLN_NEW_VALUE_TYPES
     inline

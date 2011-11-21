@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,7 +79,11 @@ namespace mln
       /// Breadth-first search algorithm for graph, on vertices.
       struct breadth_first_search_t :
         public internal::graph_first_search_t<breadth_first_search_t, std::queue>
-      {};
+      {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	breadth_first_search_t();
+      };
 
       extern const breadth_first_search_t breadth_first_search;
 
@@ -87,6 +92,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       const breadth_first_search_t breadth_first_search;
+
+      breadth_first_search_t::breadth_first_search_t()
+      {
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -56,7 +56,7 @@ namespace mln
   // Forward declarations.
   namespace algebra {
     template <unsigned n, typename T> class vec;
-    template <unsigned d, typename C> struct h_vec;
+    template <unsigned d, typename C> class h_vec;
     template <unsigned n, unsigned m, typename T> class mat;
   }
 

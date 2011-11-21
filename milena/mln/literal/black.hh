@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -42,6 +42,10 @@ namespace mln
     /// Type of literal black.
     struct black_t : public Literal<black_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      black_t();
+
 # ifdef MLN_NEW_VALUE_TYPES
       operator float()  const;
       operator double() const;
@@ -50,16 +54,20 @@ namespace mln
 
 
     /// Literal black.
-    extern const black_t& black;
+    extern const black_t black;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const black_t& black = black_t();
+    const black_t black;
 
 #  endif
+
+    black_t::black_t()
+    {
+    }
 
 #  ifdef MLN_NEW_VALUE_TYPES
     inline

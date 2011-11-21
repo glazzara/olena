@@ -44,7 +44,7 @@ namespace mln
 
 
   // Forward declaration.
-  template <typename I, typename S> struct sub_image;
+  template <typename I, typename S> class sub_image;
 
 
   namespace internal
