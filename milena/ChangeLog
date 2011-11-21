@@ -1,3 +1,7 @@
+2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/geom/crop_without_localization.hh: Fix preconditions.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation Warnings with latest g++ versions.

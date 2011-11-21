@@ -59,7 +59,8 @@ namespace mln
       const B& b_in = exact(b_in_);
       const B& b_out = exact(b_out_);
       mln_precondition(input.is_valid());
-      mln_precondition(b.is_valid());
+      mln_precondition(b_in.is_valid());
+      mln_precondition(b_out.is_valid());
       mln_precondition(b_in <= input.domain());
       mln_precondition(b_in.nsites() == b_out.nsites());
 
