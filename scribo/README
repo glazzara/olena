@@ -59,7 +59,7 @@ dependencies should be installed :
 - xsltproc
 - fop
 - GraphicsMagick++ or ImageMagick++
-- Tesseract 2.x or 3.x (strongly recommended)
+- Tesseract 2.x or 3.01 minimum (strongly recommended)
 
 Warning: Tesseract 2.x is still supported however, you may encounter
 crashes because of bugs with Tesseract and specific locales. Moreover,
@@ -73,6 +73,10 @@ KNOWN ISSUES
 
 - Tesseract 2.x may cause crashes with specific system locales. It is
   fixed in Tesseract 3.x
+
+- From Tesseract 3.00 to 3.01 API has changed, introducing
+  incompatibilities. We chose to be compatible with the latest version.
+  Hence, Scribo will not compile with Tesseract 3.00.
 
 - Apple's GCC (llvm-{gcc,g++} 4.2) compiler provided with Mac OS X
   Lion (10.7.0) has some trouble with strict aliasing and our code. If
