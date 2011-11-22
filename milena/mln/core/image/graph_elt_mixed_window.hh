@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,8 +43,8 @@ namespace mln
 
   /// Forward declaration
   template <typename G, typename S, typename S2> class graph_elt_mixed_window;
-  template <typename G, typename F> struct p_edges;
-  template <typename G, typename F> struct p_vertices;
+  template <typename G, typename F> class p_edges;
+  template <typename G, typename F> class p_vertices;
   namespace util
   {
     template <typename G> class edge;

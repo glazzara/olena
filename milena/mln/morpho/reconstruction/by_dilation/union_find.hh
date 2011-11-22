@@ -92,7 +92,7 @@ namespace mln
 	  }
 
 
-	  
+
 	  template <typename Par>
 	  inline
 	  mln_site(Par) find_root(Par& parent, mln_site(Par) x)
@@ -111,10 +111,10 @@ namespace mln
 
 	namespace impl
 	{
-	  
+
 	  namespace generic
 	  {
-	    
+
 	    template <typename I, typename J, typename N>
 	    inline
 	    mln_concrete(I)
@@ -128,8 +128,8 @@ namespace mln
 	      const N& nbh = exact(nbh_);
 
 	      internal::union_find_tests(f, g, nbh);
-	      
-	      
+
+
 	      typedef mln_site(I)  P;
 	      typedef mln_value(I) V;
 
@@ -184,7 +184,7 @@ namespace mln
 		    deja_vu(p) = true;
 		  }
 	      }
-	      
+
 	      // Second pass.
 	      {
 		for (int i = s.nsites() - 1; i >= 0; --i)
@@ -207,7 +207,7 @@ namespace mln
 	      return output;
 	    }
 
-      
+
 	  } // end of namespace mln::morpho::reconstruction::by_dilation::impl::generic
 
 	} // end of namespace mln::morpho::reconstruction::by_dilation::impl
@@ -225,6 +225,10 @@ namespace mln
 			      const Image<I>& f, const Image<J>& g,
 			      const Neighborhood<N>& nbh)
 	  {
+	    (void) f;
+	    (void) g;
+	    (void) nbh;
+
 	    // FIXME: Not yet implemented.
 	    std::cerr
 	      << __FILE__ << ":" << __LINE__ << ": error:\n"

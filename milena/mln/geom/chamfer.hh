@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -111,7 +112,7 @@ namespace mln
     template <typename I, typename W>
     mln_ch_value(I, unsigned)
     chamfer(const Image<I>& input_, const W& w_win_,
-	    unsigned max = mln_max(unsigned))
+	    unsigned max)
     {
       trace::entering("mln::geom::chamfer");
       // FIXME: check that input_ is binary.

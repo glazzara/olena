@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,7 +64,7 @@ namespace mln
         as well, since it always contains a single element, the
         center/reference face (and the traversal order is
         meaningless).
-       
+
         This iterator is essentially used to implement other iterators.
         \see mln::topo::centered_iter_adapter
         \see mln::complex_lower_window

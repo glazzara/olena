@@ -97,8 +97,8 @@ namespace mln
 	    med.take(input(q));
 	}
 
-	int& row = p.row();
-	int& col = p.col();
+	def::coord& row = p.row();
+	def::coord& col = p.col();
 	bool fwd = true;
 
 	mln_assertion(p.col() == min_col);
@@ -155,8 +155,8 @@ namespace mln
 	const unsigned half = win.length() / 2;
 
 	point2d p;
-	int& row = p.row();
-	int& col = p.col();
+	def::coord& row = p.row();
+	def::coord& col = p.col();
 
 	accu::stat::median_h<mln_vset(I)> med(input.values());
 

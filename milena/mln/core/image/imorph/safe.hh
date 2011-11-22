@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,7 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename I> struct safe_image;
+  template <typename I> class safe_image;
 
 
   namespace internal

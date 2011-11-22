@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,7 @@ namespace mln
   {
 
     // Fwd decl.
-    template <unsigned n> class float01_;
+    template <unsigned n> struct float01_;
     class float01;
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,7 @@ namespace mln
 {
 
   // Forward declarations.
-  template <unsigned N, unsigned D, typename P> class p_faces;
+  template <unsigned N, unsigned D, typename P> struct p_faces;
 
   template <unsigned N, unsigned D> class faces_fwd_iter_;
   template <unsigned N, unsigned D> class faces_bkd_iter_;

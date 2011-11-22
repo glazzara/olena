@@ -167,7 +167,7 @@ namespace mln
   graph_window_if_piter<S,W,I>::do_start_()
   {
     iter_.start();
-    while (iter_.is_valid() && is_masked(this->c_->element(), iter_))
+    while (iter_.is_valid() && this->is_masked(this->c_->element(), iter_))
       iter_.next();
   }
 
@@ -177,7 +177,7 @@ namespace mln
   graph_window_if_piter<S,W,I>::do_next_()
   {
     iter_.next();
-    while (iter_.is_valid() && is_masked(this->c_->element(), iter_))
+    while (iter_.is_valid() && this->is_masked(this->c_->element(), iter_))
       iter_.next();
   }
 

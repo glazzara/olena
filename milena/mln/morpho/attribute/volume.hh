@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ namespace mln
   // Forward declaration.
   namespace morpho {
     namespace attribute {
-      template <typename I> class volume;
+      template <typename I> struct volume;
     }
   }
 

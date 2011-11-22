@@ -1,13 +1,13 @@
 Copyright (C) 2009, 2010, 2011 EPITA Research and Development
 Laboratory (LRDE)
 
-This file is part of Scribo.
+This file is part of Olena.
 
-Scribo is free software: you can redistribute it and/or modify it under
+Olena is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free
 Software Foundation, version 2 of the License.
 
-Scribo is distributed in the hope that it will be useful,
+Olena is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
@@ -85,3 +85,29 @@ KNOWN ISSUES
 
 - On Mac OS X Lion (10.7.0) prefer using GraphicsMagick++ instead of
   ImageMagick++. The latter may cause crashes.
+
+
+============
+Bibliography
+============
+
+Further information about SCRIBO can be found into the following paper.
+
+   * `The SCRIBO Module of the Olena Platform: a Free Software
+     Framework for Document Image Analysis.`  Guillaume Lazzara,
+     Roland Levillain, Thierry Géraud, Yann Jacquelet, Julien
+     Marquegnies, Arthur Crépin-Leblond.  In the proceedings of the
+     11th International Conference on Document Analysis and
+     Recognition (ICDAR)
+     http://www.icdar2011.org/
+     Beijing, China September 18 - 21, 2011.
+
+
+   You can download this paper and related material from
+<http://publications.lrde.epita.fr>.
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:

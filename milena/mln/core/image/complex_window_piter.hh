@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -364,9 +364,10 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_window_bkd_piter<I, G, W>::center_at_(const Pref& /* c */)
+  complex_window_bkd_piter<I, G, W>::center_at_(const Pref& c)
   {
     // FIXME: Argument C is not used here... Is this normal?
+    (void) c;
     iter_.center_at(this->center().face());
   }
 

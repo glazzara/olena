@@ -63,7 +63,7 @@ namespace mln
     namespace internal
     {
       template <unsigned n> class gray_;
-      class gray_f;
+      struct gray_f;
       template <unsigned n_src, unsigned n_dest>
       long convert(int val);
     }

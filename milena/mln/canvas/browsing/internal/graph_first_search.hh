@@ -128,6 +128,7 @@ namespace mln
 	util::vertex_id_t
 	next(const S& stack)
 	{
+	  (void) stack;
 	  mln_assertion(0);
 	  /// Not defined yet!
 	  // mlc_abort(S)::check();

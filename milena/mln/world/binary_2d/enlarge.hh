@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -330,6 +331,9 @@ namespace mln
 	mln_concrete(I)
 	enlarge_dispatch(const I& input, const mln_value(I)&, unsigned n)
 	{
+	  (void) input;
+	  (void) n;
+
 	  mlc_abort(I)::check();
 	  return mln_concrete(I)();
 	}

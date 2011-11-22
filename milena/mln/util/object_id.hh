@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -136,6 +137,7 @@ namespace mln
     inline
     object_id<Tag,V>::object_id(const object_id<Tag2,V2>& id)
     {
+      (void) id;
       typedef object_id<Tag2,V2> id_t;
       mlc_abort(id_t)::check();
     }

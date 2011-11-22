@@ -63,7 +63,7 @@ namespace mln
 
   template <typename D> class neighb;
   template <typename D> class window;
-  template <typename D, typename W> class w_window;
+  template <typename D, typename W> struct w_window;
 
   template <typename T> struct image1d;
 

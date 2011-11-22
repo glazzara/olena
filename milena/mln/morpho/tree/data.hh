@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -93,7 +93,7 @@ namespace mln
       template <typename T> struct dn_leaf_piter;
 
       /// Depth1st tree traversal iterator.
-      template <typename T> struct depth1st_piter;
+      template <typename T> class depth1st_piter;
 
 
       template <typename I, typename S>

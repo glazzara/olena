@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -110,16 +111,16 @@ namespace mln
 
   // Primitive types.
   template <typename T> struct image1d;
-  template <typename T> struct image2d;
+  template <typename T> class image2d;
   template <typename T> struct image3d;
   namespace pw { template <typename F, typename S> class image; }
 
   // Morphers.
   template <typename I, typename F> struct image_if_base;
-  template <typename I, typename D> class decorated_image;
+  template <typename I, typename D> struct decorated_image;
   template <typename I, typename S> class sub_image;
   template <typename I> class safe_image;
-  template <typename T, typename I> class cast_image_;
+  template <typename T, typename I> struct cast_image_;
   namespace value { template <unsigned n, typename I> struct stack_image; }
 
 

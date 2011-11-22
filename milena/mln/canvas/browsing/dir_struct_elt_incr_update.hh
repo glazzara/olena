@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -85,6 +86,10 @@ namespace mln
        */
       struct dir_struct_elt_incr_update_t : public Browsing< dir_struct_elt_incr_update_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	dir_struct_elt_incr_update_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -94,6 +99,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       const dir_struct_elt_incr_update_t dir_struct_elt_incr_update;
+
+      dir_struct_elt_incr_update_t::dir_struct_elt_incr_update_t()
+      {
+      }
 
       template <typename F>
       inline

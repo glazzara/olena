@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,6 +22,7 @@ check_PROGRAMS =				\
   duplicate					\
   equalize					\
   fill						\
+  fill_0					\
   find						\
   get						\
   mirror					\
@@ -43,6 +44,7 @@ adjust_SOURCES = adjust.cc
 duplicate_SOURCES = duplicate.cc
 equalize_SOURCES = equalize.cc
 fill_SOURCES = fill.cc
+fill_0_SOURCES = fill_0.cc
 find_SOURCES = find.cc
 get_SOURCES = get.cc
 mirror_SOURCES = mirror.cc

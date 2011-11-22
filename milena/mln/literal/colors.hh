@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -42,146 +42,244 @@ namespace mln
     /// Type of literal red.
     struct red_t : public Literal<red_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      red_t();
     };
 
     /// Type of literal green.
     struct green_t : public Literal<green_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      green_t();
     };
 
     /// Type of literal blue.
     struct blue_t : public Literal<blue_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      blue_t();
     };
 
     /// Type of literal brown.
     struct brown_t : public Literal<brown_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      brown_t();
     };
 
     /// Type of literal lime.
     struct lime_t : public Literal<lime_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      lime_t();
     };
 
     /// Type of literal orange.
     struct orange_t : public Literal<orange_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      orange_t();
     };
 
     /// Type of literal pink.
     struct pink_t : public Literal<pink_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      pink_t();
     };
 
     /// Type of literal purple.
     struct purple_t : public Literal<purple_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      purple_t();
     };
 
     /// Type of literal teal.
     struct teal_t : public Literal<teal_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      teal_t();
     };
 
     /// Type of literal violet.
     struct violet_t : public Literal<violet_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      violet_t();
     };
 
     /// Type of literal cyan.
     struct cyan_t : public Literal<cyan_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      cyan_t();
     };
 
     /// Type of literal magenta.
     struct magenta_t : public Literal<magenta_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      magenta_t();
     };
 
     /// Type of literal yellow.
     struct yellow_t : public Literal<yellow_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      yellow_t();
     };
 
     /// Type of literal olive.
     struct olive_t : public Literal<olive_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      olive_t();
     };
 
     /// Literal red.
-    extern const red_t& red;
+    extern const red_t red;
 
     /// Literal green.
-    extern const green_t& green;
+    extern const green_t green;
 
     /// Literal blue.
-    extern const blue_t& blue;
+    extern const blue_t blue;
 
     /// Literal brown.
-    extern const brown_t& brown;
+    extern const brown_t brown;
 
     /// Literal lime.
-    extern const lime_t& lime;
+    extern const lime_t lime;
 
     /// Literal orange.
-    extern const orange_t& orange;
+    extern const orange_t orange;
 
     /// Literal pink.
-    extern const pink_t& pink;
+    extern const pink_t pink;
 
     /// Literal purple.
-    extern const purple_t& purple;
+    extern const purple_t purple;
 
     /// Literal teal.
-    extern const teal_t& teal;
+    extern const teal_t teal;
 
     /// Literal violet.
-    extern const violet_t& violet;
+    extern const violet_t violet;
 
     /// Literal cyan.
-    extern const cyan_t& cyan;
+    extern const cyan_t cyan;
 
     /// Literal magenta.
-    extern const magenta_t& magenta;
+    extern const magenta_t magenta;
 
     /// Literal yellow.
-    extern const yellow_t& yellow;
+    extern const yellow_t yellow;
 
     /// Literal olive.
-    extern const olive_t& olive;
+    extern const olive_t olive;
 
 # ifndef MLN_INCLUDE_ONLY
 
+    red_t::red_t()
+    {
+    }
+
+    green_t::green_t()
+    {
+    }
+
+    blue_t::blue_t()
+    {
+    }
+
+    brown_t::brown_t()
+    {
+    }
+
+    lime_t::lime_t()
+    {
+    }
+
+    orange_t::orange_t()
+    {
+    }
+
+    pink_t::pink_t()
+    {
+    }
+
+    purple_t::purple_t()
+    {
+    }
+
+    teal_t::teal_t()
+    {
+    }
+
+    violet_t::violet_t()
+    {
+    }
+
+    cyan_t::cyan_t()
+    {
+    }
+
+    magenta_t::magenta_t()
+    {
+    }
+
+    yellow_t::yellow_t()
+    {
+    }
+
+    olive_t::olive_t()
+    {
+    }
+
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const red_t& red = red_t();
+    const red_t red;
 
-    const green_t& green = green_t();
+    const green_t green;
 
-    const blue_t& blue = blue_t();
+    const blue_t blue;
 
-    const brown_t& brown = brown_t();
+    const brown_t brown;
 
-    const lime_t& lime = lime_t();
+    const lime_t lime;
 
-    const orange_t& orange = orange_t();
+    const orange_t orange;
 
-    const pink_t& pink = pink_t();
+    const pink_t pink;
 
-    const purple_t& purple = purple_t();
+    const purple_t purple;
 
-    const teal_t& teal = teal_t();
+    const teal_t teal;
 
-    const violet_t& violet = violet_t();
+    const violet_t violet;
 
-    const cyan_t& cyan = cyan_t();
+    const cyan_t cyan;
 
-    const magenta_t& magenta = magenta_t();
+    const magenta_t magenta;
 
-    const yellow_t& yellow = yellow_t();
+    const yellow_t yellow;
 
-    const olive_t& olive = olive_t();
+    const olive_t olive;
 
 #  endif
 

@@ -47,7 +47,7 @@ namespace mln
   {
 
     // We indeed have to handle the couple of cases when I is fastest
-    // or is not.  Justification: mln::pixel derives from pixel_impl_ 
+    // or is not.  Justification: mln::pixel derives from pixel_impl_
     // and is a general purpose pixel class; it can be used on any
     // image whatever it is a fastest one or not.
 

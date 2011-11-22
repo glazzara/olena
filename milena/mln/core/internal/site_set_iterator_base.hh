@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -114,8 +115,9 @@ namespace mln
     template <typename S, typename E>
     inline
     void
-    site_set_iterator_base<S, E>::change_target_(const S& /* s */)
+    site_set_iterator_base<S, E>::change_target_(const S& s)
     {
+      (void) s;
       // Empty by default.
     }
 

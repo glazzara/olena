@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +28,7 @@
 # define MLN_CORE_DPOINTS_PIXTER_HH
 
 /// \file
-/// 
+///
 /// \brief Definition of forward and backward mln::dpoint-based
 /// iterators for pixels iterations.
 ///
@@ -51,7 +52,7 @@ namespace mln
 
   /// \brief A generic forward iterator on the pixels of a
   /// dpoint-based window or neighborhood.
-  /// 
+  ///
   /// Parameter \c I is the image type.
   template <typename I>
   class dpoints_fwd_pixter
@@ -62,7 +63,7 @@ namespace mln
 
   public:
     /// \brief Constructor (using an image).
-    /// 
+    ///
     /// \param[in] image The image to iterate over.
     /// \param[in] dps   An object (neighborhood or window) that can
     ///                  provide a set of delta-points.
@@ -74,7 +75,7 @@ namespace mln
 		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
-    /// 
+    ///
     /// \param[in] pxl_ref Center (generalized) pixel to iterate around.
     /// \param[in] dps     An object (neighborhood or window) that can
     ///                    provide a set of delta-points.
@@ -134,7 +135,7 @@ namespace mln
 
   /// \brief A generic backward iterator on the pixels of a
   /// dpoint-based window or neighborhood.
-  /// 
+  ///
   /// Parameter \c I is the image type.
   template <typename I>
   class dpoints_bkd_pixter
@@ -145,7 +146,7 @@ namespace mln
 
   public:
     /// \brief Constructor (using an image).
-    /// 
+    ///
     /// \param[in] image The image to iterate over.
     /// \param[in] dps   An object (neighborhood or window) that can
     ///                  provide a set of delta-points.
@@ -157,7 +158,7 @@ namespace mln
 		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
-    /// 
+    ///
     /// \param[in] pxl_ref Center (generalized) pixel to iterate around.
     /// \param[in] dps     An object (neighborhood or window) that can
     ///                    provide a set of delta-points.
@@ -257,7 +258,7 @@ namespace mln
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)
-      return image_(*p_ref_);
+      return this->image_(*p_ref_);
     else
       return **value_ref_;
   }
@@ -286,7 +287,7 @@ namespace mln
     if (is_valid())
       {
 	if (p_ref_)
-	  this->value_ptr_ = & image_(*p_ref_) + *i_;
+	  this->value_ptr_ = & this->image_(*p_ref_) + *i_;
 	else
 	  this->value_ptr_ = * value_ref_ + *i_;
       }
@@ -368,7 +369,7 @@ namespace mln
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)
-      return image_(*p_ref_);
+      return this->image_(*p_ref_);
     else
       return **value_ref_;
   }
@@ -397,7 +398,7 @@ namespace mln
     if (is_valid())
       {
 	if (p_ref_)
-	  this->value_ptr_ = & image_(*p_ref_) + *i_;
+	  this->value_ptr_ = & this->image_(*p_ref_) + *i_;
 	else
 	  this->value_ptr_ = * value_ref_ + *i_;
       }

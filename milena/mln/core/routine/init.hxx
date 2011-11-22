@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,7 +39,7 @@ namespace mln
   namespace fun { namespace i2v { template <typename T> class array; } }
   namespace pw { namespace internal { template <typename F, typename S, typename E> class image_base; } }
   namespace pw { template <typename F, typename S> class image; }
-  template <typename I, typename F> class image_if;
+  template <typename I, typename F> struct image_if;
 
 
 

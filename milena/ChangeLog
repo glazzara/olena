@@ -122,24 +122,50 @@
 	* mln/value/builtin/floatings.hh: Fix string name for builtin
 	double type.
 
-2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
-	Fix Scribo build system.
+	Handle the case of filling an empty border.
 
-	* demo/viewer/Makefile.am: Take into account no-strict-aliasing
-	flag.
+	* mln/border/fill.hh (mln::border::impl::fill_size_1): Here.
+	Aesthetic changes.
+	* tests/border/fill_0.cc: New test.
+	* tests/border/Makefile.am (check_PROGRAMS): Add fill_0.
+	(fill_0_SOURCES): New.
 
-	* demo/review/Makefile.am,
-	* src/toolchain/nepomuk/Makefile.am: Do not distribute some
-	examples.
+2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
-2011-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+	Fix compilation issues with g++ 4.6.1 and clang++.
 
-	Improve text justification in HTML document reconstruction.
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/face.hh,
+	* mln/trait/images.hh,
+	* mln/convert/from_to.hxx,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/routine/init.hxx,
+	* mln/algebra/vec.hh: Make declaration and forward declarations
+	consistent.
 
-	* demo/xml2doc/templates/html/css.css,
-	* demo/xml2doc/templates/html/main.xsl,
-	* demo/xml2doc/templates/html/main_base64.xsl: Add new CSS rules.
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/breadth_first_search.hh,
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/white.hh: Add a default constructor for global
+	variable types.
+
+	* mln/canvas/browsing/internal/graph_first_search.hh: Avoid a
+	warning for an unused variable.
+
+	* mln/data/was.median.hh: Fix type of the reference.
 
 2011-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -151,6 +177,117 @@
 
 	* mln/io/dicom/load.hh: Fix invalid data while loading large
 	image.
+
+2011-04-28  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
+
+	Fix warnings with Clang/g++ 4.6.x
+
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* mln/canvas/browsing/internal/graph_first_search.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/core/image/complex_window_piter.hh,
+	* mln/extension/fill.hh,
+	* mln/fun/spe/binary.hh,
+	* mln/fun/spe/unary.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/io/fld/max_components.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/value.hh,
+	* mln/morpho/reconstruction/by_dilation/union_find.hh,
+	* mln/opt/element.hh,
+	* mln/registration/get_rot.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/subsampling/gaussian_subsampling.hh,
+	* mln/topo/skeleton/is_simple_point.hh,
+	* mln/transform/influence_zone_geodesic.hh,
+	* mln/util/object_id.hh,
+	* mln/value/lut_vec.hh,
+	* mln/world/binary_2d/enlarge.hh: Avoid unused variable warnings.
+
+	* mln/accu/internal/couple.hh,
+	* mln/convert/from_to.hxx,
+	* mln/core/faces_psite.hh,
+	* mln/core/image/ch_piter.hh,
+	* mln/core/image/dmorph/extended.hh,
+	* mln/core/image/dmorph/extension_fun.hh,
+	* mln/core/image/dmorph/extension_ima.hh,
+	* mln/core/image/dmorph/extension_val.hh,
+	* mln/core/image/dmorph/hexa.hh,
+	* mln/core/image/dmorph/sub_image_if.hh,
+	* mln/core/image/dmorph/transformed_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/graph_elt_mixed_window.hh,
+	* mln/core/image/graph_elt_window.hh,
+	* mln/core/image/graph_elt_window_if.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/image/imorph/plain.hh,
+	* mln/core/image/imorph/safe.hh,
+	* mln/core/image/vmorph/cast_image.hh,
+	* mln/core/image/vmorph/fun_image.hh,
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/core/image/vmorph/thrubin_image.hh,
+	* mln/core/image/vmorph/violent_cast_image.hh,
+	* mln/core/internal/is_masked_impl_selector.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/routine/init.hxx,
+	* mln/core/site_set/attic/p_faces_piter.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_if.hh,
+	* mln/core/site_set/p_transformed.hh,
+	* mln/debug/println.spe.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pgm/save.hh,
+	* mln/morpho/attribute/height.hh,
+	* mln/morpho/attribute/sharpness.hh,
+	* mln/morpho/attribute/volume.hh,
+	* mln/morpho/tree/data.hh,
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/face.hh,
+	* mln/topo/face_data.hh,
+	* mln/trait/image_from_grid.hh,
+	* mln/trait/images.hh,
+	* mln/value/float01.hh,
+	* mln/value/float01_f.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/graylevel_f.hh,
+	* mln/value/internal/gray_.hh,
+	* mln/value/internal/gray_f.hh: Make forward declarations
+	consistent with declarations.
+
+	* mln/core/concept/box.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/image/graph_window_if_piter.hh: Add explicit 'this'.
+
+	* mln/data/fill.hh: Make sure declarations are made before use.
+
+	* mln/geom/chamfer.hh,
+	* mln/morpho/tree/compute_attribute_image.hh: Do not set default
+	argument values in declaration.
+
+	* mln/accu/line.hh: Use def::coord.
+
+	* mln/algebra/vec.hh,
+	* mln/convert/from_to.hxx,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/internal/site_set_iterator_base.hh,
+	* mln/core/site_set/box.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_vertices.hh: Make forward declaration
+	consistent with declaration.
+
+	* mln/value/builtin/carrays.hh: Explicitly convert to char *.
+
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_int_to_value.hh,
+	* mln/core/point.hh,
+	* mln/opt/element.hh: Avoid unused variable warning.
+
+	* mln/convert/impl/from_image_to_site_set.hh: Remove useless local variable.
 
 2010-12-10  Roland Levillain  <roland@lrde.epita.fr>
 

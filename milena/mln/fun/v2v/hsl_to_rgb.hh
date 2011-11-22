@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,6 +71,9 @@ namespace mln
       {
 	typedef T_rgb result;
 
+
+	f_hsl_to_rgb_();
+
 	template <typename T_hsl>
         T_rgb operator()(const T_hsl& hsl) const;
 
@@ -94,6 +97,10 @@ namespace mln
       /// \}
 #  endif // !MLN_WO_GLOBAL_VARS
 
+      template <typename T_rgb>
+      f_hsl_to_rgb_<T_rgb>::f_hsl_to_rgb_()
+      {
+      }
 
       /// This method implements the conversion from HSL to RGB as described by
       /// Max K. Agoston in `Computer Graphics and Geometric Modeling:

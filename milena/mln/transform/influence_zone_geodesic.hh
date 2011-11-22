@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -87,6 +87,9 @@ namespace mln
 	influence_zone_geodesic(const Image<I>& input,
 				const Neighborhood<N>& nbh)
 	{
+	  (void) input;
+	  (void) nbh;
+
 	  // FIXME: To be written...
 	  mlc_abort(I)::check();
 	}

@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,7 +63,7 @@ namespace mln
     namespace internal
     {
       template <unsigned n> class gray_;
-      class gray_f;
+      struct gray_f;
     }
 
     struct float01_f;
@@ -378,6 +378,8 @@ namespace mln
     void
     operator+(const graylevel_f& lhs, const I& i)
     {
+      (void) lhs;
+      (void) i;
       typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
     }
 
@@ -388,6 +390,8 @@ namespace mln
     void
     operator+(const I& i, const graylevel_f& rhs)
     {
+      (void) i;
+      (void) rhs;
       typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
     }
 
@@ -398,6 +402,8 @@ namespace mln
     void
     operator-(const graylevel_f& lhs, const I& i)
     {
+      (void) lhs;
+      (void) i;
       typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
     }
 
@@ -408,6 +414,8 @@ namespace mln
     void
     operator-(const I& i, const graylevel_f& rhs)
     {
+      (void) i;
+      (void) rhs;
       typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
     }
 

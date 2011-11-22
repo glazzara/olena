@@ -1,3 +1,7 @@
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	* README (Bibliography): Mention the GRETSI 2011 paper.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries

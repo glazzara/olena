@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -89,6 +89,10 @@ namespace mln
        */
       struct directional_t : public Browsing< directional_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	directional_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -102,6 +106,10 @@ namespace mln
       const directional_t directional;
 
 # endif // ! MLN_WO_GLOBAL_VARS
+
+      directional_t::directional_t()
+      {
+      }
 
       template <typename F>
       inline

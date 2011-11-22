@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,70 +23,38 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_LITERAL_WHITE_HH
-# define MLN_LITERAL_WHITE_HH
-
 /// \file
-/// \brief Definition of the 'white' literal.
+/// \brief Test filling an image with a border of 0.
 
-# include <mln/core/concept/literal.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 
+#include <mln/debug/iota.hh>
+#include <mln/border/fill.hh>
 
-namespace mln
+int
+main()
 {
+  using namespace mln;
 
-  namespace literal
+  border::thickness = 0;
+
   {
+    // Image with values of width 1 (sizeof(int_u8) == 1), the border
+    // of which is filled using mln::border::impl::fill_size_1().
+    using mln::value::int_u8;
+    image2d<int_u8> ima(3, 3);
+    debug::iota(ima);
+    border::fill(ima, 42);
+  }
 
-    /// Type of literal white.
-    struct white_t : public Literal<white_t>
-    {
-      // This default constructor is needed for compilation with gcc
-      // 4.6.0, gcc 4.6.1 and Clang.
-      white_t();
-
-# ifdef MLN_NEW_VALUE_TYPES
-      operator float()  const;
-      operator double() const;
-# endif // MLN_NEW_VALUE_TYPES
-    };
-
-
-    /// Literal white.
-    extern const white_t white;
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-#  ifndef MLN_WO_GLOBAL_VARS
-
-    const white_t white;
-
-#  endif
-
-    white_t::white_t()
-    {
-    }
-
-#  ifdef MLN_NEW_VALUE_TYPES
-    inline
-    white_t::operator float() const
-    {
-      return 1.f;
-    }
-
-    inline
-    white_t::operator double() const
-    {
-      return 1.;
-    }
-#  endif // MLN_NEW_VALUE_TYPES
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::literal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_LITERAL_WHITE_HH
+  {
+    // Image with values of width > 1 (sizeof(int_u16) == 2), the border
+    // of which is filled using mln::border::impl::fill_size_n().
+    using mln::value::int_u16;
+    image2d<int_u16> ima(3, 3);
+    debug::iota(ima);
+    border::fill(ima, 42);
+  }
+}

@@ -254,6 +254,8 @@ namespace mln
       inline
       QImage to_qimage_dispatch(const Image<I>& ima, V&)
       {
+	(void) ima;
+
 	// Not supported yet!
 	mlc_abort(I)::check();
 	return QImage();
