@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2B_THRESHOLD_HH
-# define MLN_FUN_V2B_THRESHOLD_HH
+#ifndef MLN_FUN_V2B_THRESHOLD_LE_HH
+# define MLN_FUN_V2B_THRESHOLD_LE_HH
 
 /// \file
 ///
@@ -44,14 +44,14 @@ namespace mln
     {
 
       /// Threshold function.
-      /// f(v) = (v >= threshold).
+      /// f(v) = (v <= threshold).
       template <typename V>
-      struct threshold : public Function_v2b< threshold<V> >
+      struct threshold_le : public Function_v2b< threshold_le<V> >
       {
 	typedef bool result;
 	bool operator()(const V& v) const;
 
-	threshold(const V& a);
+	threshold_le(const V& a);
 	V a;
       };
 
@@ -60,7 +60,7 @@ namespace mln
 
       template <typename V>
       inline
-      threshold<V>::threshold(const V& a)
+      threshold_le<V>::threshold_le(const V& a)
 	: a(a)
       {
       }
@@ -68,7 +68,7 @@ namespace mln
       template <typename V>
       inline
       bool
-      threshold<V>::operator()(const V& v) const
+      threshold_le<V>::operator()(const V& v) const
       {
 	// Here the test seems to be inversed compared to the usual
 	// use. Indeed, we want to preserve the following convention:
@@ -85,4 +85,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_V2B_THRESHOLD_HH
+#endif // ! MLN_FUN_V2B_THRESHOLD_LE_HH

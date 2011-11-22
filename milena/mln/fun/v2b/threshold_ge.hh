@@ -24,15 +24,65 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2B_ESSENTIAL_HH
-# define MLN_FUN_V2B_ESSENTIAL_HH
+#ifndef MLN_FUN_V2B_THRESHOLD_GE_HH
+# define MLN_FUN_V2B_THRESHOLD_GE_HH
 
-/*! \file
- *
- * \brief File that includes essential functions from point to value.
- */
+/// \file
+///
+/// FIXME.
 
-# include <mln/fun/v2b/threshold_ge.hh>
-# include <mln/fun/v2b/threshold_le.hh>
+# include <mln/core/concept/function.hh>
 
-#endif // ! MLN_FUN_V2B_ESSENTIAL_HH
+
+namespace mln
+{
+
+  namespace fun
+  {
+
+    namespace v2b
+    {
+
+      /// Threshold function.
+      /// f(v) = (v >= threshold).
+      template <typename V>
+      struct threshold_ge : public Function_v2b< threshold_ge<V> >
+      {
+	typedef bool result;
+	bool operator()(const V& v) const;
+
+	threshold_ge(const V& a);
+	V a;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      threshold_ge<V>::threshold_ge(const V& a)
+	: a(a)
+      {
+      }
+
+      template <typename V>
+      inline
+      bool
+      threshold_ge<V>::operator()(const V& v) const
+      {
+	// Here the test seems to be inversed compared to the usual
+	// use. Indeed, we want to preserve the following convention:
+	// True for foreground and False for background.
+	return v >= a;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2b
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_V2B_THRESHOLD_GE_HH

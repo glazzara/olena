@@ -1,3 +1,23 @@
+2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add two variants of the threshold function.
+
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* mln/binarization/threshold.hh,
+	* mln/fun/v2b/all.hh,
+	* mln/fun/v2b/essential.hh,
+	* mln/world/binary_2d/enlarge.hh,
+	* tests/labeling/n_max.cc: Update includes and use of threshold
+	function.
+
+	* mln/fun/v2b/threshold.hh: Replaced...
+
+	* mln/fun/v2b/threshold_ge.hh,
+	* mln/fun/v2b/threshold_le.hh: ... by these files.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/geom/crop_without_localization.hh: Fix preconditions.

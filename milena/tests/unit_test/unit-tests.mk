@@ -652,7 +652,8 @@ mln_fun_unary_param \
 mln_fun_v2b_all \
 mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
-mln_fun_v2b_threshold \
+mln_fun_v2b_threshold_ge \
+mln_fun_v2b_threshold_le \
 mln_fun_v2i_all \
 mln_fun_v2i_index_of_value \
 mln_fun_v2v_abs \
@@ -720,6 +721,8 @@ mln_geom_all \
 mln_geom_bbox \
 mln_geom_chamfer \
 mln_geom_complex_geometry \
+mln_geom_crop \
+mln_geom_crop_without_localization \
 mln_geom_delta \
 mln_geom_essential \
 mln_geom_horizontal_symmetry \
@@ -1979,7 +1982,8 @@ mln_fun_unary_param_SOURCES = mln_fun_unary_param.cc
 mln_fun_v2b_all_SOURCES = mln_fun_v2b_all.cc
 mln_fun_v2b_essential_SOURCES = mln_fun_v2b_essential.cc
 mln_fun_v2b_lnot_SOURCES = mln_fun_v2b_lnot.cc
-mln_fun_v2b_threshold_SOURCES = mln_fun_v2b_threshold.cc
+mln_fun_v2b_threshold_ge_SOURCES = mln_fun_v2b_threshold_ge.cc
+mln_fun_v2b_threshold_le_SOURCES = mln_fun_v2b_threshold_le.cc
 mln_fun_v2i_all_SOURCES = mln_fun_v2i_all.cc
 mln_fun_v2i_index_of_value_SOURCES = mln_fun_v2i_index_of_value.cc
 mln_fun_v2v_abs_SOURCES = mln_fun_v2v_abs.cc
@@ -2047,6 +2051,8 @@ mln_geom_all_SOURCES = mln_geom_all.cc
 mln_geom_bbox_SOURCES = mln_geom_bbox.cc
 mln_geom_chamfer_SOURCES = mln_geom_chamfer.cc
 mln_geom_complex_geometry_SOURCES = mln_geom_complex_geometry.cc
+mln_geom_crop_SOURCES = mln_geom_crop.cc
+mln_geom_crop_without_localization_SOURCES = mln_geom_crop_without_localization.cc
 mln_geom_delta_SOURCES = mln_geom_delta.cc
 mln_geom_essential_SOURCES = mln_geom_essential.cc
 mln_geom_horizontal_symmetry_SOURCES = mln_geom_horizontal_symmetry.cc

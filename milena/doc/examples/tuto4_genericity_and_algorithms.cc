@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,8 +49,6 @@
 #include <mln/data/fill.hh>
 
 #include <mln/pw/all.hh>
-
-#include <mln/binarization/threshold.hh>
 
 #include <mln/labeling/colorize.hh>
 #include <mln/labeling/blobs.hh>

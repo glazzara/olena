@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,7 @@
 /// \brief Threshold an image.
 
 # include <mln/binarization/binarization.hh>
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
 
 
 namespace mln
@@ -69,7 +70,7 @@ namespace mln
       mln_ch_value(I, bool) output(exact(input).domain());
 
       // FIXME : threshold value should be a percentage.
-      fun::v2b::threshold< mln_value(I) > f(threshold_value);
+      fun::v2b::threshold_ge< mln_value(I) > f(threshold_value);
 
       output = mln::binarization::binarization(exact(input), f);
 

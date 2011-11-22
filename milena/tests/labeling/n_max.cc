@@ -32,7 +32,7 @@
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/n_max.hh>
 
-#include <mln/fun/v2b/threshold.hh>
+#include <mln/fun/v2b/threshold_le.hh>
 #include <mln/data/transform.hh>
 
 #include <mln/accu/math/count.hh>
@@ -49,7 +49,7 @@ int main()
 
   image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
 
-  image2d<bool> threshold = data::transform(lena, fun::v2b::threshold<int_u8>(100));
+  image2d<bool> threshold = data::transform(lena, fun::v2b::threshold_le<int_u8>(100));
   label_8 nlabels;
   image2d<label_8> labels = labeling::flat_zones(threshold, c4(), nlabels);
   accu::math::count<int_u8> a_;

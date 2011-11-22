@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <mln/debug/println.hh>
 #include <mln/draw/line.hh>
 #include <mln/pw/all.hh>
-#include <mln/binarization/threshold.hh>
+#include <mln/binarization/threshold_ge.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_8.hh>
@@ -313,7 +314,7 @@ make_complex_image(const mln::image2d<mln::value::int_u8>& input)
 
   unsigned nlabels;
   image2d<unsigned> label =
-    labeling::blobs(mln::binarization::threshold(input, 1), c4(), nlabels);
+    labeling::blobs(mln::binarization::threshold_ge(input, 1), c4(), nlabels);
 
   std::cout << "n seeds = " << nlabels << std::endl;
   {
