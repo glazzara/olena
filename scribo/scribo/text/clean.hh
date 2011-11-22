@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,9 +59,6 @@
 #include <mln/linear/gaussian.hh>
 #include <mln/value/int_u8.hh>
 
-
-#include <mln/fun/v2b/threshold.hh>
-#include <mln/binarization/threshold.hh>
 #include <mln/data/convert.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/pgm/all.hh>

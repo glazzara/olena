@@ -28,7 +28,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/value/concept/vectorial.hh>
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_le.hh>
 # include <mln/data/transform.hh>
 
 /// \file
@@ -77,7 +77,7 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
 
-      mln::fun::v2b::threshold<mln_value(I)> f(threshold);
+      mln::fun::v2b::threshold_le<mln_value(I)> f(threshold);
       mln_ch_value(I, bool) output = data::transform(input, f);
 
       trace::exiting("scribo::binarization::global_threshold");
