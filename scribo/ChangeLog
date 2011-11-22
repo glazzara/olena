@@ -1,5 +1,11 @@
 2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix test of Niblack's algorithm.
+
+	* tests/binarization/niblack.ref.pbm: Update.
+
+2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update use of the threshold function.
 
 	* scribo/binarization/global_threshold.hh: Here.
