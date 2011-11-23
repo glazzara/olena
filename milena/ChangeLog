@@ -1,5 +1,9 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation issues.
 
 	* apps/papers/levillain.09.ismm/graph.cc: Fix wrong changes.

@@ -542,7 +542,8 @@ mln/fun/stat/mahalanobis.hh \
 mln/fun/v2b/all.hh \
 mln/fun/v2b/essential.hh \
 mln/fun/v2b/lnot.hh \
-mln/fun/v2b/threshold.hh \
+mln/fun/v2b/threshold_ge.hh \
+mln/fun/v2b/threshold_le.hh \
 mln/fun/v2i/all.hh \
 mln/fun/v2i/index_of_value.hh \
 mln/fun/v2v/abs.hh \
@@ -606,6 +607,8 @@ mln/geom/all.hh \
 mln/geom/bbox.hh \
 mln/geom/chamfer.hh \
 mln/geom/complex_geometry.hh \
+mln/geom/crop.hh \
+mln/geom/crop_without_localization.hh \
 mln/geom/delta.hh \
 mln/geom/essential.hh \
 mln/geom/horizontal_symmetry.hh \
