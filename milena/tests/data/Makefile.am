@@ -23,6 +23,7 @@ check_PROGRAMS =				\
   apply						\
   compare					\
   compute					\
+  compute_in_window				\
   convert					\
   fill						\
   fill_with_image				\
@@ -45,6 +46,7 @@ abs_SOURCES = abs.cc
 apply_SOURCES = apply.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
+compute_in_window_SOURCES = compute_in_window.cc
 convert_SOURCES = convert.cc
 fill_SOURCES = fill.cc
 fill_with_image_SOURCES = fill_with_image.cc

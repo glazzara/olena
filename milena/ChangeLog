@@ -1,5 +1,15 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New routine in Milena.
+
+	* mln/data/compute_in_window.hh: New.
+
+	* tests/data/Makefile.am: New target.
+
+	* tests/data/compute_in_window.cc: New test.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation with multiple files.
 
 	* mln/canvas/browsing/backdiagonal2d.hh,
