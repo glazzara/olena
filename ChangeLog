@@ -1,3 +1,7 @@
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* lrde-upload.sh: Update list of branches.
+
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	* README (Bibliography): Mention the GRETSI 2011 paper.

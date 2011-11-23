@@ -1,6 +1,7 @@
 #! /bin/sh
 
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -45,7 +46,7 @@ branch=$1
 
 case "$branch" in
   # Consider these branches only.
-  master|next|swilena|mesh-segm-skel|next-build-test) ;;
+  master|next|swilena|mesh-segm-skel|stable/scribo|unstable/scribo) ;;
   # Don't upload other branches.
   *) exit ;;
 esac
