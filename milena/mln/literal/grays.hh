@@ -98,9 +98,6 @@ namespace mln
     {
     }
 
-#  endif // ! MLN_WO_GLOBAL_VARS
-
-
 # endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal

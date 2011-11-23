@@ -1,5 +1,31 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation with multiple files.
+
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/breadth_first_search.hh,
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/fun/v2v/hsi_to_rgb.hh,
+	* mln/fun/v2v/rgb_to_hsi.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/grays.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/white.hh: Add missing inline keyword and
+	MLN_WO_GLOBAL_VARS guards.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix more compilation issues with g++ 4.6.1 and clang++.
 
 	* mln/canvas/browsing/snake_vert.hh,

@@ -97,7 +97,7 @@ namespace mln
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-      const snake_vert_t snake_vert = snake_vert_t();
+      const snake_vert_t snake_vert;
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
