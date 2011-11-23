@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,10 @@ namespace mln
     /// Type of literal one.
     struct one_t : public Literal<one_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      one_t();
+
       // FIXME: Cf. comments in literal/zero.hh.
 
       template <typename T>
@@ -51,10 +56,15 @@ namespace mln
 
 
     /// Literal one.
-    extern const one_t& one;
+    extern const one_t one;
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    inline
+    one_t::one_t()
+    {
+    }
 
     template <typename T>
     inline
@@ -66,7 +76,7 @@ namespace mln
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const one_t& one = one_t();
+    const one_t one;
 
 #  endif // !MLN_WO_GLOBAL_VARS
 

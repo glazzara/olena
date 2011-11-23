@@ -58,6 +58,8 @@ namespace mln
       {
 	typedef T_rgb result;
 
+	f_hsi_to_rgb_();
+
 	template <typename T_hsi>
         T_rgb operator()(const T_hsi& hsi) const;
 
@@ -78,6 +80,13 @@ namespace mln
       /// \}
 
 #  endif // ! MLN_WO_GLOBAL_VARS
+
+
+      template <typename T_rgb>
+      f_hsi_to_rgb_<T_rgb>::f_hsi_to_rgb_()
+      {
+      }
+
       template <typename T_rgb>
       template <typename T_hsi>
       inline

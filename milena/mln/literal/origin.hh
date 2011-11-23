@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,16 +44,24 @@ namespace mln
     /// Type of literal origin.
     struct origin_t : public Literal<origin_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      origin_t();
     };
 
     /// Literal origin.
-    extern const origin_t& origin;
+    extern const origin_t origin;
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
+    origin_t::origin_t()
+    {
+    }
+
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const origin_t& origin = origin_t();
+    const origin_t origin;
 
 #  endif // !MLN_WO_GLOBAL_VARS
 

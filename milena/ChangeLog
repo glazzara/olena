@@ -1,5 +1,21 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix more compilation issues with g++ 4.6.1 and clang++.
+
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/fun/v2v/hsi_to_rgb.hh,
+	* mln/fun/v2v/rgb_to_hsi.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/literal/grays.hh,
+	* mln/literal/identity.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/zero.hh: Add default constructors.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>

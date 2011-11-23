@@ -43,6 +43,9 @@ namespace mln
     /// Type of literal min.
     struct min_t : public Literal<min_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      min_t();
 
       template <typename T>
       operator T () const;
@@ -50,10 +53,15 @@ namespace mln
 
 
     /// Literal min.
-    extern const min_t& min;
+    extern const min_t min;
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    inline
+    min_t::min_t()
+    {
+    }
 
     template <typename T>
     inline
