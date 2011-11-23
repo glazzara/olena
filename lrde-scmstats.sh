@@ -27,14 +27,14 @@ branch=$1
 
 # We might want to filter stats for specific branches.
 # Currently gitstats does not allow that.
-#case "$branch" in
+case "$branch" in
 #  # Consider these branches only.
-#  master|next|swilena|mesh-segm-skel|next-build-test) ;;
+  master|next|swilena|mesh-segm-skel|stable/scribo|unstable/scribo) ;;
 #  # Don't upload other branches.
-#  *) exit ;;
-#esac
+  *) exit ;;
+esac
 
 DEST=/lrde/dload/olena/stats/
 
-gitstats . $DEST
+gitstats -c commit_end=$branch . $DEST/$branch
 
