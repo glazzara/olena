@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,22 +25,53 @@
 
 /// \file
 
-#include <mln/literal/grays.hh>
-#include <mln/value/graylevel.hh>
-#include <mln/value/gl8.hh>
-#include <mln/value/gl16.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/literal/colors.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  value::gl8 a = literal::medium_gray;
-  mln_assertion(a == value::gl8(128));
+  value::rgb8 v = literal::red;
+  mln_assertion(v == value::rgb8(255, 0, 0));
 
-  value::gl16 b = a;
-  mln_assertion(b == value::gl16(32768));
+  v = literal::green;
+  mln_assertion(v == value::rgb8(0, 255, 0));
 
-  b = literal::medium_gray;
-  mln_assertion(b == value::gl16(32768));
+  v = literal::blue;
+  mln_assertion(v == value::rgb8(0, 0, 255));
+
+  v = literal::brown;
+  mln_assertion(v == value::rgb8(191, 127, 64));
+
+  v = literal::lime;
+  mln_assertion(v == value::rgb8(191, 255, 0));
+
+  v = literal::orange;
+  mln_assertion(v == value::rgb8(255, 127, 0));
+
+  v = literal::pink;
+  mln_assertion(v == value::rgb8(255, 191, 191));
+
+  v = literal::purple;
+  mln_assertion(v == value::rgb8(191, 0, 64));
+
+  v = literal::teal;
+  mln_assertion(v == value::rgb8(0, 127, 127));
+
+  v = literal::violet;
+  mln_assertion(v == value::rgb8(127, 0, 127));
+
+  v = literal::cyan;
+  mln_assertion(v == value::rgb8(0, 255, 255));
+
+  v = literal::magenta;
+  mln_assertion(v == value::rgb8(255, 0, 255));
+
+  v = literal::yellow;
+  mln_assertion(v == value::rgb8(255, 255, 0));
+
+  v = literal::olive;
+  mln_assertion(v == value::rgb8(127, 127, 0));
 }

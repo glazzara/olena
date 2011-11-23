@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -19,14 +19,24 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   black						\
+  colors					\
+  identity					\
+  max 						\
   medium_gray					\
+  min						\
   one						\
+  origin 					\
   white						\
   zero
 
 black_SOURCES = black.cc
+colors_SOURCES = colors.cc
+identity_SOURCES = identity.cc
+max_SOURCES = max.cc
 medium_gray_SOURCES = medium_gray.cc
+min_SOURCES = min.cc
 one_SOURCES = one.cc
+origin_SOURCES = origin.cc
 white_SOURCES = white.cc
 zero_SOURCES = zero.cc
 

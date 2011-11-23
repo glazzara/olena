@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,22 +25,18 @@
 
 /// \file
 
-#include <mln/literal/grays.hh>
-#include <mln/value/graylevel.hh>
-#include <mln/value/gl8.hh>
-#include <mln/value/gl16.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/point3d.hh>
+#include <mln/literal/origin.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  value::gl8 a = literal::medium_gray;
-  mln_assertion(a == value::gl8(128));
+  point2d p2 = literal::origin;
+  mln_assertion(p2 == point2d(0, 0));
 
-  value::gl16 b = a;
-  mln_assertion(b == value::gl16(32768));
-
-  b = literal::medium_gray;
-  mln_assertion(b == value::gl16(32768));
+  point3d p3 = literal::origin;
+  mln_assertion(p3 == point3d(0, 0, 0));
 }

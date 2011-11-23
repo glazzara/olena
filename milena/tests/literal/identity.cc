@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,22 +25,23 @@
 
 /// \file
 
-#include <mln/literal/grays.hh>
-#include <mln/value/graylevel.hh>
-#include <mln/value/gl8.hh>
-#include <mln/value/gl16.hh>
+#include <mln/core/contract.hh>
+#include <mln/literal/identity.hh>
+#include <mln/algebra/mat.hh>
+#include <mln/make/mat.hh>
+
 
 
 int main()
 {
   using namespace mln;
 
-  value::gl8 a = literal::medium_gray;
-  mln_assertion(a == value::gl8(128));
+  int val[4] = {
+    1, 0 ,
+    0, 1
+  };
 
-  value::gl16 b = a;
-  mln_assertion(b == value::gl16(32768));
-
-  b = literal::medium_gray;
-  mln_assertion(b == value::gl16(32768));
+  algebra::mat<2,2, int> m = literal::identity;
+  algebra::mat<2,2, int> ref = make::mat<2,2>(val);
+  mln_assertion(m == ref);
 }

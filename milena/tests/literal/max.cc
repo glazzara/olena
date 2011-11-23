@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,22 +25,21 @@
 
 /// \file
 
-#include <mln/literal/grays.hh>
-#include <mln/value/graylevel.hh>
-#include <mln/value/gl8.hh>
-#include <mln/value/gl16.hh>
+#include <mln/literal/max.hh>
+#include <mln/value/int_u8.hh>
+
 
 
 int main()
 {
   using namespace mln;
 
-  value::gl8 a = literal::medium_gray;
-  mln_assertion(a == value::gl8(128));
+  unsigned char c = literal::max;
+  mln_assertion(c == mln_max(unsigned char));
 
-  value::gl16 b = a;
-  mln_assertion(b == value::gl16(32768));
+  double d = literal::max;
+  mln_assertion(d == mln_max(double));
 
-  b = literal::medium_gray;
-  mln_assertion(b == value::gl16(32768));
+  value::int_u8 v = literal::max;
+  mln_assertion(v == mln_max(value::int_u8));
 }

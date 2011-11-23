@@ -1,5 +1,19 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve tests for literal classes.
+
+	* tests/literal/Makefile.am: Update targets.
+
+	* tests/literal/colors.cc,
+	* tests/literal/identity.cc,
+	* tests/literal/max.cc,
+	* tests/literal/min.cc,
+	* tests/literal/origin.cc: New.
+
+	* tests/literal/medium_gray.cc: Make a real test.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation with multiple files.
 
 	* mln/canvas/browsing/backdiagonal2d.hh,
