@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +28,7 @@
 # define MLN_LITERAL_GRAYS_HH
 
 /*! \file
- * \brief Definition of the colors literal.
+ * \brief Definition of the grays literal.
  *
  */
 
@@ -42,32 +43,60 @@ namespace mln
     /// Type of literal grays.
     struct light_gray_t : public Literal<light_gray_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      light_gray_t();
     };
 
     struct medium_gray_t : public Literal<medium_gray_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      medium_gray_t();
     };
 
     struct dark_gray_t : public Literal<dark_gray_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      dark_gray_t();
     };
 
     /// Literal light gray.
-    extern const light_gray_t& light_gray;
+    extern const light_gray_t light_gray;
 
     /// Literal medium_gray.
-    extern const medium_gray_t& medium_gray;
+    extern const medium_gray_t medium_gray;
 
     /// Literal dark gray.
-    extern const dark_gray_t& dark_gray;
+    extern const dark_gray_t dark_gray;
 
 # ifndef MLN_INCLUDE_ONLY
 
-    const light_gray_t& light_gray = light_gray_t();
+#  ifndef MLN_WO_GLOBAL_VARS
 
-    const medium_gray_t& medium_gray = medium_gray_t();
+    const light_gray_t light_gray;
 
-    const dark_gray_t& dark_gray = dark_gray_t();
+    const medium_gray_t medium_gray;
+
+    const dark_gray_t dark_gray;
+
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+    inline
+    light_gray_t::light_gray_t()
+    {
+    }
+
+    inline
+    medium_gray_t::medium_gray_t()
+    {
+    }
+
+    inline
+    dark_gray_t::dark_gray_t()
+    {
+    }
 
 # endif // !MLN_INCLUDE_ONLY
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,6 +46,10 @@ namespace mln
     /// Type of literal zero.
     struct zero_t : public Literal<zero_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      zero_t();
+
       // FIXME: (for the record) Add "friend class Literal<zero_t>;" and a protected ctor.
 
       template <typename T>
@@ -52,9 +57,14 @@ namespace mln
     };
 
     /// Literal zero.
-    extern const zero_t& zero;
+    extern const zero_t zero;
 
 # ifndef MLN_INCLUDE_ONLY
+
+    inline
+    zero_t::zero_t()
+    {
+    }
 
     template <typename T>
     inline
@@ -66,9 +76,9 @@ namespace mln
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const zero_t& zero = zero_t();
+    const zero_t zero;
 
-#  endif // !MLN_GLOBAL_VARS
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

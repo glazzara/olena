@@ -83,6 +83,10 @@ namespace mln
 
       struct snake_vert_t : public Browsing< snake_vert_t >
       {
+	// This default constructor is needed for compilation with gcc
+	// 4.6.0, gcc 4.6.1 and Clang.
+	snake_vert_t();
+
 	template <typename F>
 	void operator()(F& f) const;
       };
@@ -92,6 +96,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       const snake_vert_t snake_vert = snake_vert_t();
+
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+      inline
+      snake_vert_t::snake_vert_t()
+      {
+      }
 
       template <typename F>
       inline

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,16 +43,24 @@ namespace mln
     /// Type of literal identity.
     struct identity_t : public Literal<identity_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      identity_t();
     };
 
     /// Literal identity.
-    extern const identity_t& identity;
+    extern const identity_t identity;
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
+    identity_t::identity_t()
+    {
+    }
+
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const identity_t& identity = identity_t();
+    const identity_t identity;
 
 #  endif // !MLN_WO_GLOBAL_VARS
 

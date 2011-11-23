@@ -58,6 +58,8 @@ namespace mln
       {
 	typedef T_hsl result;
 
+	f_rgb_to_hsl_();
+
 	template <typename T_rgb>
 	T_hsl operator()(const T_rgb& rgb) const;
 
@@ -75,6 +77,11 @@ namespace mln
       f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
       /// \}
 
+
+      template <typename T_hsl>
+      f_rgb_to_hsl_f_t<T_hsl>::f_rgb_to_hsl_f_t()
+      {
+      }
 
       template <typename T_hsl>
       template <typename T_rgb>

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,9 @@ namespace mln
     /// Type of literal max.
     struct max_t : public Literal<max_t>
     {
+      // This default constructor is needed for compilation with gcc
+      // 4.6.0, gcc 4.6.1 and Clang.
+      max_t();
 
       template <typename T>
       operator T () const;
@@ -50,10 +54,15 @@ namespace mln
 
 
     /// Literal max.
-    extern const max_t& max;
+    extern const max_t max;
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    inline
+    max_t::max_t()
+    {
+    }
 
     template <typename T>
     inline

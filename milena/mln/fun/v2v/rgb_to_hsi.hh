@@ -49,6 +49,8 @@ namespace mln
       {
 	typedef T_hsi result;
 
+	f_rgb_to_hsi_();
+
 	template <typename T_rgb>
 	T_hsi operator()(const T_rgb& rgb) const;
 
@@ -66,6 +68,12 @@ namespace mln
       f_rgb_to_hsi_f_t f_rgb_to_hsi_f;
       /// \}
 
+
+
+      template <typename T_hsi>
+      f_rgb_to_hsi_<T_hsi>::f_rgb_to_hsi_()
+      {
+      }
 
       template <typename T_hsi>
       template <typename T_rgb>
