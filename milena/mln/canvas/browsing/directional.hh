@@ -107,6 +107,7 @@ namespace mln
 
 # endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       directional_t::directional_t()
       {
       }

@@ -195,58 +195,72 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     red_t::red_t()
     {
     }
 
+    inline
     green_t::green_t()
     {
     }
 
+    inline
     blue_t::blue_t()
     {
     }
 
+    inline
     brown_t::brown_t()
     {
     }
 
+    inline
     lime_t::lime_t()
     {
     }
 
+    inline
     orange_t::orange_t()
     {
     }
 
+    inline
     pink_t::pink_t()
     {
     }
 
+    inline
     purple_t::purple_t()
     {
     }
 
+    inline
     teal_t::teal_t()
     {
     }
 
+    inline
     violet_t::violet_t()
     {
     }
 
+    inline
     cyan_t::cyan_t()
     {
     }
 
+    inline
     magenta_t::magenta_t()
     {
     }
 
+    inline
     yellow_t::yellow_t()
     {
     }
 
+    inline
     olive_t::olive_t()
     {
     }

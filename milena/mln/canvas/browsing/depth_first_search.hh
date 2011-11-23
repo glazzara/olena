@@ -97,6 +97,7 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       depth_first_search_t::depth_first_search_t()
       {
       }

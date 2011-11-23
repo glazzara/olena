@@ -95,6 +95,7 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       snake_generic_t::snake_generic_t()
       {
       }

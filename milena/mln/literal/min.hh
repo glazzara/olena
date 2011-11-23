@@ -62,8 +62,11 @@ namespace mln
       return mln_min(T);
     }
 
+#  ifndef MLN_WO_GLOBAL_VARS
 
-    const min_t& min = min_t();
+    const min_t min;
+
+#  endif // ! MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

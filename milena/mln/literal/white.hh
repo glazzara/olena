@@ -65,6 +65,7 @@ namespace mln
 
 #  endif
 
+    inline
     white_t::white_t()
     {
     }

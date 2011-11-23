@@ -65,6 +65,7 @@ namespace mln
 
 #  endif
 
+    inline
     black_t::black_t()
     {
     }

@@ -91,11 +91,16 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const breadth_first_search_t breadth_first_search;
-
+      inline
       breadth_first_search_t::breadth_first_search_t()
       {
       }
+
+#  ifndef MLN_WO_GLOBAL_VARS
+
+      const breadth_first_search_t breadth_first_search;
+
+#  endif // ! MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

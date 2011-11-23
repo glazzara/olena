@@ -91,8 +91,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       const snake_vert_t snake_vert = snake_vert_t();
 
+#  endif // ! MLN_WO_GLOBAL_VARS
       template <typename F>
       inline
       void

@@ -98,8 +98,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       const dir_struct_elt_incr_update_t dir_struct_elt_incr_update;
 
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+      inline
       dir_struct_elt_incr_update_t::dir_struct_elt_incr_update_t()
       {
       }

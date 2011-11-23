@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,11 +62,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       /// Global variables.
       /// \{
       f_rgb_to_hsi_f_t f_rgb_to_hsi_f;
       /// \}
 
+#  endif // ! MLN_WO_GLOBAL_VARS
 
       template <typename T_hsi>
       template <typename T_rgb>
