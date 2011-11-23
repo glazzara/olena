@@ -86,8 +86,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       const hyper_directional_t hyper_directional;
 
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+
+      inline
       hyper_directional_t::hyper_directional_t()
       {
       }

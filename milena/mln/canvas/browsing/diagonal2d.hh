@@ -99,6 +99,7 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       diagonal2d_t::diagonal2d_t()
       {
       }

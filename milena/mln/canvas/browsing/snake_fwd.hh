@@ -101,6 +101,7 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       snake_fwd_t::snake_fwd_t()
       {
       }

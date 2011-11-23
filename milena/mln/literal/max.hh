@@ -72,7 +72,11 @@ namespace mln
     }
 
 
-    const max_t& max = max_t();
+#  ifndef MLN_WO_GLOBAL_VARS
+
+    const max_t max;
+
+#  endif // ! MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

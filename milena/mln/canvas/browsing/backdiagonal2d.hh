@@ -102,6 +102,7 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
+      inline
       backdiagonal2d_t::backdiagonal2d_t()
       {
       }

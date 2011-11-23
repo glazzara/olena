@@ -72,6 +72,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       /// Global variable.
       /// \{
       f_hsi_to_rgb_3x8_t f_hsi_to_rgb_3x8;
@@ -79,11 +81,11 @@ namespace mln
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 
-
       template <typename T_rgb>
       f_hsi_to_rgb_<T_rgb>::f_hsi_to_rgb_()
       {
       }
+
 
       template <typename T_rgb>
       template <typename T_hsi>

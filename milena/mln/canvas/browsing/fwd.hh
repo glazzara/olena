@@ -84,8 +84,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       const fwd_t fwd;
 
+#  endif // ! MLN_WO_GLOBAL_VARS
+
+
+      inline
       fwd_t::fwd_t()
       {
       }
