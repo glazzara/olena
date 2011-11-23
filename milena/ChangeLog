@@ -1,5 +1,14 @@
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation issues.
+
+	* apps/papers/levillain.09.ismm/graph.cc: Fix wrong changes.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Add a missing
+	include.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve tests for literal classes.
 
 	* tests/literal/Makefile.am: Update targets.

@@ -33,6 +33,8 @@
 #include <mln/core/var.hh>
 #include <mln/core/alias/neighb2d.hh>
 
+#include <mln/binarization/binarization.hh>
+
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/extract/green.hh>
