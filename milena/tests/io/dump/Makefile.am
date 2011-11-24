@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,6 +26,7 @@ TESTS = $(check_PROGRAMS)
 
 MOSTLYCLEANFILES =				\
   dump-bool.dump				\
+  dump-double.dump				\
   dump-float.dump				\
   dump-int_u8.dump				\
   dump-rgb8.dump				\

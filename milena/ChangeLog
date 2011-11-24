@@ -1,3 +1,10 @@
+2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve io::dump tests with floating values.
+
+	* tests/io/dump/Makefile.am,
+	* tests/io/dump/dump.cc: Here.
+
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	New routine in Milena.
