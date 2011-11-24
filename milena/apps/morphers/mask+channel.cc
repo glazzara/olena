@@ -61,10 +61,7 @@ int main()
 
   image2d<rgb8> lena = io::ppm::load<rgb8>(MLN_IMG_DIR "/tiny.ppm");
   fun::green green;
-  /* FIXME: Cheat: use generic fill as mln::decorated_image does not
-     define properly its properties.  */
-  data::impl::generic::fill_with_value((thru(green, lena).rw() |
-					make::box2d(5,5, 10,10)).rw(),
-				       255);
+  data::fill((thru(green, lena).rw() | make::box2d(5,5, 10,10)).rw(),
+	     255);
   io::ppm::save(lena, "lena-mask-channel.ppm");
 }

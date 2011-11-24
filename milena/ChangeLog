@@ -1,5 +1,21 @@
 2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Work around decorated_image's lack of properties, for the recorder.
+
+	* apps/morphers/recorder.hh
+	(trait::image_< decorated_image<I,D> >): Replace with..
+	(trait::image_< decorated_image<I, recorder<I> > >): ...this.
+	Add a value_storage property.
+	(ch_value_< decorated_image< image_<I>, data_< recorder<I> > >, V >):
+	New trait, to handle changes of value types in images decorated
+	with a recorder.
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/recorder.cc:
+	Simplify these programs thanks to the preceding changes.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the initialization of mln::decorated_image.
 
 	* mln/tag/init.hh (tag::data_t): New tag type.

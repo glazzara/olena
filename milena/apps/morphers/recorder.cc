@@ -56,9 +56,6 @@ int main()
   typedef image2d<rgb8> I;
   I lena = io::ppm::load<rgb8>(MLN_IMG_DIR "/tiny.ppm");
   decorated_image< I, recorder<I> > lena_rec = record(lena);
-  /* FIXME: Cheat: use generic fill as mln::decorated_image does not
-     define properly its properties.  */
-  data::impl::generic::fill_with_value(lena_rec,
-				       literal::green);
+  data::fill(lena_rec, literal::green);
   ppm::save(lena_rec, "lena-fill");
 }

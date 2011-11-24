@@ -36,6 +36,8 @@
 
 #include <string>
 
+#include <mln/trait/ch_value.hh>
+
 #include <mln/core/image/imorph/decorated_image.hh>
 
 #include <mln/value/rgb8.hh>
@@ -47,22 +49,29 @@
 #include "apps/data.hh"
 
 
-// FIXME: mln::decorated_image lacks a proper definition of
-// properties! (see mln/core/image/imorph/decorated_image.hh).  We use
-// the following (minimal) set of properties as a workaround.
+// Forward declaration.
+template <typename I> struct recorder;
+
+/* FIXME: mln::decorated_image lacks a proper definition of
+   properties! (see mln/core/image/imorph/decorated_image.hh).  We use
+   the following (minimal) set of properties as a workaround for the
+  recorder decoration.  */
 namespace mln
 {
-
   namespace trait
   {
 
-    template <typename I, typename D>
-    struct image_< decorated_image<I,D> >
+    template <typename I>
+    struct image_< decorated_image< I, recorder<I> > >
       : default_image_morpher< I,
 			       mln_value(I),
-			       decorated_image<I,D> >
+			       decorated_image< I, recorder<I> > >
     {
       typedef trait::image::category::identity_morpher category;
+
+      // Prevent fast processing of images requiring a specific
+      // interface that we are unable to retrieve now.
+      typedef trait::image::value_storage::disrupted   value_storage;
     };
 
   } // end of namespace mln::trait
@@ -87,6 +96,60 @@ struct recorder
   std::vector<I> sequence;
 };
 
+/* Skeleton of an image decorated with a recorder.
+
+   Initialy, I (Roland) wanted to add this to mln/trait/ch_value.hh:
+
+     template < template <class, class> class M, typename I, typename D,
+		typename V >
+     struct ch_value_<  M< tag::image_<I>, tag::data_<D> >,  V  >
+     {
+       typedef M< mln_ch_value(I, V), D > ret;
+     };
+
+   However, this would not work in the case of the recorder since the
+   type D of the data attached to the image (of type I) has to be
+   changed as well.  Indeed the initial decoration contains a sequence
+   of images of type I, which should be changed into a sequence of
+   images of type mln_ch_value(I, V).
+
+   There are several option to improve this.  One is to create a
+   ch_value trait for data/decorations such as `recorder<I>'.  Another
+   one is to refine the skeleton of decorated_image<I, D> to have it
+   convey the type the data stored in the decoration, e.g, changing
+
+     typedef decorated_image< tag::image_<I>, tag::data_<D> > skeleton;
+
+   into something like
+
+     typedef decorated_image< tag::image_<I>, tag::data_<D, V> > skeleton;
+
+   but this seems overly complicated.
+
+   The workaround chosen here is very local, and address the very
+   specific case of decorated_image< I, recorder<I> >.  */
+
+namespace mln
+{
+  namespace trait
+  {
+    namespace impl
+    {
+      template < typename I, typename V >
+      struct ch_value_< decorated_image< tag::image_<I>,
+					 tag::data_< recorder<I> > >,
+			V >
+      {
+	typedef decorated_image< mln_ch_value(I, V),
+				 recorder< mln_ch_value(I, V) > > ret;
+      };
+    } // end namespace mln::trait::impl
+
+  } // end namespace mln::trait
+
+} // end namespace mln
+
+// Helper.
 template <typename I>
 mln::decorated_image< I, recorder<I> >
 record(mln::Image<I>& ima)
