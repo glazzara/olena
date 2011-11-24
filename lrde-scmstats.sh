@@ -36,5 +36,8 @@ esac
 
 DEST=/lrde/dload/olena/stats/
 
-gitstats -c commit_end=$branch . $DEST/$branch
+# option '-c commit_end=$branch' is not needed since buildbot and git
+# only checkout the current branch as 'master'.
+gitstats . $DEST/$branch
+
 

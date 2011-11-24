@@ -1,3 +1,7 @@
+2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* lrde-scmstats.sh: Fix branch name ambiguities.
+
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* lrde-scmstats.sh: Compute stats per branches.
