@@ -1,5 +1,14 @@
 2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	New morpher example: recording a watershed transform.
+
+	* apps/morphers/recorder-wst.cc: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-wst.
+	(recorder_wst_SOURCES): New.
+	(MOSTLYCLEANFILES): lena-wst??????.ppm.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Work around decorated_image's lack of properties, for the recorder.
 
 	* apps/morphers/recorder.hh

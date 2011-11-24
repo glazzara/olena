@@ -25,15 +25,18 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 noinst_PROGRAMS =				\
   mask+channel					\
   recorder					\
+  recorder-wst					\
   mask+recorder
 
 mask_channel_SOURCES = mask+channel.cc
 recorder_SOURCES = recorder.cc recorder.hh
+recorder_wst_SOURCES = recorder-wst.cc recorder.hh
 mask_recorder_SOURCES = mask+recorder.cc recorder.hh
 
 MOSTLYCLEANFILES =				\
   lena-mask-channel.ppm				\
   lena-fill??????.ppm				\
+  lena-wst??????.ppm				\
   lena-roi-fill??????.ppm
 
 # FIXME: Also produce movies (see comments in recorder.cc and
