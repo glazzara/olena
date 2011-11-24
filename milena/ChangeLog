@@ -1,3 +1,14 @@
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Honor a precondition in classification examples (ISMM 2009).
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc,
+	* apps/papers/levillain.09.ismm/classif-1complex.cc:
+	Do not use a value outside the range [0, nbasins] in `canvas_wst'
+	to prevent a failed precondition in labeling::colorize (when
+	NDEBUG is not defined).
+	Reported by David Coeurjolly <david.coeurjolly at liris.cnrs.fr>.
+
 2011-10-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Graph-based version of the classification example.

@@ -267,7 +267,7 @@ main(int argc, char* argv[])
   // Output image showing the results of the above chain on an image
   // similar to the input.
   image2d<int_u8> canvas_wst(seeds.domain());
-  data::fill(canvas_wst, 255);
+  data::fill(canvas_wst, 0);
 
   // Iterator on (the edges of) WST_IMA.
   mln_piter_(wst_ima_t) e(wst_ima.domain());
