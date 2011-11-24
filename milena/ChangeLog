@@ -1,3 +1,15 @@
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the initialization of mln::decorated_image.
+
+	* mln/tag/init.hh (tag::data_t): New tag type.
+	 (tag::data): New tag.
+	* mln/core/image/imorph/decorated_image.hh
+	(init_(tag::data_t, D&, const decorated_image<I,D>&))
+	(init_(tag::data_t, D&, const decorated_image<I,D2>&))
+	(init_(tag::image_t, decorated_image<I,D>&, const J&)):
+	New functions.
+
 2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify some apps/morpher programs using mln::make::box2d.
