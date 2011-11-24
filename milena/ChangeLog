@@ -1,3 +1,7 @@
+2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/fun/v2v/rgb_to_hsl.hh: Fix constructor declaration.
+
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation with multiple files.
