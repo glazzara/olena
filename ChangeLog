@@ -1,3 +1,11 @@
+2011-11-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update lrde-scmstats.sh.
+
+	* lrde-scmstats.sh: Look more like lrde-upload.sh.
+	Ensure generated data is readable from the Web.
+	Anonymize some names as requested by some contributors.
+
 2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* distrib/macports/Portfile.in: Fix maintainers field.
