@@ -60,7 +60,7 @@ namespace mln
 
 	  Common compilation flags to link to gdcm if this file is used:
 
-	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib
+	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8
 
        */
       template <typename I>
