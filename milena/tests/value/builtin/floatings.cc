@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,11 +29,28 @@
 
 int main()
 {
-  std::cout << "mln_sum_product_(float, float)    is `"
-	    << mln_trait_value_name(mln_sum_product_(float, float)) << "'"
-	    << std::endl;
-  // FIXME: Displays `float': probably not good.  :(
-  std::cout << "mln_sum_product_(double, double)) is `"
-	    << mln_trait_value_name(mln_sum_product_(double, double)) << "'"
-	    << std::endl;
+  // Checking sum value type name.
+  mln_assertion(mln_trait_value_name(mln_sum_product_(float, float)) == std::string("float"));
+  mln_assertion(mln_trait_value_name(mln_sum_product_(double, double)) == std::string("double"));
+
+  // Make sure we return the minimum negative value but not the
+  // minimum positive value.
+  mln_assertion(mln_min(float) < 0.);
+  mln_assertion(mln_min(double) < 0.);
+
+  // Make sure the sum value type does not alter precision.
+  {
+    float a = mln_max(float) / 3,
+      b = mln_max(float) / 3;
+    volatile float c = a + b;
+    volatile mln_sum_product_(float, float) d = a + b;
+    mln_assertion(c == d);
+  }
+  {
+    double a = mln_max(double) / 3,
+      b = mln_max(double) / 3;
+    volatile double c = a + b;
+    volatile mln_sum_product_(double, double) d = a + b;
+    mln_assertion(c == d);
+  }
 }

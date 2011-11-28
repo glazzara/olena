@@ -1,3 +1,11 @@
+2011-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid minimum value for builtin floating types. (ticket #247)
+
+	* mln/value/builtin/floatings.hh: Here.
+
+	* tests/value/builtin/floatings.cc: write test.
+
 2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/fun/v2v/rgb_to_hsl.hh: Fix constructor declaration.
