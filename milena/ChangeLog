@@ -1,3 +1,16 @@
+2011-11-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	New morpher example: recording a breadth-first thinning.
+
+	* apps/morphers/recorder-bft.cc: New.
+	* apps/morphers/image2d-skel.hh: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-bft.
+	(recorder_wst_SOURCES): New.
+	(recorder_SOURCES, recorder_wst_SOURCES, mask_recorder_SOURCES):
+	Move recorder.hh...
+	(noinst_HEADERS): ...here (new variable).
+	(MOSTLYCLEANFILES): Add lena-bft??????.pbm.
+
 2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	New morpher example: recording a watershed transform.
