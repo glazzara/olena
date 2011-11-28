@@ -1,5 +1,16 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix Path to Olena logo.
+
+	* doc/logo.jpg: Move...
+	* doc/images/logo.jpg: ... here.
+
+	* doc/Doxyfile.in,
+	* milena/doc/Doxyfile.in,
+	* scribo/doc/Doxyfile.in: Fix path.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix titles.
 
 	* doc/contributors.dox,
