@@ -1,5 +1,12 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix dependencies in Makefiles.
+
+	* Makefile.am,
+	* doc/Makefile.am: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix Path to Olena logo.
 
 	* doc/logo.jpg: Move...

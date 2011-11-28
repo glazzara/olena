@@ -35,9 +35,6 @@ TEXI2DVI_FLAGS +=							\
   -I $(srcdir) -I $(srcdir)/outputs -I $(srcdir)/outputs/split		\
   -I $(srcdir)/img -I $(srcdir)/examples/split
 
-# Additional files for LaTeX compilations.
-DOC_PACKAGES = doxyfuns.sty milena.sty
-
 
 # ----------------------- #
 # User Reference Manual.  #
@@ -55,26 +52,37 @@ DOXYFILE_USER = Doxyfile_user
 
 
 # Images
-REFMAN_IMAGES = $(srcdir)/images/olena_layers.png
-EXTRA_DIST = $(REFMAN_IMAGES)
+REFMAN_IMAGES =					\
+	$(srcdir)/images/olena_layers.png 	\
+	$(srcdir)/images/logo.jpg
+
+EXTRA_DIST = 					\
+	$(REFMAN_IMAGES)			\
+	$(srcdir)/images/olena_layers.svg
 
 # Documentation content
 REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/header.html 	  	\
 	      $(srcdir)/doxygen.css 	  	\
 	      $(srcdir)/mainpage.dox 	  	\
+	      $(srcdir)/about.dox 		\
 	      $(srcdir)/DoxygenLayout.xml 	\
 	      $(srcdir)/modules_list.dox  	\
 	      $(srcdir)/olena.bib	  	\
+	      $(srcdir)/lrde.bib	  	\
+	      $(srcdir)/doc.bib	  		\
 	      $(srcdir)/contributors.dox  	\
 	      $(srcdir)/bibliography.dox  	\
 	      $(srcdir)/license.dox 	 	\
 	      $(srcdir)/license_commercial.dox 	\
 	      $(srcdir)/online_resources.dox	\
 	      $(srcdir)/get_sources.dox		\
+	      $(srcdir)/subdoc_footer.html	\
 	      contributors.html			\
 	      lrde_olena.html	 		\
 	      $(REFMAN_IMAGES)
+
+
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
@@ -142,13 +150,13 @@ contributors.html: $(top_srcdir)/AUTHORS
 ## Bibliography.  ##
 ## -------------- ##
 
-# Warning: also generate lrde_olena.cite
+# Warning: also generates lrde_olena.cite
 lrde_olena.bib:
 	bib2bib -s plain -oc lrde_olena.cite -ob lrde_olena.bib -c \
 		'project = "Image" or project = "Olena"' \
 		-s year -r $(srcdir)/lrde.bib
 
-# Warning: also generate lrde_olena_bib.html
+# Warning: also generates lrde_olena_bib.html
 lrde_olena.html: lrde_olena.bib
 	bibtex2html -s plain -nokeywords -citefile lrde_olena.cite \
 		-noabstract -nofooter -labelname -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
@@ -163,11 +171,8 @@ MAINTAINERCLEANFILES += lrde_olena.cite 	\
 ## Cleaning.  ##
 ## ---------- ##
 
-MAINTAINERCLEANFILES += $(dist_pdf_DATA)
-
 maintainer-clean-local:
 	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
-	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	-for d in $(DATA_html_dirs); do		\
 	  rm -rf $$d.tmp $(srcdir)/$$d;		\
 	done

@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2012, 2013 EPITA
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
 # Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -17,7 +17,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = build-aux doc external milena
+SUBDIRS = build-aux external milena
 
 if ENABLE_SWILENA
   SUBDIRS += swilena
@@ -26,6 +26,11 @@ endif ENABLE_SWILENA
 if ENABLE_SCRIBO
   SUBDIRS += scribo
 endif ENABLE_SCRIBO
+
+# We rely on Automake to ensure that the documentions are generated in
+# the right order.  Here, we make sure that the general documentation
+# will be generated after milena's and scribo'd documentation.
+SUBDIRS += doc
 
 # Target shortcuts delegating the actual action to milena/Makefile.
 LOCAL_RECURSIVE_TARGETS = tests
