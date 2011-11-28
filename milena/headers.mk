@@ -33,6 +33,7 @@ mln/accu/math/all.hh \
 mln/accu/math/count.hh \
 mln/accu/math/essential.hh \
 mln/accu/math/sum.hh \
+mln/accu/math/sumpow.hh \
 mln/accu/max_site.hh \
 mln/accu/nil.hh \
 mln/accu/p.hh \

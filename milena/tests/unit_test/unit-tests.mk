@@ -112,6 +112,7 @@ mln_accu_math_count \
 mln_accu_math_essential \
 mln_accu_math_sum \
 mln_accu_math_sumpow \
+mln_accu_math_sup \
 mln_accu_max_site \
 mln_accu_nil \
 mln_accu_p \
