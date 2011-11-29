@@ -17,7 +17,7 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# This file is run by the LRDE autobuilder before compilation.
+# This file is run by the LRDE autobuilder before the build.
 # It is not meant to be distributed with Olena.
 
 set -ex
@@ -25,16 +25,22 @@ set -ex
 # Buildbot will tell us the name of the branch being compiled using $1.
 branch=$1
 
-# We might want to filter stats for specific branches.
-# Currently gitstats does not allow that.
+# Filter stats for specific branches.
 case "$branch" in
-#  # Consider these branches only.
+  # Consider these branches only.
   master|next|swilena|mesh-segm-skel|stable/scribo|unstable/scribo) ;;
-#  # Don't upload other branches.
+  # Don't compute statistics for other branches.
   *) exit ;;
 esac
 
-DEST=/lrde/dload/olena/stats/
+subdir=$branch
+DEST=/lrde/dload/olena/stats/$subdir
 
-gitstats -c commit_end=$branch . $DEST/$branch
+# Compute statistics.
+gitstats . $DEST
 
+# Anonymize some names.
+find "$DEST" -name "*.html" -exec sed -i 's/J.r.me Darbon/JD/g' {} \;
+
+# Expose uploaded files.
+chmod -R a+rX $DEST

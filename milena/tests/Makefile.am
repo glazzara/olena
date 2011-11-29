@@ -81,7 +81,9 @@ all_headers_LDFLAGS = \
   $(CFITSIO_LDFLAGS) $(GDCM_LDFLAGS) $(MAGICKXX_LDFLAGS) $(TIFF_LDFLAGS)
 
 essential_headers_SOURCES = essential_headers.cc
+
 global_vars_SOURCES = global_vars1.cc global_vars2.cc
+global_vars_CXXFLAGS = -DMLN_WO_GLOBAL_VARS
 
 TESTS = $(check_PROGRAMS)
 

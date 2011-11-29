@@ -82,7 +82,7 @@ namespace mln
 #  endif // ! MLN_WO_GLOBAL_VARS
 
       template <typename T_hsl>
-      f_rgb_to_hsl_f_t<T_hsl>::f_rgb_to_hsl_f_t()
+      f_rgb_to_hsl_<T_hsl>::f_rgb_to_hsl_()
       {
       }
 

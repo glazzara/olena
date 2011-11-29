@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +24,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+# undef MLN_WO_GLOBAL_VARS
 #include <mln/all.hh>
 
 int f1();
@@ -36,6 +38,7 @@ int main ()
     mln::border::thickness = b1;
     int b2 = f1();
 
+    // Checking that both files share the same symbol.
     mln_assertion(b1 == b2);
   }
 
@@ -43,6 +46,7 @@ int main ()
     mln::border::thickness = 4;
     f2();
 
+    // Checking that both files share the same symbol.
     mln_assertion(mln::border::thickness == 2);
   }
 }

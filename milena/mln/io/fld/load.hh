@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -84,6 +84,7 @@ namespace mln
       namespace internal
       {
 
+	inline
 	void
 	abort_load(const char* msg, const char* filename)
 	{

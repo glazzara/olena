@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,6 +66,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
+      inline
       dump_header get_header(const std::string& filename)
       {
 	trace::entering("mln::io::dump::get_header");

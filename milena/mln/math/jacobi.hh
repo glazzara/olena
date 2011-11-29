@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,6 +55,7 @@ namespace mln
     a(k,l)=h+s*(g-h*tau);
 
 
+    inline
     algebra::quat
     jacobi(algebra::mat<4u,4u,float> a)
     {

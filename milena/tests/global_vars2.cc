@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +24,6 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-# define MLN_INCLUDE_ONLY
-
 #include <mln/all.hh>
 
 int f1 ()
@@ -36,4 +35,9 @@ int f1 ()
 void f2 ()
 {
   mln::border::thickness = 2;
+}
+
+void f3 ()
+{
+  mln::image2d<int> ima(2,2);
 }

@@ -76,7 +76,12 @@ namespace mln
 
       static float min()
       {
-	static const float min_ = mln::value::internal::limits<float>::min();
+	// NOTE: limits<float>::min() returns the minimum positive
+	// value. However, in Milena, min() means the minimum value of the
+	// possible range value, i.e., the lowest negative
+	// value. Since float has a symetric range value, we can
+	// safely use -MAX.
+	static const float min_ = - mln::value::internal::limits<float>::max();
 	return min_;
       }
       static float max()
@@ -115,7 +120,12 @@ namespace mln
 
       static double min()
       {
-	static const double min_ = mln::value::internal::limits<double>::min();
+	// NOTE: limits<double>::min() returns the minimum positive
+	// value. However, in Milena, min() means the minimum value of
+	// the possible range value, i.e., the lowest negative
+	// value. Since double has a symetric range value, we can
+	// safely use -MAX.
+	static const double min_ = - mln::value::internal::limits<double>::max();
 	return min_;
       }
       static double max()

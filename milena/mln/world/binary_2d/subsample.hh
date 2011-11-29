@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       image2d<value::int_u8>
       subsample(image2d<bool>& input, unsigned n)
       {
