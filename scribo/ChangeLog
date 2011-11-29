@@ -1,3 +1,10 @@
+2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make recognition faster and store recognition confidence.
+
+	* scribo/core/line_info.hh,
+	* scribo/text/recognition.hh: Here.
+
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Regenerate mk files.

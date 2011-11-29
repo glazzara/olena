@@ -137,6 +137,7 @@ namespace scribo
       // sqrt(Max(VAR(R), VAR(G), VAR(B)))
       float color_reliability_;
 
+      float text_confidence_;
       std::string text_;
       std::string html_text_;
 
@@ -237,9 +238,12 @@ namespace scribo
     bool indented() const;
 
     bool has_text() const;
+    // Returns the percentage of confidence of the recognized text. If
+    // no text has been recognized, it returns -1.
+    float text_confidence() const;
     const std::string& text() const;
     const std::string& html_text() const;
-    void update_text(const std::string& str);
+    void update_text(const std::string& str, float confidence);
 
     bool is_valid() const;
 
@@ -400,6 +404,8 @@ namespace scribo
       reading_orientation_ = 0.;
 
       indented_ = false;
+
+      text_confidence_ = -1;
     }
 
   } // end of namespace scribo::internal
@@ -769,8 +775,9 @@ namespace scribo
 
   template <typename L>
   void
-  line_info<L>::update_text(const std::string& str)
+  line_info<L>::update_text(const std::string& str, float confidence = 1.0)
   {
+    data_->text_confidence_ = confidence;
     data_->text_ = str;
     data_->html_text_ = scribo::internal::html_markups_replace(str);
   }
