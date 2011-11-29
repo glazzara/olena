@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -161,6 +162,7 @@ namespace mln
       | Facades.  |
       `----------*/
 
+      inline
       void
       save(const bin_2complex_image3df& ima, const std::string& filename)
       {
@@ -169,6 +171,7 @@ namespace mln
 	trace::exiting("mln::io::off::save");
       }
 
+      inline
       void
       save(const int_u8_2complex_image3df& ima, const std::string& filename)
       {
@@ -177,6 +180,7 @@ namespace mln
 	trace::exiting("mln::io::off::save");
       }
 
+      inline
       void
       save(const float_2complex_image3df& ima, const std::string& filename)
       {
@@ -185,6 +189,7 @@ namespace mln
 	trace::exiting("mln::io::off::save");
       }
 
+      inline
       void
       save(const rgb8_2complex_image3df& ima, const std::string& filename)
       {
@@ -380,6 +385,7 @@ namespace mln
 	    default is gray (R,G,B,A=.666).''
 
 	    \{ */
+	inline
 	void
 	bin_off_saver::write_face_data(std::ostream& /* ostr */,
 				       const value& /* v */) const
@@ -387,6 +393,7 @@ namespace mln
 	  // Do nothing (no data associated to faces).
 	}
 
+	inline
 	void
 	int_u8_off_saver::write_face_data(std::ostream& ostr,
 					  const value& v) const
@@ -405,6 +412,7 @@ namespace mln
 
 	/* FIXME: We should turn float_off_saver into a
 	   float01_off_saver to avoid the assertions below.  */
+	inline
 	void
 	float_off_saver::write_face_data(std::ostream& ostr,
 					 const value& v) const
@@ -424,6 +432,7 @@ namespace mln
 	       << ' ' << 1.0f;
 	}
 
+	inline
 	void
 	rgb8_off_saver::write_face_data(std::ostream& ostr,
 					const value& v) const

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -175,6 +176,7 @@ namespace mln
       | Facades.  |
       `----------*/
 
+      inline
       void
       load(bin_2complex_image3df& ima, const std::string& filename)
       {
@@ -183,6 +185,7 @@ namespace mln
 	trace::exiting("mln::io::off::load");
       }
 
+      inline
       void
       load(float_2complex_image3df& ima, const std::string& filename)
       {
@@ -191,6 +194,7 @@ namespace mln
 	trace::exiting("mln::io::off::load");
       }
 
+      inline
       void
       load(rgb8_2complex_image3df& ima, const std::string& filename)
       {
@@ -495,12 +499,14 @@ namespace mln
 	    default is gray (R,G,B,A=.666).''
 
 	    \{ */
+	inline
 	void
 	bin_off_loader::read_face_data(std::istream& /* istr */)
 	{
 	  // Do nothing (no data associated to faces).
 	}
 
+	inline
 	void
 	float_off_loader::read_face_data(std::istream& istr)
 	{
@@ -526,6 +532,7 @@ namespace mln
 	  face_value.push_back(r);
 	}
 
+	inline
 	void
 	rgb8_off_loader::read_face_data(std::istream& istr)
 	{
@@ -549,6 +556,7 @@ namespace mln
 	/* \} */
 
 
+	inline
 	void
 	bin_off_loader::reserve(unsigned /* nvertices */,
 				unsigned /* nedges */,
@@ -557,6 +565,7 @@ namespace mln
 	  // Do nothing (no data associated to faces).
 	}
 
+	inline
 	void
 	float_off_loader::reserve(unsigned /* nvertices */,
 				  unsigned /* nedges */,
@@ -566,6 +575,7 @@ namespace mln
 	}
 
 
+	inline
 	void
 	rgb8_off_loader::reserve(unsigned /* nvertices */,
 				 unsigned /* nedges */,
@@ -575,6 +585,7 @@ namespace mln
 	}
 
 
+	inline
 	void
 	bin_off_loader::assign(values& vs, const domain& s)
 	{
@@ -583,6 +594,7 @@ namespace mln
 	    vs[i].insert(vs[i].begin(), s.cplx().nfaces_of_dim(i), true);
 	}
 
+	inline
 	void
 	float_off_loader::assign(values& vs, const domain& s)
 	{
@@ -593,6 +605,7 @@ namespace mln
 	  vs[D] = face_value;
 	}
 
+	inline
 	void
 	rgb8_off_loader::assign(values& vs, const domain& s)
 	{

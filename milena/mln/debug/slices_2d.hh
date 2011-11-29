@@ -123,6 +123,7 @@ namespace mln
     namespace internal
     {
 
+      inline
       unsigned round_up(float f)
       {
 	unsigned n = static_cast<unsigned>(f + 0.499999f);
@@ -133,6 +134,7 @@ namespace mln
 	return n;
       }
 
+      inline
       void slices2d_helper(float nslis, float nrows, float ncols,
 			   float ratio_hv,
 			   unsigned& n_horizontal,

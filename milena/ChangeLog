@@ -1,3 +1,24 @@
+2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix the initialization of all global constants (ticket #43)
+
+	* mln/debug/slices_2d.hh,
+	* mln/io/dump/get_header.hh,
+	* mln/io/fld/header.hh,
+	* mln/io/fld/load.hh,
+	* mln/io/fld/load_header.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/math/jacobi.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/world/binary_2d/subsample.hh: Add missing 'inline'.
+
+	* tests/Makefile.am (CXXFLAGS): Add -DMLN_WO_GLOBAL_VARS.
+
+	* tests/global_vars1.cc,
+	* tests/global_vars2.cc: Make take MLN_WO_GLOBAL_VARS into
+	consideration.
+
 2011-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix invalid minimum value for builtin floating types. (ticket #247)
