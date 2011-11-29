@@ -1,5 +1,11 @@
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Do not compile scribo-viewer if Tesseract is not present.
+
+	* demo/Makefile.am: Add guards.
+
+2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make recognition faster and store recognition confidence.
 
 	* scribo/core/line_info.hh,
