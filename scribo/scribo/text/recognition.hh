@@ -34,6 +34,11 @@
 /// \todo For each text bbox, we create a new image. We may like to avoid that.
 /// \todo Do not store the result in an image?
 
+# if !defined HAVE_TESSERACT_2 && !defined HAVE_TESSERACT_3
+#  define HAVE_TESSERACT_2
+# endif
+
+
 # include <ostream>
 
 # include <mln/core/image/dmorph/image_if.hh>
@@ -59,13 +64,12 @@
 
 
 # include <tesseract/baseapi.h>
-# include <tesseract/ocrclass.h>
-# include <tesseract/resultiterator.h>
 
+# if defined HAVE_TESSERACT_3
+#  include <tesseract/ocrclass.h>
+#  include <tesseract/resultiterator.h>
+# endif // ! HAVE_TESSERACT_3
 
-# if !defined HAVE_TESSERACT_2 && !defined HAVE_TESSERACT_3
-#  define HAVE_TESSERACT_2
-# endif
 
 
 

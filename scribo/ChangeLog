@@ -1,3 +1,7 @@
+2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Make some includes conditional.
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Do not compile scribo-viewer if Tesseract is not present.
