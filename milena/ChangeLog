@@ -1,3 +1,7 @@
+2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/accu/math/sumpow.hh: New accumulator.
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants (ticket #43)
