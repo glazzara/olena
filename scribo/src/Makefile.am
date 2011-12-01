@@ -92,7 +92,6 @@ if HAVE_TESSERACT
 			       		   $(MAGICKXX_CPPFLAGS) \
 					   -I$(top_builddir)
     text_recognition_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
-		      	       		   -lpthread \
 	  			           $(TESSERACT_LDFLAGS) \
 			       		   $(TIFF_LDFLAGS) \
 					   $(MAGICKXX_LDFLAGS)

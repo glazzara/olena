@@ -1,3 +1,7 @@
+2011-12-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/Makefile.am: Remove -lpthread.
+
 2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/text/recognition.hh: Make some includes conditional.
