@@ -1,3 +1,23 @@
+2011-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add package description files for .deb generation.
+
+	* README.Debian,
+	* changelog,
+	* compat,
+	* control,
+	* copyright,
+	* olena-bin.install,
+	* olena-dev.docs,
+	* olena-dev.install,
+	* olena.1,
+	* olena.desktop,
+	* olena.install,
+	* olena.manpages,
+	* olena.menu,
+	* olena.xpm,
+	* rules: New.
+
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add warning flags to Scribo compiler flags.

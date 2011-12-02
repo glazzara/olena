@@ -1,0 +1,4 @@
+
+?package(olena):needs="text" section="Apps/Tools" \
+	title="Olena" command="/usr/bin/olena" \
+	icon="/usr/share/pixmaps/olena.xpm"
