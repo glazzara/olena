@@ -1,0 +1,12 @@
+Use the following command:
+-------------------------
+
+git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild --preserve-env --prepend-path=/usr/local/bin -i'\.git' -I.git "
+
+
+
+--preserve-env should NOT be used. However we enable this option to
+  use ccache while compiling.
+
+--prepend-path allows us to use a more recent version of Doxygen
+  located in /usr/local/bin.

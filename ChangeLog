@@ -1,5 +1,9 @@
 2011-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/HOWTO: How to make .deb package.
+
+2011-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add package description files for .deb generation.
 
 	* README.Debian,
