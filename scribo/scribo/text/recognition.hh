@@ -35,6 +35,7 @@
 /// \todo Do not store the result in an image?
 
 # include <ostream>
+# include <clocale>
 
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -106,6 +107,12 @@ namespace scribo
     {
       trace::entering("scribo::text::recognition");
 
+      // Tesseract is known to have issues while reading training data
+      // depending on the current locales in use. Training data files use
+      // float data and the decimal separator can be either '.' or ','
+      // causing errors.
+      // Setting locale to "C" fix that issue.
+      setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
 #  ifdef HAVE_TESSERACT_2
@@ -214,6 +221,13 @@ namespace scribo
 
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
+
+      // Tesseract is known to have issues while reading training data
+      // depending on the current locales in use. Training data files use
+      // float data and the decimal separator can be either '.' or ','
+      // causing errors.
+      // Setting locale to "C" fix that issue.
+      setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
 #  ifdef HAVE_TESSERACT_2
