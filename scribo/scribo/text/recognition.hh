@@ -193,6 +193,9 @@ namespace scribo
 	delete [] s;
       }
 
+      // Restore default locale.
+      setlocale(LC_ALL, "");
+
       trace::exiting("scribo::text::recognition");
     }
 
@@ -267,6 +270,9 @@ namespace scribo
 
 	if (!output_file.empty())
 	  file.close();
+
+	// Restore default locale.
+	setlocale(LC_ALL, "");
 
 	trace::exiting("scribo::text::recognition");
     }

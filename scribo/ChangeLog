@@ -1,5 +1,9 @@
 2011-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/text/recognition.hh: Restore previous locale.
+
+2011-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Ensure current locale is C while calling Tesseract.
 
 	* demo/viewer/main.cc: Move call to setLocale...
