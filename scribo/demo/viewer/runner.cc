@@ -37,13 +37,22 @@ static
 QString get_pathto(const QString& file,
 		   const QString localdirsuffix = QString())
 {
+  // Not installed ?
   QFile f(SCRIBO_LOCAL_DEMODIR "/" + localdirsuffix + "/" + file);
   if (f.exists())
     return SCRIBO_LOCAL_DEMODIR "/" + localdirsuffix;
 
+  // Installed in a specific path ?
   f.setFileName(SCRIBO_PREFIX_LIBEXECDIR "/" + file);
   if (f.exists())
     return SCRIBO_PREFIX_LIBEXECDIR;
+
+  // Installed in a specific path but moved elsewhere ?
+  QDir dir(QCoreApplication::applicationDirPath());
+  dir.cdUp(); // move from prefix/bin to prefix/
+  f.setFileName(dir.currentPath() + "/libexec/scribo" + file);
+  if (f.exists())
+    return dir.currentPath() + "/libexec/scribo";
 
   qDebug() << "FATAL ERROR: Can't locate file: " + file;
 

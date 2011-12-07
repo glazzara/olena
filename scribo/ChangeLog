@@ -1,3 +1,8 @@
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/viewer/runner.cc: Make detection of scribo-xml2doc more
+	robust.
+
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address compiler warnings in Scribo.
