@@ -1,5 +1,13 @@
 2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Create first draft of manpages for distributed binaries.
+
+	* debian/olena-dev.manpages
+	* debian/scribo-cli.1
+	* debian/scribo-viewer.1
+
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update Debian package configuration.
 
 	* debian/changelog: Use the correct release date.
