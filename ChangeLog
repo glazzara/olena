@@ -1,3 +1,19 @@
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Debian package configuration.
+
+	* debian/changelog: Use the correct release date.
+
+	* debian/control: Update architecture and descriptions.
+
+	* debian/olena-bin.install,
+	* debian/olena-dev.docs,
+	* debian/olena-dev.install: Update list of files.
+
+	* debian/olena-dev.doc-base: New.
+
+	* debian/rules: Make it support several packages builds.
+
 2011-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* debian/HOWTO: How to make .deb package.

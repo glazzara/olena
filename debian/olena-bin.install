@@ -1,3 +1,2 @@
-usr/bin/
-usr/libexec/
-usr/share/olena/
+usr/bin/*
+usr/libexec/scribo/*

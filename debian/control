@@ -3,19 +3,19 @@ Section: devel
 Priority: extra
 Maintainer: Olena Team <olena@lrde.epita.fr>
 Build-Depends: debhelper (>= 5), autotools-dev, dpkg-dev (>= 1.13.19)
-Standards-Version: 3.7.2
+Standards-Version: 3.9.1
 
 Package: olena
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, olena-doc, olena-bin
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, olena-dev, olena-bin
 Description: An Image Processing Platform.
  Install the whole plaform.
  .
  This is a meta-package
 
 Package: olena-bin
-Architecture: all
-Description: The documentation of Olena
+Architecture: any
+Description: Tools based on Olena.
  It includes several tools for manipulating images.
 
 Package: olena-dev

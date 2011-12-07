@@ -1,2 +1,3 @@
-usr/include/milena/
-usr/include/scribo/
+usr/include/mln/*
+usr/include/scribo/*
+usr/share/doc/olena/*
