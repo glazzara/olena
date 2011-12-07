@@ -195,9 +195,6 @@ EXTRA_DIST +=					\
   $(DOXYFILE).in				\
   doxyfuns.sty					\
   scribo.sty					\
-  tools/clearbanner.sh				\
-  tools/sample_utils.hh				\
-  tools/split_sample.sh				\
   tools/todoxygen.sh
 
 
