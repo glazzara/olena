@@ -42,9 +42,9 @@ namespace mln
   namespace data
   {
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// Be ware that the given accumulator won't be modified and won't
-    /// store any result.
+    /// \brief Compute an accumulator onto the pixel values of the
+    /// image \p input.  Be ware that the given accumulator won't be
+    /// modified and won't store any result.
     ///
     /// \param[in] a An accumulator.
     /// \param[in] input The input image.
@@ -57,7 +57,8 @@ namespace mln
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
+    /// \brief Compute an accumulator onto the pixel values of the
+    /// image \p input.
     ///
     /// \param[in, out] a An accumulator.
     /// \param[in] input The input image.
@@ -70,7 +71,8 @@ namespace mln
     compute(Accumulator<A>& a, const Image<I>& input);
 
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
+    /// \brief Compute an accumulator onto the pixel values of the
+    /// image \p input.
     ///
     /// \param[in] a A meta-accumulator.
     /// \param[in] input The input image.

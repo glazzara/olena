@@ -1,3 +1,14 @@
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix doxygen warnings.
+
+	* mln/accu/compute.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/data/compute.hh,
+	* mln/debug/filename.hh,
+	* mln/labeling/blobs.hh,
+	* mln/morpho/tree/filter/all.hh: Here.
+
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update generated .mk files.

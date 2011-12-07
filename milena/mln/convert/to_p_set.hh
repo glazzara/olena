@@ -69,7 +69,7 @@ namespace mln
     p_set<P>
     to_p_set(const std::set<P, C>& s);
 
-    /// Convert any site set \p ps into a 'mln::p_set' site set.
+    /// Convert any site set \p ps into a 'mln::p_set<>' site set.
     template <typename S>
     p_set<mln_psite(S)>
     to_p_set(const Site_Set<S>& ps);

@@ -46,8 +46,8 @@ namespace mln
 
     /// Make an accumulator compute the pixels of the image \p input.
     ///
-    /// \param[in] input The input image.
     /// \param[in] a An accumulator.
+    /// \param[in] input The input image.
     ///
     /// This routine runs: \n
     ///   a.take(make::pix(input, p));
@@ -62,8 +62,8 @@ namespace mln
 
     /// Make an accumulator compute the pixels of the image \p input.
     ///
-    /// \param[in] input The input image.
     /// \param[in] a A meta accumulator.
+    /// \param[in] input The input image.
     ///
     /// This routine runs: \n
     ///   a.take(make::pix(input, p));

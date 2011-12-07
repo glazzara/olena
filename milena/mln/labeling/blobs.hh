@@ -48,11 +48,11 @@ namespace mln
   namespace labeling
   {
 
-    /// Connected component labeling of the binary objects of a binary
-    ///  image.
+    /// \brief Connected component labeling of the binary objects of a
+    ///  binary image.
     ///
-    /// \param[in]  input    The input image.
-    /// \param[in]  nbh      The connexity of the objects.
+    /// \param[in] input    The input image.
+    /// \param[in] nbh      The connexity of the objects.
     /// \param[out] nlabels  The Number of labels. Its value is set in the
     ///			     algorithms.
     /// \return              The label image.
@@ -61,7 +61,7 @@ namespace mln
     ///
     /// A fast queue is used so that the algorithm is not recursive and
     /// can handle large binary objects (blobs).
-    ///
+    //
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     blobs(const Image<I>& input, const Neighborhood<N>& nbh,

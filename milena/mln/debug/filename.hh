@@ -50,9 +50,9 @@ namespace mln
     **
     ** Where:
     **  - `filename_prefix` can be set through the global variable
-    **  debug::internal::filename_prefix.
+    **     debug::internal::filename_prefix.
     ** - `postfix_id` is autoincremented by default. Its value can be
-         forced.
+          forced.
     **  - `filename` is the given filename
     */
     std::string
