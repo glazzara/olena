@@ -1,3 +1,8 @@
+2011-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/binarization/Makefile.am (EXTRA_DIST): Fix invalid
+	filename.
+
 2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Fix deprecated dist files.

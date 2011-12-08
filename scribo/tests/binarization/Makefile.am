@@ -30,6 +30,7 @@ EXTRA_DIST = 					\
   niblack_fast_wodd_heven.ref.pbm		\
   niblack_fast_weven_hodd.ref.pbm		\
   niblack_fast_wodd_hodd.ref.pbm		\
+  niblack.ref.pbm				\
   sauvola_ms.ref.pbm				\
   sauvola_ms_wodd_heven.ref.pbm			\
   sauvola_ms_weven_hodd.ref.pbm			\
