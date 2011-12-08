@@ -82,7 +82,7 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      lrde_olena.html	 		\
 	      $(REFMAN_IMAGES)
 
-
+EXTRA_DIST += $(REFMAN_deps)
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
