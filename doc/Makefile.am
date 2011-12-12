@@ -57,6 +57,7 @@ REFMAN_IMAGES =					\
 	$(srcdir)/images/logo.jpg
 
 EXTRA_DIST = 					\
+	$(DOXYFILE).in				\
 	$(REFMAN_IMAGES)			\
 	$(srcdir)/images/olena_layers.svg
 
@@ -79,7 +80,6 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/get_sources.dox		\
 	      $(srcdir)/subdoc_footer.html	\
 	      contributors.html			\
-	      lrde_olena.html	 		\
 	      $(REFMAN_IMAGES)
 
 EXTRA_DIST += $(REFMAN_deps)
@@ -161,6 +161,13 @@ lrde_olena.html: lrde_olena.bib
 	bibtex2html -s plain -nokeywords -citefile lrde_olena.cite \
 		-noabstract -nofooter -labelname -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
 
+
+EXTRA_DIST += 				\
+      lrde_olena.cite 			\
+      lrde_olena.html			\
+      lrde_olena.html	 		\
+      lrde_olena.bib			\
+      lrde_olena_bib.html
 
 MAINTAINERCLEANFILES += lrde_olena.cite 	\
 			lrde_olena.bib 		\
