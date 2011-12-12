@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,20 +53,18 @@ namespace scribo
 
       \param[in] input An image of Scalar.
       \param[in] scale The scale factor.
-      \param[in] integral_sum Integral image of mean values.
-      \param[in] integral_sum_2 Integral image of squared mean values.
+      \param[in] integral_sum_sum_2 Integral image of mean and squared mean values.
       \param[in] output_domain The domain of the subscaled image.
       \param[in] border_thickness Border of the integral and subscaled images.
 
-      \p integral_sum, \p integral_sum_2 and output image have the same domain.
+      \p integral_sum_sum_2 and output image have the same domain.
       The output domain is set with \p output_domain.
 
      */
     template <typename I, typename J>
-    inline
     mln_concrete(I)
-    integral(const Image<I>& input, unsigned scale,
-	     Image<J>& integral_sum, Image<J>& integral_sum_2,
+    integral(const Image<I>& input_, unsigned scale,
+	     Image<J>& integral_sum_sum_2,
 	     const mln_domain(I)& output_domain, unsigned border_thickness);
 
     /*! \overload
@@ -83,10 +81,8 @@ namespace scribo
     template <typename I, typename J>
     inline
     mln_concrete(I)
-    integral(const Image<I>& input, unsigned scale,
-	     Image<J>& integral_sum, Image<J>& integral_sum_2);
-
-
+    integral(const Image<I>& input_, unsigned scale,
+	     Image<J>& integral_sum_sum_2);
 
 # ifndef MLN_INCLUDE_ONLY
 

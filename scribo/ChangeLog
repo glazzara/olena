@@ -1,3 +1,8 @@
+2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/subsampling/integral_single_image.hh: Fix forward
+	declarations.
+
 2011-12-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/Makefile.am: Remove -lpthread.
