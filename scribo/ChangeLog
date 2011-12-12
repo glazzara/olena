@@ -1,3 +1,10 @@
+2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Change path to .bib files.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
 2011-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/binarization/Makefile.am (EXTRA_DIST): Fix invalid

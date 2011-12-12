@@ -63,6 +63,7 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
 	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
+	   -e 's,@abs_srcdir\@,$(abs_srcdir),g'			\
 	   -e 's,@top_builddir\@,$(top_builddir),g'		\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
 	   -e 's,@builddir\@,$(builddir),g'
