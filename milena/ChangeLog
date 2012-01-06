@@ -1,5 +1,27 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp documentation directory structure.
+
+	* doc/groups/accu.dox,
+	* doc/groups/graph.dox,
+	* doc/groups/images.dox,
+	* doc/groups/main.dox,
+	* doc/groups/neighb.dox,
+	* doc/groups/site_set.dox,
+	* doc/groups/util.dox,
+	* doc/groups/win.dox: Move...
+
+	* doc/mln/accu/accu.dox,
+	* doc/mln/core/image/images.dox,
+	* doc/mln/core/neighb.dox,
+	* doc/mln/core/site_set/site_set.dox,
+	* doc/mln/main.dox,
+	* doc/mln/util/graph.dox,
+	* doc/mln/util/util.dox,
+	* doc/mln/win/win.dox: ... Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix path to data.
 
 	* doc/Doxyfile.in,
