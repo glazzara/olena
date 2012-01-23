@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,12 +47,15 @@ namespace mln
   namespace data
   {
 
-    /*! Fill the whole image \p ima with the data provided by \p aux.
+    /*! \brief Fill the whole image \p ima with the data provided by
+     *  \p aux.
      *
      * \param[in,out] ima The image to be filled.
      * \param[in] data The auxiliary data to fill the image \p ima.
      *
      * \pre \p ima has to be initialized.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename D>
     void fill(Image<I>& ima, const D& data);

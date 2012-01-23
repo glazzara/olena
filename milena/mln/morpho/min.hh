@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,17 +45,21 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological min: either a logical "and" (if morpho on sets)
-     *  or an arithmetical min (if morpho on functions).
+    /*! \brief Morphological min: either a logical "and" (if morpho on
+     *  sets) or an arithmetical min (if morpho on functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename J>
     mln_concrete(I)
-      min(const Image<I>& lhs, const Image<J>& rhs);
+    min(const Image<I>& lhs, const Image<J>& rhs);
 
 
-    /*! Morphological min, inplace version: either a logical "and" (if
-     *  morpho on sets) or an arithmetical min (if morpho on
+    /*! \brief Morphological min, inplace version: either a logical
+     *  "and" (if morpho on sets) or an arithmetical min (if morpho on
      *  functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename J>
     void min_inplace(Image<I>& lhs, const Image<J>& rhs);

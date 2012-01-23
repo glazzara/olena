@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,38 +41,44 @@
 namespace mln
 {
 
-  /// Point-wise test if the pixel values of \p lhs are equal to the
-  /// pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are equal
+   * to the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
 
 
-  /// Point-wise test if the pixel values of \p lhs are point-wise
-  /// less than the pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are point-wise
+   * less than the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
 
 
-  /// Point-wise test if the pixel values of \p lhs are point-wise
-  /// less than or equal to the pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are point-wise
+   * less than or equal to the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
 

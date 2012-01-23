@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -53,34 +53,44 @@ namespace mln
     namespace off
     {
 
-      /** Load a (binary) OFF image into a complex image.
+      /*! \brief Load a (binary) OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
 
 	  The image is said binary since data only represent the
-	  existence of faces.  */
+	  existence of faces.
+
+	  \ingroup iooff
+      */
       void load(bin_2complex_image3df& ima, const std::string& filename);
 
       // FIXME: Implement a load routine for for
       // int_u8_2complex_image3df.
 
-      /** Load a floating-point OFF image into a complex image.
+      /*! brief Load a floating-point OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
 
 	  Read floating-point data is attached to 2-faces only;
-	  1-faces and 0-faces are set to 0.0f.  */
+	  1-faces and 0-faces are set to 0.0f.
+
+	  \ingroup iooff
+      */
       void load(float_2complex_image3df& ima, const std::string& filename);
 
-      /** Load a 3x8-bit RGB (color) OFF image into a complex image.
+      /*! \brief Load a 3x8-bit RGB (color) OFF image into a complex
+          image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
 
 	  Read floating-point data is attached to 2-faces only;
-	  1-faces and 0-faces are set to 0.0f.  */
+	  1-faces and 0-faces are set to 0.0f.
+
+	  \ingroup iooff
+      */
       void load(rgb8_2complex_image3df& ima, const std::string& filename);
 
 

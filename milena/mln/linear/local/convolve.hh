@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,14 +48,16 @@ namespace mln
     namespace local
     {
 
-      /*! Local convolution of image \p input at point \p p by the
-       *  weighted window \p w_win.
-       *
-       * \warning Computation of the \p result is performed with the
-       * type \c R.
-       *
-       * \warning The weighted window is used as-is, considering that
-       * its symmetrization is handled by the client.
+      /*! \brief Local convolution of image \p input at point \p p by the
+          weighted window \p w_win.
+
+         \warning Computation of the \p result is performed with the
+         type \c R.
+
+         \warning The weighted window is used as-is, considering that
+         its symmetrization is handled by the client.
+
+	 \ingroup mlnlinear
        */
       template <typename I, typename P, typename W, typename R>
       void convolve(const Image<I>&           input,
@@ -63,14 +66,16 @@ namespace mln
 		    R&			      result);
 
 
-      /*! Local convolution around (generalized) pixel \p by the
-       *  weighted window \p w_win.
-       *
-       * \warning Computation of the \p result is performed with the
-       * type \c R.
-       *
-       * \warning The weighted window is used as-is, considering that
-       * its symmetrization is handled by the client.
+      /*! \brief Local convolution around (generalized) pixel \p by the
+          weighted window \p w_win.
+
+         \warning Computation of the \p result is performed with the
+         type \c R.
+
+         \warning The weighted window is used as-is, considering that
+         its symmetrization is handled by the client.
+
+	 \ingroup mlnlinear
        */
       template <typename P, typename W, typename R>
       void convolve(const Generalized_Pixel<P>& p,

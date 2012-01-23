@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,10 @@ namespace mln
     namespace approx
     {
 
-
+      /*! \brief Approximate mathematical morphology erosion.
+       *
+       * \ingroup mlnmorpho
+       */
       template <typename I, typename W>
       mln_concrete(I)
       erosion(const Image<I>& input, const Window<W>& win);
@@ -58,10 +62,10 @@ namespace mln
 
       namespace impl
       {
-	
-	
+
+
 	// By distance thresholding.
-	
+
 	template <typename I>
 	mln_concrete(I)
 	erosion_by_distance_thresholding_2d(const Image<I>& input_,
@@ -85,7 +89,7 @@ namespace mln
 	  unsigned
 	    radius = coef * win.diameter() / 2,
 	    dmax   = radius + 1;
-	  
+
 
 	  mln_concrete(I) background = logical::not_(input);
 	  mln_ch_value(I, unsigned) dmap = transform::distance_front(background,
@@ -99,7 +103,7 @@ namespace mln
 	}
 
 
-	
+
 	template <typename I>
 	mln_concrete(I)
 	erosion_by_distance_thresholding_3d(const Image<I>& input_,
@@ -199,7 +203,7 @@ namespace mln
 
 	if (exact(win).is_centered())
 	  mln_postcondition(output <= input);
-	
+
 	trace::exiting("morpho::approx::erosion");
 	return output;
       }

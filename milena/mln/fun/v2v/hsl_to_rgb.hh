@@ -107,10 +107,6 @@ namespace mln
 	typedef typename T_rgb::green_t green_t;
 	typedef typename T_rgb::blue_t  blue_t;
 
-	static math::round<red_t>   to_r;
-	static math::round<green_t> to_g;
-	static math::round<blue_t>  to_b;
-
 	const float q = (hsl.lum() < 0.5) ? hsl.lum() * (1.0 + hsl.sat()) :
 					    hsl.lum() + hsl.sat() - (hsl.lum() * hsl.sat());
 	const float p = 2.0 * hsl.lum() - q;
@@ -168,9 +164,9 @@ namespace mln
 	  blue = p;
 
 	// Each component is in [0, 1].
-	red_t   r = to_r(red * 255);
-	green_t g = to_g(green * 255);
-	blue_t  b = to_b(blue * 255);
+	red_t   r = math::round<red_t>(red * 255);
+	green_t g = math::round<green_t>(green * 255);
+	blue_t  b = math::round<blue_t>(blue * 255);
 
 	T_rgb rgb_result(r, g, b);
 

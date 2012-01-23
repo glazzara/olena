@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,9 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete front distance transform.
+    /*! \brief Discrete front distance transform.
+      \ingroup mlntransform
+    */
     template <typename I, typename N, typename W, typename D>
     mln_ch_value(I, D)
     distance_front(const Image<I>& input,

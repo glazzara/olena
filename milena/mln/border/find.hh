@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,13 +41,14 @@ namespace mln
   namespace border
   {
 
-    /*! Find the virtual (outer) border thickness of image \p ima.
+    /*! \brief Find the virtual (outer) border thickness of image \p ima.
      *
      * \param[in] ima The image.
      * \result The border thickness (0 if there is no border).
      *
      * \pre \p ima has to be initialized.
      *
+     * \ingroup mlnborderext
      */
     template <typename I>
     unsigned find(const Image<I>& ima);

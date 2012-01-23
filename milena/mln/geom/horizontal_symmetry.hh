@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// \brief Perfoms a horizontal symmetry.
-    //
+    /*! \brief Perfoms a horizontal symmetry.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_concrete(I)
     horizontal_symmetry(const Image<I>& input);

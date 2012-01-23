@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,11 +69,13 @@ namespace mln
     namespace fld
     {
 
-      /// Load an image from an AVS field file.
-      ///
-      /// \param[in,out] ima_ The image to load.
-      /// \param[in] filename The path to the AVS file.
-      ///
+      /*! \brief Load an image from an AVS field file.
+       *
+       * \param[in,out] ima_ The image to load.
+       * \param[in] filename The path to the AVS file.
+       *
+       * \ingroup iofld
+       */
       template <typename I>
       inline
       void

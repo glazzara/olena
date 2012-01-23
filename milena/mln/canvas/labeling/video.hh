@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,6 +52,11 @@ namespace mln
     namespace labeling
     {
 
+      /*! \brief Fast connected component labeling of the object part
+       *  in a binary image.
+       *
+       * \ingroup modcanvaslabeling
+       */
       template <typename I, typename N, typename L, typename F>
       mln_ch_value(I, L)
       video(const Image<I>& input, const Neighborhood<N>& nbh,

@@ -55,7 +55,7 @@ namespace mln
   {
 
     /*! \brief N-Dimensional matrix with homogeneous coordinates.
-     *
+      \ingroup mlnalgebratypes
      */
     template <unsigned d, typename T>
     struct h_mat : public mat<d+1, d+1, T>

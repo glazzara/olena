@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,15 +43,20 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological laplacian.
+    /*! \brief Morphological laplacian.
      *
-     * This operator is (d_B - Id) - (Id - e_B). 
+     * This operator is (d_B - Id) - (Id - e_B).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename W, typename O>
     void laplacian(const Image<I>& input, const Window<W>& win,
 		   Image<O>& output);
 
 
+    /*! \overload
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_trait_op_minus_twice(mln_concrete(I))
       laplacian(const Image<I>& input, const Window<W>& win);

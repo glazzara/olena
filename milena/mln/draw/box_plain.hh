@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +31,7 @@
  *
  * \brief Draw a plain box in an image.
  *
- * \fixme Rename as box.hh
+ * \todo Rename as box.hh
  */
 
 # include <mln/core/concept/image.hh>
@@ -47,16 +48,17 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a plain box at value \p v in image \p ima
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] b the box to draw.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre \p ima has \p beg.
-     * \pre \p ima has \p end.
-     *
+    /*! \brief Draw a plain box at value \p v in image \p ima
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] b the box to draw.
+       \param[in] v The value to assign to all drawn pixels.
+
+       \pre \p ima has to be initialized.
+       \pre \p ima has \p beg.
+       \pre \p ima has \p end.
+
+       \ingroup mlndraw
      */
     template <typename I, typename B>
     void box_plain(Image<I>& ima,

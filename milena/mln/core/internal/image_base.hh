@@ -33,6 +33,7 @@
 ///
 /// \todo Provide coord iff the site is a grid point.
 
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
 # include <mln/core/trait/qlf_value.hh>
@@ -58,7 +59,6 @@ namespace mln
       public Image<E>
     {
     };
-
 
 
     /// \brief A base class for images.
@@ -167,7 +167,7 @@ namespace mln
       // Internal data, sharable by several images.
       util::tracked_ptr< internal::data<E> > data_;
     };
-
+    /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -272,6 +272,5 @@ namespace mln
   } // end of namespace mln::internal
 
 } // end of namespace mln
-
 
 #endif // ! MLN_CORE_INTERNAL_IMAGE_BASE_HH

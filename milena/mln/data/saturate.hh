@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ namespace mln
   {
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in] v     A value of the output type.
      * \param[in] input The input image.
@@ -50,17 +51,21 @@ namespace mln
      * The saturation is based on the min and max values of the output
      * value type.  This assumes that the range of values in the input
      * image is larger than the one of the output image.
+     *
+     * \ingroup mlndata
      */
     template <typename V, typename I>
     mln_ch_value(I, V)
     saturate(V v, const Image<I>& input);
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in] input The input image.
      * \param[in] min The minimum output value.
      * \param[in] max The maximum output value.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename V>
     mln_ch_value(I, V)
@@ -68,11 +73,13 @@ namespace mln
 	     const V& min, const V& max);
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in,out] input The input image.
      * \param[in] min The minimum output value.
      * \param[in] max The maximum output value
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void saturate_inplace(Image<I>& input,

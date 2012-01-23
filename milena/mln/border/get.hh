@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,6 +46,8 @@ namespace mln
      * \result    The border thickness (0 if there is no border).
      *
      * \pre \a ima has to be initialized.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     unsigned get(const Image<I>& ima);

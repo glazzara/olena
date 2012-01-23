@@ -50,7 +50,7 @@ namespace mln
   namespace make
   {
 
-    /// Create a graph from an influence zone image.
+    /// \brief Create a graph from an influence zone image.
     ///
     /// \param[in] iz influence zone image.
     /// \param[in] nbh A neighborhood.
@@ -60,7 +60,7 @@ namespace mln
     //
     template <typename I, typename N>
     util::graph
-    influence_zone_adjacency_graph(const Image<I>& iz_,
+    influence_zone_adjacency_graph(const Image<I>& iz,
 				   const Neighborhood<N>& nbh,
 				   const mln_value(I)& nlabels);
 

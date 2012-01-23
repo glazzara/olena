@@ -53,6 +53,10 @@ namespace mln
     namespace fld
     {
 
+      /*! \brief Save an image to AVS field file format.
+       *
+       * \ingroup iofld
+       */
       template <typename I>
       void save(const Image<I>& ima_, const char* filename);
 

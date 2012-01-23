@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -42,42 +42,48 @@ namespace mln
   namespace data
   {
 
-    /// \brief Compute an accumulator onto the pixel values of the
-    /// image \p input.  Be ware that the given accumulator won't be
-    /// modified and won't store any result.
-    ///
-    /// \param[in] a An accumulator.
-    /// \param[in] input The input image.
-    /// \return The accumulator result.
-    ///
-    /// It fully relies on data::update.
-    //
+    /*! \brief Compute an accumulator onto the pixel values of the
+     * image \p input.  Be ware that the given accumulator won't be
+     * modified and won't store any result.
+     *
+     * \param[in] a An accumulator.
+     * \param[in] input The input image.
+     * \return The accumulator result.
+     *
+     * It fully relies on data::update.
+     *
+     * \ingroup mlnaccucompute
+     */
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /// \brief Compute an accumulator onto the pixel values of the
-    /// image \p input.
-    ///
-    /// \param[in, out] a An accumulator.
-    /// \param[in] input The input image.
-    /// \return The accumulator result.
-    ///
-    /// It fully relies on data::update.
-    //
+    /*! \brief Compute an accumulator onto the pixel values of the
+     * image \p input.
+     *
+     * \param[in, out] a An accumulator.
+     * \param[in] input The input image.
+     * \return The accumulator result.
+     *
+     * It fully relies on data::update.
+     *
+     * \ingroup mlnaccucompute
+     */
     template <typename A, typename I>
     mln_result(A)
     compute(Accumulator<A>& a, const Image<I>& input);
 
 
-    /// \brief Compute an accumulator onto the pixel values of the
-    /// image \p input.
-    ///
-    /// \param[in] a A meta-accumulator.
-    /// \param[in] input The input image.
-    /// \return The accumulator result.
-    ///
+    /*! \brief Compute an accumulator onto the pixel values of the
+     * image \p input.
+     *
+     * \param[in] a A meta-accumulator.
+     * \param[in] input The input image.
+     * \return The accumulator result.
+     *
+     * \ingroup mlnaccucompute
+     */
     template <typename A, typename I>
     mln_meta_accu_result(A, mln_value(I))
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);

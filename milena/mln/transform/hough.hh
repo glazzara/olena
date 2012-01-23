@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,18 +58,21 @@ namespace mln
   namespace transform
   {
 
-    /// Compute the hough transform from a binary image.
-    /// Objects used for computation must be set to 'true'.
-    ///
-    /// \param[in] input_ A binary image.
-    ///
-    /// \return A 2D image of float. Rows are used for the distance
-    /// and columns are used for the angles. Angles go from 0 to 359.
-    /// Distance goes from 0 to the maximum distance between the
-    /// center and a corner.
-    /// The site having the maximum value indicates through its column
-    /// index the document inclination.
-    //
+    /*! \brief Compute the hough transform from a binary image.
+
+        \param[in] input_ A binary image.
+
+        \return A 2D image of float. Rows are used for the distance
+        and columns are used for the angles. Angles go from 0 to 359.
+        Distance goes from 0 to the maximum distance between the
+        center and a corner.
+        The site having the maximum value indicates through its column
+        index the document inclination.
+
+        \pre Objects used for computation must be set to 'true'.
+
+	\ingroup mlntransform
+    */
     template <typename I>
     image2d<float>
     hough(const Image<I>& input_);

@@ -1,0 +1,6 @@
+/*! \defgroup modimageidmorpher Identity morphers
+ *
+ * \brief Morpher adding new functionnalities.
+ *
+ * \ingroup modimagemorpher
+ */

@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -49,16 +49,18 @@ namespace mln
     namespace raw
     {
 
-      /// Load an image saved as a raw data file.
-      ///
-      /// \param[in,out] ima_ The image to load.
-      /// \param[in] filename the destination.
-      ///
-      /// This routine try to read two input files: 'filename' and
-      /// 'filename.info'.
-      /// 'filename' is the raw data.
-      /// 'filename.info' store various information about the image.
-      //
+      /*! \brief Load an image saved as a raw data file.
+       *
+       * \param[in,out] ima_ The image to load.
+       * \param[in] filename the destination.
+       *
+       * This routine try to read two input files: 'filename' and
+       * 'filename.info'.
+       * 'filename' is the raw data.
+       * 'filename.info' store various information about the image.
+       *
+       * \ingroup ioraw
+       */
       template <typename I>
       void load(Image<I>& ima_, const std::string& filename);
 

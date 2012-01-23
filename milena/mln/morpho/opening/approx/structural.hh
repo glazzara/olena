@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,9 +47,12 @@ namespace mln
       namespace approx
       {
 
-	/// Approximate of morphological structural opening.
-	///
-	/// This operator is d_{-B} o e_B.
+	/*! \brief Approximate of morphological structural opening.
+	 *
+	 * This operator is d_{-B} o e_B.
+	 *
+	 * \ingroup mlnmorphoopening
+	 */
 	template <typename I, typename W>
 	mln_concrete(I)
 	structural(const Image<I>& input, const Window<W>& win);

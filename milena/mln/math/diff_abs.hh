@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -31,7 +31,7 @@
 ///
 /// Define diff_abs routine.
 ///
-/// \fixme Do we want a specific version for vectorial types?
+/// \todo Do we want a specific version for vectorial types?
 
 
 namespace mln
@@ -40,6 +40,9 @@ namespace mln
   namespace math
   {
 
+    /*! \brief The absolute difference between to values.
+      \ingroup mlnmath
+    */
     template <typename T>
     T diff_abs(const T& v1, const T& v2);
 

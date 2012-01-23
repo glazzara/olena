@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,16 +48,24 @@ namespace mln
     {
 
       /*! \brief Save a Milena 1D image in a plot file.
+
 	  \param[in] ima A reference to the image to save.
-	  \param[out] filename The output file.  */
+	  \param[out] filename The output file.
+
+	  \ingroup ioplot
+      */
       template <typename I>
       void save(const image1d<I>& ima, const std::string& filename);
 
       /*! \brief Save a Milena array in a plot file.
+
           \param[in] arr A reference to the array to save.
 	  \param[out] filename The output file.
 	  \param[in] start_value The start index value of the plot
-	             (optional).  */
+	             (optional).
+
+	  \ingroup ioplot
+      */
       template <typename T>
       void save(const util::array<T>& arr, const std::string& filename,
 		int start_value = 0);

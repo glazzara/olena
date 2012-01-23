@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +47,10 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological dilation.
+    /*! \brief Morphological dilation.
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I)
     dilation(const Image<I>& input, const Window<W>& win);

@@ -1,0 +1,27 @@
+/*! \defgroup mlnmorpho Mathematical Morphology
+ *
+ * \brief Algorithms dedicated to Mathematical Morphology.
+ *
+ * \ingroup modroutines
+ */
+
+/*! \defgroup mlnmorphoclosing Morphological Closing
+ *
+ * \brief Variants of the Morphological Closing.
+ *
+ * \ingroup mlnmorpho
+ */
+
+/*! \defgroup mlnmorphoopening Morphological Opening
+ *
+ * \brief Variants of the Morphological Opening.
+ *
+ * \ingroup mlnmorpho
+ */
+
+/*! \defgroup mlnmorphowst Morphological Watershed
+ *
+ * \brief Variants of the Morphological Watershed.
+ *
+ * \ingroup mlnmorpho
+ */

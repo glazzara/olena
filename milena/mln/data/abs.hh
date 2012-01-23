@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,18 +45,24 @@ namespace mln
   {
 
 
-    /*! Apply the absolute value (abs) function to image pixel values.
+    /*! \brief Apply the absolute value (abs) function to image pixel
+     *  values.
      *
      * \param[in] input The input image.
      * \param[out] output The output image.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename O>
     void abs(const Image<I>& input, Image<O>& output);
 
 
-    /*! Apply the absolute value (abs) function to image pixel values.
+    /*! \brief Apply the absolute value (abs) function to image pixel
+     *  values.
      *
      * \param[in,out] input The input image.
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void abs_inplace(Image<I>& input);

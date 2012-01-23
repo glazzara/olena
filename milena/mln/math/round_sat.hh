@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,16 +27,13 @@
 #ifndef MLN_MATH_ROUND_SAT_HH
 # define MLN_MATH_ROUND_SAT_HH
 
-/*! \file
- *
- * \brief Define round_sat routine.
- */
+/// \file
+///
+/// Round a given value considering its type as circular.
 
 # include <cmath>
 
-# include <mln/core/concept/function.hh>
-# include <mln/trait/value_.hh>
-
+# include <mln/fun/v2v/round_sat.hh>
 
 
 namespace mln
@@ -44,32 +42,45 @@ namespace mln
   namespace math
   {
 
+    /*! \brief Round a given value considering its type as circular.
+      \param[in] v The value to be rounded.
 
-    template <typename R>
-    struct round_sat_ : public Function_v2v< round_sat_<R> >
-    {
-      typedef R result;
+      \return A round value of type \tparam R.
 
-      template <typename T>
-      result operator()(const T& v) const;
+      \warning The return type \tparam must be passed as template
+      parameter on function call.
 
-    };
+      \ingroup mlnmath
+    */
+    template <typename R, typename T>
+    R round_sat(const T& v);
+
+    /*! \brief Round a given value considering its type as circular.
+      \param[in] v The value to be rounded.
+      \param[in] return_type The returned type to be used.
+
+      \return A round value of type \tparam R.
+
+      \ingroup mlnmath
+    */
+    template <typename R, typename T>
+    R round_sat(const T& v, const R& return_type);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename R>
-    template <typename T>
-    inline
-    R round_sat_<R>::operator()(const T& v) const
+    template <typename R, typename T>
+    R round_sat(const T& v)
     {
-      long int l = (long int)(v + 0.49999); // FIXME: !!!
-      return
-	l < mln_min(R)
-	? mln_min(R)
-	: (l > mln_max(R)
-	   ? mln_max(R)
-	   : R(l));
+      static fun::v2v::round_sat<R> f;
+      return f(v);
+    }
+
+    template <typename R, typename T>
+    R round_sat(const T& v, const R&)
+    {
+      static fun::v2v::round_sat<R> f;
+      return f(v);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

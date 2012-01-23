@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,8 +46,8 @@ namespace mln
   namespace extension
   {
 
-    /*! Fill the domain extension of image \p ima with the
-     *  single value \p v.
+    /*! \brief Fill the domain extension of image \p ima with the
+     *  single value \p val.
      *
      * \param[in,out] ima The image whose domain extension is to be filled.
      * \param[in] val The value to assign.
@@ -54,6 +55,8 @@ namespace mln
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memset if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& val);

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,21 +48,25 @@ namespace mln
     namespace pfm
     {
 
-      /// Load a pfm image in a Milena image.
-      ///
-      /// \param[out] ima A reference to the image2d<float> which will receive
-      /// data.
-      /// \param[in] filename The source.
-      ///
+      /*! \brief Load a pfm image in a Milena image.
+       *
+       * \param[out] ima A reference to the image2d<float> which will receive
+       * data.
+       * \param[in] filename The source.
+       *
+       * \ingroup iopfm
+       */
       void load(image2d<float>& ima,
 		const std::string& filename);
 
-      /// Load a pfm image in a image2d<float>.
-      ///
-      /// \param[in] filename The image source.
-      ///
-      /// \return An image2d<float> which contains loaded data.
-      ///
+      /*! \brief Load a pfm image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       *
+       * \ingroup iopfm
+       */
       image2d<float> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY

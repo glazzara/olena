@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,8 +50,8 @@ namespace mln
   namespace data
   {
 
-    /*! Stretch the values of \p input so that they can be stored in
-     *  \p output.
+    /*! \brief Stretch the values of \p input so that they can be
+     *  stored in \p output.
      *
      * \param[in] v       A value to set the output value type.
      * \param[in] input   The input image.
@@ -59,6 +59,8 @@ namespace mln
      * \return A stretch image with values of the same type as \p v.
      *
      * \pre input.is_valid
+     *
+     * \ingroup mlndata
      */
     template <typename V, typename I>
     mln_ch_value(I, V)

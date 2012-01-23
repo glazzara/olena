@@ -42,12 +42,15 @@ namespace mln
   namespace data
   {
 
-    /*! Set the \p output image with the encoding values of the image \p input pixels.
+    /*! \brief Set the \p output image with the encoding values of the
+     *  image \p input pixels.
      *
      * \param[in] input The input image.
      * \param[out] output The result image.
      *
      * \pre \p output.domain >= \p input.domain
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename O>
     void to_enc(const Image<I>& input, Image<O>& output);

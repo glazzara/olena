@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -32,7 +32,7 @@
 /// Compute a skeleton under constraints.
 ///
 /// \todo Add an extension handling policy for the user to set it.
-/// \fixme The fast version does not give the exact result!
+/// \todo The fast version does not give the exact result!
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -50,6 +50,10 @@ namespace mln
   namespace morpho
   {
 
+    /*! \brief Compute a skeleton under constraints.
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I,
 	      typename N, typename F,
 	      typename K, typename R>

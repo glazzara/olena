@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,17 +44,20 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform
-    ///
-    /// \param[in] input  Image from which the geodesic distance is computed.
-    /// \param[in] nbh	  Neighborhood
-    /// \param[in] max	  Max distance of propagation.
-    ///
-    /// \return a couple of images. The first one is the distance map and the
-    ///		second one is the closest point image. The closest point image
-    ///		contains sites.
-    ///
-    /// \post The returned images have the same domain as \p input.
+    /*! \brief Discrete geodesic distance transform
+
+        \param[in] input  Image from which the geodesic distance is computed.
+        \param[in] nbh	  Neighborhood
+        \param[in] max	  Max distance of propagation.
+
+        \return a couple of images. The first one is the distance map and the
+       		second one is the closest point image. The closest point image
+       		contains sites.
+
+        \post The returned images have the same domain as \p input.
+
+	\ingroup mlntransform
+    */
     template <typename I, typename N, typename D>
     util::couple<mln_ch_value(I,D), I>
     distance_and_influence_zone_geodesic(const Image<I>& input,

@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +59,10 @@ namespace mln
       };
 
 
-      /// Retrieve header in a dump file.
+      /*! \brief Retrieve header from a dump file.
+       *
+       * \ingroup iodump
+       */
       dump_header get_header(const std::string& filename);
 
 

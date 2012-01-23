@@ -55,10 +55,14 @@ namespace mln
     namespace magick
     {
 
-      /** Load data from a file into a Milena image using Magick++.
+      /*! \brief Load data from a file into a Milena image using
+	  Magick++.
 
 	  \param[out] ima       The image data are loaded into.
-	  \param[in]  filename  The name of the input file.  */
+	  \param[in]  filename  The name of the input file.
+
+	  \ingroup iomagick
+      */
       template <typename I>
       void load(Image<I>& ima, const std::string& filename);
 

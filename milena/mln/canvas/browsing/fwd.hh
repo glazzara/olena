@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +44,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Canvas for forward browsing
-      /*!
+      /*! \brief Canvas for forward browsing
+       *
        * This canvas browse all the points of an image 'input' of type
        * 'I' from left to right and from top to bottom
        *
@@ -69,6 +69,7 @@ namespace mln
        *   void final(); \n
        * } \n
        *
+       * \ingroup modcanvasbrowsing
        */
       struct fwd_t : public Browsing< fwd_t >
       {

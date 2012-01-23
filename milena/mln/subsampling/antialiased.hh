@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -51,6 +51,7 @@ namespace mln
       \param[in] output_domain Force output domain.
       \param[in] border_thickness Force output border thickness.
 
+      \ingroup mlngeom
      */
     template <typename I>
     inline
@@ -62,6 +63,7 @@ namespace mln
 
 
     /*! \overload
+      \ingroup mlngeom
      */
     template <typename I>
     mln_concrete(I)

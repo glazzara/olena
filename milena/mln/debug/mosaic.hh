@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,8 @@ namespace mln
 
       \return a single image where all the input images are displayed
       as a mosaic.
+
+      \ingroup mlndebug
      */
     template <typename I>
     mln_concrete(I)

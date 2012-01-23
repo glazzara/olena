@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,8 +55,11 @@ namespace mln
   namespace morpho
   {
 
-    /// Create a line graph image representing the gradient
-    /// norm of a mln::image2d.
+    /*! \brief Create a line graph image representing the gradient
+     * norm of a mln::image2d.
+     *
+     * \ingroup mlnmorpho
+     */
     /* FIXME: Currently, the adjacency is set to 4-c and cannot be
        changed.  */
     template <typename V>

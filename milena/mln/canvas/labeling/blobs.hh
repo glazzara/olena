@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,10 +65,12 @@ namespace mln
 
           A fast queue is used so that the algorithm is not recursive and
           can handle large binary objects (blobs).
+
+	  \ingroup modcanvaslabeling
       */
       template <typename I, typename N, typename L, typename F>
       mln_ch_value(I, L)
-      blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
+      blobs(const Image<I>& input, const Neighborhood<N>& nbh,
 	    L& nlabels, F& functor);
 
 

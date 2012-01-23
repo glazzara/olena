@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +51,7 @@ namespace mln
     namespace dicom
     {
 
-      /*! Load a DICOM file in a Milena image.
+      /*! \brief Load a DICOM file in a Milena image.
 
           \param[out] ima A reference to the image which will receive
           data.
@@ -62,6 +62,7 @@ namespace mln
 
 	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8
 
+	  \ingroup iodicom
        */
       template <typename I>
       void load(Image<I>& ima,

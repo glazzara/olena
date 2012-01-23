@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,6 +53,7 @@ namespace mln
     /// \param[in]  val      The value to consider.
     /// \param[in]  nbh      The connectivity of components.
     /// \param[out] nlabels  The number of labels.
+    /// \param[in]  accu     The accumulator to be computed.
     /// \return              The label image.
     //
     template <typename I, typename N, typename L, typename A>

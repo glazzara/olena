@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,13 +43,15 @@ namespace mln
   namespace data
   {
 
-    /// \brief Paste the contents of image \p input into the image \p
-    /// output without taking into account the localization of sites.
-    ///
-    /// \param[in] input The input image providing pixels values.
-    /// \param[in,out] output The image in which values are
-    /// assigned.
-    //
+    /*!\brief Paste the contents of image \p input into the image \p
+     * output without taking into account the localization of sites.
+     *
+     * \param[in] input The input image providing pixels values.
+     * \param[in,out] output The image in which values are
+     * assigned.
+     *
+     * \ingroup mlndata
+     */
     template <typename I, typename J>
     void paste_without_localization(const Image<I>& input, Image<J>& output);
 

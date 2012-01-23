@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,11 @@ namespace mln
   namespace canvas
   {
 
-    /// Canvas of discrete distance computation by thick front propagation.
+    /*! \brief Canvas of discrete distance computation by thick front
+     *  propagation.
+     *
+     * \ingroup modcanvas
+     */
     template <typename I,
 	      typename N, typename W, typename D,
 	      typename F>
@@ -200,7 +205,7 @@ namespace mln
 		bucket_d.clear();
 	      }
 	  } // end of Propagation.
-	  
+
 	  trace::exiting("canvas::impl::generic::distance_front");
 	  return dmap;
 	}

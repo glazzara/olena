@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,8 @@
  * \brief Laplacian.
  */
 
+/// \todo Improve doc!
+
 # include <mln/linear/convolve.hh>
 # include <mln/make/w_window2d.hh>
 
@@ -42,8 +45,10 @@ namespace mln
   namespace linear
   {
 
-    // FIXME: Doc!
-
+    /*! \brief Laplacian
+      \ingroup mlnlinear
+    */
+    /// \{
     template <typename I>
     mln_ch_convolve(I, int)
     lap_4(const Image<I>& input);
@@ -59,7 +64,7 @@ namespace mln
     template <typename I>
     mln_ch_convolve(I, int)
     lap_o(const Image<I>& input);
-
+    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
 

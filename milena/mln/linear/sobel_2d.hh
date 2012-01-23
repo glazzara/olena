@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,26 +52,26 @@ namespace mln
   namespace linear
   {
 
-    /// Sobel_2d gradient components.
+    /*! \brief Sobel_2d gradient components.
+      \ingroup mlnlinear
+    */
     /// \{
-    /// Compute the horizontal component of the 2D Sobel gradient.
+    /// \brief Compute the horizontal component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_h(const Image<I>& input);
 
-    /// Compute the vertical component of the 2D Sobel gradient.
+    /// \brief Compute the vertical component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_v(const Image<I>& input);
-    /// \}
 
-    /// Compute the vertical component of the 2D Sobel gradient.
+    /// \brief Compute the vertical component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve_grad(I, int)
     sobel_2d(const Image<I>& input);
-    /// \}
 
-    /// Compute the L1 norm of the 2D Sobel gradient.
+    /// \brief Compute the L1 norm of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_l1_norm(const Image<I>& input);

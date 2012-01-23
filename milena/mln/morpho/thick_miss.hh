@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,9 +42,11 @@ namespace mln
   {
 
 
-    /*! Morphological thick-miss.
+    /*! \brief Morphological thick-miss.
      *
      * This operator is THICK_B = Id + HMTopeBG_B, where B = (Bfg, Bbg).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)

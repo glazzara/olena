@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,15 +46,17 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological area closing on a mln::line_graph_image computing
-      /// the area in terms of adjacent vertices.
-      ///
-      /// \param[in] input An edge image.
-      /// \param[in] nbh A graph neighborhood.
-      /// \param[in] lambda Closing parameter.
-      ///
-      /// \return An edge image.
-      //
+      /*! Morphological area closing on a mln::line_graph_image computing
+       * the area in terms of adjacent vertices.
+       *
+       * \param[in] input An edge image.
+       * \param[in] nbh A graph neighborhood.
+       * \param[in] lambda Closing parameter.
+       *
+       * \return An edge image.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename P, typename V, typename G, typename N>
       edge_image<P,V,G>
       area_on_vertices(const edge_image<P,V,G>& input,

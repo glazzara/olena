@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,33 +45,39 @@ namespace mln
   namespace accu
   {
 
-    /// Make an accumulator compute the pixels of the image \p input.
-    ///
-    /// \param[in] a An accumulator.
-    /// \param[in] input The input image.
-    ///
-    /// This routine runs: \n
-    ///   a.take(make::pix(input, p));
-    ///   on all pixels on the images.
-    ///
-    /// \warning This routine does not perform a.init().
-    ///
+    /*! \brief Make an accumulator compute the pixels of the image \p
+        input.
+
+        \param[in] a An accumulator.
+        \param[in] input The input image.
+
+        This routine runs: \n
+          a.take(make::pix(input, p));
+          on all pixels on the images.
+
+        \warning This routine does not perform a.init().
+
+	\ingroup mlnaccucompute
+    */
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /// Make an accumulator compute the pixels of the image \p input.
-    ///
-    /// \param[in] a A meta accumulator.
-    /// \param[in] input The input image.
-    ///
-    /// This routine runs: \n
-    ///   a.take(make::pix(input, p));
-    ///   on all pixels on the images.
-    ///
-    /// \warning This routine does not perform a.init().
-    ///
+    /*! \brief Make an accumulator compute the pixels of the image \p
+        input.
+
+        \param[in] a A meta accumulator.
+        \param[in] input The input image.
+
+        This routine runs: \n
+          a.take(make::pix(input, p));
+          on all pixels on the images.
+
+        \warning This routine does not perform a.init().
+
+	\ingroup mlnaccucompute
+    */
     template <typename A, typename I>
     mln_meta_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);

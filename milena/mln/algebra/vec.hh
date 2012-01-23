@@ -178,7 +178,9 @@ namespace mln
     } // end of namespace mln::algebra::internal
 
 
-
+    /*! \brief N-dimensional vector.
+      \ingroup mlnalgebratypes
+     */
     template <unsigned n, typename T>
     class vec : public internal::vec_base_<n, T>
     {

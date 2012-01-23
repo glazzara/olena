@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -123,7 +124,7 @@ namespace mln
 	  for (unsigned i = 0; i < S.size(); ++i)
 	    {
 	      point p = S[i];
-	    
+
 	      make_set(p);
 	      mln_niter(N) n(nbh, p);
 	      for_all(n)
@@ -150,7 +151,7 @@ namespace mln
 	    }
 
 	}
-  
+
 	inline
 	bool is_proc__(const point& n, const point& p) const
 	{
@@ -194,7 +195,7 @@ namespace mln
 		o(p) = mln_max(value);
 	    }
 	}
-      
+
       };
 
     } // end of namespace mln::morpho::impl

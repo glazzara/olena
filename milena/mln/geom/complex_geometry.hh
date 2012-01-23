@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,7 +72,7 @@ namespace mln
         dimensions are computed.
 
         \tparam D The dimension of the complex.
-        \tparam P The type of the location of a 0-face.  
+        \tparam P The type of the location of a 0-face.
 
 	Locations of 0-face are usually points (hence the \p P above),
 	but can possibly be any (default-constructible) values.
@@ -115,7 +116,7 @@ namespace mln
     {
       /// The data stored in a complex_geometry object.
       ///
-      /// \tparam P The type of the location of a 0-face.  
+      /// \tparam P The type of the location of a 0-face.
       template <typename P>
       struct complex_geometry_data
       {

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,18 +41,20 @@ namespace mln
   namespace logical
   {
 
-    /*! Point-wise "logical not" of image \p input.
+    /*! \brief Point-wise "logical not" of image \p input.
      *
      * \param[in] input the input image.
      * \result The result image.
      *
      * \pre \p input.is_valid
+     *
+     * \ingroup mlnimageops
      */
     template <typename I>
     mln_concrete(I) not_(const Image<I>& input);
 
 
-    /*! Point-wise in-place "logical not" of image \p input.
+    /*! \brief Point-wise in-place "logical not" of image \p input.
      *
      * \param[in,out] input The target image.
      *
@@ -60,6 +63,8 @@ namespace mln
      *     input(p) = not input(p)
      *
      * \pre \p input.is_valid
+     *
+     * \ingroup mlnimageops
      */
     template <typename I>
     void not_inplace(Image<I>& input);

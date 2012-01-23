@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,8 +43,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction.
-      /*!
+      /*! \brief Browsing in a certain direction.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -78,6 +78,8 @@ namespace mln
        * |  4 7 9
        * L------>
        *
+       *
+       * \ingroup modcanvasbrowsing
        */
       struct diagonal2d_t : public Browsing< diagonal2d_t >
       {

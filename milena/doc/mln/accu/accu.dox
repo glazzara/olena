@@ -1,3 +1,9 @@
+/*! \defgroup modaccu Accumulators
+ *
+ * \brief All accumulator types.
+ *
+ */
+
 /*! \defgroup modaccusiteset On site sets
  *
  * \brief Accumulators working on site sets.
@@ -25,5 +31,15 @@
  * at the same time.
  *
  * \ingroup modaccu
+ */
+
+
+
+
+/*! \defgroup mlnaccucompute Accumulator Computation
+ *
+ * \brief All routines related to Accumulator computation.
+ *
+ * \ingroup modroutines
  */
 

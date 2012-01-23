@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// \fixme Don't we want to change the return type 'unsigned' to a
+/// \todo Don't we want to change the return type 'unsigned' to a
 /// larger type or make it templated?
 
 # include <mln/algebra/vec.hh>

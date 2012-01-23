@@ -44,7 +44,7 @@ namespace mln
   namespace border
   {
 
-    /*! Assign the virtual (outer) border of image \p ima with the
+    /*! \brief Assign the virtual (outer) border of image \p ima with the
      *  duplicate of the inner border of this image.
      *
      * \param[in,out] ima The image whose border is to be duplicated.
@@ -52,6 +52,8 @@ namespace mln
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memcpy if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void duplicate(const Image<I>& ima);

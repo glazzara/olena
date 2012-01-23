@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,8 +42,9 @@ namespace mln
   namespace border
   {
 
-    /*! Equalize the virtual (outer) border of images \p ima1 and \p
-     *  ima2 so that their size is equal and is at least \p min_thickness.
+    /*! \brief Equalize the virtual (outer) border of images \p ima1
+     *  and \p ima2 so that their size is equal and is at least \p
+     *  min_thickness.
      *
      * \param[in,out] ima1 The first image whose border is to be equalizeed.
      * \param[in,out] ima2 The second image whose border is to be equalizeed.
@@ -54,6 +56,8 @@ namespace mln
      * \warning If both image borders already have the same thickness
      * and if this thickness is larger than \p min_thickness, this
      * routine is a no-op.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I, typename J>
     void equalize(const Image<I>& ima1, const Image<J>& ima2,

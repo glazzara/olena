@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,13 +52,15 @@ namespace mln
   namespace data
   {
 
-    /*! Compute in \p output the median filter of image \p input by
-     *  the window \p win.
+    /*! \brief Compute in \p output the median filter of image \p
+     *  input by the window \p win.
      *
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
      *
      * \pre \p input have to be initialized.
+     *
+     * \ingroup mlndatafilter
      */
     template <typename I, typename W>
     mln_concrete(I)

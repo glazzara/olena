@@ -45,7 +45,9 @@ namespace mln
   namespace linear
   {
 
-
+    /*! \brief Directional Gaussian filter for 2D images.
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_concrete(I)
     gaussian_directional_2d(const Image<I>& input,

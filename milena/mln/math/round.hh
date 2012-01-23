@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,8 +33,7 @@
 
 # include <cmath>
 
-# include <mln/core/concept/function.hh>
-
+# include <mln/fun/v2v/round.hh>
 
 
 namespace mln
@@ -42,26 +42,45 @@ namespace mln
   namespace math
   {
 
+    /*! \brief Round a given value.
+      \param[in] v The value to be rounded.
 
-    template <typename R>
-    struct round : public Function_v2v< round<R> >
-    {
-      typedef R result;
+      \return A round value of type \tparam R.
 
-      template <typename T>
-      result operator()(const T& v) const;
+      \warning The return type \tparam must be passed as template
+      parameter on function call.
 
-    };
+      \ingroup mlnmath
+    */
+    template <typename R, typename T>
+    R round(const T& v);
+
+    /*! \brief Round a given value.
+      \param[in] v The value to be rounded.
+      \param[in] return_type The returned type to be used.
+
+      \return A round value of type \tparam R.
+
+      \ingroup mlnmath
+    */
+    template <typename R, typename T>
+    R round(const T& v, const R& return_type);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename R>
-    template <typename T>
-    inline
-    R round<R>::operator()(const T& v) const
+    template <typename R, typename T>
+    R round(const T& v)
     {
-      return (long int)(v + 0.49999); // FIXME: !!!
+      static fun::v2v::round<R> f;
+      return f(v);
+    }
+
+    template <typename R, typename T>
+    R round(const T& v, const R&)
+    {
+      static fun::v2v::round<R> f;
+      return f(v);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

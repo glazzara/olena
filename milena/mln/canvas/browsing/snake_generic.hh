@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,8 +44,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Multidimentional Browsing in a given-way.
-      /*!
+      /*! \brief Multidimentional Browsing in a given-way.
+       *
        * F shall feature: \n
        * { \n
        *   --- as attributes: \n
@@ -71,6 +71,8 @@ namespace mln
        *
        *      moves[i] is called at each move following the delta psite dps[i]
        *
+       *
+       * \ingroup modcanvasbrowsing
        */
 
       struct snake_generic_t : public Browsing< snake_generic_t >

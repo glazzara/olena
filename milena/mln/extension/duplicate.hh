@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,8 +43,11 @@ namespace mln
   namespace extension
   {
 
-    /// Assign the contents of the domain extension by duplicating the
-    /// values of the inner boundary of image \p ima.
+    /*! \brief Assign the contents of the domain extension by duplicating the
+     * values of the inner boundary of image \p ima.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I>
     void duplicate(const Image<I>& ima);
 

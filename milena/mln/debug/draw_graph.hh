@@ -48,17 +48,19 @@ namespace mln
   namespace debug
   {
 
-    /// \brief Draw an image \p ima from a mln::p_vertices \p pv.
-    /*!
-     * Value \p vcolor for vertices, value \p ecolor for edges
-     * and 0 for the background.
-     *
-     * \param[in,out] ima      The image to be drawn.
-     * \param[in]     pv       The p_vertices which contains vertices positions.
-     * \param[in]     vcolor The value to assign to pixels which contains
-     *				vertices.
-     * \param[in]     ecolor   The value to assign to pixels which contains
-     *                         edges.
+    /*! \brief Draw an image \p ima from a mln::p_vertices \p pv.
+
+      Colors for vertices are defined through \p vcolor. Colors for
+      edges are defined though \p ecolor. Background is set to 0.
+
+       \param[in,out] ima      The image to be drawn.
+       \param[in]     pv       The p_vertices which contains vertices positions.
+       \param[in]     vcolor The value to assign to pixels which contains
+      				vertices.
+       \param[in]     ecolor   The value to assign to pixels which contains
+                               edges.
+
+       \ingroup mlndebug
      */
     template <typename I, typename G, typename F>
     void
@@ -66,18 +68,17 @@ namespace mln
 	       mln_value(I) vcolor, mln_value(I) ecolor);
 
 
-    /// \brief Draw an image \p ima from a mln::p_vertices \p pv.
-    /*!
-     * Colors for vertices are defined through \p vcolor_f_. Colors
-     * for edges are defined though \p ecolor_f_.
-     * Vertices are drawn using a box of width \vwidth.
-     *
-     * \param[in,out] ima       The image to be drawn.
-     * \param[in]     pv        The p_vertices which contains vertices positions.
-     * \param[in]     vcolor_f  A function returning a color value for vertices.
-     * \param[in]     ecolor_f  A function returning a color value for edges.
-     * \param[in]     vwidth
-     *
+    /*! \brief Draw an image \p ima from a mln::p_vertices \p pv.
+
+	Colors for vertices are defined through \p vcolor_f_. Colors
+        for edges are defined though \p ecolor_f_.
+
+       \param[in,out] ima       The image to be drawn.
+       \param[in]     pv        The p_vertices which contains vertices positions.
+       \param[in]     vcolor_f_ A function returning a color value for vertices.
+       \param[in]     ecolor_f_ A function returning a color value for edges.
+
+       \ingroup mlndebug
      */
     template <typename I, typename G, typename F, typename V, typename E>
     void
@@ -95,17 +96,18 @@ namespace mln
 	       const p_vertices<G, F>& pv,
 	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_);
 
-    /// \brief Draw an image \p ima from a mln::p_vertices \p pv.
-    /*!
-     * Colors for vertices
-     * are defined through \p vcolor_f_. Colors for edges are defined though
-     * \p ecolor_f_.
-     *
-     * \param[in,out] ima       The image to be drawn.
-     * \param[in]     pv        The p_vertices which contains vertices positions.
-     * \param[in]     vcolor_f_ A function returning a color value for vertices.
-     * \param[in]     ecolor_f_ A function returning a color value for edges.
-     *
+
+    /*! \brief Draw an image \p ima from a mln::p_vertices \p pv.
+
+      Colors for vertices are defined through \p vcolor_f_. Colors for
+      edges are defined though \p ecolor_f_.
+
+       \param[in,out] ima       The image to be drawn.
+       \param[in]     pv        The p_vertices which contains vertices positions.
+       \param[in]     vcolor_f_ A function returning a color value for vertices.
+       \param[in]     ecolor_f_ A function returning a color value for edges.
+
+       \ingroup mlndebug
      */
     template <typename I, typename G, typename F, typename V, typename E>
     inline

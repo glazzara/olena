@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,7 @@ namespace mln
   namespace data
   {
 
-    /*! Transform the image \p input through a function \p f.
+    /*! \brief Transform the image \p input through a function \p f.
      *
      * \param[in] input The input image.
      * \param[in] f The function.
@@ -56,13 +57,14 @@ namespace mln
      * This routine runs: \n
      * for all p of \p input, \p output(p) = \p f( \p input(p) ).
      *
+     * \ingroup mlndata
      */
     template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
     transform(const Image<I>& input, const Function_v2v<F>& f);
 
 
-    /*! Transform two images \p input1 \p input2 through a function \p f.
+    /*! \brief Transform two images \p input1 \p input2 through a function \p f.
      *
      * \param[in] input1 The 1st input image.
      * \param[in] input2 The 2nd input image.
@@ -70,6 +72,8 @@ namespace mln
      *
      * This routine runs: \n
      * for all p of \p input, \p output(p) = \p f( \p input1(p), \p input2(p) ).
+     *
+     * \ingroup mlndata
      */
     template <typename I1, typename I2, typename F>
     mln_ch_value(I1, mln_result(F))

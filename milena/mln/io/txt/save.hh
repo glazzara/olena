@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,11 +48,13 @@ namespace mln
     namespace txt
     {
 
-      /// Save an image as txt file.
-      ///
-      /// \param[in] ima The image to save. Must be an image of char.
-      /// \param[in] filename the destination.
-      //
+      /*! \brief Save an image as txt file.
+       *
+       * \param[in] ima The image to save. Must be an image of char.
+       * \param[in] filename the destination.
+       *
+       * \ingroup iotxt
+       */
       void
       save(const image2d<char>& ima, const std::string& filename);
 

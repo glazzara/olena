@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,9 @@ namespace mln
   namespace linear
   {
 
-
+    /*! \brief Gaussian filter for fastest 1D images.
+      \ingroup mlnlinear
+     */
     template <typename I>
     mln_concrete(I)
     gaussian_1d(const Image<I>& input,

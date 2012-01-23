@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,12 +41,18 @@ namespace mln
   namespace geom
   {
 
-    /// Give the maximum row of an image.
+    /*! \brief Give the maximum row of an image.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     mln_deduce(I, site, coord) max_row(const Image<I>& ima);
 
 
-    /// Give the maximum row of an box 2d or 3d.
+    /*! \brief Give the maximum row of an box 2d or 3d.
+
+      \ingroup mlngeom
+     */
     template <typename B>
     mln_deduce(B, site, coord) max_row(const Box<B>& b);
 

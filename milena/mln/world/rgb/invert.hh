@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +31,7 @@
 ///
 /// Point-wise invert (min -> max and max -> min) of RGB images.
 ///
-/// \fixme Move somewhere else?
+/// \todo Move somewhere else?
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/value_.hh>

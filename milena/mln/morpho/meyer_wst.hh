@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@
    mln/morpho/watershed/flooding.hh, and remove the former when
 
    1. it is entirely covered by the latter;
-   2. clients (including tests and Milena) are updated to use 
+   2. clients (including tests and Milena) are updated to use
       mln::morpho::watershed::flooding.  */
 
 
@@ -63,7 +64,7 @@ namespace mln
 
   namespace morpho
   {
-    /** \brief Meyer's Watershed Transform (WST) algorithm.
+    /*! \brief Meyer's Watershed Transform (WST) algorithm.
 
 	\param[in]  input   The input image.
 	\param[in]  nbh     The connexity of markers.
@@ -73,13 +74,16 @@ namespace mln
 	itself (with the minimal value), and the basins.
 	\li \p I is the exact type of the input image.
 	\li \p N is the exact type of the neighborhood used to express
-	\a input's connexity.  */
+	\a input's connexity.
+
+	\ingroup mlnmorphowst
+    */
     template <typename L, typename I, typename N>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
 	      L& nbasins);
 
-    /** \brief Meyer's Watershed Transform (WST) algorithm, with no
+    /*! \brief Meyer's Watershed Transform (WST) algorithm, with no
         count of basins.
 
 	\param[in]  input   The input image.
@@ -94,7 +98,10 @@ namespace mln
 	Note that the first parameter, \p L, is not automatically
 	valued from the type of the actual argument during implicit
 	instantiation: you have to explicitly pass this parameter at
-	call sites.  */
+	call sites.
+
+	\ingroup mlnmorphowst
+    */
     template <typename L, typename I, typename N>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh);

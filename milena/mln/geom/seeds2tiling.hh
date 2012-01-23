@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,16 +47,18 @@ namespace mln
   namespace geom
   {
 
-    /// Take a labeled image \p ima_ with seeds and extend them
-    /// until creating tiles.
-    ///
-    /// \param[in,out] ima_ The labeled image with seed.
-    /// \param[in] nbh The neighborhood to use on this algorithm.
-    ///
-    /// \return A tiled image.
-    ///
-    /// \pre \p ima_ has to be initialized.
-    //
+    /*! \brief Take a labeled image \p ima_ with seeds and extend them
+      until creating tiles.
+
+      \param[in,out] ima_ The labeled image with seed.
+      \param[in] nbh The neighborhood to use on this algorithm.
+
+      \return A tiled image.
+
+      \pre \p ima_ has to be initialized.
+
+      \ingroup mlngeom
+    */
     template <typename I, typename N>
     mln_concrete(I) seeds2tiling (const Image<I>& ima_,
 				  const Neighborhood<N>& nbh);

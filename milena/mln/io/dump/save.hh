@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,11 +52,13 @@ namespace mln
     namespace dump
     {
 
-      /// Save a Milena image by dumping its data to a file.
-      ///
-      /// \param[in] ima_ The image to save.
-      /// \param[in] filename the destination.
-      //
+      /*! Save a Milena image by dumping its data to a file.
+       *
+       * \param[in] ima_ The image to save.
+       * \param[in] filename the destination.
+       *
+       * \ingroup iodump
+       */
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename);
 

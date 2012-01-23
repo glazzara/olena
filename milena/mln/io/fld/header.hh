@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -40,9 +40,10 @@ namespace mln
       struct data_type { enum E { UNKNOWN, BYTE, SHORT, INTEGER, FLOAT, DOUBLE }; };
       struct field_type { enum E { UNKNOWN, UNIFORM, RECTILINEAR, IRREGULAR }; };
 
-      ///
-      /// \brief Define the header structure of an AVS field data file.
-      ///
+      /*! \brief Define the header structure of an AVS field data file.
+       *
+       * \ingroup iofld
+       */
       struct fld_header
       {
 	int		ndim;	  // The number of computational dimensions in the field.

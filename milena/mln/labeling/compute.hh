@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -189,15 +189,6 @@ namespace mln
       namespace generic
       {
 
-
- 	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -224,17 +215,6 @@ namespace mln
 	  return res;
 	}
 
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] accus_ An array of accumulators. If the size is
-	///                   set to nlabels + 1, the accumulators are
-	///                   considered as initialized. Otherwise,
-	///                   the size is adjusted.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -266,17 +246,6 @@ namespace mln
 	  return res;
 	}
 
-
-
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -305,16 +274,6 @@ namespace mln
 	  return res;
 	}
 
-
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] accus   An array of accumulators.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -358,15 +317,6 @@ namespace mln
         // border::get(label)) ?
         //
 
-	/// Fastest implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
       template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>
@@ -412,15 +362,6 @@ namespace mln
       // border::get(label)) ?
       //
 
-      /// Fastest implementation of labeling::compute.
-      ///
-      /// \param[in] accus   An array of accumulators.
-      /// \param[in] input_  The input image.
-      /// \param[in] label_  The labeled image.
-      /// \param[in] nlabels The number of labels in \p label.
-      ///
-      /// \return A util::array of accumulator result (one result per label).
-      //
       template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>

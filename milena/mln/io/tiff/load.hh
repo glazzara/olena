@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,8 +56,10 @@ namespace mln
     {
 
 
-      /// Load a TIFF image to a Milena image.
-      //
+      /*! \brief Load a TIFF image to a Milena image.
+       *
+       * \ingroup iotiff
+       */
       template <typename I>
       void load(Image<I>& ima_, const std::string& filename);
 

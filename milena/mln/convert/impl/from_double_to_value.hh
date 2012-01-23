@@ -119,6 +119,7 @@ namespace mln
   } // end of namespace mln::convert
 
 
+  // double -> Value
   template <typename V>
   inline
   void
@@ -127,6 +128,7 @@ namespace mln
     convert::internal::from_double_to_value_dispatch(from, to);
   }
 
+  // double -> unsigned
   inline
   void
   from_to_(const double& from, unsigned& to)
@@ -135,13 +137,13 @@ namespace mln
     to = math::round<unsigned>()(from);
   }
 
+  // double -> int
   inline
   void
   from_to_(const double& from, int& to)
   {
     to = math::round<int>()(from);
   }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

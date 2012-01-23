@@ -1,0 +1,6 @@
+/*! \defgroup mlndata Data Manipulation
+ *
+ * \brief All routines related to Image Data Manipulation.
+ *
+ * \ingroup imagemanip
+ */

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +39,9 @@ namespace mln
   namespace math
   {
 
+    /*! \brief Returns the maximum value.
+      \ingroup mlnmath
+    */
     template <typename T>
     T max(const T& v1, const T& v2);
 

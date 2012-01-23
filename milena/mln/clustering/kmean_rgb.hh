@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,16 +29,17 @@
 
 /// \file
 ///
-/// \brief Implements the optimized kmean algorithm in the 3d-RGB space.
+/// \brief Implements the optimized kmean algorithm in the 3d-RGB
+/// space.
 ///
 /// This algorithm is optimized in the way it proceeds directly with
-/// the rgb value inspite of the pixel attribute. The
-/// algorithm is independant from the image dimension. But, we have to
-/// compute one time the histogram. In fact, we move a recurrent cost
-/// by a fix cost in the complexity. This version is very adapted to
-/// images with small quantification. But, in 3d, the execution
-/// becomes very slow. It's just normal because the quantification is
-/// n bits per axis. So the actual histogram may be bigger than the image.
+/// the rgb value inspite of the pixel attribute. The algorithm is
+/// independant from the image dimension. But, we have to compute one
+/// time the histogram. In fact, we move a recurrent cost by a fix
+/// cost in the complexity. This version is very adapted to images
+/// with small quantification. But, in 3d, the execution becomes very
+/// slow. It's just normal because the quantification is n bits per
+/// axis. So the actual histogram may be bigger than the image.
 ///
 /// Take care to the following point: The within variance is still a
 /// scalar value because we take the distance between two points and
@@ -82,7 +84,8 @@
 ///   return 0;
 /// }
 ///
-/// \fixme The execution shows a bug in printing outputs and it seems severe.
+/// \todo The execution shows a bug in printing outputs and it seems
+/// severe.
 ///
 /// The last execution with the following set of parameters
 /// {house.ppm,3,10,10} shows that if the binary starts correctly, it

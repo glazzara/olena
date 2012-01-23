@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +32,7 @@
 /// is_simple_point tells if a point is simple or not.
 /// For more information refer to bertrand.07.chap.
 ///
-/// \fixme The fastest version give an approximation of the result. Do
+/// \todo The fastest version give an approximation of the result. Do
 /// we want it to be exact?
 
 # include <mln/core/concept/image.hh>

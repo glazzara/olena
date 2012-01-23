@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,6 +47,9 @@ namespace mln
       };
 
 
+    /*! \brief Return the sign of the given value.
+      \ingroup mlnmath
+    */
     template <typename T>
     sign_t sign(const T& v);
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,17 +35,23 @@
 # include <mln/morpho/algebraic_filter.hh>
 
 
-namespace mln {
-  namespace morpho {
-    namespace opening {
+namespace mln
+{
 
-    /// Morphological algebraic opening.
-    template <typename I, typename N, typename A>
-    mln_concrete(I)
-    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-	      const Accumulator<A>& accu, const mln_result(A)& lambda);
+  namespace morpho
+  {
 
+    namespace opening
+    {
 
+      /*! \brief Morphological algebraic opening.
+       *
+       * \ingroup mlnmorphoopening
+       */
+      template <typename I, typename N, typename A>
+      mln_concrete(I)
+      algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		const Accumulator<A>& accu, const mln_result(A)& lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -76,7 +83,9 @@ namespace mln {
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::opening
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 

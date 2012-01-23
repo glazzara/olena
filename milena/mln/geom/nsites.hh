@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// Compute the number of sites of the image \p input.
+    /*! \brief Compute the number of sites of the image \p input.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     unsigned nsites(const Image<I>& input);
 

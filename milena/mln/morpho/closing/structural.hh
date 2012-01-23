@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,10 +43,12 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological structural closing.
-      ///
-      /// This operator is e_{-B} o d_B.
-      ///
+      /*! \brief Morphological structural closing.
+       *
+       * This operator is e_{-B} o d_B.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename I, typename W>
       mln_concrete(I)
       structural(const Image<I>& input, const Window<W>& win);

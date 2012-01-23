@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,15 +45,16 @@ namespace mln
   namespace draw
   {
 
-    /*! Plot a point at level \p v in image \p ima
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] p The point to be plotted.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre \p ima has \p p.
-     *
+    /*! \brief Plot a point at level \p v in image \p ima
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] p The point to be plotted.
+       \param[in] v The value to assign to all drawn pixels.
+
+       \pre \p ima has to be initialized.
+       \pre \p ima has \p p.
+
+       \ingroup mlndraw
      */
     template <typename I>
     void plot(Image<I>& ima,

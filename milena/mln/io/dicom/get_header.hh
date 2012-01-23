@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,7 +56,10 @@ namespace mln
     namespace dicom
     {
 
-      /// Store dicom file header.
+      /*! \brief Store dicom file header.
+       *
+       * \ingroup iodicom
+       */
       struct dicom_header
       {
 	// The number of dimensions.
@@ -66,7 +70,10 @@ namespace mln
       };
 
 
-      /// Retrieve header in a dicom file.
+      /*! \brief Retrieve header from a dicom file.
+       *
+       * \ingroup iodicom
+       */
       dicom_header get_header(const std::string& filename);
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -54,8 +54,11 @@ namespace mln
     namespace morpho
     {
 
-      // FIXME: Doc!
-
+      /*! \brief Connected filters dispatch (algebraic & leveling
+       * filters).
+       *
+       * \ingroup modcanvasmorpho
+       */
       template <typename I, typename N, typename A>
       mln_concrete(I)
       attribute_filter(const Image<I>& input, const Neighborhood<N>& nbh,

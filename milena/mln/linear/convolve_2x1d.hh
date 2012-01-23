@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,13 +43,15 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by two weighted line-shapes
-     *  windows.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre input.is_valid
+    /*! \brief Convolution of an image \p input by two weighted line-shapes
+        windows.
+
+       \warning The weighted window is used as-is, considering that
+       its symmetrization is handled by the client.
+
+       \pre input.is_valid
+
+       \ingroup mlnlinear
      */
     template <typename I,
 	      typename W, unsigned Sh, unsigned Sv>

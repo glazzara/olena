@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Define the sininus (sin) routine.
+/// Define the sinus (sin) routine.
 
 # include <cmath>
 
@@ -39,6 +40,9 @@ namespace mln
   namespace math
   {
 
+    /*! \brief The sinus (sin) function.
+      \ingroup mlnmath
+    */
     template <typename T>
     T sin(const T& v);
 

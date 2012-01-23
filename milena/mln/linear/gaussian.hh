@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011
-// EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011,
+// 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,15 +63,20 @@ namespace mln
   namespace linear
   {
 
-    /// Gaussian filter of an image \p input
-    ///
-    /// \pre output.domain = input.domain
-    ///
+    /*! \brief Gaussian filter of an image \p input
+
+        \pre output.domain = input.domain
+
+	\ingroup mlnlinear
+    */
     template <typename I>
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma);
 
 
+    /*! \overload
+      \ingroup mlnlinear
+     */
     template <typename I>
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma, int dir);

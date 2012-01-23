@@ -66,6 +66,7 @@ HIDE_SCOPE_NAMES       = NO
 SHOW_INCLUDE_FILES     = YES
 INLINE_INFO            = YES
 SORT_MEMBER_DOCS       = YES
+SORT_MEMBERS_CTORS_1ST = YES
 SORT_BRIEF_DOCS        = YES
 SORT_BY_SCOPE_NAME     = YES
 GENERATE_TODOLIST      = NO
@@ -108,7 +109,26 @@ EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/tests/unit_test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
-EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
+EXCLUDE_SYMBOLS	       = *_ 				\
+			 *_dispatch			\
+			 mln::trait::*			\
+			 trait::* 			\
+			 mln::*<void>			\
+			 mln::*< void >			\
+			 numeric_limits 		\
+		 	 subject_impl			\
+			 subject_point_impl		\
+			 check_t 			\
+			 ret				\
+			 It 				\
+			 eval 				\
+			 is_a				\
+			 composition_unary_impl_helper 	\
+			 image_base			\
+			 binary_impl			\
+			 unary_impl			\
+			 proxy_impl			\
+			 T
 EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
 			 @top_srcdir@/milena/doc/outputs	    \
 			 @top_srcdir@/milena/doc/examples/split	    \
@@ -219,7 +239,7 @@ ENABLE_PREPROCESSING   = YES
 MACRO_EXPANSION        = YES
 EXPAND_ONLY_PREDEF     = YES
 SEARCH_INCLUDES        = YES
-INCLUDE_PATH           =
+INCLUDE_PATH           = "@boostcppflags@"
 INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
 			 "for_all_2(x1, x2)=for(x1.start(), x2.start();	x1.is_valid(); x1.next(), x2.next())" \
@@ -320,10 +340,17 @@ PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
 			 "mln_graph_element_(T)=T::graph_element" \
 			 "mln_fun_vv2v(F, L, R)=mln::fun::vv2v::F< mln_value(L), mln_value(R) >" \
 			 "mln_fun_vv2v_result(F, L, R)=typename mln_fun_vv2v(F, L, R)::result" \
-			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret"
-
-
-
+			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret" \
+			 "mln_meta_accu_result(A, T)=typename mln::internal::meta_accu_ret_result_helper<A,T>::result" \
+			 "mln_meta_accu_result_(A, T)=mln::internal::meta_accu_ret_result_helper<A,T>::result" \
+			 "mln_q_subject(T)=typename T::q_subject" \
+			 "mln_q_subject(T)_=T::q_subject" \
+			 "mlc_is_a(T, M)=mln::metal::is_a<T, M>" \
+			 "mlc_is_a__1comma(Tleft, Tright, M)=mln::metal::is_a<Tleft, Tright, M>" \
+			 "mlc_is_not_a(T, M)=mln::metal::is_not_a< T, M >" \
+			 "mlc_converts_to(T, U)=mln::metal::converts_to< T, U >" \
+			 "mlc_not_equal(T1, T2)=mln::metal::not_equal< T1, T2 >" \
+			 "BOOST_PP_LOCAL_ITERATE()=<boost/preprocessor/iteration/detail/local.hpp>"
 
 EXPAND_AS_DEFINED      =
 SKIP_FUNCTION_MACROS   = YES
@@ -368,9 +395,9 @@ SEARCHENGINE           = YES
 # Configuration::additions related to the Qt help engine
 #---------------------------------------------------------------------------
 GENERATE_QHP       = yes
-QHP_NAMESPACE      = "fr.epita.lrde.olena.scribo"
-QHP_VIRTUAL_FOLDER = "scribo-2.0"
-QCH_FILE 	   = "@builddir@/scribo.qch"
+QHP_NAMESPACE      = "fr.epita.lrde.olena.milena"
+QHP_VIRTUAL_FOLDER = "milena-2.0"
+QCH_FILE 	   = "@builddir@/milena.qch"
 QHG_LOCATION       = "qhelpgenerator"
 
 

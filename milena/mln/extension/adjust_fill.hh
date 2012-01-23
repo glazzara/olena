@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,22 +43,37 @@ namespace mln
   namespace extension
   {
 
-    /// Adjust then fill.
+    /*! \brief Adjust then fill.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust_fill(const Image<I>& ima,
 		     const Window<W>& win,
 		     const mln_value(I)& val);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust_fill(const Image<I>& ima,
 		     const Weighted_Window<W>& wwin,
 		     const mln_value(I)& val);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename N>
     void adjust_fill(const Image<I>& ima,
 		     const Neighborhood<N>& nbh,
 		     const mln_value(I)& val);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I>
     void adjust_fill(const Image<I>& ima,
 		     unsigned delta,

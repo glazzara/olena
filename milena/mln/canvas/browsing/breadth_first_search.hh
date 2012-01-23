@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,7 +76,11 @@ namespace mln
     namespace browsing
     {
 
-      /// Breadth-first search algorithm for graph, on vertices.
+      /*! \brief Breadth-first search algorithm for graph, on
+       *  vertices.
+       *
+       * \ingroup modcanvasbrowsing
+       */
       struct breadth_first_search_t :
         public internal::graph_first_search_t<breadth_first_search_t, std::queue>
       {

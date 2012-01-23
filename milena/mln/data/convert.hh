@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,11 +44,13 @@ namespace mln
   namespace data
   {
 
-    /// Convert the image \p input by changing the value type.
-    ///
-    /// \param[in] v A value of the destination type.
-    /// \param[in] input The input image.
-    //
+    /*! \brief Convert the image \p input by changing the value type.
+     *
+     * \param[in] v A value of the destination type.
+     * \param[in] input The input image.
+     *
+     * \ingroup mlndata
+     */
     template <typename V, typename I>
     mln_ch_value(I, V)
     convert(const V& v, const Image<I>& input);

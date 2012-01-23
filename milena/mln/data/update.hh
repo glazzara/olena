@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,11 +42,14 @@ namespace mln
   namespace data
   {
 
-    /*! Update an accumulator with the pixel values of the image \p input.
+    /*! \brief Update an accumulator with the pixel values of the
+     *  image \p input.
      *
      * \param[in] a The accumulator.
      * \param[in] input The input image.
      * \return The accumulator result.
+     *
+     * \ingroup mlnaccucompute
      */
     template <typename A, typename I>
     mln_result(A)

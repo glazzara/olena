@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +41,10 @@ namespace mln
   namespace geom
   {
 
+    /*! \brief Crop an image
+
+      \ingroup mlngeom
+     */
     template <typename I, typename B>
     mln_concrete(I) crop(const Image<I>& input, const Box<B>& b);
 

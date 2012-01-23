@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,6 +40,11 @@ namespace mln
   namespace border
   {
 
+    /*! \brief Define the variable which specifies border thickness
+     * for image creation.
+     *
+     * \ingroup mlnborderext
+     */
     extern unsigned thickness;
 
 # ifndef MLN_INCLUDE_ONLY

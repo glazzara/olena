@@ -146,7 +146,7 @@ namespace mln
         double x2 = std::floor(x) + 1;
         double y1 = std::floor(y);
         double y2 = std::floor(y) + 1;
-	def::coord z  = math::round<float>()(v[3]);
+	def::coord z  = math::round<float>(v[3]);
 
         //Following access are supposed valid.
         vsum q11 = ima(point3d(z, static_cast<unsigned>(x1), static_cast<unsigned>(y1)));

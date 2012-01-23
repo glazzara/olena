@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -48,7 +48,10 @@ namespace mln
   namespace canvas
   {
 
-    /// Discrete geodesic distance canvas.
+    /*! \brief Discrete geodesic distance canvas.
+     *
+     * \ingroup modcanvas
+     */
     template <typename I, typename N, typename D,
 	      typename F>
     mln_ch_value(I, D)

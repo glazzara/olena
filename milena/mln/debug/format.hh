@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,20 +39,28 @@ namespace mln
   namespace debug
   {
 
-    /// Default version for formatting a value is a no-op.
+    /*! \brief Default version for formatting a value is a no-op.
+      \ingroup mlndebug
+    */
     template <typename T>
     const T& format(const T& v);
 
-    /// Format a Boolean to print it nicely: "|" for true and "-" for
-    /// false.
+    /*! \brief Format a Boolean to print it nicely: "|" for true and
+      "-" for false.
+      \ingroup mlndebug
+    */
     char format(bool v);
 
-    /// Format a signed char to print it properly, i.e., like an
-    /// integer value.
+    /*! \brief Format a signed char to print it properly, i.e., like
+      an integer value.
+      \ingroup mlndebug
+    */
     signed short format(signed char v);
 
-    /// Format an unsigned char to print it properly, i.e., like an
-    /// integer value.
+    /*! \brief Format an unsigned char to print it properly, i.e.,
+      like an integer value.
+      \ingroup mlndebug
+    */
     unsigned short format(unsigned char v);
 
 

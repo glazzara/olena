@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -41,14 +41,18 @@ namespace mln
   namespace binarization
   {
 
-    /// Thresholds the values of \p input so that they can be stored in
-    ///  the \p output binary image.
-    ///
-    /// \param[in] input The input image.
-    /// \param[in] threshold The threshold.
-    ///
-    /// If input(p) is greater or equal than the threshold, the
-    /// value in the output image in the same point will be TRUE, else FALSE.
+    /*! \brief Gaussian subsampling
+      Thresholds the values of \p input so that they can be stored in
+      the \p output binary image.
+
+      \param[in] input The input image.
+      \param[in] threshold The threshold.
+
+      If input(p) is greater or equal than the threshold, the
+      value in the output image in the same point will be TRUE, else FALSE.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_ch_value(I, bool)
     threshold(const Image<I>& input, const mln_value(I) threshold);

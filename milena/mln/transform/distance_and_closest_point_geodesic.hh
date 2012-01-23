@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,17 +44,20 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform
-    ///
-    /// \param[in] input  Image from which the geodesic distance is computed.
-    /// \param[in] nbh	  Neighborhood
-    /// \param[in] max	  Max distance of propagation.
-    ///
-    /// \return a couple of images. The first one is the distance map and the
-    ///		second one is the closest point image. The closest point image
-    ///		contains sites.
-    ///
-    /// \post The returned images have the same domain as \p input.
+    /*! \brief Discrete geodesic distance transform
+
+        \param[in] input  Image from which the geodesic distance is computed.
+        \param[in] nbh	  Neighborhood
+        \param[in] max	  Max distance of propagation.
+
+        \return a couple of images. The first one is the distance map and the
+       		second one is the closest point image. The closest point image
+       		contains sites.
+
+        \post The returned images have the same domain as \p input.
+
+	\ingroup mlntransform
+    */
     template <typename I, typename N, typename D>
     util::couple<mln_ch_value(I,D), mln_ch_value(I,mln_psite(I))>
     distance_and_closest_point_geodesic(const Image<I>& input,
@@ -61,18 +65,21 @@ namespace mln
 					D max);
 
 
-    /// Discrete geodesic distance transform
-    ///
-    /// \param[in] pset			an array of sites.
-    /// \param[in] closest_point_domain domain of the returned image.
-    /// \param[in] nbh			neighborhood
-    /// \param[in] max			max distance of propagation.
-    ///
-    /// \return A couple of images. The first one is the distance map and the
-    ///		second one is the closest point image. The closest point image
-    ///		contains site indexes.
-    ///
-    /// \post The returned image domains are defined on \p closest_point_domain.
+    /*! \brief Discrete geodesic distance transform
+
+        \param[in] pset			an array of sites.
+        \param[in] closest_point_domain domain of the returned image.
+        \param[in] nbh			neighborhood
+        \param[in] max			max distance of propagation.
+
+        \return A couple of images. The first one is the distance map and the
+       		second one is the closest point image. The closest point image
+       		contains site indexes.
+
+        \post The returned image domains are defined on \p closest_point_domain.
+
+	\ingroup mlntransform
+    */
     template <typename P, typename N, typename D>
     util::couple<mln_image_from_grid(mln_grid(P),D),
 		 mln_image_from_grid(mln_grid(P),unsigned)>

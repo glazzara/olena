@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,10 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological rank_filter.
+    /*! \brief Morphological rank_filter.
+     *
+     * \ingroup mlndatafilter
+     */
     template <typename I, typename W>
     mln_concrete(I)
     rank_filter(const Image<I>& input, const Window<W>& win, unsigned k);

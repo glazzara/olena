@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,10 @@ namespace mln
   namespace debug
   {
 
+    /*! \brief Save a histogram to a plot data file.
 
+      \ingroup mlndebug
+    */
     template <typename T>
     void
     histo(const mln::histo::array<T>& h, const std::string& filename);

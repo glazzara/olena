@@ -26,3 +26,11 @@
  * \ingroup modneighb
  */
 
+
+/*! \defgroup modneighbnd N-D Neighborhoods
+ *
+ * \brief Predefined N-D neighborhoods.
+ *
+ * \ingroup modneighb
+ */
+

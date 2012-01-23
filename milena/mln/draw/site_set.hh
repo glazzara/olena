@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,16 +42,18 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a sites with value \p v in image \p ima
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] b the site set to draw.
-     * \param[in] v The value to assign to all drawn pixels.
-     * \param[in] output_ratio size ratio between output image and the
-     * image from which the bboxes were calculated.
-     *
-     * \pre \p s is included in \p ima domain.
-     *
+    /*! \brief Draw a sites with value \p v in image \p ima
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] s the site set to draw.
+       \param[in] v The value to assign to all drawn pixels.
+       \param[in] output_ratio size ratio between output image and the
+                               image from which the bboxes were
+                               calculated.
+
+       \pre \p s is included in \p ima domain.
+
+       \ingroup mlndraw
      */
     template <typename I, typename S>
     void site_set(Image<I>& ima,

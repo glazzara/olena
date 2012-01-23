@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -41,7 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// Give the maximum sli of an image.
+    /*! \brief Give the maximum sli of an image.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     mln_deduce(I, site, coord) max_sli(const Image<I>& ima);
 

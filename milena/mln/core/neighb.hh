@@ -50,8 +50,10 @@ namespace mln
 
 
 
-  /// Adapter class from window to neighborhood.
-
+  /*! \brief Adapter class from window to neighborhood.
+   *
+   * \ingroup modneighbnd
+   */
   template <typename W>
   class neighb
     : public internal::neighb_base<W,neighb<W> >

@@ -45,8 +45,8 @@ namespace mln
   namespace border
   {
 
-    /*! Fill the virtual (outer) border of image \p ima with the
-     *  single value \p v.
+    /*! \brief Fill the virtual (outer) border of image \p ima with
+     *  the single value \p v.
      *
      * \param[in,out] ima The image whose border is to be filled.
      * \param[in] v The value to assign to all border pixels.
@@ -54,6 +54,8 @@ namespace mln
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memset if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& v);

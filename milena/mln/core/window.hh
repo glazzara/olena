@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -80,6 +80,8 @@ namespace mln
    *
    * This type of window is just like a set of delta-points.  The
    * parameter is \c D, type of delta-point.
+   *
+   * \ingroup modwinnd
    */
   template <typename D>
   class window : public internal::window_base< D, window<D> >

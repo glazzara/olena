@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,9 +50,10 @@ namespace mln
     extern bool constrained_hit_or_miss;
 
 
-    /// Morphological hit-or-miss.
-    /*!
+    /*! \brief Morphological hit-or-miss.
      * This operator is HMT_(Bh,Bm) = e_Bh /\ (e_Bm o C).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)
@@ -60,9 +61,10 @@ namespace mln
 		const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /// Morphological hit-or-miss opening.
-    /*!
+    /*! \brief Morphological hit-or-miss opening.
      * This operator is HMTope_(Bh,Bm) = d_(-Bh) o HMT_(Bh,Bm).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)
@@ -70,9 +72,10 @@ namespace mln
 			const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /// Morphological hit-or-miss opening of the background.
-    /*!
+    /*! \brief Morphological hit-or-miss opening of the background.
      * This operator is HMTopeBG = HMTope_(Bm,Bh) o C = d_(-Bm) o HMT_(Bh,Bm).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)
@@ -80,9 +83,10 @@ namespace mln
 				   const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /// Morphological hit-or-miss closing.
-    /*!
+    /*! \brief Morphological hit-or-miss closing.
      * This operator is C o HMTope o C.
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)
@@ -90,9 +94,10 @@ namespace mln
 			const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /// Morphological hit-or-miss closing of the background.
-    /*!
+    /*! \brief Morphological hit-or-miss closing of the background.
      * This operator is C o HMTopeBG o C.
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)

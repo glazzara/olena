@@ -31,6 +31,8 @@
 ///
 /// Create a 2D image of the slices of the 3D image \p input.
 
+/// \todo Does it do the same job as debug::mosaic ?
+
 # include <cmath>
 
 # include <mln/core/image/image2d.hh>
@@ -52,8 +54,10 @@ namespace mln
   namespace debug
   {
 
-    /// Create a 2D image of the slices of the 3D image \p input.
-    ///
+    /*! \brief Create a 2D image of the slices of the 3D image \p
+      input.
+      \ingroup mlndebug
+     */
     template <typename I>
     image2d<mln_value(I)>
     slices_2d(const Image<I>& input,
@@ -61,8 +65,10 @@ namespace mln
 	      const mln_value(I)& bg);
 
 
-    /// Create a 2D image of the slices of the 3D image \p input.
-    ///
+    /*! \brief Create a 2D image of the slices of the 3D image \p
+        input.
+	\ingroup mlndebug
+     */
     template <typename I>
     image2d<mln_value(I)>
     slices_2d(const Image<I>& input,

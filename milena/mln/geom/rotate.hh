@@ -64,53 +64,65 @@ namespace mln
   namespace geom
   {
 
-    /// Perform a rotation from the center of an image.
-    ///
-    /// \param[in] input          An image.
-    /// \param[in] angle          An angle in degrees.
-    /// \param[in] extension      Function, image or value which will be used
-    ///                           as extension. This extension allows to map
-    ///                           values to sites which where not part
-    ///                           of the domain before the rotation.
-    /// \param[in] output_domain  The domain of the output image. An
-    ///                           invalid domain, causes the routine
-    ///                           to use a domain large enough to
-    ///                           display the whole original image.
-    ///
-    /// \return An image with the same domain as \p input.
-    //
+    /*! \brief Perform a rotation from the center of an image.
+
+      \param[in] input          An image.
+      \param[in] angle          An angle in degrees.
+      \param[in] extension      Function, image or value which will be used
+                                as extension. This extension allows to map
+				values to sites which where not part
+				of the domain before the rotation.
+      \param[in] output_domain  The domain of the output image. An
+                                invalid domain, causes the routine
+				to use a domain large enough to
+				display the whole original image.
+
+      \return An image with the same domain as \p input.
+
+      \ingroup mlngeom
+    */
     template <typename I, typename Ext, typename S>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle,
 	   const Ext& extension, const Site_Set<S>& output_domain);
 
 
-    /// \overload
+    /*! \overload
+
+      \ingroup mlngeom
+     */
     template <typename I, typename Ext>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle, const Ext& extension);
 
 
-    /// \overload
-    /// Use literal::zero as default value for the extension.
+    /*! \overload
+      Use literal::zero as default value for the extension.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle);
 
 
-    /// Rotate a box.
-    ///
-    /// FIXME: the return type may be too generic and may lead to
-    /// invalid covariance.
-    //
+    /*! \brief Rotate a box.
+
+      FIXME: the return type may be too generic and may lead to
+      invalid covariance.
+
+      \ingroup mlngeom
+    */
     template <typename B>
     B
     rotate(const Box<B>& box_, double angle, const mln_site(B)& ref);
 
-    /// \overload
-    ///
-    /// The rotation center \p ref is set to box.pcenter().
-    //
+    /*! \overload
+
+      The rotation center \p ref is set to box.pcenter().
+
+      \ingroup mlngeom
+    */
     template <typename B>
     B
     rotate(const Box<B>& box, double angle);

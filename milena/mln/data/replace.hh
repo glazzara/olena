@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,11 +45,14 @@ namespace mln
   namespace data
   {
 
-    /*! Replace \p old_value by \p new_value in the image \p input
+    /*! \brief Replace \p old_value by \p new_value in the image \p
+     *  input
      *
      * \param[in] input The input image.
      * \param[in] old_value The value to be replaced...
      * \param[in] new_value ...by this one.
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void replace(Image<I>& input,

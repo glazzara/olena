@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,9 @@ namespace mln
   namespace norm
   {
 
-    /// L2-norm of a vector \a vec.
+    /*! \brief L2-norm of a vector \a vec.
+      \ingroup mlnlinear
+    */
     /// \{
     template <unsigned n, typename C>
     mln_sum_product(C,C) l2(const C (&vec)[n]);
@@ -60,7 +63,9 @@ namespace mln
     mln_sum_product(C,C) l2(const algebra::vec<n,C>& vec);
     /// \}
 
-    /// Squared L2-norm of a vector \a vec.
+    /*! \brief Squared L2-norm of a vector \a vec.
+      \ingroup mlnlinear
+    */
     /// \{
     template <unsigned n, typename C>
     mln_sum_product(C,C) sqr_l2(const C (&vec)[n]);
@@ -69,7 +74,9 @@ namespace mln
     mln_sum_product(C,C) sqr_l2(const algebra::vec<n,C>& vec);
     /// \}
 
-    /// L2-norm distance between vectors \a vec1 and \p vec2.
+    /*! \brief L2-norm distance between vectors \a vec1 and \p vec2.
+      \ingroup mlnlinear
+     */
     /// \{
     template <unsigned n, typename C>
     mln_sum_product(C,C) l2_distance(const C (&vec1)[n], const C (&vec2)[n]);

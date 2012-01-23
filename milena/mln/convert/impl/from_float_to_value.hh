@@ -122,6 +122,7 @@ namespace mln
   } // end of namespace mln::convert
 
 
+  // float-> Value
   template <typename V>
   inline
   void
@@ -130,6 +131,7 @@ namespace mln
     convert::internal::from_float_to_value_dispatch(from, to);
   }
 
+  // float-> unsigned
   inline
   void
   from_to_(const float& from, unsigned& to)
@@ -138,6 +140,7 @@ namespace mln
     to = math::round<unsigned>()(from);
   }
 
+  // float-> int
   inline
   void
   from_to_(const float&	from, int& to)
@@ -145,6 +148,7 @@ namespace mln
     to = math::round<int>()(from);
   }
 
+  // float-> short
   inline
   void
   from_to_(const float& from, short& to)

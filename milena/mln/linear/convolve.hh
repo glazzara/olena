@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,15 +44,18 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by the weighted window \p w_win.
-     *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre input.is_valid
+    /*! \brief Convolution of an image \p input by the weighted window
+        \p w_win.
+
+       \warning Computation of \p output(p) is performed with the
+       value type of \p output.
+
+       \warning The weighted window is used as-is, considering that
+       its symmetrization is handled by the client.
+
+       \pre input.is_valid
+
+       \ingroup mlnlinear
      */
     template <typename I, typename W>
     mln_ch_convolve(I, W)
@@ -100,7 +104,7 @@ namespace mln
 	  internal::convolve_tests(input, w_win);
 
 	  extension::adjust_duplicate(input, w_win);
-	  
+
 	  typedef mln_ch_convolve(I, W) O;
 	  O output;
 	  initialize(output, input);
@@ -117,7 +121,7 @@ namespace mln
 	      a.take(input(q), q.w());
 	    output(p) = a.to_result();
 	  }
-	  
+
 	  trace::exiting("linear::impl::generic::convolve");
 	  return output;
 	}

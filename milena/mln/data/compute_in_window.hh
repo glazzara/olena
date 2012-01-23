@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,20 +46,24 @@ namespace mln
   namespace data
   {
 
-
-    /// Compute an accumulator for each image pixel values using neighbor
-    /// pixel values.
+    /*! \brief Compute an accumulator for each image pixel values
+     * using neighbor pixel values.
+     *
+     * \ingroup mlnaccucompute
+     */
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
     compute_in_window(const Accumulator<A>& a, const Image<I>& input,
 		      const Window<W>& win);
 
-    /// \overload
-    ///
-    /// \param[in] a A meta-accumulator.
-    /// \param[in] input The input image.
-    /// \return The accumulator result.
-    ///
+    /*! \overload
+     *
+     * \param[in] a A meta-accumulator.
+     * \param[in] input The input image.
+     * \return The accumulator result.
+     *
+     * \ingroup mlnaccucompute
+     */
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
     compute_in_window(const Meta_Accumulator<A>& a, const Image<I>& input,

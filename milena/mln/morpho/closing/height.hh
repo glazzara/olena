@@ -45,7 +45,10 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological height closing.
+      /*! \brief Morphological height closing.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename I, typename N>
       mln_concrete(I)
       height(const Image<I>& input, const Neighborhood<N>& nbh,

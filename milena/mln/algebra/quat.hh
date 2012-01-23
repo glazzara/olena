@@ -123,6 +123,9 @@ namespace mln
   {
 
     // FIXME value::Vectorial ??? value ???
+    /*! \brief Quaternion values.
+      \ingroup mlnalgebratypes
+    */
     class quat
       :
       public value::Vectorial< quat >

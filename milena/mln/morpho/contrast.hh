@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,9 +43,11 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological contrast operator (based on top-hats).
+    /*! \brief Morphological contrast operator (based on top-hats).
      *
-     * This operator is Id + wth_B - bth_B. 
+     * This operator is Id + wth_B - bth_B.
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename W>
     mln_concrete(I) contrast(const Image<I>& input, const Window<W>& win);

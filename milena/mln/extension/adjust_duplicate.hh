@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,19 +44,34 @@ namespace mln
   namespace extension
   {
 
-    /// Adjust then duplicate.
+    /*! \brief Adjust then duplicate.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust_duplicate(const Image<I>& ima,
 			  const Window<W>& win);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust_duplicate(const Image<I>& ima,
 			  const Weighted_Window<W>& wwin);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename N>
     void adjust_duplicate(const Image<I>& ima,
 			  const Neighborhood<N>& nbh);
 
+    /*! \overload
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I>
     void adjust_duplicate(const Image<I>& ima,
 			  unsigned delta);

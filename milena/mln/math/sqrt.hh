@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +41,9 @@ namespace mln
   namespace math
   {
 
+    /*! \brief The square root (sqrt) function.
+      \ingroup mlnmath
+    */
     template <typename T>
     T sqrt(const T& v);
 

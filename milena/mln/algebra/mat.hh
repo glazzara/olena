@@ -81,7 +81,9 @@ namespace mln
   namespace algebra
   {
 
-
+    /*! \brief NxM-dimensional matrix.
+      \ingroup mlnalgebratypes
+     */
     template <unsigned n, unsigned m, typename T>
     class mat : public Object< mat<n,m,T> >
     {

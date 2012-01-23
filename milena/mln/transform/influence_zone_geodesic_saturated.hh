@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,16 +41,18 @@ namespace mln
   namespace transform
   {
 
-    /// Geodesic influence zone transform.
-    ///
-    /// \param[in] input	    An image.
-    /// \param[in] nbh		    A neighborhood.
-    /// \param[in] max		    The maximum influence zone distance.
-    /// \param[in] background_value The value used as background (i.e.
-    ///				    not propagated).
-    ///
-    /// \return An image of influence zone.
-    //
+    /*! \brief Geodesic influence zone transform.
+
+        \param[in] input	    An image.
+        \param[in] nbh		    A neighborhood.
+        \param[in] max		    The maximum influence zone distance.
+        \param[in] background_value The value used as background (i.e.
+       				    not propagated).
+
+        \return An image of influence zone.
+
+	\ingroup mlntransform
+    */
     template <typename I, typename N, typename D>
     mln_concrete(I)
     influence_zone_geodesic_saturated(const Image<I>& input,
@@ -57,7 +60,9 @@ namespace mln
 				      const D& max,
 				      const mln_value(I)& background_value);
 
-    /// \overload
+    /*! \overload
+      \ingroup mlntransform
+    */
     template <typename I, typename N, typename D>
     mln_concrete(I)
     influence_zone_geodesic_saturated(const Image<I>& input,

@@ -1,0 +1,110 @@
+/*! \defgroup iogroup I/O
+ *
+ * \brief All supported I/O.
+ *
+ */
+
+/*! \defgroup iocloud Cloud
+ *
+ * \brief Cloud I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iodicom DICOM
+ *
+ * \brief DICOM I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iodump Dump
+ *
+ * \brief Dump I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iofits FITS
+ *
+ * \brief FITS I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iofld FLD
+ *
+ * \brief FLD I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iomagick ImageMagick
+ *
+ * \brief ImageMagick I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iooff OFF
+ *
+ * \brief OFF I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iopbm PBM
+ *
+ * \brief PBM I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iopfm PFM
+ *
+ * \brief PFM I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iopgm PGM
+ *
+ * \brief PGM I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup ioplot Plot
+ *
+ * \brief Plot I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup ioppm PPM
+ *
+ * \brief PPM I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup ioraw RAW
+ *
+ * \brief RAW I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iotiff TIFF
+ *
+ * \brief TIFF I/O routines.
+ *
+ * \ingroup iogroup
+ */
+
+/*! \defgroup iotxt TXT
+ *
+ * \brief TXT I/O routines.
+ *
+ * \ingroup iogroup
+ */

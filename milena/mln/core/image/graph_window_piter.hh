@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +31,7 @@
 ///
 /// Definition of a graph element iterator on a graph window.
 ///
-/// \fixme Split into graph_window_piter, graph_mixed_window_piter and
+/// \todo Split into graph_window_piter, graph_mixed_window_piter and
 /// graph_window_piter_base.
 
 # include <mln/core/concept/site_set.hh>

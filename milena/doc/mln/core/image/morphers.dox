@@ -1,0 +1,6 @@
+/*! \defgroup modimagemorpher Image morphers
+ *
+ * \brief Morpher on both image values and domain.
+ *
+ * \ingroup modimage
+ */

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -29,8 +29,9 @@
 
 /// \file
 ///
-/// Draw a line in an image.
-/// \fixme Add specializations for horizontal lines (use pointers/memset).
+/// \brief Draw a line in an image.
+/// \todo Add specializations for horizontal lines (use
+/// pointers/memset).
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
@@ -46,18 +47,19 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a line at level \p v in image \p ima between the points
-     *  \p beg and \p end.
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] beg The start point to drawn line.
-     * \param[in] end The end point to drawn line.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre \p ima has \p beg.
-     * \pre \p ima has \p end.
-     *
+    /*! \brief Draw a line at level \p v in image \p ima between the
+        points \p beg and \p end.
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] beg The start point to drawn line.
+       \param[in] end The end point to drawn line.
+       \param[in] v The value to assign to all drawn pixels.
+
+       \pre \p ima has to be initialized.
+       \pre \p ima has \p beg.
+       \pre \p ima has \p end.
+
+       \ingroup mlndraw
      */
     template <typename I>
     void line(Image<I>& ima,

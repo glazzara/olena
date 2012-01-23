@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,9 @@
 
 /// \file
 ///
-/// Draw a dashed_line in an image.
-/// \fixme Add specializations for horizontal dashed_lines (use pointers/memset).
+/// \brief Draw a dashed_line in an image.
+/// \todo Add specializations for horizontal dashed_lines (use
+/// pointers/memset).
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
@@ -46,18 +48,19 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a dashed line at level \p v in image \p ima between the
-     *  points \p beg and \p end.
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] beg The start point to drawn dashed_line.
-     * \param[in] end The end point to drawn dashed_line.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre \p ima has \p beg.
-     * \pre \p ima has \p end.
-     *
+    /*! \brief Draw a dashed line at level \p v in image \p ima
+        between the points \p beg and \p end.
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] beg The start point to drawn dashed_line.
+       \param[in] end The end point to drawn dashed_line.
+       \param[in] v The value to assign to all drawn pixels.
+
+       \pre \p ima has to be initialized.
+       \pre \p ima has \p beg.
+       \pre \p ima has \p end.
+
+       \ingroup mlndraw
      */
     template <typename I>
     void dashed_line(Image<I>& ima,

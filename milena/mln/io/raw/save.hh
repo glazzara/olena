@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,16 +52,18 @@ namespace mln
     namespace raw
     {
 
-      /// Save a Milena image as a raw data file.
-      ///
-      /// \param[in] ima_ The image to save.
-      /// \param[in] filename the destination.
-      ///
-      /// This routine produce two output files: 'filename' and
-      /// 'filename.info'.
-      /// 'filename' is the raw data.
-      /// 'filename.info' store various information about the image.
-      //
+      /*! \brief Save a Milena image as a raw data file.
+       *
+       * \param[in] ima_ The image to save.
+       * \param[in] filename the destination.
+       *
+       * This routine produce two output files: 'filename' and
+       * 'filename.info'.
+       * 'filename' is the raw data.
+       * 'filename.info' store various information about the image.
+       *
+       * \ingroup ioraw
+       */
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename);
 

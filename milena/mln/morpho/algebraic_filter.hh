@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,6 +49,9 @@ namespace mln
   namespace morpho
   {
 
+    /*!
+     * \ingroup mlndatafilter
+     */
     template <typename I, typename N, typename A>
     mln_concrete(I)
     algebraic_filter(const Image<I>& input,

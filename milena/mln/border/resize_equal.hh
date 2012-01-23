@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +42,12 @@ namespace mln
   {
 
     // FIXEM: Doc!
+    /*! \brief Define a function that resizes the virtual border of a
+     *  couple of images so that they eventually have the same border
+     *  thickness.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename J>
     void
     resize_equal(const Image<I>& ima1, const Image<J>& ima2);

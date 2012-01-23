@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +44,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction with a segment.
-      /*!
+      /*! \brief Browsing in a certain direction with a segment.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I', of dimension 'dim' in the direction 'dir' with
        * considering weigh the 'length' nearest points.
@@ -83,6 +83,8 @@ namespace mln
        *   void final(); \n
        * } \n
        *
+       *
+       * \ingroup modcanvasbrowsing
        */
       struct dir_struct_elt_incr_update_t : public Browsing< dir_struct_elt_incr_update_t >
       {

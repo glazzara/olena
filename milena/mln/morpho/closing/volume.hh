@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological volume closing.
+      /*! \brief Morphological volume closing.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename I, typename N>
       mln_concrete(I)
       volume(const Image<I>& input, const Neighborhood<N>& nbh,

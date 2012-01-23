@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,20 +41,24 @@ namespace mln
   namespace logical
   {
 
-    /*! Point-wise "logical and-not" between images \p lhs and \p rhs.
+    /*! \brief Point-wise "logical and-not" between images \p lhs and
+     *  \p rhs.
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
      * \result The result image.
      *
      * \pre \p lhs.domain == \p rhs.domain
+     *
+     * \ingroup mlnimageops
      */
     template <typename L, typename R>
     mln_ch_fun_vv2v(land_not, L, R)
     and_not(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /*! Point-wise in-place "logical and-not" of image \p rhs in image \p lhs.
+    /*! \brief Point-wise in-place "logical and-not" of image \p rhs
+     *  in image \p lhs.
      *
      * \param[in,out] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -63,6 +68,8 @@ namespace mln
      *     lhs(p) = lhs(p) and not rhs(p)
      *
      * \pre \p rhs.domain >= \p lhs.domain
+     *
+     * \ingroup mlnimageops
      */
     template <typename L, typename R>
     void and_not_inplace(Image<L>& lhs, const Image<R>& rhs);

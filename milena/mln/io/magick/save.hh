@@ -62,16 +62,19 @@ namespace mln
     namespace magick
     {
 
-      /** Save a Milena image into a file using Magick++.
+      /*! \brief Save a Milena image into a file using Magick++.
 	  \overload
 
 	  \param[in] ima       The image to save.
-	  \param[in] filename  The name of the output file.  */
+	  \param[in] filename  The name of the output file.
+
+	  \ingroup iomagick
+      */
       template <typename I>
       void
       save(const Image<I>& ima, const std::string& filename);
 
-      /** Save a Milena image into a file using Magick++.
+      /*! \brief Save a Milena image into a file using Magick++.
 
 	  \param[in] ima       The image to save.
 
@@ -80,6 +83,8 @@ namespace mln
 	  into account.
 
 	  \param[in] filename  The name of the output file.
+
+	  \ingroup iomagick
       */
       template <typename I, typename J>
       void

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,9 +53,11 @@ namespace mln
 	namespace generic
 	{
 
-          /// Generic Connected component labeling of the object part in a
-          /// binary image.
-	  //
+          /*! \brief Generic Connected component labeling of the
+	   * object part in a binary image.
+	   *
+	   * \ingroup modcanvaslabeling
+	   */
 	  template <typename I, typename N, typename L,
 		    typename S, typename F>
 	  mln_ch_value(I, L)

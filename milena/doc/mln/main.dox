@@ -4,23 +4,12 @@
  *
  */
 
-/*! \defgroup modaccu Accumulators
- *
- * \brief All accumulator types.
- *
- */
-
 /*! \defgroup modroutines Routines
  *
  * \brief All algorithms/routines provided in Milena.
  *
  */
 
-/*! \defgroup modcanvas Canvas
- *
- * \brief All canvas.
- *
- */
 
 /*! \defgroup modfun Functions
  *
@@ -28,3 +17,81 @@
  *
  */
 
+
+
+/*! \defgroup imagemanip Image Manipulation
+ *
+ * \brief All algorithms/routines for image manipulation.
+ *
+ * \ingroup modroutines
+ */
+
+/*! \defgroup mlnimageops Operators
+ *
+ * \brief All operators applying to images.
+ *
+ * \ingroup imagemanip
+ */
+
+/*! \defgroup mlndatafilter Filters
+ *
+ * \brief All routines related to Image Filtering.
+ *
+ * \ingroup imagemanip
+ */
+
+/*! \defgroup mlngeom Geometry
+ *
+ * \brief All routines related to Image Geometry.
+ *
+ * \ingroup imagemanip
+ */
+
+/*! \defgroup mlnborderext Border and Extension
+ *
+ * \brief All routines related to Image Border and Extension.
+ *
+ * \ingroup imagemanip
+ */
+
+/*! \defgroup mlndraw Drawing
+ *
+ * \brief All routines for drawing into images.
+ *
+ * \ingroup imagemanip
+ */
+
+/*! \defgroup mlndebug Debugging
+ *
+ * \brief All routines for debugging Milena based programs..
+ *
+ * \ingroup modroutines
+ */
+
+/*! \defgroup mlntransform Transform Methods
+ *
+ * \brief All transform algorithms.
+ *
+ * \ingroup modroutines
+ */
+
+/*! \defgroup mlnmath Mathematical Tools
+ *
+ * \brief All mathematical tools
+ *
+ * \ingroup modroutines
+ */
+
+/*! \defgroup mlnalgebratypes Algebra Structures
+ *
+ * \brief All algebra structures.
+ *
+ * \ingroup modtypes
+ */
+
+/*! \defgroup mlnlinear Linear Algebra Computation
+ *
+ * \brief All linear algebra algorithms.
+ *
+ * \ingroup modroutines
+ */

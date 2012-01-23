@@ -213,7 +213,8 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
 	   -e 's,@top_builddir\@,$(top_builddir),g'		\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
+	   -e 's,@builddir\@,$(builddir),g'			\
+	   -e 's,@boostcppflags\@,$(BOOST_CPPFLAGS),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\

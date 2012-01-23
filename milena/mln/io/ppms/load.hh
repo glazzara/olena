@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,11 +51,14 @@ namespace mln
     namespace ppms
     {
 
-      ///  Load ppm images as slices of a 3D Milena image.
-      ///
-      /// \param[out] ima A reference to the 3D image which will receive
-      /// data.
-      /// \param[in] filenames The list of 2D images to load..
+      /*! \brief Load ppm images as slices of a 3D Milena image.
+       *
+       * \param[out] ima A reference to the 3D image which will receive
+       * data.
+       * \param[in] filenames The list of 2D images to load..
+       *
+       * \ingroup ioppm
+       */
       template <typename V>
       void load(image3d<V>& ima,
 		const util::array<std::string>& filenames);
