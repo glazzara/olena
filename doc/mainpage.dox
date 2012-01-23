@@ -8,13 +8,15 @@
     <tr>
       <th>General Presentation</th>
       <th>Modules</th>
-      <th>Applications</th>
+      <th>Contributing</th>
     </tr>
     <tr>
       <td>
 	\li \ref about
 	\li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Publications">Bibliography</a>
 	\li \ref contributors
+	\li \ref supportedplatforms
+	\li \ref licensing
       </td>
       <td>
         \li \ref moduleslist
@@ -23,29 +25,34 @@
     	\li Swilena
       </td>
       <td>
-        \li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Demos">Online Demos</a>
-    	\li Papers Related Programs
-    	\li Olena Powered Programs
-      </td>
-    </tr>
-
-
-    <tr>
-      <th>Contributing</th>
-      <th>Licensing</th>
-      <th>&nbsp;</th>
-    </tr>
-    <tr>
-      <td>
         \li Report Bugs and Make Suggestions
 	\li \ref getsources
 	\li \ref onlineres
       </td>
+    </tr>
+
+
+    <tr>
+      <th>Fundamentals</th>
+      <th>Core Features</th>
+      <th>Applications</th>
+    </tr>
+    <tr>
       <td>
-	\li \ref gplv2 "GNU GPL"
-	\li \ref commercial "Commercial Use"
+	\li SCOOP 2
+        \li Genericity and Performance in Olena
       </td>
-      <td>&nbsp;</td>
+      <td>
+        \li Image Manipulation
+        \li Image Morphers
+	\li Mathematical Morphology
+	\li Document Image Analysis
+      </td>
+      <td>
+        \li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Demos">Online Demos</a>
+    	\li Papers Related Programs
+    	\li Olena Powered Programs
+      </td>
     </tr>
 
     </table>

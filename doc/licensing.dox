@@ -1,9 +1,12 @@
-/*! \page gplv2 GNU General Public License (GPL)
+/*! \page licensing Licensing
+
 
 Olena and its modules are Copyright (C) 2011 EPITA Research and
 Development Laboratory (LRDE).
 <br>Olena and its modules are released under GNU GPL v2.
 
+In some cases, it is possible to use Olena in non-GPL softwares. If
+you intend to do it, please contact us at olena@lrde.epita.fr
 
 \section gplv2sec "The GNU General Public License (Version 2)"
 

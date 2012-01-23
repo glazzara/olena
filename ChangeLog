@@ -1,5 +1,20 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve main documentation.
+
+	* doc/Makefile.am: Update dependencies.
+
+	* doc/about.dox,
+	* doc/doxygen.css,
+	* doc/license.dox,
+	* doc/license_commercial.dox,
+	* doc/licensing.dox,
+	* doc/mainpage.dox: Improve titles and presentation.
+
+	* doc/supported_platforms.dox: New.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix documentation.
 
 	* doc/Doxyfile.in,

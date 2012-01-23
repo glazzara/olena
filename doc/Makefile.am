@@ -74,9 +74,9 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/doc.bib	  		\
 	      $(srcdir)/contributors.dox  	\
 	      $(srcdir)/bibliography.dox  	\
-	      $(srcdir)/license.dox 	 	\
-	      $(srcdir)/license_commercial.dox 	\
+	      $(srcdir)/licensing.dox 	 	\
 	      $(srcdir)/online_resources.dox	\
+	      $(srcdir)/supported_platforms.dox	\
 	      $(srcdir)/get_sources.dox		\
 	      $(srcdir)/subdoc_footer.html	\
 	      contributors.html			\

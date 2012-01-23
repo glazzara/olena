@@ -1,0 +1,45 @@
+/*! \page supportedplatforms Supported Platforms
+
+\section linux Linux
+
+Olena has been tested on the following ditributions:
+      \li Debian 5.0 et 6.0,
+      \li Mandriva 2010.x,
+      \li Ubuntu 11.x,
+
+and with the GNU compiler g++ 4.x.
+
+It should work on many other distributions. Feel free to test and tell
+us how it works at <a
+href=mailto:olena@lrde.epita.fr>olena@lrde.epita.fr</a>. Thanks!
+
+
+\section win Windows
+
+Olena has been compiled and tested successfully using <a
+href="http://www.cygwin.com">Cygwin</a>. The GNU compiler g++ and all
+the required dependencies must be installed.
+
+User-made programs can also be compiled with <a
+href="http://www.mingw.org">MinGW</a>. However, Olena package shall
+not compile because of missing dependencies.
+
+Currently, Microsoft Visual Studio is not supported.
+
+
+\section mac Mac
+
+Olena has been tested successfully on a x86_64 architecture with:
+      \li Mac OS X 10.5, "Snow Leopard",
+      \li Mac OS X 10.6, "Lion".
+Compilation has been made using Apple's version of gcc.
+
+Olena can also be compiled using compilers and dependencies provided
+by <a href="http://www.macports.org">MacPorts</a>.
+
+\warning in some cases, due to a bug in Apple's gcc, it is necessary
+to compile with the flag '-fno-strict-aliasing'. Otherwise, invalid
+code may be produced by the compiler and strange segmentation fault
+may occur.
+
+*/

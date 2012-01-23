@@ -848,9 +848,16 @@ dl.bug
 table.itable th
 {
     font-size: 17px;
+
 }
 
 table.itable li
 {
     font-size: 16px;
+}
+
+table.itable td
+{
+    font-size: 17px;
+    vertical-align: top;
 }
