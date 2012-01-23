@@ -1,0 +1,6 @@
+/*! \defgroup grpocr Text Recognition
+ *
+ * \brief All routines/algorithms to recognize text.
+ *
+ * \ingroup grproutine
+ */

@@ -1,5 +1,13 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Define new documentation groups.
+
+	* doc/scribo/primitive/extract/separators.dox,
+	* doc/scribo/text/ocr.dox,
+	* doc/scribo/text/text.dox: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add algorithms to documentation groups.
 
 	* scribo/primitive/extract/horizontal_separators.hh,
