@@ -1,5 +1,14 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation.
+
+	* tests/linear/convolve.cc,
+	* tests/linear/convolve_2x1d.cc,
+	* tests/linear/convolve_directional.cc: Change math::round
+	function to fun::v2v::round.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Set up documentation groups in Milena documentation.
 
 	* doc/Doxyfile.in,
