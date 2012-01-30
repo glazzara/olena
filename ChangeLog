@@ -1,5 +1,9 @@
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/HOWTO: Add more details.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* Makefile.am: Add 'deb' rule.
 
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>

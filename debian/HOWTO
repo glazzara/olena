@@ -1,5 +1,11 @@
-Use the following command:
--------------------------
+	-*- outline -*-
+
+* Use one of the following command:
+----------------------------------
+
+git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild -i'\.git' -I.git "
+
+or, if you need to keep environment variables :
 
 git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild --preserve-env --prepend-path=/usr/local/bin -i'\.git' -I.git "
 
@@ -10,3 +16,17 @@ git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild --prese
 
 --prepend-path allows us to use a more recent version of Doxygen
   located in /usr/local/bin.
+
+
+
+* .git/gbp.conf: setting default config
+
+cat <<EOF > .git/gbp.conf
+[DEFAULT]
+# Force running lintian to check .deb files validity.
+postbuild=lintian $GBP_CHANGES_FILE
+EOF
+
+
+* More documentation
+http://honk.sigxcpu.org/projects/git-buildpackage/manual-html/gbp.html
