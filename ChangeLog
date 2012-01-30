@@ -1,5 +1,34 @@
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	First draft of Scribo documentation.
+
+	* scribo/doc/.gitignore,
+	* scribo/doc/Doxyfile.in,
+	* scribo/doc/DoxygenLayout.xml,
+	* scribo/doc/Makefile.am,
+	* scribo/doc/doxyfuns.sty,
+	* scribo/doc/examples-outputs.mk,
+	* scribo/doc/examples.mk,
+	* scribo/doc/examples/dummy.cc,
+	* scribo/doc/figures.mk,
+	* scribo/doc/gen-examples-outputs-mk,
+	* scribo/doc/gen-figures-mk,
+	* scribo/doc/gen-make-variable,
+	* scribo/doc/gen-split-examples-mk,
+	* scribo/doc/gen-split-outputs-mk,
+	* scribo/doc/graphicx.hva,
+	* scribo/doc/outputs.mk,
+	* scribo/doc/outputs/dummy.txt,
+	* scribo/doc/programs-examples.mk,
+	* scribo/doc/scribo.qhcp,
+	* scribo/doc/scribo.sty,
+	* scribo/doc/split-examples.mk,
+	* scribo/doc/split-outputs.mk,
+	* scribo/doc/tools/todoxygen.sh,
+	* scribo/doc/tutorial.tex: New.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	First draft of common documentation.
 
 	* configure.ac: Add new makefiles.
