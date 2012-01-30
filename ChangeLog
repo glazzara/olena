@@ -1,5 +1,14 @@
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve layout and content of Milena's doc.
+
+	* milena/doc/Doxyfile.in: Generate tag file and fine tune output.
+
+	* milena/doc/DoxygenLayout.xml,
+	* milena/doc/milena.qhcp: New.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	First draft of Scribo documentation.
 
 	* scribo/doc/.gitignore,
