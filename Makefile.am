@@ -71,6 +71,11 @@ CLEANFILES = $(PORTFILE)
 .PHONY: port
 port: $(PORTFILE)
 
+deb:
+	git-buildpackage --git-export-dir=../build-area/ \
+			 --git-builder="debuild -i'\.git' -I.git "
+
+
 # Set the package version to olena-x.x-snapshot-dd-mm-yy.
 #
 # Do not check NEWS file (this is not a release so there is no

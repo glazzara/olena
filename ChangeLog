@@ -1,5 +1,9 @@
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* Makefile.am: Add 'deb' rule.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/copyright: Set copyright.
 
 2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
