@@ -223,11 +223,16 @@ maintainer-clean-local:
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(mkdir_p) $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # The user reference manual is located in a subdirectory, hence this
 # special case.
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo
+	cp -r $(srcdir)/$(USER_REFMAN)/html \
+		$(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo
+# Update paths to milena documentation directory
+	$(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo/installdox \
+		-l milena.tag@$(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena \
+		 `find $(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo/ -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			\
 	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
@@ -246,5 +251,5 @@ uninstall-local:
 	done
 # Same remark as above regarding the special case of the user
 # reference manual.
-	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo

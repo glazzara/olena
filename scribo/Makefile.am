@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = demo tests src
+SUBDIRS = demo doc tests src
 
 .PHONY: bin
 bin:
