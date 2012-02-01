@@ -1,3 +1,20 @@
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
+	* Makefile.am: Add doc to SUBDIRS.
+
+	* doc/Doxyfile.in: Include bib file.
+
+	* doc/Makefile.am: Fix uninstall/install rules.
+
+	* doc/mainpage.hh: Improve layout.
+
+	* doc/bibliography.hh,
+	* doc/doc.bib,
+	* doc/modules_list.hh,
+	* doc/olena.bib: New.
+
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve layout and content of Milena's doc.

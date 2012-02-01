@@ -6,26 +6,46 @@
     <table class="doxtable itable">
 
     <tr>
-    <th>General Presentation</th>
-    <th>Modules</th>
-    <th>Applications</th>
+      <th>General Presentation</th>
+      <th>Modules</th>
+      <th>Applications</th>
     </tr>
     <tr>
-    <td><ul><li>What is Olena ?</li><li>Bibliography</li><li>Contributors</li></ul></td>
-    <td><ul><li>List of Available modules</li><li><a href='../../../milena/doc/user-refman/html/index.html'>Milena</a></li><li><a href='../../../scribo/doc/user-refman/html/index.html'>Scribo</a></li><li>Swilena</li></ul></td>
-    <td><ul><li>Online Demos</li><li>Papers Related Programs</li><li>Olena Powered Programs</li></ul></td>
+      <td>
+	\li What is Olena ?
+	\li \ref bibliography
+	\li Contributors
+      </td>
+      <td>
+        \li \ref moduleslist
+    	\li <a class="el" doxygen="milena.tag:../../../milena/doc/user-refman/html" href="../../../milena/doc/user-refman/html/index.html">Milena</a>
+    	\li <a class="el" doxygen="scribo.tag:../../../scribo/doc/user-refman/html" href="../../../scribo/doc/user-refman/html/index.html">Scribo</a>
+    	\li Swilena
+      </td>
+      <td>
+        \li Online Demos
+    	\li Papers Related Programs
+    	\li Olena Powered Programs
+      </td>
     </tr>
 
 
     <tr>
-    <th>Contributing</th>
-    <th>Licensing</th>
-    <th>&nbsp;</th>
+      <th>Contributing</th>
+      <th>Licensing</th>
+      <th>&nbsp;</th>
     </tr>
     <tr>
-    <td><ul><li>Report Bugs and Make Suggestions</li><li>Get the Sources</li><li>Online Resources</li></ul></td>
-    <td><ul><li>GNU GPL</li><li>Commercial Use</li></ul></td>
-    <td>&nbsp;</td>
+      <td>
+        \li Report Bugs and Make Suggestions
+	\li Get the Sources
+	\li Online Resources
+      </td>
+      <td>
+	\li GNU GPL
+	\li Commercial Use
+      </td>
+      <td>&nbsp;</td>
     </tr>
 
     </table>

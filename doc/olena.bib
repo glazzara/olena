@@ -1,0 +1,415 @@
+@InProceedings{	  burrus.03.mpool,
+  author	= {Nicolas Burrus and Alexandre Duret-Lutz and {\relax
+		  Th}ierry G\'eraud and David Lesage and Rapha\"el Poss},
+  title		= {A static {C++} object-oriented programming ({SCOOP})
+		  paradigm mixing benefits of traditional {OOP} and generic
+		  programming},
+  booktitle	= {Proceedings of the Workshop on Multiple Paradigm with
+		  Object-Oriented Languages (MPOOL)},
+  year		= 2003,
+  address	= {Anaheim, CA, USA},
+  month		= oct,
+  project	= {Olena},
+  urllrde	= {200310-MPOOL},
+  abstract	= {Object-oriented and generic programming are both supported
+		  in C++. OOP provides high expressiveness whereas GP leads
+		  to more efficient programs by avoiding dynamic typing. This
+		  paper presents SCOOP, a new paradigm which enables both
+		  classical OO design and high performance in C++ by mixing
+		  OOP and GP. We show how classical and advanced OO features
+		  such as virtual methods, multiple inheritance, argument
+		  covariance, virtual types and multimethods can be
+		  implemented in a fully statically typed model, hence
+		  without run-time overhead.}
+}
+
+
+@InProceedings{	  darbon.02.ismm,
+  author	= {J\'er\^ome Darbon and {\relax Th}ierry G\'eraud and
+		  Alexandre Duret-Lutz},
+  title		= {Generic implementation of morphological image operators},
+  booktitle	= {Mathematical Morphology, Proceedings of the 6th
+		  International Symposium (ISMM)},
+  pages		= {175--184},
+  year		= 2002,
+  address	= {Sydney, Australia},
+  month		= apr,
+  publisher	= {CSIRO Publishing},
+  project	= {Olena},
+  urllrde	= {200204-Ismm},
+  abstract	= {Several libraries dedicated to mathematical morphology
+		  exist. But they lack genericity, that is to say, the
+		  ability for operators to accept input of different natures
+		  ---2D binary images, graphs enclosing floating values, etc.
+		  We describe solutions which are integrated in Olena, a
+		  library providing morphological operators. We demonstrate
+		  with some examples that translating mathematical formulas
+		  and algorithms into source code is made easy and safe with
+		  Olena. Moreover, experimental results show that no extra
+		  costs at run-time are induced.}
+}
+
+@InProceedings{	  darbon.04.ecoopphd,
+  author	= {J\'er\^ome Darbon and {\relax Th}ierry G\'eraud and
+		  Patrick Bellot},
+  title		= {Generic algorithmic blocks dedicated to image processing},
+  booktitle	= {Proceedings of the ECOOP Workshop for PhD Students},
+  year		= 2004,
+  address	= {Oslo, Norway},
+  month		= jun,
+  project	= {Olena},
+  urllrde	= {200406-ECOOPPHD},
+  abstract	= {This paper deals with the implementation of algorithms in
+		  the specific domain of image processing. Although many
+		  image processing libraries are available, they generally
+		  lack genericity and flexibility. Many image processing
+		  algorithms can be expressed as compositions of elementary
+		  algorithmic operations referred to as blocks. Implementing
+		  these compositions is achieved using generic programming.
+		  Our solution is compared to previous ones and we
+		  demonstrate it on a class image processing algorithms.}
+}
+
+@InProceedings{	  duret.00.gcse,
+  author	= {Alexandre Duret-Lutz},
+  title		= {Olena: a component-based platform for image processing,
+		  mixing generic, generative and {OO} programming},
+  booktitle	= {Proceedings of the 2nd International Symposium on
+		  Generative and Component-Based Software Engineering
+		  (GCSE)---Young Researchers Workshop; published in
+		  ``Net.ObjectDays2000''},
+  pages		= {653--659},
+  year		= 2000,
+  address	= {Erfurt, Germany},
+  month		= oct,
+  isbn		= {3-89683-932-2},
+  project	= {Olena},
+  urllrde	= {200010-NetObjectDays},
+  abstract	= {This paper presents Olena, a toolkit for programming and
+		  designing image processing chains in which each processing
+		  is a component. But since there exist many image types
+		  (different structures such as 2D images, 3D images or
+		  graphs, as well as different value types) the platform has
+		  been designed with genericity and reusability in mind: each
+		  component is written as a generic C++ procedure, \`a la
+		  STL. Other libraries, such as Khoros [Kon94] have a
+		  different approach where a processing component contains an
+		  implementation for each type supported by the library. This
+		  makes code maintenance hard and prevents easy addition of
+		  new image types. Still, Olena is not only a generic
+		  component library [Jaz95], it shall contain additional
+		  tools such as a visual programming environment (VPE). Those
+		  tools may be programmed in a classical object-oriented
+		  fashion (using operation and inclusion polymorphism) which
+		  may seems antagonist with the generic programming paradigm
+		  used in the library. Section 2 outlines the architecture of
+		  Olena and elaborates more on the design problems resulting
+		  from the use of generic components. Section 3 presents the
+		  solution chosen to address these problems.}
+}
+
+
+@InProceedings{	  geraud.00.icpr,
+  author	= {{\relax Th}ierry G\'eraud and Yoann Fabre and Alexandre
+		  Duret-Lutz and Dimitri Papadopoulos-Orfanos and
+		  Jean-Fran\c{c}ois Mangin},
+  title		= {Obtaining genericity for image processing and pattern
+		  recognition algorithms},
+  booktitle	= {Proceedings of the 15th International Conference on
+		  Pattern Recognition (ICPR)},
+  year		= 2000,
+  month		= sep,
+  address	= {Barcelona, Spain},
+  volume	= 4,
+  pages		= {816--819},
+  publisher	= {IEEE Computer Society},
+  project	= {Olena},
+  urllrde	= {200009-Icpr},
+  abstract	= {Algorithm libraries dedicated to image processing and
+		  pattern recognition are not reusable; to run an algorithm
+		  on particular data, one usually has either to rewrite the
+		  algorithm or to manually ``copy, paste, and modify''. This
+		  is due to the lack of genericity of the programming
+		  paradigm used to implement the libraries. In this paper, we
+		  present a recent paradigm that allows algorithms to be
+		  written once and for all and to accept input of various
+		  types. Moreover, this total reusability can be obtained
+		  with a very comprehensive writing and without significant
+		  cost at execution, compared to a dedicated algorithm. This
+		  new paradigm is called ``generic programming'' and is fully
+		  supported by the C++ language. We show how this paradigm
+		  can be applied to image processing and pattern recognition
+		  routines. The perspective of our work is the creation of a
+		  generic library.}
+}
+
+@InProceedings{	  geraud.01.ai,
+  author	= {{\relax Th}ierry G\'eraud and Yoann Fabre and Alexandre
+		  Duret-Lutz},
+  title		= {Applying generic programming to image processing},
+  booktitle	= {Proceedings of the IASTED International Conference on
+		  Applied Informatics (AI)---Symposium on Advances in
+		  Computer Applications},
+  year		= 2001,
+  publisher	= {ACTA Press},
+  editor	= {M.H.~Hamsa},
+  address	= {Innsbruck, Austria},
+  pages		= {577--581},
+  month		= feb,
+  project	= {Olena},
+  urllrde	= {200102-Ai},
+  abstract	= {This paper presents the evolution of algorithms
+		  implementation in image processing libraries and discusses
+		  the limits of these implementations in terms of
+		  reusability. In particular, we show that in C++, an
+		  algorithm can have a general implementation; said
+		  differently, an implementation can be generic, i.e.,
+		  independent of both the input aggregate type and the type
+		  of the data contained in the input aggregate. A total
+		  reusability of algorithms can therefore be obtained;
+		  moreover, a generic implementation is more natural and does
+		  not introduce a meaningful additional cost in execution
+		  time as compared to an implementation dedicated to a
+		  particular input type.}
+}
+
+
+@InProceedings{	  geraud.08.mpool,
+  author	= {{\relax Th}ierry G\'eraud and Roland Levillain},
+  title		= {Semantics-Driven Genericity: A Sequel to the Static {C++}
+		  Object-Oriented Programming Paradigm ({SCOOP 2})},
+  booktitle	= {Proceedings of the 6th International Workshop on
+		  Multiparadigm Programming with Object-Oriented Languages
+		  (MPOOL)},
+  year		= 2008,
+  address	= {Paphos, Cyprus},
+  month		= jul,
+  project	= {Olena},
+  urllrde	= {200807-MPOOL},
+  abstract	= {Classical (unbounded) genericity in \Cxx{}03 defines the
+		  interactions between generic data types and algorithms in
+		  terms of concepts. Concepts define the requirements over a
+		  type (or a parameter) by expressing constraints on its
+		  methods and dependent types (typedefs). The upcoming
+		  \Cxx{}0x standard will promote concepts from abstract
+		  entities (not directly enforced by the tools) to language
+		  constructs, enabling compilers and tools to perform
+		  additional checks on generic constructs as well as enabling
+		  new features (e.g., concept-based overloading). Most modern
+		  languages support this notion of signature on generic
+		  types. However, generic types built on other types and
+		  relying on concepts to both ensure type conformance and
+		  drive code specialization, restrain the interface and the
+		  implementation of the newly created type: specific methods
+		  and associated types not mentioned in the concept will not
+		  be part of the new type. The paradigm of concept-based
+		  genericity lacks the required semantics to transform types
+		  while retaining or adapting their intrinsic capabilities.
+		  We present a new form of semantically-enriched genericity
+		  allowing static generic type transformations through a
+		  simple form of type introspection based on type metadata
+		  called properties. This approach relies on a new Static
+		  \Cxx Object-Oriented Programming (SCOOP) paradigm, and is
+		  adapted to the creation of generic and efficient libraries,
+		  especially in the field of scientific computing. Our
+		  proposal uses a metaprogramming facility built into a \Cxx
+		  library called Static, and doesn't require any language
+		  extension nor additional processing (preprocessor,
+		  transformation tool).}
+}
+
+@InProceedings{	  geraud.99.gretsi,
+  author	= {{\relax Th}ierry G\'eraud and Yoann Fabre and Dimitri
+		  Papadopoulos-Orfanos and Jean-Fran\c{c}ois Mangin},
+  title		= {Vers une r\'eutilisabilit\'e totale des algorithmes de
+		  traitement d'images},
+  booktitle	= {Proceedings of the 17th Symposium on Signal and Image
+		  Processing (GRETSI)},
+  category	= {national},
+  pages		= {331--334},
+  volume	= 2,
+  year		= 1999,
+  address	= {Vannes, France},
+  month		= sep,
+  note		= {In French},
+  project	= {Olena},
+  urllrde	= {199909-Gretsi},
+  abstract	= {Cet article pr\'esente l'\'evolution des techniques de
+		  programmation d'algorithmes de traitement d'images et
+		  discute des limites de la r\'eutilisabilit\'e de ces
+		  algorithmes. En particulier, nous montrons qu'en C++ un
+		  algorithme peut s'\'ecrire sous une forme g\'en\'erale,
+		  ind\'ependante aussi bien du type des donn\'ees que du type
+		  des structures de donn\'ees sur lesquelles il peut
+		  s'appliquer. Une r\'eutilisabilit\'e totale des algorithmes
+		  peut donc \^etre obtenue ; mieux, leur \'ecriture est plus
+		  naturelle et elle n'introduit pas de surco\^ut significatif
+		  en temps d'ex\'ecution.}
+}
+
+
+@InProceedings{	  lazzara.11.icdar,
+  author	= {Guillaume Lazzara and Roland Levillain and {\relax
+		  Th}ierry G\'eraud and Yann Jacquelet and Julien Marquegnies
+		  and Arthur Cr\'epin-Leblond},
+  title		= {The {SCRIBO} Module of the {Olena} Platform: a Free
+		  Software Framework for Document Image Analysis},
+  booktitle	= {Proceedings of the 11th International Conference on
+		  Document Analysis and Recognition (ICDAR)},
+  year		= 2011,
+  address	= {Beijing, China},
+  month		= sep,
+  organization	= {International Association for Pattern Recognition (IAPR)},
+  note		= {Accepted},
+  project	= {Olena},
+  urllrde	= {201109-ICDAR},
+  abstract	= {Electronic documents are being more and more usable thanks
+		  to better and more affordable network, storage and
+		  computational facilities. But in order to benefit from
+		  computer-aided document management, paper documents must be
+		  digitized and analyzed. This task may be challenging at
+		  several levels. Data may be of multiple types thus
+		  requiring different adapted processing chains. The tools to
+		  be developed should also take into account the needs and
+		  knowledge of users, ranging from a simple graphical
+		  application to a complete programming framework. Finally,
+		  the data sets to process may be large. In this paper, we
+		  expose a set of features that a Document Image Analysis
+		  framework should provide to handle the previous issues. In
+		  particular, a good strategy to address both flexibility and
+		  efficiency issues is the Generic Programming (GP) paradigm.
+		  These ideas are implemented as an open source module,
+		  SCRIBO, built on top of Olena, a generic and efficient
+		  image processing platform. Our solution features services
+		  such as preprocessing filters, text detection, page
+		  segmentation and document reconstruction (as XML, PDF or
+		  HTML documents). This framework, composed of reusable
+		  software components, can be used to create full-fledged
+		  graphical applications, small utilities, or processing
+		  chains to be integrated into third-party projects.},
+  keywords	= {Document Image Analysis, Software Design, Reusability,
+		  Free Software}
+}
+
+@InProceedings{	  levillain.09.ismm,
+  author	= {Roland Levillain and {\relax Th}ierry G\'eraud and Laurent
+		  Najman},
+  title		= {{Milena}: Write Generic Morphological Algorithms Once, Run
+		  on Many Kinds of Images},
+  booktitle	= {Mathematical Morphology and Its Application to Signal and
+		  Image Processing -- Proceedings of the Ninth International
+		  Symposium on Mathematical Morphology (ISMM)},
+  pages		= {295--306},
+  year		= 2009,
+  editor	= {Michael H. F. Wilkinson and Jos B. T. M. Roerdink},
+  series	= {Lecture Notes in Computer Science},
+  address	= {Groningen, The Netherlands},
+  month		= aug,
+  publisher	= {Springer Berlin / Heidelberg},
+  volume	= 5720,
+  project	= {Olena},
+  urllrde	= {200908-ISMM},
+  abstract	= {We present a programming framework for discrete
+		  mathematical morphology centered on the concept of
+		  genericity. We show that formal definitions of
+		  morphological algorithms can be translated into actual
+		  code, usable on virtually any kind of compatible images,
+		  provided a general definition of the concept of image is
+		  given. This work is implemented in Milena, a generic,
+		  efficient, and user-friendly image processing library.},
+  keywords	= {mathematical morphology, image processing operator,
+		  genericity, programming}
+}
+
+@InProceedings{	  levillain.10.icip,
+  author	= {Roland Levillain and {\relax Th}ierry G\'eraud and Laurent
+		  Najman},
+  title		= {Why and How to Design a Generic and Efficient Image
+		  Processing Framework: The Case of the {Milena} Library},
+  booktitle	= {Proceedings of the IEEE International Conference on Image
+		  Processing (ICIP)},
+  pages		= {1941--1944},
+  year		= 2010,
+  address	= {Hong Kong},
+  month		= sep,
+  project	= {Olena},
+  urllrde	= {201009-ICIP},
+  abstract	= {Most image processing frameworks are not generic enough to
+		  provide true reusability of data structures and algorithms.
+		  In fact, genericity allows users to write and experiment
+		  virtually any method on any compatible input(s). In this
+		  paper, we advocate the use of generic programming in the
+		  design of image processing software, while preserving
+		  performances close to dedicated code. The implementation of
+		  our proposal, Milena, a generic and efficient library,
+		  illustrates the benefits of our approach.},
+  keywords	= {Genericity, Image Processing, Software Design,
+		  Reusability, Efficiency}
+}
+
+@InProceedings{	  levillain.10.wadgmm,
+  author	= {Roland Levillain and {\relax Th}ierry G\'eraud and Laurent
+		  Najman},
+  title		= {Writing Reusable Digital Geometry Algorithms in a Generic
+		  Image Processing Framework},
+  booktitle	= {Proceedings of the Workshop on Applications of Digital
+		  Geometry and Mathematical Morphology (WADGMM)},
+  pages		= {96--100},
+  year		= 2010,
+  address	= {Istanbul, Turkey},
+  month		= aug,
+  url		= {http://mdigest.jrc.ec.europa.eu/wadgmm2010/},
+  project	= {Olena},
+  urllrde	= {201008-WADGMM},
+  abstract	= {Digital Geometry software should reflect the generality of
+		  the underlying mathematics: mapping the latter to the
+		  former requires genericity. By designing generic solutions,
+		  one can effectively reuse digital geometry data structures
+		  and algorithms. We propose an image processing framework
+		  centered on the Generic Programming paradigm in which an
+		  algorithm on the paper can be turn into a single code,
+		  written once and usable with various input types. This
+		  approach enables users to design and implement new methods
+		  at a lower cost, try cross-domain experiments and help
+		  generalize results.},
+  keywords	= {Generic Programming, Interface, Skeleton, Complex}
+}
+
+@InProceedings{	  levillain.11.gretsi,
+  author	= {Roland Levillain and {\relax Th}ierry G\'eraud and Laurent
+		  Najman},
+  title		= {Une approche g\'en\'erique du logiciel pour le traitement
+		  d'images pr\'eservant les performances},
+  booktitle	= {Proceedings of the 23rd Symposium on Signal and Image
+		  Processing (GRETSI)},
+  category	= {national},
+  year		= 2011,
+  address	= {Bordeaux, France},
+  month		= sep,
+  note		= {In French. Accepted},
+  project	= {Olena},
+  urllrde	= {201109-GRETSI},
+  abstract	= {De plus en plus d'outils logiciels modernes pour le
+		  traitement d'images sont con\,c{}us en prenant en compte le
+		  probl\`eme de la g\'en\'ericit\'e du code, c'est-\`a-dire
+		  la possibilit\'e d'\'ecrire des algorithmes
+		  r\'eutilisables, compatibles avec de nombreux types
+		  d'entr\'ees. Cependant, ce choix de conception se fait
+		  souvent au d\'etriment des performances du code
+		  ex\'ecut\'e. Du fait de la grande vari\'et\'e des types
+		  d'images existants et de la n\'ecessit\'e d'avoir des
+		  impl\'ementations rapides, g\'en\'ericit\'e et performance
+		  apparaissent comme des qualit\'es essentielles du logiciel
+		  en traitement d'images. Cet article pr\'esente une approche
+		  pr\'eservant les performances dans un framework logiciel
+		  g\'en\'erique tirant parti des caract\'eristiques des types
+		  de donn\'ees utilis\'es. Gr\^ace \`a celles-ci, il est
+		  possible d'\'ecrire des variantes d'algorithmes
+		  g\'en\'eriques offrant un compromis entre g\'en\'ericit\'e
+		  et performance. Ces alternatives sont capables de
+		  pr\'eserver une partie des aspects g\'en\'eriques d'origine
+		  tout en apportant des gains substantiels \`a l'ex\'ecution.
+		  D'apr\`es nos essais, ces optimisations g\'en\'eriques
+		  fournissent des performances supportant la comparaison avec
+		  du code d\'edi\'e, allant parfois m\^eme jusqu'\`a surpasser des routines optimis\'ees manuellement.}
+}

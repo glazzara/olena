@@ -53,11 +53,13 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
-REFMAN_deps = $(srcdir)/footer.html \
-	      $(srcdir)/header.html \
-	      $(srcdir)/doxygen.css \
-	      $(srcdir)/mainpage.hh \
-	      $(srcdir)/DoxygenLayout.xml
+REFMAN_deps = $(srcdir)/footer.html 	  \
+	      $(srcdir)/header.html 	  \
+	      $(srcdir)/doxygen.css 	  \
+	      $(srcdir)/mainpage.hh 	  \
+	      $(srcdir)/DoxygenLayout.xml \
+	      $(srcdir)/modules_list.hh   \
+	      $(srcdir)/olena.bib
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
@@ -142,6 +144,12 @@ install-data-local:
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+# Update paths to milena documentation directory
+	$(DESTDIR)$(htmldir)/$(USER_REFMAN)/installdox \
+		-l milena.tag@$(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena \
+		 `find $(DESTDIR)$(htmldir)/$(USER_REFMAN)/ -name '*.html'` \
+		-l scribo.tag@$(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo \
+		 `find $(DESTDIR)$(htmldir)/$(USER_REFMAN)/ -name '*.html'`
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
 	chmod -R a+rX $(DESTDIR)$(htmldir) || \
