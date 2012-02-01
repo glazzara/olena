@@ -122,7 +122,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 INPUT_ENCODING         = ISO-8859-1
-
+CITE_BIB_FILES 	       = @top_srcdir@/doc/doc.bib
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
@@ -149,7 +149,7 @@ HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = @top_srcdir@/doc/header.html
 HTML_FOOTER            = @top_srcdir@/doc/subdoc_footer.html
 HTML_STYLESHEET        = @top_srcdir@/doc/doxygen.css
-LAYOUT_FILE            = @top_srcdir@/doc/DoxygenLayout.xml
+LAYOUT_FILE            = @top_srcdir@/milena/doc/DoxygenLayout.xml
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = NO
 CHM_FILE               =

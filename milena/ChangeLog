@@ -1,3 +1,11 @@
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Milena doc (un)installation.
+
+	* doc/Doxyfile.in: Fix paths.
+
+	* doc/Makefile.am: Fix install/uninstall rules.
+
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* test/unit_test/unit-tests.mk: Update.
