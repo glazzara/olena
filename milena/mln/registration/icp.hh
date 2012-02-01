@@ -107,6 +107,8 @@ namespace mln
      *
      * \pre \p P_ and \p X must not be empty.
      *
+     * \cite besl.92.pami
+     *
      * Reference article: "A Method for Registration of 3-D Shapes", Paul J.
      * Besl and Neil D. McKay, IEEE, 2, February 1992.
      *

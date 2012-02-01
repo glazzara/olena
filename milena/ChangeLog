@@ -1,5 +1,9 @@
 2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/registration/icp.hh: Cite article.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix Milena doc (un)installation.
 
 	* doc/Doxyfile.in: Fix paths.
