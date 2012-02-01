@@ -1,5 +1,21 @@
 2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new groups in Scribo documentation.
+
+	* doc/Doxyfile.in: Refine settings.
+
+	* doc/groups.dox: Add new groups.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/document.hh,
+	* scribo/core/line_links.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh,
+	* scribo/core/paragraph_set.hh: Set to a documentation group.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve common documentation.
 
 	* AUTHORS: Use RST syntax.

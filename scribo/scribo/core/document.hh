@@ -79,9 +79,12 @@ namespace scribo
   } // end of namespace scribo::internal
 
 
-
+  /// \brief Represent document data and structure.
+  ///
+  /// \ingroup grpstruct
+  //
   template <typename L>
-  struct document : public Serializable<document<L> >
+  class document : public Serializable<document<L> >
   {
     typedef internal::document_data<L> data_t;
 

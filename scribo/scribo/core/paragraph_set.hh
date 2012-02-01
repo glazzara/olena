@@ -65,6 +65,7 @@ namespace scribo
 
     Paragraph ids start from 1.
 
+    \ingroup grpstruct
    */
   template <typename L>
   class paragraph_set : public Serializable<paragraph_set<L> >

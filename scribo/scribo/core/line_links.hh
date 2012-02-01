@@ -67,7 +67,9 @@ namespace scribo
 
 
 
-  /// \brief Line group representation.
+  /// \brief Line links representation.
+  ///
+  /// \ingroup grpstruct
   //
   template <typename L>
   class line_links : public Serializable<line_links<L> >

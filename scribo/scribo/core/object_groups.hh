@@ -88,6 +88,8 @@ namespace scribo
 
 
   /// \brief Object group representation.
+  ///
+  /// \ingroup grpstruct
   //
   template <typename L>
   class object_groups : public Serializable<object_groups<L> >

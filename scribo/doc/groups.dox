@@ -1,0 +1,19 @@
+/*! \defgroup grpstruct Data structures
+ *
+ * \brief Scribo high level data structures.
+ *
+ */
+
+
+/*! \defgroup grproutine Routines
+ *
+ * \brief All routines/algorithms provided in Scribo.
+ *
+ */
+
+
+/*! \defgroup grpalgobin Binarization
+ *
+ * \brief Binarization algorithms.
+ *
+ */

@@ -119,6 +119,10 @@ namespace scribo
   } // end of namespace scribo::internal
 
 
+  /// \brief Represents all the components in a document image.
+  ///
+  /// \ingroup grpstruct
+  //
   template <typename L>
   class component_set : public Serializable<component_set<L> >
   {

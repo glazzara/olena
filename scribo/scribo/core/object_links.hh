@@ -69,7 +69,9 @@ namespace scribo
 
 
 
-  /// \brief Object group representation.
+  /// \brief Object links representation.
+  ///
+  /// \ingroup grpstruct
   //
   template <typename L>
   class object_links : public Serializable<object_links<L> >

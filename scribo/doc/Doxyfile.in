@@ -26,7 +26,7 @@ PROJECT_LOGO 	       = @top_srcdir@/doc/logo.jpg
 OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
-BRIEF_MEMBER_DESC      = YES
+BRIEF_MEMBER_DESC      = NO
 REPEAT_BRIEF           = YES
 ABBREVIATE_BRIEF       =
 ALWAYS_DETAILED_SEC    = YES
@@ -47,6 +47,8 @@ BUILTIN_STL_SUPPORT    = YES
 IDL_PROPERTY_SUPPORT   = NO
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
+INLINE_GROUPED_CLASSES = NO
+SORT_GROUP_NAMES       = YES
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
@@ -95,7 +97,8 @@ INPUT                  = @top_srcdir@/scribo
 FILE_PATTERNS          = *.cc	\
                          *.hh	\
                          *.hxx	\
-                         *.hcc
+                         *.hcc	\
+			 *.dox
 RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/scribo/demo			\
                          @top_srcdir@/scribo/sandbox 			\
@@ -126,8 +129,8 @@ INPUT_ENCODING         = ISO-8859-1
 SOURCE_BROWSER         = YES
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
-REFERENCED_BY_RELATION = YES
-REFERENCES_RELATION    = YES
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
 REFERENCES_LINK_SOURCE = NO
 USE_HTAGS              = NO
 VERBATIM_HEADERS       = YES
@@ -329,7 +332,7 @@ SKIP_FUNCTION_MACROS   = YES
 TAGFILES               = @builddir@/../../milena/doc/milena.tag=../../../../milena/doc/user-refman/html
 GENERATE_TAGFILE       = scribo.tag
 ALLEXTERNALS           = NO
-EXTERNAL_GROUPS        = YES
+EXTERNAL_GROUPS        = NO
 PERL_PATH              = /usr/bin/perl
 #---------------------------------------------------------------------------
 # Configuration options related to the dot tool
