@@ -1,0 +1,37 @@
+/** \page bibliography Bibliography
+
+    In this page, all publications used to implement Olena or related to Olena itself are referenced.
+
+    Summary:
+    \li \ref olnpublis
+	\li \ref olnpublisjournals
+        \li \ref olnpublisconfs
+	\li \ref olnpublisposters
+	\li \ref olnpublistechreps
+
+    \li \ref{burrus.03.mpool}
+    \li \ref{darbon.02.ismm}
+    \li \ref{darbon.04.ecoopphd}
+    \li \cite duret.00.gcse
+    \li \cite geraud.00.icpr
+    \li \cite geraud.01.ai
+    \li \cite geraud.08.mpool
+    \li \cite geraud.99.gretsi
+    \li \cite lazzara.11.icdar
+    \li \cite levillain.09.ismm
+    \li \cite levillain.10.icip
+    \li \cite levillain.10.wadgmm
+    \li \cite levillain.11.gretsi
+
+    \section olnpublis Olena Publications
+
+    \subsection olnpublisjournals In Journals
+
+    \subsection olnpublisconfs In Conferences
+    \htmlinclude lrde_olena.html
+
+    \subsection olnpublisposters Posters
+
+    \subsection olnpublistechreps Student Technical Reports
+
+ */

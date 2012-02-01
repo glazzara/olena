@@ -2,6 +2,31 @@
 
 	Improve common documentation.
 
+	* AUTHORS: Use RST syntax.
+
+	* doc/Doxyfile.in: Use .dox files for documentation.
+
+	* doc/DoxygenLayout.xml: Improve layout.
+
+	* doc/Makefile.am: Add dependencies.
+
+	* doc/lrde.bib,
+	* doc/contributors.dox: New.
+
+	* doc/bibliography.hh,
+	* doc/mainpage.hh,
+	* doc/modules_list.hh: Rename to...
+
+	* doc/bibliography.dox,
+	* doc/mainpage.dox,
+	* doc/modules_list.dox: ...this.
+
+	* doc/olena.qhcp: Remove.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
 	* Makefile.am: Add doc to SUBDIRS.
 
 	* doc/Doxyfile.in: Include bib file.

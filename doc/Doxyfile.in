@@ -40,7 +40,7 @@ MULTILINE_CPP_IS_BRIEF = NO
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 8
-ALIASES                =
+ALIASES 	       = " "
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 BUILTIN_STL_SUPPORT    = YES
@@ -92,17 +92,15 @@ WARN_LOGFILE           =
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 INPUT                  = @top_srcdir@/doc
-FILE_PATTERNS          = *.cc	\
-                         *.hh	\
-                         *.hxx	\
-                         *.hcc
+FILE_PATTERNS          = *.dox
 RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/ 			    \
 		         @top_srcdir@/scribo/
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
-EXAMPLE_PATH           =
+EXAMPLE_PATH           = @top_srcdir@/doc/ 	\
+			 @builddir@
 EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
 			 *.txt

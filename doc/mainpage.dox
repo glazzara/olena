@@ -13,8 +13,8 @@
     <tr>
       <td>
 	\li What is Olena ?
-	\li \ref bibliography
-	\li Contributors
+	\li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Publications">Bibliography</a>
+	\li <a class="el" href="a00028.html">Contributors</a>
       </td>
       <td>
         \li \ref moduleslist
@@ -23,7 +23,7 @@
     	\li Swilena
       </td>
       <td>
-        \li Online Demos
+        \li <a class="el" href="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Demos">Online Demos</a>
     	\li Papers Related Programs
     	\li Olena Powered Programs
       </td>

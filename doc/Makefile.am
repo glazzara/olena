@@ -53,13 +53,17 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
-REFMAN_deps = $(srcdir)/footer.html 	  \
-	      $(srcdir)/header.html 	  \
-	      $(srcdir)/doxygen.css 	  \
-	      $(srcdir)/mainpage.hh 	  \
-	      $(srcdir)/DoxygenLayout.xml \
-	      $(srcdir)/modules_list.hh   \
-	      $(srcdir)/olena.bib
+REFMAN_deps = $(srcdir)/footer.html 	  	\
+	      $(srcdir)/header.html 	  	\
+	      $(srcdir)/doxygen.css 	  	\
+	      $(srcdir)/mainpage.dox 	  	\
+	      $(srcdir)/DoxygenLayout.xml 	\
+	      $(srcdir)/modules_list.dox  	\
+	      $(srcdir)/olena.bib	  	\
+	      $(srcdir)/contributors.dox  	\
+	      $(srcdir)/bibliography.dox  	\
+	      contributors.html			\
+	      lrde_olena.html
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
@@ -113,8 +117,36 @@ $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
 EXTRA_DIST += $(USER_REFMAN)
 
 
+## -------------- ##
+## Contributors.  ##
+## -------------- ##
+
+contributors.html: $(top_srcdir)/AUTHORS
+	rst2html --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet \
+		 --input-encoding=latin1 --output-encoding=latin1 \
+		 $(top_srcdir)/AUTHORS > contributors.html
 
 
+## -------------- ##
+## Bibliography.  ##
+## -------------- ##
+
+# Warning: also generate lrde_olena.cite
+lrde_olena.bib:
+	bib2bib -s plain -oc lrde_olena.cite -ob lrde_olena.bib -c \
+		'project = "Image" or project = "Olena"' \
+		-s year -r $(srcdir)/lrde.bib
+
+# Warning: also generate lrde_olena_bib.html
+lrde_olena.html: lrde_olena.bib
+	bibtex2html -s plain -nokeywords -citefile lrde_olena.cite \
+		-noabstract -nofooter -labelname -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
+
+
+MAINTAINERCLEANFILES += lrde_olena.cite 	\
+			lrde_olena.bib 		\
+			lrde_olena_bib.html 	\
+			lrde_olena.html
 
 ## ---------- ##
 ## Cleaning.  ##
