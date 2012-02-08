@@ -1,5 +1,9 @@
 2012-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/morpho/watershed/flooding.hh: Uniformity-related changes.
+
+2012-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/data/stretch.hh: Do not name unused arguments.
 
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
