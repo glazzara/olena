@@ -41,9 +41,9 @@
 # include <mln/fun/v2v/linear.hh>
 # include <mln/data/transform.hh>
 
-
 # include <mln/value/internal/encoding.hh>
-# include <iomanip>
+
+
 namespace mln
 {
 
@@ -82,11 +82,10 @@ namespace mln
       template <typename V, typename I>
       inline
       mln_ch_value(I, V)
-	stretch(const V& v, const Image<I>& input)
+      stretch(const V&, const Image<I>& input)
       {
 	mln_trace("data::impl::stretch");
 
-	(void) v;
 	mlc_converts_to(float, V)::check();
 
 	mln_ch_value(I, V) output;
@@ -126,11 +125,10 @@ namespace mln
     template <typename V, typename I>
     inline
     mln_ch_value(I, V)
-    stretch(const V& v, const Image<I>& input)
+    stretch(const V&, const Image<I>& input)
     {
       mln_trace("data::stretch");
 
-      (void) v;
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, V) output = impl::stretch(V(), input);
