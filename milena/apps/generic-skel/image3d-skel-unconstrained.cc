@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011-2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +44,8 @@
 #include <mln/topo/is_simple_point3d.hh>
 #include <mln/topo/detach_point.hh>
 
+#include <mln/util/timer.hh>
+
 #include "apps/data.hh"
 
 #include "image3d-skel.hh"
@@ -72,18 +74,14 @@ int main()
   // program does not use the fast version of the simple 3D point
   // criterion.
   I input = make_triple_torus(20);
+  std::cout
+    << input.nslices() << " x " << input.nrows() << " x " << input.ncols()
+    << " = " << input.nslices() * input.nrows() * input.ncols() << " voxels"
+    << std::endl;
 
   std::cerr << input.domain() << std::endl;
   save_raw_3d(input, "image3d-skel-unconstrained-input.raw");
   save_vtk_polyhedrons(input, "image3d-skel-unconstrained-input.vtk");
-
-  // FIXME: Debug.
-  unsigned n_fg_comps;
-  labeling::blobs(input, c26(), n_fg_comps);
-  unsigned n_bg_comps;
-  labeling::blobs((fun::v2b::lnot<bool>() << input), c6(), n_bg_comps);
-  std::cerr << "n_fg_comps = " << n_fg_comps << std::endl;
-  std::cerr << "n_bg_comps = " << n_bg_comps << std::endl;
 
   // FIXME: Use a dual neighborhood instead?
 
@@ -97,9 +95,14 @@ int main()
   // Simple point detach procedure.
   topo::detach_point<I> detach;
 
+  util::timer t;
+  t.start();
   I output = topo::skeleton::breadth_first_thinning(input, nbh_fg,
 						    is_simple,
 						    detach);
+  t.stop();
+  std::cout << t.read() << " s" << std::endl;
+
   save_raw_3d(output, "image3d-skel-unconstrained-skel.raw");
   save_vtk_polyhedrons(output, "image3d-skel-unconstrained-skel.vtk");
 }

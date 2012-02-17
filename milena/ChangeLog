@@ -1,3 +1,27 @@
+2012-02-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add tests to generate figures for the WADGMM 2010/LNCS submission.
+
+	* apps/generic-skel/image2d-skel-unconstrained.cc,
+	* apps/generic-skel/image2d-skel-with-end-points.cc,
+	* apps/generic-skel/image3d-skel-unconstrained.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-1-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc:
+	Display the size of the input.
+	Time the thinning step.
+	* milena/apps/generic-skel/test-mixed.in,
+	* milena/apps/mesh-segm-skel/test-mixed.in:
+	New.
+	* apps/generic-skel/Makefile.am (generated_tests): Add test-mixed.
+	(test-mixed): New target.
+	(check-mixed): New (phony) target.
+	* apps/mesh-segm-skel/Makefile.am: Likewise.
+	($(generated_tests)): New target.
+	(AM_CPPFLAGS): Add -I$(top_builddir)/milena so that
+	mln/version.hh, which is a generated header, can be found by the
+	compiler.
+
 2011-06-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce a no-constraint functor to replace fun::p2b::tautology.

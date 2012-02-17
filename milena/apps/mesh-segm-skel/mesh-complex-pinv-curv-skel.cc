@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008-2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -54,6 +54,8 @@
 #include <mln/topo/detach_cell.hh>
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
+#include <mln/util/timer.hh>
+
 #include <mln/io/off/load.hh>
 /* FIXME: Remove as soon as mln::io::off::save is able to save a
    morphed mln::complex_image (i.e., seen through image_if).  */
@@ -93,6 +95,11 @@ main(int argc, char* argv[])
 
   mln::bin_2complex_image3df bin_input;
   mln::io::off::load(bin_input, input_filename);
+  // FIXME: mln::complex_image should provide shorcuts for this.
+  const mln::topo::complex<D>& cplx = bin_input.domain().cplx();
+  for (unsigned n = 0; n <= D; ++n)
+    std::cout << cplx.nfaces_of_dim(n) << ' ' << n << "-faces" << std::endl;
+
   std::pair<float_ima_t, float_ima_t> curv =
     mln::geom::mesh_curvature(bin_input.domain());
 
@@ -307,6 +314,9 @@ main(int argc, char* argv[])
 
   mln_concrete_(bin_ima_t) skel;
   mln::initialize(skel, surface);
+
+  mln::util::timer time;
+  time.start();
   mln::data::paste
     (mln::topo::skeleton::breadth_first_thinning
      (mln::mutable_extend((surface | is_a_triangle).rw(), surface),
@@ -314,6 +324,8 @@ main(int argc, char* argv[])
       is_simple_triangle,
       detach),
      skel);
+  time.stop();
+  std::cout << time.read() << " s" << std::endl;
 
 
   /*---------.

@@ -18,7 +18,7 @@
 include $(top_srcdir)/milena/common.mk
 
 # Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
+AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
@@ -216,3 +216,30 @@ MOSTLYCLEANFILES +=				\
 # VTK file.
 bin_PROGRAMS += off-to-vtk-bin
 off_to_vtk_bin_SOURCES = off-to-vtk-bin.cc
+
+## ------------- ##
+## Mixed tests.  ##
+## ------------- ##
+
+# Use Make to generate Doxyfile instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+# FIXME: Generalize this approach to other tests.
+
+$(generated_tests): Makefile
+	rm -f $@ $@.tmp
+	srcdir=''; \
+	  test -f ./$@.in || srcdir=$(srcdir)/; \
+	  $(edit) $${srcdir}$@.in >$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+# Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
+# submission.  Not part of the `check' target; triggered by the
+# `check-mixed' target.
+generated_tests = test-mixed
+test-mixed: $(srcdir)/test-mixed.in
+.PHONY: check-mixed
+check-mixed: test-mixed $(bin_PROGRAMS)
+	./test-mixed

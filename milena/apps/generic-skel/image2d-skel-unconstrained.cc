@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010-2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +38,8 @@
 
 #include <mln/io/pbm/all.hh>
 
+#include <mln/util/timer.hh>
+
 
 int
 main(int argc, char* argv[])
@@ -64,6 +66,9 @@ main(int argc, char* argv[])
   border::thickness = 1;
 
   I input = io::pbm::load(input_filename);
+  std::cout << input.nrows() << " x " << input.ncols() << " = "
+	    << input.nrows() * input.ncols() << " pixels"
+	    << std::endl;
 
   // FIXME: Use a dual neighborhood instead?
 
@@ -77,8 +82,13 @@ main(int argc, char* argv[])
   // Simple point detach procedure.
   topo::detach_point<I> detach;
 
+  util::timer t;
+  t.start();
   I output = topo::skeleton::breadth_first_thinning(input, nbh_fg,
 						    is_simple,
 						    detach);
+  t.stop();
+  std::cout << t.read() << " s" << std::endl;
+
   io::pbm::save(output, output_filename);
 }

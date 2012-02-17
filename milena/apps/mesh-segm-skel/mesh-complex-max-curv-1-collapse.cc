@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008-2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,6 +60,8 @@
 #include <mln/io/vtk/load.hh>
 #include <mln/io/vtk/save.hh>
 
+#include <mln/util/timer.hh>
+
 #include "trimesh/misc.hh"
 
 
@@ -91,6 +92,11 @@ main(int argc, char* argv[])
 
   mln::bin_2complex_image3df bin_input;
   mln::io::vtk::load(bin_input, input_filename);
+  // FIXME: mln::complex_image should provide shorcuts for this.
+  const mln::topo::complex<D>& cplx = bin_input.domain().cplx();
+  for (unsigned n = 0; n <= D; ++n)
+    std::cout << cplx.nfaces_of_dim(n) << ' ' << n << "-faces" << std::endl;
+
   std::pair<float_ima_t, float_ima_t> curv =
     mln::geom::mesh_curvature(bin_input.domain());
 
@@ -353,6 +359,9 @@ main(int argc, char* argv[])
 
   mln_concrete_(bin_ima_t) surface_1_collapse;
   mln::initialize(surface_1_collapse, surface_2_collapse);
+
+  mln::util::timer time;
+  time.start();
   mln::data::paste
     (mln::topo::skeleton::priority_driven_thinning
      (mln::mutable_extend((surface_2_collapse | is_an_edge).rw(),
@@ -368,6 +377,8 @@ main(int argc, char* argv[])
         undirectly processed).  */
      | surface_2_collapse.domain(),
      surface_1_collapse);
+  time.stop();
+  std::cout << time.read() << " s" << std::endl;
 
   /*---------.
   | Output.  |

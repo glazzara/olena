@@ -1,4 +1,4 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010-2012 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -97,3 +97,12 @@ MOSTLYCLEANFILES =				\
   picasso-skel-with-end-points.pbm		\
   tiny-skel-unconstrained.pbm			\
   tiny-skel-with-end-points.pbm
+
+# Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
+# submission.  Not part of the `check' target; triggered by the
+# `check-mixed' target.
+generated_tests += test-mixed
+test-mixed: $(srcdir)/test-mixed.in
+.PHONY: check-mixed
+check-mixed: test-mixed $(bin_PROGRAMS)
+	./test-mixed
