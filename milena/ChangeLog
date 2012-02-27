@@ -1,5 +1,9 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp documentation directory structure.
 
 	* doc/groups/accu.dox,

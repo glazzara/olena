@@ -620,6 +620,8 @@ mln_fun_v2v_rgb8_to_rgbn \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_rgb_to_int_u \
 mln_fun_v2v_rgb_to_luma \
+mln_fun_v2v_round \
+mln_fun_v2v_round_sat \
 mln_fun_v2v_saturate \
 mln_fun_v2v_wrap \
 mln_fun_v2w2v_all \
