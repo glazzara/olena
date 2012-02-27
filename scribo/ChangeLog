@@ -1,5 +1,10 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/debug/show_lines_boldness.cc: Use mln::math::round as a
+	function.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Define new documentation groups.
 
 	* doc/scribo/primitive/extract/separators.dox,

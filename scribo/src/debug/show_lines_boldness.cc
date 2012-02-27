@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,6 +34,7 @@
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/data/convert.hh>
 #include <mln/literal/colors.hh>
+#include <mln/math/round.hh>
 
 #include <scribo/debug/usage.hh>
 
@@ -72,6 +74,7 @@ int main(int argc, char* argv[])
   std::string prefix = argv[2];
 
   typedef image2d<scribo::def::lbl_type> L;
+  typedef value::int_u8 V;
 
   // Extract lines
   line_set<L>
@@ -79,11 +82,9 @@ int main(int argc, char* argv[])
       data::convert(value::rgb8(), input), input, c8());
   const component_set<L>& comp_set = lines.components();
 
-  mln::math::round<unsigned> round;
-
   // Min boldness / line
   {
-    image2d<value::int_u8> min_boldness;
+    image2d<V> min_boldness;
     initialize(min_boldness, input);
 
     data::fill(min_boldness, 0);
@@ -105,7 +106,8 @@ int main(int argc, char* argv[])
 	{
 	  unsigned id = lines(l).component_ids()(cid);
 	  data::fill(((min_boldness | comp_set(id).bbox()).rw()
-		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(), round(min));
+		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(),
+		     mln::math::round<V>(min));
 	}
 
       }
@@ -115,7 +117,7 @@ int main(int argc, char* argv[])
 
   // Max boldness / line
   {
-    image2d<value::int_u8> max_boldness;
+    image2d<V> max_boldness;
     initialize(max_boldness, input);
 
     data::fill(max_boldness, 0);
@@ -137,7 +139,8 @@ int main(int argc, char* argv[])
 	{
 	  unsigned id = lines(l).component_ids()(cid);
 	  data::fill(((max_boldness | comp_set(id).bbox()).rw()
-		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(), round(max));
+		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(),
+		     mln::math::round<V>(max));
 	}
 
       }
@@ -148,7 +151,7 @@ int main(int argc, char* argv[])
 
   // Mean boldness / line
   {
-    image2d<value::int_u8> min_boldness;
+    image2d<V> min_boldness;
     initialize(min_boldness, input);
 
     data::fill(min_boldness, 0);
@@ -160,7 +163,8 @@ int main(int argc, char* argv[])
 	{
 	  unsigned id = lines(l).component_ids()(cid);
 	  data::fill(((min_boldness | comp_set(id).bbox()).rw()
-		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(), round(lines(l).boldness()));
+		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(),
+		     mln::math::round<V>(lines(l).boldness()));
 	}
 
       }
@@ -170,7 +174,7 @@ int main(int argc, char* argv[])
 
   // Stddev boldness / line
   {
-    image2d<value::int_u8> min_boldness;
+    image2d<V> min_boldness;
     initialize(min_boldness, input);
 
     data::fill(min_boldness, 0);
@@ -182,7 +186,8 @@ int main(int argc, char* argv[])
 	{
 	  unsigned id = lines(l).component_ids()(cid);
 	  data::fill(((min_boldness | comp_set(id).bbox()).rw()
-		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(), round(lines(l).boldness_reliability()));
+		      | (pw::value(comp_set.labeled_image()) == pw::cst(id))).rw(),
+		     mln::math::round<V>(lines(l).boldness_reliability()));
 	}
 
       }
