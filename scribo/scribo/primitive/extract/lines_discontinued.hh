@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -70,6 +70,8 @@ namespace scribo
        * \return An image in which lines are labeled.
        *
        * \pre win.length() > 2 * (rank_k + 1)
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>

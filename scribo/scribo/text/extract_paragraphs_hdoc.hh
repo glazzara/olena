@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,6 +63,9 @@ namespace scribo
   namespace text
   {
 
+    /*! \brief Extract paragraph in old documents.
+      \ingroup grptext
+     */
     template <typename L>
     inline
     paragraph_set<L>

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,8 +48,8 @@ namespace scribo
     {
 
 
-      /// Extract vertical discontinued lines.
-      /*!
+      /*! \brief Extract vertical discontinued lines.
+       *
        * \param[in]     input	    A binary image.
        * \param[in]     nbh	    A neighborhood used to label lines.
        * \param[in,out] nlines	    The number of lines found.
@@ -59,6 +59,8 @@ namespace scribo
        *
        * \result An image in which lines are labeled with a value different
        * from 0.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V>
       component_set<mln_ch_value(I,V)>

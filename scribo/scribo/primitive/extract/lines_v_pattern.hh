@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,15 +56,17 @@ namespace scribo
       using namespace mln;
 
 
-      /// \brief Extract vertical lines matching a specific pattern.
-      ///
-      /// \param[in] input  A binary image.
-      /// \param[in] length The minimum line length.
-      /// \param[in] delta space between the first background pixels
-      ///                  and the line pixels (usually 2 or 3).
-      ///
-      /// \result An image of vertical lines.
-      //
+      /*! \brief Extract vertical lines matching a specific pattern.
+
+	\param[in] input  A binary image.
+	\param[in] length The minimum line length.
+	\param[in] delta space between the first background pixels
+	                 and the line pixels (usually 2 or 3).
+
+	\result An image of vertical lines.
+
+	\ingroup extractprimitiveseps
+      */
       template <typename I>
       mln_concrete(I)
       lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta);

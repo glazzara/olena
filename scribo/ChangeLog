@@ -1,5 +1,37 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add algorithms to documentation groups.
+
+	* scribo/primitive/extract/horizontal_separators.hh,
+	* scribo/primitive/extract/lines_discontinued.hh,
+	* scribo/primitive/extract/lines_h_discontinued.hh,
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_h_thick.hh,
+	* scribo/primitive/extract/lines_h_thick_and_single.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/lines_thick.hh,
+	* scribo/primitive/extract/lines_v_discontinued.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/primitive/extract/lines_v_thick.hh,
+	* scribo/primitive/extract/lines_v_thick_and_single.hh,
+	* scribo/primitive/extract/separators.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/extract/vertical_separators.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/extract_lines_with_features.hh,
+	* scribo/text/extract_lines_wo_merge.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh,
+	* scribo/text/link_lines.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/merging_hdoc.hh,
+	* scribo/text/recognition.hh: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/scribo/binarization/sauvola.dox: Fix documentation.
 
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>

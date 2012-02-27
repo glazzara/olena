@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,6 +60,8 @@ namespace scribo
        * \param[in]     line_length The minimum line length.
        *
        * \return An image in which lines are labeled.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,8 +53,7 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract thick lines in a binary image.
-      /*!
+      /*! \brief Extract thick lines in a binary image.
        * Only non discontinued lines are correctly extracted with this routine.
        *
        * \param[in]     input_	  A binary image.
@@ -63,6 +63,8 @@ namespace scribo
        * \param[in]     win_	  Window used to extract the lines
        *
        * \return An image in which lines are labeled.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>

@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,6 +78,9 @@ namespace scribo
     {
       using namespace mln;
 
+      /*! \brief Extract both thick and thin horizontal lines.
+       * \ingroup extractprimitiveseps
+       */
       template <typename I>
       mln_concrete(I)
       lines_h_thick_and_thin(const Image<I>& binary_image,

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,8 +48,8 @@ namespace scribo
 
       using namespace mln;
 
-      /// \brief Extract vertical separators.
-      /*!
+      /*! \brief Extract vertical separators.
+       *
        *
        * \param[in]     input       A binary image.
        * \param[in]     line_length The minimum line length.
@@ -56,6 +57,8 @@ namespace scribo
        * \return A binary image were separators are set to 'True'.
        *
        * \sa primitive::remove::separators
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I>
       mln_concrete(I)

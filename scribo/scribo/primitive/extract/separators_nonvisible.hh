@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -92,9 +92,11 @@ namespace scribo
       using namespace scribo::debug;
 
 
-      /// \brief Find non visible separators. Based on components
-      /// alignments.
-      //
+      /*! \brief Find non visible separators. Based on components
+	alignments.
+
+	\ingroup extractprimitiveseps
+      */
       template <typename I>
       mln_concrete(I)
       separators_nonvisible(const Image<I>& in_);

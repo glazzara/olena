@@ -81,25 +81,29 @@ namespace scribo
 
     using namespace mln;
 
-    /// \brief Passes the text bboxes to Tesseract (OCR).
-    ///
-    /// \param[in] lines       The lines of text.
-    /// \param[in] language    The language which should be recognized by
-    ///		               Tesseract. (fra, en, ...)
-    //
+    /*! \brief Passes the text bboxes to Tesseract (OCR).
+
+       \param[in] lines       The lines of text.
+       \param[in] language    The language which should be recognized by
+      		               Tesseract. (fra, en, ...)
+
+       \ingroup grpocr
+    */
     template <typename L>
     void
     recognition(line_set<L>& lines, const char *language);
 
 
-    /// \brief Recognize text from an image.
-    ///
-    /// \param[in] line        Image of text line.
-    /// \param[in] language    The language which should be recognized by
-    ///		               Tesseract. (fra, en, ...)
-    /// \param[in] output_file If set, store the recognized text in
-    ///                        this file.
-    //
+    /*! \brief Recognize text from an image.
+
+      \param[in] line        Image of text line.
+      \param[in] language    The language which should be recognized by
+    		             Tesseract. (fra, en, ...)
+      \param[in] output_file If set, store the recognized text in
+                             this file.
+
+      \ingroup grpocr
+    */
     template <typename I>
     void
     recognition(const Image<I>& line,

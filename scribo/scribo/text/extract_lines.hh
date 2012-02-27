@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -63,25 +63,31 @@ namespace scribo
     using namespace mln;
 
     /*! \brief Extract lines of text in a binary image.
-    **
-    ** \param[in]     input  A binary image.
-    ** \param[in]     nbh    A neighborhood used for labeling.
-    ** \param[in]     separators   A binary image with separator information.
-    **
-    ** \return A set of lines.
-    */
+     *
+     * \param[in]     input  A binary image.
+     * \param[in]     nbh    A neighborhood used for labeling.
+     * \param[in]     separators   A binary image with separator information.
+     *
+     * \return A set of lines.
+     *
+     * \ingroup grptext
+     */
     template <typename I, typename N>
     line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh,
 		  const mln_ch_value(I,bool)& separators);
 
-    /// \overload
+    /*! \overload
+      \ingroup grptext
+     */
     template <typename I, typename N>
     line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
-    /// \overload
+    /*! \overload
+      \ingroup grptext
+    */
     template <typename L>
     line_set<mln_ch_value(L,scribo::def::lbl_type)>
     extract_lines(const component_set<L>& input);

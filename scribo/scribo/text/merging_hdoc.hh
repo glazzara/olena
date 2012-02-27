@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,16 +70,19 @@ namespace scribo
     using namespace mln;
 
 
-    /// \brief Merge text component in order to reconstruct text lines.
-    ///
-    /// \param[in] lines A line set.
-    ///
-    /// \return A new line set.  Line ids are preserved and merged
-    /// lines (not valid anymore) are tagged with line::Merged.  The
-    /// lines produced with this algorithm (valid lines) are tagged
-    /// with line::None. Line type is also set either with line::Text
-    /// or line::Punctuation.
-    //
+    /*! \brief Merge text component in order to reconstruct text lines
+        in old documents.
+
+      \param[in] lines A line set.
+
+      \return A new line set.  Line ids are preserved and merged
+      lines (not valid anymore) are tagged with line::Merged.  The
+      lines produced with this algorithm (valid lines) are tagged
+      with line::None. Line type is also set either with line::Text
+      or line::Punctuation.
+
+      \ingroup grptext
+    */
     template <typename L>
     line_set<L>
     merging_hdoc(const scribo::line_set<L>& lines);

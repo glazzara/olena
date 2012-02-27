@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,6 +57,8 @@ namespace scribo
        * \return A binary image were separators are set to 'True'.
        *
        * \sa primitive::remove::separators
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I>
       mln_concrete(I)

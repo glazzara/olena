@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,16 +58,17 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract lines with a specific pattern
-      ///
-      /// \param[in] input_ A binary image.
-      /// \param[in] length The minimum line length.
-      /// \param[in] dir    The direction of the lines.
-      /// \param[in] win_   A window corresponding to the line pattern.
-      ///
-      /// \return A image with lines of direction \p dir.
-      ///
-      //
+      /*! \brief Extract lines with a specific pattern
+
+          \param[in] input_ A binary image.
+          \param[in] length The minimum line length.
+          \param[in] dir    The direction of the lines.
+          \param[in] win_   A window corresponding to the line pattern.
+
+          \return A image with lines of direction \p dir.
+
+	  \ingroup extractprimitiveseps
+      */
       template <typename I, typename W>
       mln_concrete(I)
       lines_pattern(const Image<I>& input_, unsigned length,

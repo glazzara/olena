@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,6 +78,7 @@ namespace scribo
 	Using a delta of 0 is equivalent to the use of a c2_row
 	neighborhood.
 
+	\ingroup extractprimitiveseps
       */
       template <typename I>
       mln_concrete(I)
