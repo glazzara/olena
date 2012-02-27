@@ -123,7 +123,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 INPUT_ENCODING         = ISO-8859-1
-CITE_BIB_FILES 	       = @top_srcdir@/doc/doc.bib
+CITE_BIB_FILES 	       = @abs_top_srcdir@/doc/doc.bib
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
