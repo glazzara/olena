@@ -1,3 +1,10 @@
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Fix path to data and fix cleanup.
+
 2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Add more missing files in EXTRA_DIST.

@@ -94,6 +94,7 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
 	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
+	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
 	   -e 's,@top_builddir\@,$(top_builddir),g'		\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
 	   -e 's,@builddir\@,$(builddir),g'
@@ -197,7 +198,11 @@ install-data-local:
 	$(mkdir_p) $(DESTDIR)$(htmldir)
 # The user reference manual is located in a subdirectory, hence this
 # special case.
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+
+#FIXME: Find a way to clear old files without removing freshly
+#installed module docs.
+#
+#	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Update paths to milena documentation directory
 	$(DESTDIR)$(htmldir)/$(USER_REFMAN)/installdox \

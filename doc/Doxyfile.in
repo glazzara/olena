@@ -101,6 +101,7 @@ EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
 EXAMPLE_PATH           = @top_srcdir@/doc/ 	\
 			 @builddir@		\
+			 @top_builddir@/doc	\
 			 @top_srcdir@
 EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw \
@@ -111,7 +112,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 INPUT_ENCODING         = ISO-8859-1
-CITE_BIB_FILES 	       = @top_srcdir@/doc/olena.bib
+CITE_BIB_FILES 	       = @abs_top_srcdir@/doc/olena.bib
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
