@@ -23,7 +23,7 @@
   computes a local threshold for each pixel.
 
   The following formula is used:
-  \f[T(p) = m(p) + [1 + k * (s(p)/R - 1)]\f]
+  \f[T(p) = m(p) + [1 + k * (\frac{s(p)}{R} - 1)]\f]
 
   Where \a p is the central window point, \a m(p) and \a s(p) are,
   respectively, the mean and the standard deviation of the window
@@ -45,9 +45,9 @@
   <table border=0>
   <tr>
   <td>\image html input_sauvola_sharpness.png "Input image."</td>
-  <td>\image html output_k_0_03.png "scribo::binarization::sauvola_ms with \a k=0.03."</td>
-  <td>\image html output_k_0_34.png "scribo::binarization::sauvola_ms with \a k=0.34."</td>
-  <td>\image html output_k_0_60.png "scribo::binarization::sauvola_ms with \a k=0.60."</td>
+  <td>\image html output_k_0_03.png "sauvola_ms with \a k=0.03."</td>
+  <td>\image html output_k_0_34.png "sauvola_ms with \a k=0.34."</td>
+  <td>\image html output_k_0_60.png "sauvola_ms with \a k=0.60."</td>
   </tr>
   </table>
   </center>

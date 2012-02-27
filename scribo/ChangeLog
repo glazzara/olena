@@ -1,5 +1,9 @@
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/scribo/binarization/sauvola.dox: Fix documentation.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix path to data.
 
 	* doc/Doxyfile.in,
