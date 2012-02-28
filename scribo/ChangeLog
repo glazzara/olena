@@ -1,3 +1,10 @@
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Disable the use of installdox and fix doc location.
+
+	* doc/Makefile.am,
+	* doc/Doxyfile.in: Here.
+
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/debug/show_lines_boldness.cc: Use mln::math::round as a
