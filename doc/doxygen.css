@@ -861,3 +861,8 @@ table.itable td
     font-size: 17px;
     vertical-align: top;
 }
+
+address.div
+{
+    font-size: 10px;
+}

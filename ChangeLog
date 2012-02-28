@@ -1,3 +1,15 @@
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix links and location of documentation.
+
+	* doc/Makefile.am,
+	* doc/header.html,
+	* doc/mainpage.dox: Fix paths and disable the use of installdox
+	(deprecated)
+
+	* doc/doxygen.css,
+	* doc/footer.html: Fix footer.
+
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* build-aux/texi2dvi: Fix Dash incompatibility.

@@ -118,6 +118,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_USER)
 	$(DOXYGEN) $(DOXYFILE_USER)
 	rm -rf $(srcdir)/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\@relcommondocpath\@,,g" $(USER_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -204,12 +206,6 @@ install-data-local:
 #
 #	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-# Update paths to milena documentation directory
-	$(DESTDIR)$(htmldir)/$(USER_REFMAN)/installdox \
-		-l milena.tag@$(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena \
-		 `find $(DESTDIR)$(htmldir)/$(USER_REFMAN)/ -name '*.html'` \
-		-l scribo.tag@$(DESTDIR)$(htmldir)/$(USER_REFMAN)/scribo \
-		 `find $(DESTDIR)$(htmldir)/$(USER_REFMAN)/ -name '*.html'`
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
 	chmod -R a+rX $(DESTDIR)$(htmldir) || \
