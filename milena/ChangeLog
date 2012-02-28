@@ -1,3 +1,8 @@
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Disable the use of installdox and fix doc
+	location.
+
 2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation.

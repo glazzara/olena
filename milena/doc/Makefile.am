@@ -245,6 +245,9 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 ## Check some files before deeming the output as acceptable.
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\@relcommondocpath\@,../../../user-refman/html/,g" \
+		$(USER_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -324,6 +327,9 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 ## Check some files before deeming the output as acceptable.
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\@relcommondocpath\@,../,g" \
+		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
@@ -742,28 +748,29 @@ DATA_html_dirs_inst = $(WHITE_PAPER)
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 # The user reference manual is located in a subdirectory, hence this
 # special case.
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena
-	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena
+	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html
+	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 # Other HTML directories can be processed uniformly.
-	for d in $(DATA_html_dirs_inst); do			\
-	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
-	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir);	\
+	for d in $(DATA_html_dirs_inst); do			 \
+	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	 \
+	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir)/milena/;\
 	done
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
-	chmod -R a+rX $(DESTDIR)$(htmldir) || \
-	find $(DESTDIR)$(htmldir) \( -type d -a -exec chmod a+rx {} \; \) \
+	chmod -R a+rX $(DESTDIR)$(htmldir)/milena/ || \
+	find $(DESTDIR)$(htmldir)/milena/ \( -type d -a -exec chmod a+rx {} \; \) \
              -o -exec chmod a+r {} \;
 
 uninstall-local:
 	for d in $(DATA_html_dirs_inst); do			\
-	  chmod -R 700 $(DESTDIR)$(htmldir)/$$d;	\
-	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
+	  chmod -R 700 $(DESTDIR)$(htmldir)/milena/$$d;	\
+	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	\
 	done
 # Same remark as above regarding the special case of the user
 # reference manual.
-	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)/milena
+	chmod -R 700 $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/milena
