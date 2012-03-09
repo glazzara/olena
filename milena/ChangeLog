@@ -238,7 +238,8 @@
 	* mln/core/point.hh,
 	* mln/opt/element.hh: Avoid unused variable warning.
 
-	* mln/convert/impl/from_image_to_site_set.hh: Remove useless local variable.
+	* mln/convert/impl/from_image_to_site_set.hh: Remove useless local
+	variable.
 
 2010-12-10  Roland Levillain  <roland@lrde.epita.fr>
 
