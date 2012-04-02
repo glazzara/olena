@@ -67,6 +67,7 @@ static const scribo::debug::toggle_data toggle_desc[] =
     "to improve layout detection. (default: enabled)", true },
   { "find-seps", "Find separators in document (default: enabled)", true },
   { "ocr", "Performs character recognition (default: enabled)", true },
+  { "deskew", "Deskew image (default: disabled)", false},
   {0, 0, false}
 };
 
@@ -117,10 +118,11 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> input;
   mln::io::magick::load(input, options.arg("input.*"));
 
+  bool enable_deskew = options.is_enabled("deskew");
   // Preprocess document
   image2d<bool>
     input_preproc = toolchain::text_in_doc_preprocess(input, false, 0,
-						      0.34, verbose);
+						      0.34, enable_deskew, verbose);
 
   // Optional Cropping
   point2d crop_shift = literal::origin;

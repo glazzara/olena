@@ -1,3 +1,10 @@
+2012-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make unskew an option in content_in_doc.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh,
+	* src/content_in_doc.cc: Make unskew an option.
+
 2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/subsampling/integral_single_image.hh: Fix forward

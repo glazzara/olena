@@ -65,7 +65,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   unsigned lambda, double K,
+			   unsigned lambda, double K, bool enable_deskew,
 			   bool verbose = false);
 
     /*! \overload
@@ -108,7 +108,7 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
 			   double K, bool enable_fg_bg, Image<I>& fg,
-			   bool verbose = false);
+			   bool enable_deskew, bool verbose = false);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -126,7 +126,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg,
-			   unsigned lambda, double K,
+			   unsigned lambda, double K, bool enable_deskew = false,
 			   bool verbose = false)
     {
       const I& input = exact(input_);
@@ -138,7 +138,7 @@ namespace scribo
       mln_concrete(I) tmp_fg;
       mln_ch_value(I,bool)
 	output = text_in_doc_preprocess(input, lambda, K,
-					enable_fg_bg, tmp_fg, verbose);
+					enable_fg_bg, tmp_fg, enable_deskew, verbose);
 
       return output;
     }
@@ -149,7 +149,7 @@ namespace scribo
 			   bool verbose = false)
     {
       I tmp;
-      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, verbose);
+      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, false, verbose);
     }
 
 
@@ -157,7 +157,7 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
 			   double K, bool enable_fg_bg, Image<I>& fg,
-			   bool verbose)
+			   bool enable_deskew, bool verbose)
     {
       trace::entering("scribo::toolchain::text_in_doc_preprocess");
 
@@ -170,6 +170,7 @@ namespace scribo
       f.sauvola_K = K;
       f.enable_fg_extraction = enable_fg_bg;
       f.lambda = lambda;
+      f.enable_deskew = enable_deskew;
       f.verbose = verbose;
 
       // Get results.
