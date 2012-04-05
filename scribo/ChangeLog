@@ -1,5 +1,19 @@
 2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove useless targets in scribo/src/binarization.
+
+	* scribo/src/binarization/Makefile.am: Remove targets.
+
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/pgm_sauvola_threshold_image.cc,
+	* src/binarization/ppm_sauvola.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_fg.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: Remove.
+
+2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup text_in_picture_dual.
 
 	* src/Makefile.am: Update target name.

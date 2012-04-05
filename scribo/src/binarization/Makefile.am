@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -18,25 +18,9 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 noinst_PROGRAMS = 			\
-  pgm_global_threshold_auto 		\
-  pgm_sauvola 				\
-  pgm_sauvola_ms			\
-  pgm_sauvola_threshold_image 		\
-  ppm_sauvola 				\
-  ppm_sauvola_ms_fg 			\
-  ppm_sauvola_ms 			\
-  ppm_sauvola_ms_split
-
+  pgm_global_threshold_auto
 
 pgm_global_threshold_auto_SOURCES = pgm_global_threshold_auto.cc
-pgm_sauvola_SOURCES = pgm_sauvola.cc
-pgm_sauvola_ms_SOURCES = pgm_sauvola_ms.cc
-pgm_sauvola_threshold_image_SOURCES = pgm_sauvola_threshold_image.cc
-ppm_sauvola_SOURCES = ppm_sauvola.cc
-ppm_sauvola_ms_fg_SOURCES = ppm_sauvola_ms_fg.cc
-ppm_sauvola_ms_SOURCES = ppm_sauvola_ms.cc
-ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
-
 
 if HAVE_MAGICKXX
 
