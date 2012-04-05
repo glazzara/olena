@@ -1,3 +1,12 @@
+2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup text_in_picture_dual.
+
+	* src/Makefile.am: Update target name.
+
+	* src/text_in_picture_neg.cc: Rename as...
+	* src/text_in_picture_dual.cc: ... this. Use option parser.
+
 2012-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make unskew an option in content_in_doc.
