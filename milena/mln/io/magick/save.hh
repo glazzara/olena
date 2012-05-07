@@ -42,7 +42,7 @@
 
 # include <mln/metal/equal.hh>
 
-# include <mln/core/image/image2d.hh>
+# include <mln/core/concept/image.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
@@ -138,15 +138,83 @@ namespace mln
 				   - sizeof(value::rgb8::blue_t)));
 	}
 
-      } // end of namespace mln::io::magick::impl
 
+	namespace generic
+	{
 
-      namespace internal
-      {
+	  template <typename I>
+	  void
+	  paste_data(const Image<I>& ima_, Magick::Image& magick_ima)
+	  {
+	    trace::entering("io::magick::impl::generic::paste_data");
+
+	    const I& ima = exact(ima_);
+
+	    def::coord
+	      ncols  = geom::ncols(ima),
+	      nrows  = geom::nrows(ima);
+
+	    // Ensure that there is only one reference to underlying image
+	    // If this is not done, then image pixels will not be modified.
+	    magick_ima.modifyImage();
+
+	    Magick::Pixels view(magick_ima);
+	    // As above, `ncols' is passed before `nrows'.
+	    Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+
+	    mln_piter(I) p(ima.domain());
+	    for_all(p)
+	      *pixels++ = impl::get_color(ima(p));
+
+	    view.sync();
+
+	    trace::exiting("io::magick::impl::generic::paste_data");
+	  }
+
+	  template <typename I, typename J>
+	  void
+	  paste_data_opacity(const Image<I>& ima_,
+			     const Image<J>& opacity_mask_,
+			     Magick::Image& magick_ima)
+	  {
+	    trace::entering("io::magick::impl::generic::paste_data_opacity");
+
+	    const I& ima = exact(ima_);
+	    const J& opacity_mask = exact(opacity_mask_);
+
+	    def::coord
+	      ncols  = geom::ncols(ima),
+	      nrows  = geom::nrows(ima);
+
+	    // Ensure that there is only one reference to underlying image
+	    // If this is not done, then image pixels will not be modified.
+	    magick_ima.modifyImage();
+
+	    Magick::Pixels view(magick_ima);
+	    // As above, `ncols' is passed before `nrows'.
+	    Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+
+	    mln_piter(I) p(ima.domain());
+	    mln_piter(J) pm(opacity_mask.domain());
+
+	    for_all_2(p, pm)
+	    {
+	      *pixels = impl::get_color(ima(p));
+	      (*pixels).opacity = (opacity_mask(pm) ? 255 : 0);
+	      ++pixels;
+	    }
+
+	    view.sync();
+
+	    trace::exiting("io::magick::impl::generic::paste_data_opacity");
+	  }
+
+	} // end of namespace mln::io::magick::impl::generic
+
 
 	template <typename I>
 	void
-	paste_data(const Image<I>& ima_, Magick::Image& magick_ima)
+	paste_data_fastest(const Image<I>& ima_, Magick::Image& magick_ima)
 	{
 	  const I& ima = exact(ima_);
 
@@ -177,11 +245,37 @@ namespace mln
 	  view.sync();
 	}
 
+	template <typename I>
+	void
+	paste_data_fast(const Image<I>& ima_, Magick::Image& magick_ima)
+	{
+	  const I& ima = exact(ima_);
+
+	  def::coord
+	    ncols  = geom::ncols(ima),
+	    nrows  = geom::nrows(ima);
+
+	  // Ensure that there is only one reference to underlying image
+	  // If this is not done, then image pixels will not be modified.
+	  magick_ima.modifyImage();
+
+	  Magick::Pixels view(magick_ima);
+	  // As above, `ncols' is passed before `nrows'.
+	  Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+
+
+	  fwd_pixter2d<const I> pi(ima);
+	  for_all(pi)
+	    *pixels++ = impl::get_color(pi.val());
+
+	  view.sync();
+	}
+
 	template <typename I, typename J>
 	void
-	paste_data_opacity(const Image<I>& ima_,
-			   const Image<J>& opacity_mask_,
-			   Magick::Image& magick_ima)
+	paste_data_opacity_fastest(const Image<I>& ima_,
+				   const Image<J>& opacity_mask_,
+				   Magick::Image& magick_ima)
 	{
 	  const I& ima = exact(ima_);
 	  const J& opacity_mask = exact(opacity_mask_);
@@ -218,6 +312,154 @@ namespace mln
 	    }
 
 	  view.sync();
+	}
+
+
+
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_fast(const Image<I>& ima_,
+				const Image<J>& opacity_mask_,
+				Magick::Image& magick_ima)
+	{
+	  const I& ima = exact(ima_);
+	  const J& opacity_mask = exact(opacity_mask_);
+
+	  def::coord
+	    ncols  = geom::ncols(ima),
+	    nrows  = geom::nrows(ima);
+
+	  // Ensure that there is only one reference to underlying image
+	  // If this is not done, then image pixels will not be modified.
+	  magick_ima.modifyImage();
+
+	  Magick::Pixels view(magick_ima);
+	  // As above, `ncols' is passed before `nrows'.
+	  Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
+
+	  mln_pixter(const I) pi(ima);
+	  mln_pixter(const J) pom(opacity_mask);
+
+	  for_all_2(pi, pom)
+	  {
+	    *pixels = impl::get_color(pi.val());
+	    (*pixels).opacity = (pom.val() ? 255 : 0);
+	    ++pixels;
+	  }
+
+	  view.sync();
+	}
+
+      } // end of namespace mln::io::magick::impl
+
+
+      namespace internal
+      {
+
+	// paste_data_opacity
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_fast_dispatch(metal::false_, // No images are fast or fastest.
+					 const Image<I>& ima,
+					 const Image<J>& opacity_mask,
+					 Magick::Image& magick_ima)
+	{
+	  impl::generic::paste_data_opacity(ima, opacity_mask, magick_ima);
+	}
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_fast_dispatch(metal::true_, // Bost images are "fast" or one is fast and the other one is fastest.
+					 const Image<I>& ima,
+					 const Image<J>& opacity_mask,
+					 Magick::Image& magick_ima)
+	{
+	  impl::paste_data_opacity_fast(ima, opacity_mask, magick_ima);
+	}
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_fastest_dispatch(metal::false_, // At least one of the images is not "fastest".
+					    const Image<I>& ima,
+					    const Image<J>& opacity_mask,
+					    Magick::Image& magick_ima)
+	{
+
+	  enum { fast = mlc_and(mlc_is(mln_trait_image_value_storage(I), trait::image::value_storage::one_block),
+				mlc_is(mln_trait_image_value_storage(J), trait::image::value_storage::one_block))::value };
+	  paste_data_opacity_fast_dispatch(metal::bool_<fast>(),
+					   ima, opacity_mask, magick_ima);
+	}
+
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_fastest_dispatch(metal::true_, // Both images are "fastest".
+					    const Image<I>& ima,
+					    const Image<J>& opacity_mask,
+					    Magick::Image& magick_ima)
+	{
+	  impl::paste_data_opacity_fastest(ima, opacity_mask, magick_ima);
+	}
+
+	template <typename I, typename J>
+	void
+	paste_data_opacity_dispatch(const Image<I>& ima,
+				    const Image<J>& opacity_mask,
+				    Magick::Image& magick_ima)
+	{
+	  enum { fastest = mlc_and(mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest),
+				   mlc_is(mln_trait_image_speed(J), trait::image::speed::fastest))::value };
+	  paste_data_opacity_fastest_dispatch(metal::bool_<fastest>(),
+					      ima, opacity_mask, magick_ima);
+	}
+
+
+	// paste_data
+
+
+	template <typename I>
+	void
+	paste_data_dispatch_fast(const mln::trait::image::value_storage::any&,
+			    const Image<I>& ima, Magick::Image& magick_ima)
+	{
+	  impl::generic::paste_data(ima, magick_ima);
+	}
+
+
+	template <typename I>
+	void
+	paste_data_dispatch_fast(const mln::trait::image::value_storage::one_block&,
+			    const Image<I>& ima, Magick::Image& magick_ima)
+	{
+	  impl::paste_data_fast(ima, magick_ima);
+	}
+
+
+	template <typename I>
+	void
+	paste_data_dispatch_fastest(const mln::trait::image::speed::any&,
+			    const Image<I>& ima, Magick::Image& magick_ima)
+	{
+	  paste_data_dispatch_fast(mln_trait_image_value_storage(I)(), ima, magick_ima);
+	}
+
+
+	template <typename I>
+	void
+	paste_data_dispatch_fastest(const mln::trait::image::speed::fastest&,
+				    const Image<I>& ima, Magick::Image& magick_ima)
+	{
+	  impl::paste_data_fastest(ima, magick_ima);
+	}
+
+	template <typename I>
+	void
+	paste_data_dispatch(const Image<I>& ima, Magick::Image& magick_ima)
+	{
+	  paste_data_dispatch_fastest(mln_trait_image_speed(I)(), ima, magick_ima);
 	}
 
       } // end of namespace mln::io::magick::internal
@@ -267,12 +509,12 @@ namespace mln
 	if (opacity_mask.is_valid())
 	{
 	  magick_ima.type(Magick::TrueColorMatteType);
-	  internal::paste_data_opacity(ima, opacity_mask, magick_ima);
+	  internal::paste_data_opacity_dispatch(ima, opacity_mask, magick_ima);
 	}
 	else
 	{
 	  magick_ima.type(Magick::TrueColorType);
-	  internal::paste_data(ima, magick_ima);
+	  internal::paste_data_dispatch(ima, magick_ima);
 	}
 
 	magick_ima.write(filename);

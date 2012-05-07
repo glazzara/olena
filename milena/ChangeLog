@@ -1,5 +1,9 @@
 2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/magick/save.hh: Add generic and fast implementations.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/draw/box_plain.hh: Fix unused variable warning.
 
 2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
