@@ -532,7 +532,7 @@ namespace mln
 	    const vec3d_f& qT)
     {
       /// Spx: cross-covariance matrix.
-      algebra::mat<3u,3u,float> Spx;
+      algebra::mat<3u,3u,float> Spx(literal::zero);
       mln_piter(p_array<P>) p(P_);
 
       // FIXME: could we use an accu?

@@ -1,5 +1,9 @@
 2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/registration/icp.hh: Add a missing initialization.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/io/magick/save.hh: Add generic and fast implementations.
 
 2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
