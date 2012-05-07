@@ -1,3 +1,7 @@
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/logger.hh: Improve log system.
+
 2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove useless targets in scribo/src/binarization.
