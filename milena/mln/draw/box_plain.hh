@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,11 +73,8 @@ namespace mln
 		   const mln_value(I)& v)
     {
       mln_precondition(exact(ima).is_valid());
-
-      mln_psite(I) pmin = exact(b).pmin();
-      mln_psite(I) pmax = exact(b).pmax();
-
-      mln_precondition(exact(ima).has(pmin) && exact(ima).has(pmax));
+      mln_precondition(exact(ima).has(exact(b).pmin())
+		       && exact(ima).has(exact(b).pmax()));
 
       data::fill((ima | b).rw(), v);
     }
