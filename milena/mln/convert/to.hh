@@ -36,7 +36,6 @@
 # include <mln/metal/equal.hh>
 # include <mln/trace/all.hh>
 # include <mln/convert/from_to.hh>
-# include <mln/convert/from_to.hxx>
 
 
 namespace mln

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,6 +55,7 @@ namespace mln
   // Forward declarations.
   template <typename E> struct Image;
   template <typename E> struct Literal;
+  template <typename D, typename W> struct w_window;
 
 
   // Image category flag type.
@@ -121,20 +122,15 @@ namespace mln
   };
 
 
-  namespace convert
-  {
+  /// \internal Conversion: image -> w_window
+  template <typename I, typename D, typename W>
+  void
+  from_to_(const Image<I>& from, w_window<D,W>& to);
 
-    namespace over_load
-    {
-
-      template <typename V, unsigned S, typename I>
-      void
-      from_to_(const V (&values)[S], Image<I>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: values[] -> image
+  template <typename V, unsigned S, typename I>
+  void
+  from_to_(const V (&values)[S], Image<I>& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -269,42 +265,47 @@ namespace mln
   }
 
 
-  namespace convert
+  template <typename I, typename D, typename W>
+  void
+  from_to_(const Image<I>& from_, w_window<D,W>& to)
   {
+    mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
+    mlc_converts_to(mln_value(I), W)::check();
+    const I& ima = exact(from_);
+    to.clear();
+    mln_value(I) zero = literal::zero;
+    mln_piter(I) p(ima.domain());
+    for_all(p)
+      if (ima(p) != zero)
+	to.insert(ima(p), convert::to<D>(p));
+  }
 
-    namespace over_load
-    {
+  template <typename V, unsigned S, typename I>
+  void
+  from_to_(const V (&values)[S], Image<I>& to_)
+  {
+    mlc_bool(S != 0)::check();
+    mlc_converts_to(V, mln_value(I))::check();
+    typedef mln_site(I) P;
+    enum { d = P::dim,
+	   s = mlc_root(d, S)::value };
+    metal::bool_<(mlc_pow_int(s, d) == S)>::check();
 
-      template <typename V, unsigned S, typename I>
-      void
-      from_to_(const V (&values)[S], Image<I>& to_)
-      {
-	mlc_bool(S != 0)::check();
-	mlc_converts_to(V, mln_value(I))::check();
-	typedef mln_site(I) P;
-	enum { d = P::dim,
-	  s = mlc_root(d, S)::value };
-	metal::bool_<(mlc_pow_int(s, d) == S)>::check();
+    I& to = exact(to_);
+    mln_precondition(! to.is_valid());
 
-	I& to = exact(to_);
-	mln_precondition(! to.is_valid());
+    box<P> b(all_to(0), all_to(s - 1));
+    to.init_(b);
+    mln_fwd_piter(box<P>) p(b);
+    unsigned i = 0;
+    for_all(p)
+      to(p) = values[i++];
+  }
 
-	box<P> b(all_to(0), all_to(s - 1));
-	to.init_(b);
-	mln_fwd_piter(box<P>) p(b);
-	unsigned i = 0;
-	for_all(p)
-	  to(p) = values[i++];
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
 
 # include <mln/core/routine/initialize.hh>
 

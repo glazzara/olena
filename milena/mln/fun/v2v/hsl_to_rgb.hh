@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,14 +47,6 @@
 
 namespace mln
 {
-
-  // Forward declarations
-  namespace value
-  {
-    template <typename H, typename S, typename L> class hsl_;
-    typedef hsl_<float, float, float> hsl_f;
-    template <unsigned n> struct rgb;
-  }
 
   namespace fun
   {

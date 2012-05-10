@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 /// \todo Fix the FIXMEs.
 
 # include <utility>
+# include <vector>
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>

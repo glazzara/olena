@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -134,28 +134,10 @@ namespace mln
   operator*(const Gdpoint<D>& lhs, const value::Scalar<S>& rhs);
 
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename D>
-      void
-      from_to_(const Gdpoint<D>& from, mln_site(D)& to);
-
-//     template <typename D, unsigned n, typename T>
-//     void
-//     from_to_(const Gdpoint<D>& from, algebra::vec<n,T>& to);
-
-//     template <unsigned n, typename T, typename D>
-//     void
-//     from_to_(const algebra::vec<n,T>& from, Gdpoint<D>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  /// \internal Conversion: gdpoint -> mln_site
+  template <typename D>
+  void
+  from_to_(const Gdpoint<D>& from, mln_site(D)& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -220,26 +202,18 @@ namespace mln
   }
 
 
-  namespace convert
+  // Conversions
+
+  template <typename D>
+  inline
+  void
+  from_to_(const Gdpoint<D>& dp_, mln_site(D)& p)
   {
-
-    namespace over_load
-    {
-
-      template <typename D>
-      inline
-      void
-      from_to_(const Gdpoint<D>& dp_, mln_site(D)& p)
-      {
-	enum { n = D::dim };
-	const D& dp = exact(dp_);
-	for (unsigned i = 0; i < n; ++i)
-	  p[i] = dp[i];
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    enum { n = D::dim };
+    const D& dp = exact(dp_);
+    for (unsigned i = 0; i < n; ++i)
+      p[i] = dp[i];
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

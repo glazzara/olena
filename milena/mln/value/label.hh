@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -91,43 +91,6 @@ namespace mln
 
   } // end of namespace trait
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> label.
-      template <unsigned n>
-      void
-      from_to_(const value::int_u<n>& from, value::label<n>& to_);
-
-      // label -> int_u.
-      template <unsigned n>
-      void
-      from_to_(const value::label<n>& from, value::int_u<n>& to_);
-
-
-      // int_u -> label.
-      template <unsigned n, unsigned m>
-      void
-      from_to_(const value::int_u<n>& from, value::label<m>& to_);
-
-      // label -> bool.
-      template <unsigned n>
-      void
-      from_to_(const value::label<n>& from, bool& to_);
-
-      // label -> unsigned.
-      template <unsigned n>
-      void
-      from_to_(const value::label<n>& from, unsigned& to_);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
   namespace value
   {
 
@@ -197,70 +160,32 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const label<n>& l);
 
 
+    /// \internal Conversion: int_u -> label.
+    template <unsigned n>
+    void from_to_(const value::int_u<n>& from, value::label<n>& to_);
+
+    /// \internal Conversion: label -> int_u.
+    template <unsigned n>
+    void from_to_(const value::label<n>& from, value::int_u<n>& to_);
+
+
+    /// \internal Conversion: int_u -> label.
+    template <unsigned n, unsigned m>
+    void from_to_(const value::int_u<n>& from, value::label<m>& to_);
+
+    /// \internal Conversion: label -> bool.
+    template <unsigned n>
+    void from_to_(const value::label<n>& from, bool& to_);
+
+    /// \internal Conversion: label -> unsigned.
+    template <unsigned n>
+    void from_to_(const value::label<n>& from, unsigned& to_);
+
+
   } // end of namespace mln::value
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> label.
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, value::label<n>& to_)
-      {
-	to_ = from;
-      }
-
-      // label -> int_u.
-      template <unsigned n>
-      void
-      from_to_(const value::label<n>& from, value::int_u<n>& to_)
-      {
-	to_ = from;
-      }
-
-
-      // int_u<n> -> label<m> with n < m.
-      template <unsigned n, unsigned m>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, value::label<m>& to_)
-      {
-	enum { valid = n < m };
-	metal::bool_<valid>::check();
-	to_ = from;
-      }
-
-      // int_u<n> -> bool
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::label<n>& from, bool& to_)
-      {
-	to_ = (from != 0u);
-      }
-
-      // int_u<n> -> unsigned
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::label<n>& from, unsigned& to_)
-      {
-	to_ = from;
-      }
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   namespace value
@@ -353,6 +278,47 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const label<n>& i)
     {
       return ostr << debug::format(i.to_equiv());
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const value::int_u<n>& from, value::label<n>& to_)
+    {
+      to_ = from;
+    }
+
+    template <unsigned n>
+    void
+    from_to_(const value::label<n>& from, value::int_u<n>& to_)
+    {
+      to_ = from;
+    }
+
+    template <unsigned n, unsigned m>
+    inline
+    void
+    from_to_(const value::int_u<n>& from, value::label<m>& to_)
+    {
+      enum { valid = n < m };
+      metal::bool_<valid>::check();
+      to_ = from;
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const value::label<n>& from, bool& to_)
+    {
+      to_ = (from != 0u);
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const value::label<n>& from, unsigned& to_)
+    {
+      to_ = from;
     }
 
   } // end of namespace mln::value

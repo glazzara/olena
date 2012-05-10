@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,45 +48,25 @@ namespace mln
   typedef window<mln::dpoint1d> window1d;
 
 
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void from_to_(const bool (&values)[M], window1d& win);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[] -> window1d
+  template <unsigned M>
+  void from_to_(const bool (&values)[M], window1d& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace convert
+  template <unsigned M>
+  void
+  from_to_(bool const (&values)[M], window1d& win)
   {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void
-      from_to_(bool const (&values)[M], window1d& win)
-      {
-	mlc_bool(M % 2 == 1)::check();
-	win.clear();
-	const int h = int(M) / 2;
-	unsigned i = 0;
-	for (int ind = - h; ind <= h; ++ind)
-	  if (values[i++])
-	    win.insert(ind);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    mlc_bool(M % 2 == 1)::check();
+    win.clear();
+    const int h = int(M) / 2;
+    unsigned i = 0;
+    for (int ind = - h; ind <= h; ++ind)
+      if (values[i++])
+	win.insert(ind);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

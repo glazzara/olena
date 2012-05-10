@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,6 +49,7 @@ namespace mln
     template <unsigned n, typename W, typename F> class multiple_size;
     template <unsigned n, typename W, typename F> class multiple_size_qiter;
   }
+  template <typename D> class window;
 
 
 

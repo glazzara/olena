@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +38,7 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/util/couple.hh>
 
 namespace mln
 {

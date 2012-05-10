@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,112 +45,105 @@
 namespace mln
 {
 
-  namespace convert
-  {
+  /// \internal Conversion: double-> Value
+  template <typename V>
+  void from_to_(const double& from, Value<V>& to);
 
-      /// Conversion of a double \p from towards a value \p to.
-      template <typename V>
-      void
-      from_to(const double& from, Value<V>& to);
+  /// \internal Conversion: double-> unsigned
+  void from_to_(const double& from, unsigned& to);
+
+  /// \internal Conversion:  double-> int
+  void from_to_(const double& from, int& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
+  namespace convert
+  {
+
+    namespace impl
+    {
+
+      // Case 1:
+
+      template <typename V>
+      inline
+      void
+      from_double_to_value(const double&	    from,
+			   mln::value::Integer<V>& to)
       {
+	exact(to) = math::round<V>()(from);
+      }
 
-	// Case 1:
+      // Case 2:
 
-	template <typename V>
-	inline
-	void
-	from_double_to_value(const double&	    from,
-			    mln::value::Integer<V>& to)
-	{
-	  exact(to) = math::round<V>()(from);
-	}
-
-	// Case 2:
-
-	template <typename V>
-	inline
-	void
-	from_double_to_value(const double&	      from,
-			    mln::value::Floating<V>&  to)
-	{
-	  exact(to) = from;
-	}
-
-
-	// Default: no conversion defined.
-
-	template <typename V>
-	inline
-	void
-	from_double_to_value(const double&	      from,
-			     Value<V>&		      to)
-	{
-	  (void) from;
-	  (void) to;
-	  mlc_abort(V)::check();
-	}
-
-      } // end of namespace mln::convert::impl
-
-
-      namespace internal
+      template <typename V>
+      inline
+      void
+      from_double_to_value(const double&	      from,
+			   mln::value::Floating<V>&  to)
       {
-
-	template <typename V>
-	inline
-	void
-	from_double_to_value_dispatch(const double& from, Value<V>& to)
-	{
-	  impl::from_double_to_value(from, exact(to));
-	}
-
-      } // end of namespace mln::convert::internal
+	exact(to) = from;
+      }
 
 
-      namespace over_load
+      // Default: no conversion defined.
+
+      template <typename V>
+      inline
+      void
+      from_double_to_value(const double&	      from,
+			   Value<V>&		      to)
       {
+	(void) from;
+	(void) to;
+	mlc_abort(V)::check();
+      }
 
-	// Facades.
+    } // end of namespace mln::convert::impl
 
 
-	// double-> Value
-	template <typename V>
-	inline
-	void
-	from_to_(const double& from, Value<V>& to)
-	{
-	  internal::from_double_to_value_dispatch(from, to);
-	}
+    namespace internal
+    {
 
-	// double-> unsigned
-	inline
-	void
-	from_to_(const double&	    from,
-		 unsigned&	    to)
-	{
-	  mln_precondition(from >= 0);
-	  to = math::round<unsigned>()(from);
-	}
+      template <typename V>
+      inline
+      void
+      from_double_to_value_dispatch(const double& from, Value<V>& to)
+      {
+	impl::from_double_to_value(from, exact(to));
+      }
 
-	// double-> int
-	inline
-	void
-	from_to_(const double&	    from,
-		 int&		    to)
-	{
-	  to = math::round<int>()(from);
-	}
-
-      } // end of namespace mln::convert::over_load
-
-# endif // ! MLN_INCLUDE_ONLY
+    } // end of namespace mln::convert::internal
 
   } // end of namespace mln::convert
+
+
+  template <typename V>
+  inline
+  void
+  from_to_(const double& from, Value<V>& to)
+  {
+    convert::internal::from_double_to_value_dispatch(from, to);
+  }
+
+  inline
+  void
+  from_to_(const double& from, unsigned& to)
+  {
+    mln_precondition(from >= 0);
+    to = math::round<unsigned>()(from);
+  }
+
+  inline
+  void
+  from_to_(const double& from, int& to)
+  {
+    to = math::round<int>()(from);
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,8 +31,6 @@
 ///
 /// Define a generic class for unsigned integers.
 
-# include <mln/trait/all.hh> // FIXME!
-
 # include <mln/value/ops.hh>
 
 # include <mln/metal/math/pow.hh>
@@ -48,19 +46,21 @@
 namespace mln
 {
 
-  namespace value
-  {
-    // Forward declaration.
+  // Forward declarations.
+  namespace value {
+    namespace qt {
+      struct rgb32;
+    }
     template <unsigned n> struct int_u;
+    template <unsigned n> struct rgb;
   }
 
   namespace literal
   {
-    // Forward declarations.
     struct zero_t;
     struct one_t;
   }
-
+  // End of forward declarations
 
   namespace trait
   {
@@ -108,42 +108,6 @@ namespace mln
     };
 
   } // end of namespace mln::trait
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> unsigned.
-      template <unsigned n>
-      void
-      from_to_(const value::int_u<n>& from, unsigned& to_);
-
-
-      // int_u -> bool.
-      template <unsigned n>
-      void
-      from_to_(const value::int_u<n>& from, bool& to_);
-
-
-      // int_u -> float.
-      template <unsigned n>
-      void
-      from_to_(const value::int_u<n>& from, float& to_);
-
-
-      // int_u -> double.
-      template <unsigned n>
-      void
-      from_to_(const value::int_u<n>& from, double& to_);
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   namespace value
@@ -216,57 +180,41 @@ namespace mln
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, int_u<n>& i);
 
+
+
+    // Conversions
+
+    /// \internal Conversion: int_u -> unsigned.
+    template <unsigned n>
+    void from_to_(const int_u<n>& from, unsigned& to_);
+
+
+    /// \internal Conversion: int_u -> bool.
+    template <unsigned n>
+    void from_to_(const int_u<n>& from, bool& to_);
+
+
+    /// \internal Conversion: int_u -> float.
+    template <unsigned n>
+    void from_to_(const int_u<n>& from, float& to_);
+
+
+    /// \internal Conversion: int_u -> double.
+    template <unsigned n>
+    void
+    from_to_(const int_u<n>& from, double& to_);
+
+    /// \internal Conversion: Conversion: int_u -> rgb.
+    template <unsigned m>
+    void from_to_(const int_u<m>& from, qt::rgb32& to);
+
+    /// \internal Conversion: int_u -> rgb.
+    template <unsigned m>
+    void from_to_(const int_u<m>& from, rgb<m>& to);
+
   } // end of namespace mln::value
 
 # ifndef MLN_INCLUDE_ONLY
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> unsigned.
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, unsigned& to_)
-      {
-	to_ = from;
-      }
-
-      // int_u -> bool.
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, bool& to_)
-      {
-	to_ = (from != 0u);
-      }
-
-      // int_u -> float.
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, float& to_)
-      {
-	to_ = static_cast<float>(from);
-      }
-
-      // int_u -> double.
-      template <unsigned n>
-      inline
-      void
-      from_to_(const value::int_u<n>& from, double& to_)
-      {
-	to_ = static_cast<double>(from);
-      }
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace value
   {
@@ -365,6 +313,56 @@ namespace mln
     std::istream& operator>>(std::istream& istr, int_u<n>& i)
     {
       return istr >> i.handle_();
+    }
+
+
+    // Conversions
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const int_u<n>& from, unsigned& to_)
+    {
+      to_ = from;
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const int_u<n>& from, bool& to_)
+    {
+      to_ = (from != 0u);
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const int_u<n>& from, float& to_)
+    {
+      to_ = static_cast<float>(from);
+    }
+
+    template <unsigned n>
+    inline
+    void
+    from_to_(const int_u<n>& from, double& to_)
+    {
+      to_ = static_cast<double>(from);
+    }
+
+    template <unsigned m>
+    void
+    from_to_(const int_u<m>& from, qt::rgb32& to)
+    {
+      mlc_bool(m <= 8)::check();
+      to = qt::rgb32(from, from, from);
+    }
+
+    template <unsigned m>
+    void
+    from_to_(const int_u<m>& from, rgb<m>& to)
+    {
+      to = rgb<m>(from, from, from);
     }
 
   } // end of namespace mln::value

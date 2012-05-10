@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,7 @@
 ///
 /// \brief Definition of a site iterator on a custom graph window.
 
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/is_masked_impl_selector.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 

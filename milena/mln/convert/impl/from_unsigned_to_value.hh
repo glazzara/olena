@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,101 +45,91 @@
 namespace mln
 {
 
-  namespace convert
-  {
 
-    /// Conversion of an unsigned \p from towards a value \p to.
-    template <typename V>
-    void
-    from_to(const unsigned& from, Value<V>& to);
+  /// \internal Conversion: unsigned-> Value
+  template <typename V>
+  void from_to_(const unsigned& from, Value<V>& to);
 
-      /// Conversion of an unsigned \p from towards a bool \p to.
-    inline
-    void
-    from_to_(const unsigned& from, bool& to);
+  /// \internal Conversion: unsigned -> bool
+  void from_to_(const unsigned& from, bool& to);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
+  namespace convert
+  {
+
+    namespace impl
+    {
+
+      // Case 1:
+
+      template <typename V>
+      inline
+      void
+      from_unsigned_to_value(const unsigned&		  from,
+			     mln::value::Integer<V>&	  to)
       {
+	exact(to) = from;
+      }
 
-	// Case 1:
-
-	template <typename V>
-	inline
-	void
-	from_unsigned_to_value(const unsigned&		  from,
-			       mln::value::Integer<V>&	  to)
-	{
-	  exact(to) = from;
-	}
-
-	template <unsigned n>
-	inline
-	void
-	from_unsigned_to_value(const unsigned&		  from,
-			       mln::value::label<n>&	  to)
-	{
-	  exact(to) = from;
-	}
-
-	// Default: no conversion defined.
-
-	template <typename V>
-	inline
-	void
-	from_unsigned_to_value(const unsigned&,
-			       Value<V>&)
-	{
-	  mlc_abort(V)::check();
-	}
-
-      } // end of namespace mln::convert::impl
-
-
-      namespace internal
+      template <unsigned n>
+      inline
+      void
+      from_unsigned_to_value(const unsigned&		  from,
+			     mln::value::label<n>&	  to)
       {
+	exact(to) = from;
+      }
 
-	template <typename V>
-	inline
-	void
-	from_unsigned_to_value_dispatch(const unsigned& from, Value<V>& to)
-	{
-	  impl::from_unsigned_to_value(from, exact(to));
-	}
+      // Default: no conversion defined.
 
-      } // end of namespace mln::convert::unsignedernal
-
-
-      namespace over_load
+      template <typename V>
+      inline
+      void
+      from_unsigned_to_value(const unsigned&,
+			     Value<V>&)
       {
+	mlc_abort(V)::check();
+      }
 
-	// Facades.
-	// unsigned-> Value
-	template <typename V>
-	void
-	from_to_(const unsigned& from, Value<V>& to)
-	{
-	  internal::from_unsigned_to_value_dispatch(from, to);
-	}
+    } // end of namespace mln::convert::impl
 
 
-	// Facades.
-	// unsigned-> bool
-	inline
-	void
-	from_to_(const unsigned& from, bool& to)
-	{
-	  to = (from != 0u);
-	}
+    namespace internal
+    {
+
+      template <typename V>
+      inline
+      void
+      from_unsigned_to_value_dispatch(const unsigned& from, Value<V>& to)
+      {
+	impl::from_unsigned_to_value(from, exact(to));
+      }
+
+    } // end of namespace mln::convert::unsignedernal
+
+  } // end of namespace mln::convert
 
 
-      } // end of namespace mln::convert::over_load
+  template <typename V>
+  void
+  from_to_(const unsigned& from, Value<V>& to)
+  {
+    convert::internal::from_unsigned_to_value_dispatch(from, to);
+  }
+
+
+  inline
+  void
+  from_to_(const unsigned& from, bool& to)
+  {
+    to = (from != 0u);
+  }
 
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
 
 } // end of namespace mln
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -120,27 +120,6 @@ namespace mln
 
   // Forward declaration.
   template <typename T> struct image1d;
-
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // histo::array -> image1d.
-      template <typename V, typename T>
-      void from_to_(const histo::array<V>& from, image1d<T>& to);
-
-      // util::array -> image1d.
-      template <typename V, typename T>
-      void from_to_(const util::array<V>& from, image1d<T>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   /// Basic 1D image class.
@@ -577,46 +556,6 @@ namespace mln
 
 namespace mln
 {
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // histo::array -> image1d.
-      template <typename V, typename T>
-      inline
-      void
-      from_to_(const histo::array<V>& from, image1d<T>& to)
-      {
-	// FIXME: The code should looks like:
-
-// 	box1d b(point1d(mln_min(V)), point1d(mln_max(V)));
-// 	ima.init_(b, 0);
-// 	for_all(v)
-// 	  from_to(h(v), ima.at_( index_of(v) ));
-	to.init_(make::box1d(from.nvalues()));
-	for (unsigned i = 0; i < from.nvalues(); ++i)
-	  from_to(from[i], to(point1d(i)));
-      }
-
-      // util::array -> image1d.
-      template <typename V, typename T>
-      inline
-      void
-      from_to_(const util::array<V>& from, image1d<T>& to)
-      {
-	to.init_(make::box1d(from.nelements()));
-	for (unsigned i = 0; i < from.nelements(); ++i)
-	  from_to(from[i], to(point1d(i)));
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace trait
   {

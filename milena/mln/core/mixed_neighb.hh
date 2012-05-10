@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,27 +51,6 @@ namespace mln
   // Forward declarations.
   template <typename W> class mixed_neighb_fwd_niter;
   template <typename W> class mixed_neighb_bkd_niter;
-  template <typename W> class mixed_neighb;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::mixed_neighb<W>& from, W& to);
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::mixed_neighb<W>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   /// Adapter class from window to neighborhood.
@@ -101,6 +81,18 @@ namespace mln
     mixed_neighb(const W& win);
 
   };
+
+
+  /// \internal Conversion: mixed_neighb<W> -> W
+  template <typename W>
+  void
+  from_to_(const mln::mixed_neighb<W>& from, W& to);
+
+  /// \internal Conversion: mixed_neighb<W> -> W
+  template <typename W>
+  void
+  from_to_(const W& from, mln::mixed_neighb<W>& to);
+
 
 
   // mixed_neighb_fwd_niter<W>
@@ -167,33 +159,21 @@ namespace mln
   }
 
 
-  // mln::convert::from_to
+  // Conversion
 
-  namespace convert
+  template <typename W>
+  void
+  from_to_(const mln::mixed_neighb<W>& from, W& to)
   {
+    to = from.win();
+  }
 
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::mixed_neighb<W>& from, W& to)
-      {
-        to = from.win();
-      }
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::mixed_neighb<W>& to)
-      {
-        to.change_window(from);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
+  template <typename W>
+  void
+  from_to_(const W& from, mln::mixed_neighb<W>& to)
+  {
+    to.change_window(from);
+  }
 
 
   // mixed_neighb_fwd_niter<W>

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,8 @@
 /// Definition of the mln::point2d and mln::point2df aliases and of
 /// their construction routines.
 
+# include <mln/core/def/coord.hh>
+# include <mln/core/def/coordf.hh>
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl.
 # include <mln/core/concept/site_proxy.hh>

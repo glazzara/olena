@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,26 +47,6 @@ namespace mln
   // Forward declarations.
   template <typename W> class neighb_fwd_niter;
   template <typename W> class neighb_bkd_niter;
-  template <typename W> class neighb;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to);
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
 
@@ -97,6 +77,17 @@ namespace mln
     neighb(const W& win);
 
   };
+
+
+  /// \internal Conversions: neighb<W> -> W
+  template <typename W>
+  void
+  from_to_(const mln::neighb<W>& from, W& to);
+
+  /// \internal Conversions: W -> neighb<W>
+  template <typename W>
+  void
+  from_to_(const W& from, mln::neighb<W>& to);
 
 
   // neighb_fwd_niter<W>
@@ -159,35 +150,6 @@ namespace mln
   }
 
 
-  // mln::convert::from_to
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to)
-      {
-        to = from.win();
-      }
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to)
-      {
-        to.change_window(from);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
-
-
   // neighb_fwd_niter<W>
 
   template <typename W>
@@ -222,6 +184,20 @@ namespace mln
     : super_(nbh, c)
   {
     this->i_.init_(nbh.win(), c);
+  }
+
+  template <typename W>
+  void
+  from_to_(const neighb<W>& from, W& to)
+  {
+    to = from.win();
+  }
+
+  template <typename W>
+  void
+  from_to_(const W& from, neighb<W>& to)
+  {
+    to.change_window(from);
   }
 
 

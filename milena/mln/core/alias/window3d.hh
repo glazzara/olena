@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -97,19 +98,9 @@ namespace mln
   const window3d& win_c8p_3d();
 
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void from_to_(bool const (&values)[M], window3d& win);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  /// \internal Conversion: bool[] -> window3d
+  template <unsigned M>
+  void from_to_(bool const (&values)[M], window3d& win);
 
 
 
@@ -151,30 +142,23 @@ namespace mln
     return it;
   }
 
-  namespace convert
+
+  // Conversion
+
+  template <unsigned M>
+  void
+  from_to_(bool const (&values)[M], window3d& win)
   {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void
-      from_to_(bool const (&values)[M], window3d& win)
-      {
-	const int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
-	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
-	win.clear();
-	unsigned i = 0;
-	for (int sli = - h; sli <= h; ++sli)
-	  for (int row = - h; row <= h; ++row)
-	    for (int col = - h; col <= h; ++col)
-	      if (values[i++])
-		win.insert(sli, row, col);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    const int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
+    mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
+    win.clear();
+    unsigned i = 0;
+    for (int sli = - h; sli <= h; ++sli)
+      for (int row = - h; row <= h; ++row)
+	for (int col = - h; col <= h; ++col)
+	  if (values[i++])
+	    win.insert(sli, row, col);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

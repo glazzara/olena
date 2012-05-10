@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +35,6 @@
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/metal/math/sqrt.hh>
-# include <mln/convert/from_to.hxx>
 
 
 namespace mln
@@ -81,22 +80,13 @@ namespace mln
   const window2d& win_c8p();
 
 
-  namespace convert
-  {
+  /// \internal Conversion: bool[] -> window2d
+  template <unsigned S>
+  void from_to_(const bool (&values)[S], window2d& win);
 
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void from_to_(const bool (&values)[S], window2d& win);
-
-      template <unsigned R, unsigned C>
-      void from_to_(const bool (&values)[R][C], window2d& win);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[][] -> window2d
+  template <unsigned R, unsigned C>
+  void from_to_(const bool (&values)[R][C], window2d& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -138,50 +128,40 @@ namespace mln
   }
 
 
-  namespace convert
+  template <unsigned S>
+  void
+  from_to_(const bool (&values)[S], window2d& win)
   {
+    enum { H = mlc_sqrt_int(S) / 2 };
+    mlc_bool((2 * H + 1) * (2 * H + 1) == S)::check();
+    win.clear();
+    unsigned i = 0;
+    const def::coord
+      h  = static_cast<def::coord>(H),
+      _h = static_cast<def::coord>(-h);
+    for (def::coord row = _h; row <= h; ++row)
+      for (def::coord col = _h; col <= h; ++col)
+	if (values[i++])
+	  win.insert(row, col);
+  }
 
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void
-      from_to_(const bool (&values)[S], window2d& win)
-      {
-	enum { H = mlc_sqrt_int(S) / 2 };
-	mlc_bool((2 * H + 1) * (2 * H + 1) == S)::check();
-	win.clear();
-	unsigned i = 0;
-	const def::coord
-	  h  = static_cast<def::coord>(H),
-	  _h = static_cast<def::coord>(-h);
-	for (def::coord row = _h; row <= h; ++row)
-	  for (def::coord col = _h; col <= h; ++col)
-	    if (values[i++])
-	      win.insert(row, col);
-      }
-
-      template <unsigned R, unsigned C>
-      void
-      from_to_(const bool (&values)[R][C], window2d& win)
-      {
-	mlc_bool(R % 2 == 1)::check();
-	mlc_bool(C % 2 == 1)::check();
-	win.clear();
-	const def::coord
-	  drow  = static_cast<def::coord>(R / 2),
-	  _drow = static_cast<def::coord>(- drow),
-	  dcol  = static_cast<def::coord>(C / 2),
-	  _dcol = static_cast<def::coord>(- dcol);
-	for (def::coord row = _drow; row <= drow; ++row)
-	  for (def::coord col = _dcol; col <= dcol; ++col)
-	    if (values[row + drow][col + dcol])
-	      win.insert(row, col);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  template <unsigned R, unsigned C>
+  void
+  from_to_(const bool (&values)[R][C], window2d& win)
+  {
+    mlc_bool(R % 2 == 1)::check();
+    mlc_bool(C % 2 == 1)::check();
+    win.clear();
+    const def::coord
+      drow  = static_cast<def::coord>(R / 2),
+      _drow = static_cast<def::coord>(- drow),
+      dcol  = static_cast<def::coord>(C / 2),
+      _dcol = static_cast<def::coord>(- dcol);
+    for (def::coord row = _drow; row <= drow; ++row)
+      for (def::coord col = _dcol; col <= dcol; ++col)
+	if (values[row + drow][col + dcol])
+	  win.insert(row, col);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

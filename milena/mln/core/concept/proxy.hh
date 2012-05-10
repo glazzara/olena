@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -144,16 +144,6 @@ namespace mln
   template <typename E> struct Literal;
 
 
-  namespace convert
-  {
-
-    template <typename F, typename T>
-    void from_to(const F& from, T& to);
-
-  }
-
-
-
   namespace trait
   {
 
@@ -245,21 +235,10 @@ namespace mln
   };
 
 
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename P, typename T>
-      void
-      from_to_(const Proxy<P>& from, T& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  /// \internal Conversion: proxy -> T
+  template <typename P, typename T>
+  void
+  from_to_(const Proxy<P>& from, T& to);
 
 
 
@@ -337,24 +316,14 @@ namespace mln
 
 
 
-  // convert::from_to_
+  // Conversion
 
-  namespace convert
+  template <typename P, typename T>
+  void
+  from_to_(const Proxy<P>& from, T& to)
   {
-
-    namespace over_load
-    {
-
-      template <typename P, typename T>
-      void
-      from_to_(const Proxy<P>& from, T& to)
-      {
-	convert::from_to(exact(from).unproxy_(), to);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    convert::from_to(exact(from).unproxy_(), to);
+  }
 
 
   // unproxy_rec

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -203,21 +204,9 @@ namespace mln
   const neighb3d& c26();
 
 
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void from_to_(const bool (&values)[S], neighb3d& nbh);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[] -> neighb3d
+  template <unsigned S>
+  void from_to_(const bool (&values)[S], neighb3d& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -325,29 +314,19 @@ namespace mln
   }
 
 
-  namespace convert
+  template <unsigned S>
+  void
+  from_to_(const bool (&values)[S], neighb3d& nbh)
   {
-
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void
-      from_to_(const bool (&values)[S], neighb3d& nbh)
-      {
 # ifndef NDEBUG
-	const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
-	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
+    const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
+    mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
 # endif // ! NDEBUG
-	window3d win;
-	from_to_(values, win);
-	mln_precondition(win.is_neighbable_());
-	nbh.change_window(win);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    window3d win;
+    from_to_(values, win);
+    mln_precondition(win.is_neighbable_());
+    nbh.change_window(win);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

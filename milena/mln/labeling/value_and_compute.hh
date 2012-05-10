@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,6 +35,8 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling/video.hh>
 # include <mln/data/fill.hh>
+# include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 
 
 

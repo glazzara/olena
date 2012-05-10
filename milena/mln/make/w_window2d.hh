@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,7 +34,7 @@
 
 # include <mln/core/w_window.hh>
 # include <mln/core/alias/dpoint2d.hh>
-# include <mln/convert/from_to.hxx>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln

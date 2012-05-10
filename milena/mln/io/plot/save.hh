@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +35,7 @@
 # include <fstream>
 # include <mln/core/image/image1d.hh>
 # include <mln/util/array.hh>
+# include <mln/histo/array.hh>
 
 
 namespace mln

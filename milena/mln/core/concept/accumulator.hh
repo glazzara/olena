@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,25 +39,6 @@
 
 namespace mln
 {
-
-  // Forward declaration.
-  template <typename E> struct Accumulator;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename A>
-      void
-      from_to_(const Accumulator<A>& from, mln_result(A)& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   // Accumulator category flag type.
   template <>
@@ -118,39 +99,19 @@ namespace mln
     template <typename T>
     void take_n_times_(unsigned n, const T& t);
 
-    
+
   protected:
     Accumulator();
   };
 
 
+  /// \internal Conversion: Accumulator -> mln_result(A)
+  template <typename A>
+  void
+  from_to_(const Accumulator<A>& from, mln_result(A)& to);
+
+
 # ifndef MLN_INCLUDE_ONLY
-
-
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename A>
-      void
-      from_to_(const Accumulator<A>& from_, mln_result(A)& to)
-      {
-	const A& from = exact(from_);
-	if (from.is_valid())
-	  to = from.to_result();
-	else
-	  to = mln_result(A)();
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
 
   // Accumulator<E>
 
@@ -234,6 +195,21 @@ namespace mln
     for (unsigned i = 0; i < n; ++i)
       exact(this)->take(t);
   }
+
+
+  // Conversions
+
+  template <typename A>
+  void
+  from_to_(const Accumulator<A>& from_, mln_result(A)& to)
+  {
+    const A& from = exact(from_);
+    if (from.is_valid())
+      to = from.to_result();
+    else
+      to = mln_result(A)();
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

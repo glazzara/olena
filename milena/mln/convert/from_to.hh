@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -38,7 +38,6 @@
 /// \todo Find a solution for g++-2.95 and '...'; see FIXME below.
 
 # include <mln/convert/impl/all.hh>
-# include <mln/convert/from_to.hxx>
 
 # include <mln/metal/abort.hh>
 # include <mln/metal/converts_to.hh>
@@ -64,7 +63,70 @@ namespace mln
     from_to(const F& from, T& to);
 
 
+  } // end of namespace mln::convert
+
+} // end of namespace mln
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+// Exact same type.
+template <typename T>
+inline
+void
+from_to_(const T& from, T& to)
+{
+  to = from;
+}
+
+
+// Default conversion.
+template <typename F, typename T>
+inline
+void
+from_to_(const F& from, T& to)
+{
+  to = mln::value::cast<T>(from);
+}
+
+
+namespace mln
+{
+
+  // Exact same type.
+  template <typename T>
+  inline
+  void
+  from_to_(const T& from, T& to)
+  {
+    to = from;
+  }
+
+  // Object -> Object (F not convertible towards T)
+  // No conversion exists!
+  template <typename F, typename T>
+  void
+  from_to_(const Object<F>&, Object<T>&)
+  {
+    // This particular from-to is not defined!
+    //
+    // Either this conversion is meaningless or an overload is
+    // missing.
+    mlc_abort(F)::check();
+  }
+
+
+  // Object -> Object
+  template <typename T>
+  inline
+  void
+  from_to_(const Object<T>& from, Object<T>& to)
+  {
+    exact(to) = exact(from);
+  }
+
+  namespace convert
+  {
 
     namespace internal
     {
@@ -128,7 +190,7 @@ namespace mln
       from_to_dispatch(metal::false_,
 		       const Object<F>& from, Object<T>& to)
       {
-	over_load::from_to_(exact(from), exact(to));
+	from_to_(exact(from), exact(to));
       }
 
 
@@ -158,7 +220,7 @@ namespace mln
       from_to_dispatch(metal::false_,  const F& from,
 		       metal::false_,  T&	to)
       {
-	over_load::from_to_(from, to);
+	from_to_(from, to);
       }
 
 
@@ -169,7 +231,7 @@ namespace mln
       from_to_dispatch(metal::true_,  const F& from,
 		       metal::false_, T&       to)
       {
-	over_load::from_to_(exact(from), to);
+	from_to_(exact(from), to);
       }
 
 
@@ -180,7 +242,7 @@ namespace mln
       from_to_dispatch(metal::false_, const F& from,
 		       metal::true_,  T&       to)
       {
-	over_load::from_to_(from, exact(to));
+	from_to_(from, exact(to));
       }
 
       // Object -> Object
@@ -197,58 +259,6 @@ namespace mln
     } // end of namespace mln::convert::internal
 
 
-    namespace over_load
-    {
-
-
-      // Object -> Object (F not convertible towards T)
-      // No conversion exists!
-      template <typename F, typename T>
-      void
-      from_to_(const Object<F>&, Object<T>&)
-      {
-	// This particular from-to is not defined!
-	//
-	// Either this conversion is meaningless or an overload is
-	// missing.
-	mlc_abort(F)::check();
-      }
-
-
-      // Object -> Object
-      template <typename T>
-      inline
-      void
-      from_to_(const Object<T>& from, Object<T>& to)
-      {
-	exact(to) = exact(from);
-      }
-
-
-      // Exact same type.
-      template <typename T>
-      inline
-      void
-      from_to_(const T& from, T& to)
-      {
-	to = from;
-      }
-
-
-      // Default conversion.
-      template <typename F, typename T>
-      inline
-      void
-      from_to_(const F& from, T& to)
-      {
-	to = mln::value::cast<T>(from);
-      }
-
-
-    } // end of namespace mln::convert::over_load
-
-
-
     // Facade
 
     template <typename F, typename T>
@@ -263,11 +273,11 @@ namespace mln
     }
 
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::convert
 
 } // end of namespace mln
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
 #endif // ! MLN_CONVERT_FROM_TO_HH

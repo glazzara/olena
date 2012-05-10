@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,29 +54,6 @@ namespace mln
   // Forward declarations.
   template <typename D,  typename W> struct w_window;
   template <typename It, typename W> struct with_w_;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename I, typename D, typename W>
-      void
-      from_to_(const Image<I>& from, w_window<D,W>& to);
-
-      template <typename D, typename W, typename I>
-      void
-      from_to_(const w_window<D,W>& from, Image<I>& to);
-
-      template <typename V, unsigned S, typename D, typename W>
-      void
-      from_to_(const V (&weight)[S], w_window<D,W>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
   namespace trait
@@ -164,6 +142,15 @@ namespace mln
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs);
 
 
+  /// \internal Conversions: w_window -> image
+  template <typename D, typename W, typename I>
+  void from_to_(const w_window<D,W>& from, Image<I>& to);
+
+  /// \internal Conversions: weight[] -> w_window
+  template <typename V, unsigned S, typename D, typename W>
+  void from_to_(const V (&weight)[S], w_window<D,W>& to);
+
+
 
   /// Decorator to handle weights for iterators on window points.
   template <typename It, typename W>
@@ -195,7 +182,7 @@ namespace mln
       wei_(ds.weights())
   {
   }
-  
+
   template <typename It, typename W>
   inline
   W
@@ -312,107 +299,6 @@ namespace mln
   }
 
 
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename I, typename D, typename W>
-      void
-      from_to_(const Image<I>& from_, w_window<D,W>& to)
-      {
-	mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
-	mlc_converts_to(mln_value(I), W)::check();
-	const I& ima = exact(from_);
-	to.clear();
-	mln_value(I) zero = literal::zero;
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  if (ima(p) != zero)
-	    to.insert(ima(p), convert::to<D>(p));
-      }
-
-      template <typename D, typename W, typename I>
-      void
-      from_to_(const w_window<D,W>& w_win, Image<I>& ima_)
-      {
-	typedef mln_site(I) P;
-	mlc_converts_to(D, mln_delta(P))::check();
-	mlc_converts_to(W, mln_value(I))::check();
-
-	I& ima = exact(ima_);
-	mln_precondition(! ima.is_valid());
-	mln_precondition(w_win.is_valid());
-
-	ima.init_(geom::bbox(w_win));
-	{
-	  // data::fill(ima, literal::zero) is:
-	  mln_value(I) zero = literal::zero;
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
-	    ima(p) = zero;
-	}
-
-	unsigned n = w_win.size();
-	for (unsigned i = 0; i < n; ++i)
-	  ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
-      }
-
-    // FIXME: Sample code (below) to generalize the code above:
-
-//     template <typename W>
-//     inline
-//     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win_)
-//     {
-//       const W& w_win = exact(w_win_);
-//       mln_precondition(! w_win.is_empty());
-
-//       typedef mln_psite(W) P;
-//       box<P> b = geom::bbox(w_win);
-//       mln_image_from(W, mln_weight(W)) ima(b);
-//       // Fill the image with zeros, as (weighted) windows are not
-//       // necessarily box-shaped (there might be holes corresponding to
-//       // null weights).
-//       data::fill(ima, literal::zero);
-//       P O = P::origin;
-//       mln_qiter(W) q(w_win, O);
-//       for_all(q)
-// 	ima(q) = q.w();
-//       return ima;
-//     }
-
-      template <typename V, unsigned S, typename D, typename W>
-      void
-      from_to_(const V (&weight)[S], w_window<D,W>& to)
-      {
-	mlc_bool(S != 0)::check();
-	mlc_converts_to(V, W)::check();
-	enum { d = D::dim,
-	  s = mlc_root(d,S)::value / 2 };
-	metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
-	to.clear();
-	typedef mln_site(D) P;
-	box<P> b(all_to(-s), all_to(+s));
-	mln_fwd_piter(box<P>) p(b);
-	unsigned i = 0;
-	V zero = literal::zero;
-	for_all(p)
-	{
-	  if (weight[i] != zero)
-	    to.insert(weight[i], convert::to<D>(p));
-	  ++i;
-	}
-
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
   // operators
 
   template <typename D, typename W>
@@ -440,6 +326,59 @@ namespace mln
       if (wr[i] != wl[i])
 	return false;
     return true;
+  }
+
+
+  // Conversions
+
+  template <typename D, typename W, typename I>
+  void
+  from_to_(const w_window<D,W>& w_win, Image<I>& ima_)
+  {
+    typedef mln_site(I) P;
+    mlc_converts_to(D, mln_delta(P))::check();
+    mlc_converts_to(W, mln_value(I))::check();
+
+    I& ima = exact(ima_);
+    mln_precondition(! ima.is_valid());
+    mln_precondition(w_win.is_valid());
+
+    ima.init_(geom::bbox(w_win));
+    {
+      // data::fill(ima, literal::zero) is:
+      mln_value(I) zero = literal::zero;
+      mln_piter(I) p(ima.domain());
+      for_all(p)
+	ima(p) = zero;
+    }
+
+    unsigned n = w_win.size();
+    for (unsigned i = 0; i < n; ++i)
+      ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
+  }
+
+  template <typename V, unsigned S, typename D, typename W>
+  void
+  from_to_(const V (&weight)[S], w_window<D,W>& to)
+  {
+    mlc_bool(S != 0)::check();
+    mlc_converts_to(V, W)::check();
+    enum { d = D::dim,
+	   s = mlc_root(d,S)::value / 2 };
+    metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+    to.clear();
+    typedef mln_site(D) P;
+    box<P> b(all_to(-s), all_to(+s));
+    mln_fwd_piter(box<P>) p(b);
+    unsigned i = 0;
+    V zero = literal::zero;
+    for_all(p)
+    {
+      if (weight[i] != zero)
+	to.insert(weight[i], convert::to<D>(p));
+      ++i;
+    }
+
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -33,7 +33,6 @@
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/gdpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
-# include <mln/fun/i2v/all.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 

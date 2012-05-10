@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,6 +27,7 @@
 #include <vector>
 #include <utility>
 
+#include <mln/fun/i2v/array.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>

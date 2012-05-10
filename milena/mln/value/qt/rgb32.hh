@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -74,34 +75,6 @@ namespace mln
     struct olive_t;
     /// \}
   }
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> rgb.
-      template <unsigned m>
-      void from_to_(const value::int_u<m>& from, value::qt::rgb32& to);
-
-      // hsl -> rgb32.
-      template <typename H, typename S, typename L>
-      void from_to_(const value::hsl_<H,S,L>&, value::qt::rgb32& to);
-
-      // rgb32 -> bool.
-      void from_to_(const value::qt::rgb32& from, bool& to);
-
-
-      // bool -> rgb32.
-      void from_to_(const bool& from, value::qt::rgb32& to);
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace trait
   {
@@ -350,13 +323,17 @@ namespace mln
       /// \}
 
 
+      /// \internal Conversion: Conversion: #value::qt::rgb32 -> bool.
+      void from_to_(const rgb32& from, bool& to);
+
+      /// \internal Conversion: bool -> #value::qt::rgb32.
+      void from_to_(const bool& from, value::qt::rgb32& to);
+
     } // end of namespace mln::value::qt
 
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -752,45 +729,15 @@ namespace mln
 	return istr >> c.red() >> c.green() >> c.blue();
       }
 
-    } // end of namespace mln::value::qt
 
-  } // end of namespace mln::value
+      // Conversions
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // int_u -> qt::rgb32
-      template <unsigned m>
-      void
-      from_to_(const value::int_u<m>& from, value::qt::rgb32& to)
-      {
-	mlc_bool(m <= 8)::check();
-	to = value::qt::rgb32(from, from, from);
-      }
-
-
-      // hsl -> rgb8.
-      template <typename H, typename S, typename L>
-      void from_to_(const value::hsl_<H,S,L>& from, value::qt::rgb32& to)
-      {
-	value::rgb8 v = fun::v2v::f_hsl_to_rgb_3x8(from);
-	to = v.to_equiv();
-      }
-
-
-      // qt::rgb32 -> bool
       inline
-      void from_to_(const value::qt::rgb32& from, bool& to)
+      void from_to_(const rgb32& from, bool& to)
       {
 	to = ((from == literal::black) ? false : true);
       }
 
-
-      // bool -> qt::rgb32
       inline
       void from_to_(const bool& from, value::qt::rgb32& to)
       {
@@ -800,10 +747,9 @@ namespace mln
 	  to = literal::black;
       }
 
+    } // end of namespace mln::value::qt
 
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  } // end of namespace mln::value
 
 } // end of namespace mln
 

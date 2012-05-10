@@ -42,6 +42,7 @@ namespace mln
 
 
   // Forward declaration.
+  template <typename W> class neighb;
   namespace win
   {
     template <unsigned n, typename W, typename F>
@@ -66,25 +67,25 @@ namespace mln
       /// Give the foreground neighborhood in the case of a dual
       /// neighborhood.  For instance, with (object:c4, background:c8),
       /// the result is c4.
-      
+
       neighb<W> foreground() const
       {
 	W win = internal::force_exact<E>(*this).win().window_(1); // True, so object.
 	neighb<W> nbh(win);
 	return nbh;
       }
-      
+
       /// Give the background neighborhood in the case of a dual
       /// neighborhood.  For instance, with (object:c4, background:c8),
       /// the result is c8.
-      
+
       neighb<W> background() const
       {
 	W win = internal::force_exact<E>(*this).win().window_(0); // False, so background.
 	neighb<W> nbh(win);
 	return nbh;
       }
-      
+
     };
 
 
