@@ -1,0 +1,26 @@
+	-*- outline -*-
+
+* Conference
+ICDAR 2011
+
+* Contest
+Historical Document Layout Analysis Competition
+
+* Description
+This paper presents an objective comparative evaluation of layout
+analysis methods for scanned historical documents. It describes the
+competition (modus operandi, dataset and evaluation methodology) held
+in the context of ICDAR2011 and the International Workshop on
+Historical Document Imaging and Processing (HIP2011), presenting the
+results of the evaluation of four submitted methods. A commercial
+state-of-the-art system is also evaluated for comparison. Two
+scenarios are reported in this paper, one evaluating the ability of
+methods to accurately segment regions and the other evaluating the
+whole pipeline of segmentation and region classification (with a text
+extraction goal). The results indicate that there is a convergence to
+a certain methodology with some variations in the approach. However,
+there is still a considera-ble need to develop robust methods that
+deal with the idiosyn-crasies of historical documents.
+
+* Paper
+http://www.primaresearch.org/ICDAR2011_competition

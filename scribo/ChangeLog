@@ -1,5 +1,13 @@
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add Readme files about contests.
+
+	* src/contest/DAE-2011/README,
+	* src/contest/hdibco-2010/README,
+	* src/contest/hdlac-2011/README: New.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation in Scribo.
 
 	* scribo/primitive/link/merge_double_link_closest_aligned.hh: Add

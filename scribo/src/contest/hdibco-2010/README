@@ -1,0 +1,21 @@
+	-*- outline -*-
+
+* Conference
+12th Internation Conference on Frontiers in Handwriting Recognition
+(ICFHR 2010)
+
+* Contest
+Handwritten Document Image Binarization Contest
+
+* Description
+In H-DIBCO 2010 (Handwritten Document Image Binarization Contest), the
+general objective is to record recent advances in handwritten document
+image binarization using established evaluation performance
+measures. We will create a benchmarking dataset that is representative
+of the potential problems which are challenging in the binarization
+process and use a common evaluation platform in order to test and
+compare the submitted algorithms for handwritten document image
+binarization.
+
+* Paper
+http://users.iit.demokritos.gr/~bgat/HDIBCO2010.pdf
