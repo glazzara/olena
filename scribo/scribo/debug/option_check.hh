@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 # include <vector>
 # include <iostream>
 # include <mln/core/contract.hh>
+# include <scribo/debug/logger.hh>
 
 namespace scribo
 {
@@ -42,6 +44,7 @@ namespace scribo
     bool check_ocr_lang(const std::vector<const char *>& args);
     bool check_sauvola_first_subsampling(const std::vector<const char *>& args);
     bool check_sauvola_split_ntrue(const std::vector<const char *>& args);
+    bool check_verbose_mode(const std::vector<const char *>& args);
 
 #  ifndef MLN_INCLUDE_ONLY
 
@@ -117,6 +120,20 @@ namespace scribo
 	return true;
 
       std::cerr << "Error: invalid subsampling ratio : " << args[0] << std::endl;
+      return false;
+    }
+
+
+    inline
+    bool check_verbose_mode(const std::vector<const char *>& args)
+    {
+      mln_assertion(args.size() == 1);
+
+      if (logger().set_verbose_mode(txt_to_verbose_mode(args[0])))
+	return true;
+
+      std::cerr << "Error: Invalid verbose mode " << args[0] << std::endl;
+
       return false;
     }
 

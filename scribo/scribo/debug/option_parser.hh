@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -290,8 +291,17 @@ namespace scribo
 
 	    // I/O parameters
 	  default:
-	    args_[arg_desc_[nrequired_argc].name] = argv[0];
-	    ++nrequired_argc;
+	    if (nrequired_argc == required_argc_)
+	    {
+	      std::cerr << "Error: wrong number of arguments! \""
+			<< argv[0] << "\" was not expected!" << std::endl;
+	      no_error = false;
+	    }
+	    else
+	    {
+	      args_[arg_desc_[nrequired_argc].name] = argv[0];
+	      ++nrequired_argc;
+	    }
 	    ++argv;
 	    break;
 	}
@@ -301,8 +311,7 @@ namespace scribo
       {
 	if (nrequired_argc)
 	  std::cerr << "Error: wrong number of arguments!" << std::endl;
-	print_help();
-	return false;
+	no_error = false;
       }
 
       if (! no_error)
