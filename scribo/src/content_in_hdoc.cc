@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -118,7 +118,8 @@ int main(int argc, char* argv[])
       std::cout << "Using K = " << K << std::endl;
     }
 
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, K);
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, K,
+						      false, false);
 
     // Cleanup components on borders
     {

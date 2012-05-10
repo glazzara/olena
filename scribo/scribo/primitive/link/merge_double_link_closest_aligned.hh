@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 # define SCRIBO_PRIMITIVE_LINK_MERGE_DOUBLE_LINK_CLOSEST_ALIGNED_HH
 
 
+# include <mln/util/couple.hh>
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/tag/anchor.hh>

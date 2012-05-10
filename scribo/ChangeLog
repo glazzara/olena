@@ -1,3 +1,16 @@
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation in Scribo.
+
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh: Add
+	a missing include.
+
+	* src/content_in_hdoc.cc,
+	* src/contest/DAE-2011/content_in_doc_dae.cc,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/non_text_components.cc: Add mandatory arguments.
+
 2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/debug/logger.hh: Improve log system.
