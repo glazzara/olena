@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -97,7 +98,7 @@ namespace mln
 # endif // ! QT_VERSION
 
 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned offset = ima.delta_offset(dpoint2d(+1, - ncols));
 
 	// Data is stored as ABGR so we skip the first value which is ignored.
 	for (unsigned row = 0; row < nrows; ++row, ptr_ima += offset)
@@ -137,7 +138,7 @@ namespace mln
 	QImage qima(ncols, nrows, QImage::Format_RGB32);
 	uchar * ptr_qima = qima.scanLine(0);
 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned offset = ima.delta_offset(dpoint2d(+1, - ncols));
 
 	for (unsigned row = 0; row < nrows; ++row, ptr_ima += offset)
 	{
@@ -183,7 +184,7 @@ namespace mln
 	mln::border::resize(ima, 0);
 
 	unsigned
-	  offset = ima.delta_index(DP(+1, 0)),
+	  offset = ima.delta_offset(DP(+1, 0)),
 	  line_offset = 0;
 
 	QImage qima(ncols, nrows, QImage::Format_RGB888);

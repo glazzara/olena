@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -160,7 +160,7 @@ namespace mln
 
       mln_precondition(input.is_valid());
       mln_precondition(input.has(p));
-      mln_precondition(input.index_of_point(p) + n <= opt::nelements(input));
+      mln_precondition(input.offset_of_point(p) + n <= opt::nelements(input));
 
       pixel<I> pix(input, p);
       impl::memset__(pix, v, n);

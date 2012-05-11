@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -166,7 +166,7 @@ namespace mln
 	Magick::PixelPacket* pixels = view.get(0, 0, ima.ncols(), ima.nrows());
 	mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
 
-	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned row_offset = ima.delta_offset(dpoint2d(+1, - ncols));
 
 	for (def::coord row = minrow; row <= maxrow;
 	     ++row, ptr_ima += row_offset)

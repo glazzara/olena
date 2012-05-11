@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -273,7 +274,7 @@ namespace mln
       inline
       void closest_point_functor_with_sites<I>::init_p_(unsigned p)
       {
-	cp_ima.element(p) = cp_ima.point_at_index(p);
+	cp_ima.element(p) = cp_ima.point_at_offset(p);
       }
 
       template <typename I>

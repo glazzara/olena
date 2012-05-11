@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -88,7 +89,7 @@ namespace mln
                        trait::image::value_access::direct))::check();
 
 	mln_value(I) v = static_cast<mln_value(I)>(val);
-        data::memset_(ima, ima.point_at_index(0), v, opt::nelements(ima));
+        data::memset_(ima, ima.point_at_offset(0), v, opt::nelements(ima));
 
 	trace::exiting("data::impl::fill_with_value_one_block");
       }

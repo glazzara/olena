@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -270,7 +270,7 @@ namespace mln
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
-      offset_.push_back(this->image_.delta_index(dps.dp(i)));
+      offset_.push_back(this->image_.delta_offset(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative:
     if (dps.size() > 1)
@@ -381,7 +381,7 @@ namespace mln
   dpoints_bkd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
-      offset_.push_back(this->image_.delta_index(dps.dp(i)));
+      offset_.push_back(this->image_.delta_offset(dps.dp(i)));
     // offset_[size() - 1] is absolute
     // other offsets are relative:
     if (dps.size() > 1)

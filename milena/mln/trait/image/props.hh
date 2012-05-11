@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -152,10 +153,10 @@
 //  => .value_() : rvalue, returns the flat value
 // one_block
 //  => .nelements_() : unsigned, number of buffer elements
-//  => .point_at_index_(unsigned index) : point,
-//     point corresponding to the index index
-//  =>  .delta_index_(deltapoint dp) : unsigned
-//      Return the delta index associated to dp
+//  => .point_at_offset_(unsigned offset) : point,
+//     point corresponding to the offset offset
+//  =>  .delta_offset_(deltapoint dp) : unsigned
+//      Return the delta offset associated to dp
 // one_block and value_access::direct
 //  =>  element_(unsigned index) : rvalue, returns the element at index.
 //  =>  element_(unsigned index) : lvalue, returns the element at index.

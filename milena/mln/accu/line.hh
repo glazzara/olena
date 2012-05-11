@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -240,7 +240,7 @@ namespace mln
 
 	mln_delta(P) dp = literal::zero;
 	dp[Dir] = 1;
-	unsigned offset = input.delta_index(dp);
+	unsigned offset = input.delta_offset(dp);
 
 	A a; // Accumulator.
 	a.init();

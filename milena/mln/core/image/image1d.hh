@@ -189,27 +189,27 @@ namespace mln
     // Specific methods:
     // -----------------
 
-    /// Read-only access to the image value located at (\p index).
-    const T& at_(def::coord index) const;
+    /// Read-only access to the image value located at (\p offset).
+    const T& at_(def::coord offset) const;
 
-    /// Read-write access to the image value located at (\p index).
-    T& at_(def::coord index);
+    /// Read-write access to the image value located at (\p offset).
+    T& at_(def::coord offset);
 
-     /// Give the number of indexes.
+     /// Give the number of offsets.
     unsigned ninds() const;
 
 
 
     /// Fast Image method
 
-    // Give the index of a point.
-    using super_::index_of_point;
+    // Give the offset of a point.
+    using super_::offset_of_point;
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int delta_index(const dpoint1d& dp) const;
+    int delta_offset(const dpoint1d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point1d point_at_index(unsigned i) const;
+    point1d point_at_offset(unsigned i) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -450,10 +450,10 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image1d<T>::at_(def::coord index) const
+  image1d<T>::at_(def::coord offset) const
   {
-    mln_precondition(this->has(point1d(index)));
-    return this->data_->array_[index];
+    mln_precondition(this->has(point1d(offset)));
+    return this->data_->array_[offset];
   }
 
   template <typename T>
@@ -468,10 +468,10 @@ namespace mln
   template <typename T>
   inline
   T&
-  image1d<T>::at_(def::coord index)
+  image1d<T>::at_(def::coord offset)
   {
-    mln_precondition(this->has(point1d(index)));
-    return this->data_->array_[index];
+    mln_precondition(this->has(point1d(offset)));
+    return this->data_->array_[offset];
   }
 
 
@@ -514,7 +514,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image1d<T>::delta_index(const dpoint1d& dp) const
+  image1d<T>::delta_offset(const dpoint1d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = dp[0];
@@ -524,7 +524,7 @@ namespace mln
   template <typename T>
   inline
   point1d
-  image1d<T>::point_at_index(unsigned i) const
+  image1d<T>::point_at_offset(unsigned i) const
   {
     mln_precondition(i < nelements());
     def::coord ind = static_cast<def::coord>(i + this->data_->vb_.min_ind());

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,7 +94,7 @@ namespace mln
 	image2d<int_u8> output(box<point2d>(pmin, pmax));
 
 	dpoint2d dp_row(1, 0);
-	const unsigned delta_row = input.delta_index(dp_row);
+	const unsigned delta_row = input.delta_offset(dp_row);
 	unsigned count = 0;
 
 	for (unsigned row = 0; row < nrows; ++row)

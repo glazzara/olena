@@ -239,7 +239,7 @@ namespace mln
 	  Magick::PixelPacket* pixels = view.get(0, 0, ncols, nrows);
 	  const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
 
-	  unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+	  unsigned row_offset = ima.delta_offset(dpoint2d(+1, - ncols));
 
 	  for (def::coord row = minrow; row <= maxrow;
 	       ++row, ptr_ima += row_offset)
@@ -302,8 +302,8 @@ namespace mln
 	  const mln_value(I) *ptr_ima = &ima(ima.domain().pmin());
 	  const mln_value(J) *ptr_opacity_mask = &opacity_mask(opacity_mask.domain().pmin());
 
-	  unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
-	  unsigned opacity_row_offset = opacity_mask.delta_index(dpoint2d(+1, - ncols));
+	  unsigned row_offset = ima.delta_offset(dpoint2d(+1, - ncols));
+	  unsigned opacity_row_offset = opacity_mask.delta_offset(dpoint2d(+1, - ncols));
 
 	  for (def::coord row = minrow; row <= maxrow;
 	       ++row, ptr_ima += row_offset,

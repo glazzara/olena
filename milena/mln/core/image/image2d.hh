@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,9 +31,6 @@
 /// Definition of the basic mln::image2d class.
 ///
 /// \todo Re-activate include at EOF when make::image2d is up again.
-///
-/// \todo Rename delta_index and point_at_index as offset and
-/// point_at_offset.
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
@@ -226,8 +223,8 @@ namespace mln
     // As a fastest image:
     // -------------------
 
-    // Give the index of a point.
-    using super_::index_of_point;
+    // Give the offset of a point.
+    using super_::offset_of_point;
 
     /// Give the border thickness.
     unsigned border() const;
@@ -235,17 +232,17 @@ namespace mln
     /// Give the number of elements (points including border ones).
     unsigned nelements() const;
 
-    /// Read-only access to the image value located at index \p i.
+    /// Read-only access to the image value located at offset \p i.
     const T& element(unsigned i) const;
 
-    /// Read-write access to the image value located at index \p i.
+    /// Read-write access to the image value located at offset \p i.
     T& element(unsigned i);
 
-    /// Give the delta-index corresponding to the delta-point \p dp.
-    int delta_index(const dpoint2d& dp) const;
+    /// Give the delta-offset corresponding to the delta-point \p dp.
+    int delta_offset(const dpoint2d& dp) const;
 
-    /// Give the point corresponding to the index \p i.
-    point2d point_at_index(unsigned i) const;
+    /// Give the point corresponding to the offset \p i.
+    point2d point_at_offset(unsigned i) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -571,7 +568,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image2d<T>::delta_index(const dpoint2d& dp) const
+  image2d<T>::delta_offset(const dpoint2d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = dp[0] * this->data_->vb_.len(1) + dp[1];
@@ -581,7 +578,7 @@ namespace mln
   template <typename T>
   inline
   point2d
-  image2d<T>::point_at_index(unsigned i) const
+  image2d<T>::point_at_offset(unsigned i) const
   {
     mln_precondition(i < nelements());
     def::coord

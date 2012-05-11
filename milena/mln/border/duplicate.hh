@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -101,7 +101,7 @@ namespace mln
 	// Duplicate
 	for_all (pl)
 	  {
- 	    st = ima.index_of_point (pl);
+ 	    st = ima.offset_of_point (pl);
 	    for (unsigned i = 1; i <= border; ++i)
               opt::element(ima, st - i) = opt::element(ima, st);
 	    st = st + len_c - 1;
@@ -152,7 +152,7 @@ namespace mln
  	    // Duplicate
 	    for (unsigned j = 0; j < len_r; ++j)
 	      {
-		st = ima.index_of_point (pl);
+		st = ima.offset_of_point (pl);
 		for (unsigned i = 1; i <= border; ++i)
                   opt::element(ima, st - i) = opt::element(ima, st);
 		st = st + len_c - 1;

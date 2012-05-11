@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -163,7 +163,7 @@ namespace mln
     /// 3).
     image3d(const box3d& b, unsigned bdr = border::thickness);
 
-    /// Constructor with the numbers of indexes and the
+    /// Constructor with the numbers of offsets and the
     /// border thickness.
     image3d(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
 
@@ -196,10 +196,10 @@ namespace mln
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point3d& p);
 
-    /// Read-only access to the image value located at index \p i.
+    /// Read-only access to the image value located at offset \p i.
     const T& element(unsigned i) const;
 
-    /// Read-write access to the image value located at index \p i.
+    /// Read-write access to the image value located at offset \p i.
     T& element(unsigned i);
 
     /// Read-only access to the image value located at (\p sli, \p
@@ -224,10 +224,10 @@ namespace mln
     /// Fast Image method
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int delta_index(const dpoint3d& dp) const;
+    int delta_offset(const dpoint3d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point3d point_at_index(unsigned o) const;
+    point3d point_at_offset(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -569,7 +569,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image3d<T>::delta_index(const dpoint3d& dp) const
+  image3d<T>::delta_offset(const dpoint3d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = (dp[0] * this->data_->vb_.len(1)
@@ -580,7 +580,7 @@ namespace mln
   template <typename T>
   inline
   point3d
-  image3d<T>::point_at_index(unsigned o) const
+  image3d<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < nelements());
     def::coord

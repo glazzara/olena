@@ -357,7 +357,7 @@ namespace mln
     unsigned n = win.size();
 
     for (unsigned i = 0; i < n; ++i)
-      arr.append(ima.delta_index(win.dp(i)));
+      arr.append(ima.delta_offset(win.dp(i)));
 
     return arr;
   }
@@ -380,7 +380,7 @@ namespace mln
 
     for (unsigned i = 0; i < n; ++i)
       {
-	int offset = ima.delta_index(win.dp(i));
+	int offset = ima.delta_offset(win.dp(i));
 	if (offset > 0)
 	  arr.append(offset);
       }
@@ -406,7 +406,7 @@ namespace mln
 
     for (unsigned i = 0; i < n; ++i)
       {
-	int offset = ima.delta_index(win.dp(i));
+	int offset = ima.delta_offset(win.dp(i));
 	if (offset < 0)
 	  arr.append(offset);
       }

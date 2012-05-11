@@ -1,3 +1,35 @@
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename point_at_index, delta_index and index_of_point.
+
+	* mln/accu/line.hh,
+	* mln/accu/transform_line.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/fill.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/core/concept/doc/image_fastest.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/pixel.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/memset_.hh,
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/linear/gaussian_directional_2d.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/trait/image/props.hh,
+	* mln/transform/internal/closest_point_functor.hh,
+	* mln/world/binary_2d/subsample.hh: Rename point_at_index,
+	delta_index and index_of_point to point_at_offset, delta_offset
+	and offset_of_point.
+
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.

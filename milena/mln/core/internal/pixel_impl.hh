@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -95,7 +95,7 @@ namespace mln
 
       operator util::pix<unconst_image_t>() const
       {
-	util::pix<unconst_image_t> tmp(image_, image_.point_at_index(offset()));
+	util::pix<unconst_image_t> tmp(image_, image_.point_at_offset(offset()));
 	return tmp;
       }
 

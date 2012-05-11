@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +50,7 @@ namespace mln
        *
        * \pre The image has to be initialized.
        */
-      int delta_index(const dpoint& dp);
+      int delta_offset(const dpoint& dp);
 
 
       /*! \brief Give the point at offset \p o.
@@ -59,12 +60,12 @@ namespace mln
        * \pre The image has to be initialized.
        * \pre o < nelements()
        */
-      point point_at_index(unsigned o) const;
+      point point_at_offset(unsigned o) const;
 
 
       /*! \brief Give a hook to the value buffer.
        *
-       * 
+       *
        *
        * \pre The image has to be initialized.
        */

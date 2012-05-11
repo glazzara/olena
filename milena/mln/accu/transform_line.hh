@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -230,18 +230,18 @@ namespace mln
 
 	P p = pmin; // Starting point.
 	def::coord& p_dir  = p[dir];
-	
+
 	// Step.
 	mln_delta(P) dp(literal::zero);
 	dp[dir] = 1;
-	int step = input.delta_index(dp);
+	int step = input.delta_offset(dp);
 
 	do
 	  {
 	    // Start the line.
 	    // ---------------
 
-	    unsigned o_p = input.index_of_point(p);
+	    unsigned o_p = input.offset_of_point(p);
 	    unsigned o_qt = o_p - (length / 2) * step;
 	    unsigned o_qu = o_qt;
 	    a.init();
@@ -293,7 +293,7 @@ namespace mln
 	      }
 
 	  } while (p != pmin);
-	
+
 	trace::exiting("accu::impl::transform_line_fastest");
 	return output;
       }
@@ -331,17 +331,17 @@ namespace mln
 	// Step.
 	mln_delta(P) dp(literal::zero);
 	dp[dir] = 1;
-	int step = input.delta_index(dp);
+	int step = input.delta_offset(dp);
 
 	do
 	  {
 	    // Start the line.
 	    // ---------------
 
-	    unsigned o_p = input.index_of_point(p);
+	    unsigned o_p = input.offset_of_point(p);
 	    unsigned o_qt = o_p;
 	    unsigned o_qu = o_p;
-	    
+
 	    a.init();
 
 	    // Causal part.
@@ -363,7 +363,7 @@ namespace mln
 	      {
 		a.take(input.element(o_qt));
 		o_qt += step;
-		
+
 		++p_dir;
 		o_p += step;
 		output.element(o_p) = a.to_result();
@@ -397,7 +397,7 @@ namespace mln
 	      {
 		a.untake(input.element(o_qu));
 		o_qu += step;
-		
+
 		o_p += step;
 		output.element(o_p) = a.to_result();
 	      }
@@ -420,7 +420,7 @@ namespace mln
 	      }
 
 	  } while (p != pmin);
-	
+
 	trace::exiting("accu::impl::transform_line_fastest_without_border");
 	return output;
       }
@@ -534,7 +534,7 @@ namespace mln
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());
 
       internal::transform_line_tests(a_, input);
-	  
+
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_line_dispatch(a_, input, length, dir);
 

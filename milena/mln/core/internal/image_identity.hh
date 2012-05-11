@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,14 +69,14 @@ namespace mln
 
     public:
 
-      int delta_index(const mln_deduce(I, psite, delta)& dp) const
+      int delta_offset(const mln_deduce(I, psite, delta)& dp) const
       {
-	return del_().delta_index(dp);
+	return del_().delta_offset(dp);
       }
 
-      mln_site(I) point_at_index(unsigned i) const
+      mln_site(I) point_at_offset(unsigned i) const
       {
-	return del_().point_at_index(i);
+	return del_().point_at_offset(i);
       }
 
       unsigned border() const

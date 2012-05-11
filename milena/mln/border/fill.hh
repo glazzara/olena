@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -97,7 +97,7 @@ namespace mln
 
 	for_all (pl)
 	{
-	  unsigned end = ima.index_of_point (pl);
+	  unsigned end = ima.offset_of_point (pl);
 	  if (st < end)
 	    std::memset((void*)&opt::element(ima, st),
 			*(const int*)(&v),
@@ -129,7 +129,7 @@ namespace mln
 
 	for_all (pl)
 	{
-	  unsigned end = ima.index_of_point (pl);
+	  unsigned end = ima.offset_of_point (pl);
 	  for (unsigned i = st; i < end; ++i)
 	    opt::element(ima, i) = v;
 	  st = end + len_r;

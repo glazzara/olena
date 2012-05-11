@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -187,7 +187,7 @@ namespace mln
 	const unsigned
 	  factor_2 = factor * factor,
 	  factor_round = factor_2 / 2;
-	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
+	unsigned offset = input.delta_offset(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{
@@ -267,7 +267,7 @@ namespace mln
 	const unsigned
 	  factor_2 = factor * factor,
 	  factor_round = factor_2 / 2;
-	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
+	unsigned offset = input.delta_offset(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{

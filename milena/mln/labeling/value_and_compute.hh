@@ -175,7 +175,7 @@ namespace mln
 	inline
 	void process__(const mln_psite(I)&, unsigned p, const L& l)
 	{
-	  accus_[l].take(input.point_at_index(p));
+	  accus_[l].take(input.point_at_offset(p));
 	}
 
 
