@@ -1,5 +1,11 @@
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a default verbose mode in debug::logger.
+
+	* scribo/debug/logger.hh: Here.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of logger features.
 
 	* scribo/binarization/internal/local_threshold_core.hh,
