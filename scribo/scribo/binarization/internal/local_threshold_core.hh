@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,6 @@
 #  include <mln/debug/filename.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-# include <mln/util/timer.hh>
 
 namespace scribo
 {
@@ -122,8 +122,7 @@ namespace scribo
 	  trace::entering("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  mln_precondition(exact(input).is_valid());
 
-	  mln::util::timer t;
-	  t.start();
+	  scribo::debug::logger().start_local_time_logging();
 
 	  // Make sure the image sizes are a multiple of 3 in each
 	  // dimension. (browsing while binarizing relies on that
@@ -140,8 +139,7 @@ namespace scribo
 							 sub_domains[2].first(),
 							 sub_domains[2].second());
 
-	  t.stop();
-	  std::cout << "image integrale - " << t << std::endl;
+	  scribo::debug::logger().stop_local_time_logging("image integrale -");
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  initialize(internal::debug_mean, input);
@@ -152,7 +150,7 @@ namespace scribo
 	  initialize(internal::debug_alphacond, input);
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-	  t.restart();
+	  scribo::debug::logger().start_local_time_logging();
 
 	  window_size /= 3;
 	  if (window_size % 2)
@@ -162,8 +160,8 @@ namespace scribo
 
 	  scribo::canvas::integral_browsing(integral, 1, window_size,
 					    window_size, 3, f);
-	  t.stop();
-	  std::cout << "Binarization - " << t << std::endl;
+
+	  scribo::debug::logger().stop_local_time_logging("Binarization -");
 
 	  trace::exiting("scribo::binarization::internal::impl::generic::local_threshold_core");
 	}

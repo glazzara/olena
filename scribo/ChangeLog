@@ -1,3 +1,12 @@
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of logger features.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/sauvola_ms.hh: Make use of operator<< with
+	debug::logger.
+
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/binarization/sauvola_ms.cc: Fix options handling.

@@ -78,7 +78,6 @@
 #  include <mln/accu/math/count.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-# include <mln/util/timer.hh>
 
 namespace scribo
 {
@@ -838,8 +837,7 @@ namespace scribo
 	  typedef image2d<mln::util::couple<double,double> > integral_t;
 //	  integral_t integral_sum_sum_2;
 
-	  mln::util::timer t;
-	  t.start();
+	  scribo::debug::logger().start_local_time_logging();
 
 	  // Subsampling from scale 1 to 2.
 	  {
@@ -852,9 +850,8 @@ namespace scribo
 	    sub_ima.append(fi.sub);
 	  }
 
-	  t.stop();
-	  std::cout << "1. subsampling and integral - " << t << std::endl;
-	  t.restart();
+	  scribo::debug::logger().stop_local_time_logging("1. subsampling and integral -");
+	  scribo::debug::logger().start_local_time_logging();
 
 	  // Subsampling to scale 3 and 4.
 	  //
@@ -865,9 +862,8 @@ namespace scribo
 							 sub_domains[i].first(),
 							 sub_domains[i].second()));
 
-	  t.stop();
-	  std::cout << "2. More subsampling - " << t << std::endl;
-	  t.restart();
+	  scribo::debug::logger().stop_local_time_logging("2. More subsampling -");
+	  scribo::debug::logger().start_local_time_logging();
 
 	  // Compute threshold images.
 	  image2d<int_u8> e_2;
@@ -951,9 +947,8 @@ namespace scribo
 						     K);
 	  }
 
-	  t.stop();
-	  std::cout << "3. Multi-scale processing - " << t << std::endl;
-	  t.restart();
+	  scribo::debug::logger().stop_local_time_logging("3. Multi-scale processing -");
+	  scribo::debug::logger().start_local_time_logging();
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -965,9 +960,8 @@ namespace scribo
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
-	  t.stop();
-	  std::cout << "4. Influence Zone on Scale image - " << t << std::endl;
-	  t.restart();
+	  scribo::debug::logger().stop_local_time_logging("4. Influence Zone on Scale image -");
+	  scribo::debug::logger().start_local_time_logging();
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -980,10 +974,13 @@ namespace scribo
 	  mln::util::array<unsigned>
 	    count = labeling::compute(accu::meta::math::count(), e_2, 4);
 	  unsigned npixels = e_2.domain().nsites();
-	  std::cout << "Scale ratios: 2 (" << count[2] / (float)npixels * 100
-		    << ") - 3 (" << count[3] / (float)npixels * 100
-		    << ") - 4 (" << count[4] / (float)npixels * 100 << ")"
-		    << std::endl;
+	  scribo::debug::logger() << "Scale ratios: 2 ("
+				  << count[2] / (float)npixels * 100
+				  << ") - 3 ("
+				  << count[3] / (float)npixels * 100
+				  << ") - 4 ("
+				  << count[4] / (float)npixels * 100 << ")"
+				  << std::endl;
 
  	  if (internal::scale_proba_output)
  	    io::dump::save(internal::debug_scale_proba,
@@ -994,9 +991,8 @@ namespace scribo
 	  image2d<bool>
 	    output = internal::multi_scale_binarization(input_1, e_2, t_ima, s);
 
-	  t.stop();
-	  std::cout << "5. Final binarization - " << t << std::endl;
-	  t.restart();
+	  scribo::debug::logger().stop_local_time_logging("5. Final binarization -");
+	  scribo::debug::logger().start_local_time_logging();
 
 	  trace::exiting("scribo::binarization::sauvola_ms");
 	  return output;
