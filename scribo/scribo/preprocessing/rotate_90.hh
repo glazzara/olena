@@ -122,18 +122,18 @@ namespace scribo
       if (positive) // +90 deg
       {
 	dpoint2d dp(out_nrows, + 1);
-	out_next_offset = output.delta_index(dp);
+	out_next_offset = output.delta_offset(dp);
 
-	out_next_p_offset = output.delta_index(dpoint2d(-1, 0));
+	out_next_p_offset = output.delta_offset(dpoint2d(-1, 0));
 
-	out_ptr += output.delta_index(dpoint2d(out_nrows - 1, 0));
+	out_ptr += output.delta_offset(dpoint2d(out_nrows - 1, 0));
       }
       else // -90 deg
       {
 	dpoint2d dp(- out_nrows, - 1);
-	out_next_offset = output.delta_index(dp);
+	out_next_offset = output.delta_offset(dp);
 
-	out_next_p_offset = output.delta_index(dpoint2d(+1, 0));
+	out_next_p_offset = output.delta_offset(dpoint2d(+1, 0));
 
 	out_ptr += out_ncols - 1;
       }

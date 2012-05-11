@@ -129,14 +129,14 @@ namespace scribo
 	integral_sum_2.init_(output_domain, border_thickness);
 	S* p_isum_2 = integral_sum_2.buffer();
 
-	const unsigned up = sub.delta_index(dpoint2d(-1, 0));
+	const unsigned up = sub.delta_offset(dpoint2d(-1, 0));
 
 	const unsigned nrows = 3 * output_domain.nrows();
 	const unsigned ncols = 3 * output_domain.ncols();
 
 	unsigned row = 0;
 
-	unsigned b_offset = sub.delta_index(dpoint2d(border_thickness,
+	unsigned b_offset = sub.delta_offset(dpoint2d(border_thickness,
 						     border_thickness));
 	p_sub += b_offset;
 	p_isum += b_offset;
@@ -252,14 +252,14 @@ namespace scribo
 	integral_sum_2.init_(output_domain, border_thickness);
 	S* p_isum_2 = integral_sum_2.buffer();
 
-	const unsigned up = sub.delta_index(dpoint2d(-1, 0));
+	const unsigned up = sub.delta_offset(dpoint2d(-1, 0));
 
 	const unsigned nrows = 2 * output_domain.nrows();
 	const unsigned ncols = 2 * output_domain.ncols();
 
 	extension::fill(sub, 0);
 
-	unsigned b_offset = sub.delta_index(dpoint2d(border_thickness,
+	unsigned b_offset = sub.delta_offset(dpoint2d(border_thickness,
 						     border_thickness));
 	p_sub += b_offset;
 	p_isum += b_offset;

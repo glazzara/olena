@@ -403,21 +403,21 @@ namespace scribo
 	  extension::adjust_fill(tmp, 21, 0);
 
 	  value::int_u8 *sep_lbl_ptr = sep_lbl.buffer()
-	    + sep_lbl.index_of_point(sep_lbl.domain().pmin());
+	    + sep_lbl.offset_of_point(sep_lbl.domain().pmin());
 	  bool *separators_ptr = separators.buffer()
-	    + separators.index_of_point(separators.domain().pmin());
-	  unsigned *tmp_ptr = tmp.buffer() + tmp.index_of_point(tmp.domain().pmin());;
-	  int idx1 = tmp.delta_index(dp1);
-	  int idx2 = tmp.delta_index(dp2);
+	    + separators.offset_of_point(separators.domain().pmin());
+	  unsigned *tmp_ptr = tmp.buffer() + tmp.offset_of_point(tmp.domain().pmin());;
+	  int idx1 = tmp.delta_offset(dp1);
+	  int idx2 = tmp.delta_offset(dp2);
 
 	  unsigned
 	    nrows = separators.nrows(),
 	    ncols = separators.ncols();
 
 	  unsigned
-	    row_idx_sep_lbl = sep_lbl.delta_index(dpoint2d(+1, - ncols)),
-	    row_idx_separators = separators.delta_index(dpoint2d(+1, - ncols)),
-	    row_idx_tmp = tmp.delta_index(dpoint2d(+1, - ncols));
+	    row_idx_sep_lbl = sep_lbl.delta_offset(dpoint2d(+1, - ncols)),
+	    row_idx_separators = separators.delta_offset(dpoint2d(+1, - ncols)),
+	    row_idx_tmp = tmp.delta_offset(dpoint2d(+1, - ncols));
 
 	  for (unsigned row = 0; row < nrows; ++row)
 	  {

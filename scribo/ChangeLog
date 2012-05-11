@@ -1,3 +1,26 @@
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename point_at_index, delta_index and index_of_point.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/draw/line_components.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/rotate_90.hh,
+	* scribo/primitive/extract/internal/union.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/internal/rd.hh,
+	* scribo/subsampling/integral.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/merging_hdoc.hh: Rename point_at_index,
+	delta_index and index_of_point to point_at_offset, delta_offset
+	and offset_of_point.
+
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve option parser.

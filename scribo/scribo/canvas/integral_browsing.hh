@@ -95,9 +95,9 @@ namespace scribo
 	col_0 = step / 2;
 
       const int
-	offset_down  = ima.delta_index(dpoint2d(step, 0)),
-	offset_ante  = ima.delta_index(dpoint2d(0, -w)),
-	offset_below = ima.delta_index(dpoint2d(+h, 0));
+	offset_down  = ima.delta_offset(dpoint2d(step, 0)),
+	offset_ante  = ima.delta_offset(dpoint2d(0, -w)),
+	offset_below = ima.delta_offset(dpoint2d(+h, 0));
 
       const int
 	max_row_top  = h/2,

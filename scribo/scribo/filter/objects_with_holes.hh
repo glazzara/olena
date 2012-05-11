@@ -135,7 +135,7 @@ namespace scribo
 	    unsigned
 	      nrows = b.pmax().row() - b.pmin().row() + 1,
 	      ncols = b.pmax().col() - b.pmin().col() + 1,
-	      row_offset = lbl.delta_index(D(+1, -ncols));
+	      row_offset = lbl.delta_offset(D(+1, -ncols));
 
 	    mln_value(L) *ptr = &output(b.pmin());
 	    for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)

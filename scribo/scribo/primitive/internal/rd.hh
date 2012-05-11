@@ -123,7 +123,7 @@ namespace scribo
 	      unsigned n = p + dp[j];
 	      if (g.element(n) == true)
 	      {
-		mln_invariant(f.domain().has(f.point_at_index(n)));
+		mln_invariant(f.domain().has(f.point_at_offset(n)));
 		// Do-Union.
 		unsigned r = Rd_find_root_(parent, n);
 		if (r != p)

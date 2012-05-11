@@ -98,7 +98,7 @@ namespace scribo
       void draw_box(image2d<T>& input, const box2d& b, T2 l)
       {
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = b.nrows(),
 	  ncols = b.ncols();
 	T* p_start = & input(b.pmin());
@@ -133,7 +133,7 @@ namespace scribo
 	if (pmax_col > input_ncols_1) pmax_col = input_ncols_1;
 
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = pmax_row - pmin_row + 1,
 	  ncols = pmax_col - pmin_col + 1;
 	T* p_start = & input.at_(pmin_row, pmin_col);

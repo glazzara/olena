@@ -177,7 +177,7 @@ namespace scribo
 	  mln_box_runstart_piter(I) p(output.domain());
 	  for_all(p)
 	  {
-	    unsigned pi = output.index_of_point(p);
+	    unsigned pi = output.offset_of_point(p);
 	    unsigned *tmp_ptr = &tmp.element(pi);
 	    unsigned *end_ptr = tmp_ptr + ncols;
 

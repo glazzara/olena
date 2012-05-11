@@ -305,23 +305,23 @@ namespace scribo
 	  nrows4 = t_ima[4].nrows(),
 	  ncols4 = t_ima[4].ncols(),
 
-	  delta1  = in.delta_index(dpoint2d(+1, -(s - 1))),
-	  delta1b = in.delta_index(dpoint2d(+1, -(s + s - 1))),
-	  delta1c = in.delta_index(dpoint2d(-(s + s - 1), +1)),
-	  delta1d = in.delta_index(dpoint2d(+1, -(s * 4 - 1))),
-	  delta1e = in.delta_index(dpoint2d(-(s * 4 - 1), +1)),
-	  delta1f = in.delta_index(dpoint2d(-(s - 1), +1)),
+	  delta1  = in.delta_offset(dpoint2d(+1, -(s - 1))),
+	  delta1b = in.delta_offset(dpoint2d(+1, -(s + s - 1))),
+	  delta1c = in.delta_offset(dpoint2d(-(s + s - 1), +1)),
+	  delta1d = in.delta_offset(dpoint2d(+1, -(s * 4 - 1))),
+	  delta1e = in.delta_offset(dpoint2d(-(s * 4 - 1), +1)),
+	  delta1f = in.delta_offset(dpoint2d(-(s - 1), +1)),
 
-	  delta2  = t_ima[2].delta_index(dpoint2d(+1, -1)),
-	  delta2b = t_ima[2].delta_index(dpoint2d(+1, -3)),
-	  delta2c = t_ima[2].delta_index(dpoint2d(-3, +1)),
+	  delta2  = t_ima[2].delta_offset(dpoint2d(+1, -1)),
+	  delta2b = t_ima[2].delta_offset(dpoint2d(+1, -3)),
+	  delta2c = t_ima[2].delta_offset(dpoint2d(-3, +1)),
 
-	  delta3  = t_ima[3].delta_index(dpoint2d(+1, -1)),
+	  delta3  = t_ima[3].delta_offset(dpoint2d(+1, -1)),
 
-	  eor1 = in.delta_index(dpoint2d(+4 * s, - in.ncols())) + more_offset,
-	  eor2 = t_ima[2].delta_index(dpoint2d(+4,- t_ima[2].ncols())),
-	  eor3 = t_ima[3].delta_index(dpoint2d(+2,- t_ima[3].ncols())),
-	  eor4 = t_ima[4].delta_index(dpoint2d(+1,- t_ima[4].ncols()));
+	  eor1 = in.delta_offset(dpoint2d(+4 * s, - in.ncols())) + more_offset,
+	  eor2 = t_ima[2].delta_offset(dpoint2d(+4,- t_ima[2].ncols())),
+	  eor3 = t_ima[3].delta_offset(dpoint2d(+2,- t_ima[3].ncols())),
+	  eor4 = t_ima[4].delta_offset(dpoint2d(+1,- t_ima[4].ncols()));
 
 	mln_value(J) threshold;
 	for (int row4 = 0; row4 < nrows4; ++row4)

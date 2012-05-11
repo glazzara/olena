@@ -119,7 +119,7 @@ namespace scribo
 	    unsigned
 	      nrows = geom::nrows(b),
 	      ncols = geom::ncols(b),
-	      row_offset = lbl.delta_index(D(+1, -ncols));
+	      row_offset = lbl.delta_offset(D(+1, -ncols));
 
 	    mln_value(L) *ptr = &output(b.pmin());
 	    for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)
