@@ -1,5 +1,24 @@
 * Olena 2.0a
 
+  * Milena
+
+	* Rename 'point_at_index', 'delta_index' and 'index_of_point' to
+	  'point_at_offset', 'delta_offset' and 'offset_of_point'.
+
+	* Improve extensibility of convert::from_to.
+
+	* Fix compilation with the latest g++ versions (> 4.5).
+
+  * Scribo
+
+	* New logger class.
+
+	* Improve text recognition: recognition speed and storage of
+          the confidence.
+
+	* New binarization algorithms: Wolf's, Otsu's, Niblack's and
+          Kim's.
+
 
 * Olena 2.0	September 16, 2011
 
