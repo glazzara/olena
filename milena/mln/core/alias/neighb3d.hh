@@ -248,10 +248,16 @@ namespace mln
     static neighb3d it;
     if (it.size() == 0)
       {
-	static const bool vals[] = { 1, 1, 1,
-				     1, 0, 1,
-				     1, 1, 1 };
-	convert::from_to(vals, it);
+	window3d& win = it.hook_win_();
+	win
+	  .insert(0, 0, 0)
+	  .insert(0, 0, 1)
+	  .insert(0, 0, 2)
+	  .insert(0, 1, 2)
+	  .insert(0, 2, 2)
+	  .insert(0, 2, 1)
+	  .insert(0, 2, 0)
+	  .insert(0, 1, 0);
       }
     return it;
   }

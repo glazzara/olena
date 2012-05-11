@@ -1,5 +1,9 @@
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/alias/neighb3d.hh: Fix invalid c8_3d neighborhood.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename point_at_index, delta_index and index_of_point.
 
 	* mln/accu/line.hh,
