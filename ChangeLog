@@ -1,5 +1,27 @@
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix Lintian warnings.
+
+	* debian/changelog: Update date.
+
+	* debian/compat: Increase minimum required version of debhelper.
+
+	* debian/control: Add dependencies and fix description.
+
+	* debian/olena.menu,
+	* debian/copyright: Add a missing endline.
+
+	* debian/gbp.conf: New.
+
+	* debian/olena-dev.manpages: Rename to...
+	* debian/olena-bin.manpages: ... this.
+
+	* debian/rules: Use standard target names.
+
+	* debian/watch: New.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add options for dpkg-source.
 
 	* debian/source/format: Force dpkg-source 3.0.

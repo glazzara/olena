@@ -12,7 +12,7 @@ Homepage: http://olena.lrde.epita.fr
 Package: olena
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, olena-dev, olena-bin
-Description: An Image Processing Platform.
+Description: Image Processing Platform written in C++.
  Install the whole plaform.
  .
  This is a meta-package.
@@ -21,10 +21,14 @@ Description: An Image Processing Platform.
 Package: olena-bin
 Architecture: any
 Depends:
-	 libtesseract-dev (>= 3.02),
-	 libgraphicsmagick++1-dev,
-	 graphicsmagick-libmagick-dev-compat,
-	 libqt4-dev
+	${shlibs:Depends},
+	${misc:Depends},
+	libtesseract-dev (>= 3.02),
+	libgraphicsmagick++1-dev,
+	graphicsmagick-libmagick-dev-compat,
+	libqt4-dev,
+	xsltproc,
+	fop
 Description: Tools based on Olena.
  It includes several tools for manipulating images.
 
@@ -32,11 +36,13 @@ Description: Tools based on Olena.
 
 Package: olena-dev
 Architecture: all
+Depends:
+	${misc:Depends}
 Recommends:
-	 libgraphicsmagick++1-dev,
-	 graphicsmagick-libmagick-dev-compat,
+	libgraphicsmagick++1-dev,
+	graphicsmagick-libmagick-dev-compat,
 Suggests:
-	  libqt4-dev,
-	   libtesseract-dev (>= 3.02)
+	libqt4-dev,
+	libtesseract-dev (>= 3.02)
 Description: Development files for Olena.
  It includes HTML documentation and C++ headers.
