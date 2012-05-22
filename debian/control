@@ -4,6 +4,10 @@ Priority: extra
 Maintainer: Olena Team <olena@lrde.epita.fr>
 Build-Depends: debhelper (>= 5), autotools-dev, dpkg-dev (>= 1.13.19)
 Standards-Version: 3.9.1
+Vcs-Browser: https://trac.lrde.epita.fr/olena/browser
+Vcs-Git: git://git.lrde.epita.fr/olena
+Homepage: http://olena.lrde.epita.fr
+
 
 Package: olena
 Architecture: all
@@ -11,14 +15,28 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, olena-dev, olena-bin
 Description: An Image Processing Platform.
  Install the whole plaform.
  .
- This is a meta-package
+ This is a meta-package.
+
 
 Package: olena-bin
 Architecture: any
+Depends:
+	 libtesseract-dev (>= 3.02),
+	 libgraphicsmagick++1-dev,
+	 graphicsmagick-libmagick-dev-compat,
+	 libqt4-dev
 Description: Tools based on Olena.
  It includes several tools for manipulating images.
 
+
+
 Package: olena-dev
 Architecture: all
+Recommends:
+	 libgraphicsmagick++1-dev,
+	 graphicsmagick-libmagick-dev-compat,
+Suggests:
+	  libqt4-dev,
+	   libtesseract-dev (>= 3.02)
 Description: Development files for Olena.
  It includes HTML documentation and C++ headers.

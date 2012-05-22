@@ -1,3 +1,7 @@
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* debian/control: Add dependencies.
+
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* debian/HOWTO: Add more details.
