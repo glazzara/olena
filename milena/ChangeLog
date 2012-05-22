@@ -1,3 +1,7 @@
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demos/graph/region_adjacency_graph.cc: Add program arguments.
+
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/internal/image_base.hh: Improve documentation.
