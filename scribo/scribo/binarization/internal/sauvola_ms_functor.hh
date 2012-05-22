@@ -54,9 +54,9 @@ namespace scribo
     namespace internal
     {
 
-      double k2;
-      double k3;
-      double k4;
+      double k2 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k3 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k4 = SCRIBO_DEFAULT_SAUVOLA_K;
 
 
       using namespace mln;
@@ -91,7 +91,9 @@ namespace scribo
 
 	sauvola_formula formula_;
 
-	sauvola_ms_functor(const I& input, double K, double R, const image2d<value::int_u8>&e_2, unsigned i, unsigned q);
+	sauvola_ms_functor(const I& input, double R,
+			   const image2d<value::int_u8>&e_2,
+			   unsigned i, unsigned q);
 
 	void exec(double mean, double stddev);
 	void end_of_row(int row);
@@ -113,13 +115,15 @@ namespace scribo
 
 
       template <typename I>
-      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input, double K, double R, const image2d<value::int_u8>&e_2, unsigned i, unsigned q)
+      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input,
+						double R,
+						const image2d<value::int_u8>&e_2,
+						unsigned i, unsigned q)
 	: input(input),
 	  e_2(e_2),
 	  i(i),
 	  q(q),
 	  pxl(input),
-	  //K_(K),
 	  R_(R),
 	  i_(i)
       {

@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 
   // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
+    output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s);
 
   scribo::debug::logger().stop_local_time_logging("Binarized in");
 

@@ -55,7 +55,7 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "k", "Sauvola's formulae parameter. Set it globally for all scales.",
+  { "all-k", "Sauvola's formulae parameter. Set it globally for all scales.",
     "<value>", 0, 1, "0.34" },
 
   { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
@@ -98,15 +98,28 @@ int main(int argc, char *argv[])
 
   // First subsampling scale.
   unsigned s = atoi(options.opt_value("s").c_str());
-  double k = atof(options.opt_value("k").c_str());
   unsigned min_ntrue = atoi(options.opt_value("min-ntrue").c_str());
 
-  binarization::internal::k2 = atof(options.opt_value("k2").c_str());
-  binarization::internal::k3 = atof(options.opt_value("k3").c_str());
-  binarization::internal::k4 = atof(options.opt_value("k4").c_str());
 
-  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s << " - k="
-			  << k << " - min_ntrue=" << min_ntrue << std::endl;
+  // Setting k parameter.
+  double k = atof(options.opt_value("all-k").c_str());
+  binarization::internal::k2 = k;
+  binarization::internal::k3 = k;
+  binarization::internal::k4 = k;
+
+  // Override k parameter for specific scales.
+  if (options.is_set("k2"))
+    binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  if (options.is_set("k3"))
+    binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  if (options.is_set("k4"))
+    binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+
+  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s
+			  << " - k2=" << binarization::internal::k2
+			  << " - k3=" << binarization::internal::k3
+			  << " - k4=" << binarization::internal::k4
+			  << std::endl;
 
   Magick::InitializeMagick(0);
 
@@ -114,7 +127,7 @@ int main(int argc, char *argv[])
   io::magick::load(input_1, options.arg("input.*"));
 
   image2d<bool>
-    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue);
 
   io::pbm::save(output, options.arg("output.pbm"));
 }

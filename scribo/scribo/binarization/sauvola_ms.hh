@@ -69,6 +69,7 @@
 # include <scribo/util/integral_sub_sum_sum2_functor.hh>
 # include <scribo/util/compute_sub_domains.hh>
 
+# include <scribo/debug/logger.hh>
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 #  include <mln/io/pgm/save.hh>
@@ -96,10 +97,10 @@ namespace scribo
       \param[in] w_1 The window size used to compute stats.
       \param[in] s The scale factor used for the first subscaling.
       \param[in] lambda_min_1 Size of the objects kept at scale 1.
-      \param[in] K Sauvola's formulae parameter.
       \param[out] integral_sum_sum_2 Integral image of sum and squared
                                      sum.
 
+      Sauvola's formula parameter K is set to 0.34.
       \p w_1 and \p lambda_min_1 are expressed according to the image
       at scale 0, i.e. the original size.
 
@@ -108,22 +109,24 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, double K,
+	       unsigned s,
 	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2);
 
     /// \overload
     /// The integral image is not returned.
-    //
-    template <typename I>
-    mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s, double K);
-
-    /// \overload
     /// K is set to 0.34.
     //
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s);
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s);
+
+    /// \overload
+    /// Allow to specify a different k parameter for each scale.
+    //
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s,
+	       double k2, double k3, double k4);
 
 
 
@@ -154,8 +157,7 @@ namespace scribo
 			  unsigned lambda_min, unsigned lambda_max,
 			  unsigned s,
 			  unsigned q, unsigned i, unsigned w,
-			  const image2d<mln::util::couple<double,double> >& integral_sum_sum_2,
-			  double K)
+			  const image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
       {
 	typedef image2d<int_u8> I;
 	typedef point2d P;
@@ -170,7 +172,7 @@ namespace scribo
 
 	// 1st pass
 	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
-	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R, e_2, i, q);
+	  f(sub, SCRIBO_DEFAULT_SAUVOLA_R, e_2, i, q);
 	scribo::canvas::integral_browsing(integral_sum_sum_2,
 					  ratio,
 					  w_local_w, w_local_h,
@@ -783,7 +785,7 @@ namespace scribo
 	template <typename I>
 	mln_ch_value(I,bool)
 	sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-		   unsigned s, double K,
+		   unsigned s,
 		   image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
 	{
 	  trace::entering("scribo::binarization::sauvola_ms");
@@ -912,8 +914,7 @@ namespace scribo
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
-						     integral_sum_sum_2,
-						     K);
+						     integral_sum_sum_2);
 	  }
 
 	  // Other scales -> maximum and minimum component size.
@@ -929,8 +930,7 @@ namespace scribo
 //						       (8096 / 36) * coeff,
 						       s,
 						       q, i, w_work,
-						       integral_sum_sum_2,
-						       K);
+						       integral_sum_sum_2);
 	    }
 	  }
 
@@ -943,8 +943,7 @@ namespace scribo
 						     win_w[2] * 3 * coeff,
 //						     (810 / 9) * coeff,
 						     s, 1, 2, w_work,
-						     integral_sum_sum_2,
-						     K);
+						     integral_sum_sum_2);
 	  }
 
 	  scribo::debug::logger().stop_local_time_logging("3. Multi-scale processing -");
@@ -1008,8 +1007,7 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, double K,
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s,
 	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
     {
       trace::entering("scribo::binarization::sauvola_ms");
@@ -1020,7 +1018,7 @@ namespace scribo
       mlc_is_not(mln_value(I), bool)::check();
 
       mln_ch_value(I,bool)
-	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K,
+	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s,
 					   integral_sum_sum_2);
 
       trace::exiting("scribo::binarization::sauvola_ms");
@@ -1029,8 +1027,7 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, double K)
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s)
     {
       trace::entering("scribo::binarization::sauvola_ms");
 
@@ -1043,7 +1040,7 @@ namespace scribo
       integral_t integral_sum_sum_2;
 
       mln_ch_value(I,bool)
-	output = sauvola_ms(input_1_, w_1, s, K, integral_sum_sum_2);
+	output = sauvola_ms(input_1_, w_1, s, integral_sum_sum_2);
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;
@@ -1052,9 +1049,14 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s,
+	       double k2, double k3, double k4)
     {
-      return sauvola_ms(input_1, w_1, s, SCRIBO_DEFAULT_SAUVOLA_K);
+      binarization::internal::k2 = k2;
+      binarization::internal::k3 = k3;
+      binarization::internal::k4 = k4;
+
+      return sauvola_ms(input_1, w_1, s);
     }
 
 

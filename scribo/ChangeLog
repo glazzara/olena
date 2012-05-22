@@ -1,3 +1,20 @@
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a better support for different k values in Sauvola Multiscale.
+
+	* scribo/scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/scribo/binarization/sauvola_ms.hh,
+	* scribo/scribo/binarization/sauvola_ms_split.hh,
+	* scribo/scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/scribo/toolchain/text_in_doc_preprocess.hh: Make use of
+	k2, k3 and k4 variables.
+
+	* scribo/src/binarization/sauvola_ms.cc,
+	* scribo/src/binarization/sauvola_ms_debug.cc,
+	* scribo/src/binarization/sauvola_ms_fg.cc,
+	* scribo/src/binarization/sauvola_ms_split.cc: Fix program
+	arguments.
+
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a default verbose mode in debug::logger.
