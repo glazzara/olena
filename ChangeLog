@@ -1,5 +1,12 @@
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing description in manpages.
+
+	* debian/scribo-cli.1,
+	* debian/scribo-viewer.1: Here.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix Lintian warnings.
 
 	* debian/changelog: Update date.
