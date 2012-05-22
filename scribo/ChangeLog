@@ -1,5 +1,17 @@
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* scribo/binarization/internal/local_threshold_core.hh: Add a
+	missing include.
+
+	* scribo/debug/logger.hh: Fix attributes initialization order.
+
+	* scribo/text/paragraphs_closing.hh: Fix a warning related to an
+	unused-variable.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a better support for different k values in Sauvola Multiscale.
 
 	* scribo/scribo/binarization/internal/sauvola_ms_functor.hh,

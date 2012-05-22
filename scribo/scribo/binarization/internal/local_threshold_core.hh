@@ -44,6 +44,7 @@
 # include <scribo/util/integral_sum_sum2_functor.hh>
 # include <scribo/util/compute_sub_domains.hh>
 
+# include <scribo/debug/logger.hh>
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 #  include <mln/io/pgm/save.hh>

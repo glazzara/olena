@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -207,7 +207,7 @@ namespace scribo
 	  const paragraph_info<L>& current_par = parset(p);
 	  const mln::util::array<line_id_t>& line_ids = current_par.line_ids();
 
-	  line_id_t last_id = line_ids[0];
+	  //line_id_t last_id = line_ids[0];
 	  for_all_elements(i, line_ids)
 	  {
 	    const line_id_t& line_id = line_ids(i);
