@@ -1,3 +1,7 @@
+2012-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/data/transform.cc: Aesthetic changes.
+
 2011-07-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the documentation of mln::util::set.

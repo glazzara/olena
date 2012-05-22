@@ -45,6 +45,7 @@
 namespace my
 {
 
+  // FIXME: Use debug::iota instead of this hand-made version.
   template <typename I>
   void iota(I& ima)
   {
@@ -57,6 +58,7 @@ namespace my
     }
   }
 
+  // FIXME: Shouldn't this functor be part of Milena?
   struct sqrt : mln::Function_v2v<sqrt>
   {
     typedef unsigned short result;
@@ -68,7 +70,7 @@ namespace my
     }
   };
 
-} // end of namespace mln
+} // end of namespace my
 
 
 
@@ -87,6 +89,9 @@ int main()
     my::iota(ima);
     out = data::transform(ima, my::sqrt());
 
+    // FIXME: Use mln_piter().
+    // FIXME: Or use mln::test instead?
+    // (And so on for the rest of the file.)
     box_fwd_piter_<point1d> p(out.domain());
     for_all(p)
       mln_assertion(ima(p) == out(p) * out(p));
@@ -98,12 +103,12 @@ int main()
     image2d<unsigned short> ima(size, size);
     image2d<unsigned short> out(size, size);
 
-     my::iota(ima);
-     out = data::transform(ima, my::sqrt());
+    my::iota(ima);
+    out = data::transform(ima, my::sqrt());
 
-     box_fwd_piter_<point2d> p(out.domain());
-     for_all(p)
-       mln_assertion(ima(p) == out(p) * out(p));
+    box_fwd_piter_<point2d> p(out.domain());
+    for_all(p)
+      mln_assertion(ima(p) == out(p) * out(p));
   }
 
   /// Another image2d test
@@ -112,7 +117,6 @@ int main()
 
      data::fill_with_value(ima, 51);
      data::transform(ima, my::sqrt());
-
   }
 
   /// image 3d test
