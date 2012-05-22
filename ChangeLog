@@ -1,5 +1,14 @@
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add options for dpkg-source.
+
+	* debian/source/format: Force dpkg-source 3.0.
+
+	* debian/source/local-options,
+	* debian/source/options: New.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/control: Add dependencies.
 
 2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
