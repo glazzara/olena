@@ -1,3 +1,7 @@
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* debian/rules: Add missing required rules.
+
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing description in manpages.

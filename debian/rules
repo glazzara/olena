@@ -44,7 +44,9 @@ install: build
 	$(MAKE) DESTDIR="$(CURDIR)/debian/tmp" install
 
 # Build architecture independant packages.
-build-indep: build install
+build-indep: build
+
+binary-indep: build-indep install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs -i
@@ -59,7 +61,9 @@ build-indep: build install
 	dh_builddeb -i
 
 # Build architecture dependant packages.
-build-arch: build install
+build-arch: build
+
+binary-arch: build-arch install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs -a
@@ -83,6 +87,6 @@ build-arch: build install
 	dh_md5sums -a
 	dh_builddeb -a
 
-binary: build-arch build-indep
+binary: binary-arch binary-indep
 
-.PHONY: install build clean build-indep build-arch binary
+.PHONY: install build clean binary-indep binary-arch binary
