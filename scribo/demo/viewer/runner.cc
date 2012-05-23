@@ -43,9 +43,9 @@ QString get_pathto(const QString& file,
     return SCRIBO_LOCAL_DEMODIR "/" + localdirsuffix;
 
   // Installed in a specific path ?
-  f.setFileName(SCRIBO_PREFIX_LIBEXECDIR "/" + file);
+  f.setFileName(SCRIBO_PREFIX_LIBEXECDIR "/scribo/" + file);
   if (f.exists())
-    return SCRIBO_PREFIX_LIBEXECDIR;
+    return SCRIBO_PREFIX_LIBEXECDIR "/scribo/";
 
   // Installed in a specific path but moved elsewhere ?
   QDir dir(QCoreApplication::applicationDirPath());

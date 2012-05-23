@@ -1,3 +1,7 @@
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/viewer/runner.cc: Fix libexec path.
+
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/viewer/runner.cc: Make xml2doc binary lookup more robust.
