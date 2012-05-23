@@ -1,5 +1,9 @@
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/control: Update Standards-Version.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/rules: Update deprecated dh_clean -k command.
 
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
