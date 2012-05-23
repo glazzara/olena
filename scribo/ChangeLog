@@ -1,5 +1,13 @@
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix access to xsl templates.
+
+	* demo/xml2doc/Makefile.am: Add templates in distribution.
+
+	* demo/xml2doc/datarootdir.hh.in: Fix path.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/viewer/runner.cc: Fix libexec path.
 
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>

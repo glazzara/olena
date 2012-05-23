@@ -27,7 +27,7 @@
 # define SCRIBO_DEMO_XML2DOC_DATAROOTDIR_HH
 
 
-# define SCRIBO_PREFIX_DATAROOTDIR "@datarootdir@/scribo"
+# define SCRIBO_PREFIX_DATAROOTDIR "@datarootdir@/olena/scribo"
 
 # define SCRIBO_LOCAL_DATAROOTDIR "@abs_srcdir@"
 

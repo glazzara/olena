@@ -1,5 +1,5 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -71,3 +71,17 @@ EXTRA_DIST = 			\
 	README 			\
 	datarootdir.hh.in
 
+templatedir = $(pkgdatadir)/scribo/
+nobase_dist_template_DATA = 			\
+  $(srcdir)/templates/bin/ooconvert		\
+  $(srcdir)/templates/html/css.css		\
+  $(srcdir)/templates/html/main.xsl		\
+  $(srcdir)/templates/html/main_base64.xsl	\
+  $(srcdir)/templates/opendoc/css.css		\
+  $(srcdir)/templates/opendoc/xsl.xsl		\
+  $(srcdir)/templates/pdf/line.xsl		\
+  $(srcdir)/templates/pdf/main.xsl		\
+  $(srcdir)/templates/pdf/regions.xsl		\
+  $(srcdir)/templates/svg/line.xsl		\
+  $(srcdir)/templates/svg/main.xsl		\
+  $(srcdir)/templates/svg/regions.xsl
