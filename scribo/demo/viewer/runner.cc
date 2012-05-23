@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,9 +50,15 @@ QString get_pathto(const QString& file,
   // Installed in a specific path but moved elsewhere ?
   QDir dir(QCoreApplication::applicationDirPath());
   dir.cdUp(); // move from prefix/bin to prefix/
-  f.setFileName(dir.currentPath() + "/libexec/scribo" + file);
-  if (f.exists())
-    return dir.currentPath() + "/libexec/scribo";
+
+  const char *path[] = { "lib", "libexec", 0 };
+
+  for (int i = 0; path[i]; ++i)
+  {
+    f.setFileName(dir.currentPath() + QString("/%1/scribo").arg(path[i]) + file);
+    if (f.exists())
+      return dir.currentPath() + QString("/%1/scribo").arg(path[i]);
+  }
 
   qDebug() << "FATAL ERROR: Can't locate file: " + file;
 

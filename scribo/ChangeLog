@@ -1,3 +1,7 @@
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/viewer/runner.cc: Make xml2doc binary lookup more robust.
+
 2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/viewer/runner.cc: Make detection of scribo-xml2doc more
