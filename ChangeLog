@@ -1,5 +1,9 @@
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/olena-bin.install: Add shared files in olena-bin.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/changelog: Change distribution.
 
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
