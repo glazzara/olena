@@ -1,3 +1,13 @@
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a bug in a tutorial example.
+
+	* doc/examples/split/tuto4_genericity_and_algorithms-4.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-5.cc.raw: Update.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Include last
+	column and last row in computation.
+
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a typo.
