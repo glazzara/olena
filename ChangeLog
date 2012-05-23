@@ -1,5 +1,9 @@
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/rules: Handles '-j' option for make.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/control: Update Standards-Version.
 
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
