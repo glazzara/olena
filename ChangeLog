@@ -1,5 +1,9 @@
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/copyright: Update commiter name.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/control: Set packages as optional.
 
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
