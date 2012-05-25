@@ -1,5 +1,14 @@
 2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New routines to get bottom left and top right sites.
+
+	* mln/geom/bottom_left.hh,
+	* mln/geom/top_right.hh: New.
+
+	* mln/geom/all.hh: Add includes.
+
+2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve conversion between algebra::h_mat and algebra::quat.
 
 	* mln/algebra/h_mat.hh,
