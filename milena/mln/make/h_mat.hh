@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,7 @@ namespace mln
   {
 
 
-    /// Create an mln::algebra::mat<n,n,T>.
+    /// Create an mln::algebra::h_mat<n,T>.
     /*
      * \param[in] tab C-array of values.
      *
@@ -51,6 +52,14 @@ namespace mln
     algebra::h_mat<mlc_sqrt_int(N), T> h_mat(const T (&tab)[N]);
 
 
+    /*! \brief Create a rotation matrix as mln::algebra::h_mat<n,T>.
+
+      \param[in] q A quaternion.
+
+      \return A rotation matrix based on \p q.
+     */
+    template <typename C>
+    algebra::h_mat<3, C> h_mat(const C& v, const algebra::quat& q);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -66,6 +75,31 @@ namespace mln
 	tmp(i / n, i % n) = tab[i];
       return tmp;
     }
+
+
+    template <typename C>
+    inline
+    algebra::h_mat<3, C>
+    h_mat(const C& v, const algebra::quat& q)
+    {
+      mln_precondition(q.is_unit());
+      (void) v;
+
+      algebra::h_mat<3, C> m;
+      C
+	w = q.to_vec()[0],
+	x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+	y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+	z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+
+      C t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+		xy + zw,  1.f - x2 - z2,  yz - xw,
+		xz - yw,  yz + xw,  1.f - x2 - y2};
+
+      m = mln::make::h_mat(t);
+      return m;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

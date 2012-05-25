@@ -214,17 +214,7 @@ namespace mln
 	mlc_bool(n == 3)::check();
 	mln_precondition(q.is_unit());
 
-	C
-	  w = q.to_vec()[0],
-	  x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
-	  y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
-	  z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
-
-	C t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
-		      xy + zw,  1.f - x2 - z2,  yz - xw,
-		      xz - yw,  yz + xw,  1.f - x2 - y2};
-
-	this->m_ = mln::make::h_mat(t);
+	this->m_ = mln::make::h_mat(q);
 	mln_assertion(check_rotation(q));
 
 	/// Update attributes.

@@ -1,3 +1,19 @@
+2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve conversion between algebra::h_mat and algebra::quat.
+
+	* mln/algebra/h_mat.hh,
+	* mln/algebra/quat.hh: New from_to_ overloads.
+
+	* mln/fun/x2x/rotation.hh: Make use of new make::h_mat overload.
+
+	* mln/make/h_mat.hh: New overload using quaternion as argument.
+
+	* mln/value/builtin/integers.hh: Add epsilon.
+
+	* tests/algebra/h_mat.cc,
+	* tests/make/h_mat.cc: Improve tests.
+
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.

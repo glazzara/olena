@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,12 +25,26 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/make/h_mat.hh>
+#include <mln/math/abs.hh>
 
 
 static const int result[4][4] = { { 2, 3,  4, 0 },
 				  { 5, 6,  7, 0 },
 				  { 8, 9, 10, 0 },
 				  { 0, 0,  0, 1 } };
+
+static const double result_q[4][4] = { { 0.776477, -0.113801, 0.619785, 0 },
+				       { 0.345031, 0.8998, -0.267046, 0 },
+				       { -0.527293, 0.4212, 0.737938, 0 },
+				       { 0, 0, 0, 1 } };
+
+
+template <typename T>
+bool about_equal(const T& f, const T& q)
+{
+  return mln::math::abs(q - f) <= 0.000001;
+}
+
 
 int main()
 {
@@ -39,8 +54,27 @@ int main()
 		  5, 6,  7,
 		  8, 9, 10 };
   algebra::h_mat<3,int> m = make::h_mat(vals);
-  
+
   for (unsigned i = 0; i < 4; ++i)
     for (unsigned j = 0; j < 4; ++j)
       mln_assertion(m(i,j) == result[i][j]);
+
+
+  // Checking creation from quaternions.
+  {
+    algebra::vec<3,double> v;
+    v[0] = 1;
+    v[1] = 2;
+    v[2] = 3;
+    v.normalize();
+
+    algebra::quat q(0.92388, 0.186238, 0.310397, 0.124159);
+    q.set_unit();
+
+    algebra::h_mat<3,double> mat = make::h_mat(double(), q);
+
+    for (unsigned i = 0; i < 4; ++i)
+      for (unsigned j = 0; j < 4; ++j)
+	mln_assertion(about_equal(mat(i,j), result_q[i][j]));
+  }
 }
