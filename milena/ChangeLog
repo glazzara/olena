@@ -1,3 +1,7 @@
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/algebra/mat.hh: Add implementations for 4x4 matrices.
+
 2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	New routines to get bottom left and top right sites.
