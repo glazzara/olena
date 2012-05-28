@@ -159,7 +159,9 @@ namespace mln
 
 	mln_postcondition(box.is_valid());
 
+#ifndef NDEBUG
 	std::cout << "Map image defined on " << box << std::endl;
+#endif // NDEBUG
 
 	X_ = X;
 	init(X, box);
@@ -190,10 +192,11 @@ namespace mln
 
 	mln_postcondition(cp_ima_.is_valid());
 	mln_postcondition(cp_ima_.domain().is_valid());
+
+#ifndef NDEBUG
         std::cout << "pmin = " << cp_ima_.domain().pmin() << std::endl;;
         std::cout << "pmax = " << cp_ima_.domain().pmax() << std::endl;;
 
-#ifndef NDEBUG
 	mln_ch_value(I, bool) debug2(box);
 	data::fill(debug2, false);
 	mln_ch_value(I, value::rgb8) debug(box);
@@ -361,8 +364,9 @@ namespace mln
       std::ostringstream ss2;
       ss2 << "out_" << prefix << r << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
-#endif
+
       std::cout << "Points removed with the whole set and current d_min/d_max: " << removed << std::endl;
+#endif
 
     }
 
@@ -394,11 +398,11 @@ namespace mln
 	d_max = int(mean + sd);
       }
 
+#ifndef NDEBUG
       std::cout << "Standard deviation = " << sd << std::endl;
-      std::ostringstream ss1;
-      ss1 << "histo_" << r << ".dat";
       std::cout << h << std::endl;
       std::cout << "d thresholds = " << d_min << ' ' << d_max << std::endl;
+#endif // ! NDEBUG
     }
 
     template <typename P, typename F>
@@ -422,7 +426,7 @@ namespace mln
       for_all(p)
       {
 	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
-	vec3d_f Yk_i = closest_point(Pk_i);
+	//vec3d_f Yk_i = closest_point(Pk_i);
 
 	int d_i = closest_point.dmap_X_(Pk_i);
 	if (d_i >= d_min && d_i <= d_max)
@@ -438,6 +442,7 @@ namespace mln
 	}
       }
 
+# ifndef NDEBUG
       {
 	std::ostringstream ss2;
 	ss2 << method << "_" << r << "_removed_sites" << ".cloud";
@@ -449,7 +454,6 @@ namespace mln
 	io::cloud::save(tmp, ss2.str());
       }
 
-# ifndef NDEBUG
       std::ostringstream ss2;
       ss2 << method << "_" << r << "_removed_sites" << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
@@ -656,7 +660,6 @@ namespace mln
 
 	// quaternion qR - rotation
 	qR = get_rot(P_, mu_P, mu_Yk, closest_point, qR_old, qT_old);
-	vec3d_f tmp = qR.v();
 
 	// vector qT - translation
 	qT = mu_Yk - qR.rotate(mu_P);
@@ -678,10 +681,10 @@ namespace mln
 	  ss << "0";
 	ss << k << ".ppm";
 	io::ppm::save(mln::slice(tmp_,0), ss.str());
-#endif
 
 	std::cout << "e_" << k << "=" << e_k << std::endl;
 	std::cout << "d_" << k << "=" << d_k << std::endl;
+#endif // ! NDEBUG
 
 	// Check distance and error according to the related paper.
 	// Disabled because of the following 'if'

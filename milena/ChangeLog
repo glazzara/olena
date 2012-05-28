@@ -1,5 +1,9 @@
 2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/registration/icp.hh: Cleanup some debug.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/geom/rotate.hh: Add support for n-D images.
 
 2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
