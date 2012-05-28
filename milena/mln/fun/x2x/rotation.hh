@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -163,7 +163,7 @@ namespace mln
 	rotation();
 	/// Constructor with radian alpha and a facultative direction
 	/// (rotation axis).
-	rotation(C alpha, const algebra::vec<n,C>& axis);
+	rotation(const C& alpha, const algebra::vec<n,C>& axis);
 	/// Constructor with quaternion
 	rotation(const algebra::quat& q);
 	/// Constructor with h_mat.
@@ -172,23 +172,15 @@ namespace mln
 	/// Perform the rotation of the given vector.
 	algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
-	/// Set a new grade alpha.
-	void set_alpha(C alpha);
-	/// Set a new rotation axis.
-	void set_axis(const algebra::vec<n,C>& axis);
-
       protected:
-	void update();
+	void update(const C& alpha, const algebra::vec<n,C>& axis);
 	bool check_rotation(const algebra::quat& q);
 
-	/* FIXME: Is it useful to keep these values, since they are
-	   primarily used to build the matrix `m_'?  */
-	C alpha_;
-	algebra::vec<n,C> axis_;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
 
       template <unsigned n, typename C>
       inline
@@ -198,12 +190,10 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      rotation<n,C>::rotation(C alpha, const algebra::vec<n,C>& axis)
-	: alpha_(alpha),
-	  axis_(axis)
+      rotation<n,C>::rotation(const C& alpha, const algebra::vec<n,C>& axis)
       {
 	this->m_ = algebra::h_mat<n,C>::Id;
-	update();
+	update(alpha, axis);
       }
 
       template <unsigned n, typename C>
@@ -214,15 +204,8 @@ namespace mln
 	mlc_bool(n == 3)::check();
 	mln_precondition(q.is_unit());
 
-	this->m_ = mln::make::h_mat(q);
+	this->m_ = mln::make::h_mat(C(), q);
 	mln_assertion(check_rotation(q));
-
-	/// Update attributes.
-	alpha_ = acos(w) * 2;
-	axis_[0] = x;
-	axis_[1] = y;
-	axis_[2] = z;
-	axis_.normalize();
       }
 
 
@@ -257,26 +240,8 @@ namespace mln
       rotation<n,C>
       rotation<n,C>::inv() const
       {
-	typename rotation::invert res(-alpha_, axis_);
+	typename rotation::invert res(this->m_._1());
 	return res;
-      }
-
-      template <unsigned n, typename C>
-      inline
-      void
-      rotation<n,C>::set_alpha(C alpha)
-      {
-	alpha_ = alpha;
-	update();
-      }
-
-      template <unsigned n, typename C>
-      inline
-      void
-      rotation<n,C>::set_axis(const algebra::vec<n,C>& axis)
-      {
-	axis_ = axis;
-	update();
       }
 
       // Homogenous matrix for a rotation of a point (x,y,z)
@@ -284,9 +249,9 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      rotation<n,C>::update()
+      rotation<n,C>::update(const C& alpha, const algebra::vec<n,C>& axis)
       {
-	this->m_ = internal::get_rot_h_mat(alpha_, axis_);
+	this->m_ = internal::get_rot_h_mat(alpha, axis);
       }
 
       template <unsigned n, typename C>

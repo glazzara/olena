@@ -1,5 +1,9 @@
 2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/fun/x2x/rotation.hh: Remove alpha and axis attributes.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/registration/icp.hh: Cleanup some debug.
 
 2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
