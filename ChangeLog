@@ -1,5 +1,9 @@
 2012-05-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/rules: Add hardening flags according to Debian policy.
+
+2012-05-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/compat: Upgrade to debhelper 9.
 
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>

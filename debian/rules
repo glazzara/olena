@@ -22,10 +22,14 @@ endif
 
 
 build: build-stamp
+
+# Add Hardening flags during configure according to Debian policy.
+# See: 	http://wiki.debian.org/HardeningWalkthrough
+# 	http://wiki.debian.org/Hardening
 build-stamp:
 	dh_testdir
 	./bootstrap
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --enable-scribo --prefix=/usr --libexecdir=/usr/lib
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --enable-scribo --prefix=/usr --libexecdir=/usr/lib $(shell dpkg-buildflags --export=configure)
 	$(MAKE) -j$(CPU_COUNT)
 	touch $@
 
