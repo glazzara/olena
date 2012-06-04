@@ -1,5 +1,5 @@
 olena (2.0-1) wheezy; urgency=low
 
-  * Initial release.
+  * Initial release (Closes: #657974)
 
  -- Olena Team - EPITA Research and Development Laboratory (LRDE) <olena@lrde.epita.fr>  Wed, 23 May 2012 11:19:13 +0200

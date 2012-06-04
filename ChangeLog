@@ -1,5 +1,9 @@
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/changelog: Close ITP bug.
+
+2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/control: Improve descriptions and update Git browser URL.
 
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
