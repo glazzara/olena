@@ -1,5 +1,9 @@
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/source/lintian-overrides: New.
+
+2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/rules: Limit simultaneous compilations.
 
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
