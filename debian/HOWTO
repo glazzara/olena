@@ -3,12 +3,11 @@
 * Use one of the following command:
 ----------------------------------
 
-git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild -i'\.git' -I.git "
+git-buildpackage
 
 or, if you need to keep environment variables :
 
-git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild --preserve-env --prepend-path=/usr/local/bin -i'\.git' -I.git "
-
+git-buildpackage  --preserve-env --prepend-path=/usr/local/bin
 
 
 --preserve-env should NOT be used. However we enable this option to
@@ -18,15 +17,11 @@ git-buildpackage --git-export-dir=../build-area/  --git-builder="debuild --prese
   located in /usr/local/bin.
 
 
-
-* .git/gbp.conf: setting default config
-
-cat <<EOF > .git/gbp.conf
-[DEFAULT]
-# Force running lintian to check .deb files validity.
-postbuild=lintian $GBP_CHANGES_FILE
-EOF
-
-
 * More documentation
+
+** "compatibility level" for the debhelper tool
+http://wiki.debian.org/IntroDebianPackaging
+
+
+** Git Build Package
 http://honk.sigxcpu.org/projects/git-buildpackage/manual-html/gbp.html
