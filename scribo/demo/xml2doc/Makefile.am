@@ -73,7 +73,6 @@ EXTRA_DIST = 			\
 
 templatedir = $(pkgdatadir)/scribo/
 nobase_dist_template_DATA = 			\
-  $(srcdir)/templates/bin/ooconvert		\
   $(srcdir)/templates/html/css.css		\
   $(srcdir)/templates/html/main.xsl		\
   $(srcdir)/templates/html/main_base64.xsl	\
@@ -85,3 +84,5 @@ nobase_dist_template_DATA = 			\
   $(srcdir)/templates/svg/line.xsl		\
   $(srcdir)/templates/svg/main.xsl		\
   $(srcdir)/templates/svg/regions.xsl
+
+nobase_dist_template_SCRIPTS = $(srcdir)/templates/bin/ooconvert
