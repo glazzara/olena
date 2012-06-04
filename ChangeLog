@@ -1,5 +1,9 @@
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* debian/rules: Remove empty directories in package.
+
+2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debian/HOWTO: update.
 
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>

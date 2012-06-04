@@ -41,12 +41,15 @@ clean:
 	rm -f config.{sub,guess,status,log}
 	dh_clean
 
+# Remove empty directories shipped with doxygen after installation in
+# order to cleanup packages.
 install: build
 	dh_testdir
 	dh_testroot
 	dh_prep
 	dh_installdirs
 	$(MAKE) DESTDIR="$(CURDIR)/debian/tmp" install
+	find $(CURDIR)/debian/tmp -type d -empty -delete
 
 # Build architecture independant packages.
 build-indep: build
