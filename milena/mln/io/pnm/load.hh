@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+// 2012 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -45,6 +46,7 @@
 # include <mln/io/pnm/macros.hh>
 
 # include <mln/metal/is_a.hh>
+# include <mln/metal/bool.hh>
 
 namespace mln
 {
@@ -59,7 +61,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
-      void load_ascii_value(std::ifstream& file, I& ima);
+      void
+      load_ascii_value(std::ifstream& file, I& ima, metal::true_ is_scalar);
+
+      template <typename I>
+      void
+      load_ascii_value(std::ifstream& file, I& ima, metal::false_ is_scalar);
+
 
       template <typename I>
       void load_ascii_builtin(std::ifstream& file, I& ima);
@@ -71,15 +79,18 @@ namespace mln
 	template <typename I>
 	inline
 	void
-	load_ascii_dispatch(std::ifstream& file, I& ima, const metal::bool_<true>&)
+	load_ascii_dispatch(std::ifstream& file, I& ima,
+	                    const metal::bool_<true>&)
 	{
-	  load_ascii_value(file, ima);
+	  load_ascii_value(file, ima,
+	                   mlc_bool( mln_dim(mln_value(I)) == 1 ) () );
 	}
 
 	template <typename I>
 	inline
 	void
-	load_ascii_dispatch(std::ifstream& file, I& ima, const metal::bool_<false>&)
+	load_ascii_dispatch(std::ifstream& file, I& ima,
+	                    const metal::bool_<false>&)
 	{
 	  load_ascii_builtin(file, ima);
 	}
@@ -158,12 +169,37 @@ namespace mln
 	  file.read((char*)(&ima(p)), len);
       }
 
-      /// load_ascii for Milena value types.
+      /// load_ascii for Vectorial Milena value types.
       template <typename I>
       inline
-      void load_ascii_value(std::ifstream& file, I& ima)
+      void
+      load_ascii_value(std::ifstream& file, I& ima, metal::false_)
+      {
+	enum { dim = mln_dim(mln_value(I)) };
+	typedef mln_equiv(mln_value_(I)) E;
+	typedef mln_equiv(trait::value_<E>::comp) T;
+	E v;
+	T x;
+
+	mln_fwd_piter(I) p(ima.domain());
+	for_all(p)
+	{
+	  for (int i = 0; i<dim; ++i) {
+	    file >> x;
+	    v[i] = x;
+	  }
+	  ima(p) = v;
+	}
+      }
+
+      /// load_ascii for Scalar Milena value types
+      template <typename I>
+      inline
+      void
+      load_ascii_value(std::ifstream& file, I& ima, metal::true_)
       {
 	mln_equiv(mln_value_(I)) c;
+
 	mln_fwd_piter(I) p(ima.domain());
 	for_all(p)
 	{
@@ -171,6 +207,7 @@ namespace mln
 	  ima(p) = c;
 	}
       }
+
 
       /// load_ascii for builtin value types.
       template <typename I>

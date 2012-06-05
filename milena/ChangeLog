@@ -1,3 +1,10 @@
+2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix issues w.r.t. loading ASCII PPM files.
+
+	* mln/io/pnm/load.hh: Add special cases to handle vectorial types
+	when loading ASCII PPM files.
+
 2014-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove irrelevant Milena test value/interop.
