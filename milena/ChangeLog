@@ -1,5 +1,14 @@
 2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Exercise ASCII PPM file loading.
+
+	* tests/io/ppm/ppm_ascii.cc: New test.
+	* tests/io/ppm/Makefile.am (check_PROGRAMS): Add ppm_ascii.
+	* img/fly_ascii.ppm: New test image.
+	* Makefile.am (dist_img_DATA): Add img/fly_ascii.ppm.
+
+2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Fix issues w.r.t. loading ASCII PPM files.
 
 	* mln/io/pnm/load.hh: Add special cases to handle vectorial types

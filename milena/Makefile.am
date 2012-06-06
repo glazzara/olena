@@ -113,6 +113,7 @@ dist_img_DATA =					\
   img/fly.pbm					\
   img/fly.pgm					\
   img/fly.ppm					\
+  img/fly_ascii.ppm				\
   img/lena.pbm					\
   img/lena.pgm					\
   img/lena.ppm					\

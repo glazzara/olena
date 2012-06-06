@@ -20,7 +20,8 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   ppm16						\
   ppm23						\
-  ppm
+  ppm						\
+  ppm_ascii
 
 
 TESTS = $(check_PROGRAMS)
