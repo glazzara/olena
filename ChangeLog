@@ -1,3 +1,7 @@
+2012-06-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* debian/rules: Cleanup.
+
 2012-06-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* debian/source/lintian-overrides: New.
