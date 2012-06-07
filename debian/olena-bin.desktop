@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Scribo-viewer
+GenericName=Scribo-viewer
+Comment=Document Image Analysis tool.
+Comment[fr]=Outil d\'analyse d\'images de documents.
+Icon=Scribo-viewer
+Exec=scribo-viewer
+Terminal=true
+Categories=Application;

@@ -1,0 +1,3 @@
+?package(olena-bin):needs="text" section="Applications/Graphics" \
+	title="Scribo-viewer" command="/usr/bin/scribo-viewer" \
+	icon="/usr/share/pixmaps/olena.xpm"

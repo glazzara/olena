@@ -2,7 +2,7 @@ Source: olena
 Section: devel
 Priority: optional
 Maintainer: Olena Team - EPITA Research and Development Laboratory (LRDE) <olena@lrde.epita.fr>
-Build-Depends: debhelper (>= 5), autotools-dev, dpkg-dev (>= 1.13.19)
+Build-Depends: debhelper (>= 7.0.50), autotools-dev, dpkg-dev (>= 1.13.19)
 Standards-Version: 3.9.3
 Vcs-Browser: http://git.lrde.epita.fr/?p=olena.git;a=summary
 Vcs-Git: git://git.lrde.epita.fr/olena
@@ -30,7 +30,7 @@ Description: Generic image processing platform written in C++
  to the Simplified Wrapper and Interface Generator (SWIG); and the
  SCRIBO module for Document Image Analysis.
  .
- This is a meta-package installing the whole platform.
+ This is a metapackage installing the whole platform.
 
 
 Package: olena-bin

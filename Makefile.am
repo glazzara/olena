@@ -89,3 +89,36 @@ snapshot:
 	&& cp -f $(srcdir)/configure.ac.tmp $(srcdir)/configure.ac 	\
 	&& $(MAKE) $(AM_MAKEFLAGS) dist 				\
 	&& mv -f $(srcdir)/configure.ac.old $(srcdir)/configure.ac
+
+
+# Extra files for debian package generation.
+pixmapsdir = $(datarootdir)/pixmaps
+dist_pixmaps_DATA = debian/olena.xpm
+
+EXTRA_DIST = 			\
+  debian/olena.install		\
+  debian/olena-dev.doc-base	\
+  debian/watch			\
+  debian/gbp.conf		\
+  debian/compat			\
+  debian/README.Debian		\
+  debian/rules			\
+  debian/olena.manpages		\
+  debian/changelog		\
+  debian/olena-bin.menu		\
+  debian/HOWTO			\
+  debian/olena-bin.desktop	\
+  debian/control		\
+  debian/olena-dev.install	\
+  debian/scribo-cli.1		\
+  debian/olena-bin.install	\
+  debian/olena-dev.docs		\
+  debian/scribo-viewer.1	\
+  debian/olena.1		\
+  debian/copyright		\
+  debian/source			\
+  debian/source/local-options	\
+  debian/source/options		\
+  debian/source/format		\
+  debian/source/lintian-overrides\
+  debian/olena-bin.manpages

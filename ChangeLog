@@ -1,3 +1,30 @@
+2012-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix last warnings with Lintian.
+
+	* Makefile.am: Install pixmaps and include debian/ in
+	distribution.
+
+	* debian/olena-bin.menu,
+	* debian/olena.desktop: Rename as...
+
+	* debian/olena.menu,
+	* debian/olena-bin.desktop: ... this. Update to use scribo-viewer.
+
+	* debian/olena-bin.install: Include pixmap in package.
+
+	* debian/olena.1: Fix description.
+
+	* debian/olena.xpm: New.
+
+	* debian/rules: Set path to libexec.
+
+	* debian/control: Update minimal version of debhelper.
+
+	* debian/compat: Set to debhelper v7.
+
+	* debian/source/lintian-overrides: Remove.
+
 2012-06-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* debian/rules: Cleanup.
