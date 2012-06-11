@@ -1,6 +1,0 @@
-image2d< value::rgb8 >
-
-img == out 
--  
-gaussian.cc: In function 'int main(int, char*)':
-gaussian.cc:22: error: no match for 'operator==' in 'img == out'
