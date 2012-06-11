@@ -34,9 +34,7 @@
 # include <mln/fun/v2v/abs.hh>
 # include <mln/fun/v2v/cast.hh>
 # include <mln/fun/v2v/convert.hh>
-//<<lrde
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-//>>
+
 # include <mln/fun/v2v/saturate.hh>
 
 

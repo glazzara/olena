@@ -1,3 +1,49 @@
+2012-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Strip and remove files to match distributed files.
+
+	* configure.ac,
+	* milena/mln/accu/math/all.hh,
+	* milena/mln/all.hh,
+	* milena/mln/core/image/vmorph/all.hh,
+	* milena/mln/core/image/vmorph/fun_image.hh,
+	* milena/mln/data/all.hh,
+	* milena/mln/essential/routine.hh,
+	* milena/mln/fun/all.hh,
+	* milena/mln/fun/essential.hh,
+	* milena/mln/fun/v2v/all.hh,
+	* milena/mln/fun/v2v/essential.hh,
+	* milena/mln/linear/all.hh,
+	* milena/mln/trait/all.hh,
+	* milena/mln/trait/ch_value.hh,
+	* milena/mln/value/all.hh,
+	* milena/mln/value/essential.hh,
+	* milena/tests/Makefile.am,
+	* milena/tests/convert/Makefile.am,
+	* milena/tests/extract/Makefile.am,
+	* milena/tests/fun/v2v/Makefile.am,
+	* milena/tests/linear/Makefile.am,
+	* milena/tests/linear/gaussian/Makefile.am,
+	* milena/tests/registration/Makefile.am,
+	* milena/tests/trait/ch_value.cc,
+	* milena/tests/value/Makefile.am:
+	Strip (some) parts between tags `<<lrde' and `>>'.
+	* Makefile.am: Likewise.
+	(LRDE_STRIPPED_DIST_FILES, LRDE_NODIST_FILES, dist-hook): Remove.
+	* milena/tests/convert/to_hsl.cc,
+	* milena/tests/extract/blue.cc,
+	* milena/tests/extract/green.cc,
+	* milena/tests/extract/hue.cc,
+	* milena/tests/extract/lum.cc,
+	* milena/tests/extract/red.cc,
+	* milena/tests/extract/sat.cc,
+	* milena/tests/fun/v2v/component.cc,
+	* milena/tests/linear/gaussian/filter.cc,
+	* milena/tests/registration/registration.cc,
+	* milena/tests/value/stack.cc:
+	Remove.
+	* build-aux/strip-lrde: Remove.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries

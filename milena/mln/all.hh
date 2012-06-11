@@ -45,9 +45,7 @@
 #include <mln/draw/all.hh>
 #include <mln/estim/all.hh>
 #include <mln/extension/all.hh>
-//<<lrde
-#include <mln/extract/all.hh>
-//>>
+
 #include <mln/fun/all.hh>
 #include <mln/geom/all.hh>
 #include <mln/graph/all.hh>
@@ -64,13 +62,9 @@
 #include <mln/norm/all.hh>
 #include <mln/opt/all.hh>
 #include <mln/pw/all.hh>
-//<<lrde
-#include <mln/registration/all.hh>
-//>>
+
 #include <mln/set/all.hh>
-//<<lrde
-#include <mln/subsampling/all.hh>
-//>>
+
 #include <mln/tag/all.hh>
 #include <mln/test/all.hh>
 #include <mln/trace/all.hh>

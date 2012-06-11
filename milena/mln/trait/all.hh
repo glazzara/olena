@@ -57,10 +57,4 @@ namespace mln
 # include <mln/trait/promote.hh>
 # include <mln/trait/op/all.hh>
 
-//<<lrde
-// # include <mln/trait/next/all.hh>
-# include <mln/trait/functions.hh>
-//>>
-
-
 #endif // ! MLN_TRAIT_ALL_HH

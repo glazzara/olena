@@ -537,16 +537,6 @@ AC_CONFIG_FILES([
         milena/tests/world/inter_pixel/dim2/Makefile
 ])
 
-dnl<<lrde
-AC_CONFIG_FILES([
-  milena/tests/extract/Makefile
-  milena/tests/linear/gaussian/Makefile
-  milena/tests/registration/Makefile
-  milena/tests/subsampling/Makefile
-])
-dnl>>
-
-
 ## -------------- ##
 ## Applications.  ##
 ## -------------- ##

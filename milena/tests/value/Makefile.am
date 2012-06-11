@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -58,12 +58,6 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 sign_SOURCES = sign.cc
-
-#<<lrde
-# FIXME: Not distributed (yet).
-check_PROGRAMS += stack
-stack_SOURCES = stack.cc
-#>>
 
 # FIXME: Enable when make check_full works.
 # check_full_PROGRAMS =				\

@@ -116,25 +116,6 @@ namespace mln
 	typedef M< mln_ch_value(I, V), E > ret;
       };
 
-//<<lrde
-      // For mln::value::stack_image<n,I>.
-      template < template <unsigned, class> class M, unsigned n, typename I,
-		 typename V >
-      struct ch_value_<  M< n, tag::image_<I> >,  V  >
-      {
-	/* FIXME: The code used to read
-
-	     typedef algebra::vec<n, V> value;
-	     typedef mln_ch_value(I, value) ret;
-
-	   here.  But this is wrong IMHO (Roland).  Changing the value
-	   type of a stack image (in fact, a vectorial image) shall
-	   alter the *value type* of the image, not the type of the
-	   *components* of the vector.  Hence the current definition.  */
-	typedef mln_ch_value(I, V) ret;
-      };
-//>>
-
       // For mln::complex_image<D, G, T>.
       template < template <unsigned, class, class> class M,
 		 unsigned D, typename G, typename T, typename V >
