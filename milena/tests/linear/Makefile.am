@@ -44,7 +44,7 @@ MOSTLYCLEANFILES =				\
   convolve_2x1d-out.pgm				\
   convolve-out.pgm				\
   convolve_directional-out.pgm			\
+  gaussian-out.pgm				\
   lap-out.pgm					\
   log-out.pgm					\
   sobel_2d-out.pgm
-

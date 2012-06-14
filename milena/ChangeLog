@@ -1,3 +1,10 @@
+2012-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distcheck target.
+
+	* tests/linear/Makefile.am (MOSTLYCLEANFILES):
+	Add gaussian-out.pgm.
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants (ticket #43)
