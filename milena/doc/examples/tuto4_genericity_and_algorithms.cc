@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,8 +33,6 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/fun/p2b/chess.hh>
-
-#include <mln/extract/green.hh>
 
 #include <mln/accu/stat/max.hh>
 

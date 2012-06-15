@@ -1,3 +1,10 @@
+2012-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove dependencies on suppressed files.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Do not include
+	mln/extract/green.hh.
+
 2012-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distcheck target.
