@@ -1,3 +1,7 @@
+2012-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/tutorial.tex: Add section about multifile compilation.
+
 2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a bug in a tutorial example.
