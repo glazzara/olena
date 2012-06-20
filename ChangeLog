@@ -1,3 +1,10 @@
+2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ensure `bootstrap -r' regenerates all files.
+
+	* bootstrap: Here.
+	Aesthetic changes.
+
 2012-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove non-distributed headers not required by Milena nor Scribo.
