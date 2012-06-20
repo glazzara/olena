@@ -28,7 +28,8 @@ noinst_PROGRAMS =				\
   recorder-bft					\
   recorder-wst					\
   mask+recorder					\
-  lazy_recorder
+  lazy_recorder					\
+  iz
 
 noinst_HEADERS = recorder.hh lazy_recorder.hh
 
@@ -38,6 +39,12 @@ recorder_bft_SOURCES = recorder-bft.cc image2d-skel.hh
 recorder_wst_SOURCES = recorder-wst.cc
 mask_recorder_SOURCES = mask+recorder.cc
 lazy_recorder_SOURCES = lazy_recorder.cc
+iz_SOURCES = iz.cc
+
+EXTRA_DIST = iz_input.pbm
+# This target is phony: `iz' never writes `iz_output.ppm' actually.
+iz_output.ppm: iz$(EXEEXT) iz_input.pbm
+	./$< $(srcdir)/iz_input.pbm $@
 
 MOSTLYCLEANFILES =				\
   lena-mask-channel.ppm				\
@@ -45,7 +52,15 @@ MOSTLYCLEANFILES =				\
   lena-fill-lazy??????.ppm			\
   lena-bft??????.pbm				\
   lena-wst??????.ppm				\
-  lena-roi-fill??????.ppm
+  lena-roi-fill??????.ppm			\
+  tmp_clo.pgm					\
+  tmp_dmap.pgm					\
+  tmp_ws_superpose.ppm				\
+  tmp_ws.ppm					\
+  tmp_lab.pgm					\
+  tmp_iz.pgm					\
+  tmp_iz.ppm					\
+  tmp_iz_input.ppm
 
 # FIXME: Also produce movies (see comments in recorder.cc and
 # mask+recorder.cc.)

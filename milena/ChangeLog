@@ -1,3 +1,15 @@
+2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add rules to build and run apps/morphers/iz.
+
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add iz.
+	(iz_SOURCES): New.
+	(EXTRA_DIST): Add iz_input.pbm.
+	(iz_output.ppm): New target.
+	(MOSTLYCLEANFILES): Add tmp_clo.pgm, tmp_dmap.pgm,
+	tmp_ws_superpose.ppm, tmp_ws.ppm, tmp_lab.pgm, tmp_iz.pgm,
+	tmp_iz.ppm and tmp_iz_input.ppm.
+
 2012-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	New example demonstrating the use of influence zones.
