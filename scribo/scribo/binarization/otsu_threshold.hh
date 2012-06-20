@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,13 +78,13 @@ namespace scribo
 
 
       /* calculation of probability density */
-      util::array<double> pdf(hist.nvalues());  //probability distribution
+      mln::util::array<double> pdf(hist.nvalues());  //probability distribution
       for(unsigned i = 0; i< maxval; ++i)
 	pdf[i] = (double)hist[i] / nsites;
 
 
-      util::array<double> cdf(hist.nvalues()); //cumulative probability distribution
-      util::array<double> myu(hist.nvalues()); // mean value for separation
+      mln::util::array<double> cdf(hist.nvalues()); //cumulative probability distribution
+      mln::util::array<double> myu(hist.nvalues()); // mean value for separation
 
       /* cdf & myu generation */
       cdf[0] = pdf[0];
@@ -100,7 +101,7 @@ namespace scribo
 	 and determines optimal threshold value */
       mln_value(I) threshold = literal::zero;
       double max_sigma = 0.0;
-      util::array<double> sigma(hist.nvalues()); // inter-class variance
+      mln::util::array<double> sigma(hist.nvalues()); // inter-class variance
 
       for(int i = 0; i < (maxval - 1); ++i)
       {
