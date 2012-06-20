@@ -1,5 +1,9 @@
 2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/binarization/all.hh: Add more includes.
+
+2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/otsu_threshold.hh: Fix namespace ambiguities.
 
 2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
