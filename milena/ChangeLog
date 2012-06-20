@@ -1,3 +1,10 @@
+2012-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New example demonstrating the use of influence zones.
+
+	* apps/morphers/iz.cc: New.
+	* apps/morphers/iz_input.pbm: New.
+
 2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	New ``lazy'' recorder morpher in apps/morpher.
