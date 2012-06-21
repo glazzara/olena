@@ -1,5 +1,17 @@
 2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	New ``lazy'' recorder morpher in apps/morpher.
+
+	* apps/morphers/lazy_recorder.hh: New.
+	* apps/morphers/lazy_recorder.cc: New test.
+	* apps/morphers/Makefile.am (noinst_HEADERS):
+	Add lazy_recorder.hh.
+	(noinst_PROGRAMS): Add lazy_recorder.
+	(lazy_recorder_SOURCES): New.
+	(MOSTLYCLEANFILES): Add lena-fill-lazy??????.ppm.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Render the recorder morpher more generic.
 
 	* apps/morphers/recorder.hh (recorder<I>::sequence): Store a

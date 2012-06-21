@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -27,19 +27,22 @@ noinst_PROGRAMS =				\
   recorder					\
   recorder-bft					\
   recorder-wst					\
-  mask+recorder
+  mask+recorder					\
+  lazy_recorder
 
-noinst_HEADERS = recorder.hh
+noinst_HEADERS = recorder.hh lazy_recorder.hh
 
 mask_channel_SOURCES = mask+channel.cc
 recorder_SOURCES = recorder.cc
 recorder_bft_SOURCES = recorder-bft.cc image2d-skel.hh
 recorder_wst_SOURCES = recorder-wst.cc
 mask_recorder_SOURCES = mask+recorder.cc
+lazy_recorder_SOURCES = lazy_recorder.cc
 
 MOSTLYCLEANFILES =				\
   lena-mask-channel.ppm				\
   lena-fill??????.ppm				\
+  lena-fill-lazy??????.ppm			\
   lena-bft??????.pbm				\
   lena-wst??????.ppm				\
   lena-roi-fill??????.ppm
