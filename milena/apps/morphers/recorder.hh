@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +27,8 @@
 # define APPS_MORPHERS_RECORDER_HH
 
 /// \file
-/// \brief Morpher recording every change in the morphed image.
+/// \brief Morpher recording every change in the morphed image,
+/// storing snapshots of the morphed image at each write operation.
 ///
 /// \todo Split and move this into the library?
 
@@ -55,7 +56,7 @@ template <typename I> struct recorder;
 /* FIXME: mln::decorated_image lacks a proper definition of
    properties! (see mln/core/image/imorph/decorated_image.hh).  We use
    the following (minimal) set of properties as a workaround for the
-  recorder decoration.  */
+   recorder decoration.  */
 namespace mln
 {
   namespace trait
@@ -93,7 +94,7 @@ struct recorder
     sequence.push_back(mln::duplicate(ima));
   }
 
-  std::vector<I> sequence;
+  std::vector<mln_concrete(I)> sequence;
 };
 
 /* Skeleton of an image decorated with a recorder.
@@ -151,6 +152,7 @@ namespace mln
 
 // Helper.
 template <typename I>
+inline
 mln::decorated_image< I, recorder<I> >
 record(mln::Image<I>& ima)
 {
@@ -162,6 +164,7 @@ record(mln::Image<I>& ima)
 namespace ppm
 {
   template <typename I>
+  inline
   void
   save(const mln::decorated_image< I, recorder<I> >& rec,
        const std::string& prefix)

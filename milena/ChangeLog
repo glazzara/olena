@@ -1,3 +1,12 @@
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Render the recorder morpher more generic.
+
+	* apps/morphers/recorder.hh (recorder<I>::sequence): Store a
+	sequence of concrete images.
+	Add missing inline keywords.
+	Improve the documentation.
+
 2011-11-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	New morpher example: recording a breadth-first thinning.
