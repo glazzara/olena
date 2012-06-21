@@ -1,3 +1,18 @@
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use the lazy recorder morpher in apps/morphers/iz.
+
+	* apps/morphers/iz.cc (main): Here.
+	Save the sequence of recorder images as PNG images using Magick++.
+	(save_colorized): New function.
+	* apps/morphers/Makefile.am
+	(noinst_PROGRAMS, iz_SOURCES) [HAVE_MAGICKXX]: Build `iz' only if
+	Magick++ is available.
+	(iz_output.ppm) [HAVE_MAGICKXX]: Likewise.
+	(iz_CPPFLAGS, iz_LDFLAGS) [HAVE_MAGICKXX]: New.
+	(tmp_iz.avi) [HAVE_MAGICKXX]: New target.
+	(MOSTLYCLEANFILES): Add tmp_iz??????.png.
+
 2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add rules to build and run apps/morphers/iz.

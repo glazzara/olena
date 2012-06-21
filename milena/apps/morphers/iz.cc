@@ -24,14 +24,40 @@
 
 #include <mln/make/w_window2d.hh>
 
+#include "apps/morphers/lazy_recorder.hh"
+
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/io/magick/save.hh>
 
 #include <mln/literal/colors.hh>
 
 
+// Save as PNG directly, instead of using PPM as intermediate format.
+template <typename I>
+inline
+void
+save_colorized(const mln::decorated_image< I, lazy_recorder<I> >& rec,
+	       const std::string& prefix)
+{
+  mln_concrete(I) frame = mln::duplicate(rec.decoration().initial);
+  for (size_t i = 0; i < rec.decoration().sequence.size(); ++i)
+    {
+      std::stringstream s;
+      s << std::setfill ('0') << std::setw (6) << i;
+      mln::io::magick::save(mln::labeling::colorize(mln::value::rgb8(), frame),
+			    prefix + s.str() + ".png");
+      // Apply the I-th change to the next frame.
+      //
+      // Changes are applied after the I-th image has been written,
+      // to mimic the behavior of the original recorder morpher (see
+      // recorder.hh).
+      frame(rec.decoration().sequence[i].first) =
+	rec.decoration().sequence[i].second;
+    }
+}
 
 
 void usage(char* argv[])
@@ -43,6 +69,9 @@ void usage(char* argv[])
 
 int main(int argc, char* argv[])
 {
+  // Initialize Magick++.
+  Magick::InitializeMagick(*argv);
+
   using namespace mln;
   using value::int_u8;
 
@@ -112,14 +141,24 @@ int main(int argc, char* argv[])
 			      0, c4(), nlabels),
 	      lab);
 
+  decorated_image< image2d<unsigned>,
+		   lazy_recorder< image2d<unsigned> > > rec_lab =
+    lazy_record(lab);
+
   io::pgm::save(data::saturate(value::int_u8(), lab), "tmp_lab.pgm");
 
 
-  data::paste(transform::influence_zone_front(lab | (pw::value(ws) == pw::cst(0)),
-					      c8(),
-					      make::w_window2d(ww)),
-	      lab);
+  image_if< decorated_image< image2d<unsigned int>,
+			     lazy_recorder< image2d<unsigned int> > >,
+	    fun::eq_v2b_expr_< pw::value_< image2d<unsigned int> >,
+			       pw::cst_<int> > > rec_iz =
+    transform::influence_zone_front(rec_lab | (pw::value(ws) == pw::cst(0)),
+				    c8(),
+				    make::w_window2d(ww));
+  data::paste(rec_iz, lab);
   io::pgm::save(data::saturate(value::int_u8(), lab), "tmp_iz.pgm");
+
+  save_colorized(rec_iz.unmorph_(), "tmp_iz");
 
   image2d<value::rgb8> output = labeling::colorize(value::rgb8(), lab);
   io::ppm::save(output, "tmp_iz.ppm");
