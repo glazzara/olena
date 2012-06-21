@@ -43,19 +43,24 @@ save_colorized(const mln::decorated_image< I, lazy_recorder<I> >& rec,
 	       const std::string& prefix)
 {
   mln_concrete(I) frame = mln::duplicate(rec.decoration().initial);
+  std::stringstream s;
+  s << std::setfill ('0') << std::setw (6) << 0;
+  mln::io::magick::save(mln::labeling::colorize(mln::value::rgb8(), frame),
+			prefix + s.str() + ".png");
   for (size_t i = 0; i < rec.decoration().sequence.size(); ++i)
     {
+      // Next change (`frame(p)' is assigned the value `v' in the next
+      // frame).
+      mln_psite(I) p = rec.decoration().sequence[i].first;
+      mln_value(I) v = rec.decoration().sequence[i].second;
+      // Skip consecutive identical frames.
+      if (frame(p) == v)
+	continue;
+      frame(p) = v;
       std::stringstream s;
-      s << std::setfill ('0') << std::setw (6) << i;
+      s << std::setfill ('0') << std::setw (6) << i + 1;
       mln::io::magick::save(mln::labeling::colorize(mln::value::rgb8(), frame),
 			    prefix + s.str() + ".png");
-      // Apply the I-th change to the next frame.
-      //
-      // Changes are applied after the I-th image has been written,
-      // to mimic the behavior of the original recorder morpher (see
-      // recorder.hh).
-      frame(rec.decoration().sequence[i].first) =
-	rec.decoration().sequence[i].second;
     }
 }
 

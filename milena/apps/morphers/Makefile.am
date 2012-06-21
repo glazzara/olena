@@ -52,7 +52,7 @@ iz_output.ppm: iz$(EXEEXT) iz_input.pbm
 	./$< $(srcdir)/iz_input.pbm $@
 # Likewise, the dependency of this target is a (wrong) shortcut.
 tmp_iz.avi: iz_output.ppm
-	mencoder "mf://tmp_iz*.png" -o tmp_iz.avi -ovc lavc -lavcopts vcodec=mjpeg -speed 10
+	mencoder "mf://tmp_iz*.png" -o tmp_iz.avi -ovc lavc -lavcopts vcodec=mjpeg -speed 50
 endif HAVE_MAGICKXX
 
 MOSTLYCLEANFILES =				\

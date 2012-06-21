@@ -1,5 +1,16 @@
 2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the (movie) output of apps/morphers/iz.
+
+	* apps/morphers/iz.cc (save_colorized): Skip consecutive identical
+	frames.
+	Swap the frame reconstruction and write operations, so that the
+	last frame is eventually saved.
+	* apps/morphers/Makefile.am (tmp_iz.avi): Use a speedup of 50
+	instead of 10.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use the lazy recorder morpher in apps/morphers/iz.
 
 	* apps/morphers/iz.cc (main): Here.
