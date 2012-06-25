@@ -26,6 +26,8 @@ depends_lib         port:GraphicsMagick \
 supported_archs     i386 x86_64
 
 configure.args-append --with-imagemagickxx=no
+# code violates aliasing rules
+configure.cxxflags-append -fno-strict-aliasing
 
 variant scribo description {Add a DIA framework} {
     depends_lib-append port:tesseract \
@@ -39,11 +41,6 @@ variant scribo description {Add a DIA framework} {
 
 variant swilena description {Add Python bindings} {
     configure.args-append --enable-swilena
-}
-
-# Temporary workaround because of a Apple's GCC bug.
-platform darwin 11 {
-    configure.env-append CXXFLAGS=-fno-strict-aliasing
 }
 
 default_variants    +scribo

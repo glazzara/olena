@@ -1,3 +1,8 @@
+2012-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* distrib/macports/Portfile.in: Apply changes required by MacPorts
+	team.
+
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* NEWS: Start populating the changes list.
