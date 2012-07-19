@@ -78,7 +78,7 @@ namespace mln
 
   /// Generic point class.
   ///
-  /// Parameters are \c n the dimension of the space and \c C the
+  /// Parameters are \p G the grid of the space and \p C the
   /// coordinate type in this space.
   template <typename G, typename C>
   struct point : public Gpoint< point<G,C> >,
