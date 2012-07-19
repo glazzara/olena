@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -60,7 +60,8 @@ namespace mln
     /// \param[in] f The predicate.
     //
     template <typename I, typename J, typename F>
-    bool predicate(const Image<I>& lhs, const Image<J>& rhs, const Function_vv2b<F>& f);
+    bool predicate(const Image<I>& lhs, const Image<J>& rhs,
+		   const Function_vv2b<F>& f);
 
 
     /// Test if all points of \p pset verify the predicate \p f.
@@ -218,7 +219,8 @@ namespace mln
 
     template <typename I, typename J, typename F>
     inline
-    bool predicate(const Image<I>& lhs_, const Image<J>& rhs_, const Function_vv2b<F>& f)
+    bool predicate(const Image<I>& lhs_, const Image<J>& rhs_,
+		   const Function_vv2b<F>& f)
     {
       mln_trace("test::predicate");
 

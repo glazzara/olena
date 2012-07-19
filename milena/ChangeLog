@@ -1,5 +1,16 @@
 2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Various aesthetic changes in Milena.
+
+	* mln/data/stretch.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/tag/init.hh,
+	* mln/test/positive.hh,
+	* mln/test/predicate.hh:
+	Here.
+
+2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/point.hh: Fix documentation.
 
 2012-02-08  Roland Levillain  <roland@lrde.epita.fr>

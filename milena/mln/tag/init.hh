@@ -37,7 +37,6 @@ namespace mln
   namespace tag
   {
 
-
     struct bbox_t      {};
     struct border_t    {};
     struct data_t      {};

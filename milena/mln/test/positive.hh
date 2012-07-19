@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,13 +58,13 @@ namespace mln
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
-      // FIXME: Below the '>=' op should properly work with signed/unsigned without
-      // FIXME: warnings; so we really need to overload ops for functions when literals
-      // FIXME: are involved.
+      /* FIXME: Below the '>=' op should properly work with
+	 signed/unsigned without warnings; so we really need to
+	 overload ops for functions when literals are involved.  */
       mln_value(I) zero_ = literal::zero;
       bool res = test::predicate(input.domain(),
 				 pw::value(input) >= pw::cst(zero_));
-      // FIXME: test the version below.
+      /* FIXME: test the version below.  */
 //       return test::predicate(input,
 // 			     fun::v2v::id<mln_value(I)>() >= pw::cst(0));
 

@@ -120,7 +120,7 @@ namespace mln
 
 
 
-    // Facade
+    // Facade.
 
     template <typename V, typename I>
     inline

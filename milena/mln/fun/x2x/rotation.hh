@@ -34,6 +34,7 @@
 /// \todo store the quaternion instead of (axis, alpha)
 ///	  => better precision while composing two rotation matrices.
 ///
+/// FIXME: Find a better reference...
 /// Conversion from Quaternion to (angle,axis), Source:
 ///   http://jeux.developpez.com/faq/matquat/?page=quaternions#Q56
 
@@ -77,10 +78,10 @@ namespace mln
 	  std::abort();
 	}
 
-	// (Axis, angle)-based rotation: 2D case.
+	// (Angle)-based rotation: 2D case.
 	template <typename C >
 	algebra::h_mat<2, C>
-	get_rot_h_mat(const C alpha, const algebra::vec<2,C>&)
+	get_rot_h_mat(const C alpha, const algebra::vec<2,C>& /* unused */)
 	{
 	  const C cos_a = cos(alpha);
 	  const C sin_a = sin(alpha);
@@ -101,7 +102,7 @@ namespace mln
 	{
 	  // Ensure axis is valid.
 	  typedef algebra::vec<3,C> vec_t;
-	  // FIXME: This check is not precise enought when the vector
+	  // FIXME: This check is not precise enough when the vector
 	  // holds floating point values.
 	  mln_precondition(axis != vec_t(literal::zero));
 
