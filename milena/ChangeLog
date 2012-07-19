@@ -1,3 +1,11 @@
+2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove references to mln/morpho/meyer_wst.hh in mln/morpho/.
+
+	* mln/morpho/all.hh,
+	* mln/morpho/essential.hh:
+	Here.
+
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Replace uses morpho::meyer_wst by morpho::watershed::flooding.

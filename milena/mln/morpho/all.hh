@@ -62,7 +62,6 @@ namespace mln
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/laplacian.hh>
-# include <mln/morpho/meyer_wst.hh>
 # include <mln/morpho/min.hh>
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/plus.hh>
