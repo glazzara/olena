@@ -1,3 +1,14 @@
+2012-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get rid of `ltihooks' in Swilena.
+
+	* python/ltihooks.py: Remove.
+	* python/Makefile.am (python_PYTHON): Remove ltihooks.py.
+	* python/swilena.py: No longer import `ltihooks'.
+	* run.in: Help Python find actual dynamic modules in directory
+	`.libs', as suggested by Alexandre Duret-Lutz in
+	http://stackoverflow.com/a/5125879/1551751.
+
 2010-12-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Perform install tests in Swilena.

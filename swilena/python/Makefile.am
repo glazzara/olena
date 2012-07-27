@@ -53,10 +53,8 @@ edit = sed							\
          -e 's|@PYTHON[@]|$(PYTHON)|g'
 
 
-# ltihooks.py: Python import hooks that understand Libtool libraries.
-python_PYTHON = ltihooks.py
 # swilena.py: The whole Swilena suite.
-python_PYTHON += swilena.py
+python_PYTHON = swilena.py
 
 # data.py: Access to the data of the distribution (images, meshes,
 # etc.).

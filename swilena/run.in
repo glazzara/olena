@@ -1,7 +1,8 @@
-#!/bin/sh
-# Copyright (C) 2003, 2004, 2006  Laboratoire d'Informatique de Paris 6
-# (LIP6), département Systèmes Répartis Coopératifs (SRC), Université
-# Pierre et Marie Curie.
+#! /bin/sh
+
+# Copyright (C) 2003, 2004, 2006, 2012 Laboratoire d'Informatique de
+# Paris 6 (LIP6), département Systèmes Répartis Coopératifs (SRC),
+# Université Pierre et Marie Curie.
 #
 # This file is part of Spot, a model checking library.
 #
@@ -30,28 +31,29 @@ test -n "$srcdir" && test -z "$VERBOSE" && exec >/dev/null 2>&1
 # path of dependent libraries in each library).
 modpath='.libs:@abs_top_builddir@/src/.libs'
 
+# `@abs_builddir@/python' and `@abs_srcdir@/python' are for the *.py
+# files, and `@abs_builddir@/python/.libs' for the *.so files.  We
+# used to rely on a module called `ltihooks' to teach the `import'
+# statement how to load a Libtool library, but it started to cause
+# issues with Python 2.6.
+pypath='@abs_builddir@/python:@abs_builddir@/python/.libs:@abs_srcdir@/python':"$PYTHONPATH"
+
+# Likewise for Ruby: as some of our SWIG interfaces import other SWIG
+# interfaces (with the `%import' keyword), we must add the `.libs'
+# directory to SWILENA_RUBY_PATH so that the Ruby interpreter can load
+# the corresponding dynamic module(s) (SWIG's `%import' statements
+# generate code in dynamic modules that bypass Ruby's `Kernel.require'
+# mechanism).
+rbpath='@abs_builddir@/ruby:@abs_builddir@/ruby/.libs:@abs_srcdir@/ruby'
+
 case $1 in
-  '' | *.py)
-    PYTHONPATH='@abs_builddir@/python:@abs_srcdir@/python':"$PYTHONPATH" \
-    DYLD_LIBRARY_PATH=$modpath \
-    exec @PYTHON@ "$@"
-    ;;
-  # What's the point in adding `.libs' to SWILENA_RUBY_PATH?
-  #
-  # As some of our SWIG interfaces import other SWIG interfaces
-  # (with the `%import' keyword), we must add the `.libs' directory
-  # to SWILENA_RUBY_PATH so that the Ruby interpreter can load the
-  # corresponding dynamic module(s) (SWIG's `%import' statements
-  # generate code in dynamic modules that bypass Ruby's
-  # `Kernel.require' mechanism).
+  *.py)
+    PYTHONPATH=$pypath DYLD_LIBRARY_PATH=$modpath exec @PYTHON@ "$@";;
   *.rb)
-    SWILENA_RUBY_PATH='@abs_builddir@/ruby:@abs_srcdir@/ruby:.libs' \
-    DYLD_LIBRARY_PATH=$modpath \
-    exec @RUBY@ "$@"
-  ;;
+    SWILENA_RUBY_PATH=$rbpath DYLD_LIBRARY_PATH=$modpath exec @RUBY@ "$@";;
   *.test)
     exec sh -x "$@";;
   *)
-    echo "Unknown extension" 2>&1
+    echo "Unknown extension" >&2
     exit 2;;
 esac
