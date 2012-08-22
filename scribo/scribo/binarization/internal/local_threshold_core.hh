@@ -77,7 +77,12 @@ namespace scribo
       template <typename I, typename F>
       void
       local_threshold_core(const Image<I>& input, F& f,
-		   unsigned window_size);
+			   unsigned window_size);
+
+      template <typename I, typename F>
+      void
+      local_threshold_core(const Image<I>& input, F& f,
+			   unsigned window_size);
 
 
       /// \overload
@@ -125,18 +130,22 @@ namespace scribo
 
 	  scribo::debug::logger().start_local_time_logging();
 
+	  int integral_scale_ratio = F::step;
+
 	  // Make sure the image sizes are a multiple of 3 in each
 	  // dimension. (browsing while binarizing relies on that
 	  // property).
 	  mln::util::array<mln::util::couple<box2d, unsigned> >
-	    sub_domains = scribo::util::compute_sub_domains(input, 1, 3);
+	    sub_domains = scribo::util::compute_sub_domains(input, 1,
+							    integral_scale_ratio);
 
 	  border::adjust(input, sub_domains(1).second());
 	  border::mirror(input);
 
 	  scribo::util::integral_sum_sum2_functor<value::int_u8, double> fi;
 	  image2d<mln::util::couple<double,double> >
-	    integral = scribo::util::init_integral_image(input, 3, fi,
+	    integral = scribo::util::init_integral_image(input, integral_scale_ratio,
+							 fi,
 							 sub_domains[2].first(),
 							 sub_domains[2].second());
 
@@ -153,14 +162,15 @@ namespace scribo
 
 	  scribo::debug::logger().start_local_time_logging();
 
-	  window_size /= 3;
+	  window_size /= integral_scale_ratio;
 	  if (window_size % 2)
 	    window_size += 2;
 	  else
 	    window_size += 1;
 
 	  scribo::canvas::integral_browsing(integral, 1, window_size,
-					    window_size, 3, f);
+					    window_size, integral_scale_ratio,
+					    f);
 
 	  scribo::debug::logger().stop_local_time_logging("Binarization -");
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -24,15 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_NIBLACK_HH
-# define SCRIBO_BINARIZATION_NIBLACK_HH
+#ifndef SCRIBO_BINARIZATION_NIBLACK_FAST_HH
+# define SCRIBO_BINARIZATION_NIBLACK_FAST_HH
 
 /// \file
 ///
 ///
 
 # include <mln/core/concept/image.hh>
-# include <scribo/binarization/internal/niblack_functor.hh>
+# include <scribo/binarization/internal/niblack_functor_fast.hh>
 # include <scribo/binarization/internal/local_threshold_core.hh>
 
 namespace scribo
@@ -46,6 +46,10 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
+      This implementation gives an approximation of the results.  It
+      is faster than the original implementation thanks to the use of
+      integral images.
+
       \input[in]  input       An image.
       \input[in]  window_size The window size.
       \input[in]  K           Sauvola's formulae constant.
@@ -55,24 +59,19 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input, unsigned window_size, double K);
+    niblack_fast(const Image<I>& input, unsigned window_size, double K);
 
 
 
-    /*! \brief Convert an image into a binary image.
+    /*! \overload
 
       Sauvola's formulae constant K is set to
       SCRIBO_DEFAULT_NIBLACK_K.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-
-      \return A binary image.
-
      */
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input, unsigned window_size);
+    niblack_fast(const Image<I>& input, unsigned window_size);
 
 
     /// \overload
@@ -80,7 +79,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input);
+    niblack_fast(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -89,33 +88,33 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input, unsigned window_size, double K)
+    niblack_fast(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::niblack");
+      trace::entering("scribo::binarization::niblack_fast");
 
       mln_precondition(exact(input).is_valid());
 
-      internal::niblack_functor<I> f(input, K);
+      internal::niblack_functor_fast<I> f(input, K);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::niblack");
+      trace::exiting("scribo::binarization::niblack_fast");
       return f.output;
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input, unsigned window_size)
+    niblack_fast(const Image<I>& input, unsigned window_size)
     {
-      return niblack(input, window_size, SCRIBO_DEFAULT_NIBLACK_K);
+      return niblack_fast(input, window_size, SCRIBO_DEFAULT_NIBLACK_K);
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    niblack(const Image<I>& input)
+    niblack_fast(const Image<I>& input)
     {
-      return niblack(input, 11);
+      return niblack_fast(input, 11);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -126,4 +125,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_NIBLACK_HH
+#endif // ! SCRIBO_BINARIZATION_NIBLACK_FAST_HH

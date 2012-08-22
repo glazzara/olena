@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,6 +57,12 @@ namespace scribo
       template <typename I>
       struct niblack_threshold_functor
       {
+	// Moves in input and output images are made using "step"
+	// pixels. It corresponds to the scale ratio between the input
+	// image and the integral image used to give the statistics
+	// values.
+	enum { step = 3 };
+
 	niblack_threshold_functor(const Image<I>& input,
 				  double K);
 
@@ -75,7 +82,6 @@ namespace scribo
 
 	scribo::binarization::internal::niblack_formula formula_;
 
-	int step_;
 	unsigned next_line3;
 	unsigned offset1;
 	unsigned offset2;
@@ -91,7 +97,6 @@ namespace scribo
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
 
-	step_ = 3;
 	next_line3 = input.delta_index(dpoint2d(+2,0)) + 2 * input.border() - 1;
 
 	offset1 = input.delta_index(dpoint2d(+1,0));
@@ -110,7 +115,7 @@ namespace scribo
 	typedef mln_value(I) V;
 	V th = static_cast<V>(formula_(mean, stddev, K_));
 
-	for (int i = 0; i < step_; ++i, ++po)
+	for (int i = 0; i < step; ++i, ++po)
 	{
 	  *po = th;
 	  *(po + offset1) = th;

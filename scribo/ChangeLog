@@ -1,3 +1,44 @@
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Provide original algorithms without approximations.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/wolf.hh: Restore original algorithms.
+
+	* tests/binarization/Makefile.am,
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack.ref.pbm,
+	* tests/binarization/niblack_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_wodd_hodd.ref.pbm: Adjust test results.
+
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/niblack_fast.hh,
+	* scribo/binarization/wolf_fast.hh,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm,
+	* tests/binarization/niblack_fast.cc,
+	* tests/binarization/niblack_fast.ref.pbm,
+	* tests/binarization/niblack_fast_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_hodd.ref.pbm,
+	* tests/binarization/wolf_fast.cc,
+	* tests/binarization/wolf_fast.ref.pbm,
+	* tests/binarization/wolf_fast_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_hodd.ref.pbm: New.
+
 2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/all.hh: Add more includes.

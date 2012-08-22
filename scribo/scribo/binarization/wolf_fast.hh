@@ -23,15 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_WOLF_HH
-# define SCRIBO_BINARIZATION_WOLF_HH
+#ifndef SCRIBO_BINARIZATION_WOLF_FAST_HH
+# define SCRIBO_BINARIZATION_WOLF_FAST_HH
 
 /// \file
 ///
 ///
 
 # include <mln/core/concept/image.hh>
-# include <scribo/binarization/internal/wolf_functor.hh>
+# include <scribo/binarization/internal/wolf_functor_fast.hh>
 # include <scribo/binarization/internal/local_threshold_core.hh>
 # include <scribo/util/integral_sum_sum2_global_min_functor.hh>
 
@@ -56,26 +56,25 @@ namespace scribo
       Enhancement and Binarization in Multimedia Documents", Christian
       Wolf, Jean-Michel Jolion, Françoise Chassaing, ICPR 2002.
 
+      This implementation gives an approximation of the results.  It
+      is faster than the original implementation thanks to the use of
+      integral images.
+
      */
     template <typename I>
     mln_ch_value(I, bool)
-    wolf(const Image<I>& input, unsigned window_size, double K);
+    wolf_fast(const Image<I>& input, unsigned window_size, double K);
 
 
 
-    /*! \brief Convert an image into a binary image.
+    /*! \overload
 
       Wolf's formulae constant K is set to 0.34.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-
-      \return A binary image.
-
      */
     template <typename I>
     mln_ch_value(I, bool)
-    wolf(const Image<I>& input, unsigned window_size);
+    wolf_fast(const Image<I>& input, unsigned window_size);
 
 
     /// \overload
@@ -83,7 +82,7 @@ namespace scribo
     //
     template <typename I>
     mln_ch_value(I, bool)
-    wolf(const Image<I>& input);
+    wolf_fast(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -125,30 +124,29 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I, bool)
-      wolf(const Image<I>& input, unsigned window_size, double K)
+      wolf_fast(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::wolf");
+      trace::entering("scribo::binarization::wolf_fast");
 
       mln_precondition(exact(input).is_valid());
 
-      int integral_size_ratio = internal::wolf_functor<I>::step;
 
       // Make sure the image sizes are a multiple of 3 in each
       // dimension. (browsing while binarizing relies on that
       // property).
       mln::util::array<mln::util::couple<box2d, unsigned> >
-	sub_domains = scribo::util::compute_sub_domains(input, 1, integral_size_ratio);
+	sub_domains = scribo::util::compute_sub_domains(input, 1, 3);
 
       border::adjust(input, sub_domains(1).second());
       border::mirror(input);
 
       scribo::util::integral_sum_sum2_global_min_functor<value::int_u8, double> fi;
       image2d<mln::util::couple<double,double> >
-	integral = scribo::util::init_integral_image(input, integral_size_ratio, fi,
+	integral = scribo::util::init_integral_image(input, 3, fi,
 						     sub_domains[2].first(),
 						     sub_domains[2].second());
 
-      window_size /= integral_size_ratio;
+      window_size /= 3;
       if (window_size % 2)
 	window_size += 2;
       else
@@ -158,32 +156,32 @@ namespace scribo
       // Compute max(stddev) of all windows.
       internal::global_max_stddev<I> f_max_stddev;
       scribo::canvas::integral_browsing(integral, 1, window_size,
-					window_size, integral_size_ratio, f_max_stddev);
+					window_size, 3, f_max_stddev);
 
       // Binarize !
-      internal::wolf_functor<I>
+      internal::wolf_functor_fast<I>
 	f(input, K, fi.global_min(), f_max_stddev.max_stddev);
       scribo::canvas::integral_browsing(integral, 1, window_size,
-					window_size, integral_size_ratio, f);
+					window_size, 3, f);
 
-      trace::exiting("scribo::binarization::wolf");
+      trace::exiting("scribo::binarization::wolf_fast");
       return f.output;
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    wolf(const Image<I>& input, unsigned window_size)
+    wolf_fast(const Image<I>& input, unsigned window_size)
     {
-      return wolf(input, window_size, SCRIBO_DEFAULT_WOLF_K);
+      return wolf_fast(input, window_size, SCRIBO_DEFAULT_WOLF_K);
     }
 
 
     template <typename I>
     mln_ch_value(I, bool)
-    wolf(const Image<I>& input)
+    wolf_fast(const Image<I>& input)
     {
-      return wolf(input, 11);
+      return wolf_fast(input, 11);
     }
 
 
@@ -195,4 +193,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_WOLF_HH
+#endif // ! SCRIBO_BINARIZATION_WOLF_FAST_HH

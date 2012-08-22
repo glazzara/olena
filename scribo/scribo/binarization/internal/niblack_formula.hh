@@ -66,7 +66,7 @@ namespace scribo
 			  const double K) const;
 
 	/*!
-	  \overload K = 0.34.
+	  \overload K = -0.2.
 	 */
 	double operator()(const double m_x_y, const double s_x_y) const;
 

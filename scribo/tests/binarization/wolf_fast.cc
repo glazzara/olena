@@ -31,7 +31,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/load.hh>
 
-#include <scribo/binarization/wolf.hh>
+#include <scribo/binarization/wolf_fast.hh>
 
 #include "tests/data.hh"
 
@@ -44,12 +44,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, MILENA_IMG_DIR "/lena.pgm");
 
-    image2d<bool> bin = scribo::binarization::wolf(input, 101);
+    image2d<bool> bin = scribo::binarization::wolf_fast(input, 101);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/wolf.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/wolf_fast.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // even height and odd width
@@ -57,12 +57,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_heven.pgm");
 
-    image2d<bool> bin = scribo::binarization::wolf(input, 101);
+    image2d<bool> bin = scribo::binarization::wolf_fast(input, 101);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/wolf_wodd_heven.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/wolf_fast_wodd_heven.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // odd height and even width
@@ -70,12 +70,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_weven_hodd.pgm");
 
-    image2d<bool> bin = scribo::binarization::wolf(input, 101);
+    image2d<bool> bin = scribo::binarization::wolf_fast(input, 101);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/wolf_weven_hodd.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/wolf_fast_weven_hodd.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // odd height and width
@@ -83,11 +83,11 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_hodd.pgm");
 
-    image2d<bool> bin = scribo::binarization::wolf(input, 101);
+    image2d<bool> bin = scribo::binarization::wolf_fast(input, 101);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/wolf_wodd_hodd.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/wolf_fast_wodd_hodd.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,6 +57,12 @@ namespace scribo
       template <typename I>
       struct sauvola_functor
       {
+	// Moves in input and output images are made using "step"
+	// pixels. It corresponds to the scale ratio between the input
+	// image and the integral image used to give the statistics
+	// values.
+	enum { step = 3 };
+
 	sauvola_functor(const Image<I>& input, double K, double R);
 
 	// Run every 4 pixels.
@@ -77,7 +84,6 @@ namespace scribo
 
 	scribo::binarization::internal::sauvola_formula formula_;
 
-	int step_;
 	unsigned next_line3;
 	unsigned offset1;
 	unsigned offset2;
@@ -93,8 +99,6 @@ namespace scribo
 	  K_(K),
 	  R_(R)
       {
-	step_ = 3;
-
 	// Since we iterate from a smaller image in the largest ones
 	// and image at scale 1 does not always have a size which can
 	// be divided by 3, some sites in the border may not be
@@ -119,7 +123,7 @@ namespace scribo
       {
 	double th = formula_(mean, stddev, K_, R_);
 
-	for (int i = 0; i < step_; ++i, ++po, ++pi)
+	for (int i = 0; i < step; ++i, ++po, ++pi)
 	{
 	  *po = (*pi <= th);
 	  *(po + offset1) = (*(pi + offset1) <= th);

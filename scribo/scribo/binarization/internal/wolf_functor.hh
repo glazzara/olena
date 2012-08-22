@@ -58,9 +58,15 @@ namespace scribo
       {
 	typedef mln_value(I) V;
 
+	// Moves in input and output images are made using "step"
+	// pixels. It corresponds to the scale ratio between the input
+	// image and the integral image used to give the statistics
+	// values.
+	enum { step = 1 };
+
 	wolf_functor(const Image<I>& input, double K,
-		     const mln_value(I)& global_min,
-		     double global_max_stddev);
+			  const mln_value(I)& global_min,
+			  double global_max_stddev);
 
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
@@ -83,10 +89,7 @@ namespace scribo
 
 	scribo::binarization::internal::wolf_formula<V> formula_;
 
-	int step_;
-	unsigned next_line3;
-	unsigned offset1;
-	unsigned offset2;
+	unsigned next_line;
       };
 
 #ifndef MLN_INCLUDE_ONLY
@@ -102,21 +105,7 @@ namespace scribo
 	  global_min_(global_min),
 	  global_max_stddev_(global_max_stddev)
       {
-	step_ = 3;
-
-	// Since we iterate from a smaller image in the largest ones
-	// and image at scale 1 does not always have a size which can
-	// be divided by 3, some sites in the border may not be
-	// processed and we must skip them.
-	int more_offset = - (3 - input.ncols() % 3);
-	if (more_offset == - 3)
-	  more_offset = 0; // No offset needed.
-
-	next_line3 = input.delta_index(dpoint2d(+2,0))
-	  + 2 * input.border() + more_offset;
-
-	offset1 = input.delta_index(dpoint2d(+1,0));
-	offset2 = input.delta_index(dpoint2d(+2,0));
+	next_line = 2 * input.border();
 
 	initialize(output, input);
 	po = &output(output.domain().pmin());
@@ -129,16 +118,11 @@ namespace scribo
 	double th = formula_(mean, stddev, K_,
 			     global_max_stddev_, global_min_);
 
-	for (int i = 0; i < step_; ++i, ++po, ++pi)
-	{
-	  *po = (*pi <= th);
-	  *(po + offset1) = (*(pi + offset1) <= th);
-	  *(po + offset2) = (*(pi + offset2) <= th);
-	}
+	*po++ = (*pi++ <= th);
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local mean
-	unsigned index = pi - input.buffer();
+	unsigned index = pi - input.buffer() - 1;
 
 	debug_mean.element(index) = mean * mean_debug_factor;
 	debug_stddev.element(index) = stddev * stddev_debug_factor;
@@ -155,8 +139,8 @@ namespace scribo
       void
       wolf_functor<I>::end_of_row(int)
       {
-	po += next_line3;
-	pi += next_line3;
+	po += next_line;
+	pi += next_line;
       }
 
       template <typename I>

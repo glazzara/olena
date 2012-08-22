@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -29,6 +29,10 @@ EXTRA_DIST = 					\
   niblack_wodd_heven.ref.pbm			\
   niblack_weven_hodd.ref.pbm			\
   niblack_wodd_hodd.ref.pbm			\
+  niblack_fast.res.pbm				\
+  niblack_fast_wodd_heven.ref.pbm		\
+  niblack_fast_weven_hodd.ref.pbm		\
+  niblack_fast_wodd_hodd.ref.pbm		\
   sauvola_ms.ref.pbm				\
   sauvola_ms_wodd_heven.ref.pbm			\
   sauvola_ms_weven_hodd.ref.pbm			\
@@ -41,27 +45,35 @@ EXTRA_DIST = 					\
   wolf.ref.pbm					\
   wolf_wodd_heven.ref.pbm			\
   wolf_weven_hodd.ref.pbm			\
-  wolf_wodd_hodd.ref.pbm
+  wolf_wodd_hodd.ref.pbm			\
+  wolf_fast.ref.pbm				\
+  wolf_fast_wodd_heven.ref.pbm			\
+  wolf_fast_weven_hodd.ref.pbm			\
+  wolf_fast_wodd_hodd.ref.pbm
 
 check_PROGRAMS =				\
   global_threshold 				\
   kim 						\
   local_threshold	 			\
   niblack					\
+  niblack_fast					\
   otsu						\
   sauvola 					\
   sauvola_ms					\
-  wolf
+  wolf						\
+  wolf_fast
 
 
 global_threshold_SOURCES = global_threshold.cc
 kim_SOURCES = kim.cc
 local_threshold_SOURCES = local_threshold.cc
 niblack_SOURCES = niblack.cc
+niblack_fast_SOURCES = niblack_fast.cc
 otsu_SOURCES = otsu.cc
 sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc
 wolf_SOURCES = wolf.cc
+wolf_fast_SOURCES = wolf_fast.cc
 
 TESTS = $(check_PROGRAMS)
 

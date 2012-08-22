@@ -1,5 +1,4 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,18 +23,18 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_THRESHOLD_FUNCTOR_HH
-# define SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_THRESHOLD_FUNCTOR_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_NIBLACK_FUNCTOR_FAST_HH
+# define SCRIBO_BINARIZATION_INTERNAL_NIBLACK_FUNCTOR_FAST_HH
 
 /// \file
 ///
-///
+/// \todo Refactor with sauvola_functor.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/extension/fill.hh>
 
-# include <scribo/binarization/internal/sauvola_formula.hh>
+# include <scribo/binarization/internal/niblack_formula.hh>
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
@@ -55,16 +54,15 @@ namespace scribo
 
 
       template <typename I>
-      struct sauvola_threshold_functor
+      struct niblack_functor_fast
       {
+	niblack_functor_fast(const Image<I>& input, double K);
+
 	// Moves in input and output images are made using "step"
 	// pixels. It corresponds to the scale ratio between the input
 	// image and the integral image used to give the statistics
 	// values.
 	enum { step = 3 };
-
-	sauvola_threshold_functor(const Image<I>& input,
-				  double K, double R);
 
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
@@ -73,15 +71,16 @@ namespace scribo
 
 	void finalize();
 
-	typedef mln_concrete(I) th_t;
-	th_t output;
 
-	mln_value(I)* po;
+	const I input;
+	mln_ch_value(I,bool) output;
+
+	const mln_value(I)* pi;
+	bool* po;
 
 	double K_;
-	double R_;
 
-	scribo::binarization::internal::sauvola_formula formula_;
+	scribo::binarization::internal::niblack_formula formula_;
 
 	unsigned next_line3;
 	unsigned offset1;
@@ -91,15 +90,22 @@ namespace scribo
 #ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
-      sauvola_threshold_functor<I>::sauvola_threshold_functor(const Image<I>& input_,
-							      double K, double R)
-	: K_(K),
-	  R_(R)
+      niblack_functor_fast<I>::niblack_functor_fast(const Image<I>& input_,
+						    double K)
+	: input(exact(input_)),
+	  pi(&input(input.domain().pmin())),
+	  K_(K)
       {
-	const I& input = exact(input_);
-	mln_precondition(input.is_valid());
+	// Since we iterate from a smaller image in the largest ones
+	// and image at scale 1 does not always have a size which can
+	// be divided by 3, some sites in the border may not be
+	// processed and we must skip them.
+	int more_offset = - (3 - input.ncols() % 3);
+	if (more_offset == - 3)
+	  more_offset = 0; // No offset needed.
 
-	next_line3 = input.delta_index(dpoint2d(+2,0)) + 2 * input.border() - 1;
+	next_line3 = input.delta_index(dpoint2d(+2,0))
+	  + 2 * input.border() + more_offset;
 
 	offset1 = input.delta_index(dpoint2d(+1,0));
 	offset2 = input.delta_index(dpoint2d(+2,0));
@@ -110,45 +116,39 @@ namespace scribo
 
       template <typename I>
       void
-      sauvola_threshold_functor<I>::exec(double mean, double stddev)
+      niblack_functor_fast<I>::exec(double mean, double stddev)
       {
-	static point2d p(0,0);
+	double th = formula_(mean, stddev, K_);
 
-	typedef mln_value(I) V;
-	V th = static_cast<V>(formula_(mean, stddev, K_, R_));
-
-	for (int i = 0; i < step; ++i, ++po)
+	for (int i = 0; i < step; ++i, ++po, ++pi)
 	{
-	  *po = th;
-	  *(po + offset1) = th;
-	  *(po + offset2) = th;
+	  *po = (*pi <= th);
+	  *(po + offset1) = (*(pi + offset1) <= th);
+	  *(po + offset2) = (*(pi + offset2) <= th);
 	}
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	// Store local mean
-	unsigned index = po - output.buffer();
+	unsigned index = pi - input.buffer();
 
-	internal::debug_mean.element(index) = mean * internal::mean_debug_factor;
-	internal::debug_stddev.element(index) = stddev * internal::stddev_debug_factor;
-	internal::debug_threshold.element(index) = t;
-
-	double alpha = K * (1 - stddev / R);
-	internal::debug_alpham.element(index) = alpha * mean * internal::alpham_debug_factor;
-	internal::debug_alphacond.element(index) = (stddev < (alpha * mean / 2.));
+	debug_mean.element(index) = mean * mean_debug_factor;
+	debug_stddev.element(index) = stddev * stddev_debug_factor;
+	debug_threshold.element(index) = th;
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
       }
 
       template <typename I>
       void
-      sauvola_threshold_functor<I>::end_of_row(int)
+      niblack_functor_fast<I>::end_of_row(int)
       {
 	po += next_line3;
+	pi += next_line3;
       }
 
       template <typename I>
       void
-      sauvola_threshold_functor<I>::finalize()
+      niblack_functor_fast<I>::finalize()
       {
       }
 
@@ -160,4 +160,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_THRESHOLD_FUNCTOR_HH
+#endif // SCRIBO_BINARIZATION_INTERNAL_NIBLACK_FUNCTOR_FAST_HH
