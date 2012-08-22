@@ -1,5 +1,17 @@
 2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make the area value depends on the first scale ratio.
+
+	* scribo/binarization/sauvola_ms.hh: Change area ranges.
+
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms.ref.pbm,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm: Fix test.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix invalid default options.
 
 	* src/binarization/sauvola_ms_split.cc: Here.

@@ -179,8 +179,6 @@ namespace scribo
 					  s,
 					  f);
 
-	//std::cout << " i = " << i << " - ratio = " << ratio << std::endl;
-
 	// 2nd pass
 	{
 	  mln::util::array<mln_value_(I) *> ptr(ratio);
@@ -910,7 +908,7 @@ namespace scribo
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 //						     (8096 / 144) / coeff,
 //						     44 / coeff,
-						     win_w[i] / 3 / coeff,
+						     win_w[i] / s / coeff,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
@@ -924,8 +922,8 @@ namespace scribo
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 //						       22 / coeff,
 //						       201 * coeff,
-						       win_w[i] / 3 / coeff,
-						       win_w[i] * 3 * coeff,
+						       win_w[i] / s / coeff,
+						       win_w[i] * s * coeff,
 //						       (810 / 36) / coeff,
 //						       (8096 / 36) * coeff,
 						       s,
@@ -940,7 +938,7 @@ namespace scribo
             // FIXME: was '0'. '2' is to avoid too much noise with k=0.2.
 						     2,
 //						     99 * coeff,
-						     win_w[2] * 3 * coeff,
+						     win_w[2] * s * coeff,
 //						     (810 / 9) * coeff,
 						     s, 1, 2, w_work,
 						     integral_sum_sum_2);
