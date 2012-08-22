@@ -1,5 +1,11 @@
 2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix invalid default options.
+
+	* src/binarization/sauvola_ms_split.cc: Here.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Provide original algorithms without approximations.
 
 	* scribo/binarization/internal/local_threshold_core.hh,

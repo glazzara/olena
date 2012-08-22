@@ -58,9 +58,9 @@ static const scribo::debug::opt_data opt_desc[] =
   { "all-k", "Sauvola's formulae parameter. Set it globally for all scales.",
     "<value>", 0, 1, "0.34" },
 
-  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
-  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
-  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
 
   { "min-ntrue", "The number of components in which a site must be set to 'True' in"
     " order to be set to 'True' in the output (Possible values: 1, 2, 3).",
