@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -205,7 +205,6 @@ namespace scribo
       template <typename I>
       void sauvola_ms_functor<I>::finalize()
       {
-	std::cout << "Scale " << i_ << " - K = " << K_ << std::endl;
 	mln_assertion(! pxl.is_valid());
       }
 

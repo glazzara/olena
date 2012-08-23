@@ -1,5 +1,15 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce a verbose mode.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Remove debug.
+
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc: Add verbose mode option.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve Sauvola.
 
 	* sauvola_fast.cc: Remove.

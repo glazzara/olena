@@ -159,7 +159,7 @@ namespace scribo
 	  w_local_h = w_local,
 	  w_local_w = w_local;
 
-	std::cout << "scale " << i << " - w = " << w << " - lambda_min = " << lambda_min << " - lambda_max = " << lambda_max << std::endl;
+	//std::cout << "scale " << i << " - w = " << w << " - lambda_min = " << lambda_min << " - lambda_max = " << lambda_max << std::endl;
 
 	// Make sure the window fits in the image domain.
 	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
@@ -185,7 +185,7 @@ namespace scribo
 	  ++w_local_h;
 	}
 
-	std::cout << "Scale " << i << " - w_h = " << w_local_h << " - w_w = " << w_local_w << " - w = " << w << std::endl;
+	//std::cout << "Scale " << i << " - w_h = " << w_local_h << " - w_w = " << w_local_w << " - w = " << w << std::endl;
 
 	// 1st pass
 	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
@@ -196,7 +196,7 @@ namespace scribo
 					  s,
 					  f);
 
-	std::cout << " i = " << i << " - ratio = " << ratio << std::endl;
+	//std::cout << " i = " << i << " - ratio = " << ratio << std::endl;
 
 	// 2nd pass
 	{
@@ -807,6 +807,7 @@ namespace scribo
 	  trace::entering("scribo::binarization::sauvola_ms");
 
 	  const I& input_1 = exact(input_1_);
+	  typedef mln_value(I) V;
 
 	  mlc_is_a(mln_value(I), value::Scalar)::check();
 	  mln_precondition(input_1.is_valid());

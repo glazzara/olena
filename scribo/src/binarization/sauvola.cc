@@ -99,7 +99,17 @@ int main(int argc, char *argv[])
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
+  mln::util::timer t;
+  t.start();
+
+  // Binarize
   image2d<bool> out = scribo::binarization::sauvola(input_1_gl, w, k);
+
+  if (verbose)
+  {
+    t.stop();
+    std::cout << "binarized in " << t << "s" << std::endl;
+  }
 
   io::pbm::save(out, options.arg("output.pbm"));
 
