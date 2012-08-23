@@ -77,6 +77,47 @@ static const scribo::debug::opt_data opt_desc[] =
 
 
 
+double
+compute_thres(const mln::image2d<mln::util::couple<double,double> >& integral_sum_sum_2,
+	      int row, int col, unsigned win_size,
+	      const scribo::binarization::internal::sauvola_formula& formula)
+{
+  point2d
+    tl(row - win_size - 1,
+       col - win_size - 1),
+    br(row + win_size,
+       col + win_size);
+
+  box2d b(tl, br);
+  b.crop_wrt(integral_sum_sum_2.domain());
+
+  point2d tr = b.pmax();
+  tr.row() = b.pmin().row();
+  point2d bl = b.pmin();
+  bl.row() = b.pmax().row();
+
+  unsigned card_min = b.nsites() - b.height() - b.width() + 1;
+
+  const mln::util::couple<double,double>&
+    D = integral_sum_sum_2(b.pmax()),
+    B = integral_sum_sum_2(tr),
+    C = integral_sum_sum_2(bl),
+    A = integral_sum_sum_2(b.pmin());
+
+  double sum = D.first() - B.first() - C.first() + A.first();
+  double sum_2 = D.second() - B.second() - C.second() + A.second();
+  double mean = sum / card_min;
+
+  double num = (sum_2 - sum * sum / card_min);
+  double stddev;
+  if (num > 0)
+    stddev = std::sqrt(num / (card_min - 1));
+  else
+    stddev = 0;
+
+  return formula(mean, stddev);
+}
+
 
 
 int main(int argc, char *argv[])
@@ -202,97 +243,43 @@ int main(int argc, char *argv[])
     if (!lines(i).is_textline())
       continue;
 
-    math::round<double> round;
     double
       win_min = thickness(lines(i).id()),
-      win_max = lines(i).bbox().height(),
-      card_min,
-      card_max;
+      win_max = lines(i).bbox().height();;
 
     mln_assertion(win_min != 0);
     mln_assertion(win_max != 0);
 
-    binarization::internal::sauvola_formula compute_thres;
-    point2d tl, br;
+    scribo::binarization::internal::sauvola_formula formula;
 
-    mln_piter(L) p(lines(i).bbox());
-    for_all(p)
+    for (int row = lines(i).bbox().pmin().row();
+	 row <= lines(i).bbox().pmax().row();
+	 ++row)
     {
+      bool* out_ptr = &output.at_(row, lines(i).bbox().pmin().col());
+      value::int_u8* in_ptr = &input_1_gl.at_(row, lines(i).bbox().pmin().col());
+      for (int col = lines(i).bbox().pmin().col();
+	   col <= lines(i).bbox().pmax().col();
+	   ++col)
+      {
+	// Min case
+	double T_min = compute_thres(integral_sum_sum_2, row, col, win_min, formula);
 
-      // Min case
-      tl.row() = (p.row() - win_min - 1);
-      tl.col() = (p.col() - win_min - 1);
+	// Max case
+	double T_max = compute_thres(integral_sum_sum_2, row, col, win_max, formula);
 
-      br.row() = (p.row() + win_min);
-      br.col() = (p.col() + win_min);
+	// Final threshold
+	double teta = 0.3; // Good results from 0.1 to 0.3 according
+			   // to the paper.
+	double T = teta * T_max + (1 - teta) * T_min;
 
-      box2d b(tl, br);
-      b.crop_wrt(integral_sum_sum_2.domain());
+	mln_assertion(T_min <= 255);
+	mln_assertion(T_max <= 255);
+	mln_assertion(T <= 255);
 
-      point2d tr = b.pmax();
-      tr.row() = b.pmin().row();
-      point2d bl = b.pmin();
-      bl.row() = b.pmax().row();
-
-      card_min = b.nsites() - b.height() - b.width() + 1;
-
-      double sum = integral_sum_sum_2(b.pmax()).first() - integral_sum_sum_2(tr).first() - integral_sum_sum_2(bl).first() + integral_sum_sum_2(b.pmin()).first();
-      double sum_2 = integral_sum_sum_2(b.pmax()).second() - integral_sum_sum_2(tr).second() - integral_sum_sum_2(bl).second() + integral_sum_sum_2(b.pmin()).second();
-      double mean = sum / card_min;
-
-      double num = (sum_2 - sum * sum / card_min);
-      double stddev = 0;
-      if (num > 0)
-	  stddev = std::sqrt(num / (card_min - 1));
-      else
-	stddev = 0;
-
-
-      double T_min = compute_thres(mean, stddev);
-
-      // Max case
-      tl.row() = (p.row() - win_max - 1);
-      tl.col() = (p.col() - win_max - 1);
-
-      br.row() = (p.row() + win_max);
-      br.col() = (p.col() + win_max);
-
-      b = box2d(tl, br);
-      b.crop_wrt(integral_sum_sum_2.domain());
-
-      tr = b.pmax();
-      tr.row() = b.pmin().row();
-      bl = b.pmin();
-      bl.row() = b.pmax().row();
-
-      card_max = b.nsites() - b.height() - b.width() + 1;
-
-      sum = integral_sum_sum_2(b.pmax()).first() - integral_sum_sum_2(tr).first() - integral_sum_sum_2(bl).first() + integral_sum_sum_2(b.pmin()).first();
-      sum_2 = integral_sum_sum_2(b.pmax()).second() - integral_sum_sum_2(tr).second() - integral_sum_sum_2(bl).second() + integral_sum_sum_2(b.pmin()).second();
-      mean = sum / card_max;
-
-      num = (sum_2 - sum * sum / card_max);
-      stddev = 0;
-      if (num > 0)
-	  stddev = std::sqrt(num / (card_max - 1));
-      else
-	stddev = 0;
-
-      double T_max = compute_thres(mean, stddev);
-
-
-      // Final threshold
-
-      double teta = 0.3;
-      double T = teta * T_max + (1 - teta) * T_min;
-
-      mln_assertion(T_min <= 255);
-      mln_assertion(T_max <= 255);
-      mln_assertion(T <= 255);
-
-      output(p) = input_1_gl(p) <= T;
+	*out_ptr++ = *in_ptr++ <= T;
+      }
     }
-
   }
 
   lt.stop();

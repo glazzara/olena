@@ -29,6 +29,8 @@
 #include <mln/io/pbm/save.hh>
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
+#include <mln/arith/revert.hh>
+#include <mln/logical/not.hh>
 
 #include <scribo/binarization/niblack.hh>
 #include <scribo/debug/option_parser.hh>
@@ -98,8 +100,9 @@ int main(int argc, char *argv[])
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
+  arith::revert_inplace(input_1_gl);
   image2d<bool> out = scribo::binarization::niblack(input_1_gl, w, k);
-
+  logical::not_inplace(out);
   io::pbm::save(out, options.arg("output.pbm"));
 
   trace::exiting("main");

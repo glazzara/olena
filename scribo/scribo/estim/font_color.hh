@@ -83,7 +83,7 @@ namespace scribo
 	mln_ch_value(I,value::int_u8)
 	  lbl = labeling::blobs(skel, c8(), nlabels);
 
-	util::array<algebra::vec<3u, float> >	res =
+	mln::util::array<algebra::vec<3u, float> > res =
 	  labeling::compute(accu::meta::stat::mean(), text_ima, lbl, nlabels);
 
 	accu::stat::median_h<value::int_u12>	m_red;
@@ -131,7 +131,7 @@ namespace scribo
 	value::int_u8 nlabels = 0;
 	mln_ch_value(J,value::int_u8) lbl = labeling::blobs(skel, c8(), nlabels);
 
-	util::array<algebra::vec<3u, float> >	res =
+	mln::util::array<algebra::vec<3u, float> > res =
 	  labeling::compute(accu::meta::stat::mean(), text_ima, lbl, nlabels);
 
 	accu::stat::median_h<value::int_u12>	m_val;

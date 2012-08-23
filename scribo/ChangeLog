@@ -1,5 +1,19 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Several small fixes.
+
+	* scribo/estim/font_color.hh: Fix namespace ambiguities.
+
+	* src/binarization/Makefile.am: Add kim as target.
+
+	* src/binarization/kim.cc: Cleanup code.
+
+	* src/binarization/niblack.cc: Fix reverse video.
+
+	* src/binarization/sauvola_ms.cc: Handle several k values.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation.
 
 	* scribo/binarization/sauvola_ms.hh,

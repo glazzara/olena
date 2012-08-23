@@ -30,6 +30,7 @@ if HAVE_MAGICKXX
    sauvola_ms_debug
 
   utilexec_PROGRAMS =                   \
+   kim					\
    niblack				\
    otsu					\
    sauvola 				\
@@ -65,6 +66,12 @@ if HAVE_MAGICKXX
 			   $(MAGICKXX_CPPFLAGS)
   sauvola_ms_fg_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
+
+  kim_SOURCES  = kim.cc
+  kim_CPPFLAGS = $(AM_CPPFLAGS) 	\
+		 $(MAGICKXX_CPPFLAGS)
+  kim_LDFLAGS  = $(AM_LDFLAGS) 	\
+		 $(MAGICKXX_LDFLAGS)
 
   sauvola_SOURCES  = sauvola.cc
   sauvola_CPPFLAGS = $(AM_CPPFLAGS) 		\

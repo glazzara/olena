@@ -109,14 +109,23 @@ int main(int argc, char *argv[])
   unsigned s = atoi(options.opt_value("s").c_str());
   double k = atof(options.opt_value("k").c_str());
 
+  if (options.is_set("k"))
+  {
+    binarization::internal::k2 = k;
+    binarization::internal::k3 = k;
+    binarization::internal::k4 = k;
+  }
+  else
+  {
+    binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+    binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+    binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+  }
+
   if (verbose)
     std::cout << "Using w_1=" << w_1 << " - s=" << s
 	      << " - k=" << k << std::endl;
 
-
-  binarization::internal::k2 = atof(options.opt_value("k2").c_str());
-  binarization::internal::k3 = atof(options.opt_value("k3").c_str());
-  binarization::internal::k4 = atof(options.opt_value("k4").c_str());
 
 
   // Load
