@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* sauvola_fast.cc: New implementation.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/sauvola_threshold.hh: Add some debug.
 
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
