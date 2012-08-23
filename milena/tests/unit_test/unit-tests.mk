@@ -125,6 +125,7 @@ mln_accu_math_count \
 mln_accu_math_essential \
 mln_accu_math_inf \
 mln_accu_math_sum \
+mln_accu_math_sumpow \
 mln_accu_math_sup \
 mln_accu_max_site \
 mln_accu_nil \
@@ -497,6 +498,7 @@ mln_data_approx_essential \
 mln_data_approx_median \
 mln_data_compare \
 mln_data_compute \
+mln_data_compute_in_window \
 mln_data_convert \
 mln_data_essential \
 mln_data_fast_median \
@@ -719,6 +721,7 @@ mln_fun_x2x_rotation \
 mln_fun_x2x_translation \
 mln_geom_all \
 mln_geom_bbox \
+mln_geom_bottom_left \
 mln_geom_chamfer \
 mln_geom_complex_geometry \
 mln_geom_crop \
@@ -746,6 +749,7 @@ mln_geom_seeds2tiling_roundness \
 mln_geom_size1d \
 mln_geom_size2d \
 mln_geom_size3d \
+mln_geom_top_right \
 mln_geom_translate \
 mln_geom_vertical_symmetry \
 mln_graph_all \
@@ -1455,6 +1459,7 @@ mln_accu_math_count_SOURCES = mln_accu_math_count.cc
 mln_accu_math_essential_SOURCES = mln_accu_math_essential.cc
 mln_accu_math_inf_SOURCES = mln_accu_math_inf.cc
 mln_accu_math_sum_SOURCES = mln_accu_math_sum.cc
+mln_accu_math_sumpow_SOURCES = mln_accu_math_sumpow.cc
 mln_accu_math_sup_SOURCES = mln_accu_math_sup.cc
 mln_accu_max_site_SOURCES = mln_accu_max_site.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
@@ -1827,6 +1832,7 @@ mln_data_approx_essential_SOURCES = mln_data_approx_essential.cc
 mln_data_approx_median_SOURCES = mln_data_approx_median.cc
 mln_data_compare_SOURCES = mln_data_compare.cc
 mln_data_compute_SOURCES = mln_data_compute.cc
+mln_data_compute_in_window_SOURCES = mln_data_compute_in_window.cc
 mln_data_convert_SOURCES = mln_data_convert.cc
 mln_data_essential_SOURCES = mln_data_essential.cc
 mln_data_fast_median_SOURCES = mln_data_fast_median.cc
@@ -2049,6 +2055,7 @@ mln_fun_x2x_rotation_SOURCES = mln_fun_x2x_rotation.cc
 mln_fun_x2x_translation_SOURCES = mln_fun_x2x_translation.cc
 mln_geom_all_SOURCES = mln_geom_all.cc
 mln_geom_bbox_SOURCES = mln_geom_bbox.cc
+mln_geom_bottom_left_SOURCES = mln_geom_bottom_left.cc
 mln_geom_chamfer_SOURCES = mln_geom_chamfer.cc
 mln_geom_complex_geometry_SOURCES = mln_geom_complex_geometry.cc
 mln_geom_crop_SOURCES = mln_geom_crop.cc
@@ -2076,6 +2083,7 @@ mln_geom_seeds2tiling_roundness_SOURCES = mln_geom_seeds2tiling_roundness.cc
 mln_geom_size1d_SOURCES = mln_geom_size1d.cc
 mln_geom_size2d_SOURCES = mln_geom_size2d.cc
 mln_geom_size3d_SOURCES = mln_geom_size3d.cc
+mln_geom_top_right_SOURCES = mln_geom_top_right.cc
 mln_geom_translate_SOURCES = mln_geom_translate.cc
 mln_geom_vertical_symmetry_SOURCES = mln_geom_vertical_symmetry.cc
 mln_graph_all_SOURCES = mln_graph_all.cc
