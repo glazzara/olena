@@ -1,3 +1,12 @@
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Compute Sauvola on documents with light text and dark background.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh: Update formula.
+
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve option parser.

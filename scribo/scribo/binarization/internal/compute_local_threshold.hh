@@ -42,7 +42,8 @@
 
 
 
-// extern mln::image2d<double> skewness;
+extern mln::image2d<double> skewness;
+extern mln::image2d<bool> skewness_pbm;
 
 namespace scribo
 {
@@ -117,6 +118,11 @@ namespace scribo
 			    - simple.at_(row_max, col_min)
 			    - simple.at_(row_min, col_max));
 
+	// if (!skewness_pbm(p))
+	// {
+	//   m_x_y_tmp = 255 * wh - m_x_y_tmp;
+	// }
+
 	double m_x_y = m_x_y_tmp / wh;
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -130,6 +136,11 @@ namespace scribo
 			    - squared.at_(row_max, col_min)
 			    - squared.at_(row_min, col_max));
 
+	// if (!skewness_pbm(p))
+	// {
+	//   s_x_y_tmp = std::pow(255, 2) * wh - s_x_y_tmp;
+	// }
+
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -140,7 +151,7 @@ namespace scribo
 	// Thresholding.
 	// skewness_ = skewness(p);
 	// b = (p == point2d(5,5));
-	double t_x_y = formula(m_x_y, s_x_y, K, R);
+	double t_x_y = formula(p, m_x_y, s_x_y, K, R);
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	double alpha = K * (1 - s_x_y / R);

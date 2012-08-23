@@ -46,6 +46,10 @@
 # define SCRIBO_DEFAULT_SAUVOLA_R 128
 
 
+#include <mln/core/alias/point2d.hh>
+
+extern mln::image2d<bool> skewness_pbm;
+
 namespace scribo
 {
 
@@ -54,6 +58,8 @@ namespace scribo
 
     namespace internal
     {
+
+      using namespace mln;
 
       struct sauvola_formula
       {
@@ -70,13 +76,13 @@ namespace scribo
 
 	  \return A threshold.
 	*/
-	double operator()(const double m_x_y, const double s_x_y,
+	double operator()(const point2d& p, const double m_x_y, const double s_x_y,
 			  const double K, const double R) const;
 
 	/*!
 	  \overload K = 0.34 and R = 128.
 	 */
-	double operator()(const double m_x_y, const double s_x_y) const;
+	double operator()(const point2d& p, const double m_x_y, const double s_x_y) const;
 
       };
 
@@ -88,7 +94,7 @@ namespace scribo
 
       inline
       double
-      sauvola_formula::operator()(const double m_x_y, const double s_x_y,
+      sauvola_formula::operator()(const point2d& p, const double m_x_y, const double s_x_y,
 				  const double K, const double R) const
       {
 	// if (b)
@@ -98,15 +104,17 @@ namespace scribo
 	// if (skewness_ > 0)
 	//   if (new_t != old_t)
 	//     std::cout << skewness_ << " - " << new_t << " vs " << old_t << std::endl;
-
-	return  m_x_y * (1.0 + K * ((s_x_y / R) - 1.0));
+	if (skewness_pbm(p))
+	  return  m_x_y * (1.0 + K * ((s_x_y / R) - 1.0));
+	else
+	  return  (255 - m_x_y) * (1.0 + K * ((s_x_y / R) - 1.0));
       }
 
       inline
       double
-      sauvola_formula::operator()(const double m_x_y, const double s_x_y) const
+      sauvola_formula::operator()(const point2d& p, const double m_x_y, const double s_x_y) const
       {
-	return  (*this)(m_x_y, s_x_y,
+	return  (*this)(p, m_x_y, s_x_y,
 			SCRIBO_DEFAULT_SAUVOLA_K, SCRIBO_DEFAULT_SAUVOLA_R);
       }
 

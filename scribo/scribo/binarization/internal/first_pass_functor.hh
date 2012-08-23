@@ -132,7 +132,7 @@ namespace scribo
 	unsigned p = pxl.offset();
 
 	value::int_u8 t_p;
-	mln::convert::from_to(formula_(mean, stddev, K_, R_),
+	mln::convert::from_to(formula_(input.point_at_index(p), mean, stddev, K_, R_),
 			      t_p);
 
 	msk.element(p) = input.element(p) < t_p;
