@@ -210,7 +210,7 @@ namespace scribo
 	delta_size_tr += step_2;
 	size_tr_start += delta_start_right;
 	d_tr_start += offset_down;
-
+	functor.end_of_row(row);
       }
 
 
@@ -307,6 +307,7 @@ namespace scribo
 
 	b_mr_start += offset_down;
 	d_mr_start += offset_down;
+	functor.end_of_row(row);
       }
 
 
@@ -404,6 +405,7 @@ namespace scribo
 	delta_size_br -= step_2;
 	size_br_start -= delta_start_right;
 	b_br_start += offset_down;
+	functor.end_of_row(row);
       }
 
       functor.finalize();

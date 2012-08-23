@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,18 +32,8 @@
 ///
 
 # include <mln/core/concept/image.hh>
-# include <mln/data/transform.hh>
-# include <mln/value/int_u8.hh>
-
-# include <scribo/binarization/niblack_threshold.hh>
-# include <scribo/binarization/local_threshold.hh>
-# include <scribo/binarization/internal/local_threshold_debug.hh>
-
-# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-#  include <mln/io/pgm/save.hh>
-#  include <mln/io/pbm/save.hh>
-#  include <mln/data/saturate.hh>
-# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+# include <scribo/binarization/internal/niblack_functor.hh>
+# include <scribo/binarization/internal/sauvola_core.hh>
 
 namespace scribo
 {
@@ -57,7 +48,7 @@ namespace scribo
 
       \input[in]  input       An image.
       \input[in]  window_size The window size.
-      \input[in]  K           Niblack's formulae constant.
+      \input[in]  K           Sauvola's formulae constant.
 
       \return A binary image.
 
@@ -70,7 +61,8 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      Niblack's formulae constant K is set to 0.34.
+      Sauvola's formulae constant K is set to
+      SCRIBO_DEFAULT_NIBLACK_K.
 
       \input[in]  input       An image.
       \input[in]  window_size The window size.
@@ -93,101 +85,21 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    // Implementations.
-
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename I>
-	mln_ch_value(I, bool)
-	niblack(const Image<I>& input, unsigned window_size, double K)
-	{
-	  trace::entering("scribo::binarization::impl::generic::niblack");
-	  mln_precondition(exact(input).is_valid());
-
-	  mln_ch_value(I,value::int_u8)
-	    threshold_image = binarization::niblack_threshold(input, window_size, K);
-
-	  mln_ch_value(I, bool)
-	    output = local_threshold(input, threshold_image);
-
-	  trace::exiting("scribo::binarization::impl::generic::niblack");
-	  return output;
-	}
-
-      } // end of namespace scribo::binarization::impl::generic
-
-
-    } // end of namespace scribo::binarization::impl
-
-
-
-    // Dispatch
-
-    namespace internal
-    {
-
-      template <typename I>
-      mln_ch_value(I, bool)
-	niblack_dispatch(const mln_value(I)&,
-			 const Image<I>& input, unsigned window_size,
-			 double K)
-      {
-	return impl::generic::niblack(input, window_size, K);
-      }
-
-
-      template <typename I>
-      mln_ch_value(I, bool)
-      niblack_dispatch(const Image<I>& input, unsigned window_size,
-		       double K)
-      {
-	typedef mln_value(I) V;
-	return niblack_dispatch(V(), input, window_size, K);
-      }
-
-    } // end of namespace scribo::binarization::internal
-
-
-
     // Facades
 
     template <typename I>
     mln_ch_value(I, bool)
-      niblack(const Image<I>& input, unsigned window_size, double K)
+    niblack(const Image<I>& input, unsigned window_size, double K)
     {
       trace::entering("scribo::binarization::niblack");
 
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I, bool)
-	output = internal::niblack_dispatch(input, window_size, K);
-
-# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-      if (internal::stddev_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_stddev),
-		      internal::stddev_image_output);
-      if (internal::mean_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_mean),
-		      internal::mean_image_output);
-      if (internal::threshold_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_threshold),
-		      internal::threshold_image_output);
-
-      if (internal::alpham_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_alpham),
-		      internal::alpham_image_output);
-      if (internal::alphacond_image_output)
-	io::pbm::save(internal::debug_alphacond, internal::alphacond_image_output);
-# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
-
+      internal::niblack_functor<I> f(input, K);
+      internal::sauvola_core(input, f, window_size);
 
       trace::exiting("scribo::binarization::niblack");
-      return output;
+      return f.output;
     }
 
 

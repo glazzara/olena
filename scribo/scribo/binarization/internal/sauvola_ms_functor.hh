@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
-# define SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH
+# define SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH
 
 /// \file
 ///
@@ -57,7 +57,7 @@ namespace scribo
 
 
       template <typename I>
-      struct first_pass_functor
+      struct sauvola_ms_functor
       {
 	const I& input;
 	mln_fwd_pixter(const I) pxl;
@@ -75,10 +75,12 @@ namespace scribo
 
 	sauvola_formula formula_;
 
-	first_pass_functor(const I& input, double K, double R);
+	sauvola_ms_functor(const I& input, double K, double R);
 
 	void exec(double mean, double stddev);
+	void end_of_row(int row);
 	void finalize();
+
       };
 
 
@@ -95,7 +97,7 @@ namespace scribo
 
 
       template <typename I>
-      first_pass_functor<I>::first_pass_functor(const I& input, double K, double R)
+      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input, double K, double R)
 	: input(input),
 	  pxl(input),
 	  K_(K),
@@ -125,15 +127,14 @@ namespace scribo
 
       template <typename I>
       void
-      first_pass_functor<I>::exec(double mean, double stddev)
+      sauvola_ms_functor<I>::exec(double mean, double stddev)
       {
 	mln_precondition(pxl.is_valid());
 
 	unsigned p = pxl.offset();
 
 	value::int_u8 t_p;
-	mln::convert::from_to(formula_(input.point_at_index(p), mean, stddev, K_, R_),
-			      t_p);
+	mln::convert::from_to(formula_(mean, stddev, K_, R_), t_p);
 
 	msk.element(p) = input.element(p) < t_p;
 	t_sub.element(p) = t_p;
@@ -161,7 +162,14 @@ namespace scribo
 
 
       template <typename I>
-      void first_pass_functor<I>::finalize()
+      void
+      sauvola_ms_functor<I>::end_of_row(int row)
+      {
+	(void) row;
+      }
+
+      template <typename I>
+      void sauvola_ms_functor<I>::finalize()
       {
 	mln_assertion(! pxl.is_valid());
       }
@@ -174,4 +182,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
+#endif // SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH

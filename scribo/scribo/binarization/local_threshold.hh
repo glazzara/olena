@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,8 +33,6 @@
 /// \file
 ///
 /// \brief Binarize an image using a threshold image.
-
-extern mln::image2d<bool> skewness_pbm;
 
 namespace scribo
 {
@@ -111,10 +109,7 @@ namespace scribo
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    if (skewness_pbm(p))
-	      output(p) = (input(p) <= threshold(p));
-	    else
-	      output(p) = ((255 - input(p)) <= threshold(p));
+	    output(p) = (input(p) <= threshold(p));
 
 	  trace::exiting("scribo::binarization::impl::generic::local_threshold");
 	  return output;
@@ -135,8 +130,6 @@ namespace scribo
 	const I& input = exact(input_);
 	const T& threshold = exact(threshold_);
 
-	border::resize(::skewness_pbm, input.border());
-
 	typedef mln_ch_value(I, bool) O;
 	O output;
 	initialize(output, input);
@@ -146,10 +139,7 @@ namespace scribo
 	mln_pixter(O) po(output);
 
 	for_all_3(pi, pt, po)
-	  if (skewness_pbm.element(pi.offset()))
-	    po.val() = (pi.val() <= pt.val());
-	  else
-	    po.val() = ((255 - pi.val()) <= pt.val());
+	  po.val() = (pi.val() <= pt.val());
 
 	trace::exiting("scribo::binarization::impl::generic::local_threshold_fastest");
 	return output;

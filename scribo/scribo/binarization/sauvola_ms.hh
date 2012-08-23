@@ -38,6 +38,7 @@
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/data/fill.hh>
+# include <mln/data/compare.hh>
 
 # include <mln/subsampling/antialiased.hh>
 
@@ -60,9 +61,13 @@
 
 # include <scribo/core/macros.hh>
 
-# include <scribo/binarization/internal/first_pass_functor.hh>
+# include <scribo/binarization/internal/sauvola_ms_functor.hh>
 
 # include <scribo/canvas/integral_browsing.hh>
+
+# include <scribo/util/init_integral_image.hh>
+# include <scribo/util/integral_sub_sum_sum2_functor.hh>
+# include <scribo/util/compute_sub_domains.hh>
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
@@ -70,7 +75,7 @@
 #  include <scribo/make/debug_filename.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-
+# include <mln/util/timer.hh>
 
 namespace scribo
 {
@@ -177,7 +182,7 @@ namespace scribo
 
 
 	// 1st pass
-	scribo::binarization::internal::first_pass_functor< image2d<int_u8> >
+	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
 	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R);
 	scribo::canvas::integral_browsing(integral_sum_sum_2,
 					  ratio,
@@ -259,8 +264,9 @@ namespace scribo
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-	io::pbm::save(f.msk,
-		      scribo::make::debug_filename(internal::threshold_image_output).c_str());
+	if (internal::threshold_image_output)
+	  io::pbm::save(f.msk,
+			scribo::make::debug_filename(internal::threshold_image_output).c_str());
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	return f.t_sub;
@@ -746,50 +752,6 @@ namespace scribo
 	return out;
       }
 
-
-
-      inline
-      unsigned sub(unsigned nbr, unsigned down_scaling)
-      {
-	return (nbr + down_scaling - 1) / down_scaling;
-      }
-
-      // Compute domains of subsampled images and make sure they can be
-      // divided by 2.
-      template <typename I>
-      mln::util::array<mln::util::couple<mln_domain(I), unsigned> >
-      compute_sub_domains(const I& ima, unsigned n_scales, unsigned s)
-      {
-	mln::util::array<mln::util::couple<unsigned, unsigned> > n(n_scales + 2);
-
-	n(1) = mln::make::couple(ima.nrows(), ima.ncols());
-	n(2) = mln::make::couple(sub(n(1).first(), s),
-				 sub(n(1).second(), s));
-	for (unsigned i = 3; i <= n_scales + 1; ++i)
-	  n(i) = mln::make::couple(sub(n(i - 1).first(), 2),
-				   sub(n(i - 1).second(), 2));
-
-
-	mln::util::array<mln::util::couple<mln_domain(I), unsigned> > out(n.size());
-	out(0) = mln::make::couple(mln::make::box2d(1,1), 1u);
-	out(1) = mln::make::couple(mln::make::box2d(ima.nrows(),
-						    ima.ncols()), 2u);
-	out(n_scales + 1) = mln::make::couple(
-	  mln::make::box2d(n(n_scales + 1).first(),
-			   n(n_scales + 1).second()), 1u);
-
-	for (unsigned i = n_scales; i > 1; --i)
-	  out(i) = mln::make::couple(
-	    mln::make::box2d(2 * out(i + 1).first().nrows(),
-			     2 * out(i + 1).first().ncols()),
-	    2 * out(i + 1).second());
-
-	out(1).second() = std::max(out(2).first().ncols() * s - ima.ncols(),
-				   out(2).first().nrows() * s - ima.nrows());
-
-	return out;
-      }
-
     } // end of namespace scribo::binarization::internal
 
 
@@ -851,7 +813,8 @@ namespace scribo
 	  }
 
 	  mln::util::array<mln::util::couple<box2d, unsigned> >
-	    sub_domains = internal::compute_sub_domains(input_1, nb_subscale, s);
+	    sub_domains = scribo::util::compute_sub_domains(input_1,
+							    nb_subscale, s);
 
 	  border::adjust(input_1, sub_domains(1).second());
 	  border::mirror(input_1);
@@ -861,11 +824,23 @@ namespace scribo
 	  typedef image2d<mln::util::couple<double,double> > integral_t;
 	  integral_t integral_sum_sum_2;
 
+	  mln::util::timer t;
+	  t.start();
+
 	  // Subsampling from scale 1 to 2.
-	  sub_ima.append(scribo::subsampling::integral(input_1, s,
-						       integral_sum_sum_2,
-						       sub_domains[2].first(),
-						       sub_domains[2].second()));
+	  {
+	    scribo::util::integral_sub_sum_sum2_functor<I, double>
+	      fi(s, sub_domains[2].first(), sub_domains[2].second());
+
+	    integral_sum_sum_2 = scribo::util::init_integral_image(input_1, s, fi,
+								   sub_domains[2].first(),
+								   sub_domains[2].second());
+	    sub_ima.append(fi.sub);
+	  }
+
+	  t.stop();
+	  std::cout << "1. subsampling and integral - " << t << std::endl;
+	  t.restart();
 
 	  // Subsampling to scale 3 and 4.
 	  //
@@ -876,6 +851,9 @@ namespace scribo
 							 sub_domains[i].first(),
 							 sub_domains[i].second()));
 
+	  t.stop();
+	  std::cout << "2. More subsampling - " << t << std::endl;
+	  t.restart();
 
 	  // Compute threshold images.
 	  image2d<int_u8> e_2;
@@ -921,6 +899,10 @@ namespace scribo
 						     K);
 	  }
 
+	  t.stop();
+	  std::cout << "3. Multi-scale processing - " << t << std::endl;
+	  t.restart();
+
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  if (internal::scale_image_output)
@@ -930,14 +912,23 @@ namespace scribo
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
-// #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-// 	  if (internal::scale_image_output)
-// 	    io::pgm::save(e_2, internal::scale_image_output);
-// #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+	  t.stop();
+	  std::cout << "4. Influence Zone on Scale image - " << t << std::endl;
+	  t.restart();
+
+
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+ 	  if (internal::scale_iz_image_output)
+ 	    io::pgm::save(e_2, internal::scale_iz_image_output);
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Binarize
 	  image2d<bool>
 	    output = internal::multi_scale_binarization(input_1, e_2, t_ima, s);
+
+	  t.stop();
+	  std::cout << "5. Final binarization - " << t << std::endl;
+	  t.restart();
 
 	  trace::exiting("scribo::binarization::sauvola_ms");
 	  return output;

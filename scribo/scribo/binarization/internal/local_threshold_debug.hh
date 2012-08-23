@@ -52,14 +52,15 @@ namespace scribo
     namespace internal
     {
 
-      char* stddev_image_output = 0;
-      char* mean_image_output = 0;
-      char* threshold_image_output = 0;
+      const char* stddev_image_output = 0;
+      const char* mean_image_output = 0;
+      const char* threshold_image_output = 0;
 
-      char* scale_image_output = 0;
+      const char* scale_image_output = 0;
+      const char* scale_iz_image_output = 0;
 
-      char* alpham_image_output = 0;
-      char* alphacond_image_output = 0;
+      const char* alpham_image_output = 0;
+      const char* alphacond_image_output = 0;
 
       // Declare debug images.
       image2d<double> debug_stddev;

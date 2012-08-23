@@ -91,6 +91,8 @@ int main(int argc, char *argv[])
 				"input.* output.pbm <scale.pgm> <w> <s> <k>",
 				args_desc);
 
+  Magick::InitializeMagick(0);
+
   trace::entering("main");
 
   // Window size
@@ -116,6 +118,9 @@ int main(int argc, char *argv[])
   if (argc >= 4)
     scribo::binarization::internal::scale_image_output = argv[3];
 
+  scribo::binarization::internal::scale_image_output = "scale_image.pgm";
+  scribo::binarization::internal::threshold_image_output = "threshold_image.pbm";
+  scribo::binarization::internal::scale_iz_image_output = "scale_iz.pgm";
 
   // Load
   image2d<value::rgb8> input_1;
