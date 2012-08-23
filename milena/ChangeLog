@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/internal/image_base.hh: Improve documentation.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/data/compute_in_window.hh: Fix warnings.
 
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>

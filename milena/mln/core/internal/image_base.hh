@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -43,18 +43,6 @@
 # include <mln/value/set.hh>
 # include <mln/value/super_value.hh>
 
-//              image_base
-//                   ^
-//                   |
-//       ---------------------------
-//      |                           |
-// image_primary               image_morpher
-//      ^                            ^
-//      |                            |
-//      |		     -----------------------------------------
-//	|		    |                    |                    |
-// pw_image_base    image_domain_morpher  image_value_morpher   image_identity
-
 
 namespace mln
 {
@@ -73,10 +61,27 @@ namespace mln
 
 
 
-    /// A base class for images.
+    /// \brief A base class for images.
     ///
     /// Parameter \p T is the image value type.
     /// Parameter \p S is the image site set type.
+    ///
+    /// \internal
+    ///
+    /// \verbatim
+    ///              image_base
+    ///                   ^
+    ///                   |
+    ///       ---------------------------
+    ///      |                           |
+    /// image_primary               image_morpher
+    ///      ^                            ^
+    ///      |                            |
+    ///      |		     -----------------------------------------
+    ///	     |		    |                    |                    |
+    /// pw_image_base    image_domain_morpher  image_value_morpher   image_identity
+    ///
+    /// \endverbatim
     //
     template <typename T, typename S, typename E>
     struct image_base
