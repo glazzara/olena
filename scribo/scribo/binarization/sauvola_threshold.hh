@@ -44,7 +44,7 @@
 # include <scribo/binarization/internal/compute_local_threshold.hh>
 # include <scribo/binarization/internal/sauvola_formula.hh>
 
-
+extern std::string prefix;
 
 namespace scribo
 {
@@ -130,6 +130,7 @@ namespace scribo
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  initialize(internal::debug_mean, input);
 	  initialize(internal::debug_stddev, input);
+
 	  initialize(internal::debug_threshold, input);
 	  initialize(internal::debug_alpham, input);
 	  initialize(internal::debug_alphacond, input);
@@ -261,6 +262,9 @@ namespace scribo
       mln_ch_value(I, double)
 	simple = init_integral_image(input, scribo::internal::identity_),
 	squared = init_integral_image(input, scribo::internal::square_);
+
+      io::dump::save(simple, prefix + "simple.dump");
+      io::dump::save(squared, prefix + "squared.dump");
 
       return sauvola_threshold(input, window_size,
 			       K, simple, squared);
