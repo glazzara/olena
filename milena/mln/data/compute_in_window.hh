@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_DATA_COMPUTE_HH
-# define MLN_DATA_COMPUTE_HH
+#ifndef MLN_DATA_COMPUTE_IN_WINDOW_HH
+# define MLN_DATA_COMPUTE_IN_WINDOW_HH
 
 /// \file
 ///
@@ -76,9 +76,12 @@ namespace mln
       compute_in_window_tests(const Accumulator<A>& a, const Image<I>& input_,
 			      const Window<W>& win_)
       {
-	(void) a;
 	const W& win = exact(win_);
 	const I& input = exact(input_);
+
+	(void) a;
+	(void) win;
+	(void) input;
 
 	mln_assertion(win.is_valid());
 	mln_assertion(input.is_valid());
@@ -142,14 +145,14 @@ namespace mln
 
 	internal::compute_in_window_tests(a, input, win);
 
+	extension::adjust(input, win);
+	border::mirror(input);
+
 	typedef mln_ch_value(I, A) J;
 	J accu;
 	initialize(accu, input);
 
 	accu::image::init(accu);
-
-	extension::adjust(input, win);
-	border::mirror(input);
 
 	mln_pixter(J) p(accu);
 	mln_qixter(J, W) q(p, win);
@@ -245,4 +248,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_DATA_COMPUTE_HH
+#endif // ! MLN_DATA_COMPUTE_IN_WINDOW_HH

@@ -1,3 +1,7 @@
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/data/compute_in_window.hh: Fix warnings.
+
 2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.
