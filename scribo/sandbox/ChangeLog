@@ -1,5 +1,18 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename skewness directory and share code between implementations.
+
+	* z/skewness/skewness.cc,
+	* z/skewness/skewness2.cc: Move...
+
+	* z/sauvola_ms_rv/skewness.cc,
+	* z/sauvola_ms_rv/skewness/skewness2.cc: ... Here.
+
+	* z/sauvola_ms_rv/skewness/integral_browsing_rv.hh: Share code
+	between the two implementations.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* z/skewness/skewness2.cc: New.
 
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
