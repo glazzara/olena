@@ -107,9 +107,9 @@ namespace scribo
 
       bin_t r_b, g_b, b_b;
 
-      r_b = impl::generic::sauvola_ms(r_i, w_1, s, K);
-      g_b = impl::generic::sauvola_ms(g_i, w_1, s, K);
-      b_b = impl::generic::sauvola_ms(b_i, w_1, s, K);
+      r_b = sauvola_ms(r_i, w_1, s, K);
+      g_b = sauvola_ms(g_i, w_1, s, K);
+      b_b = sauvola_ms(b_i, w_1, s, K);
 
       border::resize(r_b, input_1.border());
       border::resize(g_b, input_1.border());

@@ -1,5 +1,12 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix call to sauvola_ms.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of new logger features.
 
 	* src/binarization/global_threshold.cc,

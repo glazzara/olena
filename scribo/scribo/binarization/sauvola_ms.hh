@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -1047,7 +1047,7 @@ namespace scribo
       integral_t integral_sum_sum_2;
 
       mln_ch_value(I,bool)
-	output = sauvola_ms(exact(input_1_), w_1, s, K, integral_sum_sum_2);
+	output = sauvola_ms(input_1_, w_1, s, K, integral_sum_sum_2);
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;
