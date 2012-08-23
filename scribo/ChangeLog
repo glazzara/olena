@@ -1,5 +1,12 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve documentation.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/binarization/kim.cc: Remove debug and useless steps.
 
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>

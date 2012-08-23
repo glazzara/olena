@@ -98,13 +98,23 @@ namespace scribo
       \param[in] s The scale factor used for the first subscaling.
       \param[in] lambda_min_1 Size of the objects kept at scale 1.
       \param[in] K Sauvola's formulae parameter.
-
+      \param[out] integral_sum_sum_2 Integral image of sum and squared
+                                     sum.
 
       \p w_1 and \p lambda_min_1 are expressed according to the image
       at scale 0, i.e. the original size.
 
       \return A Boolean image.
      */
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
+	       unsigned s, double K,
+	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2);
+
+    /// \overload
+    /// The integral image is not returned.
+    //
     template <typename I>
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s, double K);
@@ -802,7 +812,8 @@ namespace scribo
 	template <typename I>
 	mln_ch_value(I,bool)
 	sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-		   unsigned s, double K)
+		   unsigned s, double K,
+		   image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
 	{
 	  trace::entering("scribo::binarization::sauvola_ms");
 
@@ -853,7 +864,7 @@ namespace scribo
 
 	  // Resize input and compute integral images.
 	  typedef image2d<mln::util::couple<double,double> > integral_t;
-	  integral_t integral_sum_sum_2;
+//	  integral_t integral_sum_sum_2;
 
 	  mln::util::timer t;
 	  t.start();
@@ -1030,7 +1041,8 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, double K)
+	       unsigned s, double K,
+	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
     {
       trace::entering("scribo::binarization::sauvola_ms");
 
@@ -1040,7 +1052,30 @@ namespace scribo
       mlc_is_not(mln_value(I), bool)::check();
 
       mln_ch_value(I,bool)
-	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K);
+	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K,
+					   integral_sum_sum_2);
+
+      trace::exiting("scribo::binarization::sauvola_ms");
+      return output;
+    }
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
+	       unsigned s, double K)
+    {
+      trace::entering("scribo::binarization::sauvola_ms");
+
+      mln_precondition(exact(input_1_).is_valid());
+      // Gray level images ONLY.
+      mlc_is_not_a(mln_value(I), value::Vectorial)::check();
+      mlc_is_not(mln_value(I), bool)::check();
+
+      typedef image2d<mln::util::couple<double,double> > integral_t;
+      integral_t integral_sum_sum_2;
+
+      mln_ch_value(I,bool)
+	output = sauvola_ms(exact(input_1_), w_1, s, K, integral_sum_sum_2);
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;

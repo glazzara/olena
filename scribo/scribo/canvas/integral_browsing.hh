@@ -116,6 +116,12 @@ namespace scribo
       for (col = col_0; col <= max_col_mid; col += step) ;
       int w_right = ncols - col + w/2;
 
+      // tl: top left
+      // tr: top right
+      // ml: middle left
+      // mr: middle right
+      // bl: bottom left
+      // br: bottom right
       Ptr
 	d_tl_start, d_tr_start,
 	b_ml_start = 0, d_ml_start = 0, b_mr_start = 0, d_mr_start = 0,
@@ -176,7 +182,7 @@ namespace scribo
 	for (; col <= max_col_mid; col += step)
 	{
 	  // D - C
-	  internal::compute_stats(d_ima->first()   - c_ima->first(),
+	  internal::compute_stats(d_ima->first()  - c_ima->first(),
 				  d_ima->second() - c_ima->second(),
 				  size_tc * s_2,
 				  mean, stddev);
