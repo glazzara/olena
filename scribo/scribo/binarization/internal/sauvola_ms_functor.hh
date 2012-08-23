@@ -126,7 +126,7 @@ namespace scribo
 	initialize(card, input);
 	data::fill(card, 1);
 
-	dp = negative_offsets_wrt(input, c4());
+	dp = negative_offsets_wrt(input, c8());
 	n_nbhs = dp.nelements();
       }
 
