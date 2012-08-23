@@ -156,6 +156,8 @@ namespace scribo
 	  w_local_h = w_local,
 	  w_local_w = w_local;
 
+	std::cout << "scale " << i << " - w = " << w << " - lambda_min = " << lambda_min << " - lambda_max = " << lambda_max << std::endl;
+
 	// Make sure the window fits in the image domain.
 	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
 	{
@@ -180,6 +182,7 @@ namespace scribo
 	  ++w_local_h;
 	}
 
+	std::cout << "Scale " << i << " - w_h = " << w_local_h << " - w_w = " << w_local_w << " - w = " << w << std::endl;
 
 	// 1st pass
 	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
@@ -787,20 +790,15 @@ namespace scribo
 
 	  dpoint2d none(0, 0);
 
-	  unsigned lambda_min_1 = w_1 / 2;
-
 	  // Number of subscales.
 	  unsigned nb_subscale = 3;
 
 	  // Window size.
-	  unsigned w_work = w_1 / s;        // Scale 2
+	  unsigned w_work = w_1 * s;        // Scale 2
 
 
 	  // Subscale step.
 	  unsigned q = 2;
-
-	  unsigned lambda_min_2 = lambda_min_1 / s;
-	  unsigned lambda_max_2 = lambda_min_2 * q;
 
 
 	  mln::util::array<I> t_ima;
@@ -869,13 +867,23 @@ namespace scribo
 	  initialize(e_2, sub_ima[2]);
 	  data::fill(e_2, 0u);
 
+	  // Computing optimal object area for each scale.
+	  unsigned w_1_sq = w_1 * w_1;
+	  unsigned q_2 = std::pow(float(q), float(2));
+	  unsigned min_area = (5 * w_1_sq) / (4 * q_2);
+	  unsigned max_area = (w_1_sq + (q_2) * w_1_sq) / 4;
+
+
+	  // mln::util::array<unsigned> area(sub_ima.size(), 0);
+	  // area[2] = s * s * w_1 * w_1;
+	  // for (unsigned i = 3; i < area.nelements(); ++i)
+	  //   area[i] = std::pow(float(q), float(i * 2 - 4)) * area[2];
+
 	  // Highest scale -> no maximum component size.
 	  {
 	    int i = sub_ima.size() - 1;
-	    // Cast to float is needed on MacOS X.
-	    unsigned ratio = unsigned(std::pow(float(q), float(i - 2))); // Ratio compared to e_2
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						     lambda_min_2 / ratio,
+						     min_area,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
@@ -887,11 +895,9 @@ namespace scribo
 	  {
 	    for (int i = sub_ima.size() - 2; i > 2; --i)
 	    {
-	      // Cast to float is needed on MacOS X.
-	      unsigned ratio = unsigned(std::pow(float(q), float(i - 2))); // Ratio compared to e_2
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						       lambda_min_2 / ratio,
-						       lambda_max_2 / ratio,
+						       min_area,
+ 						       max_area,
 						       s,
 						       q, i, w_work,
 						       integral_sum_sum_2,
@@ -901,8 +907,9 @@ namespace scribo
 
 	  // Lowest scale -> no minimum component size.
 	  {
-	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2, 0,
-						     lambda_max_2,
+	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2,
+						     0,
+						     max_area,
 						     s, 1, 2, w_work,
 						     integral_sum_sum_2,
 						     K);
