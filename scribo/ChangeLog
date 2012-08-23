@@ -1,5 +1,23 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add Wolf's binarization algorithm.
+
+	* scribo/binarization/internal/wolf_formula.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/util/integral_sum_sum2_global_min_functor.hh,
+	* src/binarization/wolf.cc,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm: New.
+
+	* src/binarization/Makefile.am,
+	* tests/binarization/Makefile.am: Add new target.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more debug.
 
 	* scribo/binarization/internal/local_threshold_debug.hh,

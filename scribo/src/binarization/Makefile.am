@@ -35,7 +35,8 @@ if HAVE_MAGICKXX
    sauvola 				\
    sauvola_ms                           \
    sauvola_ms_fg 			\
-   sauvola_ms_split
+   sauvola_ms_split			\
+   wolf
 
 
   global_threshold_SOURCES  = global_threshold.cc
@@ -69,6 +70,12 @@ if HAVE_MAGICKXX
 		     $(MAGICKXX_CPPFLAGS)
   sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
 		     $(MAGICKXX_LDFLAGS)
+
+  wolf_SOURCES  = wolf.cc
+  wolf_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  $(MAGICKXX_CPPFLAGS)
+  wolf_LDFLAGS  = $(AM_LDFLAGS) 		\
+		  $(MAGICKXX_LDFLAGS)
 
   sauvola_debug_SOURCES  = sauvola_debug.cc
   sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	  \

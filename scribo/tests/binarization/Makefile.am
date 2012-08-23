@@ -22,9 +22,22 @@ include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
   niblack.res.pbm				\
+  niblack_wodd_heven.ref.pbm			\
+  niblack_weven_hodd.ref.pbm			\
+  niblack_wodd_hodd.ref.pbm			\
   sauvola_ms.ref.pbm				\
+  sauvola_ms_wodd_heven.ref.pbm			\
+  sauvola_ms_weven_hodd.ref.pbm			\
+  sauvola_ms_wodd_hodd.ref.pbm			\
   sauvola.ref.pbm				\
-  otsu.ref.pbm
+  sauvola_wodd_heven.ref.pbm			\
+  sauvola_weven_hodd.ref.pbm			\
+  sauvola_wodd_hodd.ref.pbm			\
+  otsu.ref.pbm					\
+  wolf.ref.pbm					\
+  wolf_wodd_heven.ref.pbm			\
+  wolf_weven_hodd.ref.pbm			\
+  wolf_wodd_hodd.ref.pbm
 
 check_PROGRAMS =				\
   global_threshold 				\
@@ -32,7 +45,8 @@ check_PROGRAMS =				\
   niblack					\
   otsu						\
   sauvola 					\
-  sauvola_ms
+  sauvola_ms					\
+  wolf
 
 
 global_threshold_SOURCES = global_threshold.cc
@@ -41,6 +55,7 @@ niblack_SOURCES = niblack.cc
 otsu_SOURCES = otsu.cc
 sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc
+wolf_SOURCES = wolf.cc
 
 TESTS = $(check_PROGRAMS)
 
