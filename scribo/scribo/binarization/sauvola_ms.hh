@@ -72,7 +72,7 @@
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 #  include <mln/io/pgm/save.hh>
-#  include <scribo/make/debug_filename.hh>
+#  include <mln/debug/filename.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 # include <mln/util/timer.hh>
@@ -228,8 +228,11 @@ namespace scribo
 		if (f.parent.element(p) == p)
 		{
 		  // test over the component cardinality
-		  f.msk.element(p) = f.card.element(p) > lambda_min
-		    && f.card.element(p) < lambda_max;
+		  f.msk.element(p) = f.card.element(p) > lambda_min;
+//		    && f.card.element(p) < lambda_max;
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+		  f.full_msk.element(p) = true;
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 		  if (f.msk.element(p) && e_2(sq) == 0u)
 		  {
@@ -242,6 +245,9 @@ namespace scribo
 		{
 		  // Propagation
 		  f.msk.element(p) = f.msk.element(f.parent.element(p));
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+		  f.full_msk.element(p) = f.full_msk.element(f.parent.element(p));
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 		  if (f.msk.element(p) && e_2(sq) == 0u)
 		  {
@@ -266,7 +272,10 @@ namespace scribo
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	if (internal::threshold_image_output)
 	  io::pbm::save(f.msk,
-			scribo::make::debug_filename(internal::threshold_image_output).c_str());
+			mln::debug::filename(internal::threshold_image_output));
+	if (internal::full_threshold_image_output)
+	  io::pbm::save(f.full_msk,
+			mln::debug::filename(internal::full_threshold_image_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	return f.t_sub;
@@ -906,7 +915,8 @@ namespace scribo
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  if (internal::scale_image_output)
-	    io::pgm::save(e_2, internal::scale_image_output);
+	    io::pgm::save(e_2,
+			  mln::debug::filename(internal::scale_image_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Propagate scale values.
@@ -919,7 +929,8 @@ namespace scribo
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
  	  if (internal::scale_iz_image_output)
- 	    io::pgm::save(e_2, internal::scale_iz_image_output);
+ 	    io::pgm::save(e_2,
+			  mln::debug::filename(internal::scale_iz_image_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Binarize

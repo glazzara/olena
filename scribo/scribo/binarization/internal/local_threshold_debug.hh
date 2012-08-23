@@ -55,6 +55,7 @@ namespace scribo
       const char* stddev_image_output = 0;
       const char* mean_image_output = 0;
       const char* threshold_image_output = 0;
+      const char* full_threshold_image_output = 0;
 
       const char* scale_image_output = 0;
       const char* scale_iz_image_output = 0;

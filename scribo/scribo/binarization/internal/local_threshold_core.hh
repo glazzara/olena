@@ -48,6 +48,7 @@
 #  include <mln/io/pgm/save.hh>
 #  include <mln/io/pbm/save.hh>
 #  include <mln/data/saturate.hh>
+#  include <mln/debug/filename.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 # include <mln/util/timer.hh>
@@ -226,19 +227,20 @@ namespace scribo
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	if (stddev_image_output)
 	  io::pgm::save(data::saturate(value::int_u8(), debug_stddev),
-			stddev_image_output);
+			mln::debug::filename(stddev_image_output));
 	if (mean_image_output)
 	  io::pgm::save(data::saturate(value::int_u8(), debug_mean),
-			mean_image_output);
+			mln::debug::filename(mean_image_output));
 	if (threshold_image_output)
 	  io::pgm::save(data::saturate(value::int_u8(), debug_threshold),
-			threshold_image_output);
+			mln::debug::filename(threshold_image_output));
 
 	if (alpham_image_output)
 	  io::pgm::save(data::saturate(value::int_u8(), debug_alpham),
-			alpham_image_output);
+			mln::debug::filename(alpham_image_output));
 	if (alphacond_image_output)
-	  io::pbm::save(debug_alphacond, alphacond_image_output);
+	  io::pbm::save(debug_alphacond,
+			mln::debug::filename(alphacond_image_output));
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	trace::exiting("scribo::binarization::internal::local_threshold_core");

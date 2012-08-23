@@ -67,6 +67,10 @@ namespace scribo
 	image2d<bool> msk;
 	image2d<value::int_u8> t_sub;
 
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	image2d<bool> full_msk;
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
 	unsigned n_nbhs;
 	mln::util::array<int> dp;
 
@@ -111,6 +115,8 @@ namespace scribo
 	initialize(msk, input);
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	initialize(full_msk, input);
+	mln::extension::fill(full_msk, false);
 	initialize(debug_mean, input);
 	initialize(debug_stddev, input);
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -137,6 +143,10 @@ namespace scribo
 	mln::convert::from_to(formula_(mean, stddev, K_, R_), t_p);
 
 	msk.element(p) = input.element(p) < t_p;
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	full_msk.element(p) = msk.element(p);
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
 	t_sub.element(p) = t_p;
 	if (! msk.element(p))
 	{
