@@ -30,7 +30,6 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
 
 #include <scribo/binarization/sauvola.hh>
 

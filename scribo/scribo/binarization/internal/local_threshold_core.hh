@@ -152,8 +152,15 @@ namespace scribo
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  t.restart();
-	  scribo::canvas::integral_browsing(integral, 1, window_size / 3,
-					    window_size / 3, 3, f);
+
+	  window_size /= 3;
+	  if (window_size % 2)
+	    window_size += 2;
+	  else
+	    window_size += 1;
+
+	  scribo::canvas::integral_browsing(integral, 1, window_size,
+					    window_size, 3, f);
 	  t.stop();
 	  std::cout << "Binarization - " << t << std::endl;
 
