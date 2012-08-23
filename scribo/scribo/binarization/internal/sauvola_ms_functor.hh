@@ -43,6 +43,7 @@
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
+#include <mln/value/int_u8.hh>
 
 namespace scribo
 {
@@ -60,6 +61,11 @@ namespace scribo
       struct sauvola_ms_functor
       {
 	const I& input;
+
+	const image2d<value::int_u8>& e_2;
+	unsigned i;
+	unsigned q;
+
 	mln_fwd_pixter(const I) pxl;
 	double res;
 	image2d<unsigned> parent;
@@ -79,7 +85,7 @@ namespace scribo
 
 	sauvola_formula formula_;
 
-	sauvola_ms_functor(const I& input, double K, double R);
+	sauvola_ms_functor(const I& input, double K, double R, const image2d<value::int_u8>&e_2, unsigned i, unsigned q);
 
 	void exec(double mean, double stddev);
 	void end_of_row(int row);
@@ -101,8 +107,11 @@ namespace scribo
 
 
       template <typename I>
-      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input, double K, double R)
+      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input, double K, double R, const image2d<value::int_u8>&e_2, unsigned i, unsigned q)
 	: input(input),
+	  e_2(e_2),
+	  i(i),
+	  q(q),
 	  pxl(input),
 	  K_(K),
 	  R_(R)
@@ -142,7 +151,49 @@ namespace scribo
 	value::int_u8 t_p;
 	mln::convert::from_to(formula_(mean, stddev, K_, R_), t_p);
 
+	// point2d pi = input.point_at_index(p);
+	// pi.row() *= std::pow(q, i - 2);
+	// pi.col() *= std::pow(q, i - 2);
+
+	// point2d pi_up = pi;
+	// pi_up.row() -= std::pow(q, i - 2);
+
+	// point2d pi_up_left = pi;
+	// pi_up_left.row() -= std::pow(q, i - 2);
+	// pi_up_left.col() -= std::pow(q, i - 2);
+
+	// point2d pi_up_right = pi;
+	// pi_up_right.row() -= std::pow(q, i - 2);
+	// pi_up_right.col() += std::pow(q, i - 2);
+
+	// point2d pi_down = pi;
+	// pi_down.row() += std::pow(q, i - 2);
+
+	// point2d pi_down_left = pi;
+	// pi_down_left.row() += std::pow(q, i - 2);
+	// pi_down_left.col() -= std::pow(q, i - 2);
+
+	// point2d pi_down_right = pi;
+	// pi_down_right.row() += std::pow(q, i - 2);
+	// pi_down_right.col() += std::pow(q, i - 2);
+
+	// point2d pi_left = pi;
+	// pi_left.col() -= std::pow(q, i - 2);
+
+	// point2d pi_right = pi;
+	// pi_right.col() += std::pow(q, i - 2);
+
+
+
+
+
+// 	if (e_2(pi) != 0)   // Already retrieved from another scale.
+// //	    || e_2(pi_up) != 0 || e_2(pi_down) != 0 || e_2(pi_left) != 0 || e_2(pi_right) != 0
+// //	    || e_2(pi_up_left) != 0 || e_2(pi_up_right) != 0 || e_2(pi_down_left) != 0 || e_2(pi_down_right) != 0)
+// 	  msk.element(p) = false;
+// 	else
 	msk.element(p) = input.element(p) < t_p;
+
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	full_msk.element(p) = msk.element(p);
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG

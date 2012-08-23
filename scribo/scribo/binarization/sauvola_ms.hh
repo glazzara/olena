@@ -72,6 +72,7 @@
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 #  include <mln/io/pgm/save.hh>
+#  include <mln/io/dump/save.hh>
 #  include <mln/debug/filename.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
@@ -186,12 +187,14 @@ namespace scribo
 
 	// 1st pass
 	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
-	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R);
+	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R, e_2, i, q);
 	scribo::canvas::integral_browsing(integral_sum_sum_2,
 					  ratio,
 					  w_local_w, w_local_h,
 					  s,
 					  f);
+
+	std::cout << " i = " << i << " - ratio = " << ratio << std::endl;
 
 	// 2nd pass
 	{
@@ -235,6 +238,10 @@ namespace scribo
 		    && f.card.element(p) < lambda_max;
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 		  f.full_msk.element(p) = true;
+
+		  for (unsigned l = 0; l < ratio; ++l)
+		    for (unsigned k = 0; k < ratio; ++k)
+		      debug_scale_proba(point3d(i - 2, sq.row() + l, sq.col() + k)) = f.card.element(p);
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 		  if (f.msk.element(p) && e_2(sq) == 0u)
@@ -250,6 +257,13 @@ namespace scribo
 		  f.msk.element(p) = f.msk.element(f.parent.element(p));
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 		  f.full_msk.element(p) = f.full_msk.element(f.parent.element(p));
+
+		  point2d sqp = f.parent.point_at_index(f.parent.element(p)) * ratio;
+		  unsigned v = debug_scale_proba(point3d(i - 2, sqp.row(), sqp.col()));
+
+		  for (unsigned l = 0; l < ratio; ++l)
+		    for (unsigned k = 0; k < ratio; ++k)
+		      debug_scale_proba(point3d(i - 2, sq.row() + l, sq.col() + k)) = v;
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 		  if (f.msk.element(p) && e_2(sq) == 0u)
@@ -868,10 +882,10 @@ namespace scribo
 	  data::fill(e_2, 0u);
 
 	  // Computing optimal object area for each scale.
-	  unsigned w_1_sq = w_1 * w_1;
-	  unsigned q_2 = std::pow(float(q), float(2));
-	  unsigned min_area = (5 * w_1_sq) / (4 * q_2);
-	  unsigned max_area = (w_1_sq + (q_2) * w_1_sq) / 4;
+	  // unsigned w_1_sq = w_1 * w_1;
+	  // unsigned q_2 = std::pow(float(q), float(2));
+	  // unsigned min_area = (5 * w_1_sq) / (4 * q_2);
+	  // unsigned max_area = (w_1_sq + (q_2) * w_1_sq) / 4;
 
 
 	  // mln::util::array<unsigned> area(sub_ima.size(), 0);
@@ -879,11 +893,33 @@ namespace scribo
 	  // for (unsigned i = 3; i < area.nelements(); ++i)
 	  //   area[i] = std::pow(float(q), float(i * 2 - 4)) * area[2];
 
+	  mln::util::array<unsigned> win_w(sub_ima.size(), 0);
+	  win_w[2] = s * w_1;
+	  for (unsigned i = 3; i < win_w.nelements(); ++i)
+	  {
+	    win_w[i] = q * win_w[i - 1];
+	    if (!(win_w[i] % 2))
+	      ++win_w[i];
+	  }
+
+	  float coeff = 1.4;
+
+
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	  internal::debug_scale_proba = image3d<double>(3,
+							integral_sum_sum_2.nrows(),
+							integral_sum_sum_2.ncols(),
+							integral_sum_sum_2.border());
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
+
 	  // Highest scale -> no maximum component size.
 	  {
 	    int i = sub_ima.size() - 1;
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						     min_area,
+//						     (8096 / 144) / coeff,
+//						     44 / coeff,
+						     win_w[i] / 3 / coeff,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
@@ -896,8 +932,12 @@ namespace scribo
 	    for (int i = sub_ima.size() - 2; i > 2; --i)
 	    {
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						       min_area,
- 						       max_area,
+//						       22 / coeff,
+//						       201 * coeff,
+						       win_w[i] / 3 / coeff,
+						       win_w[i] * 3 * coeff,
+//						       (810 / 36) / coeff,
+//						       (8096 / 36) * coeff,
 						       s,
 						       q, i, w_work,
 						       integral_sum_sum_2,
@@ -909,7 +949,9 @@ namespace scribo
 	  {
 	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2,
 						     0,
-						     max_area,
+//						     99 * coeff,
+						     win_w[2] * 3 * coeff,
+//						     (810 / 9) * coeff,
 						     s, 1, 2, w_work,
 						     integral_sum_sum_2,
 						     K);
@@ -938,6 +980,9 @@ namespace scribo
  	  if (internal::scale_iz_image_output)
  	    io::pgm::save(e_2,
 			  mln::debug::filename(internal::scale_iz_image_output));
+ 	  if (internal::scale_proba_output)
+ 	    io::dump::save(internal::debug_scale_proba,
+			   mln::debug::filename(internal::scale_proba_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 	  // Binarize

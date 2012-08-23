@@ -56,6 +56,7 @@ namespace scribo
       const char* mean_image_output = 0;
       const char* threshold_image_output = 0;
       const char* full_threshold_image_output = 0;
+      const char * scale_proba_output = 0;
 
       const char* scale_image_output = 0;
       const char* scale_iz_image_output = 0;
@@ -67,6 +68,8 @@ namespace scribo
       image2d<double> debug_stddev;
       image2d<double> debug_mean;
       image2d<double> debug_threshold;
+
+      image3d<double> debug_scale_proba;
 
       image2d<double> debug_alpham;
       image2d<bool> debug_alphacond;

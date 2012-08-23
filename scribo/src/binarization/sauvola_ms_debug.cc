@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
   scribo::binarization::internal::threshold_image_output = "threshold_image.pbm";
   scribo::binarization::internal::full_threshold_image_output = "full_threshold_image.pbm";
   scribo::binarization::internal::scale_iz_image_output = "scale_iz.pgm";
+  scribo::binarization::internal::scale_proba_output = "scale_proba.dump";
 
   // Load
   image2d<value::rgb8> input_1;

@@ -1,5 +1,14 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add more debug.
+
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* src/binarization/sauvola_ms_debug.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/sauvola_ms.hh: Change area thresholds.
 
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
