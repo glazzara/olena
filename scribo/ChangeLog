@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* sauvola_fast.cc: Cleanup and add some debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* sauvola_fast.cc: Use subscaled integral image.
 
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
