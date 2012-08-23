@@ -59,7 +59,8 @@ static const scribo::debug::opt_data opt_desc[] =
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -90,13 +91,9 @@ int main(int argc, char *argv[])
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());
   double k = atof(options.opt_value("k").c_str());
 
-  if (options.is_set("verbose"))
-  {
-    scribo::debug::logger().set_verbose_mode(
-      scribo::debug::txt_to_verbose_mode(options.opt_value("verbose")));
-    scribo::debug::logger().log(Low, std::string("Using w_1=") + w_1
-				+ std::string(" - k=") + k);
-  }
+  scribo::debug::logger() << "Using w_1=" << w_1
+			  << " - k=" << k << std::endl;
+
 
   // Load
   image2d<value::rgb8> input_1;

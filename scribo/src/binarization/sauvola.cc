@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -58,7 +58,8 @@ static const scribo::debug::opt_data opt_desc[] =
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -85,12 +86,10 @@ int main(int argc, char *argv[])
 
   trace::entering("main");
 
-  bool verbose = options.is_set("verbose");
   unsigned w = atoi(options.opt_value("win-size").c_str());
   double k = atof(options.opt_value("k").c_str());
 
-  if (verbose)
-    std::cout << "Using w=" << w << " and k=" << k << std::endl;
+  scribo::debug::logger() << "Using w=" << w << " and k=" << k << std::endl;
 
   image2d<value::rgb8> input;
   io::magick::load(input, options.arg("input.*"));
@@ -99,17 +98,12 @@ int main(int argc, char *argv[])
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
-  mln::util::timer t;
-  t.start();
+  scribo::debug::logger().start_local_time_logging();
 
   // Binarize
   image2d<bool> out = scribo::binarization::sauvola(input_1_gl, w, k);
 
-  if (verbose)
-  {
-    t.stop();
-    std::cout << "binarized in " << t << "s" << std::endl;
-  }
+  scribo::debug::logger().stop_local_time_logging("Binarized in");
 
   io::pbm::save(out, options.arg("output.pbm"));
 

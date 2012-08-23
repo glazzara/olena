@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,7 +67,8 @@ static const scribo::debug::opt_data opt_desc[] =
     "<num>", scribo::debug::check_sauvola_split_ntrue, 1, "2" },
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -92,7 +93,6 @@ int main(int argc, char *argv[])
 
   trace::entering("main");
 
-  bool verbose = options.is_set("verbose");
   // Window size
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());  // Scale 1
 
@@ -105,11 +105,8 @@ int main(int argc, char *argv[])
   binarization::internal::k3 = atof(options.opt_value("k3").c_str());
   binarization::internal::k4 = atof(options.opt_value("k4").c_str());
 
-
-  if (verbose)
-    std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
-	      << k << " - min_ntrue=" << min_ntrue << std::endl;
-
+  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s << " - k="
+			  << k << " - min_ntrue=" << min_ntrue << std::endl;
 
   Magick::InitializeMagick(0);
 

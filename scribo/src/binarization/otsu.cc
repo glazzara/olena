@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,8 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   {0, 0, 0, 0, 0, 0}
 };
 
@@ -85,9 +87,6 @@ int main(int argc, char *argv[])
   Magick::InitializeMagick(*argv);
 
   trace::entering("main");
-
-  bool verbose = options.is_set("verbose");
-  (void) verbose;
 
   image2d<value::rgb8> input;
   io::magick::load(input, options.arg("input.*"));

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -70,7 +70,8 @@ static const scribo::debug::opt_data opt_desc[] =
 
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -102,7 +103,6 @@ int main(int argc, char *argv[])
   trace::entering("main");
 
 
-  bool verbose = options.is_set("verbose");
   // Window size
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());
   // First subsampling scale.
@@ -122,9 +122,8 @@ int main(int argc, char *argv[])
     binarization::internal::k4 = atof(options.opt_value("k4").c_str());
   }
 
-  if (verbose)
-    std::cout << "Using w_1=" << w_1 << " - s=" << s
-	      << " - k=" << k << std::endl;
+  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s
+			  << " - k=" << k << std::endl;
 
 
 
@@ -137,18 +136,14 @@ int main(int argc, char *argv[])
     input_1_gl = data::transform(input_1,
 				 mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
-  mln::util::timer t;
-  t.start();
+
+  scribo::debug::logger().start_local_time_logging();
 
   // Binarize
   image2d<bool>
     output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
 
-  if (verbose)
-  {
-    t.stop();
-    std::cout << "binarized in " << t << "s" << std::endl;
-  }
+  scribo::debug::logger().stop_local_time_logging("Binarized in");
 
   io::pbm::save(output, options.arg("output.pbm"));
 }

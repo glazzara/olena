@@ -1,5 +1,20 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of new logger features.
+
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/wolf.cc: Make use of operator<<.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup Kim's binarization.
 
 	* src/binarization/kim.cc: Move code...

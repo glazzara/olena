@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -65,7 +65,8 @@ static const scribo::debug::opt_data opt_desc[] =
     "useful if fg-extraction is enabled.", "<size>", 0, 1, "1024" },
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -92,7 +93,6 @@ int main(int argc, char *argv[])
 
   trace::entering("main");
 
-  bool verbose = options.is_set("verbose");
   unsigned lambda = atoi(options.opt_value("lambda").c_str());
 
   // Window size
@@ -102,9 +102,8 @@ int main(int argc, char *argv[])
   unsigned s = atoi(options.opt_value("s").c_str());
   double k = atof(options.opt_value("k").c_str());
 
-  if (verbose)
-    std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
-	      << k << " - lambda=" << lambda << std::endl;
+  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s << " - k="
+			  << k << " - lambda=" << lambda << std::endl;
 
   Magick::InitializeMagick(0);
 
