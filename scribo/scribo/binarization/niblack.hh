@@ -33,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <scribo/binarization/internal/niblack_functor.hh>
-# include <scribo/binarization/internal/sauvola_core.hh>
+# include <scribo/binarization/internal/local_threshold_core.hh>
 
 namespace scribo
 {
@@ -96,7 +96,7 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       internal::niblack_functor<I> f(input, K);
-      internal::sauvola_core(input, f, window_size);
+      internal::local_threshold_core(input, f, window_size);
 
       trace::exiting("scribo::binarization::niblack");
       return f.output;

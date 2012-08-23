@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,7 +56,7 @@ namespace scribo
       template <typename I>
       struct sauvola_threshold_functor
       {
-	sauvola_threshold_functor(const I& input,
+	sauvola_threshold_functor(const Image<I>& input,
 				  double K, double R);
 
 	// Run every 4 pixels.
@@ -86,11 +85,14 @@ namespace scribo
 #ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
-      sauvola_threshold_functor<I>::sauvola_threshold_functor(const I& input,
+      sauvola_threshold_functor<I>::sauvola_threshold_functor(const Image<I>& input_,
 							      double K, double R)
 	: K_(K),
 	  R_(R)
       {
+	const I& input = exact(input_);
+	mln_precondition(input.is_valid());
+
 	step_ = 3;
 	next_line3 = input.delta_index(dpoint2d(+2,0)) + 2 * input.border() - 1;
 

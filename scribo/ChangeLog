@@ -1,5 +1,22 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp *_threshold functions.
+
+	* scribo/binarization/internal/sauvola_core.hh: Remove.
+
+	* scribo/binarization/internal/local_threshold_core.hh: New.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_threshold.hh: Make use of
+	local_threshold_core.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Refactor local threshold binarization algorithms.
 
 	* scribo/binarization/internal/compute_local_threshold.hh,

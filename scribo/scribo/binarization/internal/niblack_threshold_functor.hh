@@ -56,7 +56,7 @@ namespace scribo
       template <typename I>
       struct niblack_threshold_functor
       {
-	niblack_threshold_functor(const I& input,
+	niblack_threshold_functor(const Image<I>& input,
 				  double K);
 
 	// Run every 4 pixels.
@@ -84,10 +84,13 @@ namespace scribo
 #ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
-      niblack_threshold_functor<I>::niblack_threshold_functor(const I& input,
+      niblack_threshold_functor<I>::niblack_threshold_functor(const Image<I>& input_,
 							      double K)
 	: K_(K)
       {
+	const I& input = exact(input_);
+	mln_precondition(input.is_valid());
+
 	step_ = 3;
 	next_line3 = input.delta_index(dpoint2d(+2,0)) + 2 * input.border() - 1;
 

@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_CORE_HH
-# define SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_CORE_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_CORE_HH
+# define SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_CORE_HH
 
 /// \file
 ///
@@ -74,7 +74,7 @@ namespace scribo
       */
       template <typename I, typename F>
       void
-      sauvola_core(const Image<I>& input, F& f,
+      local_threshold_core(const Image<I>& input, F& f,
 		   unsigned window_size);
 
 
@@ -83,7 +83,7 @@ namespace scribo
       //
       template <typename I, typename F>
       void
-      sauvola_core(const Image<I>& input, F& f);
+      local_threshold_core(const Image<I>& input, F& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -101,14 +101,14 @@ namespace scribo
 
 	  template <typename I, typename F>
 	  void
-	  sauvola_core(const Image<I>& input, unsigned window_size)
+	  local_threshold_core(const Image<I>& input, unsigned window_size)
 	  {
-	    trace::entering("scribo::binarization::internal::impl::generic::sauvola_core");
+	    trace::entering("scribo::binarization::internal::impl::generic::local_threshold_core");
 
 	    // Not implemented
 	    mlc_abort(I)::check();
 
-	    trace::exiting("scribo::binarization::internal::impl::generic::sauvola_core");
+	    trace::exiting("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  }
 
 	} // end of namespace scribo::binarization::internal::impl::generic
@@ -116,9 +116,9 @@ namespace scribo
 
 	template <typename I, typename F>
 	void
-	sauvola_core_fastest(const Image<I>& input, F& f, unsigned window_size)
+	local_threshold_core_fastest(const Image<I>& input, F& f, unsigned window_size)
 	{
-	  trace::entering("scribo::binarization::internal::impl::generic::sauvola_core");
+	  trace::entering("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  mln_precondition(exact(input).is_valid());
 
 	  mln::util::timer t;
@@ -157,7 +157,7 @@ namespace scribo
 	  t.stop();
 	  std::cout << "Binarization - " << t << std::endl;
 
-	  trace::exiting("scribo::binarization::internal::impl::generic::sauvola_core");
+	  trace::exiting("scribo::binarization::internal::impl::generic::local_threshold_core");
 	}
 
 
@@ -172,31 +172,31 @@ namespace scribo
 
 	template <typename I, typename F>
 	void
-	sauvola_core_dispatch(const mln_value(I)&,
+	local_threshold_core_dispatch(const mln_value(I)&,
 			      const Image<I>& input, F& f,
 			      unsigned window_size)
 	{
-	  impl::generic::sauvola_core(input, f, window_size);
+	  impl::generic::local_threshold_core(input, f, window_size);
 	}
 
 	template <typename I, typename F>
 	void
-	sauvola_core_dispatch(mln::trait::image::speed::fastest,
+	local_threshold_core_dispatch(mln::trait::image::speed::fastest,
 			      const mln_value(I)&,
 			      const Image<I>& input, F& f,
 			      unsigned window_size)
 	{
-	  impl::sauvola_core_fastest(input, f, window_size);
+	  impl::local_threshold_core_fastest(input, f, window_size);
 	}
 
 
 	template <typename I, typename F>
 	void
-	sauvola_core_dispatch(const Image<I>& input, F& f,
+	local_threshold_core_dispatch(const Image<I>& input, F& f,
 			      unsigned window_size)
 	{
 	  typedef mln_value(I) V;
-	  sauvola_core_dispatch(mln_trait_image_speed(I)(),
+	  local_threshold_core_dispatch(mln_trait_image_speed(I)(),
 				V(), input, f, window_size);
 	}
 
@@ -208,13 +208,13 @@ namespace scribo
 
       template <typename I, typename F>
       void
-      sauvola_core(const Image<I>& input, F& f, unsigned window_size)
+      local_threshold_core(const Image<I>& input, F& f, unsigned window_size)
       {
-	trace::entering("scribo::binarization::internal::sauvola_core");
+	trace::entering("scribo::binarization::internal::local_threshold_core");
 
 	mln_precondition(exact(input).is_valid());
 
-	internal::sauvola_core_dispatch(input, f, window_size);
+	internal::local_threshold_core_dispatch(input, f, window_size);
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	if (stddev_image_output)
@@ -234,14 +234,14 @@ namespace scribo
 	  io::pbm::save(debug_alphacond, alphacond_image_output);
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-	trace::exiting("scribo::binarization::internal::sauvola_core");
+	trace::exiting("scribo::binarization::internal::local_threshold_core");
       }
 
       template <typename I, typename F>
       void
-      sauvola_core(const Image<I>& input, F& f)
+      local_threshold_core(const Image<I>& input, F& f)
       {
-	sauvola_core(input, f, 11);
+	local_threshold_core(input, f, 11);
       }
 
 
@@ -254,4 +254,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_CORE_HH
+#endif // ! SCRIBO_BINARIZATION_INTERNAL_LOCAL_THRESHOLD_CORE_HH

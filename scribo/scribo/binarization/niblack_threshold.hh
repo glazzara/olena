@@ -36,23 +36,9 @@
 # include <algorithm>
 # include <cmath>
 
-# include <mln/core/image/image2d.hh>
-# include <mln/value/int_u.hh>
-# include <mln/value/int_u8.hh>
-
-# include <mln/border/mirror.hh>
-# include <mln/border/adjust.hh>
-
-# include <scribo/core/init_integral_image.hh>
-# include <scribo/binarization/internal/niblack_formula.hh>
+# include <mln/core/concept/image.hh>
 # include <scribo/binarization/internal/niblack_threshold_functor.hh>
-
-# include <scribo/util/init_integral_image.hh>
-# include <scribo/util/integral_sum_sum2_functor.hh>
-# include <scribo/util/compute_sub_domains.hh>
-
-# include <scribo/canvas/integral_browsing.hh>
-
+# include <scribo/binarization/internal/local_threshold_core.hh>
 
 
 namespace scribo
@@ -97,119 +83,6 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    // Implementation
-
-
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename I>
-	inline
-	mln_concrete(I)
-	niblack_threshold(const Image<I>& input_, unsigned window_size,
-			  double K)
-	{
-	  trace::entering("scribo::binarization::impl::generic::niblack_threshold");
-
-	  // Not implemented
-	  mlc_abort(I)::check();
-
-	  typedef mln_concrete(I) output_t;
-	  trace::exiting("scribo::binarization::impl::generic::niblack_threshold");
-	  return output_t();
-	}
-
-      } // end of namespace scribo::binarization::impl::generic
-
-
-      template <typename I>
-      inline
-      mln_concrete(I)
-      niblack_threshold_gl(const Image<I>& input_, unsigned window_size,
-			   double K)
-      {
-	trace::entering("scribo::binarization::impl::niblack_threshold_gl");
-
-	const I& input = exact(input_);
-
-	mln_precondition(exact(input).is_valid());
-
-	// Make sure the image sizes are a multiple of 3 in each
-	// dimension. (browsing while binarizing relies on that
-	// property).
-	mln::util::array<mln::util::couple<box2d, unsigned> >
-	  sub_domains = scribo::util::compute_sub_domains(input, 1, 3);
-
-	border::adjust(input, sub_domains(1).second());
-	border::mirror(input);
-
-	typedef mln::util::couple<double,double> V_i;
-	scribo::util::integral_sum_sum2_functor<mln_value(I), double> fi;
-	mln_ch_value(I,V_i)
-	  integral = scribo::util::init_integral_image(input, 3, fi);
-
-#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-	initialize(internal::debug_mean, input);
-	initialize(internal::debug_stddev, input);
-
-	initialize(internal::debug_threshold, input);
-	initialize(internal::debug_alpham, input);
-	initialize(internal::debug_alphacond, input);
-#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
-
-	internal::niblack_threshold_functor<I> f(input, K);
-	scribo::canvas::integral_browsing(integral, 1, window_size / 3,
-					  window_size / 3, 3, f);
-
-	trace::exiting("scribo::binarization::impl::niblack_threshold_gl");
-	return f.output;
-      }
-
-
-    } // end of namespace scribo::binarization::impl
-
-
-
-
-      // Dispatch
-
-    namespace internal
-    {
-
-      template <unsigned n, typename I>
-      inline
-      mln_ch_value(I, value::int_u<n>)
-      niblack_threshold_dispatch(const value::int_u<n>&, const I& input,
-				 unsigned window_size,
-				 double K)
-      {
-	return impl::niblack_threshold_gl(input, window_size, K);
-      }
-
-
-      template <typename I>
-      inline
-      mln_ch_value(I, value::int_u8)
-      niblack_threshold_dispatch(const mln_value(I)&, const I& input,
-				 unsigned window_size,
-				 double K)
-      {
-	// No dispatch for this kind of value type.
-	mlc_abort(I)::check();
-
-	typedef mln_ch_value(I,bool) output_t;
-	return output_t();
-      }
-
-
-    } // end of namespace scribo::binarization::internal
-
-
-
     template <typename I>
     mln_ch_value(I, value::int_u8)
     niblack_threshold(const Image<I>& input, unsigned window_size,
@@ -220,15 +93,11 @@ namespace scribo
       mln_precondition(mln_site_(I)::dim == 2);
       mln_precondition(exact(input).is_valid());
 
-      typedef mln_value(I) value_t;
-      mln_ch_value(I, value::int_u8)
-	output = internal::niblack_threshold_dispatch(value_t(),
-						      exact(input),
-						      window_size,
-						      K);
+      internal::niblack_threshold_functor<I> f(input, K);
+      internal::local_threshold_core(input, f, window_size);
 
       trace::exiting("scribo::binarization::niblack_threshold");
-      return output;
+      return f.output;
     }
 
 
