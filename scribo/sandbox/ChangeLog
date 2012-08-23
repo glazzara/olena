@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* z/sauvola_ms_rv/dump_color_sign.cc: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add test images.
 
 	* z/sauvola_ms_rv/img/001.pgm,
