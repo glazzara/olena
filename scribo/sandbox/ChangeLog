@@ -1,5 +1,40 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add test images.
+
+	* z/sauvola_ms_rv/img/001.pgm,
+	* z/sauvola_ms_rv/img/001_i.pgm,
+	* z/sauvola_ms_rv/img/002.pgm,
+	* z/sauvola_ms_rv/img/002_i.pgm,
+	* z/sauvola_ms_rv/img/003.pgm,
+	* z/sauvola_ms_rv/img/003_i.pgm,
+	* z/sauvola_ms_rv/img/004.pgm,
+	* z/sauvola_ms_rv/img/004_i.pgm,
+	* z/sauvola_ms_rv/img/005.pgm,
+	* z/sauvola_ms_rv/img/005_i.pgm,
+	* z/sauvola_ms_rv/img/006.pgm,
+	* z/sauvola_ms_rv/img/006_i.pgm,
+	* z/sauvola_ms_rv/img/007.pgm,
+	* z/sauvola_ms_rv/img/007_i.pgm,
+	* z/sauvola_ms_rv/img/008.pgm,
+	* z/sauvola_ms_rv/img/008_i.pgm,
+	* z/sauvola_ms_rv/img/009.pgm,
+	* z/sauvola_ms_rv/img/009_i.pgm,
+	* z/sauvola_ms_rv/img/010.pgm,
+	* z/sauvola_ms_rv/img/010_i.pgm,
+	* z/sauvola_ms_rv/img/011.pgm,
+	* z/sauvola_ms_rv/img/011_i.pgm,
+	* z/sauvola_ms_rv/img/012.pgm,
+	* z/sauvola_ms_rv/img/012_i.pgm,
+	* z/sauvola_ms_rv/img/013.pgm,
+	* z/sauvola_ms_rv/img/013_i.pgm,
+	* z/sauvola_ms_rv/img/014.pgm,
+	* z/sauvola_ms_rv/img/014_i.pgm,
+	* z/sauvola_ms_rv/img/015.pgm,
+	* z/sauvola_ms_rv/mp00082c_crop.pgm: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* z/sauvola_ms_rv/skewness/skewness2.cc: Retrieve skewness debug
 	image.
 
