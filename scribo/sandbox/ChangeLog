@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* z/sauvola_ms_rv/skewness/skewness2.cc: Fix calls to sauvola.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new tools.
 
 	* z/sauvola_ms_rv/pgm_color_diff.cc,

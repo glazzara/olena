@@ -26,9 +26,9 @@
 #include <mln/arith/revert.hh>
 #include <mln/util/timer.hh>
 
-mln::image2d<double> skewness;
 
 #include <scribo/binarization/sauvola_ms.hh>
+#include <scribo/binarization/sauvola.hh>
 #include "integral_browsing_rv.hh"
 
 mln::image2d<bool> skewness_pbm;
@@ -131,7 +131,8 @@ namespace mln
   struct invert_on_skewness
   {
     I input;
-    image2d<double> skewness_;
+    image2d<bool> skewness_;
+    image2d<double> skewness_d_;
     mln_fwd_pixter(I) pxl;
 
     invert_on_skewness(const I& input_)
@@ -140,14 +141,16 @@ namespace mln
     {
       pxl.start();
       initialize(skewness_, input);
+      initialize(skewness_d_, input);
     }
 
     void exec(double skewness)
     {
-      skewness_.element(pxl.offset()) = skewness;
+      skewness_d_.element(pxl.offset()) = skewness;
+      skewness_.element(pxl.offset()) = (skewness <= 1000.);
 
-      if (skewness > 1000.)
-	pxl.val() = 255 - pxl.val();
+      // if (skewness > 1000.)
+      // 	pxl.val() = 255 - pxl.val();
 
       pxl.next(); // next pixel
     }
@@ -163,9 +166,9 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 5)
   {
-    std::cerr << "Usage: " << argv[0] << " <input.pgm> <prefix> <win_size>" << std::endl;
+    std::cerr << "Usage: " << argv[0] << " <input.pgm> <prefix> <skewness_win_size> <sauvola_win_size>" << std::endl;
     return 1;
   }
 
@@ -179,7 +182,8 @@ int main(int argc, char *argv[])
 
   prefix = argv[2];
 
-  int win_size = atoi(argv[3]);
+  int skewness_win_size = atoi(argv[3]);
+  int sauvola_win_size = atoi(argv[4]);
   t.stop();
   std::cout << "Initialization - " << t << std::endl;
 
@@ -190,16 +194,21 @@ int main(int argc, char *argv[])
   scribo::integral_rv(input, integral_sum_sum_2_sum_3);
 
   invert_on_skewness<image2d<value::int_u8> > f(input);
-  scribo::canvas::integral_browsing_rv(integral_sum_sum_2_sum_3, win_size, win_size, f);
+  scribo::canvas::integral_browsing_rv(integral_sum_sum_2_sum_3, skewness_win_size, skewness_win_size, f);
+
+  skewness_pbm = f.skewness_;
 
   t.stop();
   std::cout << "invert on skewness - " << t << std::endl;
 
   io::dump::save(f.skewness_, prefix + "skewness.dump");
+  io::dump::save(f.skewness_d_, prefix + "skewness_d.dump");
 
   t.restart();
-  image2d<bool> bin = scribo::binarization::sauvola_ms(f.input, 101, 2);
-  std::cout << "sauvola_ms - " << t << std::endl;
+//  image2d<bool> bin = scribo::binarization::sauvola_ms(input, 101, 2);
+//   std::cout << "sauvola_ms - " << t << std::endl;
+  image2d<bool> bin = scribo::binarization::sauvola(input, sauvola_win_size);
+  std::cout << "sauvola - " << t << std::endl;
 
 
   std::cout << "Total time : " << tt << std::endl;
