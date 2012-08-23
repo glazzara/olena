@@ -60,12 +60,12 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "k", "Sauvola's formulae parameter. Set it globally for all scales.",
+  { "all-k", "Sauvola's formulae parameter. Set it globally for all scales.",
     "<value>", 0, 1, "0.34" },
 
-  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
-  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
-  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+  { "k2", "Force Sauvola's formulae parameter value for scale 2", "<value>", 0, 1, 0 },
+  { "k3", "Force Sauvola's formulae parameter value for scale 3", "<value>", 0, 1, 0 },
+  { "k4", "Force Sauvola's formulae parameter value for scale 4", "<value>", 0, 1, 0 },
 
 
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
@@ -107,24 +107,26 @@ int main(int argc, char *argv[])
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());
   // First subsampling scale.
   unsigned s = atoi(options.opt_value("s").c_str());
-  double k = atof(options.opt_value("k").c_str());
 
-  if (options.is_set("k"))
-  {
-    binarization::internal::k2 = k;
-    binarization::internal::k3 = k;
-    binarization::internal::k4 = k;
-  }
-  else
-  {
+  // Setting k parameter.
+  double k = atof(options.opt_value("all-k").c_str());
+  binarization::internal::k2 = k;
+  binarization::internal::k3 = k;
+  binarization::internal::k4 = k;
+
+  // Override k parameter for specific scales.
+  if (options.is_set("k2"))
     binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  if (options.is_set("k3"))
     binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  if (options.is_set("k4"))
     binarization::internal::k4 = atof(options.opt_value("k4").c_str());
-  }
 
   scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s
-			  << " - k=" << k << std::endl;
-
+			  << " - k2=" << binarization::internal::k2
+			  << " - k3=" << binarization::internal::k3
+			  << " - k4=" << binarization::internal::k4
+			  << std::endl;
 
 
   // Load

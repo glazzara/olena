@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/binarization/sauvola_ms.cc: Fix options handling.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix call to sauvola_ms.
 
 	* scribo/binarization/sauvola_ms.hh,
