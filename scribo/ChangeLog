@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/binarization/kim.cc: New binarization algorithm.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce a verbose mode.
 
 	* scribo/binarization/internal/sauvola_ms_functor.hh,
