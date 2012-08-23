@@ -32,6 +32,7 @@
 #include "integral_browsing_rv.hh"
 
 mln::image2d<bool> skewness_pbm;
+mln::image2d<double> skewness_d;
 std::string prefix;
 
 
@@ -197,6 +198,7 @@ int main(int argc, char *argv[])
   scribo::canvas::integral_browsing_rv(integral_sum_sum_2_sum_3, skewness_win_size, skewness_win_size, f);
 
   skewness_pbm = f.skewness_;
+  skewness_d = f.skewness_d_;
 
   t.stop();
   std::cout << "invert on skewness - " << t << std::endl;
