@@ -74,6 +74,8 @@
 #  include <mln/io/pgm/save.hh>
 #  include <mln/io/dump/save.hh>
 #  include <mln/debug/filename.hh>
+#  include <mln/labeling/compute.hh>
+#  include <mln/accu/math/count.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
 # include <mln/util/timer.hh>
@@ -238,6 +240,13 @@ namespace scribo
 		    && f.card.element(p) < lambda_max;
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 		  f.full_msk.element(p) = true;
+
+
+		  unsigned area = f.card.element(p) * ratio * s;
+		  if (area_histo[i - 2].find(area) != area_histo[i - 2].end())
+		    ++area_histo[i - 2][area];
+		  else
+		    area_histo[i - 2][area] = 1;
 
 		  for (unsigned l = 0; l < ratio; ++l)
 		    for (unsigned k = 0; k < ratio; ++k)
@@ -948,7 +957,8 @@ namespace scribo
 	  // Lowest scale -> no minimum component size.
 	  {
 	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2,
-						     0,
+            // FIXME: was '0'. '2' is to avoid too much noise with k=0.2.
+						     2,
 //						     99 * coeff,
 						     win_w[2] * 3 * coeff,
 //						     (810 / 9) * coeff,
@@ -977,9 +987,20 @@ namespace scribo
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	  internal::debug_e_2 = e_2;
  	  if (internal::scale_iz_image_output)
  	    io::pgm::save(e_2,
 			  mln::debug::filename(internal::scale_iz_image_output));
+
+	  // Computing scale ratios.
+	  mln::util::array<unsigned>
+	    count = labeling::compute(accu::meta::math::count(), e_2, 4);
+	  unsigned npixels = e_2.domain().nsites();
+	  std::cout << "Scale ratios: 2 (" << count[2] / (float)npixels * 100
+		    << ") - 3 (" << count[3] / (float)npixels * 100
+		    << ") - 4 (" << count[4] / (float)npixels * 100 << ")"
+		    << std::endl;
+
  	  if (internal::scale_proba_output)
  	    io::dump::save(internal::debug_scale_proba,
 			   mln::debug::filename(internal::scale_proba_output));

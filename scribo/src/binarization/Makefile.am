@@ -36,6 +36,7 @@ if HAVE_MAGICKXX
    sauvola_ms                           \
    sauvola_ms_fg 			\
    sauvola_ms_split			\
+   singh				\
    wolf
 
 
@@ -70,6 +71,12 @@ if HAVE_MAGICKXX
 		     $(MAGICKXX_CPPFLAGS)
   sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
 		     $(MAGICKXX_LDFLAGS)
+
+  singh_SOURCES  = singh.cc
+  singh_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		   $(MAGICKXX_CPPFLAGS)
+  singh_LDFLAGS  = $(AM_LDFLAGS) 		\
+		   $(MAGICKXX_LDFLAGS)
 
   wolf_SOURCES  = wolf.cc
   wolf_CPPFLAGS = $(AM_CPPFLAGS) 		\

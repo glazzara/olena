@@ -54,6 +54,11 @@ namespace scribo
     namespace internal
     {
 
+      double k2;
+      double k3;
+      double k4;
+
+
       using namespace mln;
 
 
@@ -82,6 +87,7 @@ namespace scribo
 
 	double K_;
 	double R_;
+	int i_;
 
 	sauvola_formula formula_;
 
@@ -113,8 +119,9 @@ namespace scribo
 	  i(i),
 	  q(q),
 	  pxl(input),
-	  K_(K),
-	  R_(R)
+	  //K_(K),
+	  R_(R),
+	  i_(i)
       {
 	res = 0;
 	pxl.start();
@@ -137,6 +144,13 @@ namespace scribo
 
 	dp = negative_offsets_wrt(input, c8());
 	n_nbhs = dp.nelements();
+
+	if (i == 2)
+	  K_ = binarization::internal::k2;
+	else if (i == 3)
+	  K_ = binarization::internal::k3;
+	else
+	  K_ = binarization::internal::k4;
       }
 
 
@@ -151,47 +165,6 @@ namespace scribo
 	value::int_u8 t_p;
 	mln::convert::from_to(formula_(mean, stddev, K_, R_), t_p);
 
-	// point2d pi = input.point_at_index(p);
-	// pi.row() *= std::pow(q, i - 2);
-	// pi.col() *= std::pow(q, i - 2);
-
-	// point2d pi_up = pi;
-	// pi_up.row() -= std::pow(q, i - 2);
-
-	// point2d pi_up_left = pi;
-	// pi_up_left.row() -= std::pow(q, i - 2);
-	// pi_up_left.col() -= std::pow(q, i - 2);
-
-	// point2d pi_up_right = pi;
-	// pi_up_right.row() -= std::pow(q, i - 2);
-	// pi_up_right.col() += std::pow(q, i - 2);
-
-	// point2d pi_down = pi;
-	// pi_down.row() += std::pow(q, i - 2);
-
-	// point2d pi_down_left = pi;
-	// pi_down_left.row() += std::pow(q, i - 2);
-	// pi_down_left.col() -= std::pow(q, i - 2);
-
-	// point2d pi_down_right = pi;
-	// pi_down_right.row() += std::pow(q, i - 2);
-	// pi_down_right.col() += std::pow(q, i - 2);
-
-	// point2d pi_left = pi;
-	// pi_left.col() -= std::pow(q, i - 2);
-
-	// point2d pi_right = pi;
-	// pi_right.col() += std::pow(q, i - 2);
-
-
-
-
-
-// 	if (e_2(pi) != 0)   // Already retrieved from another scale.
-// //	    || e_2(pi_up) != 0 || e_2(pi_down) != 0 || e_2(pi_left) != 0 || e_2(pi_right) != 0
-// //	    || e_2(pi_up_left) != 0 || e_2(pi_up_right) != 0 || e_2(pi_down_left) != 0 || e_2(pi_down_right) != 0)
-// 	  msk.element(p) = false;
-// 	else
 	msk.element(p) = input.element(p) < t_p;
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -232,6 +205,7 @@ namespace scribo
       template <typename I>
       void sauvola_ms_functor<I>::finalize()
       {
+	std::cout << "Scale " << i_ << " - K = " << K_ << std::endl;
 	mln_assertion(! pxl.is_valid());
       }
 

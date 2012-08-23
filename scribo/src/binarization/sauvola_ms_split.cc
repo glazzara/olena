@@ -55,7 +55,13 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "k", "Sauvola's formulae parameter. Set it globally for all scales.",
+    "<value>", 0, 1, "0.34" },
+
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+
   { "min-ntrue", "The number of components in which a site must be set to 'True' in"
     " order to be set to 'True' in the output (Possible values: 1, 2, 3).",
     "<num>", scribo::debug::check_sauvola_split_ntrue, 1, "2" },
@@ -95,9 +101,15 @@ int main(int argc, char *argv[])
   double k = atof(options.opt_value("k").c_str());
   unsigned min_ntrue = atoi(options.opt_value("min-ntrue").c_str());
 
+  binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+
+
   if (verbose)
     std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
 	      << k << " - min_ntrue=" << min_ntrue << std::endl;
+
 
   Magick::InitializeMagick(0);
 

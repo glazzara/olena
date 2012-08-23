@@ -30,6 +30,13 @@
 #include <mln/io/pbm/save.hh>
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
+#include <mln/data/paste.hh>
+#include <mln/pw/all.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/data/convert.hh>
+#include <mln/labeling/foreground.hh>
+#include <mln/literal/colors.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/option_parser.hh>
@@ -58,6 +65,11 @@ static const scribo::debug::opt_data opt_desc[] =
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
   { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
@@ -66,6 +78,35 @@ static const scribo::debug::opt_data opt_desc[] =
 };
 
 
+namespace mln
+{
+
+  struct scale_to_color : public Function_v2v<scale_to_color>
+  {
+    typedef value::rgb8 result;
+
+    value::rgb8 operator()(const value::int_u8& v) const
+    {
+      switch (v)
+      {
+	default:
+	case 0:
+	  return literal::black;
+
+	case 2:
+	  return literal::green;
+
+	case 3:
+	  return literal::blue;
+
+	case 4:
+	  return literal::red;
+      }
+    }
+
+  };
+
+}
 
 
 int main(int argc, char *argv[])
@@ -97,6 +138,10 @@ int main(int argc, char *argv[])
   unsigned s = atoi(options.opt_value("s").c_str());
   double k = atof(options.opt_value("k").c_str());
 
+  binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+
   if (verbose)
     std::cout << "Using w_1=" << w_1 << " - s=" << s
 	      << " - k=" << k << std::endl;
@@ -106,6 +151,7 @@ int main(int argc, char *argv[])
   scribo::binarization::internal::full_threshold_image_output = "full_threshold_image.pbm";
   scribo::binarization::internal::scale_iz_image_output = "scale_iz.pgm";
   scribo::binarization::internal::scale_proba_output = "scale_proba.dump";
+  const char *scale_bin_output = "scale_bin.ppm";
 
   // Load
   image2d<value::rgb8> input_1;
@@ -128,6 +174,44 @@ int main(int argc, char *argv[])
     t.stop();
     std::cout << "binarized in " << t << "s" << std::endl;
   }
+
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+  {
+    image2d<value::int_u8> scale_bin;
+    initialize(scale_bin, output);
+
+    for (unsigned i = 0; i < geom::nrows(output); ++i)
+      for (unsigned j = 0; j < geom::ncols(output); ++j)
+	if (output.at_(i,j))
+	  scale_bin.at_(i,j) = binarization::internal::debug_e_2.at_(i/3, j/3);
+	else
+	  scale_bin.at_(i,j) = 0;
+
+    scale_to_color f;
+    io::ppm::save(data::transform(scale_bin, f),
+		  mln::debug::filename(scale_bin_output));
+
+    // Computing size of retrieved objects for each scale.
+    unsigned max = 15000;
+    std::ofstream ostr(mln::debug::filename("area_per_scale.tsv").c_str());
+    for (unsigned j = 0; j < max; ++j)
+    {
+      ostr << j;
+      for (unsigned i = 0; i < 3; ++i)
+      {
+	if (binarization::internal::area_histo[i].find(j) != binarization::internal::area_histo[i].end())
+	  ostr << " " << binarization::internal::area_histo[i][j];
+	else
+	  ostr << " " << 0;
+      }
+      ostr << std::endl;
+    }
+    ostr.close();
+
+
+  }
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
 
   io::pbm::save(output, options.arg("output.pbm"));
 }

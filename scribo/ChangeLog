@@ -1,5 +1,23 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve Sauvola.
+
+	* sauvola_fast.cc: Remove.
+
+	* scribo/binarization/internal/local_threshold_debug.hh: Add more
+	debug.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Introduce k for each scale.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_split.cc: Take several k into
+	account.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add Wolf's binarization algorithm.
 
 	* scribo/binarization/internal/wolf_formula.hh,

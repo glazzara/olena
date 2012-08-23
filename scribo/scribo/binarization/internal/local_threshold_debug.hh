@@ -71,12 +71,16 @@ namespace scribo
 
       image3d<double> debug_scale_proba;
 
+      image2d<value::int_u8> debug_e_2;
+
       image2d<double> debug_alpham;
       image2d<bool> debug_alphacond;
 
       double mean_debug_factor = 1.0;
       double stddev_debug_factor = 1.0;
       double alpham_debug_factor = 2.0;
+
+      mln::util::array<std::map<unsigned, unsigned> > area_histo(3);
 
     } // end of namespace scribo::binarization::internal
 

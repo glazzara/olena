@@ -60,7 +60,14 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "k", "Sauvola's formulae parameter. Set it globally for all scales.",
+    "<value>", 0, 1, "0.34" },
+
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+
+
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
   { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
@@ -105,6 +112,12 @@ int main(int argc, char *argv[])
   if (verbose)
     std::cout << "Using w_1=" << w_1 << " - s=" << s
 	      << " - k=" << k << std::endl;
+
+
+  binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+
 
   // Load
   image2d<value::rgb8> input_1;
