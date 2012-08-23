@@ -94,7 +94,17 @@ namespace scribo
 	  R_(R)
       {
 	step_ = 3;
-	next_line3 = input.delta_index(dpoint2d(+2,0)) + 2 * input.border() - 1;
+
+	// Since we iterate from a smaller image in the largest ones
+	// and image at scale 1 does not always have a size which can
+	// be divided by 3, some sites in the border may not be
+	// processed and we must skip them.
+	int more_offset = - (3 - input.ncols() % 3);
+	if (more_offset == - 3)
+	  more_offset = 0; // No offset needed.
+
+	next_line3 = input.delta_index(dpoint2d(+2,0))
+	  + 2 * input.border() + more_offset;
 
 	offset1 = input.delta_index(dpoint2d(+1,0));
 	offset2 = input.delta_index(dpoint2d(+2,0));
