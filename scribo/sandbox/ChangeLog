@@ -1,5 +1,13 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new tools.
+
+	* z/sauvola_ms_rv/pgm_color_diff.cc,
+	* z/sauvola_ms_rv/pgm_local_mean.cc,
+	* z/sauvola_ms_rv/ppm_influence_zone_geodesic.cc: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename skewness directory and share code between implementations.
 
 	* z/skewness/skewness.cc,
