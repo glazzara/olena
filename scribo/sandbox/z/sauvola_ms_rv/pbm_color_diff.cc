@@ -2,10 +2,11 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/pgm/load.hh>
+#include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/data/transform.hh>
 #include <mln/arith/minus.hh>
+#include <mln/data/convert.hh>
 
 namespace mln
 {
@@ -42,16 +43,18 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " in.pgm ref.pgm threshold out.ppm" << std::endl;
+    std::cout << "Usage: " << argv[0] << " in.pbm ref.pbm threshold out.ppm" << std::endl;
     return 1;
   }
 
-  image2d<value::int_u8> input, ref;
+  image2d<bool> input, ref;
 
-  io::pgm::load(input, argv[1]);
-  io::pgm::load(ref, argv[2]);
+  io::pbm::load(input, argv[1]);
+  io::pbm::load(ref, argv[2]);
 
-  image2d<int> diff = input - ref;
+  image2d<int>
+    diff = data::convert(value::int_u8(), input)
+    - data::convert(value::int_u8(), ref);
 
   color_diff f(atoi(argv[3]));
   image2d<value::rgb8> result = data::transform(diff, f);
