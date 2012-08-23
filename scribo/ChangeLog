@@ -1,5 +1,9 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/binarization/sauvola_ms.hh: More fixes in debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix warning in Otsu related files.
 
 	* scribo/binarization/otsu_threshold.hh,
