@@ -78,7 +78,7 @@ namespace scribo
 
       /* calculation of probability density */
       util::array<double> pdf(hist.nvalues());  //probability distribution
-      for(int i = 0; i< maxval; ++i)
+      for(unsigned i = 0; i< maxval; ++i)
 	pdf[i] = (double)hist[i] / nsites;
 
 
@@ -89,7 +89,7 @@ namespace scribo
       cdf[0] = pdf[0];
       myu[0] = 0.0;       /* 0.0 times prob[0] equals zero */
 
-      for(int i = 1; i < maxval; ++i)
+      for(unsigned i = 1; i < maxval; ++i)
       {
 	cdf[i] = cdf[i-1] + pdf[i];
 	myu[i] = myu[i-1] + i*pdf[i];
@@ -102,7 +102,7 @@ namespace scribo
       double max_sigma = 0.0;
       util::array<double> sigma(hist.nvalues()); // inter-class variance
 
-      for(int i = 0; i < maxval - 1; ++i)
+      for(int i = 0; i < (maxval - 1); ++i)
       {
 	if(cdf[i] != 0.0 && cdf[i] != 1.0)
 	{

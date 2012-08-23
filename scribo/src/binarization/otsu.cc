@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
   trace::entering("main");
 
   bool verbose = options.is_set("verbose");
+  (void) verbose;
 
   image2d<value::rgb8> input;
   io::magick::load(input, options.arg("input.*"));
