@@ -1,5 +1,20 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup Kim's binarization.
+
+	* src/binarization/kim.cc: Move code...
+	* scribo/binarization/kim.hh: ... here.
+
+	* tests/binarization/Makefile.am: Add new target.
+
+	* tests/binarization/kim.cc,
+	* tests/binarization/kim.ref.pbm,
+	* tests/binarization/kim_weven_hodd.ref.pbm,
+	* tests/binarization/kim_wodd_heven.ref.pbm,
+	* tests/binarization/kim_wodd_hodd.ref.pbm: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make integral browsing canvas robust to large windows.
 
 	* scribo/binarization/sauvola_ms.hh: remove tests on window size.

@@ -21,6 +21,10 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
+  kim.res.pbm					\
+  kim_wodd_heven.ref.pbm			\
+  kim_weven_hodd.ref.pbm			\
+  kim_wodd_hodd.ref.pbm				\
   niblack.res.pbm				\
   niblack_wodd_heven.ref.pbm			\
   niblack_weven_hodd.ref.pbm			\
@@ -41,6 +45,7 @@ EXTRA_DIST = 					\
 
 check_PROGRAMS =				\
   global_threshold 				\
+  kim 						\
   local_threshold	 			\
   niblack					\
   otsu						\
@@ -50,6 +55,7 @@ check_PROGRAMS =				\
 
 
 global_threshold_SOURCES = global_threshold.cc
+kim_SOURCES = kim.cc
 local_threshold_SOURCES = local_threshold.cc
 niblack_SOURCES = niblack.cc
 otsu_SOURCES = otsu.cc
