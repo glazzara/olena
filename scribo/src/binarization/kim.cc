@@ -116,6 +116,9 @@ int main(int argc, char *argv[])
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, options.arg("input.*"));
 
+  mln::util::timer t;
+  t.start();
+
   // Convert to Gray level image.
   image2d<value::int_u8>
     input_1_gl = data::transform(input_1,
@@ -125,12 +128,17 @@ int main(int argc, char *argv[])
   image2d<bool>
     output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
 
-  io::pbm::save(output, "debug_bin.pbm");
+  mln::util::timer lt;
+  lt.start();
 
   // Compute integral image
   scribo::util::integral_sum_sum2_functor<value::int_u8,double> f_sum_sum2;
   image2d<mln::util::couple<double,double> >
     integral_sum_sum_2 = scribo::util::init_integral_image(input_1_gl, 1, f_sum_sum2);
+
+  lt.stop();
+  std::cout << "integral image - " << lt << std::endl;
+  lt.start();
 
   // Find text lines
   line_set<image2d<scribo::def::lbl_type> >
@@ -141,6 +149,10 @@ int main(int argc, char *argv[])
   mln::util::array<unsigned> thickness(lines.nelements() + 1, 0);
   const component_set<L>& comp_set = lines.components();
   const L& lbl = comp_set.labeled_image();
+
+  lt.stop();
+  std::cout << "Text line finding - " << lt << std::endl;
+  lt.start();
 
   // Compute run-lengths histogram in order to compute character
   // thickness for each line.
@@ -178,14 +190,13 @@ int main(int argc, char *argv[])
       }
 
     thickness(lines(i).id()) = thick;
-    std::cout << "line " << i << " - thickness = " << thick << " - height = " << lines(i).x_height() << std::endl;
   }
 
-  // std::cout << "integral_sum_sum_2.domain() = " << integral_sum_sum_2.domain() << std::endl;
+  lt.stop();
+  std::cout << "run-lengths histogram - " << lt << std::endl;
 
-  // FIXME: To be removed.
-  extension::adjust_duplicate(integral_sum_sum_2, 50);
-
+  lt.start();
+  // Compute thresholds for each pixel of each line and binarize again!
   for_all_lines(i, lines)
   {
     if (!lines(i).is_textline())
@@ -193,34 +204,20 @@ int main(int argc, char *argv[])
 
     math::round<double> round;
     double
-      win_min = round(std::max(thickness(lines(i).id()),2u) / 2.0),
-      win_max = round(std::max(lines(i).x_height(),2u) / 2.0),
+      win_min = thickness(lines(i).id()),
+      win_max = lines(i).bbox().height(),
       card_min,
       card_max;
 
-    if (win_min == 0)
-    {
-      std::cout << "win_min == 0 - thickness = " << thickness(lines(i).id()) << std::endl;
-      abort();
-    }
-
-    if (win_max == 0)
-    {
-      std::cout << "win_max == 0 - x_height = " << lines(i).x_height() << std::endl;
-      abort();
-    }
-
+    mln_assertion(win_min != 0);
+    mln_assertion(win_max != 0);
 
     binarization::internal::sauvola_formula compute_thres;
-
-
-    // std::cout << "<<<<<<<<<<<<<< New line" << std::endl;
+    point2d tl, br;
 
     mln_piter(L) p(lines(i).bbox());
     for_all(p)
     {
-      accu::shape::bbox<point2d> accu;
-      point2d tl, br;
 
       // Min case
       tl.row() = (p.row() - win_min - 1);
@@ -229,9 +226,7 @@ int main(int argc, char *argv[])
       br.row() = (p.row() + win_min);
       br.col() = (p.col() + win_min);
 
-      accu.take(tl);
-      accu.take(br);
-      box2d b = accu.to_result();
+      box2d b(tl, br);
       b.crop_wrt(integral_sum_sum_2.domain());
 
       point2d tr = b.pmax();
@@ -239,24 +234,7 @@ int main(int argc, char *argv[])
       point2d bl = b.pmin();
       bl.row() = b.pmax().row();
 
-      {
-	accu::shape::bbox<point2d> accu;
-	point2d tl, br;
-
-	tl.row() = (p.row() - win_min);
-	tl.col() = (p.col() - win_min);
-
-	br.row() = (p.row() + win_min);
-	br.col() = (p.col() + win_min);
-
-	accu.take(tl);
-	accu.take(br);
-	box2d b = accu.to_result();
-	b.crop_wrt(input_1_gl.domain());
-	card_min = b.nsites();
-      }
-
-      // std::cout << "p = " << p << " - box = " << b << " - nsites = " << b.nsites() << " - card_min = " << card_min << std::endl;
+      card_min = b.nsites() - b.height() - b.width() + 1;
 
       double sum = integral_sum_sum_2(b.pmax()).first() - integral_sum_sum_2(tr).first() - integral_sum_sum_2(bl).first() + integral_sum_sum_2(b.pmin()).first();
       double sum_2 = integral_sum_sum_2(b.pmax()).second() - integral_sum_sum_2(tr).second() - integral_sum_sum_2(bl).second() + integral_sum_sum_2(b.pmin()).second();
@@ -273,16 +251,13 @@ int main(int argc, char *argv[])
       double T_min = compute_thres(mean, stddev);
 
       // Max case
-      accu.init();
       tl.row() = (p.row() - win_max - 1);
       tl.col() = (p.col() - win_max - 1);
 
       br.row() = (p.row() + win_max);
       br.col() = (p.col() + win_max);
 
-      accu.take(tl);
-      accu.take(br);
-      b = accu.to_result();
+      b = box2d(tl, br);
       b.crop_wrt(integral_sum_sum_2.domain());
 
       tr = b.pmax();
@@ -290,24 +265,7 @@ int main(int argc, char *argv[])
       bl = b.pmin();
       bl.row() = b.pmax().row();
 
-      {
-	accu::shape::bbox<point2d> accu;
-	point2d tl, br;
-
-	tl.row() = (p.row() - win_max);
-	tl.col() = (p.col() - win_max);
-
-	br.row() = (p.row() + win_max);
-	br.col() = (p.col() + win_max);
-
-	accu.take(tl);
-	accu.take(br);
-	box2d b = accu.to_result();
-	b.crop_wrt(input_1_gl.domain());
-	card_max = b.nsites();
-
-	// std::cout << "card_max = " << card_max << " - b = " << b << std::endl;
-      }
+      card_max = b.nsites() - b.height() - b.width() + 1;
 
       sum = integral_sum_sum_2(b.pmax()).first() - integral_sum_sum_2(tr).first() - integral_sum_sum_2(bl).first() + integral_sum_sum_2(b.pmin()).first();
       sum_2 = integral_sum_sum_2(b.pmax()).second() - integral_sum_sum_2(tr).second() - integral_sum_sum_2(bl).second() + integral_sum_sum_2(b.pmin()).second();
@@ -328,7 +286,6 @@ int main(int argc, char *argv[])
       double teta = 0.3;
       double T = teta * T_max + (1 - teta) * T_min;
 
-//      std::cout << "bbox = " << lines(i).bbox() << " - box = " << b << " - T_max = " << T_max << " - T_min = " << T_min << " -  T = " << T << std::endl;
       mln_assertion(T_min <= 255);
       mln_assertion(T_max <= 255);
       mln_assertion(T <= 255);
@@ -338,10 +295,11 @@ int main(int argc, char *argv[])
 
   }
 
+  lt.stop();
+  std::cout << "Last binarization - " << lt << std::endl;
 
-  image2d<value::rgb8> bbox = scribo::debug::bboxes_enlarged_image(output, lines);
-  io::ppm::save(bbox, "debug_bbox.ppm");
-
+  t.stop();
+  std::cout << "Total time = " << t << std::endl;
 
   io::pbm::save(output, options.arg("output.pbm"));
 }
