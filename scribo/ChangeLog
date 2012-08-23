@@ -1,5 +1,13 @@
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make integral browsing canvas robust to large windows.
+
+	* scribo/binarization/sauvola_ms.hh: remove tests on window size.
+
+	* scribo/canvas/integral_browsing.hh: Check window size.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Several small fixes.
 
 	* scribo/estim/font_color.hh: Fix namespace ambiguities.

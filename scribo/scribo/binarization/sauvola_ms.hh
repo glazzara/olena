@@ -169,34 +169,6 @@ namespace scribo
 	  w_local_h = w_local,
 	  w_local_w = w_local;
 
-	//std::cout << "scale " << i << " - w = " << w << " - lambda_min = " << lambda_min << " - lambda_max = " << lambda_max << std::endl;
-
-	// Make sure the window fits in the image domain.
-	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
-	{
-	  w_local_w = std::min(integral_sum_sum_2.ncols(),
-			       integral_sum_sum_2.nrows()) - integral_sum_sum_2.border();
-	  w_local_h = w_local_w;
-	  trace::warning("integral_browsing - Adjusting window width since it"
-			 " was larger than image width.");
-	}
-	if (w_local_h >= static_cast<const unsigned>(integral_sum_sum_2.nrows()))
-	{
-	  w_local_h = std::min(integral_sum_sum_2.nrows(),
-			       integral_sum_sum_2.ncols()) - integral_sum_sum_2.border();
-	  w_local_w = w_local_h;
-	  trace::warning("integral_browsing - Adjusting window height since it"
-			 " was larger than image height.");
-	}
-
-	if (! (w_local % 2))
-	{
-	  --w_local_w;
-	  ++w_local_h;
-	}
-
-	//std::cout << "Scale " << i << " - w_h = " << w_local_h << " - w_w = " << w_local_w << " - w = " << w << std::endl;
-
 	// 1st pass
 	scribo::binarization::internal::sauvola_ms_functor< image2d<int_u8> >
 	  f(sub, K, SCRIBO_DEFAULT_SAUVOLA_R, e_2, i, q);

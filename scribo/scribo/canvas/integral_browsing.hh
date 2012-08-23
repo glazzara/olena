@@ -88,6 +88,25 @@ namespace scribo
 //       mln_precondition((h/2) < ima.nrows());
 //       mln_precondition((w/2) < ima.ncols());
 
+      // Adjust window size to image.
+      if (w > (ima.domain().ncols() - ima.border()))
+      {
+	w = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
+	if (! (w % 2))
+	  --w;
+	trace::warning("integral_browsing - Adjusting window width since it"
+		       " was larger than image height.");
+      }
+      if (h > (ima.domain().nrows() - ima.border()))
+      {
+	h = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
+	if (! (h % 2))
+	  --h;
+	trace::warning("integral_browsing - Adjusting window height since it"
+		       " was larger than image width.");
+      }
+
+
       const int
 	nrows = ima.nrows(),
 	ncols = ima.ncols(),
