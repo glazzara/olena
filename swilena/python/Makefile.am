@@ -306,6 +306,7 @@ image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/ppm.ixx
 image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
 image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/println.ixx
 
+image2d_point2d-wrap.cc: $(top_srcdir)/swilena/concat.ixx
 image2d_point2d-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
 image2d_point2d-wrap.cc: $(top_srcdir)/swilena/fill.ixx
 image2d_point2d-wrap.cc: $(top_srcdir)/swilena/println.ixx

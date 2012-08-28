@@ -1,5 +1,12 @@
 2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix build dependencies in Swilena.
+
+	* python/Makefile.am (image2d_point2d-wrap.cc): Depend on
+	$(top_srcdir)/swilena/concat.ixx.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Comment on an issue of Swilena highlighted by max-tree.py.
 
 	* python/max-tree.py: Here.
