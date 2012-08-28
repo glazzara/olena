@@ -49,7 +49,7 @@
      %include "mln/morpho/dilation.hh"
      %include "mln/morpho/erosion.hh"
 
-   would require a lot of efforts.  Use an explicit prototypes
+   would require a lot of efforts.  Use explicit prototypes
    instead.  */
 namespace mln
 {
@@ -65,6 +65,9 @@ namespace mln
   }
 }
 
+
+/* FIXME: We should try to factor the multiple instantiations of
+   `mln::trait::concrete< I >'.  */
 
 %define instantiate_dilation(Name, I, W)
   // Explicit instantiation of this trait for the return type.

@@ -36,7 +36,7 @@
 #include "mln/core/alias/point2d.hh"
 %}
 
-%include concat.ixx
+%include "concat.ixx"
 
 %include "image2d.ixx"
 instantiate_image2d(image2d_point2d,

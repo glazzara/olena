@@ -42,8 +42,8 @@
 %extend mln::box< mln::point<mln::grid::square, mln::def::coord> >
 {
   // Provide a ctor creating an `mln::box2d' from two `int's.
-  mln::box< mln::point< mln::grid::square, mln::def::coord> > (int nrows,
-							       int ncols)
+  mln::box< mln::point<mln::grid::square, mln::def::coord> > (int nrows,
+							      int ncols)
   {
     return new mln::box<mln::point2d>(nrows, ncols);
   }

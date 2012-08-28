@@ -84,9 +84,10 @@
 
   // Instantiate base classes of mln::image2d<T> so that Swig knows it
   // derives from mln::Image.
-  %template() mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
-  %template() mln::internal::image_base< T, mln::box2d, mln::image2d< T > >;
+  %template() mln::Image< mln::image2d< int > >;
   %template() mln::internal::image_checked_< mln::image2d< T > >;
+  %template() mln::internal::image_base< T, mln::box2d, mln::image2d< T > >;
+  %template() mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
   // Instantiate mln::image2d<T>
   %template(I) mln::image2d< T >;
 %enddef // !instantiate_image2d

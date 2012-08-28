@@ -41,7 +41,7 @@
 /** Instantiate an mln::box<P> type.
 
     The variadic argument ``P...'' is used to allow template type
-    names having commas (e.g. mln::point<grid::square, def::coord) as
+    names having commas (e.g. mln::point<grid::square, def::coord >) as
     argument.  */
 %define instantiate_box(Name, P...)
 /* Swig tries to wrap everything by default; prevent it from wrapping
