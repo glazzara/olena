@@ -1,3 +1,9 @@
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the local (build-time) Swilena Python Shell.
+
+	* python/sps-local.in (PYTHONPATH): Add `@abs_builddir@/.libs'.
+
 2012-07-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Get rid of `ltihooks' in Swilena.

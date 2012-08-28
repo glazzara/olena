@@ -1,6 +1,6 @@
 								# -*- sh -*-
 
 # sps local version, for use from non installed distributions.
-PYTHONPATH='@abs_builddir@:@abs_srcdir@':"$PYTHONPATH" \
+PYTHONPATH='@abs_builddir@:@abs_builddir@/.libs:@abs_srcdir@':"$PYTHONPATH" \
 DYLD_LIBRARY_PATH='.libs:@abs_top_builddir@/src/.libs' \
 exec @PYTHON@ -i @abs_srcdir@/sps.py "$@"
