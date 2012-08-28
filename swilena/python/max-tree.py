@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2010, 2012 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -37,8 +37,18 @@ for p, v in itertools.izip(ima.domain(), values):
   ima.set(p, int_u8(v))
 image.println("ima =", ima)
 
+# FIXME: The type of the (Python) object returned by this call,
+# <type 'SwigPyObject'>, is wrong.  The right type should be 
+# <class 'image2d_point2d.image2d_point2d'>, but the fact that the
+# routine and the result object are located in two different
+# (generated) Swilena submodules seems to confuse SWIG.  A consequence
+# of this issue is that `max_tree_parent' is not usable at all, hence
+# the failure of the last line of this test.  We should perhaps review
+# Swilena's design and minimize or even completely get rid of the
+# modular approach...
 max_tree_parent = image.max_tree(ima, c4());
-# FIXME: Why can't we use
+
+# FIXME: Overloading issue: Why can't we use
 #
 #   image2d_point2d.println("max_tree_parent =", max_tree_parent)
 #

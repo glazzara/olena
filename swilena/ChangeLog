@@ -1,5 +1,11 @@
 2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Comment on an issue of Swilena highlighted by max-tree.py.
+
+	* python/max-tree.py: Here.
+
+2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the local (build-time) Swilena Python Shell.
 
 	* python/sps-local.in (PYTHONPATH): Add `@abs_builddir@/.libs'.
