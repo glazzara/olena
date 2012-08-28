@@ -40,7 +40,7 @@ AM_LDFLAGS = -avoid-version -module -shared
 @AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
 
 
-# Use Make to generate `data.py' and shell scripts (`sps' and
+# Use Make to generate `data.py' and shell scripts (such as `sps' and
 # `sps-local') instead of `configure', as advised by Autoconf's manual
 # (see section ``Installation Directory Variables'').
 edit = sed							\
@@ -50,7 +50,8 @@ edit = sed							\
          -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
          -e 's|@libdir[@]|$(libdir)|g'				\
          -e 's|@pythondir[@]|$(pythondir)|g'			\
-         -e 's|@PYTHON[@]|$(PYTHON)|g'
+         -e 's|@PYTHON[@]|$(PYTHON)|g'				\
+         -e 's|@LIBTOOL[@]|$(LIBTOOL)|g'
 
 
 # swilena.py: The whole Swilena suite.
@@ -321,11 +322,11 @@ python_PYTHON += sps.py
 # The script to be used in installed distributions.
 bin_SCRIPTS = sps
 # The script to be used in non-installed build trees.
-noinst_SCRIPTS = sps-local
+noinst_SCRIPTS = sps-local sps-gdb-local
 
-EXTRA_DIST += sps-common.in sps.in sps-local.in
+EXTRA_DIST += sps-common.in sps.in sps-local.in sps-gdb-local.in
 
-sps sps-local: Makefile $(srcdir)/sps-common.in
+$(bin_SCRIPTS) $(noinst_SCRIPTS): Makefile $(srcdir)/sps-common.in
 	rm -f $@ $@.tmp
 	srcdir='';				\
 	  test -f ./$@.in || srcdir=$(srcdir)/;	\
@@ -338,6 +339,7 @@ sps sps-local: Makefile $(srcdir)/sps-common.in
 
 sps: $(srcdir)/sps.in
 sps-local: $(srcdir)/sps-local.in
+sps-gdb-local: $(srcdir)/sps-gdb-local.in
 
 CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
