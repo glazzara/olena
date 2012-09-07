@@ -156,7 +156,7 @@ namespace mln
       const unsigned n_nbhs = dp.nelements();
 
       // Backward.
-      unsigned p = input.index_of_point(point2d(nrows - 1, ncols - 1));
+      unsigned p = input.offset_of_point(point2d(nrows - 1, ncols - 1));
       for (int row = nrows - 1; row >= 0; --row, p -= dp_border)
 	for (int col = ncols - 1; col >= 0; --col, --p)
 	{
@@ -189,7 +189,7 @@ namespace mln
       data::fill(label, 0);
 
       // Forward.
-      unsigned p = input.index_of_point(point2d(0, 0));
+      unsigned p = input.offset_of_point(point2d(0, 0));
       for (int row = 0; row < nrows; ++row, p += dp_border)
 	for (int col = 0; col < ncols; ++col, ++p)
 	{

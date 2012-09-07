@@ -1,5 +1,9 @@
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/afp/components.hh: Rename index_of_point to offset_of_point.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/debug/logger.hh: Add missing inline keywords.
 
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
