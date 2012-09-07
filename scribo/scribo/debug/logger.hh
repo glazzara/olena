@@ -213,6 +213,7 @@ namespace scribo
     namespace internal
     {
 
+      inline
       std::string to_upper(const std::string& s)
       {
 	std::string out(s);
@@ -481,6 +482,7 @@ namespace scribo
       }
 
 
+      inline
       logger_&
       logger_::operator<<(std::ostream& (*f)(std::ostream&))
       {
@@ -501,6 +503,7 @@ namespace scribo
     }
 
 
+    inline
     VerboseMode txt_to_verbose_mode(const std::string& name)
     {
       struct mode_name

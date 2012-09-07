@@ -1,5 +1,9 @@
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/debug/logger.hh: Add missing inline keywords.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Take OCR confidence into account in document reconstruction.
 
 	* demo/xml2doc/templates/pdf/line.xsl: Do not print lines with
