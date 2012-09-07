@@ -1,5 +1,12 @@
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+ 	Take OCR confidence into account in HTML reconstruction.
+
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl: Here.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* src/afp/components.hh: Rename index_of_point to offset_of_point.
 
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
