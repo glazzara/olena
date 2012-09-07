@@ -518,6 +518,7 @@ namespace scribo
 		 << "\" dHeight=\"" << line.d_height()
 		 << "\" aHeight=\"" << line.a_height()
 		 << "\" charWidth=\"" << line.char_width()
+		 << "\" textConfidence=\"" << line.text_confidence()
 		 << "\">" << std::endl;
 
 	  internal::print_box_coords(output, line.bbox(), "          ");

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -758,6 +758,14 @@ namespace scribo
 
 
   template <typename L>
+  float
+  line_info<L>::text_confidence() const
+  {
+    return data_->text_confidence_;
+  }
+
+
+  template <typename L>
   const std::string&
   line_info<L>::text() const
   {
@@ -775,7 +783,7 @@ namespace scribo
 
   template <typename L>
   void
-  line_info<L>::update_text(const std::string& str, float confidence = 1.0)
+  line_info<L>::update_text(const std::string& str, float confidence = 100.0)
   {
     data_->text_confidence_ = confidence;
     data_->text_ = str;

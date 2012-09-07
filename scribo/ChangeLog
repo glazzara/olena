@@ -1,3 +1,17 @@
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Take OCR confidence into account in document reconstruction.
+
+	* demo/xml2doc/templates/pdf/line.xsl: Do not print lines with
+	confidence < 60%.
+
+	* scribo/core/line_info.hh: Add access to text confidence.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh: Save text confidence.
+
+	* scribo/io/xml/load.hh: Load text confidence.
+
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename point_at_index, delta_index and index_of_point.
