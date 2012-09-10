@@ -26,7 +26,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/magick/load.hh>
+#include <mln/io/magick/all.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
@@ -38,7 +38,7 @@
 static const scribo::debug::arg_data arg_desc[] =
 {
   { "input.*", "An image." },
-  { "output.pbm", "A binary image." },
+  { "output.*", "A binary image." },
   {0, 0}
 };
 
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
   scribo::debug::logger().stop_local_time_logging("Binarized in");
 
-  io::pbm::save(out, options.arg("output.pbm"));
+  io::magick::save(out, options.arg("output.*"));
 
   trace::exiting("main");
 }
