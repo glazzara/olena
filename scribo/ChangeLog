@@ -1,5 +1,9 @@
 2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/binarization/sauvola_ms.hh: Add comments.
+
+2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Use io::magick for sauvola binaries output.
 
 	* src/binarization/sauvola.cc,

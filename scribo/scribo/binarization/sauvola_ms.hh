@@ -807,6 +807,10 @@ namespace scribo
 	  unsigned q = 2;
 
 
+	  /*==========================
+	    == Step 1 - Subsampling ==
+	    ========================*/
+
 	  mln::util::array<I> t_ima;
 
 	  // Make sure t_ima indexes start from 2.
@@ -901,6 +905,9 @@ namespace scribo
 							integral_sum_sum_2.border());
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
+	  /*=============================================
+	    == Step 2 - Object selection at each scale ==
+	    ===========================================*/
 
 	  // Highest scale -> no maximum component size.
 	  {
@@ -954,6 +961,10 @@ namespace scribo
 			  mln::debug::filename(internal::scale_image_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
+	  /*==============================
+	    == Step 3 - Results Merging ==
+	    ============================*/
+
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
@@ -983,6 +994,10 @@ namespace scribo
  	    io::dump::save(internal::debug_scale_proba,
 			   mln::debug::filename(internal::scale_proba_output));
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
+	  /*=================================
+	    == Step 4 - Final Binarization ==
+	    ===============================*/
 
 	  // Binarize
 	  image2d<bool>
