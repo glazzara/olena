@@ -235,8 +235,8 @@ namespace scribo
       logger_::logger_()
 	: level_(None),
 	  verbose_mode_(Mute),
-	  stream_(std::cerr),
-	  verbose_prefix_("LOG: ")
+	  verbose_prefix_("LOG: "),
+	  stream_(std::cerr)
       {
 	// Magick::InitializeMagick(0);
       }

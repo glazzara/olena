@@ -1,3 +1,7 @@
+2012-09-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/logger.hh: Fix attributes initialization order.
+
 2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
  	Take OCR confidence into account in HTML reconstruction.
