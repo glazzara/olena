@@ -1,3 +1,157 @@
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix file names in apps/morphers/recorder-bft.
+
+	* apps/morphers/recorder-bft.cc,
+	* apps/morphers/Makefile.am (recorder_SOURCES):
+	s/lena/picasso/.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the (movie) output of apps/morphers/iz.
+
+	* apps/morphers/iz.cc (save_colorized): Skip consecutive identical
+	frames.
+	Swap the frame reconstruction and write operations, so that the
+	last frame is eventually saved.
+	* apps/morphers/Makefile.am (tmp_iz.avi): Use a speedup of 50
+	instead of 10.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use the lazy recorder morpher in apps/morphers/iz.
+
+	* apps/morphers/iz.cc (main): Here.
+	Save the sequence of recorder images as PNG images using Magick++.
+	(save_colorized): New function.
+	* apps/morphers/Makefile.am
+	(noinst_PROGRAMS, iz_SOURCES) [HAVE_MAGICKXX]: Build `iz' only if
+	Magick++ is available.
+	(iz_output.ppm) [HAVE_MAGICKXX]: Likewise.
+	(iz_CPPFLAGS, iz_LDFLAGS) [HAVE_MAGICKXX]: New.
+	(tmp_iz.avi) [HAVE_MAGICKXX]: New target.
+	(MOSTLYCLEANFILES): Add tmp_iz??????.png.
+
+2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add rules to build and run apps/morphers/iz.
+
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add iz.
+	(iz_SOURCES): New.
+	(EXTRA_DIST): Add iz_input.pbm.
+	(iz_output.ppm): New target.
+	(MOSTLYCLEANFILES): Add tmp_clo.pgm, tmp_dmap.pgm,
+	tmp_ws_superpose.ppm, tmp_ws.ppm, tmp_lab.pgm, tmp_iz.pgm,
+	tmp_iz.ppm and tmp_iz_input.ppm.
+
+2012-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New example demonstrating the use of influence zones.
+
+	* apps/morphers/iz.cc: New.
+	* apps/morphers/iz_input.pbm: New.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	New ``lazy'' recorder morpher in apps/morpher.
+
+	* apps/morphers/lazy_recorder.hh: New.
+	* apps/morphers/lazy_recorder.cc: New test.
+	* apps/morphers/Makefile.am (noinst_HEADERS):
+	Add lazy_recorder.hh.
+	(noinst_PROGRAMS): Add lazy_recorder.
+	(lazy_recorder_SOURCES): New.
+	(MOSTLYCLEANFILES): Add lena-fill-lazy??????.ppm.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Render the recorder morpher more generic.
+
+	* apps/morphers/recorder.hh (recorder<I>::sequence): Store a
+	sequence of concrete images.
+	Add missing inline keywords.
+	Improve the documentation.
+
+2011-11-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	New morpher example: recording a breadth-first thinning.
+
+	* apps/morphers/recorder-bft.cc: New.
+	* apps/morphers/image2d-skel.hh: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-bft.
+	(recorder_wst_SOURCES): New.
+	(recorder_SOURCES, recorder_wst_SOURCES, mask_recorder_SOURCES):
+	Move recorder.hh...
+	(noinst_HEADERS): ...here (new variable).
+	(MOSTLYCLEANFILES): Add lena-bft??????.pbm.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	New morpher example: recording a watershed transform.
+
+	* apps/morphers/recorder-wst.cc: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-wst.
+	(recorder_wst_SOURCES): New.
+	(MOSTLYCLEANFILES): lena-wst??????.ppm.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around decorated_image's lack of properties, for the recorder.
+
+	* apps/morphers/recorder.hh
+	(trait::image_< decorated_image<I,D> >): Replace with..
+	(trait::image_< decorated_image<I, recorder<I> > >): ...this.
+	Add a value_storage property.
+	(ch_value_< decorated_image< image_<I>, data_< recorder<I> > >, V >):
+	New trait, to handle changes of value types in images decorated
+	with a recorder.
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/recorder.cc:
+	Simplify these programs thanks to the preceding changes.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the initialization of mln::decorated_image.
+
+	* mln/tag/init.hh (tag::data_t): New tag type.
+	 (tag::data): New tag.
+	* mln/core/image/imorph/decorated_image.hh
+	(init_(tag::data_t, D&, const decorated_image<I,D>&))
+	(init_(tag::data_t, D&, const decorated_image<I,D2>&))
+	(init_(tag::image_t, decorated_image<I,D>&, const J&)):
+	New functions.
+
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify some apps/morpher programs using mln::make::box2d.
+
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/mask+channel.cc:
+	Here.
+
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Refactor apps/morphers.
+
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	Factor common parts...
+	* apps/morphers/recorder.hh: ...here (new file).
+	* apps/morphers/Makefile.am
+	(recorder_SOURCES, mask_recorder_SOURCES): Add recorder.hh.
+
+2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add examples of morphers.
+
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	New.
+	* apps/morphers/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add morphers.
+
 2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Honor a precondition in classification examples (ISMM 2009).

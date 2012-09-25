@@ -566,6 +566,7 @@ AC_CONFIG_FILES([
     milena/apps/constrained-connectivity/Makefile
     milena/apps/graph-morpho/Makefile
     milena/apps/mesh-segm-skel/Makefile
+    milena/apps/morphers/Makefile
     milena/apps/papers/Makefile
       milena/apps/papers/levillain.09.ismm/Makefile
 ])

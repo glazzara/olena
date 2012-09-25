@@ -140,6 +140,32 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // init_.
+
+  template <typename I, typename D>
+  void init_(tag::data_t, D& d, const decorated_image<I,D>& model)
+  {
+    d = model.decoration();
+  }
+
+  // Initializing a decoration with a model of another type.
+  template <typename I, typename D, typename D2>
+  void init_(tag::data_t, D& /* d */, const decorated_image<I,D2>& /* model */)
+  {
+    // FIXME: No initialization, really?
+  }
+
+  template <typename I, typename D, typename J>
+  void init_(tag::image_t, decorated_image<I,D>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, exact(model));
+    D d;
+    init_(tag::data, d, exact(model));
+    target.init_(ima, d);
+  }
+
+
   namespace internal
   {
 

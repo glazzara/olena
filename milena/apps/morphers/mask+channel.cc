@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,56 +23,45 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_TAG_INIT_HH
-# define MLN_TAG_INIT_HH
-
 /// \file
-///
-/// Definition of tags used in the mln::init mechanism.
+/// \brief Example projecting a RGB image to the green channel and
+/// then applying a domain restricting with a mask.
+
+#include <sstream>
+#include <iomanip>
+
+#include <string>
+
+#include <mln/core/image/image2d.hh>
+#include <mln/make/box2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+
+#include <mln/value/rgb8.hh>
+
+#include <mln/fun/component/green.hh>
+/* FIXME: We wanted to use `fun_image' and `operator<<' from
+   <mln/core/image/vmorph/fun_image.hh, but they only create read-only
+   images.  Use `thru_image' instead.  */
+#include <mln/core/image/vmorph/thru_image.hh>
+
+#include <mln/core/routine/duplicate.hh>
+
+#include <mln/literal/colors.hh>
+#include <mln/data/fill.hh>
+
+#include <mln/io/ppm/all.hh>
+
+#include "apps/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using mln::value::rgb8;
 
-  namespace tag
-  {
-
-
-    struct bbox_t      {};
-    struct border_t    {};
-    struct data_t      {};
-    struct domain_t    {};
-    struct extension_t {};
-    struct function_t  {};
-    struct image_t     {};
-
-    extern bbox_t      bbox;
-    extern border_t    border;
-    extern data_t      data;
-    extern domain_t    domain;
-    extern extension_t extension;
-    extern function_t  function;
-    extern image_t     image;
-
-# ifndef MLN_INCLUDE_ONLY
-
-#  ifndef MLN_WO_GLOBAL_VARS
-
-    bbox_t      bbox;
-    border_t    border;
-    data_t      data;
-    domain_t    domain;
-    extension_t extension;
-    function_t  function;
-    image_t     image;
-
-#  endif // !MLN_WO_GLOBAL_VARS
-
-# endif // !MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::tag
-
-} // end of namespace mln
-
-
-#endif // ! MLN_TAG_INIT_HH
+  image2d<rgb8> lena = io::ppm::load<rgb8>(MLN_IMG_DIR "/tiny.ppm");
+  fun::green green;
+  data::fill((thru(green, lena).rw() | make::box2d(5,5, 10,10)).rw(),
+	     255);
+  io::ppm::save(lena, "lena-mask-channel.ppm");
+}
