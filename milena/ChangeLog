@@ -1,3 +1,85 @@
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Honor a precondition in classification examples (ISMM 2009).
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc,
+	* apps/papers/levillain.09.ismm/classif-1complex.cc:
+	Do not use a value outside the range [0, nbasins] in `canvas_wst'
+	to prevent a failed precondition in labeling::colorize (when
+	NDEBUG is not defined).
+	Reported by David Coeurjolly <david.coeurjolly at liris.cnrs.fr>.
+
+2011-10-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Graph-based version of the classification example.
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc: New.
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_PROGRAMS):
+	Add classif-graph.
+	(classif_graph_SOURCES): New.
+	(noinst_DATA): Add classwst-graph.ppm.
+	(classwst-graph.ppm): New target.
+
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Rename as...
+	* apps/papers/levillain.09.ismm/classif-1complex.cc: ...this.
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS, noinst_DATA): s/classif/classif-1complex/.
+	(classif_SOURCES, classwst.pnm): Replace by...
+	(classif_1complex_SOURCES, classwst-1complex.ppm): ...these.
+
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes in apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Here.
+	Remove useless headers inclusions.
+	Adjust comments.
+
+2011-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and clean up apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc (main): Actually use
+	the chain() routine from chain.hh instead of ad hoc code.
+	Move code related to the construction of the 1-complex (graph)
+	image on which the processing chain is run...
+	(make_complex_image): ...here.
+	* apps/papers/levillain.09.ismm/Makefile.am (classwst.pnm): Change
+	the lambda (area) parameter to 4.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import the WST-based classification in apps/papers/levillain.09.ismm.
+
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS): Add classif.
+	(classif_SOURCES): Add classif.cc
+	(dist_noinst_DATA): Add classseedsi.pbm.
+	(noinst_DATA): Add classwst.pnm.
+	(classwst.pnm): New target.
+	* apps/papers/levillain.09.ismm/classif.cc: New.
+	Copied and adapted from
+	sandbox/theo/esiee/laurent/presentation/classif.cc.
+	* apps/papers/levillain.09.ismm/classseedsi.pbm: New.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Split apps/papers/levillain.09.ismm/graph.cc.
+
+	* apps/papers/levillain.09.ismm/graph.cc: Misc. changes.
+	(mln::influence_zones)
+	(mln::io::neato::save):
+	Move functions...
+	* apps/papers/levillain.09.ismm/influence_zones.hh,
+	* apps/papers/levillain.09.ismm/io.hh:
+	...here (new files).
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_HEADERS):
+	Add io.hh and influence_zones.hh
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants (ticket #43)
