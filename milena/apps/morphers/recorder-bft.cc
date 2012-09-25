@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,17 +27,17 @@
 /// \brief Exercise a morpher recording every change in the morphed
 /// image with the breadth-first thinning.
 ///
-/// To produce an AVI movie from the `lena-bft*.pbm' files, use:
+/// To produce an AVI movie from the `picasso-bft*.pbm' files, use:
 ///
-///   for f in lena-bft*pbm; convert $f -define png:bit-depth=8 -scale 2500% $(basename $f .pbm).png
-///   mencoder "mf://lena-bft*.png" -o lena-bft.avi -ovc lavc -lavcopts gray:vcodec=mjpeg
+///   for f in picasso-bft*pbm; convert $f -define png:bit-depth=8 -scale 2500% $(basename $f .pbm).png
+///   mencoder "mf://picasso-bft*.png" -o picasso-bft.avi -ovc lavc -lavcopts gray:vcodec=mjpeg
 ///
 /// Note: the `-define png:bit-depth=8' option prevents convert from
 /// creating an image with 1-bit channels (since the image is binary)
 /// and forces it to use 8-bit channels.  Indeed mencoder is unable to
 /// process PNG images with 1-bit channel(s).
 ///
-/// The output `lena-bft.avi' can be embedded in a PDF file.  */
+/// The output `picasso-bft.avi' can be embedded in a PDF file.  */
 
 /* FIXME: Modernize this program as soon as patches from the
    mesh-segm-skel branch have been merged into the current branch.  */
@@ -75,20 +75,20 @@ int main()
   using namespace mln;
 
   typedef image2d<bool> I;
-  I lena = io::pbm::load(MLN_IMG_DIR "/tiny.pbm");
+  I picasso = io::pbm::load(MLN_IMG_DIR "/tiny.pbm");
   // Attach recorder to input image.
   typedef decorated_image< I, recorder<I> > J;
-  J lena_rec = record(lena);
+  J picasso_rec = record(picasso);
 
   // Dual neighborhood.
   typedef neighb< win::multiple_size<2, window2d, pw::value_<I> > > N;
-  N nbh = make::dual_neighb(lena, c4(), c8());
+  N nbh = make::dual_neighb(picasso, c4(), c8());
   // Simplicity criterion functor.
   ::is_simple_2d<J, N> is_simple(nbh);
   // Constraint.
-  ::is_not_end_point<J, neighb2d> constraint(c4(), lena_rec);
+  ::is_not_end_point<J, neighb2d> constraint(c4(), picasso_rec);
 
-  J bft_rec = topo::skeleton::breadth_first_thinning(lena_rec, nbh,
+  J bft_rec = topo::skeleton::breadth_first_thinning(picasso_rec, nbh,
 						     is_simple, ::detach<J>,
 						     constraint);
 
@@ -102,13 +102,13 @@ int main()
       I frame = bft_rec.decoration().sequence[i];
 
       // Skip frames until the inital image has been seen.
-      if (frame == lena)
+      if (frame == picasso)
 	output_initialized_p = true;
       if (!output_initialized_p)
 	continue;
 
       std::stringstream s;
       s << std::setfill ('0') << std::setw (6) << i;
-      io::pbm::save(frame, std::string("lena-bft") + s.str() + ".pbm");
+      io::pbm::save(frame, std::string("picasso-bft") + s.str() + ".pbm");
     }
 }

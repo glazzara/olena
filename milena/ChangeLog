@@ -1,3 +1,11 @@
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix file names in apps/morphers/recorder-bft.
+
+	* apps/morphers/recorder-bft.cc,
+	* apps/morphers/Makefile.am (recorder_SOURCES):
+	s/lena/picasso/.
+
 2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the (movie) output of apps/morphers/iz.
