@@ -46,6 +46,7 @@
 #include <scribo/preprocessing/crop.hh>
 
 #include <scribo/io/xml/save.hh>
+#include <scribo/io/img/save.hh>
 
 #include <scribo/debug/option_parser.hh>
 
@@ -180,6 +181,9 @@ int main(int argc, char* argv[])
     scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Page);
   else if (options.opt_value("xml-format") == "full")
     scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Full);
+
+  if (scribo::debug::logger().is_enabled())
+    scribo::io::img::save(doc, mln::debug::filename("regions.png"), scribo::io::img::DebugWoImage);
 
   trace::exiting("main");
 }
