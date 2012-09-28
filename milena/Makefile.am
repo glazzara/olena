@@ -110,3 +110,6 @@ EXTRA_DIST =					\
   tests/img/test_rgb8.tif			\
   tests/img/test_bw.tif				\
   tests/img/test_gl.tif
+
+# Header file generator.
+EXTRA_DIST += new-header

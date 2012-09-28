@@ -1,3 +1,10 @@
+2012-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a script to generate a Milena header file.
+
+	* new-header: New.
+	* Makefile.am (EXTRA_DIST): Add new-header.
+
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing TESTS variable to Makefile.am's.

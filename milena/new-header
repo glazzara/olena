@@ -1,0 +1,155 @@
+#! /bin/sh
+
+me=$(basename $0)
+
+stderr ()
+{
+  for i
+  do
+    echo >&2 "$me: $i"
+  done
+}
+
+fatal ()
+{
+  stderr "$@"
+  exit 1
+}
+
+usage ()
+{
+  cat <<EOF
+Usage: $me: FILENAME
+
+with
+  FILENAME     path to filename, e.g. "mln/foo/bar.hh"
+EOF
+}
+
+
+process()
+{
+  year=$(date +%Y)
+  guard=$(echo "$1" | tr "[:lower:].-/" "[:upper:]_")
+  function=$(basename "$filename" .hh)
+
+  # Almost fully qualified name (`mln' is dropped if it is the
+  # outermost namespace).
+  qual_name=$(echo "$filename"			\
+              | sed 's,^mln/,,'			\
+              | sed 's,\.hh$,,'			\
+              | sed 's,/,::,g')
+
+  dirs=$(dirname "$filename" | tr '/' ' ')
+
+  # Newline.
+  nl="
+"
+  # Indentation.
+  indent=""
+  # Namespace opening and closing statements.
+  ns_opening=""
+  ns_closing=""
+  for dir in $dirs; do
+    ns_opening="${ns_opening}${indent}$nl"
+    ns_opening="${ns_opening}${indent}namespace $dir$nl"
+    ns_opening="${ns_opening}${indent}{$nl"
+    ns_closing="${indent}} // end of namespace $dir$nl${ns_closing}"
+    ns_closing="${indent}$nl${ns_closing}"
+    indent="${indent}  "
+  done
+
+#\\} // end of namespace mln
+
+  # Perl is used when the substitution pattern contains several lines;
+  # in these cases, escape `@' as it is a special meaning in Perl
+  # (array sigil).
+  sed -e "s/@YEAR@/$year/"						\
+      -e "s/@GUARD@/$guard/"						\
+      -e "s/@FUNCTION@/$function/"					\
+      -e "s/@QUAL_NAME@/$qual_name/"					\
+  | sed "/@BEGIN_INDENT@/,/@END_INDENT@/s/^\([^#]\)/$indent\\1/"	\
+  | sed -e "/@BEGIN_INDENT@/d"						\
+        -e "/@END_INDENT@/d"						\
+  | perl -p -e "s,\\@NAMESPACE_OPENING\\@,$ns_opening,;"		\
+            -e "s,\\@NAMESPACE_CLOSING\\@,$ns_closing,"
+}
+
+
+if test $# -ne 1; then
+  usage
+  exit 1
+fi
+
+filename=$1
+prefix=$(dirname "$filename")
+
+mkdir -p "$prefix" || fatal "cannot create directory \`$prefix'"
+
+process "$filename" >"$filename" <<EOF
+// Copyright (C) @YEAR@ EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+#ifndef @GUARD@
+# define @GUARD@
+
+/// \file
+/// \brief FIXME: Enter short file description here.
+
+// FIXME: Adjust headers inclusions.
+# include <mln/core/concept/image.hh>
+# include <mln/core/routine/duplicate.hh>
+
+@NAMESPACE_OPENING@
+@BEGIN_INDENT@
+/// FIXME: Document this function.
+template <typename I>
+mln_concrete(I)
+@FUNCTION@(const Image<I>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+template <typename I>
+inline
+mln_concrete(I)
+@FUNCTION@(const Image<I>& input)
+{
+  trace::entering("@QUAL_NAME@");
+
+  // FIXME: Replace this dummy statement with actual code.
+  mln_concrete(I) output = duplicate(input);
+  // ...
+
+  trace::exiting("@QUAL_NAME@");
+  return output;
+}
+
+# endif // ! MLN_INCLUDE_ONLY
+
+@END_INDENT@
+@NAMESPACE_CLOSING@
+#endif // ! @GUARD@
+EOF
