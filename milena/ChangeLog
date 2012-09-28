@@ -1,3 +1,7 @@
+2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/debug/draw_graph.hh: Add a new overload and fix comments.
+
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/core/alias/neighb3d.hh: Fix invalid c8_3d neighborhood.
