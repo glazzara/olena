@@ -1,3 +1,18 @@
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove anything depending on the Trimesh library.
+
+	* apps/mesh-segm-skel/io.hh,
+	* apps/mesh-segm-skel/mesh-max-curv.cc,
+	* apps/mesh-segm-skel/mesh-pinv-curv.cc,
+	* apps/mesh-segm-skel/mesh-segm.cc,
+	* apps/mesh-segm-skel/mesh-skel.cc,
+	* apps/mesh-segm-skel/test-mesh-max-curv.in,
+	* apps/mesh-segm-skel/test-mesh-segm.in:
+	Remove.
+	* apps/mesh-segm-skel/Makefile.am: Remove anything related to the
+	Trimesh library.
+
 2012-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove dependencies on suppressed files.
