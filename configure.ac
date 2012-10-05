@@ -154,7 +154,7 @@ fi
 ## ``Enable Everything'' Switch.  ##
 ## ------------------------------ ##
 
-# Enable all bundled features (trimesh2, Swilena, apps, tools).  This
+# Enable all bundled features (Swilena, apps, tools).  This
 # option is useful to maintainers to ensure they do not break optional
 # parts while modifying the core of the project. If both
 # ``--enable-all'' is set and a given feature is disabled (say,
@@ -163,7 +163,6 @@ fi
 AC_ARG_ENABLE([all],
   [AS_HELP_STRING([--enable-all], [enable maintainer mode])],
   [if test "x$enable_all" != xno; then
-     enable_trimesh=yes
      enable_swilena=yes
      enable_scribo=yes
      enable_apps=yes
@@ -265,16 +264,6 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
              m4_do([-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF],
                    [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
                    [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
-
-# ---------------------------- #
-# (Bundled) trimesh2 library.  #
-# ---------------------------- #
-
-AC_ARG_ENABLE([trimesh],
-              [AS_HELP_STRING([--enable-trimesh],
-                              [build the (bundled) trimesh2 library])])
-AM_CONDITIONAL([ENABLE_TRIMESH], [test "x$enable_trimesh" = xyes])
-AC_CONFIG_SUBDIRS([external/trimesh])
 
 
 ## --------- ##
@@ -406,7 +395,6 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
-    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/mesh/Makefile
@@ -642,7 +630,6 @@ Magick++                --with-magickxx         $oln_have_magickxx
 Qt                      --with-qt               $oln_have_qt
 Tesseract               --with-tesseract@<:@=DIR@:>@  $oln_have_tesseract
 TIFF                    --with-tiff@<:@=DIR@:>@       $oln_have_tiff
-Trimesh                 --enable-trimesh        $enable_trimesh
 -------------------------------------------------------------------------------
 
 

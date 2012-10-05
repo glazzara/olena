@@ -1,5 +1,18 @@
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove Trimesh sources from Olena.
+
+	* external/trimesh/,
+	* external/:
+	Remove.
+	* configure.ac,
+	* README:
+	Remove anything related to Trimesh.
+	No longer configure external/Makefile.
+	* Makefile.am (SUBDIRS): Remove external.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	No longer configure tests of apps depending on Trimesh.
 
 	* configure.ac: No longer configure

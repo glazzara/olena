@@ -278,15 +278,6 @@ installation of these applications use::
 
        ./configure --enable-apps
 
-Trimesh
--------
-
-Trimesh, a third-party library that we have been using to manipulate
-3D meshes, is shipped with Olena.  (We will probably drop Trimesh from
-the distribution someday.)  To enable it, use::
-
-       ./configure --enable-trimesh
-
 Input/output libraries
 ----------------------
 
@@ -382,12 +373,6 @@ from the build directory.
 And optionally:
 
    * Swilena's Python bindings in `/usr/local/lib/python2.x/site-packages/',
-
-   * Trimesh programs in `/usr/local/bin/',
-
-   * Trimesh libraries in `/usr/local/lib/',
-
-   * Trimesh headers in `/usr/local/share/trimesh/',
 
 
    You can later remove Olena from your system by running
