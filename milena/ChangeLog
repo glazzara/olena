@@ -1,5 +1,13 @@
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Provide typedefs mln::value::int_s24 and mln::value::int_u24.
+
+	* mln/value/int_s24.hh,
+	* mln/value/int_u24.hh:
+	New.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename Trimesh reimplementations in apps/mesh-segm-skel/.
 
 	* apps/mesh-segm-skel/trimesh/misc.hh: Move...

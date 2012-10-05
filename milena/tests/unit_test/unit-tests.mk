@@ -1257,11 +1257,13 @@ mln_value_graylevel_f \
 mln_value_hsl \
 mln_value_int_s \
 mln_value_int_s16 \
+mln_value_int_s24 \
 mln_value_int_s32 \
 mln_value_int_s8 \
 mln_value_int_u \
 mln_value_int_u12 \
 mln_value_int_u16 \
+mln_value_int_u24 \
 mln_value_int_u32 \
 mln_value_int_u8 \
 mln_value_int_u_sat \
@@ -2506,11 +2508,13 @@ mln_value_graylevel_f_SOURCES = mln_value_graylevel_f.cc
 mln_value_hsl_SOURCES = mln_value_hsl.cc
 mln_value_int_s_SOURCES = mln_value_int_s.cc
 mln_value_int_s16_SOURCES = mln_value_int_s16.cc
+mln_value_int_s24_SOURCES = mln_value_int_s24.cc
 mln_value_int_s32_SOURCES = mln_value_int_s32.cc
 mln_value_int_s8_SOURCES = mln_value_int_s8.cc
 mln_value_int_u_SOURCES = mln_value_int_u.cc
 mln_value_int_u12_SOURCES = mln_value_int_u12.cc
 mln_value_int_u16_SOURCES = mln_value_int_u16.cc
+mln_value_int_u24_SOURCES = mln_value_int_u24.cc
 mln_value_int_u32_SOURCES = mln_value_int_u32.cc
 mln_value_int_u8_SOURCES = mln_value_int_u8.cc
 mln_value_int_u_sat_SOURCES = mln_value_int_u_sat.cc
