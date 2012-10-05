@@ -1,5 +1,12 @@
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Swilena's build.
+
+	* image2d_int_u8.i: Use int_u24 instead of int_u32 to avoid
+	overflow problems in mln::metal::math::pow.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap mln::value::int_u24.
 
 	* int_u24.i: New.
