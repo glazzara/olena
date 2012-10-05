@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 EPITA Research and
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -563,12 +563,8 @@ AC_CONFIG_FILES([
 # Configure tests.
 # FIXME: Consider using `sed' instead of `configure' to create these
 # tests for the sake of speed.
-AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-max-curv],
-                [chmod +x milena/apps/mesh-segm-skel/test-mesh-max-curv])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
-AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-segm],
-                [chmod +x milena/apps/mesh-segm-skel/test-mesh-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],

@@ -1,3 +1,11 @@
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	No longer configure tests of apps depending on Trimesh.
+
+	* configure.ac: No longer configure
+	milena/apps/mesh-segm-skel/test-mesh-max-curv nor
+	milena/apps/mesh-segm-skel/test-mesh-segm.
+
 2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Ensure `bootstrap -r' regenerates all files.
