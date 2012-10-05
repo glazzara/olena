@@ -24,7 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-// FIXME: Split this file.
+// FIXME: Split this file and eventually move its content into the
+// library.
 // FIXME: Address license-related issues?
 
 #ifndef MILENA_APPS_MESH_SEGM_SKEL_MISC_HH

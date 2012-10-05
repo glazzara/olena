@@ -1,5 +1,19 @@
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename Trimesh reimplementations in apps/mesh-segm-skel/.
+
+	* apps/mesh-segm-skel/trimesh/misc.hh: Move...
+	* apps/mesh-segm-skel/misc.hh: ...here.
+	Update comments.
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv.cc:
+	Adjust.
+	* apps/mesh-segm-skel/trimesh/README: Remove.
+	* apps/mesh-segm-skel/Makefile.am (noinst_HEADERS, EXTRA_DIST):
+	Adjust.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove anything depending on the Trimesh library.
 
 	* apps/mesh-segm-skel/io.hh,

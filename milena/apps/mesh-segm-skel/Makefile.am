@@ -34,9 +34,7 @@ MOSTLYCLEANFILES =
 
 # A Milena re-implementation of some features from Trimesh.  This code
 # is completely independent from the Trimesh library.
-# FIXME: Change the name of this directory, as it is confusing.
-noinst_HEADERS = trimesh/misc.hh
-EXTRA_DIST = trimesh/README
+noinst_HEADERS = misc.hh
 
 ## Segmentation.
 ## ------------
