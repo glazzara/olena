@@ -135,16 +135,6 @@ CLEANFILES += $(nodist__int_u24_la_SOURCES) int_u24.py int_u24.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_int_u24-wrap.Pcc@am__quote@
 nodist_python_PYTHON += int_u24.py
 
-## int_u32.
-pyexec_LTLIBRARIES += _int_u32.la
-nodist__int_u32_la_SOURCES = int_u32-wrap.cc
-_int_u32_la_LIBADD = $(AM_LIBADD)
-CLEANFILES += $(nodist__int_u32_la_SOURCES) int_u32.py int_u32.py[co]
-## Include the dependency files.  Copied from Automake's generated
-## case for C++.
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_int_u32-wrap.Pcc@am__quote@
-nodist_python_PYTHON += int_u32.py
-
 ## neighb2d.
 pyexec_LTLIBRARIES += _neighb2d.la
 nodist__neighb2d_la_SOURCES = neighb2d-wrap.cc
