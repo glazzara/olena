@@ -1,5 +1,11 @@
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update texi2dvi from upstream.
+
+	* build-aux/texi2dvi: Update from CVS Texinfo.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove Trimesh sources from Olena.
 
 	* external/trimesh/,
