@@ -1,3 +1,25 @@
+2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive headers required by the RGB component functors.
+
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/fun/component/blue.hh,
+	* mln/fun/component/green.hh,
+	* mln/fun/component/red.hh,
+	* mln/fun/component/rgb.hh,
+	* mln/fun/param.hh,
+	* mln/fun/spe/unary.hh,
+	* mln/fun/unary.hh,
+	* mln/trait/functions.hh,
+	* mln/trait/next/solve.hh,
+	* mln/trait/next/solve_binary.hh,
+	* mln/trait/next/solve_proxy.hh,
+	* mln/trait/next/solve_unary.hh:
+	New.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Provide typedefs mln::value::int_s24 and mln::value::int_u24.

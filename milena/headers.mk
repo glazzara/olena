@@ -313,6 +313,7 @@ mln/core/image/vertex_image.hh \
 mln/core/image/vmorph/all.hh \
 mln/core/image/vmorph/cast_image.hh \
 mln/core/image/vmorph/fun_image.hh \
+mln/core/image/vmorph/thru_image.hh \
 mln/core/image/vmorph/violent_cast_image.hh \
 mln/core/internal/box_impl.hh \
 mln/core/internal/check/image_all.hh \
@@ -507,6 +508,10 @@ mln/extension/fill.hh \
 mln/fun/all.hh \
 mln/fun/c.hh \
 mln/fun/cast.hh \
+mln/fun/component/blue.hh \
+mln/fun/component/green.hh \
+mln/fun/component/red.hh \
+mln/fun/component/rgb.hh \
 mln/fun/essential.hh \
 mln/fun/i2v/all.hh \
 mln/fun/i2v/all_to.hh \
@@ -537,8 +542,11 @@ mln/fun/p2v/elifs.hh \
 mln/fun/p2v/essential.hh \
 mln/fun/p2v/iota.hh \
 mln/fun/p2v/ternary.hh \
+mln/fun/param.hh \
+mln/fun/spe/unary.hh \
 mln/fun/stat/all.hh \
 mln/fun/stat/mahalanobis.hh \
+mln/fun/unary.hh \
 mln/fun/v2b/all.hh \
 mln/fun/v2b/essential.hh \
 mln/fun/v2b/lnot.hh \
@@ -1063,11 +1071,16 @@ mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/concrete.hh \
 mln/trait/essential.hh \
+mln/trait/functions.hh \
 mln/trait/image/print.hh \
 mln/trait/image/props.hh \
 mln/trait/image_from_grid.hh \
 mln/trait/images.hh \
 mln/trait/neighborhood.hh \
+mln/trait/next/solve.hh \
+mln/trait/next/solve_binary.hh \
+mln/trait/next/solve_proxy.hh \
+mln/trait/next/solve_unary.hh \
 mln/trait/op/all.hh \
 mln/trait/op/and.hh \
 mln/trait/op/decl.hh \

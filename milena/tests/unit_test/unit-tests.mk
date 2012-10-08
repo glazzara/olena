@@ -378,6 +378,7 @@ mln_core_image_vertex_image \
 mln_core_image_vmorph_all \
 mln_core_image_vmorph_cast_image \
 mln_core_image_vmorph_fun_image \
+mln_core_image_vmorph_thru_image \
 mln_core_image_vmorph_violent_cast_image \
 mln_core_internal_box_impl \
 mln_core_internal_check_image_all \
@@ -563,6 +564,10 @@ mln_extension_fill \
 mln_fun_all \
 mln_fun_c \
 mln_fun_cast \
+mln_fun_component_blue \
+mln_fun_component_green \
+mln_fun_component_red \
+mln_fun_component_rgb \
 mln_fun_essential \
 mln_fun_i2v_all \
 mln_fun_i2v_all_to \
@@ -593,8 +598,11 @@ mln_fun_p2v_elifs \
 mln_fun_p2v_essential \
 mln_fun_p2v_iota \
 mln_fun_p2v_ternary \
+mln_fun_param \
+mln_fun_spe_unary \
 mln_fun_stat_all \
 mln_fun_stat_mahalanobis \
+mln_fun_unary \
 mln_fun_v2b_all \
 mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
@@ -1105,11 +1113,16 @@ mln_trait_ch_function_value \
 mln_trait_ch_value \
 mln_trait_concrete \
 mln_trait_essential \
+mln_trait_functions \
 mln_trait_image_print \
 mln_trait_image_props \
 mln_trait_image_from_grid \
 mln_trait_images \
 mln_trait_neighborhood \
+mln_trait_next_solve \
+mln_trait_next_solve_binary \
+mln_trait_next_solve_proxy \
+mln_trait_next_solve_unary \
 mln_trait_op_all \
 mln_trait_op_and \
 mln_trait_op_decl \
@@ -1629,6 +1642,7 @@ mln_core_image_vertex_image_SOURCES = mln_core_image_vertex_image.cc
 mln_core_image_vmorph_all_SOURCES = mln_core_image_vmorph_all.cc
 mln_core_image_vmorph_cast_image_SOURCES = mln_core_image_vmorph_cast_image.cc
 mln_core_image_vmorph_fun_image_SOURCES = mln_core_image_vmorph_fun_image.cc
+mln_core_image_vmorph_thru_image_SOURCES = mln_core_image_vmorph_thru_image.cc
 mln_core_image_vmorph_violent_cast_image_SOURCES = mln_core_image_vmorph_violent_cast_image.cc
 mln_core_internal_box_impl_SOURCES = mln_core_internal_box_impl.cc
 mln_core_internal_check_image_all_SOURCES = mln_core_internal_check_image_all.cc
@@ -1814,6 +1828,10 @@ mln_extension_fill_SOURCES = mln_extension_fill.cc
 mln_fun_all_SOURCES = mln_fun_all.cc
 mln_fun_c_SOURCES = mln_fun_c.cc
 mln_fun_cast_SOURCES = mln_fun_cast.cc
+mln_fun_component_blue_SOURCES = mln_fun_component_blue.cc
+mln_fun_component_green_SOURCES = mln_fun_component_green.cc
+mln_fun_component_red_SOURCES = mln_fun_component_red.cc
+mln_fun_component_rgb_SOURCES = mln_fun_component_rgb.cc
 mln_fun_essential_SOURCES = mln_fun_essential.cc
 mln_fun_i2v_all_SOURCES = mln_fun_i2v_all.cc
 mln_fun_i2v_all_to_SOURCES = mln_fun_i2v_all_to.cc
@@ -1844,8 +1862,11 @@ mln_fun_p2v_elifs_SOURCES = mln_fun_p2v_elifs.cc
 mln_fun_p2v_essential_SOURCES = mln_fun_p2v_essential.cc
 mln_fun_p2v_iota_SOURCES = mln_fun_p2v_iota.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
+mln_fun_param_SOURCES = mln_fun_param.cc
+mln_fun_spe_unary_SOURCES = mln_fun_spe_unary.cc
 mln_fun_stat_all_SOURCES = mln_fun_stat_all.cc
 mln_fun_stat_mahalanobis_SOURCES = mln_fun_stat_mahalanobis.cc
+mln_fun_unary_SOURCES = mln_fun_unary.cc
 mln_fun_v2b_all_SOURCES = mln_fun_v2b_all.cc
 mln_fun_v2b_essential_SOURCES = mln_fun_v2b_essential.cc
 mln_fun_v2b_lnot_SOURCES = mln_fun_v2b_lnot.cc
@@ -2356,11 +2377,16 @@ mln_trait_ch_function_value_SOURCES = mln_trait_ch_function_value.cc
 mln_trait_ch_value_SOURCES = mln_trait_ch_value.cc
 mln_trait_concrete_SOURCES = mln_trait_concrete.cc
 mln_trait_essential_SOURCES = mln_trait_essential.cc
+mln_trait_functions_SOURCES = mln_trait_functions.cc
 mln_trait_image_print_SOURCES = mln_trait_image_print.cc
 mln_trait_image_props_SOURCES = mln_trait_image_props.cc
 mln_trait_image_from_grid_SOURCES = mln_trait_image_from_grid.cc
 mln_trait_images_SOURCES = mln_trait_images.cc
 mln_trait_neighborhood_SOURCES = mln_trait_neighborhood.cc
+mln_trait_next_solve_SOURCES = mln_trait_next_solve.cc
+mln_trait_next_solve_binary_SOURCES = mln_trait_next_solve_binary.cc
+mln_trait_next_solve_proxy_SOURCES = mln_trait_next_solve_proxy.cc
+mln_trait_next_solve_unary_SOURCES = mln_trait_next_solve_unary.cc
 mln_trait_op_all_SOURCES = mln_trait_op_all.cc
 mln_trait_op_and_SOURCES = mln_trait_op_and.cc
 mln_trait_op_decl_SOURCES = mln_trait_op_decl.cc
