@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -34,17 +34,11 @@ qt_rgb_to_int_u_SOURCES = qt_rgb_to_int_u.cc
 
 endif HAVE_QT
 
-
-#<<lrde
-# FIXME: Not distributed (yet).
 check_PROGRAMS +=				\
-  component					\
   hsl_to_rgb					\
   rgb_to_hsl
 
-component_SOURCES = component.cc
 hsl_to_rgb_SOURCES = hsl_to_rgb.cc
 rgb_to_hsl_SOURCES = rgb_to_hsl.cc
-#>>
 
 TESTS = $(check_PROGRAMS)

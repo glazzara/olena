@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -61,13 +61,6 @@ SUBDIRS =					\
   value						\
   win 						\
   world
-
-#<<lrde
-SUBDIRS +=					\
-  extract					\
-  registration 					\
-  subsampling
-#>>
 
 check_PROGRAMS =				\
   all_headers 					\

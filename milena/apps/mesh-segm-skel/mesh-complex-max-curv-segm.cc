@@ -48,7 +48,7 @@
 #include <mln/io/off/load.hh>
 #include <mln/io/off/save.hh>
 
-#include "trimesh/misc.hh"
+#include "misc.hh"
 
 
 // Doesn't C++ have a better way to express Pi?

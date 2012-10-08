@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,25 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# Linking with gluit and GLUT/OpenGL.
-gluit_builddir = $(top_builddir)/external/trimesh/gluit
-include $(top_srcdir)/external/trimesh/gluit/gluit.mk
-
-# Find Milena and trimesh headers.
+# Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
-CPPFLAGS_trimesh = -I$(top_srcdir)/external/trimesh/include
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
-# Find the trimesh library and its dependencies.
-#
-# Don't use TRIMESH_LDFLAGS, since it looks like the LDFLAGS of the
-# program `TRIMESH' and triggers Automake warnings; use
-# LDFLAGS_trimesh instead.  Likewise for CPPFLAGS_trimesh and
-# LDADD_trimesh, for symmetry reasons.
-LDFLAGS_trimesh = $(GLFLAGS)
-LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
-
 
 bin_PROGRAMS =
 TESTS = 
@@ -41,62 +28,13 @@ MOSTLYCLEANFILES =
 # FIXME: Have program names embed the type of structure used (either
 # graph or complex).
 
-## FIXME: Likewise, programs' names should reflect a dependency on
-## Trimesh, if any.
-
-## ------------------------------------------------ ##
-## Graph-based applications, depending on Trimesh.  ##
-## ------------------------------------------------ ##
-
-if ENABLE_TRIMESH
-# bin_PROGRAMS += mesh-segm mesh-skel
-# 
-# mesh_segm_SOURCES = mesh-segm.cc io.hh
-# mesh_segm_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-# mesh_segm_LDFLAGS = $(LDFLAGS_trimesh)
-# mesh_segm_LDADD = $(LDADD_trimesh)
-#
-# TESTS += test-mesh-segm
-# MOSTLYCLEANFILES += socket-segm.off teapot-segm.off
-
-# FIXME: mesh_skel is unfinished.  Anyway, it should be superseded by
-# another program, using no Trimesh code.
-
-# mesh_skel_SOURCES = mesh-skel.cc io.hh
-# mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-# mesh_skel_LDFLAGS = $(LDFLAGS_trimesh)
-# mesh_skel_LDADD = $(LDADD_trimesh)
-endif ENABLE_TRIMESH
-
-## -------------------------------------------------- ##
-## Complex-based applications, depending on Trimesh.  ##
-## -------------------------------------------------- ##
-
-if ENABLE_TRIMESH
-  bin_PROGRAMS += mesh-pinv-curv mesh-max-curv
-
-  mesh_pinv_curv_SOURCES = mesh-pinv-curv.cc io.hh
-  mesh_pinv_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-  mesh_pinv_curv_LDFLAGS = $(LDFLAGS_trimesh)
-  mesh_pinv_curv_LDADD = $(LDADD_trimesh)
-
-  mesh_max_curv_SOURCES = mesh-max-curv.cc io.hh
-  mesh_max_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-  mesh_max_curv_LDFLAGS = $(LDFLAGS_trimesh)
-  mesh_max_curv_LDADD = $(LDADD_trimesh)
-  TESTS += test-mesh-max-curv
-  MOSTLYCLEANFILES += teapot-max-curv-skel.off
-endif ENABLE_TRIMESH
-
-## ---------------------------------------------------- ##
-## Complex-based applications, independent of Trimesh.  ##
-## ---------------------------------------------------- ##
+## ---------------------------- ##
+## Complex-based applications.  ##
+## ---------------------------- ##
 
 # A Milena re-implementation of some features from Trimesh.  This code
 # is completely independent from the Trimesh library.
-# FIXME: Change the name of this directory, as it is confusing.
-noinst_HEADERS = trimesh/misc.hh
-EXTRA_DIST = trimesh/README
+noinst_HEADERS = misc.hh
 
 ## Segmentation.
 ## ------------

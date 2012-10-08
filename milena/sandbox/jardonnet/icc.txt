@@ -1,2 +1,0 @@
-export GXX_INCLUDE=/usr/include/c++/4.1
--D_GLIBCXX_GTHREAD_USE_WEAK=0

@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -32,14 +32,6 @@ to_p_array_SOURCES = to_p_array.cc
 to_p_set_SOURCES = to_p_set.cc
 to_rgb_SOURCES = to_rgb.cc
 to_window_SOURCES = to_window.cc
-
-#<<lrde
-# FIXME: Not distributed (yet).
-check_PROGRAMS += to_hsl
-to_hsl_SOURCES = to_hsl.cc
-#>>
-
-
 
 if HAVE_QT
 

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,18 +23,27 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/trait/ch_value.hh>
+#ifndef MLN_VALUE_INT_S24_HH
+# define MLN_VALUE_INT_S24_HH
 
-#include <mln/core/image/image2d.hh>
+/// \file
+/// \brief Define the alias mln::value::int_s24.
 
-int main()
+# include <mln/value/int_s.hh>
+
+
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d<int> I;
-  typedef trait::ch_value<I, bool>::ret J;
-  J ima1;
+  namespace value
+  {
 
-  // FIXME: Exercise more image types.
-  // ...
-}
+    /// Alias for signed 24-bit integers.
+    typedef mln::value::int_s<24> int_s24;
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+#endif // ! MLN_VALUE_INT_S24_HH

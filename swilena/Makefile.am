@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -42,6 +43,7 @@ wrappers =					\
   dpoint2d.i					\
   image2d_int.i					\
   image2d_int_u8.i				\
+  int_u24.i					\
   int_u32.i					\
   int_u8.i					\
   neighb2d.i					\

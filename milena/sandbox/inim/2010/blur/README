@@ -1,7 +1,0 @@
-MUST CHANGE RULE TO MILENA PATH FOR INCLUDES IN MAKEFILE!!!
-
-USE: ./cutthem {-p | -v} FILE [...]
-
-     - Create subdirs for resulting images
-     and print operations on stdout.
-     - Final files are FILE_super.pgm and FILE_final.pgm

@@ -1,9 +1,10 @@
 #! /bin/sh
 # texi2dvi --- produce DVI (or PDF) files from Texinfo (or (La)TeX) sources.
-# $Id: texi2dvi,v 1.157 2010/02/09 18:37:08 karl Exp $
+# $Id: texi2dvi,v 1.173 2012/04/20 18:52:48 karl Exp $
 #
-# Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001, 2002, 2003,
-# 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+# Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001, 2002,
+# 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
+# Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@ unset RUNNING_KSH
 set -e
 
 # This string is expanded automatically when this file is checked out.
-rcs_revision='$Revision: 1.157 $'
+rcs_revision='$Revision: 1.173 $'
 rcs_version=`set - $rcs_revision; echo $2`
 program=`echo $0 | sed -e 's!.*/!!'`
 
@@ -58,6 +59,7 @@ quiet=false     # let the tools' message be displayed
 recode=false
 set_language=
 src_specials=
+shell_escape=
 latex2html=hevea  # or set to tex4ht
 textra=         # Extra TeX commands to insert in the input file.
 txiprereq=19990129 # minimum texinfo.tex version with macro expansion
@@ -129,13 +131,15 @@ test -n "$TEX" && test -d "$TEX" && unset TEX
   test_local () {
     local foo=foo
   }
-  test_local
+  test_local >/dev/null 2>&1
   test $foo = bar
-) || local () {
+) || eval '
+local () {
   case $1 in
     *=*) eval "$1";;
   esac
 }
+'
 
 
 # cd_orig
@@ -186,8 +190,8 @@ absolute ()
       local rel
       rel=$orig_pwd/`func_dirname "$1"`
       if test -d "$rel"; then
-        (cd "$rel" 2>/dev/null &&
-         local n
+        (cd "$rel" 2>/dev/null \
+         && local n
          n=`pwd`/`basename "$1"`"$slashes"
          echo "$n")
       else
@@ -218,7 +222,7 @@ ensure_dir ()
 
 # error EXIT_STATUS LINE1 LINE2...
 # --------------------------------
-# Report an error and exit with failure if EXIT_STATUS is non null.
+# Report an error and exit with failure if EXIT_STATUS is non-null.
 error ()
 {
   local s="$1"
@@ -248,8 +252,8 @@ findprog ()
     # design decisions, so there is little chance to make them consistent.)
     # Thusly, it seems to be difficult to make use of these enhancements.
     #
-    if  { test -f "$dir/$1"     && test -x "$dir/$1"; } ||
-        { test -f "$dir/$1.exe" && test -x "$dir/$1.exe"; }; then
+    if   { test -f "$dir/$1"     && test -x "$dir/$1"; } \
+      || { test -f "$dir/$1.exe" && test -x "$dir/$1.exe"; }; then
       return 0
     fi
   done
@@ -274,8 +278,8 @@ report ()
 run ()
 {
   verbose "Running $@"
-  "$@" 2>&5 1>&2 ||
-     error 1 "$1 failed"
+  "$@" 2>&5 1>&2 \
+  || error 1 "$1 failed"
 }
 
 
@@ -295,8 +299,8 @@ usage ()
   # where % denotes the eol character.
   cat <<EOF
 Usage: $program [OPTION]... FILE...
-       texi2pdf [OPTION]... FILE...
-       pdftexi2dvi [OPTION]... FILE...
+  or:  texi2pdf [OPTION]... FILE...
+  or:  pdftexi2dvi [OPTION]... FILE...
 
 Run each Texinfo or (La)TeX FILE through TeX in turn until all
 cross-references are resolved, building all indices.  The directory
@@ -316,12 +320,20 @@ General options:
   -b, --batch         no interaction
   -D, --debug         turn on shell debugging (set -x)
   -h, --help          display this help and exit successfully
-  -o, --output=OFILE  leave output in OFILE (implies --clean);
-                        only one input FILE may be specified in this case
+  -o, --output=OFILE  leave output in OFILE; only one input FILE is allowed
   -q, --quiet         no output unless errors (implies --batch)
   -s, --silent        same as --quiet
   -v, --version       display version information and exit successfully
   -V, --verbose       report on what is done
+
+Output format:
+      --dvi     output a DVI file [default]
+      --dvipdf  output a PDF file via DVI (using a dvi-to-pdf program)
+      --html    output an HTML file from LaTeX, using HeVeA
+      --info    output an Info file from LaTeX, using HeVeA
+  -p, --pdf     use pdftex or pdflatex for processing
+      --ps      output a PostScript file via DVI (using dvips)
+      --text    output a plain text file from LaTeX, using HeVeA
 
 TeX tuning:
   -@                         use @input instead of \input for preloaded Texinfo
@@ -331,19 +343,11 @@ TeX tuning:
       --no-line-error        do not pass --file-line-error to TeX
   -r, --recode               call recode before TeX to translate input
       --recode-from=ENC      recode from ENC to the @documentencoding
+      --shell-escape         pass --shell-escape to TeX
       --src-specials         pass --src-specials to TeX
   -t, --command=CMD          insert CMD in copy of input file
    or --texinfo=CMD          multiple values accumulate
       --translate-file=FILE  use given charset translation file for TeX
-
-Output format:
-      --dvi     output a DVI file [default]
-      --dvipdf  output a PDF file via DVI (using dvipdf)
-      --html    output an HTML file.  Use HeVeA for LaTeX files
-      --info    output an Info file.  Use HeVeA for LaTeX files
-  -p, --pdf     use pdftex or pdflatex for processing
-      --ps      output a PDF file via DVI (using dvips)
-      --text    output a plain text file.  Use HeVeA for LaTeX files
 
 Build modes:
   --build=MODE         specify the treatment of auxiliary files [$build_mode]
@@ -374,7 +378,7 @@ Using the \`tidy' mode brings several advantages:
     directories are stored there.
   - clutter can be reduced to zero using, e.g., --build-dir=/tmp/\$USER.t2d
     or --build-dir=\$HOME/.t2d.
-  - the output file is updated after every succesful TeX run, for
+  - the output file is updated after every successful TeX run, for
     sake of concurrent visualization of the output.  In a \`local' build
     the viewer stops during the whole TeX run.
   - if the compilation fails, the previous state of the output file
@@ -384,13 +388,19 @@ Using the \`tidy' mode brings several advantages:
 
 On the other hand, because \`tidy' compilation takes place in another
 directory, occasionally TeX won't be able to find some files (e.g., when
-using \\graphicspath): in that case use -I to specify the additional
+using \\graphicspath): in that case, use -I to specify the additional
 directories to consider.
 
-The values of the BIBTEX, DVIPDF, DVIPS, LATEX, MAKEINDEX, MAKEINFO,
-PDFLATEX, PDFTEX, TEX, TEXINDEX, and THUMBPDF environment variables are used
-to run those commands, if they are set.  Any CMD strings are added after
-@setfilename for Texinfo input, in the first line for LaTeX input.
+The values of the BIBTEX, DVIPDF, DVIPS, HEVEA, LATEX, MAKEINDEX,
+MAKEINFO, PDFLATEX, PDFTEX, T4HT, TEX, TEX4HT, TEXINDEX, and THUMBPDF
+environment variables are used to run those commands, if they are set.
+
+Regarding --dvipdf, if DVIPDF is not set in the environment, the
+following programs are looked for (in this order): dvipdfmx dvipdfm
+dvipdf dvi2pdf dvitopdf.
+
+Any CMD strings are added after @setfilename for Texinfo input, or in
+the first line for LaTeX input.
 
 Report bugs to bug-texinfo@gnu.org,
 general questions and discussion to help-texinfo@gnu.org.
@@ -414,13 +424,13 @@ verbose ()
 
 # version
 # -------
-# Display version info and exit succesfully.
+# Display version info and exit successfully.
 version ()
 {
   cat <<EOF
-texi2dvi (GNU Texinfo 4.13) $rcs_version
+texi2dvi (GNU Texinfo 4.13+dev) $rcs_version
 
-Copyright (C) 2008 Free Software Foundation, Inc.
+Copyright (C) 2012 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -673,7 +683,10 @@ destdir ()
 # an auxiliary file with the same base name.
 move_to_dest ()
 {
-  # If we built in place, there is nothing to install, leave.
+#  echo "move_to_dest $*, tidy=$tidy, oname=$oname"
+
+  # If we built in place and have no output name, there is nothing to
+  # do, so just return.
   case $tidy:$oname in
     false:) return;;
   esac
@@ -686,14 +699,17 @@ move_to_dest ()
 
   for file
   do
-    test -f "$file" ||
-      error 1 "no such file or directory: $file"
+    test -f "$file" \
+    || error 1 "no such file or directory: $file"
     case $tidy:$oname in
       true:)  destdir=$orig_pwd
               destfile=$destdir/$file;;
-      *:*)    destfile=`output_base_name "$file"`
+      true:*) destfile=`output_base_name "$file"`
               destdir=`dirname "$destfile"`;;
+      false:*) destfile=$oname
+               destdir=`dirname "$destfile"`;;
     esac
+ 
     # We want to compare the source location and the output location,
     # and if they are different, do the move.  But if they are the
     # same, we must preserve the source.  Since we can't assume
@@ -987,6 +1003,9 @@ run_tex ()
   # source, given a sufficiently smart editor), if specified.
   test -n "$src_specials" && cmd="$cmd $src_specials"
 
+  # Tell TeX to allow running external executables
+  test -n "$shell_escape" && cmd="$cmd $shell_escape"
+
   # Tell TeX to be batch if requested.
   if $batch; then
     # \batchmode does not show terminal output at all, so we don't
@@ -1103,9 +1122,10 @@ run_bibtex ()
 # won't know that if the index files are out of date or nonexistent.
 run_index ()
 {
-  local index_files=`generated_files_get $in_noext index_file_p`
-  test -n "$index_files" ||
-    return 0
+  local index_files
+  index_files=`generated_files_get $in_noext index_file_p`
+  test -n "$index_files" \
+  || return 0
 
   : ${MAKEINDEX:=makeindex}
   : ${TEXINDEX:=texindex}
@@ -1154,7 +1174,7 @@ run_tex4ht ()
 {
   case $in_lang:$latex2html:`out_lang_tex` in
     latex:tex4ht:html)
-      : ${TEX4HT=tex4ht} ${T4HT=t4ht}
+      : ${TEX4HT:=tex4ht} ${T4HT:=t4ht}
       run "$TEX4HT" "-f/$in_noext"
       # Do not remove the / after the destdir.
       run "$T4HT" "-d`destdir`/" "-f/$in_noext"
@@ -1191,8 +1211,7 @@ run_dvipdf ()
 {
   # Find which dvi->pdf program is available.
   if test -z "$dvipdf"; then
-    for i in "$DVIPDF" dvipdfmx dvipdfm dvipdf dvi2pdf dvitopdf;
-    do
+    for i in "$DVIPDF" dvipdfmx dvipdfm dvipdf dvi2pdf dvitopdf; do
       if findprog $i; then
         dvipdf=$i
       fi
@@ -1259,8 +1278,8 @@ run_tex_suite ()
       move_to_dest "$in_noext.`out_lang_ext`"
       ;;
     *:ps)
-      : {DVIPS=dvips}
-      $DVIPS -o "$in_noext.`out_lang_ext`" "$in_noext.`out_lang_tex`"
+      : ${DVIPS:=dvips}
+      run $DVIPS -o "$in_noext.`out_lang_ext`" "$in_noext.`out_lang_tex`"
       move_to_dest "$in_noext.`out_lang_ext`"
       ;;
   esac
@@ -1274,7 +1293,7 @@ run_tex_suite ()
 
 
 # A sed script that preprocesses Texinfo sources in order to keep the
-# iftex sections only.  We want to remove non TeX sections, and comment
+# iftex sections only.  We want to remove non-TeX sections, and comment
 # (with `@c _texi2dvi') TeX sections so that makeinfo does not try to
 # parse them.  Nevertheless, while commenting TeX sections, don't
 # comment @macro/@end macro so that makeinfo does propagate them.
@@ -1330,22 +1349,21 @@ run_makeinfo ()
     # Check if texinfo.tex performs macro expansion by looking for
     # its version.  The version is a date of the form YEAR-MO-DA.
     # We don't need to use [0-9] to match the digits since anyway
-    # the comparison with $txiprereq, a number, will fail with non
-    # digits.
+    # the comparison with $txiprereq, a number, will fail with non-digits.
     # Run in a temporary directory to avoid leaving files.
     version_test_dir=$t2ddir/version_test
     ensure_dir "$version_test_dir"
-    (
+    if (
        cd "$version_test_dir"
        echo '\input texinfo.tex @bye' >txiversion.tex
        # Be sure that if tex wants to fail, it is not interactive:
        # close stdin.
        $TEX txiversion.tex </dev/null >txiversion.out 2>txiversion.err
-    )
-    if test $? != 0; then
+    ); then :; else
+      report "texinfo.tex appears to be broken:"
       cat "$version_test_dir/txiversion.out"
       cat "$version_test_dir/txiversion.err" >&2
-      error 1 "texinfo.tex appears to be broken, quitting."
+      error 1 "quitting."
     fi
     eval `sed -n 's/^.*\[\(.*\)version \(....\)-\(..\)-\(..\).*$/txiformat=\1 txiversion="\2\3\4"/p' "$version_test_dir/txiversion.out"`
     verbose "texinfo.tex preloaded as \`$txiformat', version is \`$txiversion' ..."
@@ -1699,6 +1717,7 @@ while test x"$1" != x"$arg_sep"; do
     -r | --recode) recode=true;;
     --recode-from) shift; recode=true; recode_from="$1";;
     --src-specials) src_specials=--src-specials;;
+    --shell-escape) shell_escape=--shell-escape;;  
     --tex4ht) latex2html=tex4ht;;
     -t | --texinfo | --command ) shift; textra="$textra\\
 "`echo "$1" | sed 's/\\\\/\\\\\\\\/g'`;;
@@ -1800,14 +1819,15 @@ fi
 
 
 # Enable tracing, and auxiliary tools output.
-#
-# Should be used where you'd typically use /dev/null to throw output
-# away.  But sometimes it is convenient to see that output (e.g., from
-# a grep) to aid debugging.  Especially debugging at distance, via the
-# user.
+# 
+# This fd should be used where you'd typically use /dev/null to throw
+# output away.  But sometimes it is convenient to see that output (e.g.,
+# from a grep) to aid debugging.  Especially debugging at distance, via
+# the user.
+# 
 if $debug; then
   exec 6>&1
-  set -x
+  set -vx
 else
   exec 6>/dev/null
 fi
@@ -1848,15 +1868,15 @@ input_file_name_decode ()
 
   # If the COMMAND_LINE_FILENAME is not absolute (e.g., --debug.tex),
   # prepend `./' in order to avoid that the tools take it as an option.
-  echo "$command_line_filename" | $EGREP '^(/|[A-Za-z]:/)' >&6 \
+  echo "$command_line_filename" | LC_ALL=C $EGREP '^(/|[A-Za-z]:/)' >&6 \
   || command_line_filename="./$command_line_filename"
 
   # See if the file exists.  If it doesn't we're in trouble since, even
   # though the user may be able to reenter a valid filename at the tex
   # prompt (assuming they're attending the terminal), this script won't
   # be able to find the right xref files and so forth.
-  test -r "$command_line_filename" ||
-    error 1 "cannot read $command_line_filename, skipping."
+  test -r "$command_line_filename" \
+  || error 1 "cannot read $command_line_filename, skipping."
 
   # Get the name of the current directory.
   in_dir=`func_dirname "$command_line_filename"`

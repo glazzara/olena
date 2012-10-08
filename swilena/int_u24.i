@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+//						       		-*- C++ -*-
+// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,18 +24,17 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/trait/ch_value.hh>
+/// \file int_u24.i
+/// \brief A wrapper of mln::value::int_u24.
 
-#include <mln/core/image/image2d.hh>
+%module int_u24
 
-int main()
-{
-  using namespace mln;
+%include "int_u.ixx"
 
-  typedef image2d<int> I;
-  typedef trait::ch_value<I, bool>::ret J;
-  J ima1;
+%{
+#include "mln/value/int_u24.hh"
+%}
 
-  // FIXME: Exercise more image types.
-  // ...
-}
+%include "mln/value/int_u24.hh"
+
+%template (int_u24) mln::value::int_u<24>;

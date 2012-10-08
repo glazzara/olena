@@ -1,3 +1,180 @@
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update texi2dvi from upstream.
+
+	* build-aux/texi2dvi: Update from CVS Texinfo.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove Trimesh sources from Olena.
+
+	* external/trimesh/,
+	* external/:
+	Remove.
+	* configure.ac,
+	* README:
+	Remove anything related to Trimesh.
+	No longer configure external/Makefile.
+	* Makefile.am (SUBDIRS): Remove external.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	No longer configure tests of apps depending on Trimesh.
+
+	* configure.ac: No longer configure
+	milena/apps/mesh-segm-skel/test-mesh-max-curv nor
+	milena/apps/mesh-segm-skel/test-mesh-segm.
+
+2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ensure `bootstrap -r' regenerates all files.
+
+	* bootstrap: Here.
+	Aesthetic changes.
+
+2012-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove non-distributed headers not required by Milena nor Scribo.
+
+	* build-aux/generate_dist_headers.sh: No longer handle the third
+	argument (list of non-distributed files).
+	* milena/Makefile.am,
+	* scribo/Makefile.am
+	(regen-am, $(srcdir)/headers.mk): Adjust.
+	(EXTRA_DIST): Remove nodist-headers.
+	* milena/headers.mk,
+	* scribo/headers.mk:
+	Regen.
+	* milena/nodist-headers,
+	* scribo/nodist-headers:
+	Remove.
+	* milena/mln/accu/math/inf.hh,
+	* milena/mln/accu/math/sup.hh,
+	* milena/mln/core/image/vmorph/thru_image.hh,
+	* milena/mln/core/image/vmorph/thrubin_image.hh,
+	* milena/mln/data/was.median.hh,
+	* milena/mln/extract/all.hh,
+	* milena/mln/extract/blue.hh,
+	* milena/mln/extract/essential.hh,
+	* milena/mln/extract/green.hh,
+	* milena/mln/extract/hue.hh,
+	* milena/mln/extract/lum.hh,
+	* milena/mln/extract/red.hh,
+	* milena/mln/extract/sat.hh,
+	* milena/mln/fun/access/all.hh,
+	* milena/mln/fun/access/mean.hh,
+	* milena/mln/fun/accu_result.hh,
+	* milena/mln/fun/binary.hh,
+	* milena/mln/fun/binary_param.hh,
+	* milena/mln/fun/component/blue.hh,
+	* milena/mln/fun/component/comp.hh,
+	* milena/mln/fun/component/comp_count.hh,
+	* milena/mln/fun/component/green.hh,
+	* milena/mln/fun/component/ithcomp.hh,
+	* milena/mln/fun/component/red.hh,
+	* milena/mln/fun/component/rgb.hh,
+	* milena/mln/fun/component/scomp.hh,
+	* milena/mln/fun/compose.hh,
+	* milena/mln/fun/composition.hh,
+	* milena/mln/fun/from_accu.hh,
+	* milena/mln/fun/math/abs.hh,
+	* milena/mln/fun/math/cos.hh,
+	* milena/mln/fun/math/inf.hh,
+	* milena/mln/fun/math/norm.hh,
+	* milena/mln/fun/math/sup.hh,
+	* milena/mln/fun/meta/all.hh,
+	* milena/mln/fun/meta/blue.hh,
+	* milena/mln/fun/meta/essential.hh,
+	* milena/mln/fun/meta/first.hh,
+	* milena/mln/fun/meta/green.hh,
+	* milena/mln/fun/meta/hue.hh,
+	* milena/mln/fun/meta/inty.hh,
+	* milena/mln/fun/meta/lum.hh,
+	* milena/mln/fun/meta/red.hh,
+	* milena/mln/fun/meta/sat.hh,
+	* milena/mln/fun/meta/second.hh,
+	* milena/mln/fun/meta/to_enc.hh,
+	* milena/mln/fun/param.hh,
+	* milena/mln/fun/point/col.hh,
+	* milena/mln/fun/point/row.hh,
+	* milena/mln/fun/point/sli.hh,
+	* milena/mln/fun/spe/binary.hh,
+	* milena/mln/fun/spe/unary.hh,
+	* milena/mln/fun/unary.hh,
+	* milena/mln/fun/unary_param.hh,
+	* milena/mln/fun/v2v/hsi_to_rgb.hh,
+	* milena/mln/fun/v2v/rgb_to_hsi.hh,
+	* milena/mln/linear/gaussian/filter.hh,
+	* milena/mln/linear/gaussian/impl.hh,
+	* milena/mln/linear/gaussian/internal/coefficients.hh,
+	* milena/mln/registration/all.hh,
+	* milena/mln/registration/essential.hh,
+	* milena/mln/registration/get_rot.hh,
+	* milena/mln/registration/get_rtransf.hh,
+	* milena/mln/registration/icp.hh,
+	* milena/mln/registration/internal/rms.hh,
+	* milena/mln/registration/registration.hh,
+	* milena/mln/subsampling/all.hh,
+	* milena/mln/subsampling/essential.hh,
+	* milena/mln/subsampling/gaussian_subsampling.hh,
+	* milena/mln/subsampling/subsampling.hh,
+	* milena/mln/trait/functions.hh,
+	* milena/mln/trait/next/solve.hh,
+	* milena/mln/trait/next/solve_binary.hh,
+	* milena/mln/trait/next/solve_proxy.hh,
+	* milena/mln/trait/next/solve_unary.hh,
+	* milena/mln/value/hsi.hh,
+	* milena/mln/value/shell.hh,
+	* milena/mln/value/stack.hh,
+	Remove.
+	* milena/tests/unit_test/unit-tests.mk: Regen.
+
+2012-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Strip and remove files to match distributed files.
+
+	* configure.ac,
+	* milena/mln/accu/math/all.hh,
+	* milena/mln/all.hh,
+	* milena/mln/core/image/vmorph/all.hh,
+	* milena/mln/core/image/vmorph/fun_image.hh,
+	* milena/mln/data/all.hh,
+	* milena/mln/essential/routine.hh,
+	* milena/mln/fun/all.hh,
+	* milena/mln/fun/essential.hh,
+	* milena/mln/fun/v2v/all.hh,
+	* milena/mln/fun/v2v/essential.hh,
+	* milena/mln/linear/all.hh,
+	* milena/mln/trait/all.hh,
+	* milena/mln/trait/ch_value.hh,
+	* milena/mln/value/all.hh,
+	* milena/mln/value/essential.hh,
+	* milena/tests/Makefile.am,
+	* milena/tests/convert/Makefile.am,
+	* milena/tests/extract/Makefile.am,
+	* milena/tests/fun/v2v/Makefile.am,
+	* milena/tests/linear/Makefile.am,
+	* milena/tests/linear/gaussian/Makefile.am,
+	* milena/tests/registration/Makefile.am,
+	* milena/tests/trait/ch_value.cc,
+	* milena/tests/value/Makefile.am:
+	Strip (some) parts between tags `<<lrde' and `>>'.
+	* Makefile.am: Likewise.
+	(LRDE_STRIPPED_DIST_FILES, LRDE_NODIST_FILES, dist-hook): Remove.
+	* milena/tests/convert/to_hsl.cc,
+	* milena/tests/extract/blue.cc,
+	* milena/tests/extract/green.cc,
+	* milena/tests/extract/hue.cc,
+	* milena/tests/extract/lum.cc,
+	* milena/tests/extract/red.cc,
+	* milena/tests/extract/sat.cc,
+	* milena/tests/fun/v2v/component.cc,
+	* milena/tests/linear/gaussian/filter.cc,
+	* milena/tests/registration/registration.cc,
+	* milena/tests/value/stack.cc:
+	Remove.
+	* build-aux/strip-lrde: Remove.
+
 2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/apps/morphers/Makefile.

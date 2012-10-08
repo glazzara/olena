@@ -60,14 +60,10 @@ namespace mln
 # include <mln/fun/n2v/all.hh>
 
 # include <mln/fun/i2v/all.hh>
-//<<lrde
-# include <mln/fun/meta/all.hh>
-//>>
+
 # include <mln/fun/p2b/all.hh>
 # include <mln/fun/p2v/all.hh>
-//<<lrde
-// # include <mln/fun/spe/all.hh>
-//>>
+
 # include <mln/fun/stat/all.hh>
 # include <mln/fun/v2b/all.hh>
 # include <mln/fun/v2i/all.hh>
