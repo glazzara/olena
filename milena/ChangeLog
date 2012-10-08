@@ -1,3 +1,10 @@
+2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address g++-4.7 compilation errors.
+
+	* apps/morphers/image2d-skel.hh (is_simple_2d::operator()):
+	Qualify a call to a base class member.
+
 2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix file names in apps/morphers/recorder-bft.

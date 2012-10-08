@@ -84,7 +84,7 @@ public:
   /// Based on connectivity numbers.
   bool operator()(const mln_psite(I)& p) const
   {
-    return check(*ima_, p);
+    return this->check(*ima_, p);
   }
 
 private:
