@@ -1,3 +1,20 @@
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the Fast Fourier Transform.
+
+	* mln/transform/fft.hh
+	(mln::transform::fft<T, internal::fft_real>::fft):
+	Properly initialize the plan of the inverse transform using
+	fftw_plan_dft_c2r_2d.
+	(mln::transform::fft<T, internal::fft_real>::transform_inv):
+	Use the entire complex values (not just their real parts) to
+	compute the inverse transform.
+	(mln::transform::class fft<T, internal::fft_cplx>::fft):
+	Call the proper function (fftw_plan_dft_2d) to create the plan of
+	the inverse transform.
+	Switch the input and the output so that the inverse transform uses
+	the right images.
+
 2012-10-09  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Import the FFTW-based Fast Fourier Transform.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -418,8 +419,8 @@ namespace mln {
 
 	this->p = fftw_plan_dft_r2c_2d (original_im.nrows(), original_im.ncols(),
 					this->in, reinterpret_cast<fftw_complex*>(this->out), FFTW_ESTIMATE);
-	this->p_inv = fftw_plan_dft_r2c_2d (original_im.nrows(), original_im.ncols(),
-					    this->in, reinterpret_cast<fftw_complex*>(this->out), FFTW_ESTIMATE);
+	this->p_inv = fftw_plan_dft_c2r_2d (original_im.nrows(), original_im.ncols(),
+					    reinterpret_cast<fftw_complex*>(this->out), this->in, FFTW_ESTIMATE);
 
 	this->trans_im = image2d< std::complex<T> >(original_im.domain());
       }
@@ -460,7 +461,7 @@ namespace mln {
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = 0; col <= this->trans_im.ncols() / 2; ++col)
 	    this->out[row * (this->trans_im.ncols() / 2 + 1) + col] =
-	      opt::at(this->trans_im, row, col).real();
+	      opt::at(this->trans_im, row, col);
 
 	fftw_execute(this->p_inv);
 
@@ -620,9 +621,9 @@ namespace mln {
 	this->p = fftw_plan_dft_2d(original_im.nrows(), original_im.ncols(),
 				   this->in, this->out,
 				   FFTW_FORWARD, FFTW_ESTIMATE);
-	this->p_inv = fftw2d_plan_dft_2d(original_im.nrows(), original_im.ncols(),
-					 this->in, this->out,
-					 FFTW_BACKWARD, FFTW_ESTIMATE);
+	this->p_inv = fftw_plan_dft_2d(original_im.nrows(), original_im.ncols(),
+				       this->out, this->in,
+				       FFTW_BACKWARD, FFTW_ESTIMATE);
 
 	this->trans_im = image2d< std::complex<T> >(original_im.domain());
       }
