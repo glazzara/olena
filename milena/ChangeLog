@@ -1,3 +1,12 @@
+2012-10-09  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Import the FFTW-based Fast Fourier Transform.
+
+	* mln/transform/fft.hh,
+	* tests/transform/fft.cc:
+	New.
+	Imported from the old directory sanbox/abraham/.
+
 2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a couple of Milena tests.
