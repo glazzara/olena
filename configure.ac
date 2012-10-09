@@ -315,6 +315,12 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
                    [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
                    [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
 
+# --------------- #
+# FFTW3 library.  #
+# --------------- #
+
+OLN_WITH_LIB([FFTW3], [fftw3.h], [fftw3], [fftw3], [FFTW3], [-lm])
+
 
 ## --------- ##
 ## Swilena.  ##
