@@ -30,6 +30,12 @@
 #include <mln/opt/at.hh>
 #include <mln/debug/println.hh>
 
+#include <mln/core/image/flat_image.hh>
+#include <mln/fun/vv2b/le.hh>
+#include <mln/fun/vv2v/diff_abs.hh>
+#include <mln/data/transform.hh>
+#include <mln/test/predicate.hh>
+
 #include "tests/data.hh"
 
 #define CHECK(Condition)			\
@@ -61,11 +67,16 @@ int main ()
   io::pgm::save(im3, "fft_copy.pgm");
 
   image2d<int_u8> fft = fourier.transformed_image_log_magn<int_u8>(true);
-  //  debug::println(fourier.transformed_image());
   io::pgm::save(fft, "fft.pgm");
 
   std::cout << "Test: Image == F-1(F(Image)) ... " << std::flush;
-  // CHECK (im1 == im3);
+  /* FIXME: Milena lacks some feature to make write the following in a
+     shorter fashion (fun-morpher accepting binary (vv2v) functions or
+     function composition in pw-functions.  */
+  CHECK(test::predicate(data::transform(im1, im3,
+					fun::vv2v::diff_abs<int_u8>()),
+			flat_image<int_u8, box2d>(1, im1.domain()),
+			fun::vv2b::le<int_u8>()));
 
   image2d<int_u8> out = fourier.transformed_image_clipped_magn<int_u8>(0.01);
 
@@ -82,6 +93,9 @@ int main ()
   for (int row = 0; row < im2.nrows(); ++row)
     for (int col = 40; col < im2.ncols() - 40; ++col)
       opt::at(im2, row, col) = 0;
+
+  fft = fourier.transformed_image_log_magn<int_u8>(true);
+  io::pgm::save(fft, "fft_trans_cropped.pgm");
 
   out = fourier.transform_inv<int_u8>();
 

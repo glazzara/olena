@@ -46,4 +46,5 @@ MOSTLYCLEANFILES = 				\
   fft_copy.pgm					\
   fft_low_pass.pgm				\
   fft_trans_clipped.pgm				\
+  fft_trans_cropped.pgm				\
   fft_trans_log.pgm

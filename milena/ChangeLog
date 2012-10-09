@@ -1,5 +1,16 @@
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the test of the Fast Fourier Transform.
+
+	* tests/transform/fft.cc: Ensure the inverse transform of the
+	transform is pretty much the same as the input image.
+	Save the cropped transform.
+	Remove dead code.
+	* tests/transform/Makefile.am (MOSTLYCLEANFILES):
+	Add fft_trans_cropped.pgm.
+
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright headers.
 
 	* mln/transform/fft.hh,
