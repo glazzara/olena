@@ -70,7 +70,10 @@ int main(int argc, char *argv[])
   par_t par = scribo::util::component_precise_outline(input);
 
   t.stop();
-  std::cout << t << std::endl;
+  /* FIXME: Help the compiler to ``unproxy' the float stored in the
+     timer.  There is a problem with an overload resolution of
+     `mln::unproxy_rec' here.  */
+  std::cout << t.read() << std::endl;
 
   image2d<value::rgb8> input_rgb = data::convert(value::rgb8(), input);
 

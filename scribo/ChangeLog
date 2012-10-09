@@ -1,3 +1,11 @@
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around an overload resolution problem reported by g++ 4.7.
+
+	* src/debug/show_separators.cc,
+	* src/util/component_precise_outline.cc:
+	Here.
+
 2011-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/text/recognition.hh: Restore previous locale.
