@@ -1,5 +1,13 @@
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update copyright headers.
+
+	* mln/transform/fft.hh,
+	* tests/transform/fft.cc:
+	Here.
+
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
 
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
