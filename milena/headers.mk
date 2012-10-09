@@ -1142,6 +1142,7 @@ mln/transform/distance_and_influence_zone_geodesic.hh \
 mln/transform/distance_front.hh \
 mln/transform/distance_geodesic.hh \
 mln/transform/essential.hh \
+mln/transform/fft.hh \
 mln/transform/hough.hh \
 mln/transform/influence_zone_front.hh \
 mln/transform/influence_zone_geodesic.hh \

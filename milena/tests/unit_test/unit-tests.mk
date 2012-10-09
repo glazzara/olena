@@ -1183,6 +1183,7 @@ mln_transform_distance_and_influence_zone_geodesic \
 mln_transform_distance_front \
 mln_transform_distance_geodesic \
 mln_transform_essential \
+mln_transform_fft \
 mln_transform_hough \
 mln_transform_influence_zone_front \
 mln_transform_influence_zone_geodesic \

@@ -1,5 +1,9 @@
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise the Fast Fourier Transform.
 
 	* tests/transform/fft.cc: Fix the path to the input image.
