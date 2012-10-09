@@ -1,5 +1,15 @@
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise the Fast Fourier Transform.
+
+	* tests/transform/fft.cc: Fix the path to the input image.
+	* tests/transform/Makefile.am
+	(check_PROGRAMS) [HAVE_FFTW3]: Add fft.
+	(fft_SOURCES, fft_CPPFLAGS, fft_LDFLAGS) [HAVE_FFTW3]: New.
+	(MOSTLYCLEANFILES): New.
+
+2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the Fast Fourier Transform.
 
 	* mln/transform/fft.hh

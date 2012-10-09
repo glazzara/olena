@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE)
+# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -28,4 +28,22 @@ check_PROGRAMS =				\
   influence_zone_geodesic_saturated
 
 
+
+if HAVE_FFTW3
+
+check_PROGRAMS += fft
+fft_SOURCES = fft.cc
+fft_CPPFLAGS = $(AM_CPPFLAGS) $(FFTW3_CPPFLAGS)
+fft_LDFLAGS = $(AM_LDFLAGS) $(FFTW3_LDFLAGS)
+
+endif HAVE_FFTW3
+
+
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES = 				\
+  fft.pgm					\
+  fft_copy.pgm					\
+  fft_low_pass.pgm				\
+  fft_trans_clipped.pgm				\
+  fft_trans_log.pgm

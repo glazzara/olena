@@ -1,5 +1,5 @@
 //                                                                  -*- c++ -*-
-// Copyright (C) 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2004, 2012 EPITA Research and Development Laboratory
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,6 +33,8 @@
 #include <mln/opt/at.hh>
 #include <mln/debug/println.hh>
 
+#include "tests/data.hh"
+
 #define CHECK(Condition)			\
     if (Condition)				\
       std::cout << "OK" << std::endl;		\
@@ -51,7 +53,7 @@ int main ()
   int status = 0;
 
   image2d<int_u8> im1;
-  io::pgm::load(im1, "lena.pgm");
+  io::pgm::load(im1, MLN_IMG_DIR "/lena.pgm");
 
   fft<double> fourier(im1);
 
