@@ -81,7 +81,7 @@ namespace mln {
       **
       ** Const version.
       */
-      const image2d< std::complex<T> > transformed_image() const
+      const image2d< std::complex<T> >& transformed_image() const
       {
 	return trans_im;
       }
@@ -156,14 +156,14 @@ namespace mln {
       */
 
       template <class R>
-      image2d<R> transformed_image_clipped_magn(const double clip,
+      image2d<R> transformed_image_clipped_magn(double clip,
 						bool ordered = true) const
       {
 	// Check that R is real
 
 	image2d<R> new_im(trans_im.domain());
 	// check that clip is >=0 and <=1 ?
-	double max;
+	double max = mln_min(double);
 	mln_piter(image2d<T>) it(trans_im.domain());
 
 	for_all(it)
@@ -209,7 +209,7 @@ namespace mln {
       ** \param clip Value used for clipping.
       ** \param ordered Kind of traversal.
       */
-      image2d<T> transformed_image_clipped_magn(const double clip,
+      image2d<T> transformed_image_clipped_magn(double clip,
 						bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(clip, ordered);
@@ -271,7 +271,7 @@ namespace mln {
 
 	image2d<R> new_im(trans_im.domain());
 
-	double max = 0;
+	double max = mln_min(double);
 	mln_piter(image2d<R>) it(trans_im.domain());
 
 	for_all(it)

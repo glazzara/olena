@@ -1,3 +1,16 @@
+2012-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Minor corrections in the Fast Fourier Transform.
+
+	* mln/transform/fft.hh
+	(internal::_fft<T>::transformed_image() const): Return a const
+	reference instead of a copy.
+	(internal::_fft<T>::transformed_image_clipped_magn(double, bool)):
+	Drop the const before the first argument.
+	Properly initialize `max'.
+	(internal::_fft<T>::transformed_image_log_magn(double, double, bool)):
+	Properly initialize `max'.
+
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the test of the Fast Fourier Transform.
