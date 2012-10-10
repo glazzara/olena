@@ -479,105 +479,12 @@ namespace mln {
       }
 
       /*!
-      ** \brief Shift zero-frequency component of discrete Fourier transform
-      ** to center of spectrum.
-      **
-      ** \param R The data type of the image returned.
-      **
-      ** The zero-frequency component of discrete Fourier transform are moved
-      ** to center of the image :
-      **
-      ** \htmlonly
-      ** <table>
-      **   <tr><td>1</td><td>2</td></tr>
-      **   <tr><td>3</td><td>4</td></tr>
-      ** </table>
-      ** becomes
-      ** <table>
-      **   <tr><td>4</td><td>3</td></tr>
-      **   <tr><td>2</td><td>1</td></tr>
-      ** </table>
-      ** \endhtmlonly
-      **
-      */
-
-      /*
-      template <class R>
-      image2d<R> shift_transform_inv()
-      {
-	image2d<R> t = transform_inv<R>();
-	image2d<R> st(t.size());
-
-	// We have to exchange t_1 with t_1_dest and not directly t_3 because
-	// they have not he same size.
-	typedef morpher::piece_morpher< image2d<R> > piece_t;
-	piece_t t_1(t, dpoint2d(0, 0),
-		    image2d_size((t.size().nrows() - 1) / 2,
-				 (t.size().ncols() - 1) / 2,
-				 t.border()));
-	piece_t t_1_dest(st, dpoint2d(t.nrows() - t_1.nrows(),
-				     t.ncols() - t_1.ncols()),
-			 image2d_size(t_1.nrows(), t_1.ncols(),
-				      t.border()));
-	piece_t t_2(t, dpoint2d(0, (t.size().ncols() - 1) / 2),
-		    image2d_size((t.size().nrows() - 1) / 2,
-				 t.size().ncols() - (t.size().ncols() - 1) / 2,
-				 t.border()));
-	piece_t t_2_dest(st, dpoint2d(t.nrows() - t_2.nrows(), 0),
-			 image2d_size(t_2.nrows(), t_2.ncols(),
-				      t.border()));
-	piece_t t_3(t, dpoint2d((t.size().nrows() - 1) / 2, 0),
-		    image2d_size(t.size().nrows() - (t.size().nrows() - 1) / 2,
-				 (t.size().ncols() - 1) / 2,
-				 t.border()));
-	piece_t t_3_dest(st, dpoint2d(0, t.ncols() - t_3.ncols()),
-			 image2d_size(t_3.nrows(), t_3.ncols(),
-				      t.border()));
-	piece_t t_4(t, dpoint2d((t.size().nrows() - 1) / 2,
-				(t.size().ncols() - 1) / 2),
-		    image2d_size(t.size().nrows() - (t.size().nrows() - 1) / 2,
-				 t.size().ncols() - (t.size().ncols() - 1) / 2,
-				 t.border()));
-	piece_t t_4_dest(st, dpoint2d(0, 0),
-			 image2d_size(t_4.nrows(), t_4.ncols(),
-				      t.border()));
-
-	oln_iter_type(piece_t) i1(t_1);
-	for_all(i1)
-	  t_1_dest[i1] = t_1[i1];
-	oln_iter_type(piece_t) i2(t_2);
-	for_all(i2)
-	  t_2_dest[i2] = t_2[i2];
-	oln_iter_type(piece_t) i3(t_3);
-	for_all(i3)
-	  t_3_dest[i3] = t_3[i3];
-	oln_iter_type(piece_t) i4(t_4);
-	for_all(i4)
-	  t_4_dest[i4] = t_4[i4];
-
-	return st;
-      }
-      */
-
-
-      /*!
       ** \brief Compute and return the invert transform.
       */
       image2d<T> transform_inv()
       {
 	return transform_inv<T>();
       }
-
-      /*!
-      ** \brief Shift zero-frequency component of discrete Fourier transform
-      ** to center of spectrum.
-      */
-      /*
-      image2d<T> shift_transform_inv()
-      {
-	return shift_transform_inv<T>();
-      }
-      */
 
     };
 

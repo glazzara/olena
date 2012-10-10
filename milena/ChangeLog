@@ -1,5 +1,11 @@
 2012-10-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove dead code in the Fast Fourier Transform.
+
+	* mln/transform/fft.hh: Here.
+
+2012-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Minor corrections in the Fast Fourier Transform.
 
 	* mln/transform/fft.hh
