@@ -895,7 +895,8 @@ namespace scribo
 	      ++win_w[i];
 	  }
 
-	  float coeff = 1.4;
+	  float coeff_max = 1.6;
+	  float coeff_min = 1.4;
 
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -915,7 +916,7 @@ namespace scribo
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 //						     (8096 / 144) / coeff,
 //						     44 / coeff,
-						     win_w[i] / s / coeff,
+						     win_w[i] / s / coeff_max,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
@@ -929,8 +930,8 @@ namespace scribo
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 //						       22 / coeff,
 //						       201 * coeff,
-						       win_w[i] / s / coeff,
-						       win_w[i] * s * coeff,
+						       win_w[i] / s / coeff_min,
+						       win_w[i] * s * coeff_max,
 //						       (810 / 36) / coeff,
 //						       (8096 / 36) * coeff,
 						       s,
@@ -945,7 +946,7 @@ namespace scribo
             // FIXME: was '0'. '2' is to avoid too much noise with k=0.2.
 						     2,
 //						     99 * coeff,
-						     win_w[2] * s * coeff,
+						     win_w[2] * s * coeff_max,
 //						     (810 / 9) * coeff,
 						     s, 1, 2, w_work,
 						     integral_sum_sum_2);
