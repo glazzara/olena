@@ -1,3 +1,7 @@
+2012-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/histo/equalize.hh: Revamp.
+
 2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Regen.

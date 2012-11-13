@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,15 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_HISTO_EQUALIZATION_HH
-# define MLN_HISTO_EQUALIZATION_HH
+#ifndef MLN_HISTO_EQUALIZE_HH
+# define MLN_HISTO_EQUALIZE_HH
 
 # include <mln/core/concept/image.hh>
 # include <mln/histo/all.hh>
 
 /// \file
 ///
-/// Function histogram equalization.
+/// Histogram equalization.
 
 namespace mln
 {
@@ -39,13 +40,12 @@ namespace mln
   namespace histo
   {
 
-    /**
-     Equalizes the histogram of image \p input.
+    /*! \brief Equalizes the histogram of image \p input.
+
      \author J. Fabrizio, R. Levillain
      */
     template <typename I>
-    mln_concrete(I)
-    equalize(const Image<I>& input);
+    mln_concrete(I) equalize(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -54,36 +54,38 @@ namespace mln
     mln_concrete(I)
     equalize(const Image<I>& input_)
     {
-      trace::entering("histo::equalize");
+      trace::entering("mln::histo::equalize");
 
       const I& input = exact(input_);
-      mln_concrete(I) out_image;
+      mln_precondition(input.is_valid());
 
-      array<mln_value(I)> histogram = compute(input);
-      array<mln_value(I)> histogram_correction;
+      typedef mln_value(I) V;
+      array<V> histogram = compute(input);
+      array<V> histo_correction;
 
       unsigned cumulation = 0;
-      int number_of_pixels = input.nsites();
+      unsigned number_of_pixels = input.nsites();
       //int number_of_colors=histogram.nvalues();
-      //int number_of_colors=mln_card(mln_value(I));
-      int max_color = mln_max(mln_value(I));
-      mln_piter(I) p(input.domain());
+      //int number_of_colors=mln_card(V);
+      V max_color = mln_max(V);
 
-      mln_viter(mln::value::set<mln_value(I)>) v(histogram.vset());
+      mln_viter(mln::value::set<V>) v(histogram.vset());
       for_all(v)
 	if (histogram(v) != 0)
 	{
 	  cumulation += histogram(v);
-	  histogram_correction(v) = (/*number_of_colors-1*/max_color)
+	  histo_correction(v) = (/*number_of_colors-1*/max_color)
 	    * cumulation / number_of_pixels;
 	}
 
-      initialize(out_image, input);
+      mln_concrete(I) output;
+      initialize(output, input);
+      mln_piter(I) p(input.domain());
       for_all(p)
-	out_image(p) = histogram_correction[input(p)];
+	output(p) = histo_correction[input(p)];
 
-      trace::exiting("histo::equalize");
-      return out_image;
+      trace::exiting("mln::histo::equalize");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -94,4 +96,4 @@ namespace mln
 
 
 
-#endif // ! MLN_HISTO_EQUALIZATION_HH
+#endif // ! MLN_HISTO_EQUALIZE_HH
