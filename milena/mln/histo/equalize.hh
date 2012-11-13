@@ -27,6 +27,7 @@
 #ifndef MLN_HISTO_EQUALIZE_HH
 # define MLN_HISTO_EQUALIZE_HH
 
+# include <cmath>
 # include <mln/core/concept/image.hh>
 # include <mln/histo/all.hh>
 
@@ -43,6 +44,9 @@ namespace mln
     /*! \brief Equalizes the histogram of image \p input.
 
      \author J. Fabrizio, R. Levillain
+
+     Source:
+     http://en.wikipedia.org/wiki/Histogram_equalization
      */
     template <typename I>
     mln_concrete(I) equalize(const Image<I>& input);
@@ -63,19 +67,25 @@ namespace mln
       array<V> histogram = compute(input);
       array<V> histo_correction;
 
-      unsigned cumulation = 0;
-      unsigned number_of_pixels = input.nsites();
-      //int number_of_colors=histogram.nvalues();
-      //int number_of_colors=mln_card(V);
+      unsigned nsites = input.nsites();
       V max_color = mln_max(V);
 
+      unsigned h_min = nsites;
       mln_viter(mln::value::set<V>) v(histogram.vset());
+
+      // Looking for minimum occurence in histogram
+      for_all(v)
+	if (histogram(v) > 0 && h_min > histogram(v))
+	  h_min = histogram(v);
+
+      // Computing new histogram.
+      unsigned cdf_v = 0;
       for_all(v)
 	if (histogram(v) != 0)
 	{
-	  cumulation += histogram(v);
-	  histo_correction(v) = (/*number_of_colors-1*/max_color)
-	    * cumulation / number_of_pixels;
+	  cdf_v += histogram(v);
+	  histo_correction(v)
+	    = round((cdf_v - h_min) / (float)(nsites - h_min) * max_color);
 	}
 
       mln_concrete(I) output;
