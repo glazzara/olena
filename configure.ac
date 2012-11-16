@@ -1,5 +1,5 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 EPITA Research and
-# Development Laboratory (LRDE).
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 EPITA
+# Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -212,7 +212,7 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 OLN_WITH_LIB_PKG_CONFIG([ImageMagick++], [Magick++.h], [Magick++],
                         [imagemagickxx], [IMAGEMAGICKXX])
 
-OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [Magick++],
+OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [GraphicsMagick++],
                         [graphicsmagickxx], [GRAPHICSMAGICKXX])
 
 # If both ImageMagick and GraphicsMagic are available, choose the
