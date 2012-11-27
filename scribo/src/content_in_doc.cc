@@ -202,7 +202,7 @@ int main(int argc, char* argv[])
   if (scribo::debug::logger().is_enabled())
     scribo::io::img::save(doc, mln::debug::filename("regions.png"), scribo::io::img::DebugWoImage);
   if (options.opt_value("debug-regions") != "/dev/null")
-    scribo::io::img::save(doc, options.opt_value("debug-regions"), scribo::io::img::DebugWoImage);
+    scribo::io::img::save(doc, options.opt_value("debug-regions"), scribo::io::img::DebugWithImage);
 
   trace::exiting("main");
 }

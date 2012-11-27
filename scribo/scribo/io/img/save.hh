@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +40,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/io/magick/save.hh>
-# include <mln/subsampling/antialiased.hh>
-# include <mln/data/transform_inplace.hh>
+# include <mln/data/transform.hh>
 
 # include <scribo/core/document.hh>
 
@@ -160,11 +160,9 @@ namespace scribo
 	save_debug_without_image(const document<L>& doc)
 	{
 	  mln_precondition(doc.is_valid());
-	  mln::image2d<value::rgb8>
-	    output(box2d(doc.image().domain().pmin() / 4,
-			 doc.image().domain().pmax() / 4));
+	  mln::image2d<value::rgb8> output(doc.image().domain());
 	  data::fill(output, literal::black);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
+	  scribo::io::img::internal::debug_img_visitor<L> f(output, 1);
 	  doc.accept(f);
 	  return output;
 	}
@@ -174,11 +172,10 @@ namespace scribo
 	save_debug_with_image(const document<L>& doc)
 	{
 	  mln_precondition(doc.is_valid());
-	  mln::image2d<value::rgb8>
-	    output = mln::subsampling::antialiased(doc.image(), 4);
 	  internal::highlight_mask highlight(0.5f);
-	  data::transform_inplace(output, highlight);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
+	  mln::image2d<value::rgb8>
+	    output = data::transform(doc.image(), highlight);
+	  scribo::io::img::internal::debug_img_visitor<L> f(output, 1);
 	  doc.accept(f);
 	  return output;
 	}
