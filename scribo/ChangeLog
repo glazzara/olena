@@ -1,3 +1,7 @@
+2012-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/content_in_doc.cc: Add more options.
+
 2011-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/text/recognition.hh: Restore previous locale.
