@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -204,8 +204,8 @@ namespace mln
       if (diff_size < 0)
       {
 	srand(1);
+	unsigned i = f.size();
 	f.resize(label_count);
-	unsigned i = f.size() + diff_size;
 	// We want to treat comp 0 differently since it is the background.
 	if (i == 0)
 	{

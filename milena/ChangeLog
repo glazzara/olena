@@ -1,3 +1,8 @@
+2013-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/colorize.hh: Do not recompute previously computed
+	colors.
+
 2012-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/histo/equalize.hh: Fix.
