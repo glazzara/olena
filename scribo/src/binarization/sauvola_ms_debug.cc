@@ -66,9 +66,9 @@ static const scribo::debug::opt_data opt_desc[] =
     "given prefix.", "<prefix>", 0, 1, 0 },
   { "all-k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
 
-  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, "0.20" },
-  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, "0.30" },
-  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, "0.50" },
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
 
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
     for (unsigned i = 0; i < geom::nrows(output); ++i)
       for (unsigned j = 0; j < geom::ncols(output); ++j)
 	if (output.at_(i,j))
-	  scale_bin.at_(i,j) = binarization::internal::debug_e_2.at_(i/3, j/3);
+	  scale_bin.at_(i,j) = binarization::internal::debug_e_2.at_(i/s, j/s);
 	else
 	  scale_bin.at_(i,j) = 0;
 

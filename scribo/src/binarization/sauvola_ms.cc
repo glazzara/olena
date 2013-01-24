@@ -33,6 +33,7 @@
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
 #include <mln/util/timer.hh>
+#include <mln/logical/not.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/option_parser.hh>
@@ -50,6 +51,7 @@ static const scribo::debug::arg_data arg_desc[] =
 static const scribo::debug::toggle_data toggle_desc[] =
 {
   // name, description, default value
+  { "negate", "Negate output image.", false},
   {0, 0, false}
 };
 
@@ -147,5 +149,8 @@ int main(int argc, char *argv[])
 
   scribo::debug::logger().stop_local_time_logging("Binarized in");
 
-  io::magick::save(output, options.arg("output.*"));
+  if (options.is_enabled("negate"))
+    io::magick::save(logical::not_(output), options.arg("output.*"));
+  else
+    io::magick::save(output, options.arg("output.*"));
 }
