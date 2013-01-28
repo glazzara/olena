@@ -211,7 +211,6 @@ namespace scribo
 	    {
 	      if (f.msk.element(p))
 	      {
-
 		mln_site_(I) sq = site * ratio;
 
 		if (f.parent.element(p) == p)
@@ -874,30 +873,6 @@ namespace scribo
 	  initialize(e_2, sub_ima[2]);
 	  data::fill(e_2, 0u);
 
-	  // Computing optimal object area for each scale.
-	  // unsigned w_1_sq = w_1 * w_1;
-	  // unsigned q_2 = std::pow(float(q), float(2));
-	  // unsigned min_area = (5 * w_1_sq) / (4 * q_2);
-	  // unsigned max_area = (w_1_sq + (q_2) * w_1_sq) / 4;
-
-
-	  // mln::util::array<unsigned> area(sub_ima.size(), 0);
-	  // area[2] = s * s * w_1 * w_1;
-	  // for (unsigned i = 3; i < area.nelements(); ++i)
-	  //   area[i] = std::pow(float(q), float(i * 2 - 4)) * area[2];
-
-	  mln::util::array<unsigned> win_w(sub_ima.size(), 0);
-	  win_w[2] = s * w_1;
-	  for (unsigned i = 3; i < win_w.nelements(); ++i)
-	  {
-	    win_w[i] = q * win_w[i - 1];
-	    if (!(win_w[i] % 2))
-	      ++win_w[i];
-	  }
-
-	  float coeff_max = 1.6;
-	  float coeff_min = 1.4;
-
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  internal::debug_scale_proba = image3d<double>(3,
@@ -910,13 +885,17 @@ namespace scribo
 	    == Step 2 - Object selection at each scale ==
 	    ===========================================*/
 
+	  float
+	    min_coef = 0.8,
+	    max_s2 = (w_1 * w_1) / (s * s) * 0.7,
+	    q_2 = q * q;
+
+
 	  // Highest scale -> no maximum component size.
 	  {
 	    int i = sub_ima.size() - 1;
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-//						     (8096 / 144) / coeff,
-//						     44 / coeff,
-						     win_w[i] / s / coeff_max,
+						     (max_s2 * q_2) / (q_2) * min_coef,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
@@ -928,12 +907,8 @@ namespace scribo
 	    for (int i = sub_ima.size() - 2; i > 2; --i)
 	    {
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-//						       22 / coeff,
-//						       201 * coeff,
-						       win_w[i] / s / coeff_min,
-						       win_w[i] * s * coeff_max,
-//						       (810 / 36) / coeff,
-//						       (8096 / 36) * coeff,
+						       max_s2 / (q_2) * min_coef,
+						       max_s2 * q_2,
 						       s,
 						       q, i, w_work,
 						       integral_sum_sum_2);
@@ -945,9 +920,7 @@ namespace scribo
 	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2,
             // FIXME: was '0'. '2' is to avoid too much noise with k=0.2.
 						     2,
-//						     99 * coeff,
-						     win_w[2] * s * coeff_max,
-//						     (810 / 9) * coeff,
+						     max_s2,
 						     s, 1, 2, w_work,
 						     integral_sum_sum_2);
 	  }
