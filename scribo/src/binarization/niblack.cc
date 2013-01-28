@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,8 +26,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/magick/load.hh>
-#include <mln/io/pbm/save.hh>
+#include <mln/io/magick/all.hh>
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
 #include <mln/arith/revert.hh>
@@ -103,7 +102,7 @@ int main(int argc, char *argv[])
   arith::revert_inplace(input_1_gl);
   image2d<bool> out = scribo::binarization::niblack(input_1_gl, w, k);
   logical::not_inplace(out);
-  io::pbm::save(out, options.arg("output.pbm"));
+  io::magick::save(out, options.arg("output.pbm"));
 
   trace::exiting("main");
 }

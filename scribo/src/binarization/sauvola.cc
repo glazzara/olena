@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +27,6 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/magick/all.hh>
-#include <mln/io/pbm/save.hh>
 #include <mln/data/transform.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
 

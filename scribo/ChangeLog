@@ -1,3 +1,13 @@
+2013-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use io::magick to save output.
+
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/wolf.cc: Here.
+
 2013-01-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix binarization programs.
