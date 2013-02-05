@@ -1,3 +1,29 @@
+2013-02-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address more remaining clang++ errors in Milena.
+
+	* mln/core/concept/proxy.hxx: Add and reorder forward
+	declarations.
+	* mln/accu/site_set/rectangularity.hh (rectangularity<P>): Do not
+	re-import base class attributes as protected members, so that the
+	base class can still access them.
+	Adjust.
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/world/inter_pixel/dim2/make_edge_image.hh:
+	Add missing header inclusions.
+	* mln/io/plot/save.hh (save)
+	* mln/morpho/tree/propagate_node.hh
+	(propagate_node_to_descendants):
+	Do not provide default arguments twice.
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face_iter.hh:
+	Add `this->' qualifiers to disambiguate calls to base class
+	methods.
+	* tests/metal/converts_to.cc (from_2): Do not rely on
+	uninitialized data.
+	(main): Add a test case.
+
 2012-03-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	More clang++ support in Milena.

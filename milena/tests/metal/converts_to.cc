@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,6 +26,7 @@
 
 #include <mln/metal/converts_to.hh>
 
+#include <mln/accu/math/sum.hh>
 
 
 struct from_1
@@ -38,7 +40,7 @@ struct dest
 
 struct from_2
 {
-  operator dest() const { dest* tmp; return *tmp; }
+  operator dest() const { dest* tmp = 0; return *tmp; }
 };
 
 
@@ -71,6 +73,8 @@ int main()
   metal::converts_to<derived*, base*>::check();
   metal::converts_to<derived, base>::check();
   metal::converts_to<derived, const base>::check();
+
+  metal::converts_to<accu::math::sum<int, int>, int>::check();
 
 //   metal::converts_to<derived, base_>::check_not();
 //   metal::converts_to<derived, const base_>::check_not();

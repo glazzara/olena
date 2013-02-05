@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,12 +77,8 @@ namespace mln
 
 	/// Return the rectangularity value.
 	result to_result() const;
-
-      protected:
-	using super_::a1_;
-	using super_::a2_;
-
       };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -97,8 +93,8 @@ namespace mln
       mln_result(rectangularity<P>::A1)
       rectangularity<P>::bbox() const
       {
-	mln_precondition(a1_.is_valid());
-	return a1_.to_result();
+	mln_precondition(this->a1_.is_valid());
+	return this->a1_.to_result();
       }
 
       template <typename P>
@@ -106,8 +102,8 @@ namespace mln
       mln_result(rectangularity<P>::A2)
       rectangularity<P>::area() const
       {
-	mln_precondition(a2_.is_valid());
-	return a2_.to_result();
+	mln_precondition(this->a2_.is_valid());
+	return this->a2_.to_result();
       }
 
       template <typename P>
@@ -117,7 +113,8 @@ namespace mln
       {
 	mln_precondition(this->is_valid());
 	// Force division return type.
-	return static_cast<result>(a2_.to_result()) / a1_.to_result().nsites();
+	return static_cast<result>
+	  (this->a2_.to_result()) / this->a1_.to_result().nsites();
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +30,7 @@
 ///
 /// Construct a valued image of edges.
 
+# include <mln/core/image/image2d.hh>
 # include <mln/core/image/dmorph/extension_ima.hh>
 # include <mln/core/image/dmorph/image_if.hh>
 

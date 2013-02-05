@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -162,7 +163,7 @@ namespace mln
     face_fwd_iter<D>::face_fwd_iter(complex<D>& c)
       : super_(c)
     {
-      set_cplx(c);
+      this->set_cplx(c);
       mln_postcondition(!is_valid());
     }
 
@@ -214,7 +215,7 @@ namespace mln
     face_bkd_iter<D>::face_bkd_iter(complex<D>& c)
       : super_(c)
     {
-      set_cplx(c);
+      this->set_cplx(c);
       mln_postcondition(!is_valid());
     }
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -87,7 +87,7 @@ namespace mln
       template <typename T>
       inline
       void save(const util::array<T>& arr, const std::string& filename,
-		int start_value = 0)
+		int start_value)
       {
 	trace::entering("mln::io::plot::save");
 
