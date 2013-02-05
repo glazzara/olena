@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,6 +63,16 @@ namespace mln
       /// Negation (for arithmetical tests).
       bool operator !() const;
 
+      /// Mimics the behavior of op* for a pointer in the const case.
+      ///
+      /// \invariant Pointer proxy exists.
+      const T& operator*() const;
+
+      /// Mimics the behavior of op* for a pointer in the mutable case.
+      ///
+      /// \invariant Pointer proxy exists.
+      T& operator*();
+
       /// Mimics the behavior of op-> for a pointer in the const case.
       ///
       /// \invariant Pointer proxy exists.
@@ -115,6 +125,24 @@ namespace mln
     {
       mln_invariant(run_());
       return ! bool(*this);
+    }
+
+    template <typename T>
+    inline
+    const T& tracked_ptr<T>::operator*() const
+    {
+      mln_invariant(run_());
+      mln_precondition(ptr_ != 0);
+      return *ptr_;
+    }
+
+    template <typename T>
+    inline
+    T& tracked_ptr<T>::operator*()
+    {
+      mln_invariant(run_());
+      mln_precondition(ptr_ != 0);
+      return *ptr_;
     }
 
     template <typename T>

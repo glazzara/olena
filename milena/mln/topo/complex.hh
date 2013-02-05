@@ -479,9 +479,13 @@ namespace mln
     n_face<0u, D>
     complex<D>::add_face()
     {
+      // Upcast `data_' to get access to the field `faces_' of its
+      // base class `internal::faces_set_mixin<0u, D>'.
+      std::vector< face_data<0u, D> >& faces_0 =
+	static_cast< internal::faces_set_mixin<0u, D>& >(*data_).faces_;
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
-      data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face_data<0u, D>());
+      faces_0.push_back(face_data<0u, D>());
       unsigned id = nfaces_of_static_dim<0u>() - 1;
       return n_face<0u, D>(*this, id);
     }
@@ -505,9 +509,13 @@ namespace mln
 	  }
 
       face_data<N + 1, D> f;
+      // Upcast `data_' to get access to the field `faces_' of its
+      // base class `internal::faces_set_mixin<N + 1, D>'.
+      std::vector< face_data<N + 1, D> >& faces_n_plus_1 =
+	static_cast< internal::faces_set_mixin<N + 1, D>& >(*data_).faces_;
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
-      data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
+      faces_n_plus_1.push_back(f);
       unsigned id = nfaces_of_static_dim<N + 1>() - 1;
 
       n_face<N + 1, D> fh(*this, id);
@@ -587,7 +595,11 @@ namespace mln
     unsigned
     complex<D>::nfaces_of_static_dim() const
     {
-      return data_->internal::faces_set_mixin<N, D>::faces_.size();
+      // Upcast `data_' to get access to the field `faces_' of its
+      // base class `internal::faces_set_mixin<N, D>'.
+      const std::vector< face_data<N, D> >& faces_n =
+	static_cast< const internal::faces_set_mixin<N, D>& >(*data_).faces_;
+      return faces_n.size();
     }
 
 
@@ -616,7 +628,11 @@ namespace mln
     face_data<N, D>&
     complex<D>::face_data_(unsigned face_id)
     {
-      return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
+      // Upcast `data_' to get access to the field `faces_' of its
+      // base class `internal::faces_set_mixin<N, D>'.
+      std::vector< face_data<N, D> >& faces_n =
+	static_cast< internal::faces_set_mixin<N, D>& >(*data_).faces_;
+      return faces_n[face_id];
     }
 
     template <unsigned D>
@@ -625,7 +641,11 @@ namespace mln
     const face_data<N, D>&
     complex<D>::face_data_(unsigned face_id) const
     {
-      return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
+      // Upcast `data_' to get access to the field `faces_' of its
+      // base class `internal::faces_set_mixin<N, D>'.
+      const std::vector< face_data<N, D> >& faces_n =
+	static_cast< const internal::faces_set_mixin<N, D>& >(*data_).faces_;
+      return faces_n[face_id];
     }
 
     template <unsigned D>
@@ -678,7 +698,9 @@ namespace mln
     void
     complex<D>::print(std::ostream& ostr) const
     {
-      data_->internal::faces_set_mixin<D, D>::print_rec_asc(ostr);
+      // Upcast `data_' to get access to the method `print_rec_asc' of
+      // its base class `internal::faces_set_mixin<D, D>'.
+      static_cast< const internal::faces_set_mixin<D, D>& >(*data_).print_rec_asc(ostr);
     }
 
     template <unsigned D>
@@ -690,7 +712,9 @@ namespace mln
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
 
-      data_->internal::faces_set_mixin<N, D>::print(ostr);
+      // Upcast `data_' to get access to the method `print' of its
+      // base class `internal::faces_set_mixin<N, D>'.
+      static_cast< const internal::faces_set_mixin<N, D>& >(*data_).print(ostr);
     }
 
     template <unsigned D>
@@ -842,7 +866,9 @@ namespace mln
     T
     complex<D>::fold_left_(const BinaryFunction& f, const T& accu) const
     {
-      return data_->internal::faces_set_mixin<D, D>::fold_left_(f, accu);
+      // Upcast `data_' to get access to the method `fold_left_' of
+      // its base class `internal::faces_set_mixin<D, D>'.
+      return static_cast< const internal::faces_set_mixin<D, D>& >(*data_).fold_left_(f, accu);
     }
 
     namespace internal
@@ -857,7 +883,9 @@ namespace mln
       faces_set_mixin<D, D>::fold_left_(const BinaryFunction& f,
 					const T& accu) const
       {
-	return faces_set_mixin<D - 1, D>::fold_left_(f, f(accu, faces_));
+	// Upcast `data_' to get access to the method `fold_left_' of
+	// its base class `internal::faces_set_mixin<D - 1, D>'.
+	return static_cast< const faces_set_mixin<D - 1, D>& >(*this).fold_left_(f, f(accu, faces_));
       }
 
       template <unsigned N, unsigned D>
@@ -867,7 +895,9 @@ namespace mln
       faces_set_mixin<N, D>::fold_left_(const BinaryFunction& f,
 					const T& accu) const
       {
-	return faces_set_mixin<N - 1, D>::fold_left_(f, f(accu, faces_));
+	// Upcast `data_' to get access to the method `fold_left_' of
+	// its base class `internal::faces_set_mixin<N - 1, D>'.
+	return static_cast< const faces_set_mixin<N - 1, D>& >(*this).fold_left_(f, f(accu, faces_));
       }
 
       template <unsigned D>
@@ -904,7 +934,9 @@ namespace mln
     {
       // Ensure N is compatible with D.
       mln_precondition(n <= D);
-      return data_->internal::faces_set_mixin<D, D>::apply_if_dim_matches_(n, f);
+      // Upcast `data_' to get access to the method `apply_if_dim_matches_' of
+      // its base class `internal::faces_set_mixin<D, D>'.
+      return static_cast< const internal::faces_set_mixin<D, D>& >(*data_).apply_if_dim_matches_(n, f);
     }
 
     namespace internal

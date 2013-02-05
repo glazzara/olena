@@ -1,3 +1,10 @@
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start to work around clang++ deficiencies to compile Milena.
+
+	* mln/util/tracked_ptr.hh (tracked_ptr<T>::operator*): New.
+	* mln/topo/complex.hh: Decompose complex instructions.
+
 2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revive headers required by the RGB component functors.
