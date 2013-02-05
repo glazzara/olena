@@ -1,3 +1,11 @@
+2012-03-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	More clang++ support in Milena.
+
+	* mln/core/concept/proxy.hxx (get_proxy_impl<Subject, E>): Swap
+	two definitions to help clang++ properly resolve calls to the
+	overloaded conversion operator.
+
 2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Start to work around clang++ deficiencies to compile Milena.

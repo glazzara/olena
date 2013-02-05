@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -263,8 +264,8 @@ namespace mln
 						   mlc_is_a(Subject, Proxy)::value >
     {
     public:
-      operator mlc_fix_return(Subject) ();
       operator mlc_fix_return(mlc_const_return(Subject)) () const;
+      operator mlc_fix_return(Subject) ();
     };
 
     template <typename Subject, typename E>
