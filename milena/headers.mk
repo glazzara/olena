@@ -1225,6 +1225,7 @@ mln/value/gl8.hh \
 mln/value/glf.hh \
 mln/value/graylevel.hh \
 mln/value/graylevel_f.hh \
+mln/value/graylevel_f.hxx \
 mln/value/hsl.hh \
 mln/value/int_s.hh \
 mln/value/int_s16.hh \
@@ -1244,6 +1245,7 @@ mln/value/internal/encoding.hh \
 mln/value/internal/essential.hh \
 mln/value/internal/gray_.hh \
 mln/value/internal/gray_f.hh \
+mln/value/internal/gray_f.hxx \
 mln/value/internal/integer.hh \
 mln/value/internal/iterable_set.hh \
 mln/value/internal/limits.hh \

@@ -1,3 +1,15 @@
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mutual dependencies between floating-point gray-level values.
+
+	* mln/value/graylevel_f.hh,
+	* mln/value/internal/gray_f.hh:
+	Move definitions...
+	* mln/value/graylevel_f.hxx,
+	* mln/value/internal/gray_f.hxx:
+	...here (new files).
+	* headers.mk (nobase_include_HEADERS): Regen.
+
 2013-02-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address more remaining clang++ errors in Milena.
