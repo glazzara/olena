@@ -1,5 +1,19 @@
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Revive tests/value/graylevel.cc.
+
+	* mln/value/graylevel.hh: Aesthetic changes in comments.
+	* tests/value/graylevel.cc (test_conversion): Turn this macro into
+	a function template.
+	(main): Ensure all valid comparisons listed in
+	mln/value/graylevel.hh work.
+	Remove dead code.
+	Address warnings.
+	* tests/value/Makefile.am (check_PROGRAMS): Re-enable graylevel.
+	(graylevel_SOURCES): Re-enable.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mutual dependencies between floating-point gray-level values.
 
 	* mln/value/graylevel_f.hh,
