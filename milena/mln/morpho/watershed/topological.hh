@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -692,7 +693,6 @@ namespace mln
 	p_priority< mln_value(I), p_queue_fast<mln_site(I)> > l;
 	// p_queue < site > m;
 	std::queue<mln_site(I)> m;
-	mln_value(I) min = mln_min(mln_value(I));
 
 	std::cout << "Init" << std::endl;
 

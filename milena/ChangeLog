@@ -1,3 +1,35 @@
+2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address warnings reported by clang++ in Milena.
+
+	* mln/canvas/browsing/diagonal2d.hh (diagonal2d_t::operator())
+	* mln/clustering/kmean_rgb.hh (internal::kmean_rgb_dispatch)
+	* mln/labeling/value_and_compute.hh
+	(internal::value_and_compute_tests)
+	(impl::process__)
+	* mln/metal/math/root.hh (impl::root<n, x, lo, hi>::value): Add an
+	explicit type conversion of operator<'s the right-hand side
+	operand.
+	* mln/morpho/watershed/topological.hh (topological)
+	* mln/world/rgb/invert.hh (internal::invert_dispatch):
+	Remove unused variables.
+	Do not name unused arguments.
+	* mln/util/object_id.hh
+	(operator==(const object_id<Tag,V>&, const Value<V2>&)):
+	Add an explicit type conversion of the right-hand side operand.
+	* mln/world/rgb/invert.hh,
+	* tests/core/alias/point1d.cc,
+	* tests/make/p_edges_with_mass_centers.cc,
+	* tests/make/p_vertices_with_mass_centers.cc,
+	* tests/value/int_s16.cc,
+	* tests/value/int_u8.cc:
+	Shush the compiler about unused variables.
+	* tests/trait/op/plus.cc (mln::my_image2d<T>): Complete this type
+	to have it comply with the mln::Image concept.
+	(mln::dummy_t): New (dummy) type.
+	(dummy): New (dummy) value.
+	(main): Do not use uninitialized pointers.
+
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Disambiguate operator- overload resolution with a pow_int_ operand.

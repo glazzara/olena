@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,7 @@ namespace mln
 	    val_lo = root<n, x, lo, mid-1>::value,
 	    val_hi = root<n, x, mid, hi>::value
 	  };
-	  enum { value = x < mlc_pow_int(mid, n) ? val_lo : val_hi };
+	  enum { value = x < unsigned(mlc_pow_int(mid, n)) ? val_lo : val_hi };
 	};
 
 	template<unsigned n, unsigned x, unsigned m>

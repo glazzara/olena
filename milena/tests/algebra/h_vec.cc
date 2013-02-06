@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,6 +29,8 @@
 
 using namespace mln;
 
+/* FIXME: Complete or at least describe the purpose of these empty
+   functions.  */
 
 void run_in_3d(const algebra::vec<3, float>&)
 {
@@ -45,9 +48,9 @@ void foo(const mln::algebra::h_vec<3,float>&)
 
 int main()
 {
-
   algebra::vec<3, def::coord> x;
   algebra::h_vec<3, def::coord> w = x.to_h_vec();
+  (void) w;
 
   typedef algebra::h_vec<3, def::coord> p3d;
   p3d p;

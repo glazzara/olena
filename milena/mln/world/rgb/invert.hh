@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -130,9 +130,9 @@ namespace mln
 	inline
 	void
 	invert_dispatch(trait::image::speed::any, const mln_value(I)&,
-			const I& input, O& output)
+			const I& /* input*/ , O& /* output */)
 	{
-	  // No implementation found. May be input is not a RGB image?
+	  // No implementation found.  Maybe `input' is not an RGB image?
 	  mlc_abort(I)::check();
 	}
 

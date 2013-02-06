@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,7 +57,6 @@ int main()
   g.add_edge(4,3);
   g.add_edge(4,2);
 
-  L nbasins = 4;
   typedef p_vertices<G,fun::i2v::array<point2d> > pv_t;
   pv_t pv = make::p_vertices_with_mass_centers(wst, g);
 

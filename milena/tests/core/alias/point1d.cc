@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,6 +26,7 @@
 
 #include <mln/core/alias/point1d.hh>
 
+#include <mln/math/abs.hh>
 
 
 int main()
@@ -33,19 +35,17 @@ int main()
 
   point1d p, q;
 
-  // assignment
-
   p[0] = 4;
   algebra::vec<1,float> v = p;
+  mln_assertion(v[0] == 4);
 
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);
 
-  // construction
   q.ind() = 5;
   mln_assertion(p == q);
 
   q.set_all(0);
-  for (unsigned i = 0; i < p.dim; ++i)
+  for (unsigned i = 0; i < q.dim; ++i)
     mln_assertion(q[i] == 0);
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -966,8 +966,8 @@ namespace mln
 			 const unsigned  k_center,
 			 const unsigned  watch_dog,
 			 const unsigned  n_times,
-			 const value::rgb<n>&,
-			 const point2d&)
+			 const value::rgb<n>& /* v */,
+			 const point2d& /* p */)
       {
 	return impl::kmean_image2d_rgb<T,n>(img, k_center, watch_dog, n_times);
       }
@@ -975,12 +975,12 @@ namespace mln
       template <typename T, unsigned n, typename I, typename V, typename P>
       inline
       mln_ch_value(I,value::label_8)
-      kmean_rgb_dispatch(const Image<I>& img,
-			 const unsigned  k_center,
-			 const unsigned  watch_dog,
-			 const unsigned  n_times,
-			 const V&,
-			 const P&)
+      kmean_rgb_dispatch(const Image<I>& /* img */,
+			 const unsigned /* k_center */,
+			 const unsigned /* watch_dog */,
+			 const unsigned /* n_times */,
+			 const V& /* v */,
+			 const P& /* p */)
       {
 	// No kmean implementation found.
 	mlc_abort(I)::check();

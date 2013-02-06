@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,11 +33,46 @@
 namespace mln
 {
 
+  struct dummy_t {};
+  dummy_t dummy;
 
   template <typename T>
   struct my_image2d : Image< my_image2d<T> >
   {
     void m() {}
+
+
+    // Dummy typedefs and methods added to comply with interface
+    // requirements of concept Image.
+
+    typedef dummy_t domain_t;
+    typedef dummy_t site;
+    typedef dummy_t psite;
+    typedef dummy_t piter;
+    typedef dummy_t fwd_piter;
+    typedef dummy_t bkd_piter;
+
+    bool has(const psite& /* p */) const { return false; }
+    bool is_valid() const { return true; }
+
+    typedef dummy_t t_eligible_values_set;
+    const t_eligible_values_set& values_eligible() const { return dummy; }
+
+    typedef dummy_t t_values_space;
+    const t_values_space& values_space() const { return dummy; }
+
+    typedef dummy_t value;
+    typedef dummy_t rvalue;
+    typedef dummy_t lvalue;
+
+    rvalue operator()(const psite& /* p */) const { return dummy; }
+    lvalue operator()(const psite& /* p */) { return dummy; }
+
+    const domain_t& domain() const { return dummy; }
+
+    typedef dummy_t skeleton;
+
+    void init_(const dummy_t&) {};
   };
 
 
@@ -82,7 +118,8 @@ int main()
     tmp = 5.1f;
   }
   {
-    my_image2d<float>* ptr;
+    my_image2d<float> ima;
+    my_image2d<float>* ptr = &ima;
     mln_trait_op_plus_(my_image2d<int>, my_image2d<float>) tmp = *ptr;
     tmp.m();
   }

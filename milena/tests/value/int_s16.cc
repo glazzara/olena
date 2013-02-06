@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -192,7 +193,7 @@ int main()
     mln_assertion(c == 100);
 
     int_s16 d = 2;
-    c /= 2;
+    c /= d;
     mln_assertion(c == 50);
 
   }
