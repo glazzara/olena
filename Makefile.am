@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2012 EPITA Research and
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -28,10 +28,14 @@ if ENABLE_SCRIBO
 endif ENABLE_SCRIBO
 
 # Target shortcuts delegating the actual action to milena/Makefile.
-LOCAL_RECURSIVE_TARGETS = pretty-check tests
+LOCAL_RECURSIVE_TARGETS = tests
+.PHONY: $(LOCAL_RECURSIVE_TARGETS)
 $(LOCAL_RECURSIVE_TARGETS):
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
-.PHONY: $(LOCAL_RECURSIVE_TARGETS)
+	cd scribo && $(MAKE) $(AM_MAKEFLAGS) $@
+.PHONY: pretty-check
+pretty-check:
+	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk

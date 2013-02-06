@@ -18,9 +18,12 @@
 SUBDIRS = demo tests src
 
 .PHONY: bin
-
 bin:
-	make -C src
+	cd src && $(MAKE) $(AM_MAKEFLAGS) $@
+
+.PHONY: tests
+tests:
+	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk

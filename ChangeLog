@@ -1,3 +1,18 @@
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Equip Scribo with a recursive `tests' target.
+
+	* Makefile.am (LOCAL_RECURSIVE_TARGETS): Remove pretty-check.
+	($(LOCAL_RECURSIVE_TARGETS)): Recurse in scribo/ too.
+	(pretty-check): New target, recursing only in milena/.
+	* milena/tests/tests-recursive.mk: Move...
+	* build-aux/tests-recursive.mk: ...here.
+	* milena/tests/tests.mk: Adjust.
+	Remove old comments.
+	* scribo/Makefile.am (tests): New target.
+	(bin): Use common idioms.
+	* scribo/tests/tests.mk: Include milena/tests/tests-recursive.mk.
+
 2010-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add advice about the release process.

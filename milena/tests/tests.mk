@@ -19,19 +19,10 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-
-# FIXME: Revamp (see Olena 0.11's test suite).
-
 # Look for Milena header in srcdir and for (generated) test headers
 # (like data.hh) in builddir.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
-# FIXME: Add
-#
-#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
-#
-# when oln.m4 (or just a part of it) is available in the distribution,
-# instead of using the hand-made TESTS_CXXFLAGS.
 TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
@@ -55,4 +46,4 @@ TIFF_LDFLAGS = @TIFF_LDFLAGS@
 
 
 # Inject rules to compile tests (recursively), without running them.
-include $(top_srcdir)/milena/tests/tests-recursive.mk
+include $(top_srcdir)/build-aux/tests-recursive.mk
