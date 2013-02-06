@@ -1,5 +1,12 @@
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disambiguate operator- overload resolution with a pow_int_ operand.
+
+	* mln/metal/math/pow.hh (mln::metal::math::impl::pow_int_):
+	Use static const integers instead of enums.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revive tests/value/graylevel.cc.
 
 	* mln/value/graylevel.hh: Aesthetic changes in comments.
