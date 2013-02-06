@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -100,7 +100,7 @@ namespace scribo
       trace::entering("scribo::debug::bboxes_enlarged_image");
       mln_precondition(exact(input).is_valid());
 
-      image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
 
       for_all_lines(l, lines)
 	if (! lines(l).is_hidden())

@@ -1,5 +1,19 @@
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Address remaining errors reported by clang++ in Scribo.
+
+	* scribo/debug/alignment_decision_image.hh
+	(alignment_decision_image)
+	* scribo/debug/bboxes_enlarged_image.hh (bboxes_enlarged_image)
+	* scribo/debug/decision_image.hh (decision_image)
+	* scribo/debug/links_decision_image.hh (links_decision_image)
+	* scribo/debug/links_image.hh (links_image)
+	* scribo/debug/looks_like_a_text_line_image.hh
+	(looks_like_a_text_line_image):
+	Fix the type of the value to be returned by theses functions.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address errors reported by clang++ in Scribo.
 
 	* scribo/io/text_boxes/save.hh,

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -76,7 +76,7 @@ namespace scribo
       mln_precondition(links.size() == filtered_links.size());
       /// Fixme: check that objects has been computed from input.
 
-      image2d<value::rgb8>
+      mln_ch_value(I,value::rgb8)
 	links_decision_image = data::convert(value::rgb8(), input);
 
       for_all_comps(i, comps)

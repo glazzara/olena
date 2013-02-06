@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,7 +77,7 @@ namespace scribo
 
       const component_set<L>& comps = links.components();
 
-      image2d<value::rgb8>
+      mln_ch_value(I,value::rgb8)
 	links_image = data::convert(value::rgb8(), input);
 
       if (draw_bboxes)

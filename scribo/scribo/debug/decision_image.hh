@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -111,7 +111,7 @@ namespace scribo
       mln_precondition(filtered_groups.is_valid());
       /// Fixme: check that components has been computed from input.
 
-      image2d<value::rgb8>
+      mln_ch_value(I,value::rgb8)
 	decision_image = data::convert(value::rgb8(), input);
 
       for (unsigned i = 1; i < groups.size(); ++i)
@@ -144,7 +144,7 @@ namespace scribo
       mln_precondition(filtered_links.is_valid());
       /// Fixme: check that components has been computed from input.
 
-      image2d<value::rgb8>
+      mln_ch_value(I,value::rgb8)
 	decision_image = data::convert(value::rgb8(), input);
 
       for_all_comps(i, comps)
