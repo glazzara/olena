@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,10 +58,10 @@ namespace scribo
     document<mln_ch_value(I, def::lbl_type)>
     content_in_hdoc(const Image<I>& input, const Image<J>& input_preproc,
 		   bool denoise,
-		   bool find_line_seps = true,
-		   bool find_whitespace_seps = true,
-		   bool enable_ocr = true,
-		   const std::string& language = std::string("eng"))
+		   bool find_line_seps,
+		   bool find_whitespace_seps,
+		   bool enable_ocr,
+		   const std::string& language)
     {
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(input_preproc).is_valid());

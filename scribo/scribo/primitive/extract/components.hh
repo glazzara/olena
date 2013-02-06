@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -97,7 +97,7 @@ namespace scribo
       component_set<mln_ch_value(I,V)>
       components(const Image<I>& input, const Image<J>& binary_input,
 		 const Neighborhood<N>& nbh, V& ncomponents,
-		 component::Type type = component::Undefined)
+		 component::Type type)
       {
 	trace::entering("scribo::components");
 
@@ -123,7 +123,7 @@ namespace scribo
       component_set<mln_ch_value(I,V)>
       components(const Image<I>& binary_input,
 		 const Neighborhood<N>& nbh, V& ncomponents,
-		 component::Type type = component::Undefined)
+		 component::Type type)
       {
 	trace::entering("scribo::components");
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -117,7 +117,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   bool verbose = false)
+			   bool verbose)
     {
       return text_in_doc_preprocess(input, enable_fg_bg, 0.34, verbose);
     }
@@ -127,7 +127,7 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg,
 			   unsigned lambda, double K,
-			   bool verbose = false)
+			   bool verbose)
     {
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -146,7 +146,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   bool verbose = false)
+			   bool verbose)
     {
       I tmp;
       return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, verbose);

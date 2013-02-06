@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -218,7 +218,7 @@ namespace scribo
     void
     recognition(const Image<I>& line_,
 		const char *language,
-		const std::string& output_file = std::string())
+		const std::string& output_file)
     {
       trace::entering("scribo::text::recognition");
 

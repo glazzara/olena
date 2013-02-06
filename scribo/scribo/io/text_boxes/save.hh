@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +59,7 @@ namespace scribo
       void
       save(const line_set<L>& lines,
 	   const std::string& output_name,
-	   const mln_site(L)& crop_shift = literal::origin)
+	   const mln_site(L)& crop_shift)
       {
 	trace::entering("scribo::io::text_boxes:save");
 	mln_precondition(lines.is_valid());

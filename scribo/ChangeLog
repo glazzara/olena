@@ -1,3 +1,18 @@
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address errors reported by clang++ in Scribo.
+
+	* scribo/io/text_boxes/save.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/link/with_single_right_link.hh,
+	* scribo/text/recognition.hh,
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/toolchain/content_in_hdoc.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh,
+	* scribo/toolchain/text_in_picture.hh:
+	Do not provide default arguments twice.
+
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Work around an overload resolution problem reported by g++ 4.7.
