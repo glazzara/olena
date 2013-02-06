@@ -1,6 +1,6 @@
 # /bin/sh
 
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,8 +22,8 @@ if ! [ $# -eq 4 ]; then
   exit 1;
 fi
 
-begins=`grep -n -R '//[[:space:]]*\\\{' $1 | cut -d ':' -f 1`
-ends=`grep -n -R '//[[:space:]]*\\\}' $1 | cut -d ':' -f 1`
+begins=$(grep -n -h '//[[:space:]]*\\{' $1 | cut -d ':' -f 1)
+ends=$(grep -n -h '//[[:space:]]*\\}' $1 | cut -d ':' -f 1)
 
 if ! [ -z "$3" ]; then
   suffix=".$3"

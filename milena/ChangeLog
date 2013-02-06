@@ -1,5 +1,15 @@
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the generation of code excerpts for the documentation.
+
+	* doc/tools/split_sample.sh: Use $(...) instead of `...` so that
+	backslashes are interpreted uniformly.
+	Pass option `-h' to grep to prevent file names from being printed
+	on OS X.
+	Remove useless option `-R' passed to grep.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address warnings reported by clang++ in Milena.
 
 	* mln/canvas/browsing/diagonal2d.hh (diagonal2d_t::operator())
