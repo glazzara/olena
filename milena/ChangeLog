@@ -1,5 +1,12 @@
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete and clean up tests/metal/converts_to.cc.
+
+	* tests/metal/converts_to.cc: Remove dead code and add new test
+	cases.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the generation of code excerpts for the documentation.
 
 	* doc/tools/split_sample.sh: Use $(...) instead of `...` so that

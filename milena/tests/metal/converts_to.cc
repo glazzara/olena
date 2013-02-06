@@ -76,6 +76,17 @@ int main()
 
   metal::converts_to<accu::math::sum<int, int>, int>::check();
 
-//   metal::converts_to<derived, base_>::check_not();
-//   metal::converts_to<derived, const base_>::check_not();
+
+  metal::converts_to<from_1, float>::check_not();
+
+  metal::converts_to<base, derived>::check_not();
+  metal::converts_to<base_, derived>::check_not();
+
+  /* Unfortunately, we cannot perform the following checks, as they
+     trigger an error (*before* SFINAE comes into play) about base_'s
+     ctor(s) being protected:
+
+      metal::converts_to<derived, base_>::check_not();
+      metal::converts_to<derived, const base_>::check_not();
+  */
 }
