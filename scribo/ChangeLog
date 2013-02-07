@@ -1,5 +1,21 @@
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove scoria from Makefiles.
+
+	* src/contest/DAE-2011/Makefile.am,
+	* src/contest/Makefile.am,
+	* src/contest/hdibco-2010/Makefile.am,
+	* src/contest/hdlac-2011/Makefile.am,
+	* src/postprocessing/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/core/Makefile.am,
+	* tests/estim/Makefile.am,
+	* tests/toolchain/nepomuk/Makefile.am:
+	Here.
+
+2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address warnings reported by clang++ in Scribo.
 
 	* scribo/text/paragraphs_closing.hh
