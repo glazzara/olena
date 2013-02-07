@@ -1,3 +1,12 @@
+2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address warnings reported by clang++ in Scribo.
+
+	* scribo/text/paragraphs_closing.hh
+	(internal::horizontal_CRLA, internal::vertical_CRLA):
+	Replace empty bodies of loops with single `continue' statements as
+	this is more explicit.
+
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address remaining errors reported by clang++ in Scribo.
