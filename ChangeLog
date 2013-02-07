@@ -1,3 +1,14 @@
+2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Always write FIXME with uppercase letters.
+
+	* milena/mln/canvas/browsing/snake_fwd.hh,
+	* milena/mln/canvas/browsing/snake_vert.hh,
+	* scribo/scribo/debug/alignment_decision_image.hh,
+	* scribo/scribo/debug/decision_image.hh,
+	* scribo/scribo/debug/links_decision_image.hh:
+	Here.
+
 2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Equip Scribo with a recursive `tests' target.

@@ -89,7 +89,7 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
-      /// Fixme: check that components has been computed from input.
+      /// FIXME: Check that components has been computed from input.
 
       mln_ch_value(I,value::rgb8)
 	decision_image = data::convert(value::rgb8(), input);

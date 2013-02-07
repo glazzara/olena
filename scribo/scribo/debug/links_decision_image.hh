@@ -74,7 +74,7 @@ namespace scribo
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
       mln_precondition(links.size() == filtered_links.size());
-      /// Fixme: check that objects has been computed from input.
+      /// FIXME: Check that objects has been computed from input.
 
       mln_ch_value(I,value::rgb8)
 	links_decision_image = data::convert(value::rgb8(), input);
