@@ -9,19 +9,22 @@ class RootGraphicsItem :
         public QGraphicsPolygonItem
 {
     public:
-        explicit RootGraphicsItem(int numberRegion) { childsFromRegion_.fill(QList<QGraphicsItem *>(), numberRegion); }
+        explicit RootGraphicsItem(int numberRegion)
+        { childsFromRegion_.fill(QList<QGraphicsItem *>(), numberRegion); }
+        ~RootGraphicsItem()
+        { foreach(QList<QGraphicsItem *> list, childsFromRegion_) { foreach(QGraphicsItem *child, list) delete child; } }
 
-        inline QList<QGraphicsItem *> childsFrom(GraphicsRegion::Id region) const;
-        inline void addItemFrom(QGraphicsItem *graphicalItem, GraphicsRegion::Id region);
+        inline void addItemFrom(QGraphicsItem *graphicalItem, const GraphicsRegion::Id& region);
+        inline QList<QGraphicsItem *> childsFrom(const GraphicsRegion::Id& region) const;
 
     private:
         QVector<QList<QGraphicsItem *> > childsFromRegion_;
 };
 
-inline QList<QGraphicsItem *> RootGraphicsItem::childsFrom(GraphicsRegion::Id region) const
+inline QList<QGraphicsItem *> RootGraphicsItem::childsFrom(const GraphicsRegion::Id& region) const
 { return childsFromRegion_[region]; }
 
-inline void RootGraphicsItem::addItemFrom(QGraphicsItem *graphicalItem, GraphicsRegion::Id region)
+inline void RootGraphicsItem::addItemFrom(QGraphicsItem *graphicalItem, const GraphicsRegion::Id& region)
 { childsFromRegion_[region] << graphicalItem; }
 
 #endif // ROOTGRAPHICSITEM_H

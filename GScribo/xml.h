@@ -53,7 +53,7 @@ class Xml
         XmlItem *init(const QDomElement& root, XmlItem *rootTreeItem);
         void processNode(const QDomElement& root, const GraphicsRegion::Data& data, XmlItem *rootTreeItem);
         void processLineNode(const QDomElement& root, XmlItem *rootTreeItem);
-        void processTypoNode(const QDomElement& root, const QPoint& xPoint, RegionItem *rootGraphicsItem);
+        void processTypoNode(const QDomElement& root, const QPoint& xPoint);
 
         RootGraphicsItem *graphicsItem_;
         XmlItem *xmlItem_;

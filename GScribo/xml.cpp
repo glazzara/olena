@@ -174,21 +174,21 @@ void Xml::processLineNode(const QDomElement& root, XmlItem *precItem)
         graphicsItem->setXmlItem(lineItem);
 
         // Get meanline and baseline.
-        processTypoNode(root, QPoint(xMin, xMax), graphicsItem);
+        processTypoNode(root, QPoint(xMin, xMax));
         // Run through all line nodes recursively.
         processLineNode(root.nextSiblingElement(datas_[1].name), lineItem);
     }
 }
 
-void Xml::processTypoNode(const QDomElement& root, const QPoint& xPoint, RegionItem *parentgraphicsItem)
+void Xml::processTypoNode(const QDomElement& root, const QPoint& xPoint)
 {
     int yPos = root.attribute("baseline", "null").toInt();
-    QGraphicsLineItem *baselineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentgraphicsItem);
+    QGraphicsLineItem *baselineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)));
     baselineItem->setZValue(datas_[11].zValue);
     graphicsItem_->addItemFrom(baselineItem, datas_[11].region);
 
     yPos = root.attribute("meanline", "null").toInt();
-    QGraphicsLineItem *meanlineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentgraphicsItem);
+    QGraphicsLineItem *meanlineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)));
     meanlineItem->setZValue(datas_[12].zValue);
-    graphicsItem_->addItemFrom(baselineItem, datas_[12].region);
+    graphicsItem_->addItemFrom(meanlineItem, datas_[12].region);
 }

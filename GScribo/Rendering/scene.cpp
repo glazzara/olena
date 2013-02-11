@@ -51,7 +51,6 @@ void Scene::clearSelection()
         regionItem->unselect();
     }
 
-    baseSelection_.clear();
     selectedRegions_.clear();
     emit selectionCleared();
 }
@@ -62,6 +61,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         isPressing_ = true;
 
+        baseSelection_.clear();
         pressPos_ = event->scenePos();
         selection_.show();
     }
@@ -101,7 +101,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
               else
                   select(selection_.rect());
 
-              emit newSelection(selectedRegions_);
+              baseSelection_ = selectedRegions();
+               emit newSelection(selectedRegions_);
           }
 
           selection_.setRect(0, 0, 0, 1);
@@ -177,6 +178,7 @@ void Scene::unselect(const QList<RegionItem *>& unselectedRegions)
     // Check if after the removal, the selected list isn't empty.
     if(!selectedRegions_.isEmpty())
         ensureVisible(selectedRegions_.last());
+
     emit newSelection();
 }
 
@@ -188,6 +190,26 @@ void Scene::ensureVisible(QGraphicsItem *graphicalItem)
         view->ensureVisible(graphicalItem);
 }
 
+void Scene::setVisible(const GraphicsRegion::Id& region, bool visible)
+{
+    if(root_)
+    {
+        QGraphicsItem *child;
+
+        if(visible)
+        {
+            foreach(child, root_->childsFrom(region))
+                child->setVisible(true);
+        }
+
+        else
+        {
+            foreach(child, root_->childsFrom(region))
+                child->setVisible(false);
+        }
+    }
+}
+
 void Scene::setRoot(RootGraphicsItem *root)
 {
     // Delete all items.
@@ -195,6 +217,14 @@ void Scene::setRoot(RootGraphicsItem *root)
 
     root_ = root;
     addItem(root);
+
+    // Add typo lines separately because can't be selected.
+    QGraphicsItem *line;
+    foreach(line, root->childsFrom(GraphicsRegion::Baseline))
+        addItem(line);
+
+    foreach(line, root->childsFrom(GraphicsRegion::Meanline))
+        addItem(line);
 }
 
 void Scene::changeScene(const QString& filename, RootGraphicsItem *root)
@@ -210,8 +240,5 @@ void Scene::changeScene(const QString& filename, RootGraphicsItem *root)
 
     // Add new items.
     if(root)
-    {
-        root_ = root;
-        addItem(root);
-    }
+        setRoot(root);
 }

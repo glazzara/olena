@@ -2,6 +2,7 @@
 #define XMLWIDGET_H
 
 #include <QSortFilterProxyModel>
+#include <QTableView>
 #include <QTreeWidget>
 #include <QSplitter>
 #include <QDomElement>
@@ -24,19 +25,23 @@ class XmlWidget :
         explicit XmlWidget(QWidget *parent = 0);
 
         inline XmlView *view();
-        inline QTreeView *property();
+        inline QTableView *attributes();
 
         void changeView(XmlItem *rootItem);
 
     private:
         QSortFilterProxyModel proxy_;
         SelectionProxy proxy2_;
+        QString basePattern_;
 
         XmlModel model_;
         AttributesModel attributesModel_;
 
         XmlView view_;
-        QTreeView property_;
+        QTableView attributes_;
+
+    public slots:
+        void setFilterString(const QString& filterString);
 
     private slots:
         inline void loadAttributes(const QModelIndex& index);
@@ -45,8 +50,8 @@ class XmlWidget :
 inline XmlView *XmlWidget::view()
 { return &view_; }
 
-inline QTreeView *XmlWidget::property()
-{ return &property_; }
+inline QTableView *XmlWidget::attributes()
+{ return &attributes_; }
 
 inline void XmlWidget::loadAttributes(const QModelIndex &index)
 { attributesModel_.load(index.data(Qt::UserRole+2).value<XmlItem *>()->attributes()); }

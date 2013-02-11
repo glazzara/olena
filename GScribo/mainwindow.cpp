@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -71,6 +71,7 @@ void MainWindow::initRegionWidget()
 
 void MainWindow::initXmlWidget()
 {
+    xmlWidget_.setFilterString(regionWidget_.filterString());
     dockXml_.setWindowTitle("Xml");
     dockXml_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
     dockXml_.setWidget(&xmlWidget_);
@@ -114,6 +115,11 @@ void MainWindow::connectWidgets()
     connect(xmlWidget_.view(), SIGNAL(unselect(QList<XmlItem*>)), this, SLOT(onXmlUnselect(QList<XmlItem*>)));
     connect(xmlWidget_.view(), SIGNAL(emptySelection()), &scene_, SLOT(selectBase()));
     connect(xmlWidget_.view(), SIGNAL(resetSelection()), &scene_, SLOT(clearSelection()));
+
+    // Connect the scene with the region widget.
+    connect(&regionWidget_, SIGNAL(checkStateChanged(GraphicsRegion::Id,bool)), &scene_, SLOT(setVisible(GraphicsRegion::Id,bool)));
+    // Connect the xml widget with the region widget.
+    connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), &xmlWidget_, SLOT(setFilterString(QString)));
 
     /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
@@ -239,7 +245,11 @@ void MainWindow::onRegionSelection(QList<RegionItem *> regionItems)
     if(!regionItems.isEmpty())
         xmlWidget_.view()->displayOnly(toXmlItems(regionItems));
     else
+    {
+        xmlWidget_.view()->reset();
         xmlWidget_.view()->displayAll();
+        xmlWidget_.view()->expandAll();
+    }
 }
 
 void MainWindow::onXmlChangeSelection(QList<XmlItem *> xmlItems, bool select)

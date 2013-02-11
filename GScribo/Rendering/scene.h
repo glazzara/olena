@@ -60,6 +60,7 @@ class Scene :
         inline void selectBase();
         void unselect(const QList<RegionItem *>& unselectedItems);
 
+        void setVisible(const GraphicsRegion::Id& region, bool visible);
         void ensureVisible(QGraphicsItem *graphicsItem);
 
     signals:

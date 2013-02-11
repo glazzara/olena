@@ -4,7 +4,6 @@
 #include <QTreeWidget>
 #include <QLabel>
 
-#include "regionwidgetitem.h"
 #include "xml.h"
 
 class RegionWidget :
@@ -15,19 +14,27 @@ class RegionWidget :
     public:
         explicit RegionWidget(QWidget *parent = 0);
 
+        inline QString filterString() const;
+
     private:
-        RegionWidgetItem *createRoot(const QString& text, const GraphicsRegion::Id& region, const GraphicsRegion::Id& begin, const GraphicsRegion::Id& end);
-        RegionWidgetItem *createItem(const QString& text, const GraphicsRegion::Id& region, const QColor& color = QColor::fromRgb(255, 255, 255));
-        inline void fillRoot(RegionWidgetItem *rootItem, const GraphicsRegion::Id& region);
+        QTreeWidgetItem *createRoot(const QString& text, const GraphicsRegion::Id& region, const GraphicsRegion::Id& begin, const GraphicsRegion::Id& end);
+        QTreeWidgetItem *createItem(const QString& text, const GraphicsRegion::Id& region, const QColor& color = QColor::fromRgb(255, 255, 255));
+        inline void fillRoot(QTreeWidgetItem *rootItem, const GraphicsRegion::Id& region);
+
+        QString filterString_;
 
     private slots:
-        void onItemChanged(QTreeWidgetItem *item);
+        void checkStateChanged(QTreeWidgetItem *item);
 
     signals:
-        void checkStateChanged(GraphicsRegion::Id region);
+        void checkStateChanged(const GraphicsRegion::Id& region, bool checked);
+        void checkStateChanged(const QString& filterString);
 };
 
-inline void RegionWidget::fillRoot(RegionWidgetItem *rootItem, const GraphicsRegion::Id& region)
-{ GraphicsRegion::Data data = Xml::dataFromRegion(region); rootItem->addChild(createItem(data.name, region, data.color)); }
+inline void RegionWidget::fillRoot(QTreeWidgetItem *rootItem, const GraphicsRegion::Id& region)
+{ GraphicsRegion::Data data = Xml::dataFromRegion(region); filterString_.append('|' + data.name); rootItem->addChild(createItem(data.name, region, data.color)); }
+
+inline QString RegionWidget::filterString() const
+{ return filterString_.right(filterString_.count()-1); }
 
 #endif // REGIONWIDGET_H

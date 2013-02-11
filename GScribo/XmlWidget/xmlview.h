@@ -62,7 +62,7 @@ inline void XmlView::displayOnly(QList<XmlItem *> displayedItems)
 { display(displayedItems, false); }
 
 inline void XmlView::displayAll()
-{ displayedItems_.clear(); proxy_.displayAll(); }
+{ hideAll(); proxy_.displayAll(); }
 
 inline QList<XmlItem *> XmlView::selectedItems() const
 { return transform(selectedIndexes()); }
