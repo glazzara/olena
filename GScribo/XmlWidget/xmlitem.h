@@ -3,8 +3,9 @@
 
 #include <QDomElement>
 
-#include "Rendering/polygonitem.h"
 #include "xmlattributes.h"
+
+class PolygonItem;
 
 class XmlItem
 {
@@ -18,11 +19,15 @@ class XmlItem
         inline QList<XmlItem *> childs() const;
         inline XmlItem *child(int i) const;
         inline void addChild(XmlItem *child);
-
         inline XmlItem *parent() const;
 
         inline PolygonItem *graphicalItem();
         inline void setGraphicalItem(PolygonItem *graphicalItem);
+
+        inline bool isSelected() const;
+        inline void setSelected(bool selected);
+        inline void select();
+        inline void unselect();
 
         inline QString text() const;
         inline int row() const;
@@ -32,6 +37,7 @@ class XmlItem
         void init(XmlItem *parent = 0, XmlItem *precItem = 0);
 
         int row_;
+        bool isSelected_;
         QList<XmlItem *> childs_;
         XmlItem *parent_;
         PolygonItem *graphicalItem_;
@@ -56,6 +62,18 @@ inline PolygonItem *XmlItem::graphicalItem()
 
 inline void XmlItem::setGraphicalItem(PolygonItem *graphicalItem)
 { graphicalItem_ = graphicalItem; }
+
+inline bool XmlItem::isSelected() const
+{ return isSelected_; }
+
+inline void XmlItem::setSelected(bool selected)
+{ isSelected_ = selected; }
+
+inline void XmlItem::select()
+{ setSelected(true); }
+
+inline void XmlItem::unselect()
+{ setSelected(false); }
 
 inline QString XmlItem::text() const
 { return text_; }

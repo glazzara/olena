@@ -20,6 +20,8 @@ class XmlModel :
         inline int columnCount(const QModelIndex& parent) const;
 
         QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+        Qt::ItemFlags flags(const QModelIndex &index) const;
+
         QVariant data(const QModelIndex& index, int role) const;
 
         QModelIndex index(int row, int column, const QModelIndex& parent) const;
@@ -29,16 +31,13 @@ class XmlModel :
         inline XmlItem *toXmlItem(const QModelIndex& index) const;
 
         XmlItem *rootItem_;
-        QList<XmlItem *> list_;
-        int rowCount_;
-
 };
 
 inline XmlItem *XmlModel::toXmlItem(const QModelIndex& parent) const
 { return !parent.isValid() ? rootItem_ : static_cast<XmlItem *>(parent.internalPointer()); }
 
-inline int XmlModel::rowCount(const QModelIndex&/* parent*/) const
-{ return rowCount_; }
+inline int XmlModel::rowCount(const QModelIndex& parent) const
+{ if(rootItem_) return toXmlItem(parent)->childs().count(); return 0; }
 
 inline int XmlModel::columnCount(const QModelIndex&/* parent*/) const
 { return 1; }

@@ -10,18 +10,7 @@ class XmlView :
         public QTreeView
 {
     public:
-        explicit XmlView(XmlItem *rootItem = 0);
-
-        void load(XmlItem *rootItem);
-
-        inline XmlItem *rootItem() const;
-        inline XmlModel *model() const;
-
-    private:
-        XmlModel *model_;
+        explicit XmlView(XmlItem * = 0);
 };
-
-inline XmlModel *XmlView::model() const
-{ return model_; }
 
 #endif // XMLVIEW_H

@@ -1,6 +1,7 @@
 #ifndef XMLWIDGET_H
 #define XMLWIDGET_H
 
+#include <QSortFilterProxyModel>
 #include <QGraphicsView>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -8,7 +9,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "Rendering/polygonitem.h"
+#include "selectionproxy.h"
 #include "treedelegate.h"
 #include "xmlmodel.h"
 #include "xmlview.h"
@@ -24,10 +25,22 @@ class XmlWidget :
         void changeView(XmlItem *rootItem);
 
     private:
-
+        QSortFilterProxyModel proxy_;
+        SelectionProxy selectionProxy_;
+        XmlModel model_;
         XmlView viewer_;
-        QTreeWidget selection_;
+        XmlView selection_;
         QTreeWidget property_;
+
+    public slots:
+        inline void onBeginGraphicalSelection();
+        inline void onEndGraphicalSelection();
 };
+
+inline void XmlWidget::onBeginGraphicalSelection()
+{ selectionProxy_.beginResetModel(); }
+
+inline void XmlWidget::onEndGraphicalSelection()
+{ selectionProxy_.endResetModel(); }
 
 #endif // XMLWIDGET_H

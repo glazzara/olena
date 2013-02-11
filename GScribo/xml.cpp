@@ -123,6 +123,10 @@ void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, 
         PolygonItem *polygonItem = new PolygonItem(polygon, gItem);
         polygonItem->loadData(data);
 
+        // Store xml item and graphical item in each object for selection.
+        regionItem->setGraphicalItem(polygonItem);
+        polygonItem->setXmlItem(regionItem);
+
         if(data.region == GraphicRegion::Text)
             processLineNode(root.firstChild().nextSiblingElement("Line"), polygonItem, coordsItem);
 
@@ -175,6 +179,10 @@ void Xml::processLineNode(const QDomElement& root, PolygonItem *parentPolygonIte
         // Create the graphical item from data structure.
         PolygonItem *polygonItem = new PolygonItem(polygon, parentPolygonItem);
         polygonItem->loadData(itemsData[0]);
+
+        // Store xml item and graphical item in each object for selection.
+        lineItem->setGraphicalItem(polygonItem);
+        polygonItem->setXmlItem(lineItem);
 
         // Get meanline and baseline.
         processTypoNode(root, QPoint(xMin, xMax), polygonItem);

@@ -1,7 +1,7 @@
 #ifndef OCR_OPTIONS_H
 #define OCR_OPTIONS_H
 
-#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
+//#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
 
 #include "optionwidget.h"
 #include "configs.h"

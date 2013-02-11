@@ -1,7 +1,7 @@
 #include "ocroptions.h"
 #include "ui_ocroptions.h"
 
-using namespace scribo::toolchain::internal;
+//using namespace scribo::toolchain::internal;
 
 static const char *language[][2] =
 {

@@ -5,6 +5,7 @@
 #include <QTreeWidgetItem>
 #include <QPen>
 
+#include "XmlWidget/xmlitem.h"
 #include "variantpointer.h"
 #include "region.h"
 
@@ -18,43 +19,48 @@ class PolygonItem :
         void setColor(const QColor& color);
         inline QColor color() const;
 
-        inline void loadData(const GraphicRegion::Data& data);
+        inline void setXmlItem(XmlItem *xmlItem);
+        inline XmlItem *xmlItem() const;
 
-        inline bool isSelected(const QRectF& rect, bool clic);
+        inline void loadData(const GraphicRegion::Data& data);
+        inline int region() const;
+
+        bool isSelected(const QRectF& rect, bool clic);
+        void setSelected(const QRectF& rect, bool clic);
         inline void unselect();
         inline void select();
-        inline void setSelected(bool selected);
 
     private:
         void init();
 
-        QPen selectedPen;
-        QPen unselectedPen;
-        QBrush selectedBrush;
-        QBrush unselectedBrush;
+        XmlItem *xmlItem_;
+        int region_;
+
+        QPen selectedPen_;
+        QPen unselectedPen_;
+        QBrush selectedBrush_;
+        QBrush unselectedBrush_;
 };
 
+inline void PolygonItem::setXmlItem(XmlItem *xmlItem)
+{ xmlItem_ = xmlItem; }
+
+inline XmlItem *PolygonItem::xmlItem() const
+{ return xmlItem_; }
+
 inline QColor PolygonItem::color() const
-{ return selectedBrush.color(); }
+{ return selectedBrush_.color(); }
 
-inline void PolygonItem::loadData(const GraphicRegion::Data &data)
-{ setData(0, data.region); setColor(data.color); setZValue(data.zValue); }
+inline void PolygonItem::loadData(const GraphicRegion::Data& data)
+{ region_ = data.region; setColor(data.color); setZValue(data.zValue); }
 
-inline bool PolygonItem::isSelected(const QRectF &rect, bool clic)
-{
-    if(clic)
-        return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(rect.bottomRight())) && shape().contains(rect.bottomRight());
-    else
-        return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect);
-}
+inline int PolygonItem::region() const
+{ return region_; }
 
 inline void PolygonItem::select()
-{ if(pen() != selectedPen) { setPen(selectedPen); setBrush(selectedBrush); } }
+{ if(pen() != selectedPen_) { setPen(selectedPen_); setBrush(selectedBrush_); } }
 
 inline void PolygonItem::unselect()
-{ if(pen() != unselectedPen) { setPen(unselectedPen); setBrush(unselectedBrush); } }
-
-inline void PolygonItem::setSelected(bool selected)
-{ if(selected) select(); else unselect(); }
+{ if(pen() != unselectedPen_) { setPen(unselectedPen_); setBrush(unselectedBrush_);} }
 
 #endif // POLYGONITEM_H

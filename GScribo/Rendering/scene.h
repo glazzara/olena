@@ -34,21 +34,22 @@ class Scene :
     private:
         void init();
 
-        QGraphicsItem *item;
-        Selection selection;
-        QPointF pressPos;
-        bool isPressing;
-        bool clic;
-        QString path;
+        QGraphicsItem *item_;
+        Selection selection_;
+        QPointF pressPos_;
+        bool isPressing_;
+        bool clic_;
+        QString backgroundPath_;
 
     public slots:
         void selectItem(PolygonItem *graphicalItem);
 
     signals:
-        void selectTreeItems(const QList<QTreeWidgetItem *>& selectionTree);
+        void beginSelection();
+        void endSelection();
 };
 
 inline QString Scene::backgroundPath() const
-{ return path; }
+{ return backgroundPath_; }
 
 #endif // SCENE_H

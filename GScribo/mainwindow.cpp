@@ -160,6 +160,9 @@ void MainWindow::connectWidgets()
     // If double click on a picture of the page widget -> draw it on background scene.
     connect(&pagesWidget, SIGNAL(sceneChanged(QString,QPixmap)), this, SLOT(onFileChanged(QString,QPixmap)));
 
+    connect(&scene, SIGNAL(beginSelection()), &xmlWidget, SLOT(onBeginGraphicalSelection()));
+    connect(&scene, SIGNAL(endSelection()), &xmlWidget, SLOT(onEndGraphicalSelection()));
+
     // Connect scene selection with xml tree and vice versa.
     /*connect(&scene, SIGNAL(selectTreeItems(QList<QTreeWidgetItem*>)), &xmlWidget, SLOT(selectItems(QList<QTreeWidgetItem*>)));
     connect(&xmlWidget, SIGNAL(selectGraphicalItem(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));

@@ -3,15 +3,13 @@
 XmlModel::XmlModel(XmlItem *rootItem, QObject *parent) :
         QAbstractItemModel(parent)
 {
-    rowCount_ = 0;
-    rootItem_ = 0;
+    rootItem_ = rootItem;
 }
 
 XmlModel::XmlModel(XmlItem *rootItem, QAbstractItemModelPrivate& dd, QObject *parent) :
         QAbstractItemModel(dd, parent)
 {
-    rowCount_ = 0;
-    rootItem_ = 0;
+    rootItem_ = rootItem;
 }
 
 XmlModel::~XmlModel()
@@ -28,6 +26,14 @@ QVariant XmlModel::headerData(int/* section*/, Qt::Orientation orientation, int 
     return QVariant();
 }
 
+Qt::ItemFlags XmlModel::flags(const QModelIndex &index) const
+{
+    if(!index.isValid())
+        return 0;
+
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}
+
 QVariant XmlModel::data(const QModelIndex& index, int role) const
 {
     if(!index.isValid())
@@ -36,14 +42,13 @@ QVariant XmlModel::data(const QModelIndex& index, int role) const
     switch(role)
     {
         case Qt::UserRole:
-        return list_.at(index.row())->text();
-            //return static_cast<XmlItem *>(index.internalPointer())->text();
+            return static_cast<XmlItem *>(index.internalPointer())->text();
 
         case Qt::UserRole+1:
-            //return static_cast<XmlItem *>(index.internalPointer())->attributes().names();
+            return static_cast<XmlItem *>(index.internalPointer())->attributes().names();
 
         case Qt::UserRole+2:
-            //return static_cast<XmlItem *>(index.internalPointer())->attributes().values();
+            return static_cast<XmlItem *>(index.internalPointer())->attributes().values();
 
         default:
             return QVariant();
@@ -77,29 +82,14 @@ QModelIndex XmlModel::parent(const QModelIndex& child) const
     return createIndex(parentItem->row(), 0, parentItem);
 }
 
-void XmlModel::clear()
-{
-    /*if(rootItem_)
-    {
-        beginResetModel();
-        delete rootItem_;
-        rowCount_ = 0;
-        endResetModel();
-    }*/
-}
-
 void XmlModel::load(XmlItem *rootItem)
 {
-    if(rootItem)
-    {
-        //beginInsertRows(QModelIndex(), 0, rootItem_->childs().count());
+    beginResetModel();
 
-        XmlItem *child;
-        foreach(child, rootItem->childs())
-            list_ << child;
+    if(rootItem_)
+        delete rootItem_;
 
-        rowCount_ = rootItem->childs().count();
+    rootItem_ = rootItem;
 
-        //endInsertRows();
-    }
+    endResetModel();
 }
