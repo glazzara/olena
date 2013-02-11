@@ -9,15 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     xml.load("/tmp/mp00082c_gui.xml");
 
-    //xmlWidget.load(xml.treeItem());
-
-    view = new QGraphicsView(new QGraphicsScene());
-
-    QGraphicsItem *item;
-    foreach(item, xml.graphicsItems())
-        view->scene()->addItem(item);
-
-    setCentralWidget(view);
+    XmlWidget *xmlWidget = new XmlWidget(xml.treeItem());
+    setCentralWidget(&xmlWidget->tree);
 }
 
 MainWindow::~MainWindow()

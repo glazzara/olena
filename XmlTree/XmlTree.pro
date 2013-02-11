@@ -8,11 +8,20 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     xmlwidget.cpp \
     xml.cpp \
-    polygonitem.cpp
+    polygonitem.cpp \
+    xmlmodel.cpp \
+    xmlitem.cpp \
+    xmlproxy.cpp \
+    xmldelegate.cpp
 HEADERS += mainwindow.h \
     xmlwidget.h \
     xml.h \
-    pointer.h \
+    region.h \
     polygonitem.h \
-    region.h
+    variantpointer.h \
+    configs.h \
+    xmlmodel.h \
+    xmlitem.h \
+    xmlproxy.h \
+    xmldelegate.h
 FORMS += mainwindow.ui

@@ -22,7 +22,7 @@ QStringList PagesWidget::filenames() const
     return model.filenames();
 }
 
-void PagesWidget::getPixmap(const QModelIndex &index)
+void PagesWidget::getPixmap(const QModelIndex& index)
 {
     // Get the pixmap and the path of the icon to send it to the scene and draw it.
     QPixmap pixmap = index.data(Qt::UserRole).value<QPixmap>();
@@ -31,7 +31,7 @@ void PagesWidget::getPixmap(const QModelIndex &index)
     emit sceneChanged(filename, pixmap);
 }
 
-void PagesWidget::addPixmap(const QString& filename, const QPixmap &pixmap)
+void PagesWidget::addPixmap(const QString& filename, const QPixmap& pixmap)
 {
     model.addPixmap(filename, pixmap);
 }

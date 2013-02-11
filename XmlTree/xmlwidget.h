@@ -1,25 +1,25 @@
 #ifndef XMLWIDGET_H
 #define XMLWIDGET_H
 
+#include <QSortFilterProxyModel>
 #include <QTreeWidgetItem>
 #include <QDomElement>
 #include <QWidget>
 
+#include "xmldelegate.h"
+#include "xmlmodel.h"
+#include "xmlitem.h"
+
 class XmlWidget :
         public QWidget
 {
-    friend class QTreeWidget;
-
     public:
-        explicit XmlWidget(QTreeWidgetItem *item = 0);
+        explicit XmlWidget(XmlItem *item = 0);
 
-        inline void load(QTreeWidgetItem *item);
+        QTreeView tree;
 
     private:
-        QTreeWidget tree;
+        QSortFilterProxyModel proxy;
 };
-
-inline void XmlWidget::load(QTreeWidgetItem *item)
-{ tree.addTopLevelItem(item); }
 
 #endif // XMLWIDGET_H

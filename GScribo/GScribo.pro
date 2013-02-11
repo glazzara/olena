@@ -29,7 +29,10 @@ SOURCES += main.cpp \
     Processing/preprocess.cpp \
     Processing/runner.cpp \
     xml.cpp \
-    xmlwidget.cpp
+    xmlwidget.cpp \
+    xmlmodel.cpp \
+    xmlitem.cpp \
+    xmlattributes.cpp
 HEADERS += mainwindow.h \
     configs.h \
     region.h \
@@ -51,7 +54,10 @@ HEADERS += mainwindow.h \
     Processing/runner.h \
     xml.h \
     variantpointer.h \
-    xmlwidget.h
+    xmlwidget.h \
+    xmlmodel.h \
+    xmlitem.h \
+    xmlattributes.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \
