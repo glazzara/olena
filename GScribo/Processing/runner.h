@@ -30,12 +30,12 @@ class Runner :
 
     public:
         explicit Runner(QObject *parent = 0);
-        void start_demat(const QString& filename);
+        void start_demat(const QStringList& filenames);
         void start_export(const QString& imgfile, const QString& xmlfile, const QString& outfile);
 
     private:
         image2d<bool> preprocess(const image2d<value::rgb8>& ima);
-        void process(const image2d<value::rgb8>& original_ima, const image2d<bool>& processed_ima);
+        void process(const image2d<value::rgb8>& original_ima, const image2d<bool>& processed_ima, int arg);
         void export_as();
         virtual void run();
         template <typename V> unsigned find_best_scale(const mln::image2d<V>& ima);

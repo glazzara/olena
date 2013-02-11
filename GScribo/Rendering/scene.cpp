@@ -28,6 +28,11 @@ void Scene::init()
     addItem(&selection);
 }
 
+QString Scene::backgroundPath() const
+{
+    return path;
+}
+
 void Scene::removeItems()
 {
     QList<QGraphicsItem *> itemsList = items();
@@ -91,9 +96,9 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Scene::setBackground(const QString& filename, const QPixmap& pixmap)
 {
-    if(backgroundPath != filename)
+    if(path != filename)
     {
-        backgroundPath = filename;
+        path = filename;
 
         setSceneRect(pixmap.rect());
         setBackgroundBrush(QBrush(pixmap));

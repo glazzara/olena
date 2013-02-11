@@ -2,8 +2,8 @@
 #define SELECTION_H
 
 #include <QGraphicsRectItem>
-#include <QPen>
 #include <climits>
+#include <QPen>
 
 class Selection :
         public QGraphicsRectItem

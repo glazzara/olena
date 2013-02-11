@@ -28,7 +28,9 @@ SOURCES += main.cpp \
     Rendering/polygonitem.cpp \
     Processing/progressdialog.cpp \
     Processing/process.cpp \
-    Processing/preprocess.cpp
+    Processing/preprocess.cpp \
+    Processing/runner.cpp \
+    xml.cpp
 HEADERS += mainwindow.h \
     configs.h \
     region.h \
@@ -46,7 +48,9 @@ HEADERS += mainwindow.h \
     Processing/preprocess.h \
     Processing/progressdialog.h \
     Processing/process.h \
-    dir.h
+    dir.h \
+    Processing/runner.h \
+    xml.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \

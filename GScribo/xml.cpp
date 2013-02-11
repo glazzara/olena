@@ -1,5 +1,4 @@
 #include "xml.h"
-#include "region.h"
 
 static const GraphicRegion::Data itemsData[] =
 {
@@ -16,6 +15,7 @@ static const GraphicRegion::Data itemsData[] =
 
 Xml::Xml()
 {
+
 }
 
 void Xml::graphicsRegion(const QDomElement& element, const GraphicRegion::Data& data, Scene *scene)

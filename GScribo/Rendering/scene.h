@@ -1,9 +1,9 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <QFileDialog>
-#include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsScene>
+#include <QFileDialog>
 
 #include "selection.h"
 #include "polygonitem.h"
@@ -17,6 +17,7 @@ class Scene :
         explicit Scene(QObject *parent = 0);
         explicit Scene(const QRectF &sceneRect, QObject *parent = 0);
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+        QString backgroundPath() const;
         void removeItems();
 
     protected:
@@ -27,7 +28,7 @@ class Scene :
     private:
         void init();
 
-        QString backgroundPath;
+        QString path;
         Selection selection;
         QPointF pressPos;
         bool isPressing;

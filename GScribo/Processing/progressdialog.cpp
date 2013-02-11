@@ -17,6 +17,6 @@ void ProgressDialog::run()
 void ProgressDialog::reset()
 {
     setValue(0);
-    setLabelText("");
+    setLabelText("Initilization");
     show();
 }

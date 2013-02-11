@@ -12,13 +12,17 @@ class ListModel:
 
     public:
         explicit ListModel(QObject *parent = 0);
+        QStringList filenames() const;
         int rowCount(const QModelIndex &parent) const;
         QVariant data(const QModelIndex &index, int role = Qt::DecorationRole) const;
         void addPixmap(const QString& filename, const QPixmap& pixmap);
 
     private:
         QList<QPixmap> pixmaps;
-        QList<QString> filenames;
+        QStringList paths;
+
+    public slots:
+        void removePixmap(const QModelIndex &parent);
 };
 
 #endif // LISTMODEL_H

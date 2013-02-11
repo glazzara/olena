@@ -1,11 +1,8 @@
 #ifndef PAGESWIDGET_H
 #define PAGESWIDGET_H
 
-#include <QPushButton>
-#include <QScrollBar>
 #include <QListView>
-#include <QPainter>
-#include <QWidget>
+#include <QShortcut>
 
 #include "listmodel.h"
 
@@ -17,12 +14,14 @@ class PagesWidget:
     public:
         explicit PagesWidget(QWidget *parent = 0);
         void addPixmap(const QString& filename, const QPixmap& pixmap);
+        QStringList filenames() const;
 
     private:
         ListModel model;
 
     public slots:
-        void getSelection(const QModelIndex &index);
+        void getPixmap(const QModelIndex &index);
+        void removeSelection();
 
     signals:
         void clicked(const QModelIndex &index);

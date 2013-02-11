@@ -29,9 +29,12 @@ void Runner::run()
         case Demat:
         {
             image2d<value::rgb8> ima;
-            io::magick::load(ima, args_.at(0).toUtf8().constData());
-            image2d<bool> bin_ima = preprocess(ima);
-            process(ima, bin_ima);
+            for(int i = 0; i < args_.count(); i++)
+            {
+                io::magick::load(ima, args_.at(i).toUtf8().constData());
+                image2d<bool> bin_ima = preprocess(ima);
+                process(ima, bin_ima, i);
+            }
             emit finished();
         }
         break;
@@ -48,10 +51,10 @@ void Runner::stop()
 }
 
 // Demat related stuff
-void Runner::start_demat(const QString& filename)
+void Runner::start_demat(const QStringList& filenames)
 {
     args_.clear();
-    args_ << filename;
+    args_ = filenames;
     mode_ = Demat;
     QThread::start();
 }
@@ -86,11 +89,11 @@ image2d<bool> Runner::preprocess(const image2d<value::rgb8>& ima)
 
 
 void Runner::process(const image2d<value::rgb8>& original_ima,
-                       const image2d<bool>& processed_ima)
+                       const image2d<bool>& processed_ima, int arg)
 {
     emit new_step("Page segmentation");
 
-    Process f(args_.at(0).toUtf8().constData());
+    Process f(args_.at(arg).toUtf8().constData());
 
     connect(&f, SIGNAL(progress()), this, SIGNAL(progress()));
     connect(&f, SIGNAL(newProgressLabel(QString)),
@@ -112,7 +115,7 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
 
 
     f.save_doc_as_xml = true;
-    QFileInfo file(args_.at(0));
+    QFileInfo file(args_.at(arg));
     QString output_dir = QDir::tempPath();
     if (conf->generalSaveXmlEnabled())
     {
@@ -134,8 +137,6 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
     emit xml_saved(filename);
 }
 
-
-
 // Export related stuff
 void Runner::start_export(const QString& imgfile,
                           const QString& xmlfile, const QString& outfile)
@@ -147,10 +148,9 @@ void Runner::start_export(const QString& imgfile,
     QThread::start();
 }
 
-
 void Runner::export_as()
 {
-    emit new_step("Exporting document...");
+    emit new_step("Exporting document");
     emit new_progress_max_value(2);
 
     // Checking output format
@@ -169,14 +169,14 @@ void Runner::export_as()
     int rvalue = 0;
     if (f.suffix() == "pdf")
     {
-        emit new_step("Exporting as PDF...");
+        emit new_step("Exporting as PDF");
         rvalue = system(QString("%1/scribo-xml2doc --pdf %2 %3 %4")
                         .arg(pathto_xml2doc).arg(args_.at(1)).arg(args_.at(0))
                         .arg(args_.at(2)).toAscii().constData());
     }
     else if (f.suffix() == "html" || f.suffix() == "htm")
     {
-        emit new_step("Exporting as HTML...");
+        emit new_step("Exporting as HTML");
         rvalue = system(QString("%1/scribo-xml2doc --html %2 %3 %4")
                         .arg(pathto_xml2doc).arg(args_.at(1)).arg(args_.at(0))
                         .arg(args_.at(2)).toAscii().constData());

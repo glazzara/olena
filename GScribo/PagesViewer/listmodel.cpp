@@ -5,6 +5,11 @@ ListModel::ListModel(QObject *parent):
 {
 }
 
+QStringList ListModel::filenames() const
+{
+    return paths;
+}
+
 int ListModel::rowCount(const QModelIndex&) const
 {
     return pixmaps.size();
@@ -24,7 +29,7 @@ QVariant ListModel::data(const QModelIndex& index, int role) const
 
     // Store the path of the pixmap in an other custom place.
     if(role == Qt::UserRole+1)
-        return filenames.value(index.row());
+        return paths.value(index.row());
 
    return QVariant();
 }
@@ -36,7 +41,19 @@ void ListModel::addPixmap(const QString& filename, const QPixmap& pixmap)
     beginInsertRows(QModelIndex(), row, row);
 
     pixmaps.insert(row, pixmap);
-    filenames.insert(row, filename);
+    paths.insert(row, filename);
 
     endInsertRows();
+}
+
+void ListModel::removePixmap(const QModelIndex &parent)
+{
+    int row = parent.row();
+
+    beginRemoveRows(parent, row, row);
+
+    pixmaps.removeAt(row);
+    paths.removeAt(row);
+
+    endRemoveRows();
 }

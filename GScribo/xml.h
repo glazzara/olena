@@ -1,15 +1,23 @@
 #ifndef XML_H
 #define XML_H
 
-#include <QString>
 #include <QGraphicsItem>
 #include <QDomElement>
-#include <QFile>
-#include <climits>
 #include <QTextEdit>
+#include <climits>
+#include <QString>
+#include <QFile>
+
 #include "polygonitem.h"
 #include "region.h"
+#include "region.h"
 #include "scene.h"
+
+struct Node
+{
+    QDomElement root;
+    QDomElement
+};
 
 class Xml:
         QObject
@@ -19,10 +27,12 @@ class Xml:
         static void parseItems(const QString &filename, Scene *scene);
 
     private:
-        static void graphicsRegion(const QDomElement& element, const GraphicRegion::Data& data, Scene *scene);
-        static void graphicsTypoRegion(const QDomElement& element, const QPoint& xPos, Scene *scene);
-        static void graphicsLineRegion(const QDomElement& element, Scene *scene);
-        static void graphicsTextRegion(const QDomElement& element, Scene *scene);
+        void graphicsRegion(const QDomElement& element, const GraphicRegion::Data& data, Scene *scene);
+        void graphicsTypoRegion(const QDomElement& element, const QPoint& xPos, Scene *scene);
+        void graphicsLineRegion(const QDomElement& element, Scene *scene);
+        void graphicsTextRegion(const QDomElement& element, Scene *scene);
+
+        QDomElement root;
 };
 
 #endif // XML_H
