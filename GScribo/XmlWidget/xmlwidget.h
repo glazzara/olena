@@ -2,24 +2,21 @@
 #define XMLWIDGET_H
 
 #include <QSortFilterProxyModel>
-#include <QGraphicsView>
 #include <QTreeWidget>
-#include <QVBoxLayout>
+#include <QSplitter>
 #include <QDomElement>
-#include <QHeaderView>
 #include <QWidget>
-#include <QLabel>
 
 #include "Rendering/scene.h"
 #include "selectionproxy.h"
-#include "attributemodel.h"
+#include "attributesmodel.h"
 #include "variantpointer.h"
 #include "xmldelegate.h"
 #include "xmlmodel.h"
 #include "xmlview.h"
 
 class XmlWidget :
-        public QWidget
+        public QSplitter
 {
         Q_OBJECT
 
@@ -36,10 +33,13 @@ class XmlWidget :
         SelectionProxy proxy2_;
 
         XmlModel model_;
-        AttributeModel attributesModel_;
+        AttributesModel attributesModel_;
 
         XmlView view_;
         QTreeView property_;
+
+    private slots:
+        inline void loadAttributes(const QModelIndex& index);
 };
 
 inline XmlView *XmlWidget::view()
@@ -47,5 +47,8 @@ inline XmlView *XmlWidget::view()
 
 inline QTreeView *XmlWidget::property()
 { return &property_; }
+
+inline void XmlWidget::loadAttributes(const QModelIndex &index)
+{ attributesModel_.load(index.data(Qt::UserRole+2).value<XmlItem *>()->attributes()); }
 
 #endif // XMLWIDGET_H

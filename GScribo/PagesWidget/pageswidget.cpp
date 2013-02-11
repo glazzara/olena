@@ -14,27 +14,27 @@ PagesWidget::PagesWidget(QWidget *parent):
     setModel(&model_);
     setItemDelegate(new PagesDelegate());
 
+    QShortcut *remove = new QShortcut(Qt::Key_Delete, this);
+    connect(remove, SIGNAL(activated()), this, SLOT(removeSelection()));
     connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getPicture(QModelIndex)));
 }
 
 void PagesWidget::removeSelection()
 {
-    QModelIndexList indexes = selectedIndexes();
-
-    if(indexes.count() > 0)
+    if(hasFocus() && selectedIndexes().count() > 0)
     {
-        // We have to sort the list because after the first removal, the second row index may not be the good one.
-        qSort(indexes.begin(), indexes.end());
+        // Sort the list because after the first removal, the second row index may not be the good one.
+        qSort(selectedIndexes().begin(), selectedIndexes().end());
 
-        // From the highest row value to the smallest to be sure to remove the good index.
-        for(int i = indexes.count()-1; i > -1; i--)
-            model_.removePixmap(indexes[i]);
+        // From the highest row to the smallest to be sure to remove the good index.
+        for(int i = selectedIndexes().count()-1; i > -1; i--)
+            model_.removePixmap(selectedIndexes()[i]);
 
-        // Draw new pixmap on the scene.
-        getPicture(model_.index(indexes[0].row()));
+        // Draw new image on the scene.
+        getPicture(model_.index(selectedIndexes()[0].row()));
         clearSelection();
 
-        model_.setCurrentRow(indexes[0].row());
+        model_.setCurrentRow(selectedIndexes()[0].row());
     }
 }
 

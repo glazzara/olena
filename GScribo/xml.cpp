@@ -1,21 +1,5 @@
 #include "xml.h"
 
-static const GraphicRegion::Data itemsData[] =
-{
-    /*           COLOR               |             NAME             |               REGION           | ZVALUE */
-    { QColor::fromRgb(255, 0, 0, 90),   "Line",                      GraphicRegion::Line,                2 },
-    { QColor::fromRgb(0, 100, 0, 90),   "TextRegion",                GraphicRegion::Text,                1 },
-    { QColor::fromRgb(0, 0, 255, 90),   "VerticalSeparatorRegion",   GraphicRegion::VerticalSeparator,   2 },
-    { QColor::fromRgb(0, 0, 255, 90),   "HorizontalSeparatorRegion", GraphicRegion::HorizontalSeparator, 2 },
-    { QColor::fromRgb(0, 0, 128, 90),   "WhitespaceSeparatorRegion", GraphicRegion::WhiteSpaceSeparator, 2 },
-    { QColor::fromRgb(255, 120, 0, 90), "ImageRegion",               GraphicRegion::Image,               1 },
-    { QColor::fromRgb(43, 39, 128, 90), "NoiseRegion",               GraphicRegion::Noise,               2 },
-    { QColor::fromRgb(220, 246, 0, 90), "TableRegion",               GraphicRegion::Table,               2 },
-    { QColor::fromRgb(170, 0, 255, 90), "MathsRegion",               GraphicRegion::Maths,               2 },
-    { QColor::fromRgb(255, 0, 144, 90), "GraphicRegion",             GraphicRegion::Graphic,             2 },
-    { QColor::fromRgb(0, 204, 255, 90), "ChartRegion",               GraphicRegion::Chart,               2 }
-};
-
 Xml::Xml(const QString& filename)
 {
     filename_ = filename;
@@ -43,13 +27,13 @@ void Xml::load(const QString& filename)
     if(filename.isEmpty())
     {
         xmlItem_ = 0;
-        graphicalItem_ = 0;
+        graphicsItem_ = 0;
         return;
     }
 
     // Reset graphic and tree items;
     xmlItem_ = new XmlItem;
-    graphicalItem_ = new RootGraphicsItem(11);
+    graphicsItem_ = new RootGraphicsItem(13);
 
     QFile xmlFile(filename);
     xmlFile.open(QIODevice::ReadOnly);
@@ -69,9 +53,9 @@ void Xml::load(const QString& filename)
 
     // Run through the xml file structure by structure.
     root = root.nextSibling().firstChild().toElement();
-    processNode(root, itemsData[1], parentTreeItem);
-    for(int i = 2; i < 10; i++)
-        processNode(root.nextSiblingElement(itemsData[i].name), itemsData[i], parentTreeItem);
+    processNode(root, datas_[0], parentTreeItem);
+    for(int i = 2; i < 11; i++)
+        processNode(root.nextSiblingElement(datas_[i].name), datas_[i], parentTreeItem);
 }
 
 XmlItem *Xml::init(const QDomElement& root, XmlItem *rootTreeItem)
@@ -95,7 +79,7 @@ XmlItem *Xml::init(const QDomElement& root, XmlItem *rootTreeItem)
     return metadataItem;
 }
 
-void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, XmlItem *pageItem)
+void Xml::processNode(const QDomElement& root, const GraphicsRegion::Data& data, XmlItem *pageItem)
 {
     if(!root.isNull())
     {
@@ -122,16 +106,16 @@ void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, 
             node = node.nextSibling().toElement();
         }
 
-        // Create the graphical item from data structure.
-        PolygonItem *polygonItem = new PolygonItem(polygon, graphicalItem_);
-        polygonItem->loadData(data);
-        graphicalItem_->addItemFrom(polygonItem, data.region);
+        // Create the graphics item from data structure.
+        RegionItem *graphicsItem = new RegionItem(polygon, graphicsItem_);
+        graphicsItem->loadData(data);
+        graphicsItem_->addItemFrom(graphicsItem, data.region);
 
-        // Store xml item and graphical item in each object for selection.
-        regionItem->setGraphicalItem(polygonItem);
-        polygonItem->setXmlItem(regionItem);
+        // Store xml item and graphics item in each object for selection.
+        regionItem->setRegionItem(graphicsItem);
+        graphicsItem->setXmlItem(regionItem);
 
-        if(data.region == GraphicRegion::Text)
+        if(data.region == GraphicsRegion::Text)
             processLineNode(root.firstChild().nextSiblingElement("Line"), coordsItem);
 
         // Run through all nodes from the same data structure recursively.
@@ -180,31 +164,31 @@ void Xml::processLineNode(const QDomElement& root, XmlItem *precItem)
             node = node.nextSibling().toElement();
         }
 
-        // Create the graphical item from data structure.
-        PolygonItem *polygonItem = new PolygonItem(polygon, graphicalItem_);
-        polygonItem->loadData(itemsData[0]);
-        graphicalItem_->addItemFrom(polygonItem, GraphicRegion::Line);
+        // Create the graphics item from data structure.
+        RegionItem *graphicsItem = new RegionItem(polygon, graphicsItem_);
+        graphicsItem->loadData(datas_[1]);
+        graphicsItem_->addItemFrom(graphicsItem, datas_[1].region);
 
-        // Store xml item and graphical item in each object for selection.
-        lineItem->setGraphicalItem(polygonItem);
-        polygonItem->setXmlItem(lineItem);
+        // Store xml item and graphics item in each object for selection.
+        lineItem->setRegionItem(graphicsItem);
+        graphicsItem->setXmlItem(lineItem);
 
         // Get meanline and baseline.
-        processTypoNode(root, QPoint(xMin, xMax), polygonItem);
+        processTypoNode(root, QPoint(xMin, xMax), graphicsItem);
         // Run through all line nodes recursively.
-        processLineNode(root.nextSiblingElement("Line"), lineItem);
+        processLineNode(root.nextSiblingElement(datas_[1].name), lineItem);
     }
 }
 
-void Xml::processTypoNode(const QDomElement& root, const QPoint& xPoint, PolygonItem *parentPolygonItem)
+void Xml::processTypoNode(const QDomElement& root, const QPoint& xPoint, RegionItem *parentgraphicsItem)
 {
     int yPos = root.attribute("baseline", "null").toInt();
-    QGraphicsLineItem *baselineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentPolygonItem);
-    baselineItem->setZValue(3);
-    graphicalItem_->addItemFrom(baselineItem, GraphicRegion::Baseline);
+    QGraphicsLineItem *baselineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentgraphicsItem);
+    baselineItem->setZValue(datas_[11].zValue);
+    graphicsItem_->addItemFrom(baselineItem, datas_[11].region);
 
     yPos = root.attribute("meanline", "null").toInt();
-    QGraphicsLineItem *meanlineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentPolygonItem);
-    meanlineItem->setZValue(3);
-    graphicalItem_->addItemFrom(baselineItem, GraphicRegion::Meanline);
+    QGraphicsLineItem *meanlineItem = new QGraphicsLineItem(QLine(QPoint(xPoint.x(), yPos), QPoint(xPoint.y(), yPos)), parentgraphicsItem);
+    meanlineItem->setZValue(datas_[12].zValue);
+    graphicsItem_->addItemFrom(baselineItem, datas_[12].region);
 }

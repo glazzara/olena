@@ -1,18 +1,18 @@
-#include "attributemodel.h"
+#include "attributesmodel.h"
 
-AttributeModel::AttributeModel(const XmlAttributes& attributes, QObject *parent) :
+AttributesModel::AttributesModel(const XmlAttributes& attributes, QObject *parent) :
         QAbstractItemModel(parent)
 {
     attributes_ = attributes;
 }
 
-AttributeModel::AttributeModel(const XmlAttributes& attributes, QAbstractItemModelPrivate& dd, QObject *parent) :
+AttributesModel::AttributesModel(const XmlAttributes& attributes, QAbstractItemModelPrivate& dd, QObject *parent) :
         QAbstractItemModel(dd, parent)
 {
     attributes_ = attributes;
 }
 
-QVariant AttributeModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant AttributesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(orientation == Qt::Horizontal && role == Qt::DisplayRole)
     {
@@ -32,7 +32,7 @@ QVariant AttributeModel::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
-QVariant AttributeModel::data(const QModelIndex& index, int role) const
+QVariant AttributesModel::data(const QModelIndex& index, int role) const
 {
     if(!index.isValid())
         return QVariant();
@@ -50,7 +50,7 @@ QVariant AttributeModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void AttributeModel::load(const XmlAttributes& attributes)
+void AttributesModel::load(const XmlAttributes& attributes)
 {
     beginResetModel();
 
@@ -59,7 +59,7 @@ void AttributeModel::load(const XmlAttributes& attributes)
     endResetModel();
 }
 
-void AttributeModel::reset()
+void AttributesModel::reset()
 {
     beginResetModel();
 

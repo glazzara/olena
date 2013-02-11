@@ -5,7 +5,7 @@
 
 #include "xmlattributes.h"
 
-class PolygonItem;
+class RegionItem;
 
 class XmlItem
 {
@@ -21,8 +21,8 @@ class XmlItem
         inline void addChild(XmlItem *child);
         inline XmlItem *parent() const;
 
-        inline PolygonItem *graphicalItem();
-        inline void setGraphicalItem(PolygonItem *graphicalItem);
+        inline RegionItem *regionItem();
+        inline void setRegionItem(RegionItem *regionItem);
 
         inline bool isVisible() const;
         inline void setVisible(bool visible);
@@ -40,7 +40,7 @@ class XmlItem
         bool isVisible_;
         QList<XmlItem *> childs_;
         XmlItem *parent_;
-        PolygonItem *graphicalItem_;
+        RegionItem *regionItem_;
         QString text_;
         XmlAttributes attributes_;
 };
@@ -57,11 +57,11 @@ inline void XmlItem::addChild(XmlItem *child)
 inline XmlItem *XmlItem::parent() const
 { return parent_; }
 
-inline PolygonItem *XmlItem::graphicalItem()
-{ return graphicalItem_; }
+inline RegionItem *XmlItem::regionItem()
+{ return regionItem_; }
 
-inline void XmlItem::setGraphicalItem(PolygonItem *graphicalItem)
-{ graphicalItem_ = graphicalItem; }
+inline void XmlItem::setRegionItem(RegionItem *regionItem)
+{ regionItem_ = regionItem; }
 
 inline bool XmlItem::isVisible() const
 { return isVisible_; }
@@ -83,5 +83,8 @@ inline int XmlItem::row() const
 
 inline XmlAttributes XmlItem::attributes() const
 { return attributes_; }
+
+Q_DECLARE_METATYPE(XmlItem)
+Q_DECLARE_METATYPE(XmlItem *)
 
 #endif // XMLITEM_H

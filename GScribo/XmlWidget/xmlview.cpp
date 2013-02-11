@@ -3,75 +3,82 @@
 XmlView::XmlView(QWidget *parent) :
         QTreeView(parent)
 {
-    proxy_.setFilterRole(Qt::UserRole+1);
-    proxy_.setDynamicSortFilter(true);
+    proxy_.setFilterRole(Qt::UserRole+2);
 
     setUniformRowHeights(true);
     setItemDelegate(new XmlDelegate(Qt::UserRole));
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
 
-void XmlView::hideVisibles()
+void XmlView::hideAll()
 {
+    proxy_.beginResetModel();
+
     XmlItem *child;
-    foreach(child, visibleItems_)
+    foreach(child, displayedItems_)
         child->hide();
 
-    visibleItems_.clear();
+    displayedItems_.clear();
+    emit resetProperty();
+
+    proxy_.endResetModel();
 }
 
-void XmlView::onEndGraphicalSelection(const QList<QGraphicsItem *>& selectedItems)
+void XmlView::display(QList<XmlItem *> displayedItems, bool addToDisplayedList)
 {
-    hideVisibles();
+    proxy_.beginResetModel();
 
-    if(selectedItems.isEmpty())
-        proxy_.selectAll();
-    else
+    if(!addToDisplayedList)
+        hideAll();
+
+    XmlItem *child;
+    foreach(child, displayedItems)
     {
-        QGraphicsItem *child;
-        XmlItem *xmlItem;
-        foreach(child, selectedItems)
-        {
-            xmlItem = static_cast<PolygonItem *>(child)->xmlItem();
-            xmlItem->show();
-            visibleItems_ << xmlItem;
-        }
+        child->show();
+        displayedItems_ << child;
     }
 
     proxy_.endResetModel();
 
-    emit resetAttributes();
     expandAll();
+}
+
+QList<XmlItem *> XmlView::transform(const QModelIndexList& modelIndexList) const
+{
+    QList<XmlItem *> selectedItems;
+    QModelIndex index;
+
+    foreach(index, modelIndexList)
+        selectedItems << index.data(Qt::UserRole+2).value<XmlItem *>();
+
+    return selectedItems;
 }
 
 void XmlView::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     QTreeView::selectionChanged(selected, deselected);
 
-    if(!proxy_.isAllSelected())
-    {
-        //if(emptySelection_)
-            //emit resetGraphicalSelection();
+    if(selected.indexes() == selectedIndexes())
+        emit resetSelection();
 
+    if(!selectedIndexes().isEmpty())
+    {
+        QList<XmlItem *> xmlItems;
         if(!selected.isEmpty())
         {
-            QList<PolygonItem *> sel;
-            QModelIndex index;
-
-            foreach(index, selected.indexes())
-            {
-                PolygonItem *graphicalItem = VariantPointer<PolygonItem>::fromQVariant(index.data(Qt::UserRole+3));
-
-                if(graphicalItem)
-                    sel << graphicalItem;
-            }
-
-            //emptySelection_ = false;
-            emit selection(sel, true);
+            xmlItems = transform(selected.indexes());
+            emit select(xmlItems);
         }
-        //else
-            //emit resetGraphicalSelection();
+        else
+        {
+            xmlItems = transform(deselected.indexes());
+            emit unselect(xmlItems);
+        }
+
+        emit loadAttributes(xmlItems.last()->attributes());
     }
-    //else
-        //emptySelection_ = true;
+    else
+        emit emptySelection();
+
+    emit newSelection();
 }

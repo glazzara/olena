@@ -13,11 +13,16 @@ MainWindow::MainWindow(QWidget *parent) :
     initTextRegion();
     initXmlWidget();
     initPageWidget();
+    initRegionWidget();
     initToolBar();
     initMenuBar();
 
+    // Told the left dock widget (here the pages widget and the region widget) to fill the bottom left corner.
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    // Merge the region and pages widget in one tab (pages widget over the region widget).
+    tabifyDockWidget(&dockRegion_, &dockPages_);
+
     connectWidgets();
-    connectShortcuts();
 }
 
 MainWindow::~MainWindow()
@@ -25,43 +30,62 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::changeEvent(QEvent *e)
+{
+    QMainWindow::changeEvent(e);
+    switch (e->type())
+    {
+        case QEvent::LanguageChange:
+            ui->retranslateUi(this);
+            break;
+        default:
+            break;
+    }
+}
+
 void MainWindow::initGraphicsRegion()
 {
-    // Cache backgroud to speed up its repaint.
-    graphicsView.setCacheMode(QGraphicsView::CacheBackground);
-    graphicsView.setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    graphicsView.setScene(&scene);
+    graphicsView_.setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    graphicsView_.setScene(&scene_);
 
-    setCentralWidget(&graphicsView);
+    setCentralWidget(&graphicsView_);
 }
 
 void MainWindow::initPageWidget()
 {
-    dockPages.setWindowTitle(tr("Pages"));
-    dockPages.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
-    dockPages.setWidget(&pagesWidget);
+    dockPages_.setWindowTitle("Pages");
+    dockPages_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
+    dockPages_.setWidget(&pagesWidget_);
 
-    addDockWidget(Qt::LeftDockWidgetArea, &dockPages);
+    addDockWidget(Qt::LeftDockWidgetArea, &dockPages_);
+}
+
+void MainWindow::initRegionWidget()
+{
+    dockRegion_.setWindowTitle("Regions");
+    dockRegion_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
+    dockRegion_.setWidget(&regionWidget_);
+
+    addDockWidget(Qt::LeftDockWidgetArea, &dockRegion_);
 }
 
 void MainWindow::initXmlWidget()
 {
-    dockXml.setWindowTitle(tr("Xml"));
-    dockXml.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
-    dockXml.setWidget(&xmlWidget);
+    dockXml_.setWindowTitle("Xml");
+    dockXml_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
+    dockXml_.setWidget(&xmlWidget_);
 
-    addDockWidget(Qt::BottomDockWidgetArea, &dockXml);
+    addDockWidget(Qt::BottomDockWidgetArea, &dockXml_);
 }
 
 void MainWindow::initTextRegion()
 {
-    dockText.setWindowTitle(tr("Text"));
-    dockText.setAllowedAreas(Qt::AllDockWidgetAreas);
-    dockText.setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-    dockText.setWidget(&textEdit);
+    dockText_.setWindowTitle("Text");
+    dockText_.setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
+    dockText_.setWidget(&textEdit_);
 
-    addDockWidget(Qt::RightDockWidgetArea, &dockText);
-    dockText.hide();
+    addDockWidget(Qt::RightDockWidgetArea, &dockText_);
+    dockText_.hide();
 }
 
 void MainWindow::initToolBar()
@@ -79,20 +103,23 @@ void MainWindow::initMenuBar()
     connect(preferences, SIGNAL(triggered()), SLOT(onPreferences()));
 }
 
-void MainWindow::onFileChanged(const QString& filename)
+void MainWindow::connectWidgets()
 {
-    // If it's not the current scene.
-    if(scene.backgroundPath() != filename)
-    {
-        QString xmlPath = Xml::getPath(filename);
-        // Check if the xml file already exists.
-        if(!QFile(xmlPath).exists())
-            xmlPath = QString();
+    // If double click on a picture of the page widget -> draw it on background scene.
+    connect(&pagesWidget_, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
 
-        xml.load(xmlPath);
-        scene.changeScene(filename, xml.graphicItem());
-        xmlWidget.changeView(xml.xmlItem());
-    }
+    // Connect the scene to the xml widget and vice versa.
+    connect(&scene_, SIGNAL(newSelection(QList<RegionItem*>)), this, SLOT(onRegionSelection(QList<RegionItem*>)));
+    connect(xmlWidget_.view(), SIGNAL(select(QList<XmlItem*>)), this, SLOT(onXmlSelect(QList<XmlItem*>)));
+    connect(xmlWidget_.view(), SIGNAL(unselect(QList<XmlItem*>)), this, SLOT(onXmlUnselect(QList<XmlItem*>)));
+    connect(xmlWidget_.view(), SIGNAL(emptySelection()), &scene_, SLOT(selectBase()));
+    connect(xmlWidget_.view(), SIGNAL(resetSelection()), &scene_, SLOT(clearSelection()));
+
+    /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
+    connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
+    connect(&runner, SIGNAL(new_progress_label(QString)), &progressDialog, SLOT(setLabelText(QString)));
+    connect(&runner, SIGNAL(finished()), &progressDialog, SLOT(close()));
+    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));*/
 }
 
 void MainWindow::onOpen()
@@ -101,7 +128,7 @@ void MainWindow::onOpen()
 
     if(paths.count() > 0)
     {
-        QStringList filenames = pagesWidget.filenames();
+        QStringList filenames = pagesWidget_.filenames();
         QString path;
 
         int counter = 0;
@@ -116,7 +143,7 @@ void MainWindow::onOpen()
 
         if(!isContained)
         {
-            pagesWidget.addPicture(path, QPixmap(path));
+            pagesWidget_.addPicture(path, QPixmap(path));
 
             // If more than one file, we store it in the page widget.
             for(int i = counter; i < paths.count(); i++)
@@ -125,12 +152,12 @@ void MainWindow::onOpen()
                 if(!filenames.contains(paths[i]))
                 {
                     path = paths[i];
-                    pagesWidget.addPicture(path, QPixmap(path));
+                    pagesWidget_.addPicture(path, QPixmap(path));
                 }
             }
 
-            pagesWidget.setCurrentRow(0);
-            pagesWidget.scrollToTop();
+            pagesWidget_.setCurrentRow(0);
+            pagesWidget_.scrollToTop();
         }
 
         // Change current scene.
@@ -140,26 +167,19 @@ void MainWindow::onOpen()
 
 void MainWindow::onSegment()
 {
-    if(scene.backgroundPath() != "")
+    if(scene_.backgroundPath() != "")
     {
         QStringList filenames;
 
-        if(!pagesWidget.isVisible())
-            filenames << scene.backgroundPath();
+        if(!pagesWidget_.isVisible())
+            filenames << scene_.backgroundPath();
         else
-            filenames = pagesWidget.filenames();
+            filenames = pagesWidget_.filenames();
 
         // Run segmentation of page(s).
         //progressDialog.reset();
         //runner.start_demat(filenames);
     }
-}
-
-void MainWindow::onXmlSaved(const QString& filename)
-{
-    xml.load(filename);
-    xmlWidget.changeView(xml.xmlItem());
-    scene.setRootItem(xml.graphicItem());
 }
 
 void MainWindow::onPreferences()
@@ -168,45 +188,69 @@ void MainWindow::onPreferences()
     //preferenceDialog->show();
 }
 
-void MainWindow::onDelete()
+void MainWindow::onXmlSaved(const QString& filename)
 {
-    if(pagesWidget.hasFocus())
-        pagesWidget.removeSelection();
+    xml_.load(filename);
+    xmlWidget_.changeView(xml_.xmlItem());
+    scene_.setRoot(xml_.graphicsItem());
 }
 
-void MainWindow::connectWidgets()
+void MainWindow::onFileChanged(const QString& filename)
 {
-    // If double click on a picture of the page widget -> draw it on background scene.
-    connect(&pagesWidget, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
-
-    // Connect the scene to the xml widget and vice versa.
-    connect(&scene, SIGNAL(beginSelection()), xmlWidget.view(), SLOT(onBeginGraphicalSelection()));
-    connect(&scene, SIGNAL(endSelection(QList<QGraphicsItem*>)), xmlWidget.view(), SLOT(onEndGraphicalSelection(QList<QGraphicsItem*>)));
-    connect(xmlWidget.view(), SIGNAL(selection(QList<PolygonItem*>,bool)), &scene, SLOT(selectItems(QList<PolygonItem*>, bool)));
-    connect(xmlWidget.view(), SIGNAL(resetGraphicalSelection()), &scene, SLOT(clearSelection()));
-
-    /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
-    connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
-    connect(&runner, SIGNAL(new_progress_label(QString)), &progressDialog, SLOT(setLabelText(QString)));
-    connect(&runner, SIGNAL(finished()), &progressDialog, SLOT(close()));
-    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));*/
-}
-
-void MainWindow::connectShortcuts()
-{
-    QShortcut *del = new QShortcut(Qt::Key_Delete, &pagesWidget);
-    connect(del, SIGNAL(activated()), this, SLOT(onDelete()));
-}
-
-void MainWindow::changeEvent(QEvent *e)
-{
-    QMainWindow::changeEvent(e);
-    switch (e->type())
+    // If it's not the current scene.
+    if(scene_.backgroundPath() != filename)
     {
-        case QEvent::LanguageChange:
-            ui->retranslateUi(this);
-            break;
-        default:
-            break;
+        QString xmlPath = Xml::getPath(filename);
+        // Check if the xml file already exists.
+        if(!QFile(xmlPath).exists())
+            xmlPath = QString();
+
+        xml_.load(xmlPath);
+        scene_.changeScene(filename, xml_.graphicsItem());
+        xmlWidget_.changeView(xml_.xmlItem());
+    }
+}
+
+QList<RegionItem *> MainWindow::toRegionItems(QList<XmlItem *> xmlItems) const
+{
+    QList<RegionItem *> regionItems;
+    XmlItem *child;
+    foreach(child, xmlItems)
+    {
+        if(child->regionItem())
+            regionItems << child->regionItem();
+    }
+
+    return regionItems;
+}
+
+QList<XmlItem *> MainWindow::toXmlItems(QList<RegionItem *> regionItems) const
+{
+    QList<XmlItem *> xmlItems;
+    RegionItem *child;
+    foreach(child, regionItems)
+        xmlItems << child->xmlItem();
+
+    return xmlItems;
+}
+
+void MainWindow::onRegionSelection(QList<RegionItem *> regionItems)
+{
+    if(!regionItems.isEmpty())
+        xmlWidget_.view()->displayOnly(toXmlItems(regionItems));
+    else
+        xmlWidget_.view()->displayAll();
+}
+
+void MainWindow::onXmlChangeSelection(QList<XmlItem *> xmlItems, bool select)
+{
+    QList<RegionItem *> regionItems = toRegionItems(xmlItems);
+
+    if(!regionItems.isEmpty())
+    {
+        if(select)
+            scene_.select(regionItems);
+        else
+            scene_.unselect(regionItems);
     }
 }

@@ -15,6 +15,7 @@
 #include "XmlWidget/xmlwidget.h"
 //#include "Processing/runner.h"
 #include "Rendering/scene.h"
+#include "regionwidget.h"
 #include "xml.h"
 
 namespace Ui
@@ -39,33 +40,55 @@ class MainWindow:
         void initTextRegion();
         void initToolBar();
         void initPageWidget();
+        void initRegionWidget();
         void initXmlWidget();
         void initMenuBar();
         void connectWidgets();
-        void connectShortcuts();
 
         Xml processTmpXml(const QString& filename) const;
+        QList<RegionItem *> toRegionItems(QList<XmlItem *> regionItems) const;
+        QList<XmlItem *> toXmlItems(QList<RegionItem *> xmlItems) const;
 
         Ui::MainWindow *ui;
-        QDockWidget dockText;
-        QDockWidget dockPages;
-        QDockWidget dockXml;
-        QGraphicsView graphicsView;
-        Scene scene;
-        QPlainTextEdit textEdit;
-        PagesWidget pagesWidget;
-        //Runner runner;
-        //ProgressDialog progressDialog;
-        Xml xml;
-        XmlWidget xmlWidget;
+
+        QDockWidget dockRegion_;
+        QDockWidget dockPages_;
+        QDockWidget dockText_;
+        QDockWidget dockXml_;
+
+        QGraphicsView graphicsView_;
+        Scene scene_;
+
+        PagesWidget pagesWidget_;
+        RegionWidget regionWidget_;
+
+        QPlainTextEdit textEdit_;
+
+        //ProgressDialog progressDialog_;
+        //Runner runner_;
+
+        XmlWidget xmlWidget_;
+        Xml xml_;
 
     private slots:
         void onOpen();
         void onSegment();
-        void onXmlSaved(const QString& filename);
         void onPreferences();
+
+        void onXmlSaved(const QString& filename);
         void onFileChanged(const QString& filename);
-        void onDelete();
+
+        void onRegionSelection(QList<RegionItem *> regionItems);
+        void onXmlChangeSelection(QList<XmlItem *> xmlItems, bool select);
+        inline void onXmlSelect(QList<XmlItem *> xmlItems);
+        inline void onXmlUnselect(QList<XmlItem *> xmlItems);
 };
+
+
+inline void MainWindow::onXmlSelect(QList<XmlItem *> xmlItems)
+{ onXmlChangeSelection(xmlItems, true); }
+
+inline void MainWindow::onXmlUnselect(QList<XmlItem *> xmlItems)
+{ onXmlChangeSelection(xmlItems, false); }
 
 #endif // MAINWINDOW_H

@@ -1,5 +1,5 @@
-#ifndef POLYGONITEM_H
-#define POLYGONITEM_H
+#ifndef RegionITEM_H
+#define RegionITEM_H
 
 #include <QGraphicsPolygonItem>
 #include <QTreeWidgetItem>
@@ -10,12 +10,12 @@
 
 class XmlItem;
 
-class PolygonItem :
+class RegionItem :
         public QGraphicsPolygonItem
 {
     public:
-        explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-        explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        explicit RegionItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        explicit RegionItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
         void setColor(const QColor& color);
         inline QColor color() const;
@@ -23,7 +23,7 @@ class PolygonItem :
         inline void setXmlItem(XmlItem *xmlItem);
         inline XmlItem *xmlItem() const;
 
-        inline void loadData(const GraphicRegion::Data& data);
+        inline void loadData(const GraphicsRegion::Data& data);
         inline int region() const;
 
         inline bool intersects(const QRectF& rect);
@@ -47,34 +47,34 @@ class PolygonItem :
         QBrush unselectedBrush_;
 };
 
-inline void PolygonItem::setXmlItem(XmlItem *xmlItem)
+inline void RegionItem::setXmlItem(XmlItem *xmlItem)
 { xmlItem_ = xmlItem; }
 
-inline XmlItem *PolygonItem::xmlItem() const
+inline XmlItem *RegionItem::xmlItem() const
 { return xmlItem_; }
 
-inline QColor PolygonItem::color() const
+inline QColor RegionItem::color() const
 { return selectedBrush_.color(); }
 
-inline int PolygonItem::region() const
+inline int RegionItem::region() const
 { return region_; }
 
-inline bool PolygonItem::isSelected()
+inline bool RegionItem::isSelected()
 { return isSelected_; }
 
-inline void PolygonItem::select()
+inline void RegionItem::select()
 { setSelected(true); }
 
-inline void PolygonItem::unselect()
+inline void RegionItem::unselect()
 { setSelected(false); }
 
-inline void PolygonItem::loadData(const GraphicRegion::Data& data)
+inline void RegionItem::loadData(const GraphicsRegion::Data& data)
 { region_ = data.region; setColor(data.color); setZValue(data.zValue); }
 
-inline bool PolygonItem::contains(const QPointF& point)
+inline bool RegionItem::contains(const QPointF& point)
 { return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(point)) && shape().contains(point); }
 
-inline bool PolygonItem::intersects(const QRectF& rect)
+inline bool RegionItem::intersects(const QRectF& rect)
 { return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect); }
 
-#endif // POLYGONITEM_H
+#endif // RegionITEM_H

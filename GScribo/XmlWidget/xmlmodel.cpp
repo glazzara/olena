@@ -37,13 +37,10 @@ QVariant XmlModel::data(const QModelIndex& index, int role) const
             return static_cast<XmlItem *>(index.internalPointer())->text();
 
         case Qt::UserRole+1:
-            return static_cast<XmlItem *>(index.internalPointer())->isVisible();
-
-        case Qt::UserRole+2:
             return QVariant::fromValue(static_cast<XmlItem *>(index.internalPointer())->attributes());
 
-        case Qt::UserRole+3:
-            return VariantPointer<PolygonItem>::toQVariant(static_cast<XmlItem *>(index.internalPointer())->graphicalItem());
+        case Qt::UserRole+2:
+            return QVariant::fromValue(static_cast<XmlItem *>(index.internalPointer()));
 
         default:
             return QVariant();

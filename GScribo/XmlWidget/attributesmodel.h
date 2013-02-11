@@ -1,18 +1,18 @@
-#ifndef ATTRIBUTEMODEL_H
-#define ATTRIBUTEMODEL_H
+#ifndef ATTRIBUTESMODEL_H
+#define ATTRIBUTESMODEL_H
 
 #include <QAbstractItemModel>
 
 #include "xmlattributes.h"
 
-class AttributeModel :
+class AttributesModel :
         public QAbstractItemModel
 {
-    public:
-        explicit AttributeModel(const XmlAttributes& attributes = XmlAttributes(), QObject *parent = 0);
-        explicit AttributeModel(const XmlAttributes& attributes, QAbstractItemModelPrivate& dd, QObject *parent = 0);
+        Q_OBJECT
 
-        void load(const XmlAttributes& attributes);
+    public:
+        explicit AttributesModel(const XmlAttributes& attributes = XmlAttributes(), QObject *parent = 0);
+        explicit AttributesModel(const XmlAttributes& attributes, QAbstractItemModelPrivate& dd, QObject *parent = 0);
 
         inline int rowCount(const QModelIndex& parent) const;
         inline int columnCount(const QModelIndex& parent) const;
@@ -27,18 +27,21 @@ class AttributeModel :
 
     private:
         XmlAttributes attributes_;
+
+    public slots:
+        void load(const XmlAttributes& attributes);
 };
 
-inline int AttributeModel::rowCount(const QModelIndex&) const
+inline int AttributesModel::rowCount(const QModelIndex&) const
 { return attributes_.names().count(); }
 
-inline int AttributeModel::columnCount(const QModelIndex&) const
+inline int AttributesModel::columnCount(const QModelIndex&) const
 { return 2; }
 
-inline QModelIndex AttributeModel::index(int row, int column, const QModelIndex& parent) const
+inline QModelIndex AttributesModel::index(int row, int column, const QModelIndex& parent) const
 { if(!hasIndex(row, column, parent)) return QModelIndex(); return createIndex(row, column, 0); }
 
-inline QModelIndex AttributeModel::parent(const QModelIndex&) const
+inline QModelIndex AttributesModel::parent(const QModelIndex&) const
 { return QModelIndex(); }
 
-#endif // ATTRIBUTEMODEL_H
+#endif // ATTRIBUTESMODEL_H

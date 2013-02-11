@@ -7,7 +7,7 @@
 #include <QFileDialog>
 
 #include "rootgraphicsitem.h"
-#include "polygonitem.h"
+#include "regionitem.h"
 #include "selection.h"
 
 class Scene :
@@ -21,15 +21,15 @@ class Scene :
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         inline QString backgroundPath() const;
+        inline QList<RegionItem *> selectedRegions() const;
 
-        void setRootItem(RootGraphicsItem *graphicalItem);
-        inline RootGraphicsItem *rootItem() const;
+        void setRoot(RootGraphicsItem *rootItem);
+        inline RootGraphicsItem *root() const;
 
-        inline QList<QGraphicsItem *> selectedItems() const;
-        void selectItems(const QRectF& rect);
-        void selectItems(const QPointF& point);
+        void select(const QRectF& rect);
+        void select(const QPointF& point);
 
-        void changeScene(const QString& filename, RootGraphicsItem *rootItem = 0);
+        void changeScene(const QString& filename, RootGraphicsItem *root = 0);
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -38,13 +38,16 @@ class Scene :
 
     private:
         void init();
-        void selectItems(QGraphicsItem *root, const QPointF& point, const QRectF& rect);
+        void select(QGraphicsItem *root, const QPointF& point, const QRectF& rect);
+
+        QGraphicsView *mainView_;
 
         QString backgroundPath_;
-        RootGraphicsItem *rootItem_;
+        RootGraphicsItem *root_;
 
         Selection selection_;
-        QList<QGraphicsItem *> selectedItems_;
+        QList<RegionItem *> selectedRegions_;
+        QList<RegionItem *> baseSelection_;
 
         QPointF pressPos_;
         bool isPressing_;
@@ -52,26 +55,35 @@ class Scene :
     public slots:
         void clear();
         void clearSelection();
-        void selectItems(const QList<PolygonItem *>& selectedItems, bool addToSelection);
+
+        void select(const QList<RegionItem *>& selectedRegions);
+        inline void selectBase();
+        void unselect(const QList<RegionItem *>& unselectedItems);
+
+        void ensureVisible(QGraphicsItem *graphicsItem);
 
     signals:
-        void beginSelection();
-        void endSelection(const QList<QGraphicsItem *>& selectedItems);
+        void selectionCleared();
+        void newSelection();
+        void newSelection(const QList<RegionItem *>& selectedRegions);
 };
 
 inline QString Scene::backgroundPath() const
 { return backgroundPath_; }
 
-inline RootGraphicsItem *Scene::rootItem() const
-{ return rootItem_; }
+inline RootGraphicsItem *Scene::root() const
+{ return root_; }
 
-inline QList<QGraphicsItem *> Scene::selectedItems() const
-{ return selectedItems_; }
+inline QList<RegionItem *> Scene::selectedRegions() const
+{ return selectedRegions_; }
 
-inline void Scene::selectItems(const QPointF& point)
-{ selectItems(rootItem_, point, QRectF()); }
+inline void Scene::selectBase()
+{ select(baseSelection_); }
 
-inline void Scene::selectItems(const QRectF& rect)
-{ selectItems(rootItem_, QPointF(), rect); }
+inline void Scene::select(const QPointF& point)
+{ select(root_, point, QRectF()); }
+
+inline void Scene::select(const QRectF& rect)
+{ select(root_, QPointF(), rect); }
 
 #endif // SCENE_H

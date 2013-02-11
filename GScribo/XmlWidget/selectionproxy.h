@@ -10,34 +10,34 @@ class SelectionProxy :
         public QSortFilterProxyModel
 {
     public:
-        explicit SelectionProxy(QObject *parent = 0) : QSortFilterProxyModel(parent) { isAllSelected_ = true; }
+        explicit SelectionProxy(QObject *parent = 0) : QSortFilterProxyModel(parent) { isAllDisplayed_ = true; }
+
+        inline void displayAll();
+        inline bool isAllDisplayed();
 
         inline void beginResetModel();
         inline void endResetModel();
-
-        inline void selectAll();
-        inline bool isAllSelected();
 
     protected:
         inline bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const;
 
     private:
-        bool isAllSelected_;
+        bool isAllDisplayed_;
 };
 
 inline bool SelectionProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{ return isAllSelected_ || sourceModel()->index(sourceRow, 0, sourceParent).data(filterRole()).toBool(); }
+{ return isAllDisplayed_ || sourceModel()->index(sourceRow, 0, sourceParent).data(filterRole()).value<XmlItem *>()->isVisible(); }
 
 inline void SelectionProxy::beginResetModel()
-{ isAllSelected_ = false; QSortFilterProxyModel::beginResetModel(); }
+{ isAllDisplayed_ = false; QSortFilterProxyModel::beginResetModel(); }
 
 inline void SelectionProxy::endResetModel()
 { QSortFilterProxyModel::endResetModel(); }
 
-inline void SelectionProxy::selectAll()
-{ isAllSelected_ = true; }
+inline void SelectionProxy::displayAll()
+{ isAllDisplayed_ = true; }
 
-inline bool SelectionProxy::isAllSelected()
-{ return isAllSelected_; }
+inline bool SelectionProxy::isAllDisplayed()
+{ return isAllDisplayed_; }
 
 #endif // SELECTIONPROXY_H

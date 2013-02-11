@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QTreeView>
 
-#include "Rendering/polygonitem.h"
+#include "Rendering/regionitem.h"
 #include "selectionproxy.h"
 #include "xmldelegate.h"
 #include "xmlitem.h"
@@ -17,8 +17,10 @@ class XmlView :
     public:
         explicit XmlView(QWidget *parent = 0);
 
-        inline QList<XmlItem *> visibleItems() const;
-        void hideVisibles();
+        inline QList<XmlItem *> displayedItems() const;
+        void hideAll();
+
+        inline QList<XmlItem *> selectedItems() const;
 
         inline void setModel(QAbstractItemModel *model);
 
@@ -26,24 +28,44 @@ class XmlView :
         void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
     private:
-        QList<XmlItem *> visibleItems_;
+        QList<XmlItem *> transform(const QModelIndexList& modelIndexList) const;
+        void display(QList<XmlItem *> displayedItems, bool addToDisplayedList);
+
         SelectionProxy proxy_;
+        QList<XmlItem *> displayedItems_;
 
     public slots:
-        inline void onBeginGraphicalSelection();
-        void onEndGraphicalSelection(const QList<QGraphicsItem *>& selectedItems);
+        inline void display(QList<XmlItem *> displayedItems);
+        inline void displayOnly(QList<XmlItem *> displayedItems);
+        inline void displayAll();
 
     signals:
-        void selection(const QList<PolygonItem *>& selectedItems, bool addToSelection);
-        void resetGraphicalSelection();
-        void resetAttributes();
+        void loadAttributes(const XmlAttributes& xmlAttributes);
+
+        void select(const QList<XmlItem *>& selectedItems);
+        void unselect(const QList<XmlItem *>& unselectedItems);
+
+        void newSelection();
+        void emptySelection();
+
+        void resetSelection();
+        void resetProperty();
 };
 
-inline QList<XmlItem *> XmlView::visibleItems() const
-{ return visibleItems_; }
+inline QList<XmlItem *> XmlView::displayedItems() const
+{ return displayedItems_; }
 
-inline void XmlView::onBeginGraphicalSelection()
-{ proxy_.beginResetModel(); }
+inline void XmlView::display(QList<XmlItem *> displayedItems)
+{ display(displayedItems, true); }
+
+inline void XmlView::displayOnly(QList<XmlItem *> displayedItems)
+{ display(displayedItems, false); }
+
+inline void XmlView::displayAll()
+{ displayedItems_.clear(); proxy_.displayAll(); }
+
+inline QList<XmlItem *> XmlView::selectedItems() const
+{ return transform(selectedIndexes()); }
 
 inline void XmlView::setModel(QAbstractItemModel *model)
 { proxy_.setSourceModel(model); QTreeView::setModel(&proxy_); }

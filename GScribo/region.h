@@ -3,31 +3,40 @@
 
 #include <QColor>
 
-namespace GraphicRegion
+namespace GraphicsRegion
 {
     enum Id
     {
         Text = 0,
         Line,
-        Baseline,
-        Meanline,
-        HorizontalSeparator,
+
         VerticalSeparator,
+        HorizontalSeparator,
         WhiteSpaceSeparator,
+
         Image,
         Noise,
         Table,
-        LineDrawing,
+        Maths,
         Graphic,
         Chart,
-        Maths
+
+        Baseline,
+        Meanline,
+
+        TextRegion,
+        SeparatorRegion,
+        MiscRegion,
+        TypoRegion,
+
+        None
     };
 
     struct Data
     {
         QColor color;
         QString name;
-        GraphicRegion::Id region;
+        GraphicsRegion::Id region;
         int zValue;
     };
 }

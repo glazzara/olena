@@ -1,18 +1,18 @@
-#include "polygonitem.h"
+#include "regionitem.h"
 
-PolygonItem::PolygonItem(QGraphicsItem *parent, QGraphicsScene *scene)
+RegionItem::RegionItem(QGraphicsItem *parent, QGraphicsScene *scene)
     : QGraphicsPolygonItem(parent, scene)
 {
     init();
 }
 
-PolygonItem::PolygonItem(const QPolygonF &polygon, QGraphicsItem *parent, QGraphicsScene *scene):
+RegionItem::RegionItem(const QPolygonF& polygon, QGraphicsItem *parent, QGraphicsScene *scene):
         QGraphicsPolygonItem(polygon, parent, scene)
 {
     init();
 }
 
-void PolygonItem::init()
+void RegionItem::init()
 {
     xmlItem_ = 0;
 
@@ -29,7 +29,7 @@ void PolygonItem::init()
     unselectedBrush_.setStyle(Qt::SolidPattern);
 }
 
-void PolygonItem::setColor(const QColor& color)
+void RegionItem::setColor(const QColor& color)
 {
     selectedPen_.setColor(QColor::fromRgb(color.red(), color.green(), color.blue(), 255));
     unselectedPen_.setColor(color);
@@ -41,7 +41,7 @@ void PolygonItem::setColor(const QColor& color)
     setBrush(unselectedBrush_);
 }
 
-void PolygonItem::setSelected(bool isSelected)
+void RegionItem::setSelected(bool isSelected)
 {
     if(isSelected)
     {

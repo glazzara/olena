@@ -2,13 +2,13 @@
 # Project created by QtCreator 2013-01-21T09:20:54
 # -------------------------------------------------
 QT += xml
-INCLUDEPATH += /lrde/home/stage/froger_a/olena/scribo/ \
-    /lrde/home/stage/froger_a/olena/_build/scribo/demo/
+INCLUDEPATH += /home/onix/olena/scribo/ \
+    /home/onix/olena/_build/scribo/demo/
 QMAKE_CXXFLAGS += -DNDEBUG \
     -DMLN_WO_GLOBAL_VARS
 LIBS += -I/usr/include/graphicsImage \
     -lGraphicsMagick++ \
-    -ltesseract_full
+    -ltesseract
 TARGET = GScribo
 TEMPLATE = app
 SOURCES += main.cpp \
@@ -16,7 +16,7 @@ SOURCES += main.cpp \
     xml.cpp \
     Rendering/scene.cpp \
     Rendering/selection.cpp \
-    Rendering/polygonitem.cpp \
+    Rendering/regionitem.cpp \
     PagesWidget/pageswidget.cpp \
     PagesWidget/pagesmodel.cpp \
     Preferences/segmentationoptions.cpp \
@@ -28,9 +28,11 @@ SOURCES += main.cpp \
     XmlWidget/xmlmodel.cpp \
     XmlWidget/xmlitem.cpp \
     XmlWidget/xmlattributes.cpp \
-    XmlWidget/attributemodel.cpp \
+    XmlWidget/attributesmodel.cpp \
     PagesWidget/pagesdelegate.cpp \
-    XmlWidget/xmlview.cpp
+    XmlWidget/xmlview.cpp \
+    regionwidget.cpp \
+    regionwidgetitem.cpp
 HEADERS += mainwindow.h \
     variantpointer.h \
     configs.h \
@@ -39,7 +41,7 @@ HEADERS += mainwindow.h \
     xml.h \
     Rendering/scene.h \
     Rendering/selection.h \
-    Rendering/polygonitem.h \
+    Rendering/regionitem.h \
     PagesWidget/pageswidget.h \
     PagesWidget/pagesmodel.h \
     Preferences/segmentationoptions.h \
@@ -54,10 +56,12 @@ HEADERS += mainwindow.h \
     XmlWidget/xmlattributes.h \
     XmlWidget/selectionproxy.h \
     XmlWidget/xmldelegate.h \
-    XmlWidget/attributemodel.h \
+    XmlWidget/attributesmodel.h \
     PagesWidget/pagesdelegate.h \
     Rendering/rootgraphicsitem.h \
-    XmlWidget/xmlview.h
+    XmlWidget/xmlview.h \
+    regionwidget.h \
+    regionwidgetitem.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \

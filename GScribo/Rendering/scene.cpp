@@ -21,7 +21,7 @@ Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
 void Scene::init()
 {
     isPressing_ = false;
-    rootItem_ = 0;
+    root_ = 0;
 
     // Disable the scene size adaptation to items rect with a non null rect.
     setSceneRect(0, 0, 0, 1);
@@ -32,26 +32,28 @@ void Scene::init()
 
 void Scene::clear()
 {
-    if(rootItem_)
-        delete rootItem_;
+    if(root_)
+        delete root_;
 
-    selectedItems_.clear();
-    rootItem_ = 0;
+    selectedRegions_.clear();
+    root_ = 0;
 }
 
 void Scene::clearSelection()
 {
     QGraphicsItem *child;
-    PolygonItem *polygonItem;
+    RegionItem *regionItem;
 
     // Unselect all items.
-    foreach(child, selectedItems_)
+    foreach(child, selectedRegions_)
     {
-        polygonItem = static_cast<PolygonItem *>(child);
-        polygonItem->unselect();
+        regionItem = static_cast<RegionItem *>(child);
+        regionItem->unselect();
     }
 
-    selectedItems_.clear();
+    baseSelection_.clear();
+    selectedRegions_.clear();
+    emit selectionCleared();
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -89,57 +91,40 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
           isPressing_ = false;
 
           // Redraw all items in selection.
-          if(rootItem_)
+          if(root_)
           {
               clearSelection();
-              emit beginSelection();
 
               // Check if it is a click.
               if(selection_.rect().width() * selection_.rect().height() == 0)
-                  selectItems(event->scenePos());
+                  select(event->scenePos());
               else
-                  selectItems(selection_.rect());
+                  select(selection_.rect());
 
-              emit endSelection(selectedItems_);
+              emit newSelection(selectedRegions_);
           }
 
-          selection_.setRect(0, 0, 0, 0);
+          selection_.setRect(0, 0, 0, 1);
           selection_.hide();
       }
 }
 
-void Scene::selectItems(const QList<PolygonItem *>& selectedItems, bool addToSelection)
-{
-    if(!addToSelection)
-        clearSelection();
-
-    PolygonItem *child;
-    foreach(child, selectedItems)
-    {
-        if(!child->isSelected())
-        {
-            child->select();
-            selectedItems_ << child;
-        }
-    }
-}
-
-void Scene::selectItems(QGraphicsItem *root, const QPointF& point, const QRectF& rect)
+void Scene::select(QGraphicsItem *root, const QPointF& point, const QRectF& rect)
 {
     QGraphicsItem *child;
-    PolygonItem *polygonItem;
+    RegionItem *regionItem;
 
     // Check if it is a click.
     if(!point.isNull())
     {
         foreach(child, root->childItems())
         {
-            polygonItem = static_cast<PolygonItem *>(child);
+            regionItem = static_cast<RegionItem *>(child);
 
-            if(polygonItem->contains(point))
+            if(regionItem->contains(point))
             {
-                polygonItem->select();
-                selectedItems_ << polygonItem;
+                regionItem->select();
+                selectedRegions_ << regionItem;
             }
         }
     }
@@ -148,27 +133,71 @@ void Scene::selectItems(QGraphicsItem *root, const QPointF& point, const QRectF&
     {
         foreach(child, root->childItems())
         {
-            polygonItem = static_cast<PolygonItem *>(child);
+            regionItem = static_cast<RegionItem *>(child);
 
-            if(polygonItem->intersects(rect))
+            if(regionItem->intersects(rect))
             {
-                polygonItem->select();
-                selectedItems_ << polygonItem;
+                regionItem->select();
+                selectedRegions_ << regionItem;
             }
         }
     }
+
+    emit newSelection();
 }
 
-void Scene::setRootItem(RootGraphicsItem *rootItem)
+void Scene::select(const QList<RegionItem *>& selectedRegions)
+{
+    RegionItem *child;
+    foreach(child, selectedRegions)
+    {
+        if(!child->isSelected())
+        {
+            child->select();
+            selectedRegions_ << child;
+        }
+    }
+
+    ensureVisible(selectedRegions_.last());
+    emit newSelection();
+}
+
+void Scene::unselect(const QList<RegionItem *>& unselectedRegions)
+{
+    RegionItem *child;
+    foreach(child, unselectedRegions)
+    {
+        if(child->isSelected())
+        {
+            child->unselect();
+            selectedRegions_.removeOne(child);
+        }
+    }
+
+    // Check if after the removal, the selected list isn't empty.
+    if(!selectedRegions_.isEmpty())
+        ensureVisible(selectedRegions_.last());
+    emit newSelection();
+}
+
+
+void Scene::ensureVisible(QGraphicsItem *graphicalItem)
+{
+    QGraphicsView *view;
+    foreach (view, views())
+        view->ensureVisible(graphicalItem);
+}
+
+void Scene::setRoot(RootGraphicsItem *root)
 {
     // Delete all items.
     clear();
 
-    rootItem_ = rootItem;
-    addItem(rootItem);
+    root_ = root;
+    addItem(root);
 }
 
-void Scene::changeScene(const QString& filename, RootGraphicsItem *rootItem)
+void Scene::changeScene(const QString& filename, RootGraphicsItem *root)
 {
     backgroundPath_ = filename;
 
@@ -180,9 +209,9 @@ void Scene::changeScene(const QString& filename, RootGraphicsItem *rootItem)
     setBackgroundBrush(QBrush(pixmap));
 
     // Add new items.
-    if(rootItem)
+    if(root)
     {
-        rootItem_ = rootItem;
-        addItem(rootItem);
+        root_ = root;
+        addItem(root);
     }
 }

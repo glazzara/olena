@@ -8,7 +8,7 @@ class XmlDelegate :
         public QStyledItemDelegate
 {
     public:
-        explicit XmlDelegate(int role = Qt::DisplayRole, QObject *parent = 0) : QStyledItemDelegate(parent) { role_ = role; };
+        explicit XmlDelegate(int role = Qt::DisplayRole, QObject *parent = 0) : QStyledItemDelegate(parent) { role_ = role; }
         inline void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
         inline void setRole(int role);

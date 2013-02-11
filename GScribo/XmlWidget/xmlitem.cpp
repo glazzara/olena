@@ -22,7 +22,7 @@ XmlItem::~XmlItem()
 void XmlItem::init(XmlItem *parent, XmlItem *precItem)
 {
     isVisible_ = false;
-    graphicalItem_ = 0;
+    regionItem_ = 0;
     parent_ = parent;
 
     if(parent)
