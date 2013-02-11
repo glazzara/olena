@@ -6,21 +6,23 @@
 class XmlAttributes
 {
     public:
-        explicit XmlAttributes(XmlAttributes *precItem = 0);
+        explicit XmlAttributes();
         explicit XmlAttributes(const QDomNamedNodeMap& node);
-        explicit XmlAttributes(const QDomNamedNodeMap& node, XmlAttributes *precItem = 0);
-        ~XmlAttributes();
 
-        inline QString name() const;
-        inline QString value() const;
-        inline int row();
+        void load(const QDomNamedNodeMap& node);
+
+        inline QStringList names() const;
+        inline QStringList values() const;
 
     private:
-        void init(XmlAttributes *precItem = 0);
-
-        QString n;
-        QString v;
-        int r;
+        QStringList names_;
+        QStringList values_;
 };
+
+inline QStringList XmlAttributes::names() const
+{ return names_; }
+
+inline QStringList XmlAttributes::values() const
+{ return values_; }
 
 #endif // XMLATTRIBUTES_H

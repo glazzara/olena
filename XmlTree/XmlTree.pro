@@ -4,6 +4,7 @@
 QT += xml
 TARGET = XmlTree
 TEMPLATE = app
+LIBS +=
 SOURCES += main.cpp \
     mainwindow.cpp \
     xmlwidget.cpp \

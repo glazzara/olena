@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
     Magick::InitializeMagick(*argv);
     // On Linux, we NEED to use the raster graphics system.
-    // Linux don't really support X11 graphics system (the default one).
+    // Linux don't really support openGL graphics system (the default one on Linux).
     QApplication::setGraphicsSystem("raster");
     QApplication a(argc, argv);
     MainWindow w;
