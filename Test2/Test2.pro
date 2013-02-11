@@ -5,7 +5,11 @@ TARGET = Test2
 TEMPLATE = app
 SOURCES += main.cpp \
     test2.cpp \
-    picture.cpp
+    picture.cpp \
+    customgraphicsview.cpp \
+    xml.cpp
 HEADERS += test2.h \
-    picture.h
+    picture.h \
+    customgraphicsview.h \
+    xml.h
 FORMS += test2.ui

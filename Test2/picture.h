@@ -12,8 +12,7 @@ class Picture :
         public QGraphicsPixmapItem
 {
     public:
-        Picture(QTextEdit *textEdit);
-        Picture(const QString &filename, QTextEdit *textEdit);
+        Picture();
         void load(const QString &filename);
 
     protected:
@@ -21,14 +20,9 @@ class Picture :
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     private:
-        QString pressPosition();
-        QString releasePosition();
-
-        QTextEdit *textEdit;
-        QPainter *painter;
         QPointF pressPos;
         QPointF releasePos;
-        bool isPush;
+        bool isPress;
 };
 
 #endif // PICTURE_H

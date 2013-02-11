@@ -45,16 +45,6 @@
        <height>317</height>
       </rect>
      </property>
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>40</y>
-        <width>281</width>
-        <height>201</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
    </widget>
   </widget>

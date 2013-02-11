@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QShortcut>
 #include "picture.h"
+#include "customgraphicsview.h"
 
 namespace Ui
 {
@@ -27,6 +28,7 @@ private:
 
     Ui::Test2 *ui;
     Picture *picture;
+    CustomGraphicsView *graphicsView;
     QScrollArea *scrollArea;
     double scaleFactor;
 
