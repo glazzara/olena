@@ -18,12 +18,12 @@ SOURCES += main.cpp \
     scene.cpp \
     selection.cpp \
     pageswidget.cpp \
-    itemdelegate.cpp \
-    listmodel.cpp
+    listmodel.cpp \
+    icon.cpp
 HEADERS += mainwindow.h \
     scene.h \
     selection.h \
     pageswidget.h \
-    itemdelegate.h \
-    listmodel.h
+    listmodel.h \
+    icon.h
 FORMS += mainwindow.ui

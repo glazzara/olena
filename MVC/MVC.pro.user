@@ -76,14 +76,14 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-sncykruQ0C,guid=e454b1a02a95fc6454d7a56d0067ee2b</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-iL4mXwl7ak,guid=7e9603aab929b1f1fce663d30068f708</value>
     <value type="QString">DESKTOP_SESSION=fluxbox</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">GDMSESSION=fluxbox</value>
     <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-8ccgXN</value>
-    <value type="QString">GNOME_KEYRING_PID=30769</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-kN7FtK</value>
+    <value type="QString">GNOME_KEYRING_PID=25582</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
@@ -95,16 +95,16 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=30844</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-gtQAz30778/agent.30778</value>
+    <value type="QString">SSH_AGENT_PID=25657</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-RiFAp25591/agent.25591</value>
     <value type="QString">TERM=xterm</value>
     <value type="QString">USER=froger_a</value>
     <value type="QString">USERNAME=froger_a</value>
     <value type="QString">WINDOWID=10485796</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdm3KFZQW</value>
+    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmJKU1QW</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358858991.561353-1070905078</value>
+    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358926796.562496-56304996</value>
     <value type="QString">XPSERVERLIST=:64 </value>
     <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
     <value type="QString">XTERM_SHELL=/bin/bash</value>
@@ -128,14 +128,14 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-sncykruQ0C,guid=e454b1a02a95fc6454d7a56d0067ee2b</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-iL4mXwl7ak,guid=7e9603aab929b1f1fce663d30068f708</value>
     <value type="QString">DESKTOP_SESSION=fluxbox</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">GDMSESSION=fluxbox</value>
     <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-8ccgXN</value>
-    <value type="QString">GNOME_KEYRING_PID=30769</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-kN7FtK</value>
+    <value type="QString">GNOME_KEYRING_PID=25582</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
@@ -147,16 +147,16 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=30844</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-gtQAz30778/agent.30778</value>
+    <value type="QString">SSH_AGENT_PID=25657</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-RiFAp25591/agent.25591</value>
     <value type="QString">TERM=xterm</value>
     <value type="QString">USER=froger_a</value>
     <value type="QString">USERNAME=froger_a</value>
     <value type="QString">WINDOWID=10485796</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdm3KFZQW</value>
+    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmJKU1QW</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358858991.561353-1070905078</value>
+    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358926796.562496-56304996</value>
     <value type="QString">XPSERVERLIST=:64 </value>
     <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
     <value type="QString">XTERM_SHELL=/bin/bash</value>

@@ -1,23 +1,20 @@
-#ifndef LISTMODEL_H
-#define LISTMODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <QAbstractListModel>
 #include <QIcon>
-#include <QList>
 
-class ListModel:
+class Model :
         public QAbstractListModel
 {
-        Q_OBJECT
-
     public:
-        explicit ListModel(QObject *parent = 0);
+        explicit Model(QObject *parent = 0);
+        QVariant data(const QModelIndex &index, int role) const;
         int rowCount(const QModelIndex &parent) const;
-        QVariant data(const QModelIndex &index, int role = Qt::DecorationRole) const;
         void addPixmap(const QPixmap& pixmap);
 
     private:
         QList<QPixmap> pixmaps;
 };
 
-#endif // LISTMODEL_H
+#endif // MODEL_H

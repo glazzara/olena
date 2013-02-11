@@ -2,29 +2,24 @@
 #define PAGESWIDGET_H
 
 #include <QWidget>
-#include <QScrollArea>
-#include <QVBoxLayout>
-#include <QListWidget>
-#include <QStandardItemModel>
-#include <QLabel>
+#include <QListView>
+#include <QPainter>
+#include <QPushButton>
+#include <QScrollBar>
 
-#include "itemdelegate.h"
 #include "listmodel.h"
 
 class PagesWidget:
-        public QWidget
+        public QListView
 {
         Q_OBJECT
 
     public:
         explicit PagesWidget(QWidget *parent = 0);
-        ~PagesWidget();
-        void addPicture(const QString& filename, const QPixmap& pixmap);
+        void addPixmap(const QString& filename, const QPixmap& pixmap);
 
     private:
-        QListView *listView;
-        ListModel *model;
-        QStringList *filenames;
+        ListModel model;
 };
 
 #endif // PAGESWIDGET_H

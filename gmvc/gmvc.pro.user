@@ -10,11 +10,11 @@
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString">GScribo.pro</value>
+  <value type="QString">gmvc.pro</value>
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">GScribo</value>
+  <value type="QString">gmvc</value>
  </data>
  <data>
   <variable>RunConfiguration0-UseDyldImageSuffix</variable>
@@ -91,7 +91,7 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/GScribo</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/gmvc</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
@@ -112,7 +112,7 @@
     <value type="QString">_=/usr/bin/qtcreator</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo/GScribo.pro</value>
+    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/gmvc/gmvc.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
@@ -120,7 +120,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/gmvc</value>
   </valuemap>
  </data>
  <data>
@@ -143,7 +143,7 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/GScribo</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/gmvc</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
@@ -169,7 +169,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/gmvc</value>
   </valuemap>
  </data>
  <data>
