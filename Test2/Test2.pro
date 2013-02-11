@@ -8,11 +8,13 @@ SOURCES += main.cpp \
     picture.cpp \
     customgraphicsview.cpp \
     xml.cpp \
-    graphicsregion.cpp
+    graphicsregion.cpp \
+    polygonitem.cpp
 HEADERS += test2.h \
     picture.h \
     customgraphicsview.h \
     xml.h \
-    graphicsregion.h
+    graphicsregion.h \
+    polygonitem.h
 FORMS += test2.ui
 QT += xml

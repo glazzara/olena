@@ -7,7 +7,7 @@ Xml::Xml()
 {
 }
 
-void Xml::graphicsTypoRegion(const QDomElement &element, const QString &typologicalName, const QPoint &xPos, QMap<QString, GraphicsRegion *> *map)
+void Xml::graphicsTypoRegion(const QDomElement &element, const QString &typologicalName, const QPoint &xPos)
 {
     GraphicsRegion *typoRegion = new GraphicsRegion();
     int yPos = element.attribute(typologicalName, "null").toInt();
@@ -15,10 +15,9 @@ void Xml::graphicsTypoRegion(const QDomElement &element, const QString &typologi
     QPainterPath painterPath(QPoint(xPos.x(), yPos));
     painterPath.lineTo(QPoint(xPos.y(), yPos));
     typoRegion->setPainterPath(&painterPath);
-    map->insert(QString::number(-yPos), typoRegion);
 }
 
-void Xml::graphicsLineRegion(const QDomElement &element, QMap<QString, GraphicsRegion *> *map)
+void Xml::graphicsLineRegion(const QDomElement &element)
 {
     if(!element.isNull())
     {
@@ -43,14 +42,13 @@ void Xml::graphicsLineRegion(const QDomElement &element, QMap<QString, GraphicsR
         }
         QPainterPath painterPath;
         painterPath.addPolygon(polygonLine);
-        map->insert(id, lineRegion);
-        graphicsTypoRegion(element.parentNode().toElement(), "baseline", QPoint(xMin, xMax), map);
-        graphicsTypoRegion(element.parentNode().toElement(), "meanline", QPoint(xMin, xMax), map);
-        graphicsLineRegion(element.nextSiblingElement("Line"), map);
+        graphicsTypoRegion(element.parentNode().toElement(), "baseline", QPoint(xMin, xMax));
+        graphicsTypoRegion(element.parentNode().toElement(), "meanline", QPoint(xMin, xMax));
+        graphicsLineRegion(element.nextSiblingElement("Line"));
     }
 }
 
-void Xml::graphicsTextRegion(const QDomElement &element, QMap<QString, GraphicsRegion *> *map)
+void Xml::graphicsTextRegion(const QDomElement &element)
 {
     if(!element.isNull())
     {
@@ -66,24 +64,17 @@ void Xml::graphicsTextRegion(const QDomElement &element, QMap<QString, GraphicsR
         }
         QPainterPath painterPath;
         painterPath.addPolygon(polygonText);
-        map->insert(id, textRegion);
-        graphicsLineRegion(element.firstChild().nextSiblingElement("Line"), map);
-        graphicsTextRegion(element.nextSiblingElement("TextRegion"), map);
+        graphicsLineRegion(element.firstChild().nextSiblingElement("Line"));
+        graphicsTextRegion(element.nextSiblingElement("TextRegion"));
     }
 }
 
-QMap<QString, GraphicsRegion *> Xml::mapItems(const QString &filename)
+QVector<QGraphicsItem> Xml::mapItems(const QString &filename)
 {
-    QMap<QString, GraphicsRegion *> *map = new QMap<QString, GraphicsRegion *>();
     QFile xmlFile(filename);
     xmlFile.open(QIODevice::ReadOnly);
     QDomDocument xml;
     xml.setContent(&xmlFile);
     xmlFile.close();
-    QDomElement elt = xml.documentElement().firstChild().nextSiblingElement("Page");
-    //int width = elt.attribute("imageWidth", "null").toInt();
-    //int height = elt.attribute("imageHeight", "null").toInt();
-    elt = elt.firstChild().toElement();
-    graphicsTextRegion(elt, map);
-    return *map;
+    graphicsTextRegion(xml.documentElement().firstChild().nextSiblingElement("Page").firstChild().toElement());
 }
