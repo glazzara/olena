@@ -6,9 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->graphicsView->setGeometry(0, 0, ui->groupBox->width(), ui->groupBox->height());
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(ui->groupBox);
+    layout->addWidget(ui->textEdit);
+    setLayout(layout);
+    QVBoxLayout *gBLayout = new QVBoxLayout;
+    gBLayout->addWidget(ui->graphicsView);
+    ui->groupBox->setLayout(gBLayout);
     Scene *scene = new Scene(ui->graphicsView);
-    scene->setSceneRect(/*ui->graphicsView->geometry()*/0, 0, 1000, 1000);
+    scene->setSceneRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene);
     Xml::parseItems("/tmp/mp00082c_gui.xml", scene);
 }

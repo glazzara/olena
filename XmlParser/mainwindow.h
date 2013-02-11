@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QVBoxLayout>
 #include <QFileDialog>
 #include "scene.h"
 #include "xml.h"
