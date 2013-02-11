@@ -60,7 +60,7 @@ void MainWindow::initTextRegion()
     dockText->setWidget(textEdit);
 
     addDockWidget(Qt::RightDockWidgetArea, dockText);
-    dockText->hide();
+    //dockText->hide();
 }
 
 void MainWindow::initToolBar()

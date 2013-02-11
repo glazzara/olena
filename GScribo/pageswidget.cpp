@@ -3,28 +3,25 @@
 PagesWidget::PagesWidget(QWidget *parent):
         QWidget(parent)
 {
+    QStringList l;
+    l << "/lrde/home/stage/froger_a/ppm/mp00032c.ppm" << "/lrde/home/stage/froger_a/ppm/mp00042.ppm" << "/lrde/home/stage/froger_a/ppm/mp00076.ppm";
     filenames = new QStringList;
-    scrollArea = new QScrollArea(this);
-    scrollArea->setGeometry(0, 0, 1000, 1000);
-    layout = new QHBoxLayout;
-    QWidget *widget = new QWidget;
-    widget->setLayout(layout);
-    scrollArea->setWidget(widget);
+    model = new ListModel(l);
+    listView = new QListView(this);
+    listView->setItemDelegate(new ItemDelegate());
+    listView->setModel(model);
+    listView->update(model->index(0, 0));
+    listView->show();
 }
 
 PagesWidget::~PagesWidget()
 {
     delete filenames;
-    delete layout;
-    delete scrollArea;
+    delete listView;
 }
 
 void PagesWidget::addPicture(const QString& filename, const QPixmap& pixmap)
 {
     *filenames << filename;
-    QPixmap pix = pixmap.scaled(100, 100, Qt::IgnoreAspectRatio);
-    QLabel *label = new QLabel(this);
-    label->setPixmap(pix);
-    layout->addWidget(label, 0, Qt::AlignHCenter | Qt::AlignTop);
-    scrollArea->update(scrollArea->geometry());
+
 }

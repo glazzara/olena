@@ -5,7 +5,11 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QListWidget>
+#include <QStandardItemModel>
 #include <QLabel>
+
+#include "itemdelegate.h"
+#include "listmodel.h"
 
 class PagesWidget:
         public QWidget
@@ -14,13 +18,12 @@ class PagesWidget:
 
     public:
         explicit PagesWidget(QWidget *parent = 0);
-        explicit PagesWidget(QWidgetPrivate &d, QWidget *parent = 0);
         ~PagesWidget();
         void addPicture(const QString& filename, const QPixmap& pixmap);
 
     private:
-        QScrollArea *scrollArea;
-        QHBoxLayout *layout;
+        QListView *listView;
+        ListModel *model;
         QStringList *filenames;
 };
 
