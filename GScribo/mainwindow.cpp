@@ -38,8 +38,7 @@ void MainWindow::initGraphicsRegion()
 void MainWindow::initPageWidget()
 {
     dockPages.setWindowTitle(tr("Pages"));
-    dockPages.setFeatures(QDockWidget::DockWidgetClosable);
-    //dockPages.setFixedWidth(190);
+    dockPages.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
     dockPages.setWidget(&pagesWidget);
 
     addDockWidget(Qt::LeftDockWidgetArea, &dockPages);
@@ -48,7 +47,7 @@ void MainWindow::initPageWidget()
 void MainWindow::initXmlWidget()
 {
     dockXml.setWindowTitle(tr("Xml"));
-    dockXml.setFeatures(QDockWidget::DockWidgetClosable);
+    dockXml.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
     dockXml.setWidget(&xmlWidget);
 
     addDockWidget(Qt::BottomDockWidgetArea, &dockXml);
@@ -72,9 +71,6 @@ void MainWindow::initToolBar()
 
     QAction *segment = ui->mainToolBar->addAction(tr("Segment"));
     connect(segment, SIGNAL(triggered()), this, SLOT(onSegment()));
-
-    QAction *del = ui->mainToolBar->addAction(tr("Delete"));
-    connect(del, SIGNAL(triggered()), &pagesWidget, SLOT(removeSelection()));
 }
 
 void MainWindow::initMenuBar()
@@ -95,7 +91,7 @@ void MainWindow::onFileChanged(const QString& filename)
 
         xml.load(xmlPath);
         scene.changeScene(filename, xml.graphicItem());
-        xmlWidget.changeView(xml.treeItem());
+        xmlWidget.changeView(xml.xmlItem());
     }
 }
 
@@ -134,10 +130,11 @@ void MainWindow::onOpen()
             }
 
             pagesWidget.setCurrentRow(0);
-            onFileChanged(path);
+            pagesWidget.scrollToTop();
         }
-        else
-            onFileChanged(path);
+
+        // Change current scene.
+        onFileChanged(path);
     }
 }
 
@@ -161,7 +158,7 @@ void MainWindow::onSegment()
 void MainWindow::onXmlSaved(const QString& filename)
 {
     xml.load(filename);
-    xmlWidget.changeView(xml.treeItem());
+    xmlWidget.changeView(xml.xmlItem());
     scene.setRootItem(xml.graphicItem());
 }
 
@@ -171,15 +168,22 @@ void MainWindow::onPreferences()
     //preferenceDialog->show();
 }
 
+void MainWindow::onDelete()
+{
+    if(pagesWidget.hasFocus())
+        pagesWidget.removeSelection();
+}
+
 void MainWindow::connectWidgets()
 {
     // If double click on a picture of the page widget -> draw it on background scene.
     connect(&pagesWidget, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
 
     // Connect the scene to the xml widget and vice versa.
-    connect(&scene, SIGNAL(beginSelection()), &xmlWidget, SLOT(onBeginGraphicalSelection()));
-    connect(&scene, SIGNAL(endSelection()), &xmlWidget, SLOT(onEndGraphicalSelection()));
-    connect(&xmlWidget, SIGNAL(select(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));
+    connect(&scene, SIGNAL(beginSelection()), xmlWidget.view(), SLOT(onBeginGraphicalSelection()));
+    connect(&scene, SIGNAL(endSelection(QList<QGraphicsItem*>)), xmlWidget.view(), SLOT(onEndGraphicalSelection(QList<QGraphicsItem*>)));
+    connect(xmlWidget.view(), SIGNAL(selection(QList<PolygonItem*>,bool)), &scene, SLOT(selectItems(QList<PolygonItem*>, bool)));
+    connect(xmlWidget.view(), SIGNAL(resetGraphicalSelection()), &scene, SLOT(clearSelection()));
 
     /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
@@ -191,7 +195,7 @@ void MainWindow::connectWidgets()
 void MainWindow::connectShortcuts()
 {
     QShortcut *del = new QShortcut(Qt::Key_Delete, &pagesWidget);
-    connect(del, SIGNAL(activated()), &pagesWidget, SLOT(removeSelection()));
+    connect(del, SIGNAL(activated()), this, SLOT(onDelete()));
 }
 
 void MainWindow::changeEvent(QEvent *e)

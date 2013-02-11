@@ -1,12 +1,12 @@
-#include "listmodel.h"
+#include "pagesmodel.h"
 
-ListModel::ListModel(QObject *parent):
+PagesModel::PagesModel(QObject *parent):
         QAbstractListModel(parent)
 {
     currentRow_ = 0;
 }
 
-QVariant ListModel::data(const QModelIndex& index, int role) const
+QVariant PagesModel::data(const QModelIndex& index, int role) const
 {
     if(!index.isValid())
         return QVariant();
@@ -23,19 +23,17 @@ QVariant ListModel::data(const QModelIndex& index, int role) const
    return QVariant();
 }
 
-void ListModel::addPicture(const QString& filename, const QPixmap& pixmap)
+void PagesModel::addPicture(const QString& filename, const QPixmap& pixmap)
 {
     beginInsertRows(QModelIndex(), 0, 0);
-    beginResetModel();
 
     pixmaps_.prepend(pixmap.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     filenames_.prepend(filename);
 
     endInsertRows();
-    //endResetModel();
 }
 
-void ListModel::removePixmap(const QModelIndex &parent)
+void PagesModel::removePixmap(const QModelIndex &parent)
 {
     int row = parent.row();
 
@@ -47,7 +45,7 @@ void ListModel::removePixmap(const QModelIndex &parent)
     endRemoveRows();
 }
 
-void ListModel::setCurrentRow(int currentRow)
+void PagesModel::setCurrentRow(int currentRow)
 {
     beginResetModel();
     currentRow_ = currentRow;

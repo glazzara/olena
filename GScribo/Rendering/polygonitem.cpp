@@ -12,14 +12,6 @@ PolygonItem::PolygonItem(const QPolygonF &polygon, QGraphicsItem *parent, QGraph
     init();
 }
 
-PolygonItem::~PolygonItem()
-{
-    // Delete all childs.
-    QGraphicsItem *child;
-    foreach(child, childItems())
-        delete child;
-}
-
 void PolygonItem::init()
 {
     xmlItem_ = 0;
@@ -49,40 +41,19 @@ void PolygonItem::setColor(const QColor& color)
     setBrush(unselectedBrush_);
 }
 
-bool PolygonItem::isSelected(const QRectF& rect, bool clic)
+void PolygonItem::setSelected(bool isSelected)
 {
-    if(clic)
-        return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(rect.bottomRight())) &&
-            shape().contains(rect.bottomRight());
-    else
-        return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) &&
-            shape().intersects(rect);
-}
-
-void PolygonItem::setSelected(const QRectF& rect, bool clic)
-{
-    if(isSelected(rect, clic))
+    if(isSelected)
     {
-        // Select graphical and xml item.
-        select();
-        xmlItem_->select();
-
-        // If we are on a line, select the text xml item.
-        if(region_ == GraphicRegion::Line)
-            static_cast<PolygonItem *>(parentItem())->xmlItem()->select();
-    }
-    else
-    {
-        // Unselect graphical and xml item.
-        unselect();
-        xmlItem_->unselect();
+        isSelected_ = true;
+        setPen(selectedPen_);
+        setBrush(selectedBrush_);
     }
 
-    // Set selection for line items.
-    if(region_ == GraphicRegion::Text)
+    else
     {
-        QGraphicsItem *child;
-        foreach(child, childItems())
-            static_cast<PolygonItem *>(child)->setSelected(rect, clic);
+        isSelected_ = false;
+        setPen(unselectedPen_);
+        setBrush(unselectedBrush_);
     }
 }

@@ -18,7 +18,7 @@ SOURCES += main.cpp \
     Rendering/selection.cpp \
     Rendering/polygonitem.cpp \
     PagesWidget/pageswidget.cpp \
-    PagesWidget/listmodel.cpp \
+    PagesWidget/pagesmodel.cpp \
     Preferences/segmentationoptions.cpp \
     Preferences/preprocessingoptions.cpp \
     Preferences/ocroptions.cpp \
@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     XmlWidget/xmlitem.cpp \
     XmlWidget/xmlattributes.cpp \
     XmlWidget/attributemodel.cpp \
-    PagesWidget/pagesdelegate.cpp
+    PagesWidget/pagesdelegate.cpp \
+    XmlWidget/xmlview.cpp
 HEADERS += mainwindow.h \
     variantpointer.h \
     configs.h \
@@ -40,7 +41,7 @@ HEADERS += mainwindow.h \
     Rendering/selection.h \
     Rendering/polygonitem.h \
     PagesWidget/pageswidget.h \
-    PagesWidget/listmodel.h \
+    PagesWidget/pagesmodel.h \
     Preferences/segmentationoptions.h \
     Preferences/preprocessingoptions.h \
     Preferences/ocroptions.h \
@@ -54,7 +55,9 @@ HEADERS += mainwindow.h \
     XmlWidget/selectionproxy.h \
     XmlWidget/xmldelegate.h \
     XmlWidget/attributemodel.h \
-    PagesWidget/pagesdelegate.h
+    PagesWidget/pagesdelegate.h \
+    Rendering/rootgraphicsitem.h \
+    XmlWidget/xmlview.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \

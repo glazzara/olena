@@ -7,7 +7,7 @@ namespace GraphicRegion
 {
     enum Id
     {
-        Text,
+        Text = 0,
         Line,
         Baseline,
         Meanline,
@@ -27,7 +27,7 @@ namespace GraphicRegion
     {
         QColor color;
         QString name;
-        int region;
+        GraphicRegion::Id region;
         int zValue;
     };
 }

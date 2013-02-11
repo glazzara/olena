@@ -1,17 +1,17 @@
-#ifndef LISTMODEL_H
-#define LISTMODEL_H
+#ifndef PAGESMODEL_H
+#define PAGESMODEL_H
 
 #include <QAbstractListModel>
 #include <QIcon>
 #include <QList>
 
-class ListModel:
+class PagesModel:
         public QAbstractListModel
 {
         Q_OBJECT
 
     public:
-        explicit ListModel(QObject *parent = 0);
+        explicit PagesModel(QObject *parent = 0);
 
         inline QStringList filenames() const;
         inline int rowCount(const QModelIndex& parent = QModelIndex()) const;
@@ -31,13 +31,13 @@ class ListModel:
         void removePixmap(const QModelIndex& parent);
 };
 
-inline QStringList ListModel::filenames() const
+inline QStringList PagesModel::filenames() const
 { return filenames_; }
 
-inline int ListModel::rowCount(const QModelIndex&) const
+inline int PagesModel::rowCount(const QModelIndex&) const
 { return filenames_.count(); }
 
-inline int ListModel::currentRow() const
+inline int PagesModel::currentRow() const
 { return currentRow_; }
 
-#endif // LISTMODEL_H
+#endif // PAGESMODEL_H

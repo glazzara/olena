@@ -24,10 +24,10 @@ class XmlItem
         inline PolygonItem *graphicalItem();
         inline void setGraphicalItem(PolygonItem *graphicalItem);
 
-        inline bool isSelected() const;
-        inline void setSelected(bool selected);
-        inline void select();
-        inline void unselect();
+        inline bool isVisible() const;
+        inline void setVisible(bool visible);
+        inline void show();
+        inline void hide();
 
         inline QString text() const;
         inline int row() const;
@@ -37,7 +37,7 @@ class XmlItem
         void init(XmlItem *parent = 0, XmlItem *precItem = 0);
 
         int row_;
-        bool isSelected_;
+        bool isVisible_;
         QList<XmlItem *> childs_;
         XmlItem *parent_;
         PolygonItem *graphicalItem_;
@@ -63,17 +63,17 @@ inline PolygonItem *XmlItem::graphicalItem()
 inline void XmlItem::setGraphicalItem(PolygonItem *graphicalItem)
 { graphicalItem_ = graphicalItem; }
 
-inline bool XmlItem::isSelected() const
-{ return isSelected_; }
+inline bool XmlItem::isVisible() const
+{ return isVisible_; }
 
-inline void XmlItem::setSelected(bool selected)
-{ isSelected_ = selected; }
+inline void XmlItem::setVisible(bool visible)
+{ isVisible_ = visible; }
 
-inline void XmlItem::select()
-{ isSelected_ = true; }
+inline void XmlItem::show()
+{ isVisible_ = true; }
 
-inline void XmlItem::unselect()
-{ isSelected_ = false; }
+inline void XmlItem::hide()
+{ isVisible_ = false; }
 
 inline QString XmlItem::text() const
 { return text_; }

@@ -16,6 +16,7 @@
 #include "variantpointer.h"
 #include "xmldelegate.h"
 #include "xmlmodel.h"
+#include "xmlview.h"
 
 class XmlWidget :
         public QWidget
@@ -25,33 +26,26 @@ class XmlWidget :
     public:
         explicit XmlWidget(QWidget *parent = 0);
 
+        inline XmlView *view();
+        inline QTreeView *property();
+
         void changeView(XmlItem *rootItem);
 
     private:
         QSortFilterProxyModel proxy_;
-        SelectionProxy selectionProxy_;
+        SelectionProxy proxy2_;
 
         XmlModel model_;
         AttributeModel attributesModel_;
 
-        QTreeView selection_;
+        XmlView view_;
         QTreeView property_;
-
-    public slots:
-        inline void onBeginGraphicalSelection();
-        inline void onEndGraphicalSelection();
-
-    private slots:
-        void onClick(const QModelIndex& index);
-
-    signals:
-        void select(PolygonItem *polygonItem);
 };
 
-inline void XmlWidget::onBeginGraphicalSelection()
-{ selectionProxy_.beginResetModel(); }
+inline XmlView *XmlWidget::view()
+{ return &view_; }
 
-inline void XmlWidget::onEndGraphicalSelection()
-{ selectionProxy_.endResetModel(); attributesModel_.reset(); selection_.expandAll(); }
+inline QTreeView *XmlWidget::property()
+{ return &property_; }
 
 #endif // XMLWIDGET_H

@@ -6,8 +6,9 @@
 #include <QGraphicsScene>
 #include <QFileDialog>
 
-#include "selection.h"
+#include "rootgraphicsitem.h"
 #include "polygonitem.h"
+#include "selection.h"
 
 class Scene :
         public QGraphicsScene
@@ -20,12 +21,15 @@ class Scene :
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         inline QString backgroundPath() const;
-        void setRootItem(QGraphicsItem *graphicalItem);
-        inline QGraphicsItem *rootItem() const;
 
-        void clear();
-        void changeScene(const QString& filename, QGraphicsItem *rootItem = 0);
-        void selectItems(const QRectF& rect, bool clic);
+        void setRootItem(RootGraphicsItem *graphicalItem);
+        inline RootGraphicsItem *rootItem() const;
+
+        inline QList<QGraphicsItem *> selectedItems() const;
+        void selectItems(const QRectF& rect);
+        void selectItems(const QPointF& point);
+
+        void changeScene(const QString& filename, RootGraphicsItem *rootItem = 0);
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -34,26 +38,40 @@ class Scene :
 
     private:
         void init();
+        void selectItems(QGraphicsItem *root, const QPointF& point, const QRectF& rect);
 
-        QGraphicsItem *rootItem_;
+        QString backgroundPath_;
+        RootGraphicsItem *rootItem_;
+
         Selection selection_;
+        QList<QGraphicsItem *> selectedItems_;
+
         QPointF pressPos_;
         bool isPressing_;
-        bool click_;
-        QString backgroundPath_;
 
     public slots:
-        void selectItem(PolygonItem *graphicalItem);
+        void clear();
+        void clearSelection();
+        void selectItems(const QList<PolygonItem *>& selectedItems, bool addToSelection);
 
     signals:
         void beginSelection();
-        void endSelection();
+        void endSelection(const QList<QGraphicsItem *>& selectedItems);
 };
 
 inline QString Scene::backgroundPath() const
 { return backgroundPath_; }
 
-inline QGraphicsItem *Scene::rootItem() const
+inline RootGraphicsItem *Scene::rootItem() const
 { return rootItem_; }
+
+inline QList<QGraphicsItem *> Scene::selectedItems() const
+{ return selectedItems_; }
+
+inline void Scene::selectItems(const QPointF& point)
+{ selectItems(rootItem_, point, QRectF()); }
+
+inline void Scene::selectItems(const QRectF& rect)
+{ selectItems(rootItem_, QPointF(), rect); }
 
 #endif // SCENE_H

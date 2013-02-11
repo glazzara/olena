@@ -21,7 +21,7 @@ XmlItem::~XmlItem()
 
 void XmlItem::init(XmlItem *parent, XmlItem *precItem)
 {
-    isSelected_ = true;
+    isVisible_ = false;
     graphicalItem_ = 0;
     parent_ = parent;
 

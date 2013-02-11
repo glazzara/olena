@@ -65,6 +65,7 @@ class MainWindow:
         void onXmlSaved(const QString& filename);
         void onPreferences();
         void onFileChanged(const QString& filename);
+        void onDelete();
 };
 
 #endif // MAINWINDOW_H

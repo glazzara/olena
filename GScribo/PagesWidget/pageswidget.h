@@ -5,7 +5,7 @@
 #include <QShortcut>
 
 #include "pagesdelegate.h"
-#include "listmodel.h"
+#include "pagesmodel.h"
 
 class PagesWidget:
         public QListView
@@ -21,8 +21,11 @@ class PagesWidget:
 
         inline void addPicture(const QString& filename, const QPixmap& pixmap);
 
+    protected:
+        inline void focusOutEvent(QFocusEvent *event);
+
     private:
-        ListModel model_;
+        PagesModel model_;
 
     public slots:
         void removeSelection();
@@ -45,5 +48,8 @@ inline void PagesWidget::setCurrentRow(int currentRow)
 
 inline void PagesWidget::addPicture(const QString& filename, const QPixmap& pixmap)
 { model_.addPicture(filename, pixmap); }
+
+inline void PagesWidget::focusOutEvent(QFocusEvent *event)
+{ QListView::focusOutEvent(event); clearSelection(); }
 
 #endif // PAGESWIDGET_H

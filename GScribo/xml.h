@@ -8,6 +8,7 @@
 #include <climits>
 #include <QFile>
 
+#include "Rendering/rootgraphicsitem.h"
 #include "Rendering/polygonitem.h"
 #include "XmlWidget/xmlitem.h"
 #include "variantpointer.h"
@@ -19,8 +20,8 @@ class Xml
     public:
         explicit Xml(const QString& filename = QString());
 
-        inline XmlItem *treeItem();
-        inline QGraphicsItem *graphicItem();
+        inline XmlItem *xmlItem();
+        inline RootGraphicsItem *graphicItem();
         inline QDomDocument document() const;
         inline QString filename() const;
 
@@ -30,25 +31,25 @@ class Xml
     private:
         XmlItem *init(const QDomElement& root, XmlItem *rootTreeItem);
         void processNode(const QDomElement& root, const GraphicRegion::Data& data, XmlItem *rootTreeItem);
-        void processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, XmlItem *rootTreeItem);
+        void processLineNode(const QDomElement& root, XmlItem *rootTreeItem);
         void processTypoNode(const QDomElement& root, const QPoint& xPoint, PolygonItem *rootPolygonItem);
 
-        QGraphicsPolygonItem *gItem;
-        XmlItem *tItem;
-        QDomDocument xml;
-        QString path;
+        RootGraphicsItem *graphicalItem_;
+        XmlItem *xmlItem_;
+        QDomDocument xml_;
+        QString filename_;
 };
 
-inline XmlItem *Xml::treeItem()
-{ return tItem; }
+inline XmlItem *Xml::xmlItem()
+{ return xmlItem_; }
 
-inline QGraphicsItem *Xml::graphicItem()
-{ return gItem; }
+inline RootGraphicsItem *Xml::graphicItem()
+{ return graphicalItem_; }
 
 inline QDomDocument Xml::document() const
-{ return xml; }
+{ return xml_; }
 
 inline QString Xml::filename() const
-{ return path; }
+{ return filename_; }
 
 #endif // XML_H

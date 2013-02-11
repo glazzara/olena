@@ -37,7 +37,7 @@ QVariant XmlModel::data(const QModelIndex& index, int role) const
             return static_cast<XmlItem *>(index.internalPointer())->text();
 
         case Qt::UserRole+1:
-            return static_cast<XmlItem *>(index.internalPointer())->isSelected();
+            return static_cast<XmlItem *>(index.internalPointer())->isVisible();
 
         case Qt::UserRole+2:
             return QVariant::fromValue(static_cast<XmlItem *>(index.internalPointer())->attributes());

@@ -21,7 +21,6 @@ Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
 void Scene::init()
 {
     isPressing_ = false;
-    click_ = false;
     rootItem_ = 0;
 
     // Disable the scene size adaptation to items rect with a non null rect.
@@ -36,7 +35,23 @@ void Scene::clear()
     if(rootItem_)
         delete rootItem_;
 
+    selectedItems_.clear();
     rootItem_ = 0;
+}
+
+void Scene::clearSelection()
+{
+    QGraphicsItem *child;
+    PolygonItem *polygonItem;
+
+    // Unselect all items.
+    foreach(child, selectedItems_)
+    {
+        polygonItem = static_cast<PolygonItem *>(child);
+        polygonItem->unselect();
+    }
+
+    selectedItems_.clear();
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -44,7 +59,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton && !isPressing_)
     {
         isPressing_ = true;
-        click_ = true;
 
         pressPos_ = event->scenePos();
         selection_.show();
@@ -55,8 +69,6 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(isPressing_)
     {
-        click_ = false;
-
         // Adapt if the selection rectangle has a negative size.
         if(pressPos_.x() < event->scenePos().x())
             selection_.setRect(pressPos_.x(), 0, event->scenePos().x()-pressPos_.x(), 0);
@@ -76,16 +88,19 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
       {
           isPressing_ = false;
 
-          // If no selection, store the click position in the selection rectangle.
-          if(click_)
-              selection_.setRect(QRectF(QPointF(0, 0), event->scenePos()));
-
           // Redraw all items in selection.
           if(rootItem_)
           {
+              clearSelection();
               emit beginSelection();
-              selectItems(selection_.rect(), click_);
-              emit endSelection();
+
+              // Check if it is a click.
+              if(selection_.rect().width() * selection_.rect().height() == 0)
+                  selectItems(event->scenePos());
+              else
+                  selectItems(selection_.rect());
+
+              emit endSelection(selectedItems_);
           }
 
           selection_.setRect(0, 0, 0, 0);
@@ -93,38 +108,58 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
       }
 }
 
-void Scene::selectItem(PolygonItem *graphicalItem)
+void Scene::selectItems(const QList<PolygonItem *>& selectedItems, bool addToSelection)
+{
+    if(!addToSelection)
+        clearSelection();
+
+    PolygonItem *child;
+    foreach(child, selectedItems)
+    {
+        if(!child->isSelected())
+        {
+            child->select();
+            selectedItems_ << child;
+        }
+    }
+}
+
+void Scene::selectItems(QGraphicsItem *root, const QPointF& point, const QRectF& rect)
 {
     QGraphicsItem *child;
     PolygonItem *polygonItem;
 
-    // Unselect all items.
-    foreach(child, rootItem_->childItems())
+    // Check if it is a click.
+    if(!point.isNull())
     {
-        polygonItem = static_cast<PolygonItem *>(child);
-        polygonItem->unselect();
-
-        // Unselect lines.
-        foreach(child, polygonItem->childItems())
+        foreach(child, root->childItems())
         {
             polygonItem = static_cast<PolygonItem *>(child);
-            polygonItem->unselect();
+
+            if(polygonItem->contains(point))
+            {
+                polygonItem->select();
+                selectedItems_ << polygonItem;
+            }
         }
     }
 
-    // Select the good item.
-    graphicalItem->select();
-    views()[0]->centerOn(graphicalItem);
+    else
+    {
+        foreach(child, root->childItems())
+        {
+            polygonItem = static_cast<PolygonItem *>(child);
+
+            if(polygonItem->intersects(rect))
+            {
+                polygonItem->select();
+                selectedItems_ << polygonItem;
+            }
+        }
+    }
 }
 
-void Scene::selectItems(const QRectF& rect, bool clic)
-{
-    QGraphicsItem *child;
-    foreach(child, rootItem_->childItems())
-        static_cast<PolygonItem *>(child)->setSelected(rect, clic);
-}
-
-void Scene::setRootItem(QGraphicsItem *rootItem)
+void Scene::setRootItem(RootGraphicsItem *rootItem)
 {
     // Delete all items.
     clear();
@@ -133,7 +168,7 @@ void Scene::setRootItem(QGraphicsItem *rootItem)
     addItem(rootItem);
 }
 
-void Scene::changeScene(const QString& filename, QGraphicsItem *rootItem)
+void Scene::changeScene(const QString& filename, RootGraphicsItem *rootItem)
 {
     backgroundPath_ = filename;
 

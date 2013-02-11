@@ -2,6 +2,7 @@
 #define XMLDELEGATE_H
 
 #include <QStyledItemDelegate>
+#include<QPainter>
 
 class XmlDelegate :
         public QStyledItemDelegate

@@ -5,9 +5,10 @@
 #include <QTreeWidgetItem>
 #include <QPen>
 
-#include "XmlWidget/xmlitem.h"
 #include "variantpointer.h"
 #include "region.h"
+
+class XmlItem;
 
 class PolygonItem :
         public QGraphicsPolygonItem
@@ -15,7 +16,6 @@ class PolygonItem :
     public:
         explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
         explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-        ~PolygonItem();
 
         void setColor(const QColor& color);
         inline QColor color() const;
@@ -26,8 +26,11 @@ class PolygonItem :
         inline void loadData(const GraphicRegion::Data& data);
         inline int region() const;
 
-        bool isSelected(const QRectF& rect, bool clic);
-        void setSelected(const QRectF& rect, bool clic);
+        inline bool intersects(const QRectF& rect);
+        inline bool contains(const QPointF& point);
+
+        void setSelected(bool isSelected);
+        inline bool isSelected();
         inline void unselect();
         inline void select();
 
@@ -36,6 +39,7 @@ class PolygonItem :
 
         XmlItem *xmlItem_;
         int region_;
+        bool isSelected_;
 
         QPen selectedPen_;
         QPen unselectedPen_;
@@ -52,18 +56,25 @@ inline XmlItem *PolygonItem::xmlItem() const
 inline QColor PolygonItem::color() const
 { return selectedBrush_.color(); }
 
-inline void PolygonItem::loadData(const GraphicRegion::Data& data)
-{ region_ = data.region; setColor(data.color); setZValue(data.zValue); }
-
 inline int PolygonItem::region() const
 { return region_; }
 
+inline bool PolygonItem::isSelected()
+{ return isSelected_; }
+
 inline void PolygonItem::select()
-{ if(pen() != selectedPen_) { setPen(selectedPen_); setBrush(selectedBrush_); } }
+{ setSelected(true); }
 
 inline void PolygonItem::unselect()
-{ if(pen() != unselectedPen_) { setPen(unselectedPen_); setBrush(unselectedBrush_);} }
+{ setSelected(false); }
 
-Q_DECLARE_METATYPE(PolygonItem *)
+inline void PolygonItem::loadData(const GraphicRegion::Data& data)
+{ region_ = data.region; setColor(data.color); setZValue(data.zValue); }
+
+inline bool PolygonItem::contains(const QPointF& point)
+{ return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(point)) && shape().contains(point); }
+
+inline bool PolygonItem::intersects(const QRectF& rect)
+{ return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect); }
 
 #endif // POLYGONITEM_H
