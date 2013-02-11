@@ -10,11 +10,11 @@
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString">XmlParser.pro</value>
+  <value type="QString">GScribo.pro</value>
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">XmlParser</value>
+  <value type="QString">GScribo</value>
  </data>
  <data>
   <variable>RunConfiguration0-UseDyldImageSuffix</variable>
@@ -50,7 +50,7 @@
  </data>
  <data>
   <variable>activebuildconfiguration</variable>
-  <value type="QString">Release</value>
+  <value type="QString">Debug</value>
  </data>
  <data>
   <variable>buildConfiguration-Debug</variable>
@@ -67,7 +67,6 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <value key="QtVersionId" type="int">0</value>
-   <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">0</value>
   </valuemap>
@@ -77,14 +76,14 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-TRVg8AHdB1,guid=cba5ba91aecc3f6dfc36295700626000</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Si71aPButo,guid=4a5769b30d2b16bfbff191ee00669e72</value>
     <value type="QString">DESKTOP_SESSION=fluxbox</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">GDMSESSION=fluxbox</value>
     <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-nw18hR</value>
-    <value type="QString">GNOME_KEYRING_PID=3747</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-xqG91k</value>
+    <value type="QString">GNOME_KEYRING_PID=24747</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
@@ -92,20 +91,20 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/GScribo</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=3822</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-SkEKXK3756/agent.3756</value>
+    <value type="QString">SSH_AGENT_PID=24822</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-ViaPN24756/agent.24756</value>
     <value type="QString">TERM=xterm</value>
     <value type="QString">USER=froger_a</value>
     <value type="QString">USERNAME=froger_a</value>
-    <value type="QString">WINDOWID=12582948</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdmQ2DSQW</value>
+    <value type="QString">WINDOWID=10485796</value>
+    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmDMHCRW</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358494916.667367-1101742900</value>
+    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358773046.159332-2135577617</value>
     <value type="QString">XPSERVERLIST=:64 </value>
     <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
     <value type="QString">XTERM_SHELL=/bin/bash</value>
@@ -113,7 +112,7 @@
     <value type="QString">_=/usr/bin/qtcreator</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser/XmlParser.pro</value>
+    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo/GScribo.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
@@ -121,7 +120,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo</value>
   </valuemap>
  </data>
  <data>
@@ -129,14 +128,14 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-TRVg8AHdB1,guid=cba5ba91aecc3f6dfc36295700626000</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Si71aPButo,guid=4a5769b30d2b16bfbff191ee00669e72</value>
     <value type="QString">DESKTOP_SESSION=fluxbox</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">GDMSESSION=fluxbox</value>
     <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
     <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-nw18hR</value>
-    <value type="QString">GNOME_KEYRING_PID=3747</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-xqG91k</value>
+    <value type="QString">GNOME_KEYRING_PID=24747</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
@@ -144,20 +143,20 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/GScribo</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=3822</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-SkEKXK3756/agent.3756</value>
+    <value type="QString">SSH_AGENT_PID=24822</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-ViaPN24756/agent.24756</value>
     <value type="QString">TERM=xterm</value>
     <value type="QString">USER=froger_a</value>
     <value type="QString">USERNAME=froger_a</value>
-    <value type="QString">WINDOWID=12582948</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdmQ2DSQW</value>
+    <value type="QString">WINDOWID=10485796</value>
+    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmDMHCRW</value>
     <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358494916.667367-1101742900</value>
+    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358773046.159332-2135577617</value>
     <value type="QString">XPSERVERLIST=:64 </value>
     <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
     <value type="QString">XTERM_SHELL=/bin/bash</value>
@@ -170,7 +169,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/GScribo</value>
   </valuemap>
  </data>
  <data>
@@ -187,110 +186,18 @@
   <variable>buildconfiguration-Release-buildstep0</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-dwXmVzGpRA,guid=2e4bb3ce70c39fa5e5288771006655e3</value>
-    <value type="QString">DESKTOP_SESSION=fluxbox</value>
-    <value type="QString">DISPLAY=:0.0</value>
-    <value type="QString">GDMSESSION=fluxbox</value>
-    <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
-    <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-9aAGCJ</value>
-    <value type="QString">GNOME_KEYRING_PID=19876</value>
-    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
-    <value type="QString">HOME=/lrde/home/stage/froger_a</value>
-    <value type="QString">LANG=fr_FR.UTF-8</value>
-    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
-    <value type="QString">LOGNAME=froger_a</value>
-    <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
-    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
-    <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=19951</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-kVrax19885/agent.19885</value>
-    <value type="QString">TERM=xterm</value>
-    <value type="QString">USER=froger_a</value>
-    <value type="QString">USERNAME=froger_a</value>
-    <value type="QString">WINDOWID=10485796</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdm0ICXQW</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358754471.558659-246518931</value>
-    <value type="QString">XPSERVERLIST=:64 </value>
-    <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
-    <value type="QString">XTERM_SHELL=/bin/bash</value>
-    <value type="QString">XTERM_VERSION=XTerm(261)</value>
-    <value type="QString">_=/usr/bin/qtcreator</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser/XmlParser.pro</value>
-    <value type="QString">-spec</value>
-    <value type="QString">linux-g++</value>
-    <value type="QString">-r</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
-   <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
   </valuemap>
  </data>
  <data>
   <variable>buildconfiguration-Release-buildstep1</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-dwXmVzGpRA,guid=2e4bb3ce70c39fa5e5288771006655e3</value>
-    <value type="QString">DESKTOP_SESSION=fluxbox</value>
-    <value type="QString">DISPLAY=:0.0</value>
-    <value type="QString">GDMSESSION=fluxbox</value>
-    <value type="QString">GDM_LANG=fr_FR.UTF-8</value>
-    <value type="QString">GDM_XSERVER_LOCATION=local</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-9aAGCJ</value>
-    <value type="QString">GNOME_KEYRING_PID=19876</value>
-    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
-    <value type="QString">HOME=/lrde/home/stage/froger_a</value>
-    <value type="QString">LANG=fr_FR.UTF-8</value>
-    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
-    <value type="QString">LOGNAME=froger_a</value>
-    <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
-    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
-    <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=2</value>
-    <value type="QString">SSH_AGENT_PID=19951</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-kVrax19885/agent.19885</value>
-    <value type="QString">TERM=xterm</value>
-    <value type="QString">USER=froger_a</value>
-    <value type="QString">USERNAME=froger_a</value>
-    <value type="QString">WINDOWID=10485796</value>
-    <value type="QString">WINDOWPATH=7:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8:8</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdm0ICXQW</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/usr/share/gdm/</value>
-    <value type="QString">XDG_SESSION_COOKIE=b24883b9b4dbfb80ea83575b00000a11-1358754471.558659-246518931</value>
-    <value type="QString">XPSERVERLIST=:64 </value>
-    <value type="QString">XTERM_LOCALE=fr_FR.UTF-8</value>
-    <value type="QString">XTERM_SHELL=/bin/bash</value>
-    <value type="QString">XTERM_VERSION=XTerm(261)</value>
-    <value type="QString">_=/usr/bin/qtcreator</value>
-   </valuelist>
-   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
   </valuemap>
  </data>
  <data>
   <variable>buildconfiguration-Release-cleanstep0</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <value key="cleanConfig" type="bool">true</value>
-   <valuelist key="makeargs" type="QVariantList">
-    <value type="QString">clean</value>
-   </valuelist>
   </valuemap>
  </data>
  <data>

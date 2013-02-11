@@ -75,14 +75,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
           isPressing = false;
           if(clic)
             selection->setRect(QRectF(QPointF(0, 0), event->scenePos()));
-          emit repaintItems(selection->rect(), clic);
+          emit repaintItem(selection->rect(), clic);
           selection->setRect(0, 0, 0, 0);
           selection->hide();
       }
-}
-
-QString Scene::debug(QRect &rect)
-{
-    return "Position : " + QString::number(rect.x()) + ", " + QString::number(rect.y()) + "\n" +
-           "Size : " + QString::number(rect.width()) + ", " + QString::number(rect.height());
 }

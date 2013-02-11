@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent):
     QVBoxLayout *gBLayout = new QVBoxLayout;
     gBLayout->addWidget(ui->graphicsView);
     ui->groupBox->setLayout(gBLayout);
+    // Cache the background for repaint optimization.
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     scene = new Scene(ui->graphicsView);
     scene->setSceneRect(ui->graphicsView->geometry());

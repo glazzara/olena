@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QGLWidget>
 #include "scene.h"
 #include "toolbar.h"
 #include "xml.h"

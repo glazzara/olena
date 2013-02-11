@@ -1,10 +1,8 @@
 # -------------------------------------------------
-# Project created by QtCreator 2013-01-11T14:21:43
+# Project created by QtCreator 2013-01-21T09:20:54
 # -------------------------------------------------
-QT += xml \
-    opengl
-TARGET = XmlParser
-TEMPLATE = app
+QT += opengl \
+    xml
 INCLUDEPATH += /lrde/home/stage/froger_a/olena/milena/ \
     /lrde/home/stage/froger_a/olena/scribo/ \
     /lrde/home/stage/froger_a/olena/_build/scribo/demo/
@@ -13,29 +11,15 @@ QMAKE_CXXFLAGS += -DNDEBUG \
 LIBS += -I/usr/include/graphicsImage \
     -lGraphicsMagick++ \
     -ltesseract_full
+TARGET = GScribo
+TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    xml.cpp \
     scene.cpp \
     selection.cpp \
-    polygonitem.cpp \
-    runner.cpp \
-    toolbar.cpp \
-    process.cpp \
-    preprocess.cpp \
-    configs.cpp \
-    progressdialog.cpp
+    pageswidget.cpp
 HEADERS += mainwindow.h \
-    region.h \
-    xml.h \
     scene.h \
     selection.h \
-    polygonitem.h \
-    runner.h \
-    toolbar.h \
-    process.h \
-    preprocess.h \
-    configs.h \
-    dir.h \
-    progressdialog.h
+    pageswidget.h
 FORMS += mainwindow.ui
