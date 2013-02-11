@@ -3,16 +3,7 @@
 ListModel::ListModel(QObject *parent):
         QAbstractListModel(parent)
 {
-}
-
-QStringList ListModel::filenames() const
-{
-    return paths;
-}
-
-int ListModel::rowCount(const QModelIndex&) const
-{
-    return pixmaps.count();
+    currentRow_ = -1;
 }
 
 QVariant ListModel::data(const QModelIndex& index, int role) const
@@ -21,27 +12,25 @@ QVariant ListModel::data(const QModelIndex& index, int role) const
         return QVariant();
 
     if(role == Qt::DecorationRole)
-        return QIcon(pixmaps.value(index.row()).scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        return pixmaps_[index.row()];
 
-    // Store the original pixmap in a custom place.
     if(role == Qt::UserRole)
-        return pixmaps[index.row()];
+        return filenames_[index.row()];
 
-    // Store the path of the pixmap in an other custom place.
     if(role == Qt::UserRole+1)
-        return paths[index.row()];
+        return currentRow_;
 
    return QVariant();
 }
 
-void ListModel::addPixmap(const QString& filename, const QPixmap& pixmap)
+void ListModel::addPicture(const QString& filename, const QPixmap& pixmap)
 {
     int row = rowCount();
 
     beginInsertRows(QModelIndex(), row, row);
 
-    pixmaps.insert(row, pixmap);
-    paths.insert(row, filename);
+    pixmaps_.insert(row, pixmap.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    filenames_.insert(row, filename);
 
     endInsertRows();
 }
@@ -52,8 +41,19 @@ void ListModel::removePixmap(const QModelIndex &parent)
 
     beginRemoveRows(parent, row, row);
 
-    pixmaps.removeAt(row);
-    paths.removeAt(row);
+    pixmaps_.removeAt(row);
+    filenames_.removeAt(row);
 
     endRemoveRows();
+}
+
+void ListModel::setCurrentRow(int currentRow)
+{
+    int precRow = currentRow_;
+    currentRow_ = currentRow;
+
+    QModelIndex i = index(precRow, 0, QModelIndex());
+    emit dataChanged(i, i);
+    i = index(currentRow_, 0, QModelIndex());
+    emit dataChanged(i, i);
 }

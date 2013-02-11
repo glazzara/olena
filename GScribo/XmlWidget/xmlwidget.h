@@ -52,6 +52,6 @@ inline void XmlWidget::onBeginGraphicalSelection()
 { selectionProxy_.beginResetModel(); }
 
 inline void XmlWidget::onEndGraphicalSelection()
-{ selectionProxy_.endResetModel(); property_.reset(); selection_.expandAll(); }
+{ selectionProxy_.endResetModel(); attributesModel_.reset(); selection_.expandAll(); }
 
 #endif // XMLWIDGET_H

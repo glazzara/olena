@@ -5,35 +5,16 @@ PagesWidget::PagesWidget(QWidget *parent):
 {
     setUniformItemSizes(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
-    setSelectionRectVisible(false);
     setViewMode(QListView::IconMode);
     setIconSize(QSize(200, 200));
-    setFlow(QListView::TopToBottom);
     setMovement(QListView::Static);
+    setResizeMode(QListView::Adjust);
     setSpacing(10);
-    setWrapping(false);
-    setModel(&model);
 
-    connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getPixmap(QModelIndex)));
-}
+    setModel(&model_);
+    setItemDelegate(new PagesDelegate());
 
-QStringList PagesWidget::filenames() const
-{
-    return model.filenames();
-}
-
-void PagesWidget::getPixmap(const QModelIndex& index)
-{
-    // Get the pixmap and the path of the icon to send it to the scene and draw it.
-    QPixmap pixmap = index.data(Qt::UserRole).value<QPixmap>();
-    QString filename = index.data(Qt::UserRole+1).toString();
-
-    emit sceneChanged(filename, pixmap);
-}
-
-void PagesWidget::addPixmap(const QString& filename, const QPixmap& pixmap)
-{
-    model.addPixmap(filename, pixmap);
+    connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getPicture(QModelIndex)));
 }
 
 void PagesWidget::removeSelection()
@@ -47,10 +28,10 @@ void PagesWidget::removeSelection()
 
         // From the highest row value to the smallest to be sure to remove the good index.
         for(int i = indexes.count()-1; i > -1; i--)
-            model.removePixmap(indexes[i]);
+            model_.removePixmap(indexes[i]);
 
         // Draw new pixmap on the scene.
-        getPixmap(model.index(indexes[0].row()));
+        getPicture(model_.index(indexes[0].row()));
         clearSelection();
     }
 }

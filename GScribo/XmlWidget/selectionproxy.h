@@ -19,10 +19,7 @@ class SelectionProxy :
 };
 
 inline bool SelectionProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return index.data(filterRole()).toBool();
-}
+{ QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent); return index.data(filterRole()).toBool(); }
 
 inline void SelectionProxy::beginResetModel()
 { QSortFilterProxyModel::beginResetModel(); }

@@ -24,7 +24,7 @@ void Selection::init()
     setZValue(INT_MAX);
 
     QPen pen;
-    pen.setStyle(Qt::DashLine);
+    pen.setStyle(Qt::SolidLine);
     pen.setCapStyle(Qt::SquareCap);
     pen.setCosmetic(true);
     setPen(pen);

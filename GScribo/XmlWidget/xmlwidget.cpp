@@ -36,6 +36,7 @@ XmlWidget::XmlWidget(QWidget *parent) :
 
 void XmlWidget::changeView(XmlItem *rootItem)
 {
+    attributesModel_.reset();
     model_.load(rootItem);
 }
 

@@ -20,10 +20,11 @@ class Scene :
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         inline QString backgroundPath() const;
+        void setRootItem(QGraphicsItem *graphicalItem);
+        inline QGraphicsItem *rootItem() const;
 
         void clear();
-        void addPolygonItem(QGraphicsItem *item);
-        void changeScene(const QString& filename, const QPixmap& pixmap, QGraphicsItem *item = 0);
+        void changeScene(const QString& filename, QGraphicsItem *rootItem = 0);
         void selectItems(const QRectF& rect, bool clic);
 
     protected:
@@ -34,11 +35,11 @@ class Scene :
     private:
         void init();
 
-        QGraphicsItem *item_;
+        QGraphicsItem *rootItem_;
         Selection selection_;
         QPointF pressPos_;
         bool isPressing_;
-        bool clic_;
+        bool click_;
         QString backgroundPath_;
 
     public slots:
@@ -51,5 +52,8 @@ class Scene :
 
 inline QString Scene::backgroundPath() const
 { return backgroundPath_; }
+
+inline QGraphicsItem *Scene::rootItem() const
+{ return rootItem_; }
 
 #endif // SCENE_H

@@ -16,16 +16,13 @@ static const GraphicRegion::Data itemsData[] =
     { QColor::fromRgb(0, 204, 255, 90), "ChartRegion",               (int)GraphicRegion::Chart,               2 }
 };
 
-Xml::Xml(const QString &filename)
+Xml::Xml(const QString& filename)
 {
-    gItem = 0;
-    tItem = 0;
-
     path = filename;
     load(filename);
 }
 
-QString Xml::getPath(const QString &filename)
+QString Xml::getPath(const QString& filename)
 {
     // Get instance of the configuration settings.
     Configs *const conf = Configs::getInstance();
@@ -41,35 +38,39 @@ QString Xml::getPath(const QString &filename)
     return conf->generalSaveXmlCustomDirPath() + "/" + xmlPath;
 }
 
-void Xml::load(const QString &filename)
+void Xml::load(const QString& filename)
 {
-    if(!filename.isEmpty())
+    if(filename.isEmpty())
     {
-        // Reset graphic and tree items;
-        tItem = new XmlItem;
-        gItem = new QGraphicsPolygonItem;
-
-        QFile xmlFile(filename);
-        xmlFile.open(QIODevice::ReadOnly);
-
-        // Fill new xml tree.
-        xml.clear();
-        xml.setContent(&xmlFile);
-
-        xmlFile.close();
-
-        QDomElement root = xml.documentElement();
-        tItem->load(root);
-
-        root = root.firstChild().toElement();
-        XmlItem *parentTreeItem = init(root, tItem);
-
-        // Run through the xml file structure by structure.
-        root = root.nextSibling().firstChild().toElement();
-        processNode(root, itemsData[1], parentTreeItem);
-        for(int i = 2; i < 10; i++)
-            processNode(root.nextSiblingElement(itemsData[i].name), itemsData[i], parentTreeItem);
+        tItem = 0;
+        gItem = 0;
+        return;
     }
+
+    // Reset graphic and tree items;
+    tItem = new XmlItem;
+    gItem = new QGraphicsPolygonItem;
+
+    QFile xmlFile(filename);
+    xmlFile.open(QIODevice::ReadOnly);
+
+    // Fill new xml tree.
+    xml.clear();
+    xml.setContent(&xmlFile);
+
+    xmlFile.close();
+
+    QDomElement root = xml.documentElement();
+    tItem->load(root);
+
+    root = root.firstChild().toElement();
+    XmlItem *parentTreeItem = init(root, tItem);
+
+    // Run through the xml file structure by structure.
+    root = root.nextSibling().firstChild().toElement();
+    processNode(root, itemsData[1], parentTreeItem);
+    for(int i = 2; i < 10; i++)
+        processNode(root.nextSiblingElement(itemsData[i].name), itemsData[i], parentTreeItem);
 }
 
 XmlItem *Xml::init(const QDomElement& root, XmlItem *rootTreeItem)

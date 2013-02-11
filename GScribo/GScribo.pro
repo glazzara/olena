@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     XmlWidget/xmlmodel.cpp \
     XmlWidget/xmlitem.cpp \
     XmlWidget/xmlattributes.cpp \
-    XmlWidget/attributemodel.cpp
+    XmlWidget/attributemodel.cpp \
+    PagesWidget/pagesdelegate.cpp
 HEADERS += mainwindow.h \
     variantpointer.h \
     configs.h \
@@ -52,7 +53,8 @@ HEADERS += mainwindow.h \
     XmlWidget/xmlattributes.h \
     XmlWidget/selectionproxy.h \
     XmlWidget/xmldelegate.h \
-    XmlWidget/attributemodel.h
+    XmlWidget/attributemodel.h \
+    PagesWidget/pagesdelegate.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \

@@ -39,8 +39,7 @@ void MainWindow::initPageWidget()
 {
     dockPages.setWindowTitle(tr("Pages"));
     dockPages.setFeatures(QDockWidget::DockWidgetClosable);
-    dockPages.setMaximumWidth(190);
-    dockPages.setMinimumWidth(190);
+    //dockPages.setFixedWidth(190);
     dockPages.setWidget(&pagesWidget);
 
     addDockWidget(Qt::LeftDockWidgetArea, &dockPages);
@@ -84,21 +83,19 @@ void MainWindow::initMenuBar()
     connect(preferences, SIGNAL(triggered()), SLOT(onPreferences()));
 }
 
-void MainWindow::onFileChanged(const QString &filename, const QPixmap &pixmap)
+void MainWindow::onFileChanged(const QString& filename)
 {
     // If it's not the current scene.
     if(scene.backgroundPath() != filename)
     {
         QString xmlPath = Xml::getPath(filename);
-        // Check if the xml file exists to draw data in the scene.
-        if(QFile(xmlPath).exists())
-        {
-            xml.load(xmlPath);
-            scene.changeScene(filename, pixmap, xml.graphicItem());
-            xmlWidget.changeView(xml.treeItem());
-        }
-        else
-            scene.changeScene(filename, pixmap);
+        // Check if the xml file already exists.
+        if(!QFile(xmlPath).exists())
+            xmlPath = QString();
+
+        xml.load(xmlPath);
+        scene.changeScene(filename, xml.graphicItem());
+        xmlWidget.changeView(xml.treeItem());
     }
 }
 
@@ -113,6 +110,7 @@ void MainWindow::onOpen()
 
         int counter = 0;
         bool isContained;
+        // Check for an image not already added to the page widget.
         do
         {
             path = paths[counter];
@@ -122,22 +120,23 @@ void MainWindow::onOpen()
 
         if(!isContained)
         {
-            QPixmap pixmap(path);
-            pagesWidget.addPixmap(path, pixmap);
+            onFileChanged(path);
+            pagesWidget.setCurrentRow(filenames.count()+counter-1);
+            pagesWidget.addPicture(path, QPixmap(path));
 
             // If more than one file, we store it in the page widget.
             for(int i = counter; i < paths.count(); i++)
             {
+                // Check if the page widget contains the image.
                 if(!filenames.contains(paths[i], Qt::CaseSensitive))
                 {
                     path = paths[i];
-                    pixmap.load(path);
-                    pagesWidget.addPixmap(path, pixmap);
+                    pagesWidget.addPicture(path, QPixmap(path));
                 }
             }
-
-            onFileChanged(path, pixmap);
         }
+        else
+            onFileChanged(path);
     }
 }
 
@@ -162,7 +161,7 @@ void MainWindow::onXmlSaved(const QString& filename)
 {
     xml.load(filename);
     xmlWidget.changeView(xml.treeItem());
-    scene.addPolygonItem(xml.graphicItem());
+    scene.setRootItem(xml.graphicItem());
 }
 
 void MainWindow::onPreferences()
@@ -174,7 +173,7 @@ void MainWindow::onPreferences()
 void MainWindow::connectWidgets()
 {
     // If double click on a picture of the page widget -> draw it on background scene.
-    connect(&pagesWidget, SIGNAL(sceneChanged(QString,QPixmap)), this, SLOT(onFileChanged(QString,QPixmap)));
+    connect(&pagesWidget, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
 
     // Connect the scene to the xml widget and vice versa.
     connect(&scene, SIGNAL(beginSelection()), &xmlWidget, SLOT(onBeginGraphicalSelection()));

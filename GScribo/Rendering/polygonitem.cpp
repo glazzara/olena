@@ -71,7 +71,6 @@ void PolygonItem::setSelected(const QRectF& rect, bool clic)
         if(region_ == GraphicRegion::Line)
             static_cast<PolygonItem *>(parentItem())->xmlItem()->select();
     }
-
     else
     {
         // Unselect graphical and xml item.
