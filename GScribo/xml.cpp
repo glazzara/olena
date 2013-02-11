@@ -21,7 +21,24 @@ Xml::Xml(const QString &filename)
     gItem = 0;
     tItem = 0;
 
+    path = filename;
     load(filename);
+}
+
+QString Xml::getPath(const QString &filename)
+{
+    // Get instance of the configuration settings.
+    Configs *const conf = Configs::getInstance();
+
+    QString xmlPath = filename;
+
+    // Get xml filename from image path.
+    xmlPath.remove(0, xmlPath.lastIndexOf('/')+1);
+    int pos = xmlPath.lastIndexOf('.');
+    xmlPath.remove(pos, xmlPath.length()-pos);
+    xmlPath += "_gui.xml";
+
+    return conf->generalSaveXmlCustomDirPath() + "/" + xmlPath;
 }
 
 void Xml::load(const QString &filename)

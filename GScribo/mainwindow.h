@@ -64,7 +64,7 @@ class MainWindow:
         void onSegment();
         void onXmlSaved(const QString& filename);
         void onPreferences();
-        void onPagesSelection(const QString& filename, const QPixmap& pixmap);
+        void onFileChanged(const QString& filename, const QPixmap& pixmap);
 };
 
 #endif // MAINWINDOW_H

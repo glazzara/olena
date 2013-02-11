@@ -24,8 +24,7 @@ class PagesWidget:
         void removeSelection();
 
     signals:
-        void clicked(const QModelIndex &index);
-        void selectionClicked(const QString& filename, const QPixmap& pixmap);
+        void sceneChanged(const QString& filename, const QPixmap& pixmap);
 };
 
 #endif // PAGESWIDGET_H

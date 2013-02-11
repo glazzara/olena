@@ -84,11 +84,22 @@ void MainWindow::initMenuBar()
     connect(preferences, SIGNAL(triggered()), SLOT(onPreferences()));
 }
 
-void MainWindow::onPagesSelection(const QString &filename, const QPixmap &pixmap)
+void MainWindow::onFileChanged(const QString &filename, const QPixmap &pixmap)
 {
-    xml = processTmpXml(filename);
-    scene.changeScene(filename, pixmap, xml.graphicItem());
-    xmlWidget.changeView(xml.treeItem());
+    // If it's not the current scene.
+    if(scene.backgroundPath() != filename)
+    {
+        QString xmlPath = Xml::getPath(filename);
+        // Check if the xml file exists to draw data in the scene.
+        if(QFile(xmlPath).exists())
+        {
+            xml.load(xmlPath);
+            scene.changeScene(filename, pixmap, xml.graphicItem());
+            xmlWidget.changeView(xml.treeItem());
+        }
+        else
+            scene.changeScene(filename, pixmap);
+    }
 }
 
 void MainWindow::onOpen()
@@ -110,42 +121,9 @@ void MainWindow::onOpen()
             pagesWidget.addPixmap(path, pixmap);
         }
 
-        // Seek if xml file already exists and in that case, add it to the scene.
-        xml = processTmpXml(path);
-        scene.changeScene(path, pixmap, xml.graphicItem());
-        xmlWidget.changeView(xml.treeItem());
+        onFileChanged(path, pixmap);
     }
 }
-
-Xml MainWindow::processTmpXml(const QString &filename) const
-{
-    QString path = filename;
-
-    // Get instance of the configuration settings.
-    Configs * const conf = Configs::getInstance();
-
-    // Get xml filename from image path.
-    path.remove(0, path.lastIndexOf('/')+1);
-    int pos = path.lastIndexOf('.');
-    path.remove(pos, path.length()-pos);
-    path += "_gui.xml";
-
-    // Get full path of xml file.
-    if(QDir::temp().exists(path))
-        path = QDir::tempPath() + "/" + path;
-    else if(QDir(conf->generalSaveXmlCustomDirPath()).exists(path))
-        path = conf->generalSaveXmlCustomDirPath() + "/" + path;
-    else
-        path = QString();
-
-    // Get xml file informations if it exists.
-    if(path.isNull())
-        return Xml();
-    else
-
-        return Xml(path);
-}
-
 
 void MainWindow::onSegment()
 {
@@ -180,12 +158,12 @@ void MainWindow::onPreferences()
 void MainWindow::connectWidgets()
 {
     // If double click on a picture of the page widget -> draw it on background scene.
-    connect(&pagesWidget, SIGNAL(selectionClicked(QString,QPixmap)), this, SLOT(onPagesSelection(QString,QPixmap)));
+    connect(&pagesWidget, SIGNAL(sceneChanged(QString,QPixmap)), this, SLOT(onFileChanged(QString,QPixmap)));
 
     // Connect scene selection with xml tree and vice versa.
-    connect(&scene, SIGNAL(selectTreeItem(QTreeWidgetItem*)), &xmlWidget, SLOT(selectItem(QTreeWidgetItem*)));
-    connect(&scene, SIGNAL(clearTreeSelection()), &xmlWidget, SLOT(clearSelection()));
+    connect(&scene, SIGNAL(selectTreeItems(QList<QTreeWidgetItem*>)), &xmlWidget, SLOT(selectItems(QList<QTreeWidgetItem*>)));
     connect(&xmlWidget, SIGNAL(selectGraphicalItem(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));
+    connect(&pagesWidget, SIGNAL(removeTreeSelection()), &xmlWidget, SLOT(clear()));
 
     connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));

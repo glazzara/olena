@@ -10,6 +10,7 @@
 
 #include "Rendering/polygonitem.h"
 #include "variantpointer.h"
+#include "configs.h"
 #include "region.h"
 
 class Xml
@@ -17,10 +18,13 @@ class Xml
     public:
         explicit Xml(const QString& filename = QString());
 
-        void load(const QString& filename);
         inline QTreeWidgetItem *treeItem();
         inline QGraphicsItem *graphicItem();
-        inline QDomDocument xmlDocument() const;
+        inline QDomDocument document() const;
+        inline QString filename() const;
+
+        static QString getPath(const QString& filename);
+        void load(const QString& filename);
 
     private:
         QTreeWidgetItem *init(const QDomElement& root, QTreeWidgetItem *rootTreeItem);
@@ -32,6 +36,7 @@ class Xml
         QGraphicsPolygonItem *gItem;
         QTreeWidgetItem *tItem;
         QDomDocument xml;
+        QString path;
 };
 
 inline QTreeWidgetItem *Xml::treeItem()
@@ -40,8 +45,11 @@ inline QTreeWidgetItem *Xml::treeItem()
 inline QGraphicsItem *Xml::graphicItem()
 { return gItem; }
 
-inline QDomDocument Xml::xmlDocument() const
+inline QDomDocument Xml::document() const
 { return xml; }
+
+inline QString Xml::filename() const
+{ return path; }
 
 inline QTreeWidgetItem *Xml::fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem)
 {

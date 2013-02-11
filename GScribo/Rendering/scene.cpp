@@ -1,7 +1,5 @@
 #include "scene.h"
 
-/*******************************************    Run through item childs run through LINES ! TODO    ****************************************/
-/*******************************************    Center */
 Scene::Scene(QObject *parent):
     QGraphicsScene(parent)
 {
@@ -28,15 +26,12 @@ void Scene::init()
 
     // Disable the scene size adaptation to items rect with a non null rect.
     setSceneRect(0, 0, 0, 1);
+
+    selection.setRect(0, 0, 0, 0);
     addItem(&selection);
 }
 
-QString Scene::backgroundPath() const
-{
-    return path;
-}
-
-void Scene::reset()
+void Scene::clear()
 {
     if(item)
         delete item;
@@ -83,11 +78,11 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
           // If no selection, store the click position in the selection rectangle.
           if(clic)
-            selection.setRect(QRectF(QPointF(0, 0), event->scenePos()));
+              selection.setRect(QRectF(QPointF(0, 0), event->scenePos()));
 
           // Redraw all items in selection.
           if(item)
-            repaintSelection(selection.rect(), clic);
+              selectItems(selection.rect(), clic);
 
           selection.setRect(0, 0, 0, 0);
           selection.hide();
@@ -101,62 +96,84 @@ void Scene::selectItem(PolygonItem *graphicalItem)
         QGraphicsItem *child;
         PolygonItem *polygonItem;
 
+        // Unselect all items.
         foreach(child, item->childItems())
         {
             polygonItem = static_cast<PolygonItem *>(child);
             polygonItem->unselect();
 
-            if(polygonItem->data(0).toInt() == GraphicRegion::Text)
+            // Unselect lines.
+            foreach(child, polygonItem->childItems())
             {
-                foreach(child, polygonItem->childItems())
-                {
-                    polygonItem = static_cast<PolygonItem *>(child);
-                    polygonItem->unselect();
-                }
+                polygonItem = static_cast<PolygonItem *>(child);
+                polygonItem->unselect();
             }
         }
 
+        // Select the good item.
         graphicalItem->select();
+        views()[0]->centerOn(graphicalItem);
     }
 }
 
-void Scene::repaintSelection(const QRectF &rect, bool clic)
+void Scene::selectItems(const QRectF &rect, bool clic)
 {
     QGraphicsItem *child;
     PolygonItem *polygonItem;
+    QList<QTreeWidgetItem *> selectionTree;
+    QTreeWidgetItem *treeItem;
     bool isSel;
-
-    emit clearTreeSelection();
 
     // Redraw all items in the scene except selection.
     foreach(child, item->childItems())
     {
         polygonItem = static_cast<PolygonItem *>(child);
-        isSel = polygonItem->repaint(rect, clic);
+        isSel = polygonItem->isSelected(rect, clic);
 
-        // If item selectionned, select it on the xml tree.
+        // If item selectionned, select it on the xml tree and the scene.
         if(isSel)
-            emit selectTreeItem(VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
+        {
+            polygonItem->select();
+            treeItem = VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1));
+            treeItem = new QTreeWidgetItem(*treeItem);
+            selectionTree << treeItem;
+        }
+        else
+            polygonItem->unselect();
 
-        // If the item is a text region.
         if(polygonItem->data(0).toInt() == GraphicRegion::Text)
         {
-            // Run through each child lines items.
+            // Run through each child lines items and do the same.
             foreach(child, polygonItem->childItems())
             {
                 polygonItem = static_cast<PolygonItem *>(child);
-                isSel = polygonItem->repaint(rect, clic);
+                isSel = polygonItem->isSelected(rect, clic);
 
                 if(isSel)
-                    emit selectTreeItem(VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
+                {
+                    polygonItem->select();
+
+                    // Check if the corresponding text region has been clicked.
+                    if(treeItem)
+                        treeItem->addChild(new QTreeWidgetItem(*VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1))));
+                    else
+                        selectionTree << new QTreeWidgetItem(*VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
+                }
+                else
+                    polygonItem->unselect();
             }
         }
+
+        treeItem = 0;
     }
+
+    emit selectTreeItems(selectionTree);
 }
 
 void Scene::addPolygonItem(QGraphicsItem *item)
 {
-    reset();
+    // Delete all items in the scene.
+    clear();
 
     this->item = item;
     addItem(item);
@@ -164,16 +181,15 @@ void Scene::addPolygonItem(QGraphicsItem *item)
 
 void Scene::changeScene(const QString& filename, const QPixmap& pixmap, QGraphicsItem *item)
 {
-    if(path != filename)
-    {
-        reset();
+   path = filename;
 
-        path = filename;
+    // Delete all items in the scene.
+    clear();
 
-        setSceneRect(pixmap.rect());
-        setBackgroundBrush(QBrush(pixmap));
+    setSceneRect(pixmap.rect());
+    setBackgroundBrush(QBrush(pixmap));
 
-        if(item)
-            addPolygonItem(item);
-    }
+    // Add new items.
+    if(item)
+        addPolygonItem(item);
 }

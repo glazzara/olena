@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QFileDialog>
 
@@ -18,11 +19,12 @@ class Scene :
         explicit Scene(const QRectF &sceneRect, QObject *parent = 0);
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
-        QString backgroundPath() const;
-        void reset();
+        inline QString backgroundPath() const;
+
+        void clear();
         void addPolygonItem(QGraphicsItem *item);
         void changeScene(const QString& filename, const QPixmap& pixmap, QGraphicsItem *item = 0);
-        void repaintSelection(const QRectF& rect, bool clic);
+        void selectItems(const QRectF& rect, bool clic);
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -36,15 +38,17 @@ class Scene :
         Selection selection;
         QPointF pressPos;
         bool isPressing;
-        QString path;
         bool clic;
+        QString path;
 
     public slots:
         void selectItem(PolygonItem *graphicalItem);
 
     signals:
-        void selectTreeItem(QTreeWidgetItem *treeItem);
-        void clearTreeSelection();
-    };
+        void selectTreeItems(const QList<QTreeWidgetItem *>& selectionTree);
+};
+
+inline QString Scene::backgroundPath() const
+{ return path; }
 
 #endif // SCENE_H

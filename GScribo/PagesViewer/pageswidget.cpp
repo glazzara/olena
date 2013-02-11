@@ -28,7 +28,7 @@ void PagesWidget::getPixmap(const QModelIndex &index)
     QPixmap pixmap = index.data(Qt::UserRole).value<QPixmap>();
     QString filename = index.data(Qt::UserRole+1).toString();
 
-    emit selectionClicked(filename, pixmap);
+    emit sceneChanged(filename, pixmap);
 }
 
 void PagesWidget::addPixmap(const QString& filename, const QPixmap &pixmap)
@@ -49,6 +49,7 @@ void PagesWidget::removeSelection()
         for(int i = indexes.count()-1; i > -1; i--)
             model.removePixmap(indexes[i]);
 
+        // Draw new pixmap on the scene.
         getPixmap(model.index(indexes[0].row()));
         clearSelection();
     }

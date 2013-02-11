@@ -27,11 +27,6 @@ void PolygonItem::init()
     unselectedBrush.setStyle(Qt::SolidPattern);
 }
 
-QColor PolygonItem::color() const
-{
-    return selectedBrush.color();
-}
-
 void PolygonItem::setColor(const QColor &color)
 {
     selectedPen.setColor(QColor::fromRgb(color.red(), color.green(), color.blue(), 255));
@@ -42,30 +37,4 @@ void PolygonItem::setColor(const QColor &color)
 
     setPen(unselectedPen);
     setBrush(unselectedBrush);
-}
-
-bool PolygonItem::repaint(const QRectF& rect, bool clic)
-{
-    bool isSel = isSelected(rect, clic);
-
-    // Change items brush and pen if it's selectionned or not.
-    if(isSel)
-    {
-        if(pen() != selectedPen)
-        {
-            setPen(selectedPen);
-            setBrush(selectedBrush);
-        }
-    }
-
-    else
-    {
-        if(pen() != unselectedPen)
-        {
-            setPen(unselectedPen);
-            setBrush(unselectedBrush);
-        }
-    }
-
-    return isSel;
 }

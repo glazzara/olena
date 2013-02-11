@@ -16,14 +16,14 @@ class PolygonItem :
         explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
         void setColor(const QColor& color);
-        QColor color() const;
+        inline QColor color() const;
 
-        inline bool isSelected(const QRectF& rect, bool clic);
-        bool repaint(const QRectF &rect, bool clic);
         inline void loadData(const GraphicRegion::Data& data);
 
+        inline bool isSelected(const QRectF& rect, bool clic);
         inline void unselect();
         inline void select();
+        inline void setSelected(bool selected);
 
     private:
         void init();
@@ -34,12 +34,11 @@ class PolygonItem :
         QBrush unselectedBrush;
 };
 
+inline QColor PolygonItem::color() const
+{ return selectedBrush.color(); }
+
 inline void PolygonItem::loadData(const GraphicRegion::Data &data)
-{
-    setData(0, data.region);
-    setColor(data.color);
-    setZValue(data.zValue);
-}
+{ setData(0, data.region); setColor(data.color); setZValue(data.zValue); }
 
 inline bool PolygonItem::isSelected(const QRectF &rect, bool clic)
 {
@@ -50,15 +49,12 @@ inline bool PolygonItem::isSelected(const QRectF &rect, bool clic)
 }
 
 inline void PolygonItem::select()
-{
-    setPen(selectedPen);
-    setBrush(selectedBrush);
-}
+{ if(pen() != selectedPen) { setPen(selectedPen); setBrush(selectedBrush); } }
 
 inline void PolygonItem::unselect()
-{
-    setPen(unselectedPen);
-    setBrush(unselectedBrush);
-}
+{ if(pen() != unselectedPen) { setPen(unselectedPen); setBrush(unselectedBrush); } }
+
+inline void PolygonItem::setSelected(bool selected)
+{ if(selected) select(); else unselect(); }
 
 #endif // POLYGONITEM_H
