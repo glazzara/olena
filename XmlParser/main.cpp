@@ -12,6 +12,7 @@
 int main(int argc, char **argv)
 {
     Magick::InitializeMagick(*argv);
+    QApplication::setGraphicsSystem("raster");
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

@@ -1,7 +1,7 @@
 #include "polygonitem.h"
 
-PolygonItem::PolygonItem(QGraphicsItem *parent, QGraphicsScene *scene):
-        QGraphicsPolygonItem(parent, scene)
+PolygonItem::PolygonItem(QGraphicsItem *parent, QGraphicsScene *scene)
+    : QGraphicsPolygonItem(parent, scene)
 {
     init();
 }
@@ -12,23 +12,24 @@ PolygonItem::PolygonItem(const QPolygonF &polygon, QGraphicsItem *parent, QGraph
     init();
 }
 
+PolygonItem::~PolygonItem()
+{
+    delete selectedPen;
+    delete unselectedPen;
+    delete selectedBrush;
+    delete unselectedBrush;
+}
+
 void PolygonItem::init()
 {
-    setCacheMode(QGraphicsItem::ItemCoordinateCache);
-    setFlags(QGraphicsItem::ItemClipsToShape);
     selectedPen = new QPen(Qt::SolidLine);
     unselectedPen = new QPen(Qt::SolidLine);
-    selectedPen->setWidthF(3);
+    selectedPen->setWidthF(2);
     unselectedPen->setWidth(0);
     selectedPen->setCapStyle(Qt::SquareCap);
     unselectedPen->setCapStyle(Qt::SquareCap);
     selectedBrush = new QBrush(Qt::SolidPattern);
     unselectedBrush = new QBrush(Qt::SolidPattern);
-    QRectF bRect(boundingRect());
-    if(bRect.width() < 1)
-        bRect.setWidth(1);
-    if(bRect.height() < 1)
-        bRect.setHeight(1);
 }
 
 void PolygonItem::setColor(const QColor &color)
@@ -46,7 +47,7 @@ QColor PolygonItem::color() const
     return selectedBrush->color();
 }
 
-void PolygonItem::repaint(const QRectF &rect, bool clic)
+void PolygonItem::repaint(const QRectF& rect, bool clic)
 {
     bool sel;
     if(clic)

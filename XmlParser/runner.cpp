@@ -33,7 +33,8 @@ void Runner::run()
             image2d<value::rgb8> ima;
             io::magick::load(ima, args_.at(0).toUtf8().constData());
             image2d<bool> bin_ima = preprocess(ima);
-            emit finished(&process(ima, bin_ima));
+            process(ima, bin_ima);
+            emit finished();
         }
         break;
 
@@ -130,12 +131,13 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
         if (!dir.exists() && !dir.mkpath(output_dir))
             output_dir = QDir::tempPath();
     }
-    f.output_file = (output_dir  + "/" + file.baseName() + "_gui.xml").toUtf8().constData();
+    QString filename = (output_dir  + "/" + file.baseName() + "_gui.xml");
+    f.output_file = filename.toUtf8().constData();
     emit new_progress_max_value(f.nsteps());
 
     // Perform text detection.
     f(original_ima, processed_ima);
-    return f.output_file;
+    emit xml_saved(filename);
     //qDebug() << "Process Done.";
 }
 

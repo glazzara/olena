@@ -39,8 +39,8 @@ class MainWindow :
 
     private slots:
         void on_actionOpen_triggered();
-        void onSegmentation();
-        void onEndSegmentation(QString *filename);
+        void onBeginSegmentation();
+        void onXmlSaved(const QString& filename);
         //void on_action(QString& string);
 };
 

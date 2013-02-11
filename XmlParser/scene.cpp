@@ -18,12 +18,28 @@ Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
     init();
 }
 
+Scene::~Scene()
+{
+    delete selection;
+}
+
 void Scene::init()
 {
     isPressing = false;
     clic = false;
     selection = new Selection(this);
 }        
+
+void Scene::removeItems()
+{
+    QList<QGraphicsItem *> itemsList = items();
+    QGraphicsItem *i;
+    foreach(i, itemsList)
+    {
+        if(i != selection)
+            delete i;
+    }
+}
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -57,9 +73,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
       {
           isPressing = false;
           if(clic)
-              emit repaintItems(QRectF(QPointF(0, 0), event->scenePos()), true);
-          else
-              emit repaintItems(selection->rect(), false);
+            selection->setRect(QRectF(QPointF(0, 0), event->scenePos()));
+          emit repaintItems(selection->rect(), clic);
           selection->setRect(0, 0, 0, 0);
       }
 }

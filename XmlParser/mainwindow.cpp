@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent):
     QVBoxLayout *gBLayout = new QVBoxLayout;
     gBLayout->addWidget(ui->graphicsView);
     ui->groupBox->setLayout(gBLayout);
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     scene = new Scene(ui->graphicsView);
     scene->setSceneRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene);
@@ -18,16 +19,19 @@ MainWindow::MainWindow(QWidget *parent):
     toolBar->setGeometry(0, ui->menuBar->height(), ui->menuBar->width(), 30);
     connect(toolBar->openAction(), SIGNAL(triggered()), this, SLOT(on_actionOpen_triggered()));
     connect(toolBar->quitAction(), SIGNAL(triggered()), this, SLOT(close()));
-    connect(toolBar->segmentAction(), SIGNAL(triggered()), this, SLOT(onSegmentation()));
+    connect(toolBar->segmentAction(), SIGNAL(triggered()), this, SLOT(onBeginSegmentation()));
     progressDialog = new ProgressDialog(this);
-    connect(&runner, SIGNAL(finished(QString*)), this, SLOT(onEndSegmentation(QString*)));
+    connect(&runner, SIGNAL(finished()), progressDialog, SLOT(close()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), progressDialog, SLOT(setMaximum(int)));
     connect(&runner, SIGNAL(new_progress_label(QString)), progressDialog, SLOT(setLabelText(QString)));
+    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));
     connect(&runner, SIGNAL(progress()), progressDialog, SLOT(run()));
 }
 
 MainWindow::~MainWindow()
 {
+    delete scene;
+    delete progressDialog;
     delete ui;
 }
 
@@ -49,17 +53,14 @@ void MainWindow::on_actionOpen_triggered()
     imagePath = QFileDialog::getOpenFileName(this);
     if(imagePath != "")
     {
+        scene->removeItems();
         QPixmap pixmap(imagePath);
-        QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem(pixmap);
-        pixmapItem->setFlag(QGraphicsItem::ItemNegativeZStacksBehindParent, true);
-        pixmapItem->setZValue(-1);
-        pixmapItem->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-        ui->graphicsView->scene()->setSceneRect(pixmap.rect());
-        ui->graphicsView->scene()->addItem(pixmapItem);
+        scene->setSceneRect(pixmap.rect());
+        scene->setBackgroundBrush(QBrush(pixmap));
     }
 }
 
-void MainWindow::onSegmentation()
+void MainWindow::onBeginSegmentation()
 {
     if(imagePath != "")
     {
@@ -68,10 +69,9 @@ void MainWindow::onSegmentation()
     }
 }
 
-void MainWindow::onEndSegmentation(QString *filename)
+void MainWindow::onXmlSaved(const QString& filename)
 {
-    progressDialog->close();
-    Xml::parseItems(*filename, scene);
+    Xml::parseItems(filename, scene);
 }
 
 /*void MainWindow::on_action(QString& string)

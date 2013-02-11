@@ -34,7 +34,7 @@ class Runner :
 
     private:
         image2d<bool> preprocess(const image2d<value::rgb8>& ima);
-        QString process(const image2d<value::rgb8>& original_ima, const image2d<bool>& processed_ima);
+        void process(const image2d<value::rgb8>& original_ima, const image2d<bool>& processed_ima);
         void export_as();
         virtual void run();
         template <typename V> unsigned find_best_scale(const mln::image2d<V>& ima);
@@ -51,7 +51,7 @@ class Runner :
         void new_progress_label(const QString& msg);
         void xml_saved(const QString& filename);
         void progress();
-        void finished(QString *filename = 0);
+        void finished();
 };
 
 #endif // RUNNER_H

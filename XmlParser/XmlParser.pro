@@ -5,7 +5,8 @@ QT += xml
 TARGET = XmlParser
 TEMPLATE = app
 INCLUDEPATH += /lrde/home/stage/froger_a/olena/milena/ \
-    /lrde/home/stage/froger_a/olena/scribo/
+    /lrde/home/stage/froger_a/olena/scribo/ \
+    /lrde/home/stage/froger_a/olena/_build/scribo/demo/
 QMAKE_CXXFLAGS += -DNDEBUG \
     -DMLN_WO_GLOBAL_VARS
 LIBS += -I/usr/include/graphicsImage \
@@ -31,7 +32,6 @@ HEADERS += mainwindow.h \
     polygonitem.h \
     runner.h \
     toolbar.h \
-    demodir.h \
     process.h \
     preprocess.h \
     configs.h \

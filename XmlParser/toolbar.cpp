@@ -12,6 +12,13 @@ ToolBar::ToolBar(QWidget *parent):
     quit = addAction(tr("Quit"));
 }
 
+ToolBar::~ToolBar()
+{
+    delete open;
+    delete segment;
+    delete quit;
+}
+
 QAction * ToolBar::openAction() const
 {
     return open;

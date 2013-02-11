@@ -3,13 +3,13 @@
 
 #include <QToolBar>
 #include <QAction>
-#include "mainwindow.h"
 
 class ToolBar :
         public QToolBar
 {
     public:
         explicit ToolBar(QWidget *parent);
+        ~ToolBar();
         QAction * openAction() const;
         QAction * segmentAction() const;
         QAction * quitAction() const;

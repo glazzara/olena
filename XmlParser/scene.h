@@ -15,6 +15,8 @@ class Scene :
         explicit Scene(QObject *parent = 0);
         explicit Scene(const QRectF &sceneRect, QObject *parent = 0);
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+        ~Scene();
+        void removeItems();
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);

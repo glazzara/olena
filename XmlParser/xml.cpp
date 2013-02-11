@@ -1,6 +1,19 @@
 #include "xml.h"
 #include "region.h"
 
+static const GraphicRegion::Data itemsData[] =
+{
+    {QColor::fromRgb(0, 0, 255, 60), "VerticalSeparatorRegion", (int)GraphicRegion::VerticalSeparator, 2},
+    {QColor::fromRgb(0, 0, 255, 60), "HorizontalSeparatorRegion", (int)GraphicRegion::HorizontalSeparator, 2},
+    {QColor::fromRgb(0, 0, 128, 60), "WhitespaceSeparatorRegion", (int)GraphicRegion::WhiteSpaceSeparator, 2},
+    {QColor::fromRgb(255, 120, 0, 60), "ImageRegion", (int)GraphicRegion::Image, 1},
+    {QColor::fromRgb(43, 39, 128, 60), "NoiseRegion", (int)GraphicRegion::Noise, 2},
+    {QColor::fromRgb(220, 246, 0, 60), "TableRegion", (int)GraphicRegion::Table, 2},
+    {QColor::fromRgb(170, 0, 255, 60), "MathsRegion", (int)GraphicRegion::Maths, 3},
+    {QColor::fromRgb(255, 0, 144, 60), "GraphicRegion", (int)GraphicRegion::Graphic, 2},
+    {QColor::fromRgb(0, 204, 255, 60), "ChartRegion", (int)GraphicRegion::Chart, 2}
+};
+
 Xml::Xml()
 {
 }
@@ -29,10 +42,12 @@ void Xml::graphicsTypoRegion(const QDomElement& element, const QPoint& xPos, Sce
 {
     int yPos = element.attribute("baseline", "null").toInt();
     QGraphicsLineItem *baselineRegion = new QGraphicsLineItem(QLine(QPoint(xPos.x(), yPos), QPoint(xPos.y(), yPos)), 0, scene);
+    baselineRegion->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
     baselineRegion->setData(0, QVariant::fromValue((int)GraphicRegion::Baseline));
     baselineRegion->setZValue(3);
     yPos = element.attribute("meanline", "null").toInt();
     QGraphicsLineItem *meanlineRegion = new QGraphicsLineItem(QLine(QPoint(xPos.x(), yPos), QPoint(xPos.y(), yPos)), 0, scene);
+    meanlineRegion->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
     meanlineRegion->setData(0, QVariant::fromValue((int)GraphicRegion::Meanline));
     meanlineRegion->setZValue(3);
 }
@@ -95,61 +110,8 @@ void Xml::parseItems(const QString &filename, Scene *scene)
     QDomDocument xml;
     xml.setContent(&xmlFile);
     xmlFile.close();
-    QVector<QGraphicsItem *> items;
     QDomElement element = xml.documentElement().firstChild().nextSiblingElement("Page").firstChild().toElement();
     graphicsTextRegion(element, scene);
-    GraphicRegion::Data verticalData;
-    verticalData.color = QColor::fromRgb(0, 0, 255, 80);
-    verticalData.name = "VerticalSeparatorRegion";
-    verticalData.region = (int)GraphicRegion::VerticalSeparator;
-    verticalData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(verticalData.name), verticalData, scene);
-    GraphicRegion::Data horizontalData;
-    horizontalData.color = QColor::fromRgb(0, 0, 255, 80);
-    horizontalData.name = "HorizontalSeparatorRegion";
-    horizontalData.region = (int)GraphicRegion::HorizontalSeparator;
-    horizontalData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(horizontalData.name), horizontalData, scene);
-    GraphicRegion::Data spaceData;
-    spaceData.color = QColor::fromRgb(0, 0, 128, 80);
-    spaceData.name = "WhitespaceSeparatorRegion";
-    spaceData.region = (int)GraphicRegion::WhiteSpaceSeparator;
-    spaceData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(spaceData.name), spaceData, scene);
-    GraphicRegion::Data imageData;
-    imageData.color = QColor::fromRgb(255, 120, 0, 80);
-    imageData.name = "ImageRegion";
-    imageData.region = (int)GraphicRegion::Image;
-    imageData.zValue = 1;
-    graphicsRegion(element.nextSiblingElement(imageData.name), imageData, scene);
-    GraphicRegion::Data noiseData;
-    noiseData.color = QColor::fromRgb(43, 39, 128, 80);
-    noiseData.name = "NoiseRegion";
-    noiseData.region = (int)GraphicRegion::Noise;
-    noiseData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(noiseData.name), noiseData, scene);
-    GraphicRegion::Data tableData;
-    tableData.color = QColor::fromRgb(220, 246, 0, 80);
-    tableData.name = "TableRegion";
-    tableData.region = (int)GraphicRegion::Table;
-    tableData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(tableData.name), tableData, scene);
-    GraphicRegion::Data mathsData;
-    mathsData.color = QColor::fromRgb(170, 0, 255, 80);
-    mathsData.name = "MathsRegion";
-    mathsData.region = (int)GraphicRegion::Maths;
-    mathsData.zValue = 3;
-    graphicsRegion(element.nextSiblingElement(mathsData.name), mathsData, scene);
-    GraphicRegion::Data graphicData;
-    graphicData.color = QColor::fromRgb(255, 0, 144, 80);
-    graphicData.name = "GraphicRegion";
-    graphicData.region = (int)GraphicRegion::Graphic;
-    graphicData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(graphicData.name), graphicData, scene);
-    GraphicRegion::Data chartData;
-    chartData.color = QColor::fromRgb(0, 204, 255, 80);
-    chartData.name = "ChartRegion";
-    chartData.region = (int)GraphicRegion::Chart;
-    chartData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(chartData.name), chartData, scene);
+    for(int i = 0; i < 9; i++)
+        graphicsRegion(element.nextSiblingElement(itemsData[i].name), itemsData[i], scene);
 }

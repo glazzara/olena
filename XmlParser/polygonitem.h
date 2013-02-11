@@ -13,6 +13,7 @@ class PolygonItem :
     public:
         explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
         explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        ~PolygonItem();
         void setColor(const QColor& color);
         QColor color() const;
 

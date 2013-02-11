@@ -5,14 +5,6 @@
 
 namespace GraphicRegion
 {
-    struct Data
-    {
-        QColor color;
-        QString name;
-        int region;
-        int zValue;
-    };
-
     enum Id
     {
         Text,
@@ -29,6 +21,14 @@ namespace GraphicRegion
         Graphic,
         Chart,
         Maths
+    };
+
+    struct Data
+    {
+        QColor color;
+        QString name;
+        int region;
+        int zValue;
     };
 }
 
