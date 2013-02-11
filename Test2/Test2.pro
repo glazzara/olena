@@ -7,9 +7,12 @@ SOURCES += main.cpp \
     test2.cpp \
     picture.cpp \
     customgraphicsview.cpp \
-    xml.cpp
+    xml.cpp \
+    graphicsregion.cpp
 HEADERS += test2.h \
     picture.h \
     customgraphicsview.h \
-    xml.h
+    xml.h \
+    graphicsregion.h
 FORMS += test2.ui
+QT += xml

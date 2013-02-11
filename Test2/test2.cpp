@@ -8,6 +8,7 @@
 #include "picture.h"
 #include "ui_test2.h"
 #include "customgraphicsview.h"
+#include "xml.h"
 
 Test2::Test2(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +27,7 @@ Test2::Test2(QWidget *parent) :
     connect(shortcutZoomIn, SIGNAL(activated()), this, SLOT(on_actionZoomIn_triggered()));
     picture = new Picture();
     graphicsView->scene()->addItem(picture);
+    Xml::mapItems("/tmp/mp00082c_gui.xml");
 }
 
 Test2::~Test2()
