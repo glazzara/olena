@@ -55,7 +55,6 @@ bool PolygonItem::repaint(const QRectF& rect, bool clic)
         {
             setPen(selectedPen);
             setBrush(selectedBrush);
-            update(rect);
         }
     }
 
@@ -65,7 +64,6 @@ bool PolygonItem::repaint(const QRectF& rect, bool clic)
         {
             setPen(unselectedPen);
             setBrush(unselectedBrush);
-            update(rect);
         }
     }
 

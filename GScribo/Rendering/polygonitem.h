@@ -22,6 +22,9 @@ class PolygonItem :
         bool repaint(const QRectF &rect, bool clic);
         inline void loadData(const GraphicRegion::Data& data);
 
+        inline void unselect();
+        inline void select();
+
     private:
         void init();
 
@@ -44,6 +47,18 @@ inline bool PolygonItem::isSelected(const QRectF &rect, bool clic)
         return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(rect.bottomRight())) && shape().contains(rect.bottomRight());
     else
         return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect);
+}
+
+inline void PolygonItem::select()
+{
+    setPen(selectedPen);
+    setBrush(selectedBrush);
+}
+
+inline void PolygonItem::unselect()
+{
+    setPen(unselectedPen);
+    setBrush(unselectedBrush);
 }
 
 #endif // POLYGONITEM_H

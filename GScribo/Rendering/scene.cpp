@@ -1,5 +1,7 @@
 #include "scene.h"
 
+/*******************************************    Run through item childs run through LINES ! TODO    ****************************************/
+/*******************************************    Center */
 Scene::Scene(QObject *parent):
     QGraphicsScene(parent)
 {
@@ -92,13 +94,39 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
       }
 }
 
+void Scene::selectItem(PolygonItem *graphicalItem)
+{
+    if(graphicalItem)
+    {
+        QGraphicsItem *child;
+        PolygonItem *polygonItem;
+
+        foreach(child, item->childItems())
+        {
+            polygonItem = static_cast<PolygonItem *>(child);
+            polygonItem->unselect();
+
+            if(polygonItem->data(0).toInt() == GraphicRegion::Text)
+            {
+                foreach(child, polygonItem->childItems())
+                {
+                    polygonItem = static_cast<PolygonItem *>(child);
+                    polygonItem->unselect();
+                }
+            }
+        }
+
+        graphicalItem->select();
+    }
+}
+
 void Scene::repaintSelection(const QRectF &rect, bool clic)
 {
     QGraphicsItem *child;
     PolygonItem *polygonItem;
     bool isSel;
 
-    emit clearTreeItemSelection();
+    emit clearTreeSelection();
 
     // Redraw all items in the scene except selection.
     foreach(child, item->childItems())
@@ -106,14 +134,22 @@ void Scene::repaintSelection(const QRectF &rect, bool clic)
         polygonItem = static_cast<PolygonItem *>(child);
         isSel = polygonItem->repaint(rect, clic);
 
+        // If item selectionned, select it on the xml tree.
         if(isSel)
             emit selectTreeItem(VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
 
-        // If the item is a text region, run through childs line items.
+        // If the item is a text region.
         if(polygonItem->data(0).toInt() == GraphicRegion::Text)
         {
+            // Run through each child lines items.
             foreach(child, polygonItem->childItems())
-                static_cast<PolygonItem *>(child)->repaint(rect, clic);
+            {
+                polygonItem = static_cast<PolygonItem *>(child);
+                isSel = polygonItem->repaint(rect, clic);
+
+                if(isSel)
+                    emit selectTreeItem(VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
+            }
         }
     }
 }

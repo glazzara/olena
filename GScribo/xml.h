@@ -12,11 +12,8 @@
 #include "variantpointer.h"
 #include "region.h"
 
-class Xml :
-        QObject
+class Xml
 {
-        Q_OBJECT
-
     public:
         explicit Xml(const QString& filename = QString());
 

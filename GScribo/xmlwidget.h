@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QLabel>
 
+#include "Rendering/polygonitem.h"
 #include "variantpointer.h"
 
 class XmlWidget :
@@ -17,23 +18,22 @@ class XmlWidget :
     public:
         explicit XmlWidget(QWidget *parent = 0);
 
-        inline void changeView(QTreeWidgetItem *treeItem);
+        void changeView(QTreeWidgetItem *treeItem);
 
     private:
+        void fillProperty(QTreeWidgetItem *treeItem);
+        void deleteItemsNode(QTreeWidgetItem *topLevelItem);
+
         QTreeWidget viewer;
         QTreeWidget property;
 
     public slots:
-        void fillProperty(QTreeWidgetItem *treeItem);
-        inline void selectItem(QTreeWidgetItem *item);
+        void setSelectItem(QTreeWidgetItem *treeItem);
         inline void clearSelection();
+
+    signals:
+        void selectGraphicalItem(PolygonItem *polygonItem);
 };
-
-inline void XmlWidget::changeView(QTreeWidgetItem *treeItem)
-{ viewer.takeTopLevelItem(0); viewer.reset(); if(treeItem != 0) viewer.addTopLevelItem(treeItem); }
-
-inline void XmlWidget::selectItem(QTreeWidgetItem *item)
-{ viewer.setCurrentItem(item, 0); item->setExpanded(true); }
 
 inline void XmlWidget::clearSelection()
 { viewer.reset(); property.clear(); }

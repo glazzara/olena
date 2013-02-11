@@ -39,9 +39,12 @@ class Scene :
         QString path;
         bool clic;
 
+    public slots:
+        void selectItem(PolygonItem *graphicalItem);
+
     signals:
-        void selectTreeItem(QTreeWidgetItem *item);
-        void clearTreeItemSelection();
+        void selectTreeItem(QTreeWidgetItem *treeItem);
+        void clearTreeSelection();
     };
 
 #endif // SCENE_H
