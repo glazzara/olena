@@ -137,8 +137,8 @@ void MainWindow::onSegment()
             filenames = pagesWidget.filenames();
 
         // Run segmentation of page(s).
-        progressDialog.reset();
-        runner.start_demat(filenames);
+        //progressDialog.reset();
+        //runner.start_demat(filenames);
     }
 }
 
@@ -151,8 +151,8 @@ void MainWindow::onXmlSaved(const QString& filename)
 
 void MainWindow::onPreferences()
 {
-    PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
-    preferenceDialog->show();
+    //PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
+    //preferenceDialog->show();
 }
 
 void MainWindow::connectWidgets()
@@ -161,15 +161,15 @@ void MainWindow::connectWidgets()
     connect(&pagesWidget, SIGNAL(sceneChanged(QString,QPixmap)), this, SLOT(onFileChanged(QString,QPixmap)));
 
     // Connect scene selection with xml tree and vice versa.
-    connect(&scene, SIGNAL(selectTreeItems(QList<QTreeWidgetItem*>)), &xmlWidget, SLOT(selectItems(QList<QTreeWidgetItem*>)));
+    /*connect(&scene, SIGNAL(selectTreeItems(QList<QTreeWidgetItem*>)), &xmlWidget, SLOT(selectItems(QList<QTreeWidgetItem*>)));
     connect(&xmlWidget, SIGNAL(selectGraphicalItem(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));
-    connect(&pagesWidget, SIGNAL(removeTreeSelection()), &xmlWidget, SLOT(clear()));
+    connect(&pagesWidget, SIGNAL(removeTreeSelection()), &xmlWidget, SLOT(clear()));*/
 
-    connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
+    /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
     connect(&runner, SIGNAL(new_progress_label(QString)), &progressDialog, SLOT(setLabelText(QString)));
     connect(&runner, SIGNAL(finished()), &progressDialog, SLOT(close()));
-    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));
+    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));*/
 }
 
 void MainWindow::connectShortcuts()

@@ -9,12 +9,12 @@
 #include <QFileDialog>
 #include <QGroupBox>
 
-#include "Preferences/preferencesdialog.h"
-#include "Processing/progressdialog.h"
-#include "PagesViewer/pageswidget.h"
-#include "Processing/runner.h"
+//#include "Preferences/preferencesdialog.h"
+//#include "Processing/progressdialog.h"
+#include "PagesWidget/pageswidget.h"
+#include "XmlWidget/xmlwidget.h"
+//#include "Processing/runner.h"
 #include "Rendering/scene.h"
-#include "xmlwidget.h"
 #include "xml.h"
 
 namespace Ui
@@ -54,8 +54,8 @@ class MainWindow:
         Scene scene;
         QPlainTextEdit textEdit;
         PagesWidget pagesWidget;
-        Runner runner;
-        ProgressDialog progressDialog;
+        //Runner runner;
+        //ProgressDialog progressDialog;
         Xml xml;
         XmlWidget xmlWidget;
 

@@ -9,10 +9,8 @@
 class XmlItem
 {
     public:
-        explicit XmlItem(XmlItem *parent = 0);
-        explicit XmlItem(XmlItem *precItem, XmlItem *parent = 0);
-        explicit XmlItem(const QDomElement& node, XmlItem *parent = 0);
-        explicit XmlItem(const QDomElement& node, XmlItem *precItem, XmlItem *parent = 0);
+        explicit XmlItem(XmlItem *parent = 0, XmlItem *precItem = 0);
+        explicit XmlItem(const QDomElement& node, XmlItem *parent = 0, XmlItem *precItem = 0);
         ~XmlItem();
 
         void load(const QDomElement& node);
@@ -28,7 +26,7 @@ class XmlItem
 
         inline QString text() const;
         inline int row() const;
-        inline XmlAttributes *attributes() const;
+        inline XmlAttributes attributes() const;
 
     private:
         void init(XmlItem *parent = 0, XmlItem *precItem = 0);
@@ -45,7 +43,7 @@ inline QList<XmlItem *> XmlItem::childs() const
 { return childs_; }
 
 inline XmlItem *XmlItem::child(int i) const
-{ return childs_[i]; }
+{ if(i > -1 && i < childs_.count()) return childs_[i]; return 0; }
 
 inline void XmlItem::addChild(XmlItem *child)
 { childs_ << child; }
@@ -53,7 +51,7 @@ inline void XmlItem::addChild(XmlItem *child)
 inline XmlItem *XmlItem::parent() const
 { return parent_; }
 
-inline PolygonItem *XmlItem::graphicalItem() const
+inline PolygonItem *XmlItem::graphicalItem()
 { return graphicalItem_; }
 
 inline void XmlItem::setGraphicalItem(PolygonItem *graphicalItem)

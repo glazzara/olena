@@ -46,7 +46,7 @@ void Xml::load(const QString &filename)
     if(!filename.isEmpty())
     {
         // Reset graphic and tree items;
-        tItem = new QTreeWidgetItem;
+        tItem = new XmlItem;
         gItem = new QGraphicsPolygonItem;
 
         QFile xmlFile(filename);
@@ -59,12 +59,10 @@ void Xml::load(const QString &filename)
         xmlFile.close();
 
         QDomElement root = xml.documentElement();
-        tItem->setText(0, root.tagName());
-        tItem->setData(1, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(new QDomNamedNodeMap(root.attributes())));
+        tItem->load(root);
 
         root = root.firstChild().toElement();
-        QTreeWidgetItem *parentTreeItem = init(root, tItem);
-        parentTreeItem->setData(1, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(0));
+        XmlItem *parentTreeItem = init(root, tItem);
 
         // Run through the xml file structure by structure.
         root = root.nextSibling().firstChild().toElement();
@@ -74,57 +72,50 @@ void Xml::load(const QString &filename)
     }
 }
 
-QTreeWidgetItem *Xml::init(const QDomElement& root, QTreeWidgetItem *rootTreeItem)
+XmlItem *Xml::init(const QDomElement& root, XmlItem *rootTreeItem)
 {
-    QDomElement node = root;
+    XmlItem *metadataItem = new XmlItem(root, rootTreeItem);
 
-    QTreeWidgetItem *parentTreeItem = new QTreeWidgetItem(rootTreeItem);
-    parentTreeItem->setText(0, root.tagName());
-    parentTreeItem->setData(0, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(0));
-
-    QString nodeText;
-    QTreeWidgetItem *treeItem, *childTreeItem;
+    XmlItem *contentItem = 0;
 
     // Run through "METADATA" node and subnodes.
-    node = node.firstChild().toElement();
+    QDomElement node = root.firstChild().toElement();
     while(!node.isNull())
     {
-        treeItem = new QTreeWidgetItem(parentTreeItem, treeItem);
-        treeItem->setText(0, node.tagName());
-        // Store the xml node in the item.
-        treeItem->setData(0, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(0));
-
-        // Add widget item child with text content.
-        nodeText = node.text();
-        childTreeItem = new QTreeWidgetItem(treeItem);
-        childTreeItem->setText(0, nodeText);
-
+        contentItem = new XmlItem(node, metadataItem, contentItem);
         node = node.nextSibling().toElement();
     }
 
     // Add "PAGE" root node and return it.
-    parentTreeItem = new QTreeWidgetItem(rootTreeItem, parentTreeItem);
-    parentTreeItem->setText(0, root.nextSibling().toElement().tagName());
-    parentTreeItem->setData(0, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(new QDomNamedNodeMap(root.nextSibling().attributes())));
+    metadataItem = new XmlItem(root.nextSibling().toElement(), rootTreeItem, metadataItem);
 
-    return parentTreeItem;
+    return metadataItem;
 }
 
-void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, QTreeWidgetItem *rootTreeItem)
+void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, XmlItem *pageItem)
 {
     if(!root.isNull())
     {
         // Create corresponding tree item.
-        QTreeWidgetItem *parentTreeItem = new QTreeWidgetItem(rootTreeItem, QStringList(root.tagName()));
-        parentTreeItem->setData(0, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(new QDomNamedNodeMap(root.attributes())));
+        XmlItem *regionItem = new XmlItem(root, pageItem);
+
+        QDomElement node = root.firstChild().toElement();
+        XmlItem *coordsItem = new XmlItem(node, regionItem);
 
         QPolygon polygon;
+        XmlItem *pointItem = 0;
+        QString x, y;
 
         // Run through all points data.
-        QDomElement node = root.firstChild().firstChild().toElement();
+        node = node.firstChild().toElement();
         while(!node.isNull())
         {
-            polygon << QPoint(node.attribute("x", "null").toInt(), node.attribute("y", "null").toInt());
+            x = node.attribute("x", "null");
+            y = node.attribute("y", "null");
+
+            pointItem = new XmlItem(node, coordsItem, pointItem);
+
+            polygon << QPoint(x.toInt(), y.toInt());
             node = node.nextSibling().toElement();
         }
 
@@ -132,38 +123,44 @@ void Xml::processNode(const QDomElement& root, const GraphicRegion::Data& data, 
         PolygonItem *polygonItem = new PolygonItem(polygon, gItem);
         polygonItem->loadData(data);
 
-        // Store tree object in the graphical object an vice versa.
-        polygonItem->setData(1, VariantPointer<QTreeWidgetItem>::toQVariant(parentTreeItem));
-        parentTreeItem->setData(0, Qt::UserRole+1, VariantPointer<PolygonItem>::toQVariant(polygonItem));
-
         if(data.region == GraphicRegion::Text)
-            processLineNode(root.firstChild().nextSiblingElement("Line"), polygonItem, parentTreeItem);
+            processLineNode(root.firstChild().nextSiblingElement("Line"), polygonItem, coordsItem);
 
         // Run through all nodes from the same data structure recursively.
-        processNode(root.nextSiblingElement(data.name), data, rootTreeItem);
+        processNode(root.nextSiblingElement(data.name), data, pageItem);
     }
 }
 
-void Xml::processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, QTreeWidgetItem *rootTreeItem)
+void Xml::processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, XmlItem *precItem)
 {
     if(!root.isNull())
     {
         // Create corresponding tree item.
-        QTreeWidgetItem *parentTreeItem = new QTreeWidgetItem(rootTreeItem, QStringList(root.tagName()));
-        parentTreeItem->setData(0, Qt::UserRole, VariantPointer<QDomNamedNodeMap>::toQVariant(new QDomNamedNodeMap(root.attributes())));
+        XmlItem *lineItem = new XmlItem(root, precItem->parent(), precItem);
+
+        QDomElement node = root.firstChild().toElement();
+        XmlItem *coordsItem = new XmlItem(node, lineItem);
 
         QPolygon polygon;
+        XmlItem *pointItem = 0;
+
+        QString xs, ys;
         int x, y;
 
         int xMin = INT_MAX;
         int xMax = INT_MIN;
 
         // Run through all points data.
-        QDomElement node = root.firstChild().firstChild().toElement();
+        node = node.firstChild().toElement();
         while(!node.isNull())
         {
-            x = node.attribute("x", "null").toInt();
-            y = node.attribute("y", "null").toInt();
+            xs = node.attribute("x", "null");
+            ys = node.attribute("y", "null");
+
+            pointItem = new XmlItem(node, coordsItem, pointItem);
+
+            x = xs.toInt();
+            y = ys.toInt();
 
             // Get beginning and end of line.
             if(xMin > x)
@@ -179,14 +176,10 @@ void Xml::processLineNode(const QDomElement& root, PolygonItem *parentPolygonIte
         PolygonItem *polygonItem = new PolygonItem(polygon, parentPolygonItem);
         polygonItem->loadData(itemsData[0]);
 
-        // Store tree object in the graphical object and vice versa.
-        polygonItem->setData(1, VariantPointer<QTreeWidgetItem>::toQVariant(parentTreeItem));
-        parentTreeItem->setData(0, Qt::UserRole+1, VariantPointer<PolygonItem>::toQVariant(polygonItem));
-
         // Get meanline and baseline.
         processTypoNode(root, QPoint(xMin, xMax), polygonItem);
         // Run through all line nodes recursively.
-        processLineNode(root.nextSiblingElement("Line"), parentPolygonItem, rootTreeItem);
+        processLineNode(root.nextSiblingElement("Line"), parentPolygonItem, lineItem);
     }
 }
 

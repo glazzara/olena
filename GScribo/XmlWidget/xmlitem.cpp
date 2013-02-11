@@ -1,22 +1,11 @@
 #include "xmlitem.h"
 
-XmlItem::XmlItem(XmlItem *parent)
-{
-    init(parent);
-}
-
-XmlItem::XmlItem(XmlItem *precItem, XmlItem *parent)
+XmlItem::XmlItem(XmlItem *parent, XmlItem *precItem)
 {
     init(parent, precItem);
 }
 
-XmlItem::XmlItem(const QDomElement& node, XmlItem *parent)
-{
-    init(parent);
-    load(node);
-}
-
-XmlItem::XmlItem(const QDomElement& node, XmlItem *precItem, XmlItem *parent)
+XmlItem::XmlItem(const QDomElement& node, XmlItem *parent, XmlItem *precItem)
 {
     init(parent, precItem);
     load(node);
@@ -31,7 +20,7 @@ XmlItem::~XmlItem()
 }
 
 void XmlItem::init(XmlItem *parent, XmlItem *precItem)
-{    
+{
     graphicalItem_ = 0;
     parent_ = parent;
 
@@ -49,5 +38,5 @@ void XmlItem::load(const QDomElement& node)
     text_ = node.tagName();
 
     // Load attributes.
-    attributes_.load(node);
+    attributes_.load(node.attributes());
 }

@@ -2,6 +2,7 @@
 #define XMLATTRIBUTES_H
 
 #include <QDomNamedNodeMap>
+#include <QStringList>
 
 class XmlAttributes
 {
