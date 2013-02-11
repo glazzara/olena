@@ -1,7 +1,5 @@
-#include <QFile>
-#include <QTextStream>
-#include <climits>
 #include "xml.h"
+#include "region.h"
 
 Xml::Xml()
 {

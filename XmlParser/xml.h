@@ -3,10 +3,10 @@
 
 #include <QString>
 #include <QGraphicsItem>
-#include <QPainterPath>
 #include <QDomElement>
+#include <QFile>
+#include <climits>
 #include <QTextEdit>
-#include "region.h"
 
 class Xml
 {

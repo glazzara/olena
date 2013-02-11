@@ -63,8 +63,8 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 void CustomGraphicsView::paintEvent(QPaintEvent *event)
 {
     QGraphicsView::paintEvent(event);
-    QPainter *painter = new QPainter(viewport());
+    /*QPainter *painter = new QPainter(viewport());
     painter->drawRect(rectangle);
     painter->fillRect(rectangle, color);
-    delete painter;
+    delete painter;*/
 }

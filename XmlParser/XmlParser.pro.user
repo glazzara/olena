@@ -10,11 +10,11 @@
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString">Test2.pro</value>
+  <value type="QString">XmlParser.pro</value>
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">Test2</value>
+  <value type="QString">XmlParser</value>
  </data>
  <data>
   <variable>RunConfiguration0-UseDyldImageSuffix</variable>
@@ -56,10 +56,19 @@
   <variable>buildConfiguration-Debug</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <value key="QtVersionId" type="int">2</value>
+   <value key="QtVersionId" type="int">0</value>
    <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">2</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildConfiguration-Release</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <value key="QtVersionId" type="int">0</value>
+   <value key="addQDumper" type=""></value>
+   <value key="buildConfiguration" type="int">0</value>
   </valuemap>
  </data>
  <data>
@@ -82,7 +91,7 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/Test2</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
@@ -103,7 +112,7 @@
     <value type="QString">_=/usr/bin/qtcreator</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/Test2/Test2.pro</value>
+    <value type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser/XmlParser.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
@@ -111,7 +120,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/Test2</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
   </valuemap>
  </data>
  <data>
@@ -134,7 +143,7 @@
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</value>
-    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/Test2</value>
+    <value type="QString">PWD=/lrde/home/stage/froger_a/qt/XmlParser</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=2</value>
@@ -160,7 +169,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/Test2</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/amd/nfs/volume1/home/stage/froger_a/qt/XmlParser</value>
   </valuemap>
  </data>
  <data>
@@ -174,9 +183,28 @@
   </valuemap>
  </data>
  <data>
+  <variable>buildconfiguration-Release-buildstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Release-buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Release-cleanstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+  </valuemap>
+ </data>
+ <data>
   <variable>buildconfigurations</variable>
   <valuelist type="QVariantList">
    <value type="QString">Debug</value>
+   <value type="QString">Release</value>
   </valuelist>
  </data>
  <data>

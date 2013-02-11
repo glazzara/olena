@@ -14,15 +14,6 @@ class Picture :
     public:
         Picture();
         void load(const QString &filename);
-
-    protected:
-        void mousePressEvent(QGraphicsSceneMouseEvent *event);
-        void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
-    private:
-        QPointF pressPos;
-        QPointF releasePos;
-        bool isPress;
 };
 
 #endif // PICTURE_H

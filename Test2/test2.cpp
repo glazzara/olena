@@ -16,18 +16,21 @@ Test2::Test2(QWidget *parent) :
 {
     ui->setupUi(this);
     scaleFactor = 1.0;
-    graphicsView = new CustomGraphicsView(ui->textEdit);
+    graphicsView = new QGraphicsView();
     graphicsView->setParent(ui->scrollArea);
     QGraphicsScene *scene = new QGraphicsScene(ui->scrollArea);
     graphicsView->setScene(scene);
     graphicsView->setGeometry(0, 0, ui->scrollArea->width(), ui->scrollArea->height());
+    picture = new Picture();
+    graphicsView->scene()->addItem(picture);
+    QVector<QGraphicsItem *> items = Xml::graphicsItems("/tmp/mp00082c_gui.xml", ui->textEdit);
+    //for(int i = 0; i < items.count(); i++)
+        //graphicsView->scene()->addItem(items[i]);
+    selectionItem = new SelectionItem(0, 0, 0, 0);
     shortcutZoomIn = new QShortcut(QKeySequence("Ctrl++"), this);
     shortcutZoomOut = new QShortcut(QKeySequence("Ctrl+-"), this);
     connect(shortcutZoomOut, SIGNAL(activated()), this, SLOT(on_actionZoomOut_triggered()));
     connect(shortcutZoomIn, SIGNAL(activated()), this, SLOT(on_actionZoomIn_triggered()));
-    picture = new Picture();
-    graphicsView->scene()->addItem(picture);
-    Xml::mapItems("/tmp/mp00082c_gui.xml");
 }
 
 Test2::~Test2()
