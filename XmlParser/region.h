@@ -1,8 +1,18 @@
 #ifndef REGION_H
 #define REGION_H
 
-namespace GraphicsRegion
+#include <QColor>
+
+namespace GraphicRegion
 {
+    struct Data
+    {
+        QColor color;
+        QString name;
+        int region;
+        int zValue;
+    };
+
     enum Id
     {
         Text = 0,

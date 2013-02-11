@@ -1,7 +1,7 @@
 #ifndef POLYGONITEM_H
 #define POLYGONITEM_H
 
-#include <QGraphicsPolygonItem>
+#include <QGraphicsPathItem>
 #include <QPen>
 
 class PolygonItem :
@@ -11,7 +11,7 @@ class PolygonItem :
 
     public:
         explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-        explicit PolygonItem(const QPolygonF &polygon, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
         void setColor(const QColor& color);
         QColor color() const;
 
@@ -24,7 +24,7 @@ class PolygonItem :
         QBrush *unselectedBrush;
 
     public slots:
-        void repaint(const QRectF& rect);
+        void repaint(const QRectF& rect, bool clic);
 };
 
 #endif // POLYGONITEM_H

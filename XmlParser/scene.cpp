@@ -21,16 +21,17 @@ Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
 void Scene::init()
 {
     isPressing = false;
+    clic = false;
     selection = new Selection(this);
-}
+}        
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton && !isPressing)
     {
         isPressing = true;
+        clic = true;
         pressPos = event->scenePos();
-        selection->show();
     }
 }
 
@@ -38,6 +39,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(isPressing)
     {
+        clic = false;
         if(pressPos.x() < event->scenePos().x())
             selection->setRect(pressPos.x(), 0, event->scenePos().x()-pressPos.x(), 0);
         else
@@ -54,12 +56,11 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton)
       {
           isPressing = false;
-          QPainterPath path;
-          path.addRect(selection->rect());
-          setSelectionArea(path, Qt::IntersectsItemShape);
-          emit repaintItems(selection->rect());
+          if(clic)
+              emit repaintItems(QRectF(QPointF(0, 0), event->scenePos()), true);
+          else
+              emit repaintItems(selection->rect(), false);
           selection->setRect(0, 0, 0, 0);
-          selection->hide();
       }
 }
 

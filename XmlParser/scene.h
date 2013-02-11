@@ -22,7 +22,7 @@ class Scene :
         void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     signals:
-       void repaintItems(const QRectF& rect);
+       void repaintItems(const QRectF& rect, bool clic);
        void sendString(QString& string);
 
     private:
@@ -32,6 +32,7 @@ class Scene :
         Selection *selection;
         QPointF pressPos;
         bool isPressing;
+        bool clic;
 };
 
 #endif // SCENE_H

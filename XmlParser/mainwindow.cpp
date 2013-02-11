@@ -8,10 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->graphicsView->setGeometry(0, 0, ui->groupBox->width(), ui->groupBox->height());
     Scene *scene = new Scene(ui->graphicsView);
-    scene->setSceneRect(ui->graphicsView->geometry());
+    scene->setSceneRect(/*ui->graphicsView->geometry()*/0, 0, 1000, 1000);
     ui->graphicsView->setScene(scene);
-    Xml::parseItems("/lrde/home/stage/froger_a/olena/_build/scribo/src/out.xml", scene);
-    connect(scene, SIGNAL(sendString(QString&)), this, SLOT(on_action(QString&)));
+    Xml::parseItems("/tmp/mp00082c_gui.xml", scene);
 }
 
 MainWindow::~MainWindow()
@@ -35,9 +34,12 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::on_actionOpen_triggered()
 {
     QPixmap pixmap(QFileDialog::getOpenFileName(this));
-    QBrush brush(pixmap);
-    ui->graphicsView->scene()->setBackgroundBrush(brush);
-    ui->graphicsView->scene()->setSceneRect(pixmap.rect());;
+    QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem(pixmap);
+    pixmapItem->setFlag(QGraphicsItem::ItemNegativeZStacksBehindParent, true);
+    pixmapItem->setZValue(-1);
+    pixmapItem->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    ui->graphicsView->scene()->setSceneRect(pixmap.rect());
+    ui->graphicsView->scene()->addItem(pixmapItem);
 }
 
 /*void MainWindow::on_action(QString& string)
