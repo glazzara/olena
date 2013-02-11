@@ -115,25 +115,26 @@ void MainWindow::onOpen()
         {
             path = paths[counter];
             counter++;
-            isContained = filenames.contains(path, Qt::CaseSensitive);
+            isContained = filenames.contains(path);
         } while(isContained && counter < paths.count());
 
         if(!isContained)
         {
-            onFileChanged(path);
-            pagesWidget.setCurrentRow(filenames.count()+counter-1);
             pagesWidget.addPicture(path, QPixmap(path));
 
             // If more than one file, we store it in the page widget.
             for(int i = counter; i < paths.count(); i++)
             {
                 // Check if the page widget contains the image.
-                if(!filenames.contains(paths[i], Qt::CaseSensitive))
+                if(!filenames.contains(paths[i]))
                 {
                     path = paths[i];
                     pagesWidget.addPicture(path, QPixmap(path));
                 }
             }
+
+            pagesWidget.setCurrentRow(0);
+            onFileChanged(path);
         }
         else
             onFileChanged(path);

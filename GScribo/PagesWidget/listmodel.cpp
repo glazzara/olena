@@ -3,7 +3,7 @@
 ListModel::ListModel(QObject *parent):
         QAbstractListModel(parent)
 {
-    currentRow_ = -1;
+    currentRow_ = 0;
 }
 
 QVariant ListModel::data(const QModelIndex& index, int role) const
@@ -25,14 +25,14 @@ QVariant ListModel::data(const QModelIndex& index, int role) const
 
 void ListModel::addPicture(const QString& filename, const QPixmap& pixmap)
 {
-    int row = rowCount();
+    beginInsertRows(QModelIndex(), 0, 0);
+    beginResetModel();
 
-    beginInsertRows(QModelIndex(), row, row);
-
-    pixmaps_.insert(row, pixmap.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    filenames_.insert(row, filename);
+    pixmaps_.prepend(pixmap.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    filenames_.prepend(filename);
 
     endInsertRows();
+    //endResetModel();
 }
 
 void ListModel::removePixmap(const QModelIndex &parent)
@@ -49,11 +49,7 @@ void ListModel::removePixmap(const QModelIndex &parent)
 
 void ListModel::setCurrentRow(int currentRow)
 {
-    int precRow = currentRow_;
+    beginResetModel();
     currentRow_ = currentRow;
-
-    QModelIndex i = index(precRow, 0, QModelIndex());
-    emit dataChanged(i, i);
-    i = index(currentRow_, 0, QModelIndex());
-    emit dataChanged(i, i);
+    endResetModel();
 }

@@ -33,5 +33,15 @@ void PagesWidget::removeSelection()
         // Draw new pixmap on the scene.
         getPicture(model_.index(indexes[0].row()));
         clearSelection();
+
+        model_.setCurrentRow(indexes[0].row());
     }
+}
+
+void PagesWidget::getPicture(const QModelIndex& index)
+{
+    QString filename = index.data(Qt::UserRole).toString();
+    model_.setCurrentRow(index.row());
+
+    emit imageSelectionned(filename);
 }

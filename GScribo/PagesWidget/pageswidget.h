@@ -28,7 +28,7 @@ class PagesWidget:
         void removeSelection();
 
     private slots:
-        inline void getPicture(const QModelIndex& index);
+        void getPicture(const QModelIndex& index);
 
     signals:
         void imageSelectionned(const QString& filename);
@@ -42,9 +42,6 @@ inline int PagesWidget::currentRow() const
 
 inline void PagesWidget::setCurrentRow(int currentRow)
 { model_.setCurrentRow(currentRow); }
-
-void PagesWidget::getPicture(const QModelIndex& index)
-{ QString filename = index.data(Qt::UserRole).toString(); emit imageSelectionned(filename); }
 
 inline void PagesWidget::addPicture(const QString& filename, const QPixmap& pixmap)
 { model_.addPicture(filename, pixmap); }
