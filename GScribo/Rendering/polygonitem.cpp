@@ -12,6 +12,14 @@ PolygonItem::PolygonItem(const QPolygonF &polygon, QGraphicsItem *parent, QGraph
     init();
 }
 
+PolygonItem::~PolygonItem()
+{
+    // Delete all childs.
+    QGraphicsItem *child;
+    foreach(child, childItems())
+        delete child;
+}
+
 void PolygonItem::init()
 {
     xmlItem_ = 0;
@@ -29,7 +37,7 @@ void PolygonItem::init()
     unselectedBrush_.setStyle(Qt::SolidPattern);
 }
 
-void PolygonItem::setColor(const QColor &color)
+void PolygonItem::setColor(const QColor& color)
 {
     selectedPen_.setColor(QColor::fromRgb(color.red(), color.green(), color.blue(), 255));
     unselectedPen_.setColor(color);
@@ -58,6 +66,10 @@ void PolygonItem::setSelected(const QRectF& rect, bool clic)
         // Select graphical and xml item.
         select();
         xmlItem_->select();
+
+        // If we are on a line, select the text xml item.
+        if(region_ == GraphicRegion::Line)
+            static_cast<PolygonItem *>(parentItem())->xmlItem()->select();
     }
 
     else
@@ -68,7 +80,7 @@ void PolygonItem::setSelected(const QRectF& rect, bool clic)
     }
 
     // Set selection for line items.
-    if(region_ == (int)GraphicRegion::Text)
+    if(region_ == GraphicRegion::Text)
     {
         QGraphicsItem *child;
         foreach(child, childItems())

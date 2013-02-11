@@ -15,6 +15,7 @@ class PolygonItem :
     public:
         explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
         explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+        ~PolygonItem();
 
         void setColor(const QColor& color);
         inline QColor color() const;
@@ -62,5 +63,7 @@ inline void PolygonItem::select()
 
 inline void PolygonItem::unselect()
 { if(pen() != unselectedPen_) { setPen(unselectedPen_); setBrush(unselectedBrush_);} }
+
+Q_DECLARE_METATYPE(PolygonItem *)
 
 #endif // POLYGONITEM_H

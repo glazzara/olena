@@ -108,20 +108,36 @@ void MainWindow::onOpen()
 
     if(paths.count() > 0)
     {
-        QString path = paths[0];
-        QPixmap pixmap(path);
+        QStringList filenames = pagesWidget.filenames();
+        QString path;
 
-        pagesWidget.addPixmap(path, pixmap);
-
-        // If more than one file, we store it in the page widget.
-        for(int i = 1; i < paths.count(); i++)
+        int counter = 0;
+        bool isContained;
+        do
         {
-            path = paths[i];
-            pixmap.load(path);
-            pagesWidget.addPixmap(path, pixmap);
-        }
+            path = paths[counter];
+            counter++;
+            isContained = filenames.contains(path, Qt::CaseSensitive);
+        } while(isContained && counter < paths.count());
 
-        onFileChanged(path, pixmap);
+        if(!isContained)
+        {
+            QPixmap pixmap(path);
+            pagesWidget.addPixmap(path, pixmap);
+
+            // If more than one file, we store it in the page widget.
+            for(int i = counter; i < paths.count(); i++)
+            {
+                if(!filenames.contains(paths[i], Qt::CaseSensitive))
+                {
+                    path = paths[i];
+                    pixmap.load(path);
+                    pagesWidget.addPixmap(path, pixmap);
+                }
+            }
+
+            onFileChanged(path, pixmap);
+        }
     }
 }
 
@@ -160,13 +176,10 @@ void MainWindow::connectWidgets()
     // If double click on a picture of the page widget -> draw it on background scene.
     connect(&pagesWidget, SIGNAL(sceneChanged(QString,QPixmap)), this, SLOT(onFileChanged(QString,QPixmap)));
 
+    // Connect the scene to the xml widget and vice versa.
     connect(&scene, SIGNAL(beginSelection()), &xmlWidget, SLOT(onBeginGraphicalSelection()));
     connect(&scene, SIGNAL(endSelection()), &xmlWidget, SLOT(onEndGraphicalSelection()));
-
-    // Connect scene selection with xml tree and vice versa.
-    /*connect(&scene, SIGNAL(selectTreeItems(QList<QTreeWidgetItem*>)), &xmlWidget, SLOT(selectItems(QList<QTreeWidgetItem*>)));
-    connect(&xmlWidget, SIGNAL(selectGraphicalItem(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));
-    connect(&pagesWidget, SIGNAL(removeTreeSelection()), &xmlWidget, SLOT(clear()));*/
+    connect(&xmlWidget, SIGNAL(select(PolygonItem*)), &scene, SLOT(selectItem(PolygonItem*)));
 
     /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));

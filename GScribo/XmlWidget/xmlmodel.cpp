@@ -18,20 +18,12 @@ XmlModel::~XmlModel()
         delete rootItem_;
 }
 
-QVariant XmlModel::headerData(int/* section*/, Qt::Orientation orientation, int role) const
+QVariant XmlModel::headerData(int, Qt::Orientation orientation, int role) const
 {
     if(orientation == Qt::Horizontal && role == Qt::DisplayRole)
         return tr("Tree");
 
     return QVariant();
-}
-
-Qt::ItemFlags XmlModel::flags(const QModelIndex &index) const
-{
-    if(!index.isValid())
-        return 0;
-
-    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 QVariant XmlModel::data(const QModelIndex& index, int role) const
@@ -45,10 +37,13 @@ QVariant XmlModel::data(const QModelIndex& index, int role) const
             return static_cast<XmlItem *>(index.internalPointer())->text();
 
         case Qt::UserRole+1:
-            return static_cast<XmlItem *>(index.internalPointer())->attributes().names();
+            return static_cast<XmlItem *>(index.internalPointer())->isSelected();
 
         case Qt::UserRole+2:
-            return static_cast<XmlItem *>(index.internalPointer())->attributes().values();
+            return QVariant::fromValue(static_cast<XmlItem *>(index.internalPointer())->attributes());
+
+        case Qt::UserRole+3:
+            return VariantPointer<PolygonItem>::toQVariant(static_cast<XmlItem *>(index.internalPointer())->graphicalItem());
 
         default:
             return QVariant();

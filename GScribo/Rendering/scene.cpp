@@ -95,29 +95,26 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Scene::selectItem(PolygonItem *graphicalItem)
 {
-    if(graphicalItem)
-    {
-        QGraphicsItem *child;
-        PolygonItem *polygonItem;
+    QGraphicsItem *child;
+    PolygonItem *polygonItem;
 
-        // Unselect all items.
-        foreach(child, item_->childItems())
+    // Unselect all items.
+    foreach(child, item_->childItems())
+    {
+        polygonItem = static_cast<PolygonItem *>(child);
+        polygonItem->unselect();
+
+        // Unselect lines.
+        foreach(child, polygonItem->childItems())
         {
             polygonItem = static_cast<PolygonItem *>(child);
             polygonItem->unselect();
-
-            // Unselect lines.
-            foreach(child, polygonItem->childItems())
-            {
-                polygonItem = static_cast<PolygonItem *>(child);
-                polygonItem->unselect();
-            }
         }
-
-        // Select the good item.
-        graphicalItem->select();
-        views()[0]->centerOn(graphicalItem);
     }
+
+    // Select the good item.
+    graphicalItem->select();
+    views()[0]->centerOn(graphicalItem);
 }
 
 void Scene::selectItems(const QRectF& rect, bool clic)

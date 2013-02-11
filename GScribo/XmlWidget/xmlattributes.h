@@ -3,6 +3,7 @@
 
 #include <QDomNamedNodeMap>
 #include <QStringList>
+#include <QVariant>
 
 class XmlAttributes
 {
@@ -25,5 +26,8 @@ inline QStringList XmlAttributes::names() const
 
 inline QStringList XmlAttributes::values() const
 { return values_; }
+
+Q_DECLARE_METATYPE(XmlAttributes)
+Q_DECLARE_METATYPE(XmlAttributes *)
 
 #endif // XMLATTRIBUTES_H

@@ -6,13 +6,16 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QDomElement>
+#include <QHeaderView>
 #include <QWidget>
 #include <QLabel>
 
+#include "Rendering/scene.h"
 #include "selectionproxy.h"
-#include "treedelegate.h"
+#include "attributemodel.h"
+#include "variantpointer.h"
+#include "xmldelegate.h"
 #include "xmlmodel.h"
-#include "xmlview.h"
 
 class XmlWidget :
         public QWidget
@@ -27,20 +30,28 @@ class XmlWidget :
     private:
         QSortFilterProxyModel proxy_;
         SelectionProxy selectionProxy_;
+
         XmlModel model_;
-        XmlView viewer_;
-        XmlView selection_;
-        QTreeWidget property_;
+        AttributeModel attributesModel_;
+
+        QTreeView selection_;
+        QTreeView property_;
 
     public slots:
         inline void onBeginGraphicalSelection();
         inline void onEndGraphicalSelection();
+
+    private slots:
+        void onClick(const QModelIndex& index);
+
+    signals:
+        void select(PolygonItem *polygonItem);
 };
 
 inline void XmlWidget::onBeginGraphicalSelection()
 { selectionProxy_.beginResetModel(); }
 
 inline void XmlWidget::onEndGraphicalSelection()
-{ selectionProxy_.endResetModel(); }
+{ selectionProxy_.endResetModel(); property_.reset(); selection_.expandAll(); }
 
 #endif // XMLWIDGET_H

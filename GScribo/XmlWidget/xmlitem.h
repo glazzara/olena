@@ -70,10 +70,10 @@ inline void XmlItem::setSelected(bool selected)
 { isSelected_ = selected; }
 
 inline void XmlItem::select()
-{ setSelected(true); }
+{ isSelected_ = true; }
 
 inline void XmlItem::unselect()
-{ setSelected(false); }
+{ isSelected_ = false; }
 
 inline QString XmlItem::text() const
 { return text_; }

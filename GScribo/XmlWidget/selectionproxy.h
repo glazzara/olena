@@ -2,6 +2,7 @@
 #define SELECTIONPROXY_H
 
 #include <QSortFilterProxyModel>
+#include <QDebug>
 
 #include "xmlitem.h"
 
@@ -19,12 +20,8 @@ class SelectionProxy :
 
 inline bool SelectionProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
 {
-    QModelIndex index = static_cast<QSortFilterProxyModel *>(sourceModel())->sourceModel()->index(sourceRow, 0, sourceParent);
-
-    if(index.isValid())
-        return static_cast<XmlItem *>(index.internalPointer())->isSelected();
-
-    return false;
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    return index.data(filterRole()).toBool();
 }
 
 inline void SelectionProxy::beginResetModel()
