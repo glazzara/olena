@@ -23,6 +23,7 @@ class Xml :
         void load(const QString& filename);
         inline QTreeWidgetItem *treeItem();
         inline QGraphicsItem *graphicItem();
+        inline QDomDocument xmlDocument() const;
 
     private:
         QTreeWidgetItem *init(const QDomElement& root, QTreeWidgetItem *rootTreeItem);
@@ -33,6 +34,7 @@ class Xml :
 
         QGraphicsPolygonItem *gItem;
         QTreeWidgetItem *tItem;
+        QDomDocument xml;
 };
 
 inline QTreeWidgetItem *Xml::treeItem()
@@ -40,6 +42,9 @@ inline QTreeWidgetItem *Xml::treeItem()
 
 inline QGraphicsItem *Xml::graphicItem()
 { return gItem; }
+
+inline QDomDocument Xml::xmlDocument() const
+{ return xml; }
 
 inline QTreeWidgetItem *Xml::fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem)
 {

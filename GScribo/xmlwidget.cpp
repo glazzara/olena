@@ -25,12 +25,15 @@ void XmlWidget::fillProperty(QTreeWidgetItem *treeItem)
     property.clear();
 
     // Get node from the tree item.
-    QDomElement *node = VariantPointer<QDomElement>::fromQVariant(treeItem->data(0, Qt::UserRole));
-    QStringList values;
+    QDomNamedNodeMap *node = VariantPointer<QDomNamedNodeMap>::fromQVariant(treeItem->data(0, Qt::UserRole));
 
-    if(node->hasAttributes())
+    if(node)
     {
-        QDomNamedNodeMap attributes = node->attributes();
+        QStringList values;
+
+    //if(node.hasAttributes())
+    //{
+        QDomNamedNodeMap attributes = *node;/*.attributes();*/
 
         for(int i = 0; i < attributes.count(); i++)
         {
@@ -38,6 +41,8 @@ void XmlWidget::fillProperty(QTreeWidgetItem *treeItem)
             property.addTopLevelItem(new QTreeWidgetItem(values));
             values.clear();
         }
+        //}
     }
+
     property.resizeColumnToContents(0);
 }
