@@ -6,10 +6,10 @@
 struct OptionWidget :
         public QWidget
 {
-    explicit OptionWidget(QWidget * parent);
+    explicit OptionWidget(QWidget * parent) : QWidget(parent) {}
 
-    virtual void loadConfig();
-    virtual void saveConfig();
+    virtual void loadConfig() {}
+    virtual void saveConfig() {}
 };
 
 #endif // OPTIONWIDGET_H
