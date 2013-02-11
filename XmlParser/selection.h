@@ -13,7 +13,6 @@ class Selection :
         explicit Selection(QGraphicsScene *scene = 0);
         explicit Selection(const QRectF& rect, QGraphicsScene *scene = 0);
         explicit Selection(qreal x, qreal y, qreal width, qreal height, QGraphicsScene *scene = 0);
-        void changeShape();
 
     private:
         void init();

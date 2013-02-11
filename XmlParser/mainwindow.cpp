@@ -1,5 +1,5 @@
-#include "ui_mainwindow.h"
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene *scene = new Scene(ui->graphicsView);
     scene->setSceneRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene);
+    Xml::parseItems("/lrde/home/stage/froger_a/olena/_build/scribo/src/out.xml", scene);
     connect(scene, SIGNAL(sendString(QString&)), this, SLOT(on_action(QString&)));
 }
 
@@ -24,20 +25,22 @@ void MainWindow::changeEvent(QEvent *e)
     switch (e->type())
     {
         case QEvent::LanguageChange:
-          ui->retranslateUi(this);
-          break;
+            ui->retranslateUi(this);
+            break;
         default:
-          break;
+            break;
     }
 }
 
 void MainWindow::on_actionOpen_triggered()
 {
     QPixmap pixmap(QFileDialog::getOpenFileName(this));
-    ui->graphicsView->scene()->addPixmap(pixmap);
+    QBrush brush(pixmap);
+    ui->graphicsView->scene()->setBackgroundBrush(brush);
+    ui->graphicsView->scene()->setSceneRect(pixmap.rect());;
 }
 
-void MainWindow::on_action(QString& string)
+/*void MainWindow::on_action(QString& string)
 {
     ui->textEdit->setText(string);
-}
+}*/

@@ -8,10 +8,12 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     xml.cpp \
     scene.cpp \
-    selection.cpp
+    selection.cpp \
+    polygonitem.cpp
 HEADERS += mainwindow.h \
     region.h \
     xml.h \
     scene.h \
-    selection.h
+    selection.h \
+    polygonitem.h
 FORMS += mainwindow.ui

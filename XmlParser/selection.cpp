@@ -31,10 +31,3 @@ void Selection::init()
     brush.setColor(QColor::fromRgb(100, 200, 60, 100));
     setBrush(brush);
 }
-
-void Selection::changeShape()
-{
-    ensureVisible(rect());
-    prepareGeometryChange();
-    update(rect());
-}

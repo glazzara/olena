@@ -46,7 +46,6 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             selection->setRect(selection->rect().x(), pressPos.y(), selection->rect().width(), event->scenePos().y()-pressPos.y());
         else
             selection->setRect(selection->rect().x(), event->scenePos().y(), selection->rect().width(), pressPos.y()-event->scenePos().y());
-        selection->changeShape();
     }
 }
 
@@ -55,9 +54,10 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton)
       {
           isPressing = false;
-          QRect rect = selection->rect().toRect();
-          QString str = debug(rect);
-          emit sendString(str);
+          QPainterPath path;
+          path.addRect(selection->rect());
+          setSelectionArea(path, Qt::IntersectsItemShape);
+          emit repaintItems(selection->rect());
           selection->setRect(0, 0, 0, 0);
           selection->hide();
       }

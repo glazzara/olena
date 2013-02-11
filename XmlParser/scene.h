@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include "selection.h"
+#include "polygonitem.h"
 
 class Scene :
         public QGraphicsScene
@@ -21,6 +22,7 @@ class Scene :
         void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     signals:
+       void repaintItems(const QRectF& rect);
        void sendString(QString& string);
 
     private:

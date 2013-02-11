@@ -7,17 +7,20 @@
 #include <QFile>
 #include <climits>
 #include <QTextEdit>
+#include "polygonitem.h"
+#include "scene.h"
 
-class Xml
+class Xml:
+        QObject
 {
     public:
         Xml();
-        static QVector<QGraphicsItem *> graphicsItems(const QString &filename, QTextEdit *debug);
+        static void parseItems(const QString &filename, Scene *scene);
 
     private:
-        static void graphicsTypoRegion(const QDomElement &element, QGraphicsItem *parent, const QPoint &xPos);
-        static void graphicsLineRegion(const QDomElement &element, QGraphicsItem *parent);
-        static void graphicsTextRegion(const QDomElement &element, QVector<QGraphicsItem *>& items, QTextEdit *debug);
+        static void graphicsTypoRegion(const QDomElement &element, const QPoint& xPos, Scene *scene);
+        static void graphicsLineRegion(const QDomElement &element, Scene *scene);
+        static void graphicsTextRegion(const QDomElement &element, Scene *scene);
 };
 
 #endif // XML_H

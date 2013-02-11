@@ -5,13 +5,16 @@
 #include <QGraphicsView>
 #include <QFileDialog>
 #include "scene.h"
+#include "xml.h"
+#include "polygonitem.h"
 
 namespace Ui
 {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow :
+        public QMainWindow
 {
         Q_OBJECT
 
@@ -27,7 +30,7 @@ class MainWindow : public QMainWindow
 
     private slots:
         void on_actionOpen_triggered();
-        void on_action(QString& string);
+        //void on_action(QString& string);
 };
 
 #endif // MAINWINDOW_H
