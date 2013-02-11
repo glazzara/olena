@@ -21,10 +21,6 @@ class Scene :
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
         void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
-    signals:
-       void repaintItems(const QRectF& rect, bool clic);
-       void sendString(QString& string);
-
     private:
         void init();
         QString debug(QRect &rect);
@@ -33,6 +29,10 @@ class Scene :
         QPointF pressPos;
         bool isPressing;
         bool clic;
+
+    signals:
+       void repaintItems(const QRectF& rect, bool clic);
+       void sendString(QString& string);
 };
 
 #endif // SCENE_H

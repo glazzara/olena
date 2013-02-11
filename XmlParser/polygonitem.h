@@ -5,7 +5,8 @@
 #include <QPen>
 
 class PolygonItem :
-        public QObject, public QGraphicsPolygonItem
+        public QObject,
+        public QGraphicsPolygonItem
 {
         Q_OBJECT
 

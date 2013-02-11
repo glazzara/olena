@@ -5,9 +5,13 @@
 #include <QGraphicsView>
 #include <QVBoxLayout>
 #include <QFileDialog>
+#include <QProgressDialog>
 #include "scene.h"
+#include "toolbar.h"
 #include "xml.h"
 #include "polygonitem.h"
+#include "runner.h"
+#include "progressdialog.h"
 
 namespace Ui
 {
@@ -28,11 +32,16 @@ class MainWindow :
 
     private:
         Ui::MainWindow *ui;
+        Scene * scene;
+        ProgressDialog *progressDialog;
+        QString imagePath;
+        Runner runner;
 
     private slots:
         void on_actionOpen_triggered();
+        void onSegmentation();
+        void onEndSegmentation(QString *filename);
         //void on_action(QString& string);
 };
 
 #endif // MAINWINDOW_H
-

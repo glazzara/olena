@@ -97,59 +97,59 @@ void Xml::parseItems(const QString &filename, Scene *scene)
     xmlFile.close();
     QVector<QGraphicsItem *> items;
     QDomElement element = xml.documentElement().firstChild().nextSiblingElement("Page").firstChild().toElement();
-    graphicsTextRegion(element, scene);                                                         // TextRegion + LineRegion + Baseline + Meanline
+    graphicsTextRegion(element, scene);
     GraphicRegion::Data verticalData;
     verticalData.color = QColor::fromRgb(0, 0, 255, 80);
     verticalData.name = "VerticalSeparatorRegion";
     verticalData.region = (int)GraphicRegion::VerticalSeparator;
     verticalData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(verticalData.name), verticalData, scene);         // VerticalRegion
+    graphicsRegion(element.nextSiblingElement(verticalData.name), verticalData, scene);
     GraphicRegion::Data horizontalData;
     horizontalData.color = QColor::fromRgb(0, 0, 255, 80);
     horizontalData.name = "HorizontalSeparatorRegion";
     horizontalData.region = (int)GraphicRegion::HorizontalSeparator;
     horizontalData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(horizontalData.name), horizontalData, scene);     // HorizontalRegion
+    graphicsRegion(element.nextSiblingElement(horizontalData.name), horizontalData, scene);
     GraphicRegion::Data spaceData;
     spaceData.color = QColor::fromRgb(0, 0, 128, 80);
     spaceData.name = "WhitespaceSeparatorRegion";
     spaceData.region = (int)GraphicRegion::WhiteSpaceSeparator;
     spaceData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(spaceData.name), spaceData, scene);               // WhitespaceRegion
+    graphicsRegion(element.nextSiblingElement(spaceData.name), spaceData, scene);
     GraphicRegion::Data imageData;
     imageData.color = QColor::fromRgb(255, 120, 0, 80);
     imageData.name = "ImageRegion";
     imageData.region = (int)GraphicRegion::Image;
     imageData.zValue = 1;
-    graphicsRegion(element.nextSiblingElement(imageData.name), imageData, scene);               // ImageRegion
+    graphicsRegion(element.nextSiblingElement(imageData.name), imageData, scene);
     GraphicRegion::Data noiseData;
     noiseData.color = QColor::fromRgb(43, 39, 128, 80);
     noiseData.name = "NoiseRegion";
     noiseData.region = (int)GraphicRegion::Noise;
     noiseData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(noiseData.name), noiseData, scene);               // NoiseRegion
+    graphicsRegion(element.nextSiblingElement(noiseData.name), noiseData, scene);
     GraphicRegion::Data tableData;
     tableData.color = QColor::fromRgb(220, 246, 0, 80);
     tableData.name = "TableRegion";
     tableData.region = (int)GraphicRegion::Table;
     tableData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(tableData.name), tableData, scene);               // TableRegion
+    graphicsRegion(element.nextSiblingElement(tableData.name), tableData, scene);
     GraphicRegion::Data mathsData;
     mathsData.color = QColor::fromRgb(170, 0, 255, 80);
     mathsData.name = "MathsRegion";
     mathsData.region = (int)GraphicRegion::Maths;
     mathsData.zValue = 3;
-    graphicsRegion(element.nextSiblingElement(mathsData.name), mathsData, scene);               // MathsRegion
+    graphicsRegion(element.nextSiblingElement(mathsData.name), mathsData, scene);
     GraphicRegion::Data graphicData;
     graphicData.color = QColor::fromRgb(255, 0, 144, 80);
     graphicData.name = "GraphicRegion";
     graphicData.region = (int)GraphicRegion::Graphic;
     graphicData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(graphicData.name), graphicData, scene);           // GraphicRegion
+    graphicsRegion(element.nextSiblingElement(graphicData.name), graphicData, scene);
     GraphicRegion::Data chartData;
     chartData.color = QColor::fromRgb(0, 204, 255, 80);
     chartData.name = "ChartRegion";
     chartData.region = (int)GraphicRegion::Chart;
     chartData.zValue = 2;
-    graphicsRegion(element.nextSiblingElement(chartData.name), chartData, scene);               // ChartRegion
+    graphicsRegion(element.nextSiblingElement(chartData.name), chartData, scene);
 }

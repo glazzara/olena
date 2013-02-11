@@ -11,7 +11,7 @@
 
 namespace Ui
 {
-    class Test2;
+    class Test2
 }
 
 class Test2 : public QMainWindow {

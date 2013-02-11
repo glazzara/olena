@@ -20,8 +20,8 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>650</y>
+      <x>120</x>
+      <y>670</y>
       <width>811</width>
       <height>75</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>10</y>
+      <x>30</x>
+      <y>50</y>
       <width>971</width>
       <height>591</height>
      </rect>

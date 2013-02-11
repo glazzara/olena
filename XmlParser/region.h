@@ -15,7 +15,7 @@ namespace GraphicRegion
 
     enum Id
     {
-        Text = 0,
+        Text,
         Line,
         Baseline,
         Meanline,
@@ -29,6 +29,16 @@ namespace GraphicRegion
         Graphic,
         Chart,
         Maths
+    };
+}
+
+namespace Separator
+{
+    enum FindSeparator
+    {
+        Lines,
+        Whitespaces,
+        Both
     };
 }
 
