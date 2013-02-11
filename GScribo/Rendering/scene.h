@@ -19,8 +19,10 @@ class Scene :
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         QString backgroundPath() const;
-        void addPolygonItem(QGraphicsItem *item);
         void reset();
+        void addPolygonItem(QGraphicsItem *item);
+        void changeScene(const QString& filename, const QPixmap& pixmap, QGraphicsItem *item = 0);
+        void repaintSelection(const QRectF& rect, bool clic);
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -31,17 +33,15 @@ class Scene :
         void init();
 
         QGraphicsItem *item;
-        QString path;
         Selection selection;
         QPointF pressPos;
         bool isPressing;
+        QString path;
         bool clic;
 
-    public slots:
-        void setBackground(const QString& filename, const QPixmap& pixmap);
-
     signals:
-        void repaintItem(const QRectF& rect, bool clic);
+        void selectTreeItem(QTreeWidgetItem *item);
+        void clearTreeItemSelection();
     };
 
 #endif // SCENE_H

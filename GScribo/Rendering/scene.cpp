@@ -22,6 +22,7 @@ void Scene::init()
 {
     isPressing = false;
     clic = false;
+    item = 0;
 
     // Disable the scene size adaptation to items rect with a non null rect.
     setSceneRect(0, 0, 0, 1);
@@ -33,16 +34,12 @@ QString Scene::backgroundPath() const
     return path;
 }
 
-void Scene::addPolygonItem(QGraphicsItem *item)
-{
-    this->item = item;
-    addItem(item);
-}
-
 void Scene::reset()
 {
     if(item)
-        removeItem(item);
+        delete item;
+
+    item = 0;
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -86,20 +83,61 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
           if(clic)
             selection.setRect(QRectF(QPointF(0, 0), event->scenePos()));
 
-          emit repaintItem(selection.rect(), clic);
+          // Redraw all items in selection.
+          if(item)
+            repaintSelection(selection.rect(), clic);
 
           selection.setRect(0, 0, 0, 0);
           selection.hide();
       }
 }
 
-void Scene::setBackground(const QString& filename, const QPixmap& pixmap)
+void Scene::repaintSelection(const QRectF &rect, bool clic)
+{
+    QGraphicsItem *child;
+    PolygonItem *polygonItem;
+    bool isSel;
+
+    emit clearTreeItemSelection();
+
+    // Redraw all items in the scene except selection.
+    foreach(child, item->childItems())
+    {
+        polygonItem = static_cast<PolygonItem *>(child);
+        isSel = polygonItem->repaint(rect, clic);
+
+        if(isSel)
+            emit selectTreeItem(VariantPointer<QTreeWidgetItem>::fromQVariant(polygonItem->data(1)));
+
+        // If the item is a text region, run through childs line items.
+        if(polygonItem->data(0).toInt() == GraphicRegion::Text)
+        {
+            foreach(child, polygonItem->childItems())
+                static_cast<PolygonItem *>(child)->repaint(rect, clic);
+        }
+    }
+}
+
+void Scene::addPolygonItem(QGraphicsItem *item)
+{
+    reset();
+
+    this->item = item;
+    addItem(item);
+}
+
+void Scene::changeScene(const QString& filename, const QPixmap& pixmap, QGraphicsItem *item)
 {
     if(path != filename)
     {
+        reset();
+
         path = filename;
 
         setSceneRect(pixmap.rect());
         setBackgroundBrush(QBrush(pixmap));
+
+        if(item)
+            addPolygonItem(item);
     }
 }

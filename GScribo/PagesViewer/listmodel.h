@@ -13,8 +13,8 @@ class ListModel:
     public:
         explicit ListModel(QObject *parent = 0);
         QStringList filenames() const;
-        int rowCount(const QModelIndex &parent) const;
-        QVariant data(const QModelIndex &index, int role = Qt::DecorationRole) const;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        QVariant data(const QModelIndex& index, int role = Qt::DecorationRole) const;
         void addPixmap(const QString& filename, const QPixmap& pixmap);
 
     private:

@@ -7,10 +7,10 @@ template<typename T> class VariantPointer
 {
     public:
         static inline QVariant toQVariant(T *pointer)
-        { return QVariant::fromValue((void *)pointer); }
+        { return QVariant::fromValue(static_cast<void *>(pointer)); }
 
         static inline T *fromQVariant(const QVariant& variant)
-        { return (T *)variant.value<void *>(); }
+        { return static_cast<T *>(variant.value<void *>()); }
 
     private:
         VariantPointer() { }

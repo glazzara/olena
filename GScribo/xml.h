@@ -31,15 +31,15 @@ class Xml :
         void processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, QTreeWidgetItem *rootTreeItem);
         void processTypoNode(const QDomElement& root, const QPoint& xPoint, PolygonItem *rootPolygonItem);
 
-        QGraphicsPolygonItem gItem;
-        QTreeWidgetItem tItem;
+        QGraphicsPolygonItem *gItem;
+        QTreeWidgetItem *tItem;
 };
 
 inline QTreeWidgetItem *Xml::treeItem()
-{ return &tItem; }
+{ return tItem; }
 
 inline QGraphicsItem *Xml::graphicItem()
-{ return &gItem; }
+{ return gItem; }
 
 inline QTreeWidgetItem *Xml::fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem)
 {
