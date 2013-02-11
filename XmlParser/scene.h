@@ -1,0 +1,35 @@
+#ifndef SCENE_H
+#define SCENE_H
+
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include "selection.h"
+
+class Scene :
+        public QGraphicsScene
+{
+        Q_OBJECT
+
+    public:
+        explicit Scene(QObject *parent = 0);
+        explicit Scene(const QRectF &sceneRect, QObject *parent = 0);
+        explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+
+    protected:
+        void mousePressEvent(QGraphicsSceneMouseEvent *event);
+        void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+        void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+
+    signals:
+       void sendString(QString& string);
+
+    private:
+        void init();
+        QString debug(QRect &rect);
+
+        Selection *selection;
+        QPointF pressPos;
+        bool isPressing;
+};
+
+#endif // SCENE_H

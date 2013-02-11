@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsView>
 #include <QFileDialog>
-#include "selectionitem.h"
-#include "graphicsview.h"
+#include "scene.h"
 
 namespace Ui
 {
@@ -15,6 +14,7 @@ namespace Ui
 class MainWindow : public QMainWindow
 {
         Q_OBJECT
+
     public:
         MainWindow(QWidget *parent = 0);
         ~MainWindow();
@@ -24,11 +24,10 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::MainWindow *ui;
-        SelectionItem *selectionItem;
-        GraphicsView *graphicsView;
 
     private slots:
         void on_actionOpen_triggered();
+        void on_action(QString& string);
 };
 
 #endif // MAINWINDOW_H

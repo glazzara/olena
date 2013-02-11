@@ -7,11 +7,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     xml.cpp \
-    graphicsview.cpp \
-    selectionitem.cpp
+    scene.cpp \
+    selection.cpp
 HEADERS += mainwindow.h \
     region.h \
     xml.h \
-    graphicsview.h \
-    selectionitem.h
+    scene.h \
+    selection.h
 FORMS += mainwindow.ui
