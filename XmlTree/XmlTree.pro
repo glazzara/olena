@@ -7,8 +7,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     xmlwidget.cpp \
-    xml.cpp
+    xml.cpp \
+    polygonitem.cpp
 HEADERS += mainwindow.h \
     xmlwidget.h \
-    xml.h
+    xml.h \
+    pointer.h \
+    polygonitem.h \
+    region.h
 FORMS += mainwindow.ui

@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "xmlwidget.h"
+#include "xml.h"
+
 namespace Ui
 {
     class MainWindow;
@@ -22,6 +25,8 @@ class MainWindow :
 
     private:
         Ui::MainWindow *ui;
+        XmlWidget xmlWidget;
+        Xml xml;
 };
 
 #endif // MAINWINDOW_H

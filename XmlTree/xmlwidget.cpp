@@ -1,5 +1,7 @@
 #include "xmlwidget.h"
 
-XmlWidget::XmlWidget()
+XmlWidget::XmlWidget(QTreeWidgetItem *item)
 {
+    tree.setParent(this);
+    load(item);
 }

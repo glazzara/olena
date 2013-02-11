@@ -6,6 +6,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    xml.load("/home/onix/icdar_ppm_100p/mp00032c_gui.xml");
+
+    xmlWidget.load(xml.treeItem());
+    setCentralWidget(&xmlWidget);
 }
 
 MainWindow::~MainWindow()
