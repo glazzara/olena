@@ -1,8 +1,6 @@
 #include "ocroptions.h"
 #include "ui_ocroptions.h"
 
-//using namespace scribo::toolchain::internal;
-
 static const char *language[][2] =
 {
     { "English", "eng" },
@@ -39,7 +37,7 @@ int OcrOptions::findIndex(const QString& lang)
 
 void OcrOptions::loadConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     ui->enable_ocr->setChecked(conf->ocrEnabled());
     ui->ocr_language->setCurrentIndex(findIndex(conf->ocrLanguage()));
@@ -48,7 +46,7 @@ void OcrOptions::loadConfig()
 
 void OcrOptions::saveConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     conf->setOcrEnabled(ui->enable_ocr->isChecked());
     conf->setOcrLanguage(language[ui->ocr_language->currentIndex()][1]);

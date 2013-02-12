@@ -9,11 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(tr("GScribo"));
 
+    xml_.fillSettings();
     initGraphicsRegion();
     initTextRegion();
     initXmlWidget();
-    initPageWidget();
     initRegionWidget();
+    initPageWidget();
     initToolBar();
     initMenuBar();
 
@@ -190,8 +191,8 @@ void MainWindow::onSegment()
 
 void MainWindow::onPreferences()
 {
-    //PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
-    //preferenceDialog->show();
+    PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
+    preferenceDialog->show();
 }
 
 void MainWindow::onXmlSaved(const QString& filename)

@@ -16,7 +16,7 @@ GeneralOptions::~GeneralOptions()
 
 void GeneralOptions::loadConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     ui->saveXml->setChecked(conf->generalSaveXmlEnabled());
     ui->sameDir->setChecked(conf->generalSaveXmlSameDir());
@@ -27,7 +27,7 @@ void GeneralOptions::loadConfig()
 
 void GeneralOptions::saveConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     conf->setGeneralSaveXmlEnabled(ui->saveXml->isChecked());
     conf->setGeneralSaveXmlSameDir(ui->sameDir->isChecked());

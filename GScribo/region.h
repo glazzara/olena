@@ -5,15 +5,21 @@
 
 namespace GraphicsRegion
 {
+    // WARNING : The order is important.
     enum Id
     {
-        Text = 0,
+        None,
+
+        Text,
+        TextRegion,
         Line,
 
+        Separators,
         VerticalSeparator,
         HorizontalSeparator,
         WhiteSpaceSeparator,
 
+        Miscellaneous,
         Image,
         Noise,
         Table,
@@ -21,15 +27,9 @@ namespace GraphicsRegion
         Graphic,
         Chart,
 
+        Typology,
         Baseline,
-        Meanline,
-
-        TextRegion,
-        SeparatorRegion,
-        MiscRegion,
-        TypoRegion,
-
-        None
+        Meanline
     };
 
     struct Data
@@ -37,6 +37,7 @@ namespace GraphicsRegion
         QColor color;
         QString name;
         GraphicsRegion::Id region;
+        GraphicsRegion::Id parent;
         int zValue;
     };
 }

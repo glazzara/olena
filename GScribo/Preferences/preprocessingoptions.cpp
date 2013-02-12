@@ -23,7 +23,7 @@ PreprocessingOptions::~PreprocessingOptions()
 
 void PreprocessingOptions::loadConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     ui->subsampleCb->setChecked(conf->preprocessingSubsample());
     ui->remove_bgCb->setChecked(conf->preprocessingRemoveBg());
@@ -35,11 +35,11 @@ void PreprocessingOptions::loadConfig()
 
 void PreprocessingOptions::saveConfig()
 {
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     conf->setPreprocessingSubsample(ui->subsampleCb->isChecked());
     conf->setPreprocessingRemoveBg(ui->remove_bgCb->isChecked());
     conf->setPreprocessingDeskew(ui->deskewCb->isChecked());
     conf->setPreprocessingRemoveNoise(ui->remove_noiseCb->isChecked());
-    conf->setPreprocessingBinAlgo(ui->bin_algoCbox->currentIndex());
+    //conf->setPreprocessingBinAlgo(ui->bin_algoCbox->currentIndex());
 }

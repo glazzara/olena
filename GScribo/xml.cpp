@@ -1,15 +1,38 @@
 #include "xml.h"
 
+// WARNING : The order is VERY IMPORTANT (depending on the enum).
+static const GraphicsRegion::Data datas_[] =
+{
+    /*           COLOR               |             NAME            |                 REGION                |              PARENT             |  Z */
+    { QColor::fromRgb(255, 255, 255),   "Text",                         GraphicsRegion::Text,                   GraphicsRegion::None,           0 },
+    { QColor::fromRgb(0, 100, 0, 90),   "TextRegion",                   GraphicsRegion::TextRegion,             GraphicsRegion::Text,           1 },
+    { QColor::fromRgb(255, 0, 0, 90),   "Line",                         GraphicsRegion::Line,                   GraphicsRegion::Text,           2 },
+    { QColor::fromRgb(255, 255, 255),   "Separators",                   GraphicsRegion::Separators,             GraphicsRegion::None,           0 },
+    { QColor::fromRgb(0, 0, 255, 90),   "VerticalSeparatorRegion",      GraphicsRegion::VerticalSeparator,      GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 255, 90),   "HorizontalSeparatorRegion",    GraphicsRegion::HorizontalSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 128, 90),   "WhitespaceSeparatorRegion",    GraphicsRegion::WhiteSpaceSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(255, 255, 255),   "Miscellaneous",                GraphicsRegion::Miscellaneous,          GraphicsRegion::None,           0 },
+    { QColor::fromRgb(255, 120, 0, 90), "ImageRegion",                  GraphicsRegion::Image,                  GraphicsRegion::Miscellaneous,  1 },
+    { QColor::fromRgb(43, 39, 128, 90), "NoiseRegion",                  GraphicsRegion::Noise,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(220, 246, 0, 90), "TableRegion",                  GraphicsRegion::Table,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(170, 0, 255, 90), "MathsRegion",                  GraphicsRegion::Maths,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(255, 0, 144, 90), "GraphicsRegion",               GraphicsRegion::Graphic,                GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(0, 204, 255, 90), "ChartRegion",                  GraphicsRegion::Chart,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(255, 255, 255),   "Typological Lines",            GraphicsRegion::Typology,               GraphicsRegion::None,           0 },
+    { QColor::fromRgb(128, 0, 255),     "Baseline",                     GraphicsRegion::Baseline,               GraphicsRegion::Typology,       3 },
+    { QColor::fromRgb(128, 0, 255),     "Meanline",                     GraphicsRegion::Meanline,               GraphicsRegion::Typology,       3 }
+};
+
 Xml::Xml(const QString& filename)
 {
     filename_ = filename;
+
     load(filename);
 }
 
 QString Xml::getPath(const QString& filename)
 {
-    // Get instance of the configuration settings.
-    Configs *const conf = Configs::getInstance();
+    Configs *const configs = Configs::getInstance();
 
     QString xmlPath = filename;
 
@@ -19,7 +42,46 @@ QString Xml::getPath(const QString& filename)
     xmlPath.remove(pos, xmlPath.length()-pos);
     xmlPath += "_gui.xml";
 
-    return conf->generalSaveXmlCustomDirPath() + "/" + xmlPath;
+    return configs->generalSaveXmlCustomDirPath() + "/" + xmlPath;
+}
+
+void Xml::fillSettings()
+{
+    Configs *const configs = Configs::getInstance();
+
+    // Check if the configuration file has already been created.
+    if(!configs->isRegionInit())
+    {
+        configs->beginGroup("region");
+        configs->setValue("init", true);
+
+        for(int i = 0; i < 17; i++)
+        {
+            // Create group : region\father\current\...
+            if(datas_[i].parent != GraphicsRegion::None)
+            {
+                configs->beginGroup(QString::number(datas_[datas_[i].parent].region));
+                configs->beginGroup(QString::number(datas_[i].region));
+
+                configs->setValue("color", datas_[i].color);
+                configs->setValue("name", datas_[i].name);
+
+                configs->endGroup();
+                configs->endGroup();
+            }
+            else
+            {
+                configs->beginGroup(QString::number(datas_[i].region));
+
+                configs->setValue("color", datas_[i].color);
+                configs->setValue("name", datas_[i].name);
+
+                configs->endGroup();
+            }
+        }
+
+        configs->endGroup();
+    }
 }
 
 void Xml::load(const QString& filename)
@@ -115,7 +177,7 @@ void Xml::processNode(const QDomElement& root, const GraphicsRegion::Data& data,
         regionItem->setRegionItem(graphicsItem);
         graphicsItem->setXmlItem(regionItem);
 
-        if(data.region == GraphicsRegion::Text)
+        if(data.region == GraphicsRegion::TextRegion)
             processLineNode(root.firstChild().nextSiblingElement("Line"), coordsItem);
 
         // Run through all nodes from the same data structure recursively.

@@ -19,17 +19,18 @@ SOURCES += main.cpp \
     Rendering/regionitem.cpp \
     PagesWidget/pageswidget.cpp \
     PagesWidget/pagesmodel.cpp \
+    PagesWidget/pagesdelegate.cpp \
     Preferences/segmentationoptions.cpp \
     Preferences/preprocessingoptions.cpp \
     Preferences/ocroptions.cpp \
     Preferences/generaloptions.cpp \
     Preferences/preferencesdialog.cpp \
+    Processing/progressdialog.cpp \
     XmlWidget/xmlwidget.cpp \
     XmlWidget/xmlmodel.cpp \
     XmlWidget/xmlitem.cpp \
     XmlWidget/xmlattributes.cpp \
     XmlWidget/attributesmodel.cpp \
-    PagesWidget/pagesdelegate.cpp \
     XmlWidget/xmlview.cpp \
     regionwidget.cpp
 HEADERS += mainwindow.h \
@@ -49,6 +50,7 @@ HEADERS += mainwindow.h \
     Preferences/generaloptions.h \
     Preferences/optionwidget.h \
     Preferences/preferencesdialog.h \
+    Processing/progressdialog.h \
     XmlWidget/xmlwidget.h \
     XmlWidget/xmlmodel.h \
     XmlWidget/xmlitem.h \

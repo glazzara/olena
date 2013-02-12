@@ -1,8 +1,6 @@
 #include "segmentationoptions.h"
 #include "ui_segmentationoptions.h"
 
-//using namespace scribo::toolchain::internal;
-
 SegmentationOptions::SegmentationOptions(QWidget *parent) :
         OptionWidget(parent),
         ui(new Ui::SegmentationOptions)

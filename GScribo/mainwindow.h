@@ -9,8 +9,8 @@
 #include <QFileDialog>
 #include <QGroupBox>
 
-//#include "Preferences/preferencesdialog.h"
-//#include "Processing/progressdialog.h"
+#include "Preferences/preferencesdialog.h"
+#include "Processing/progressdialog.h"
 #include "PagesWidget/pageswidget.h"
 #include "XmlWidget/xmlwidget.h"
 //#include "Processing/runner.h"
@@ -64,7 +64,7 @@ class MainWindow:
 
         QPlainTextEdit textEdit_;
 
-        //ProgressDialog progressDialog_;
+        ProgressDialog progressDialog_;
         //Runner runner_;
 
         XmlWidget xmlWidget_;

@@ -4,6 +4,7 @@
 //#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
 #include <QSettings>
 #include <QDir>
+#include <QDebug>
 
 #include "region.h"
 
@@ -11,10 +12,14 @@ class Configs :
         public QSettings
 {
     public:
-        Configs() : QSettings("olena-scribo", "gui") { }
+        inline static Configs *getInstance();
 
-        static Configs * getInstance()
-        { static Configs *conf = new Configs(); return conf; }
+        inline bool isRegionInit();
+        inline QColor regionColor(const GraphicsRegion::Id& region);
+        inline QString regionName(const GraphicsRegion::Id& region);
+
+        inline bool isRegionChecked(const GraphicsRegion::Id& region);
+        inline void setRegionChecked(const GraphicsRegion::Id& region, bool checked);
 
         inline bool preprocessingSubsample();
         inline void setPreprocessingSubsample(bool b);
@@ -51,7 +56,28 @@ class Configs :
 
         inline QString generalSaveXmlCustomDirPath();
         inline void setGeneralSaveXmlCustomDirPath(const QString& path);
+
+    private:
+        explicit Configs() : QSettings("olena-scribo", "gui") { }
 };
+
+inline Configs *Configs::getInstance()
+{ static Configs *conf = new Configs(); return conf; }
+
+inline bool Configs::isRegionInit()
+{ return value("region/init", false).toBool(); }
+
+inline bool Configs::isRegionChecked(const GraphicsRegion::Id &region)
+{ return value("region/" + QString::number(region) + "/checked", true).toBool(); }
+
+inline void Configs::setRegionChecked(const GraphicsRegion::Id &region, bool checked)
+{ setValue("region/" + QString::number(region) + "/checked", checked); }
+
+inline QColor Configs::regionColor(const GraphicsRegion::Id& region)
+{ return value("region/" + QString::number(region) + "color").value<QColor>(); }
+
+inline QString Configs::regionName(const GraphicsRegion::Id &region)
+{ beginGroup("region"); beginGroup(QString::number(region)); QString l = value("name").toString(); endGroup(); endGroup(); qDebug() << l; return l; }
 
 inline bool Configs::preprocessingSubsample()
 { return value("preprocessing/subsample", false).toBool(); }
