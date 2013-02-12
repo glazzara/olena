@@ -1,5 +1,13 @@
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen unit tests' Makefile fragments.
+
+	* milena/tests/unit_test/unit-tests.mk,
+	* scribo/tests/unit_test/unit-tests.mk:
+	Regen.
+
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify build_unit_test.sh thanks to AM_DEFAULT_SOURCE_EXT.
 
 	* build-aux/build_unit_test.sh: No longer output `*_SOURCES'
