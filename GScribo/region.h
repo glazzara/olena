@@ -8,18 +8,13 @@ namespace GraphicsRegion
     // WARNING : The order is important.
     enum Id
     {
-        None,
-
-        Text,
         TextRegion,
         Line,
 
-        Separators,
         VerticalSeparator,
         HorizontalSeparator,
         WhiteSpaceSeparator,
 
-        Miscellaneous,
         Image,
         Noise,
         Table,
@@ -27,9 +22,15 @@ namespace GraphicsRegion
         Graphic,
         Chart,
 
-        Typology,
         Baseline,
-        Meanline
+        Meanline,
+
+        Text,
+        Separators,
+        Miscellaneous,
+        Typology,
+
+        None
     };
 
     struct Data

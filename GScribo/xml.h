@@ -15,6 +15,29 @@
 #include "configs.h"
 #include "region.h"
 
+// WARNING : The order is VERY IMPORTANT (depending on the enum).
+static const GraphicsRegion::Data datas_[] =
+{
+    /*           COLOR               |             NAME            |                 REGION                |              PARENT             |  Z */
+    { QColor::fromRgb(0, 100, 0, 90),   "TextRegion",                   GraphicsRegion::TextRegion,             GraphicsRegion::Text,           1 },
+    { QColor::fromRgb(255, 0, 0, 90),   "Line",                         GraphicsRegion::Line,                   GraphicsRegion::Text,           2 },
+    { QColor::fromRgb(0, 0, 255, 90),   "VerticalSeparatorRegion",      GraphicsRegion::VerticalSeparator,      GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 255, 90),   "HorizontalSeparatorRegion",    GraphicsRegion::HorizontalSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 128, 90),   "WhitespaceSeparatorRegion",    GraphicsRegion::WhiteSpaceSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(255, 120, 0, 90), "ImageRegion",                  GraphicsRegion::Image,                  GraphicsRegion::Miscellaneous,  1 },
+    { QColor::fromRgb(43, 39, 128, 90), "NoiseRegion",                  GraphicsRegion::Noise,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(220, 246, 0, 90), "TableRegion",                  GraphicsRegion::Table,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(170, 0, 255, 90), "MathsRegion",                  GraphicsRegion::Maths,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(255, 0, 144, 90), "GraphicsRegion",               GraphicsRegion::Graphic,                GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(0, 204, 255, 90), "ChartRegion",                  GraphicsRegion::Chart,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(128, 0, 255),     "Baseline",                     GraphicsRegion::Baseline,               GraphicsRegion::Typology,       3 },
+    { QColor::fromRgb(128, 0, 255),     "Meanline",                     GraphicsRegion::Meanline,               GraphicsRegion::Typology,       3 },
+    { QColor::fromRgb(255, 255, 255),   "Text",                         GraphicsRegion::Text,                   GraphicsRegion::None,           0 },
+    { QColor::fromRgb(255, 255, 255),   "Separators",                   GraphicsRegion::Separators,             GraphicsRegion::None,           0 },
+    { QColor::fromRgb(255, 255, 255),   "Miscellaneous",                GraphicsRegion::Miscellaneous,          GraphicsRegion::None,           0 },
+    { QColor::fromRgb(255, 255, 255),   "Typological Lines",            GraphicsRegion::Typology,               GraphicsRegion::None,           0 }
+};
+
 class Xml
 {
     public:
@@ -29,7 +52,7 @@ class Xml
         static QString getPath(const QString& filename);
 
         void load(const QString& filename);
-        void fillSettings();
+        inline static GraphicsRegion::Data dataFromRegion(GraphicsRegion::Id region);
 
     private:
         XmlItem *init(const QDomElement& root, XmlItem *rootTreeItem);
@@ -56,5 +79,8 @@ inline QDomDocument Xml::document() const
 
 inline QString Xml::filename() const
 { return filename_; }
+
+inline GraphicsRegion::Data Xml::dataFromRegion(GraphicsRegion::Id region)
+{ return datas_[region]; }
 
 #endif // XML_H

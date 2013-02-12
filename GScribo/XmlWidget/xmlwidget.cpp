@@ -3,11 +3,10 @@
 XmlWidget::XmlWidget(QWidget *parent) :
         QSplitter(Qt::Horizontal, parent)
 {
-    basePattern_ = "Page";
-    proxy_.setFilterFixedString(basePattern_);
+    proxy_.setFilterRegExp(QRegExp("(?:Page|.Region|Line)", Qt::CaseSensitive));
+    proxy_.setDynamicSortFilter(true);
     proxy_.setFilterRole(Qt::UserRole);
     proxy_.setSourceModel(&model_);
-    proxy_.setDynamicSortFilter(true);
 
     view_.setModel(&proxy_);
 
@@ -22,11 +21,6 @@ XmlWidget::XmlWidget(QWidget *parent) :
     connect(&view_, SIGNAL(resetProperty()), &attributes_, SLOT(reset()));
     connect(&view_, SIGNAL(clicked(QModelIndex)), this, SLOT(loadAttributes(QModelIndex)));
     connect(&view_, SIGNAL(loadAttributes(XmlAttributes)), &attributesModel_, SLOT(load(XmlAttributes)));
-}
-
-void XmlWidget::setFilterString(const QString& filterString)
-{
-    proxy_.setFilterFixedString(basePattern_ + '|' + filterString);
 }
 
 void XmlWidget::changeView(XmlItem *rootItem)

@@ -17,6 +17,7 @@ class SelectionProxy :
 
         inline void beginResetModel();
         inline void endResetModel();
+        inline void invalidateFilter();
 
     protected:
         inline bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const;
@@ -26,7 +27,7 @@ class SelectionProxy :
 };
 
 inline bool SelectionProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{ return isAllDisplayed_ || sourceModel()->index(sourceRow, 0, sourceParent).data(filterRole()).value<XmlItem *>()->isVisible(); }
+{ return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent) && (isAllDisplayed_ || sourceModel()->index(sourceRow, 0, sourceParent).data(Qt::UserRole+2).value<XmlItem *>()->isVisible()); }
 
 inline void SelectionProxy::beginResetModel()
 { isAllDisplayed_ = false; QSortFilterProxyModel::beginResetModel(); }
@@ -39,5 +40,8 @@ inline void SelectionProxy::displayAll()
 
 inline bool SelectionProxy::isAllDisplayed()
 { return isAllDisplayed_; }
+
+inline void SelectionProxy::invalidateFilter()
+{ QSortFilterProxyModel::invalidateFilter(); }
 
 #endif // SELECTIONPROXY_H

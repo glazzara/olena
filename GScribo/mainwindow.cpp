@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(tr("GScribo"));
 
-    xml_.fillSettings();
     initGraphicsRegion();
     initTextRegion();
     initXmlWidget();
@@ -72,7 +71,6 @@ void MainWindow::initRegionWidget()
 
 void MainWindow::initXmlWidget()
 {
-    xmlWidget_.setFilterString(regionWidget_.filterString());
     dockXml_.setWindowTitle("Xml");
     dockXml_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
     dockXml_.setWidget(&xmlWidget_);
@@ -120,7 +118,7 @@ void MainWindow::connectWidgets()
     // Connect the scene with the region widget.
     connect(&regionWidget_, SIGNAL(checkStateChanged(GraphicsRegion::Id,bool)), &scene_, SLOT(setVisible(GraphicsRegion::Id,bool)));
     // Connect the xml widget with the region widget.
-    connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), &xmlWidget_, SLOT(setFilterString(QString)));
+    connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), xmlWidget_.view(), SLOT(setFilterString(QString)));
 
     /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));

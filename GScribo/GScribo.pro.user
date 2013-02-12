@@ -85,7 +85,6 @@
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>
@@ -135,7 +134,6 @@
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/lrde/home/stage/froger_a</value>
     <value type="QString">LANG=fr_FR.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
     <value type="QString">LOGNAME=froger_a</value>
     <value type="QString">OLDPWD=/lrde/home/stage/froger_a/qt</value>

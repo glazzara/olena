@@ -31,17 +31,12 @@ class XmlWidget :
 
     private:
         QSortFilterProxyModel proxy_;
-        SelectionProxy proxy2_;
-        QString basePattern_;
 
         XmlModel model_;
         AttributesModel attributesModel_;
 
         XmlView view_;
         QTableView attributes_;
-
-    public slots:
-        void setFilterString(const QString& filterString);
 
     private slots:
         inline void loadAttributes(const QModelIndex& index);

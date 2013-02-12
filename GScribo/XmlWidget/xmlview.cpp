@@ -3,7 +3,8 @@
 XmlView::XmlView(QWidget *parent) :
         QTreeView(parent)
 {
-    proxy_.setFilterRole(Qt::UserRole+2);
+    proxy_.setFilterRole(Qt::UserRole);
+    proxy_.setDynamicSortFilter(true);
 
     setUniformRowHeights(true);
     setItemDelegate(new XmlDelegate(Qt::UserRole));

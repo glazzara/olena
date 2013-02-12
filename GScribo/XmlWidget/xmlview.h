@@ -37,7 +37,10 @@ class XmlView :
     public slots:
         inline void display(QList<XmlItem *> displayedItems);
         inline void displayOnly(QList<XmlItem *> displayedItems);
+
         inline void displayAll();
+
+        inline void setFilterString(const QString& filterString);
 
     signals:
         void loadAttributes(const XmlAttributes& xmlAttributes);
@@ -66,6 +69,9 @@ inline void XmlView::displayAll()
 
 inline QList<XmlItem *> XmlView::selectedItems() const
 { return transform(selectedIndexes()); }
+
+inline void XmlView::setFilterString(const QString& filterString)
+{ proxy_.setFilterRegExp(QRegExp(filterString, Qt::CaseSensitive)); proxy_.invalidateFilter(); }
 
 inline void XmlView::setModel(QAbstractItemModel *model)
 { proxy_.setSourceModel(model); QTreeView::setModel(&proxy_); }
