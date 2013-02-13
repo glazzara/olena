@@ -12,6 +12,7 @@
 #include "Preferences/preferencesdialog.h"
 #include "Processing/progressdialog.h"
 #include "PagesWidget/pageswidget.h"
+#include "Rendering/graphicsview.h"
 #include "XmlWidget/xmlwidget.h"
 //#include "Processing/runner.h"
 #include "Rendering/scene.h"

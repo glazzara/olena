@@ -17,6 +17,7 @@ SOURCES += main.cpp \
     Rendering/scene.cpp \
     Rendering/selection.cpp \
     Rendering/regionitem.cpp \
+    Rendering/graphicsview.cpp \
     PagesWidget/pageswidget.cpp \
     PagesWidget/pagesmodel.cpp \
     PagesWidget/pagesdelegate.cpp \
@@ -42,6 +43,7 @@ HEADERS += mainwindow.h \
     Rendering/scene.h \
     Rendering/selection.h \
     Rendering/regionitem.h \
+    Rendering/graphicsview.h \
     PagesWidget/pageswidget.h \
     PagesWidget/pagesmodel.h \
     Preferences/segmentationoptions.h \
