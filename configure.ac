@@ -39,8 +39,11 @@ AC_CONFIG_FILES([build-aux/Makefile])
 # Automake 1.11.2 or newer (Debian GNU/Linux 6 ships Automake 1.11.1
 # only), at which point we'll use the new AM_PROG_AR macro instead.
 AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
-                  parallel-tests nostdinc
+                  parallel-tests nostdinc silent-rules
                   -Wall -Wno-extra-portability])
+# By default, let "make" hide the compilation command and display a
+# "GEN ..." message, unless V=1 is passed to "make".
+AM_SILENT_RULES([yes])
 
 # Package metadata.
 AC_CONFIG_FILES([milena/mln/version.hh])

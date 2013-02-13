@@ -1,5 +1,11 @@
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use Automake's silent-rules.
+
+	* configure.ac: Here.
+
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable Automake's extra-portability warnings.
 
 	* configure.ac: Here, so that Automake 1.12 stops complaining
