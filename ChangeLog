@@ -1,3 +1,11 @@
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable Automake's extra-portability warnings.
+
+	* configure.ac: Here, so that Automake 1.12 stops complaining
+	about AM_PROG_AR not being used, while preserving the
+	compatibility with Automake versions 1.11.2 and earlier.
+
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Enable parallel tests.

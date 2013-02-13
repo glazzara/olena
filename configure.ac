@@ -1,5 +1,5 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
-# Development Laboratory (LRDE).
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+# Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -34,8 +34,13 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
+#
+# Disable the -Wextra-portability option until developers can all use
+# Automake 1.11.2 or newer (Debian GNU/Linux 6 ships Automake 1.11.1
+# only), at which point we'll use the new AM_PROG_AR macro instead.
 AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
-                  parallel-tests nostdinc -Wall])
+                  parallel-tests nostdinc
+                  -Wall -Wno-extra-portability])
 
 # Package metadata.
 AC_CONFIG_FILES([milena/mln/version.hh])
