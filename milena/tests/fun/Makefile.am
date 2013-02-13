@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -32,3 +32,5 @@ check_PROGRAMS =				\
   ops
 
 ops_SOURCES = ops.cc
+
+TESTS = $(check_PROGRAMS)

@@ -1,3 +1,21 @@
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing TESTS variable to Makefile.am's.
+
+	* tests/canvas/Makefile.am,
+	* tests/canvas/morpho/Makefile.am,
+	* tests/fun/Makefile.am,
+	* tests/fun/p2b/Makefile.am,
+	* tests/fun/p2v/Makefile.am,
+	* tests/io/pfm/Makefile.am,
+	* tests/io/pnm/Makefile.am,
+	* tests/math/Makefile.am,
+	* tests/metal/make/Makefile.am,
+	* tests/tag/Makefile.am,
+	* tests/trace/Makefile.am,
+	* tests/value/concept/Makefile.am:
+	Here.
+
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Complete and clean up tests/metal/converts_to.cc.
