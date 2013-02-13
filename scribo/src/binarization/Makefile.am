@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -28,7 +28,6 @@ noinst_PROGRAMS = 			\
   ppm_sauvola_ms_split
 
 
-pgm_global_threshold_auto_SOURCES = pgm_global_threshold_auto.cc
 
 
 if HAVE_MAGICKXX

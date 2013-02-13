@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,6 +19,5 @@ include $(top_srcdir)/scribo/tests/tests.mk
 check_PROGRAMS =				\
 	base64
 
-base64_SOURCES = base64.cc
 
 TESTS = $(check_PROGRAMS)

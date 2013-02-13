@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,7 +23,6 @@ if HAVE_MAGICKXX
 
 noinst_PROGRAMS += content_in_hdoc_dae content_in_doc_dae
 
-content_in_hdoc_dae_SOURCES = content_in_hdoc_dae.cc
 content_in_hdoc_dae_CPPFLAGS = $(AM_CPPFLAGS) 		\
 			       $(MAGICKXX_CPPFLAGS) 	\
 			       -I$(top_builddir)
@@ -31,7 +30,6 @@ content_in_hdoc_dae_LDFLAGS  = $(AM_LDFLAGS) 		\
 			       -lpthread 		\
 			       $(MAGICKXX_LDFLAGS)
 
-content_in_doc_dae_SOURCES = content_in_doc_dae.cc
 content_in_doc_dae_CPPFLAGS = $(AM_CPPFLAGS) 		\
 			      $(MAGICKXX_CPPFLAGS) 	\
 			      -I$(top_builddir)

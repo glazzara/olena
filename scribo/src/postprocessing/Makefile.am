@@ -1,4 +1,4 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,4 +20,3 @@ noinst_PROGRAMS = 		\
   fill_object_holes
 
 
-fill_object_holes_SOURCES = fill_object_holes.cc

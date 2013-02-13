@@ -1,4 +1,4 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+# Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -26,7 +26,6 @@ if HAVE_TESSERACT
 if HAVE_MAGICKXX
 
 check_PROGRAMS += text_extraction
-text_extraction_SOURCES = text_extraction.cc
 text_extraction_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS)
 text_extraction_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) \
 			   $(TESSERACT_CPPFLAGS) \

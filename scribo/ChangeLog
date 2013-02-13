@@ -1,3 +1,25 @@
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify more Scribo Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
+
+	* src/binarization/Makefile.am,
+	* src/contest/DAE-2011/Makefile.am,
+	* src/contest/hdibco-2010/Makefile.am,
+	* src/contest/hdlac-2011/Makefile.am,
+	* src/postprocessing/Makefile.am,
+	* src/primitive/remove/Makefile.am,
+	* src/toolchain/nepomuk/Makefile.am,
+	* src/util/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/core/Makefile.am,
+	* tests/estim/Makefile.am,
+	* tests/primitive/extract/Makefile.am,
+	* tests/primitive/link/Makefile.am,
+	* tests/toolchain/nepomuk/Makefile.am,
+	* tests/util/Makefile.am:
+	Here.
+
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor Makefiles' helpers.

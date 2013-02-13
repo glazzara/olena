@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -28,10 +28,6 @@ check_PROGRAMS =				\
   sauvola_ms
 
 
-global_threshold_SOURCES = global_threshold.cc
-local_threshold_SOURCES = local_threshold.cc
-sauvola_SOURCES = sauvola.cc
-sauvola_ms_SOURCES = sauvola_ms.cc
 
 TESTS = $(check_PROGRAMS)
 
