@@ -1410,7 +1410,7 @@
 
 2010-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* milena/mln/core/image/vmorph/fun_image.hh: Fix an invalid
+	* mln/core/image/vmorph/fun_image.hh: Fix an invalid
 	function call.
 
 2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
@@ -1483,7 +1483,7 @@
 	HAVE_BOOST_PREPROCESSOR conditional.
 	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple:
 	Rename as...
-	* milena/tests/unit_test/cond_tests_boost-tuple: ...this.
+	* tests/unit_test/cond_tests_boost-tuple: ...this.
 	* tests/unit_test/Makefile.am (COND_TESTS):
 	s/cond_tests_boost-preprocessor_boost-tuple/cond_tests_boost-tuple/.
 	* tests/unit_test/unit-tests.mk: Regen.
@@ -1742,11 +1742,11 @@
 
 	Fix a bug in conversions from vec to point.
 
-	* milena/mln/core/concept/gpoint.hh: Fix comment.
+	* mln/core/concept/gpoint.hh: Fix comment.
 
-	* milena/mln/core/image/image1d.hh: Share a dpoint value.
+	* mln/core/image/image1d.hh: Share a dpoint value.
 
-	* milena/mln/core/point.hh: Handle point1d.
+	* mln/core/point.hh: Handle point1d.
 
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1894,12 +1894,12 @@
 
 	Add some code in my sandbox.
 
-	* milena/sandbox/lazzara/scribo/binarization_naive/main.cc,
-	* milena/sandbox/lazzara/scribo/binarization_naive/toto.cc,
-	* milena/sandbox/lazzara/scribo/fill_holes/main.cc,
-	* milena/sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
-	* milena/sandbox/lazzara/scribo/skeleton_crest/main.cc,
-	* milena/sandbox/lazzara/skeleton_crest/main.cc: New.
+	* sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* sandbox/lazzara/scribo/fill_holes/main.cc,
+	* sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* sandbox/lazzara/skeleton_crest/main.cc: New.
 
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -20014,10 +20014,6 @@
 	* mln/util/all.hh,
 	* mln/util/essential.hh: include new header.
 
-2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
-
-	configure.ac: configure milena/tests/transform.
-
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing tests in morpho.
@@ -36047,7 +36043,7 @@
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Changelog and comments.
-	* ChangeLog: Add missing entries.
+
 	* tests/core/site_set/p_image.cc: Fix comments.
 
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -43564,7 +43560,6 @@
 
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* ChangeLog: Fix my previous patch.
 	* mln/draw/box.hh: Fix licence.
 
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
@@ -46751,7 +46746,6 @@
 
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* ChangeLog: Fix my previous patch.
 	* mln/draw/box.hh: Fix licence.
 
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>

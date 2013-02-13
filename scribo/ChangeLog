@@ -354,7 +354,7 @@
 
 	* scribo/util/component_precise_outline.hh: Fix an include.
 
-	* scribo/src/contest/hdlac-2011/content_in_hdoc_hdlac.cc: Fix
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc: Fix
 	parameters.
 
 2011-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -400,11 +400,11 @@
 
 	* scribo/util/component_precise_outline.hh: Add options.
 
-	* scribo/tests/util/Makefile.am: Fix targets.
+	* tests/util/Makefile.am: Fix targets.
 
-	* scribo/tests/util/component_outline.cc: Remove.
+	* tests/util/component_outline.cc: Remove.
 
-	* scribo/tests/util/component_precise_outline.cc: New.
+	* tests/util/component_precise_outline.cc: New.
 
 2011-08-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -805,7 +805,8 @@
 
 	Improve results.
 
-	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Fix structural element length.
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh: Fix
+	structural element length.
 
 	* scribo/primitive/extract/non_text_hdoc.hh: Filter too small images.
 
@@ -845,7 +846,7 @@
 	* tests/filter/Makefile.am,
 	* tests/util/Makefile.am: Add new targets.
 
-v	* tests/filter/objects_on_border.cc,
+	* tests/filter/objects_on_border.cc,
 	* tests/util/component_outline.cc: New.
 
 	* tests/img/comp_on_borders.pbm,
@@ -895,7 +896,7 @@ v	* tests/filter/objects_on_border.cc,
 
 	* scribo/text/merging.hh: Reindent comments.
 
-	* scribo/src/Makefile.am: Add content_in_hdoc target.
+	* src/Makefile.am: Add content_in_hdoc target.
 
 2011-05-16  Guillaume Lazzara  <lazzara@fidji.lrde.epita.fr>
 
@@ -1178,9 +1179,9 @@ v	* tests/filter/objects_on_border.cc,
 
 	Add test data in EXTRA_DIST.
 
-	scribo/tests/Makefile.am,
-	scribo/tests/binarization/Makefile.am,
-	scribo/tests/primitive/extract/Makefile.am: Here.
+	* tests/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/primitive/extract/Makefile.am: Here.
 
 2011-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1229,7 +1230,7 @@ v	* tests/filter/objects_on_border.cc,
 	* tests/filter/object_links_right_aligned.cc,
 	* tests/filter/object_links_top_aligned.cc: New.
 
-	* scribo/tests/img/the_valleys.pbm: New test data.
+	* tests/img/the_valleys.pbm: New test data.
 
 2011-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1354,7 +1355,8 @@ v	* tests/filter/objects_on_border.cc,
 	* scribo/primitive/link/internal/dmax_width_only.hh: Rename
 	operator() as compute_().
 
-	* scribo/primitive/link/internal/dmax_functor_base.hh: Make use of compute_().
+	* scribo/primitive/link/internal/dmax_functor_base.hh: Make use of
+	compute_().
 
 	* scribo/primitive/link/internal/link_functor_base.hh: Add a fixme.
 
@@ -1402,7 +1404,7 @@ v	* tests/filter/objects_on_border.cc,
 
 	* src/preprocessing/denoise_fg.cc: Fix usage.
 
-	* scribo/tests/toolchain/nepomuk/Makefile.am: Check if Magick++ is
+	* tests/toolchain/nepomuk/Makefile.am: Check if Magick++ is
 	available.
 
 2011-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -1811,10 +1813,10 @@ v	* tests/filter/objects_on_border.cc,
 
 	Regen mk files.
 
-	* scribo/headers.mk,
-	* scribo/tests/unit_test/unit-tests.mk: Regen.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
 
-	* scribo/tests/unit_test/cond_tests_qt: Add scribo/io/xml/load.hh.
+	* tests/unit_test/cond_tests_qt: Add scribo/io/xml/load.hh.
 
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1824,11 +1826,11 @@ v	* tests/filter/objects_on_border.cc,
 
 	Add new debug tools.
 
-	* scribo/src/debug/Makefile.am: New targets.
+	* src/debug/Makefile.am: New targets.
 
-	* scribo/src/debug/show_separators.cc,
-	* scribo/src/debug/show_stoppers.cc,
-	* scribo/src/debug/show_text_lines.cc: New.
+	* src/debug/show_separators.cc,
+	* src/debug/show_stoppers.cc,
+	* src/debug/show_text_lines.cc: New.
 
 2011-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1955,22 +1957,22 @@ v	* tests/filter/objects_on_border.cc,
 
 	Various changes in scribo core structures.
 
-	* scribo/scribo/core/component_info.hh: Remove useless line_id.
+	* scribo/core/component_info.hh: Remove useless line_id.
 
-	* scribo/scribo/core/line_set.hh,
-	* scribo/scribo/core/component_set.hh: Add new constructors.
+	* scribo/core/line_set.hh,
+	* scribo/core/component_set.hh: Add new constructors.
 
-	* scribo/scribo/core/document.hh: Store line separators.
+	* scribo/core/document.hh: Store line separators.
 
-	* scribo/scribo/core/line_info.hh: Share attributes and add new
+	* scribo/core/line_info.hh: Share attributes and add new
 	constructors.
 	(is_textline): New method.
 
-	* scribo/scribo/core/line_links.hh: Do not allocate useless data.
+	* scribo/core/line_links.hh: Do not allocate useless data.
 
-	* scribo/scribo/core/paragraph_info.hh (operator<<): New.
+	* scribo/core/paragraph_info.hh (operator<<): New.
 
-	* scribo/scribo/core/paragraph_set.hh: Share attributes and add new
+	* scribo/core/paragraph_set.hh: Share attributes and add new
 	constructors.
 
 2011-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -2000,12 +2002,12 @@ v	* tests/filter/objects_on_border.cc,
 
 	Add Base64 conversion routines.
 
-	* scribo/scribo/convert/from_base64.hh,
-	* scribo/scribo/convert/to_base64.hh: New routines.
+	* scribo/convert/from_base64.hh,
+	* scribo/convert/to_base64.hh: New routines.
 
-	* scribo/tests/Makefile.am,
-	* scribo/tests/convert/Makefile.am,
-	* scribo/tests/convert/base64.cc: New associated test.
+	* tests/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/convert/base64.cc: New associated test.
 
 2011-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -2384,8 +2386,8 @@ v	* tests/filter/objects_on_border.cc,
 
 	Add new options to command lines tools.
 
-	* scribo/src/content_in_doc.cc,
-	* scribo/src/pbm_text_in_doc.cc: Here.
+	* src/content_in_doc.cc,
+	* src/pbm_text_in_doc.cc: Here.
 
 2010-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -2857,18 +2859,11 @@ v	* tests/filter/objects_on_border.cc,
 	* demo/viewer/viewer.cc,
 	* demo/viewer/xml_widget.cc: Layout adjustement.
 
-2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
-
-	ChangeLog mistake.
-
-	* ChangeLog: Move 2010-07-08 entry in...
-	* sandbox/ChangeLog:...this.
-
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
 	Extended XML mode support.
 
-	* scribo/demo/viewer/Makefile.am
+	* demo/viewer/Makefile.am
 
 	* demo/viewer/image_region.cc,
 	* viewer/image_region.hh,
@@ -2886,7 +2881,7 @@ v	* tests/filter/objects_on_border.cc,
 	* demo/viewer/viewer.hh: Chnage XML parsing to support extended
 	format.
 
-	* scribo/demo/viewer/common.hh: Add new RegionId's.
+	* demo/viewer/common.hh: Add new RegionId's.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
@@ -4142,7 +4137,7 @@ v	* tests/filter/objects_on_border.cc,
 
 	Extended XML mode support.
 
-	* scribo/demo/viewer/Makefile.am
+	* demo/viewer/Makefile.am
 
 	* demo/viewer/image_region.cc,
 	* viewer/image_region.hh,
@@ -4160,7 +4155,7 @@ v	* tests/filter/objects_on_border.cc,
 	* demo/viewer/viewer.hh: Change XML parsing to support extended
 	format.
 
-	* scribo/demo/viewer/common.hh: Add new RegionId's.
+	* demo/viewer/common.hh: Add new RegionId's.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
@@ -4227,7 +4222,6 @@ v	* tests/filter/objects_on_border.cc,
 
 	* sandbox: New experimental directory.
 	* sandbox/green: New green'work.
-	* sandbox/green/ChangeLog: New ChangeLog file.
 
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -5626,9 +5620,9 @@ v	* tests/filter/objects_on_border.cc,
 
 	Add missing copyright headers in Scribo.
 
-	* scribo/Doxyfile,
-	* scribo/Doxyfile_tex,
-	* scribo/demo/Makefile.am:
+	* Doxyfile,
+	* Doxyfile_tex,
+	* demo/Makefile.am:
 	Here.
 
 2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
