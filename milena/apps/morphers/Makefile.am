@@ -1,4 +1,5 @@
-# Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -32,18 +33,12 @@ noinst_PROGRAMS =				\
 
 noinst_HEADERS = recorder.hh lazy_recorder.hh
 
-mask_channel_SOURCES = mask+channel.cc
-recorder_SOURCES = recorder.cc
 recorder_bft_SOURCES = recorder-bft.cc image2d-skel.hh
-recorder_wst_SOURCES = recorder-wst.cc
-mask_recorder_SOURCES = mask+recorder.cc
-lazy_recorder_SOURCES = lazy_recorder.cc
 
 EXTRA_DIST = iz_input.pbm
 
 if HAVE_MAGICKXX
 noinst_PROGRAMS += iz
-iz_SOURCES = iz.cc
 iz_CPPFLAGS = $(AM_CPPFLAGS) $(MAGICKXX_CPPFLAGS)
 iz_LDFLAGS = $(AM_LDFLAGS) $(MAGICKXX_LDFLAGS)
 

@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -26,7 +26,6 @@ check_PROGRAMS =				\
 if HAVE_QT
 
 check_PROGRAMS += qt_rgb_to_int_u
-qt_rgb_to_int_u_SOURCES = qt_rgb_to_int_u.cc
 
 endif HAVE_QT
 

@@ -1,3 +1,12 @@
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify more Milena Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
+
+	* apps/morphers/Makefile.am,
+	* tests/fun/v2v/Makefile.am,
+	* tests/subsampling/Makefile.am:
+	Here.
+
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use AM_DEFAULT_SOURCE_EXT to simplify Milena's Makefiles.
