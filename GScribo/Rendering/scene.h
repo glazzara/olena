@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QFileDialog>
+#include <climits>
 
 #include "rootgraphicsitem.h"
 #include "regionitem.h"
@@ -41,9 +42,10 @@ class Scene :
         void select(QGraphicsItem *root, const QPointF& point, const QRectF& rect);
 
         QGraphicsView *mainView_;
+        RootGraphicsItem *root_;
 
         QString backgroundPath_;
-        RootGraphicsItem *root_;
+        QGraphicsPixmapItem *backgroundPixmap;
 
         Selection selection_;
         QList<RegionItem *> selectedRegions_;
@@ -53,7 +55,8 @@ class Scene :
         bool isPressing_;
 
     public slots:
-        void clear();
+        void clearAll();
+        void clearRegions();
         void clearSelection();
 
         void select(const QList<RegionItem *>& selectedRegions);

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(tr("GScribo"));
+    statusBar()->hide();
 
     initGraphicsRegion();
     initTextRegion();
@@ -56,6 +57,7 @@ void MainWindow::initPageWidget()
     dockPages_.setWindowTitle("Pages");
     dockPages_.setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable);
     dockPages_.setWidget(&pagesWidget_);
+    dockPages_.setMinimumWidth(190);
 
     addDockWidget(Qt::LeftDockWidgetArea, &dockPages_);
 }
@@ -76,6 +78,7 @@ void MainWindow::initXmlWidget()
     dockXml_.setWidget(&xmlWidget_);
 
     addDockWidget(Qt::BottomDockWidgetArea, &dockXml_);
+    dockXml_.setVisible(false);
 }
 
 void MainWindow::initTextRegion()
@@ -99,12 +102,43 @@ void MainWindow::initToolBar()
 
 void MainWindow::initMenuBar()
 {
+    QMenu *menuFile = ui->menuBar->addMenu(tr("File"));
+
+    QAction *open = menuFile->addAction(tr("Open"));
+    connect(open, SIGNAL(triggered()), SLOT(onOpen()));
+
+    QAction *segment = menuFile->addAction(tr("Segment"));
+    connect(segment, SIGNAL(triggered()), this, SLOT(onSegment()));
+
+    QMenu *menuAreas = ui->menuBar->addMenu(tr("Areas"));
+
+    QAction *page = menuAreas->addAction(tr("Page"));
+    page->setCheckable(true);
+    page->setChecked(true);
+    connect(page, SIGNAL(triggered()), &dockPages_, SLOT(switchVisibility()));
+
+    QAction *region = menuAreas->addAction(tr("Region"));
+    region->setCheckable(true);
+    region->setChecked(true);
+    connect(region, SIGNAL(triggered()), &dockRegion_, SLOT(switchVisibility()));
+
+    QAction *xml = menuAreas->addAction(tr("Xml"));
+    xml->setCheckable(true);
+    xml->setChecked(false);
+    connect(xml, SIGNAL(triggered()), &dockXml_, SLOT(switchVisibility()));
+
     QAction *preferences = ui->menuBar->addAction(tr("Preferences"));
     connect(preferences, SIGNAL(triggered()), SLOT(onPreferences()));
+
+    QAction *about = ui->menuBar->addAction(tr("About"));
+    connect(about, SIGNAL(triggered()), SLOT(onAbout()));
 }
 
 void MainWindow::connectWidgets()
 {
+    // Each time the scene rect change (when a new picture is loaded), we fit the scene background rectangle in the view.
+    connect(&scene_, SIGNAL(sceneRectChanged(QRectF)), &graphicsView_, SLOT(fitInView(QRectF)));
+
     // If double click on a picture of the page widget -> draw it on background scene.
     connect(&pagesWidget_, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
 
@@ -117,6 +151,7 @@ void MainWindow::connectWidgets()
 
     // Connect the scene with the region widget.
     connect(&regionWidget_, SIGNAL(checkStateChanged(GraphicsRegion::Id,bool)), &scene_, SLOT(setVisible(GraphicsRegion::Id,bool)));
+
     // Connect the xml widget with the region widget.
     connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), xmlWidget_.view(), SLOT(setFilterString(QString)));
 
@@ -191,6 +226,12 @@ void MainWindow::onPreferences()
 {
     PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
     preferenceDialog->show();
+}
+
+void MainWindow::onAbout()
+{
+    AboutDialog *about = new AboutDialog;
+    about->show();
 }
 
 void MainWindow::onXmlSaved(const QString& filename)

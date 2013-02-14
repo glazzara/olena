@@ -11,8 +11,9 @@ LIBS += -I/usr/include/graphicsImage \
     -ltesseract_full
 TARGET = GScribo
 TEMPLATE = app
-SOURCES += main.cpp \
+SOURCES += regionwidget.cpp \
     mainwindow.cpp \
+    main.cpp \
     xml.cpp \
     Rendering/scene.cpp \
     Rendering/selection.cpp \
@@ -32,10 +33,11 @@ SOURCES += main.cpp \
     XmlWidget/xmlitem.cpp \
     XmlWidget/xmlattributes.cpp \
     XmlWidget/attributesmodel.cpp \
-    XmlWidget/xmlview.cpp \
-    regionwidget.cpp
+    XmlWidget/xmlview.cpp
 HEADERS += mainwindow.h \
     variantpointer.h \
+    regionwidget.h \
+    aboutdialog.h \
     configs.h \
     region.h \
     dir.h \
@@ -63,8 +65,9 @@ HEADERS += mainwindow.h \
     PagesWidget/pagesdelegate.h \
     Rendering/rootgraphicsitem.h \
     XmlWidget/xmlview.h \
-    regionwidget.h
+    dockwidget.h
 FORMS += mainwindow.ui \
+    aboutdialog.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \
     Preferences/segmentationoptions.ui \

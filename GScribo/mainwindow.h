@@ -17,6 +17,8 @@
 //#include "Processing/runner.h"
 #include "Rendering/scene.h"
 #include "regionwidget.h"
+#include "aboutdialog.h"
+#include "dockwidget.h"
 #include "xml.h"
 
 namespace Ui
@@ -52,12 +54,12 @@ class MainWindow:
 
         Ui::MainWindow *ui;
 
-        QDockWidget dockRegion_;
-        QDockWidget dockPages_;
-        QDockWidget dockText_;
-        QDockWidget dockXml_;
+        DockWidget dockRegion_;
+        DockWidget dockPages_;
+        DockWidget dockText_;
+        DockWidget dockXml_;
 
-        QGraphicsView graphicsView_;
+        GraphicsView graphicsView_;
         Scene scene_;
 
         PagesWidget pagesWidget_;
@@ -75,6 +77,7 @@ class MainWindow:
         void onOpen();
         void onSegment();
         void onPreferences();
+        void onAbout();
 
         void onXmlSaved(const QString& filename);
         void onFileChanged(const QString& filename);

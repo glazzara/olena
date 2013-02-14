@@ -30,7 +30,7 @@ void Selection::init()
     setPen(pen);
 
     QBrush brush;
-    brush.setStyle(Qt::Dense4Pattern);
-    brush.setColor(QColor::fromRgb(80, 200, 10, 100));
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(QColor::fromRgb(80, 200, 10, 60));
     setBrush(brush);
 }

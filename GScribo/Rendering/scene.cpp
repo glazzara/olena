@@ -23,14 +23,24 @@ void Scene::init()
     isPressing_ = false;
     root_ = 0;
 
-    // Disable the scene size adaptation to items rect with a non null rect.
-    setSceneRect(0, 0, 0, 1);
-
-    selection_.setRect(0, 0, 0, 0);
+    selection_.hide();
     addItem(&selection_);
 }
 
-void Scene::clear()
+void Scene::clearAll()
+{
+    if(root_)
+    {
+        delete backgroundPixmap;
+        delete root_;
+    }
+
+    selectedRegions_.clear();
+    backgroundPixmap = 0;
+    root_ = 0;
+}
+
+void Scene::clearRegions()
 {
     if(root_)
         delete root_;
@@ -57,7 +67,7 @@ void Scene::clearSelection()
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton && !isPressing_)
+    if(root_ && event->button() == Qt::LeftButton && !isPressing_)
     {
         isPressing_ = true;
 
@@ -105,7 +115,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                emit newSelection(selectedRegions_);
           }
 
-          selection_.setRect(0, 0, 0, 1);
+          selection_.setRect(QRect());
           selection_.hide();
       }
 }
@@ -213,7 +223,7 @@ void Scene::setVisible(const GraphicsRegion::Id& region, bool visible)
 void Scene::setRoot(RootGraphicsItem *root)
 {
     // Delete all items.
-    clear();
+    clearRegions();
 
     root_ = root;
     addItem(root);
@@ -232,11 +242,14 @@ void Scene::changeScene(const QString& filename, RootGraphicsItem *root)
     backgroundPath_ = filename;
 
     // Delete all items.
-    clear();
+    clearAll();
 
     QPixmap pixmap(filename);
     setSceneRect(pixmap.rect());
-    setBackgroundBrush(QBrush(pixmap));
+
+    // Create the background item and dock it at the maximal depth of the scene.
+    backgroundPixmap = new QGraphicsPixmapItem(pixmap, 0, this);
+    backgroundPixmap->setZValue(INT_MIN);
 
     // Add new items.
     if(root)

@@ -72,9 +72,9 @@ inline void RegionItem::loadData(const GraphicsRegion::Data& data)
 { region_ = data.region; setColor(data.color); setZValue(data.zValue); }
 
 inline bool RegionItem::contains(const QPointF& point)
-{ return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().contains(point)) && shape().contains(point); }
+{ return (boundingRect().width() * boundingRect().height() == 0 || boundingRect().contains(point)) && shape().contains(point); }
 
 inline bool RegionItem::intersects(const QRectF& rect)
-{ return (boundingRect().width() == 0 || boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect); }
+{ return (boundingRect().width() * boundingRect().height() == 0 || boundingRect().intersects(rect)) && shape().intersects(rect); }
 
 #endif // RegionITEM_H

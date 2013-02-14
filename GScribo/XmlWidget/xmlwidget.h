@@ -42,13 +42,13 @@ class XmlWidget :
         inline void loadAttributes(const QModelIndex& index);
 };
 
-inline XmlView *XmlWidget::view()
+inline XmlView * XmlWidget::view()
 { return &view_; }
 
 inline QTableView *XmlWidget::attributes()
 { return &attributes_; }
 
-inline void XmlWidget::loadAttributes(const QModelIndex &index)
+inline void XmlWidget::loadAttributes(const QModelIndex& index)
 { attributesModel_.load(index.data(Qt::UserRole+2).value<XmlItem *>()->attributes()); }
 
 #endif // XMLWIDGET_H
