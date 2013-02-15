@@ -23,6 +23,7 @@ class AttributesModel :
         inline QModelIndex index(int row, int column, const QModelIndex &parent) const;
         inline QModelIndex parent(const QModelIndex &child) const;
 
+    public slots:
         void reset();
 
     private:
