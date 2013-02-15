@@ -20,7 +20,7 @@ void GraphicsView::init()
     setTransformationAnchor(GraphicsView::AnchorUnderMouse);
     setBackgroundBrush(QBrush(Qt::lightGray));
 
-    // Important to hide scroll bars : when they appear, they trigger the resizeEvent.
+    // Important to hide scroll bars : when they appear, it triggers the resizeEvent.
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -36,6 +36,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
     QMouseEvent *mouseEvent = new QMouseEvent(QEvent::MouseButtonPress, event->pos(), Qt::LeftButton,
                                               Qt::LeftButton, Qt::MetaModifier);
 
+    event->ignore();
     QGraphicsView::mousePressEvent(mouseEvent);
 }
 
@@ -123,6 +124,7 @@ void GraphicsView::keyPressEvent(QKeyEvent* event)
 
 void GraphicsView::fitInView(const QRectF& rect)
 {
+    setFocus();
     isWidthGreater_ = static_cast<qreal>(rect.width()) / static_cast<qreal>(rect.height()) > 1 ? true :
                                                                                                  false;
     qreal ratio = isWidthGreater_ ? static_cast<qreal>(width()) / static_cast<qreal>(rect.width()) :
@@ -132,7 +134,7 @@ void GraphicsView::fitInView(const QRectF& rect)
     if(isContainedInView_)
     {
         scaleRatio_ = QSizeF(1, 1);
-        scale(ratio, ratio);
+        QGraphicsView::fitInView(rect, Qt::KeepAspectRatio);
     }
 }
 

@@ -22,6 +22,7 @@ void Scene::init()
 {
     isPressing_ = false;
     isSelectionDisabled_ = false;
+    backgroundPixmap_ = 0;
     root_ = 0;
 
     selection_.hide();
@@ -31,13 +32,14 @@ void Scene::init()
 void Scene::clearAll()
 {
     if(root_)
-    {
-        delete backgroundPixmap;
         delete root_;
-    }
+
+    if(backgroundPixmap_)
+        delete backgroundPixmap_;
 
     selectedRegions_.clear();
-    backgroundPixmap = 0;
+    backgroundPath_ = QString();
+    backgroundPixmap_ = 0;
     root_ = 0;
 }
 
@@ -66,9 +68,20 @@ void Scene::clearSelection()
     emit selectionCleared();
 }
 
+void Scene::selectAll()
+{
+    RegionItem *item;
+    foreach(QGraphicsItem *child, root_->childItems())
+    {
+        item = static_cast<RegionItem *>(child);
+        item->select();
+        selectedRegions_ << item;
+    }
+}
+
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(root_ && event->button() == Qt::LeftButton && !isSelectionDisabled_)
+    if(!backgroundPath_.isEmpty() && event->button() == Qt::LeftButton && !isSelectionDisabled_)
     {
         isPressing_ = true;
 
@@ -240,19 +253,22 @@ void Scene::setRoot(RootGraphicsItem *root)
 
 void Scene::changeScene(const QString& filename, RootGraphicsItem *root)
 {
-    backgroundPath_ = filename;
-
     // Delete all items.
     clearAll();
+    backgroundPath_ = filename;
 
-    QPixmap pixmap(filename);
-    setSceneRect(pixmap.rect());
+    if(!filename.isEmpty())
+    {
+        QPixmap pixmap(filename);
+        setSceneRect(pixmap.rect());
+        // Create the background item and dock it at the maximal depth of the scene.
+        backgroundPixmap_ = new QGraphicsPixmapItem(pixmap, 0, this);
+        backgroundPixmap_->setZValue(INT_MIN);
+    }
+    else
+        setSceneRect(QRectF());
 
-    // Create the background item and dock it at the maximal depth of the scene.
-    backgroundPixmap = new QGraphicsPixmapItem(pixmap, 0, this);
-    backgroundPixmap->setZValue(INT_MIN);
-
-    // Add new items.
+        // Add new items.
     if(root)
         setRoot(root);
 }

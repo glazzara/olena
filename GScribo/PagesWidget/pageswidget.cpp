@@ -21,20 +21,22 @@ PagesWidget::PagesWidget(QWidget *parent):
 
 void PagesWidget::removeSelection()
 {
-    if(hasFocus() && selectedIndexes().count() > 0)
+    QModelIndexList indexes = selectionModel()->selectedIndexes();
+    if(hasFocus() && indexes.count() > 0)
     {
         // Sort the list because after the first removal, the second row index may not be the good one.
-        qSort(selectedIndexes().begin(), selectedIndexes().end());
+        qSort(indexes.begin(), indexes.end());
 
         // From the highest row to the smallest to be sure to remove the good index.
-        for(int i = selectedIndexes().count()-1; i > -1; i--)
-            model_.removePixmap(selectedIndexes()[i]);
+        for(int i = indexes.count()-1; i > -1; i--)
+            model_.removePixmap(indexes[i]);
 
         // Draw new image on the scene.
-        getPicture(model_.index(selectedIndexes()[0].row()));
+        getPicture(model_.index(indexes[0].row()));
         clearSelection();
 
-        model_.setCurrentRow(selectedIndexes()[0].row());
+        model_.setCurrentRow(indexes[0].row());
+        scrollTo(indexes[0]);
     }
 }
 

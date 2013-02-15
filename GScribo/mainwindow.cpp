@@ -1,4 +1,4 @@
- #include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(tr("GScribo"));
     statusBar()->hide();
+    ui->mainToolBar->hide();
 
     initGraphicsRegion();
-    initTextRegion();
     initXmlWidget();
     initRegionWidget();
     initPageWidget();
@@ -80,16 +80,6 @@ void MainWindow::initXmlWidget()
     dockXml_.setVisible(false);
 }
 
-void MainWindow::initTextRegion()
-{
-    dockText_.setWindowTitle("Text");
-    dockText_.setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);
-    dockText_.setWidget(&textEdit_);
-
-    addDockWidget(Qt::RightDockWidgetArea, &dockText_);
-    dockText_.hide();
-}
-
 void MainWindow::initMenuBar()
 {
     QMenu *menuFile = ui->menuBar->addMenu(tr("File"));
@@ -97,8 +87,30 @@ void MainWindow::initMenuBar()
     QAction *open = menuFile->addAction(tr("Open"));
     connect(open, SIGNAL(triggered()), SLOT(onOpen()));
 
-    QAction *segment = menuFile->addAction(tr("Segment"));
-    connect(segment, SIGNAL(triggered()), this, SLOT(onSegment()));
+    segment_ = menuFile->addAction(tr("Segment"));
+    segment_->setEnabled(false);
+    connect(segment_, SIGNAL(triggered()), this, SLOT(onSegment()));
+
+    menuFile->addSeparator();
+
+    previewPrinting_ = menuFile->addAction(tr("Preview Printing"));
+    previewPrinting_->setEnabled(false);
+    connect(previewPrinting_, SIGNAL(triggered()), this, SLOT(onPreviewPrint()));
+
+    print_ = menuFile->addAction(tr("Print"));
+    print_->setEnabled(false);
+    connect(print_, SIGNAL(triggered()), this, SLOT(onPrint()));
+
+    menuFile->addSeparator();
+
+    export_ = menuFile->addAction(tr("Exportation"));
+    export_->setEnabled(false);
+    connect(export_, SIGNAL(triggered()), this, SLOT(onExportation()));
+
+    menuFile->addSeparator();
+
+    QAction *quit = menuFile->addAction(tr("Quit"));
+    connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
     QMenu *menuAreas = ui->menuBar->addMenu(tr("Areas"));
 
@@ -122,6 +134,22 @@ void MainWindow::initMenuBar()
 
     QAction *about = ui->menuBar->addAction(tr("About"));
     connect(about, SIGNAL(triggered()), SLOT(onAbout()));
+}
+
+void MainWindow::setActionsEnabled(bool isSegmented)
+{
+    segment_->setEnabled(!isSegmented);
+    print_->setEnabled(isSegmented);
+    previewPrinting_->setEnabled(isSegmented);
+    export_->setEnabled(isSegmented);
+}
+
+void MainWindow::disableActions()
+{
+    segment_->setEnabled(false);
+    print_->setEnabled(false);
+    previewPrinting_->setEnabled(false);
+    export_->setEnabled(false);
 }
 
 void MainWindow::connectWidgets()
@@ -200,18 +228,90 @@ void MainWindow::onOpen()
 
 void MainWindow::onSegment()
 {
-    if(scene_.backgroundPath() != "")
+    QStringList filenames;
+
+    if(!pagesWidget_.isVisible())
+        filenames << scene_.backgroundPath();
+    else
+        filenames = pagesWidget_.filenames();
+
+    // Run segmentation of page(s).
+    //progressDialog.reset();
+    //runner.start_demat(filenames);
+}
+
+void MainWindow::onPreviewPrint()
+{
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setResolution(300);
+
+    QPrintPreviewDialog preview(&printer);
+    connect(&preview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printScene(QPrinter*)));
+
+    preview.exec();
+}
+
+void MainWindow::onPrint()
+{
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setResolution(300);
+
+    QPrintDialog dialog(&printer);
+    dialog.setWindowTitle("Print Document");
+
+    if(dialog.exec() != QDialog::Accepted)
+        return;
+
+    printScene(&printer);
+}
+
+void MainWindow::printScene(QPrinter *printer)
+{
+    scene_.selectAll();
+
+    QPainter painter(printer);
+    QStyleOptionGraphicsItem options;
+
+    scene_.backgroundPixmap()->paint(&painter, &options, 0);
+
+    // Paint backwards items first.
+    printItems(&painter, scene_.root()->childsFrom(GraphicsRegion::TextRegion), &options);
+    printItems(&painter, scene_.root()->childsFrom(GraphicsRegion::Image), &options);
+
+    for(int i = GraphicsRegion::Line; i < GraphicsRegion::Image; i++)
+        printItems(&painter, scene_.root()->childsFrom(static_cast<GraphicsRegion::Id>(i)), &options);
+
+    for(int i = GraphicsRegion::Noise; i <= GraphicsRegion::Meanline; i++)
+        printItems(&painter, scene_.root()->childsFrom(static_cast<GraphicsRegion::Id>(i)), &options);
+
+    scene_.clearSelection();
+}
+
+void MainWindow::onExportation()
+{
+    QFileInfo fileInfo(scene_.backgroundPath());
+    QString outputSuggestion = fileInfo.baseName() + ".pdf";
+    QString output = QFileDialog::getSaveFileName(0, tr("Export Document As ..."), outputSuggestion,
+                                                  tr("PDF (*.pdf);; HTML (*.html *.htm"));
+
+    if(!output.isEmpty())
     {
-        QStringList filenames;
+        progressDialog_.reset();
+        //runner_.start_export(scene_.backgroundPath(), xml_.filename(), output);
+    }
+}
 
-        if(!pagesWidget_.isVisible())
-            filenames << scene_.backgroundPath();
-        else
-            filenames = pagesWidget_.filenames();
-
-        // Run segmentation of page(s).
-        //progressDialog.reset();
-        //runner.start_demat(filenames);
+void MainWindow::printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options)
+{
+    foreach(QGraphicsItem *child, items)
+    {
+        QRect viewport = scene_.backgroundPixmap()->mapRectFromItem(child, child->boundingRect()).toRect();
+        painter->translate(abs(child->boundingRect().x() - viewport.x()),
+                           abs(child->boundingRect().y() - viewport.y()));
+        child->paint(painter, options);
+        painter->resetTransform();
     }
 }
 
@@ -232,6 +332,8 @@ void MainWindow::onXmlSaved(const QString& filename)
     xml_.load(filename);
     xmlWidget_.changeView(xml_.xmlItem());
     scene_.setRoot(xml_.graphicsItem());
+
+    setActionsEnabled(true);
 }
 
 void MainWindow::onFileChanged(const QString& filename)
@@ -240,37 +342,25 @@ void MainWindow::onFileChanged(const QString& filename)
     if(scene_.backgroundPath() != filename)
     {
         QString xmlPath = Xml::getPath(filename);
-        // Check if the xml file already exists.
-        if(!QFile(xmlPath).exists())
+
+        if(filename.isEmpty())
+        {
             xmlPath = QString();
+            disableActions();
+        }
+        // Check if the xml file already exists.
+        else if(!QFile(xmlPath).exists())
+        {
+            xmlPath = QString();
+            setActionsEnabled(false);
+        }
+        else
+            setActionsEnabled(true);
 
         xml_.load(xmlPath);
         scene_.changeScene(filename, xml_.graphicsItem());
         xmlWidget_.changeView(xml_.xmlItem());
     }
-}
-
-QList<RegionItem *> MainWindow::toRegionItems(QList<XmlItem *> xmlItems) const
-{
-    QList<RegionItem *> regionItems;
-    XmlItem *child;
-    foreach(child, xmlItems)
-    {
-        if(child->regionItem())
-            regionItems << child->regionItem();
-    }
-
-    return regionItems;
-}
-
-QList<XmlItem *> MainWindow::toXmlItems(QList<RegionItem *> regionItems) const
-{
-    QList<XmlItem *> xmlItems;
-    RegionItem *child;
-    foreach(child, regionItems)
-        xmlItems << child->xmlItem();
-
-    return xmlItems;
 }
 
 void MainWindow::onRegionSelection(QList<RegionItem *> regionItems)
@@ -296,4 +386,27 @@ void MainWindow::onXmlChangeSelection(QList<XmlItem *> xmlItems, bool select)
         else
             scene_.unselect(regionItems);
     }
+}
+
+QList<RegionItem *> MainWindow::toRegionItems(QList<XmlItem *> xmlItems) const
+{
+    QList<RegionItem *> regionItems;
+    XmlItem *child;
+    foreach(child, xmlItems)
+    {
+        if(child->regionItem())
+            regionItems << child->regionItem();
+    }
+
+    return regionItems;
+}
+
+QList<XmlItem *> MainWindow::toXmlItems(QList<RegionItem *> regionItems) const
+{
+    QList<XmlItem *> xmlItems;
+    RegionItem *child;
+    foreach(child, regionItems)
+        xmlItems << child->xmlItem();
+
+    return xmlItems;
 }

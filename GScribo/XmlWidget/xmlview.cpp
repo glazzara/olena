@@ -79,7 +79,10 @@ void XmlView::selectionChanged(const QItemSelection& selected, const QItemSelect
         emit loadAttributes(xmlItems.last()->attributes());
     }
     else
+    {
+        emit resetProperty();
         emit emptySelection();
+    }
 
     emit newSelection();
 }

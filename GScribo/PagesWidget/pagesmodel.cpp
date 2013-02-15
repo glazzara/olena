@@ -48,6 +48,8 @@ void PagesModel::removePixmap(const QModelIndex &parent)
 void PagesModel::setCurrentRow(int currentRow)
 {
     beginResetModel();
+
     currentRow_ = currentRow;
+
     endResetModel();
 }

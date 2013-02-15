@@ -1,13 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QPrintPreviewDialog>
 #include <QGraphicsView>
-#include <QPlainTextEdit>
+#include <QPrintDialog>
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QGroupBox>
+#include <QPrinter>
 
 #include "Preferences/preferencesdialog.h"
 #include "Processing/progressdialog.h"
@@ -40,12 +42,17 @@ class MainWindow:
 
     private:
         void initGraphicsRegion();
-        void initTextRegion();
         void initPageWidget();
         void initRegionWidget();
         void initXmlWidget();
         void initMenuBar();
         void connectWidgets();
+
+        void setActionsEnabled(bool isSegmented);
+        void disableActions();
+
+        void printScene(QPrinter *printer);
+        void printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options);
 
         Xml processTmpXml(const QString& filename) const;
         QList<RegionItem *> toRegionItems(QList<XmlItem *> regionItems) const;
@@ -55,7 +62,6 @@ class MainWindow:
 
         DockWidget dockRegion_;
         DockWidget dockPages_;
-        DockWidget dockText_;
         DockWidget dockXml_;
 
         GraphicsView graphicsView_;
@@ -64,17 +70,23 @@ class MainWindow:
         PagesWidget pagesWidget_;
         RegionWidget regionWidget_;
 
-        QPlainTextEdit textEdit_;
-
         ProgressDialog progressDialog_;
         //Runner runner_;
 
         XmlWidget xmlWidget_;
         Xml xml_;
 
+        QAction *segment_;
+        QAction *previewPrinting_;
+        QAction *print_;
+        QAction *export_;
+
     private slots:
         void onOpen();
         void onSegment();
+        void onPreviewPrint();
+        void onPrint();
+        void onExportation();
         void onPreferences();
         void onAbout();
 
@@ -82,6 +94,7 @@ class MainWindow:
         void onFileChanged(const QString& filename);
 
         void onRegionSelection(QList<RegionItem *> regionItems);
+
         void onXmlChangeSelection(QList<XmlItem *> xmlItems, bool select);
         inline void onXmlSelect(QList<XmlItem *> xmlItems);
         inline void onXmlUnselect(QList<XmlItem *> xmlItems);

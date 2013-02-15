@@ -2,8 +2,6 @@
 
 Xml::Xml(const QString& filename)
 {
-    filename_ = filename;
-
     load(filename);
 }
 
@@ -28,12 +26,14 @@ void Xml::load(const QString& filename)
     {
         xmlItem_ = 0;
         graphicsItem_ = 0;
+        filename_ = QString();
         return;
     }
 
     // Reset graphic and tree items;
     xmlItem_ = new XmlItem;
     graphicsItem_ = new RootGraphicsItem(13);
+    filename_ = getPath(filename);
 
     QFile xmlFile(filename);
     xmlFile.open(QIODevice::ReadOnly);

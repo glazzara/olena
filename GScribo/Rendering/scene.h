@@ -22,6 +22,8 @@ class Scene :
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         inline QString backgroundPath() const;
+        inline QGraphicsPixmapItem *backgroundPixmap() const;
+
         inline QList<RegionItem *> selectedRegions() const;
 
         void setRoot(RootGraphicsItem *rootItem);
@@ -29,6 +31,7 @@ class Scene :
 
         void select(const QRectF& rect);
         void select(const QPointF& point);
+        void selectAll();
 
         inline bool selectionEnable() const;
         inline void setSelectionEnable(bool enable);
@@ -48,7 +51,7 @@ class Scene :
         RootGraphicsItem *root_;
 
         QString backgroundPath_;
-        QGraphicsPixmapItem *backgroundPixmap;
+        QGraphicsPixmapItem *backgroundPixmap_;
 
         Selection selection_;
         QList<RegionItem *> selectedRegions_;
@@ -81,6 +84,9 @@ class Scene :
 
 inline QString Scene::backgroundPath() const
 { return backgroundPath_; }
+
+inline QGraphicsPixmapItem *Scene::backgroundPixmap() const
+{ return backgroundPixmap_; }
 
 inline RootGraphicsItem *Scene::root() const
 { return root_; }

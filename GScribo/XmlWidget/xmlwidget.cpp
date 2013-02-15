@@ -18,7 +18,7 @@ XmlWidget::XmlWidget(QWidget *parent) :
     addWidget(&view_);
     addWidget(&attributes_);
 
-    connect(&view_, SIGNAL(resetProperty()), &attributes_, SLOT(reset()));
+    connect(&view_, SIGNAL(resetProperty()), &attributesModel_, SLOT());
     connect(&view_, SIGNAL(clicked(QModelIndex)), this, SLOT(loadAttributes(QModelIndex)));
     connect(&view_, SIGNAL(loadAttributes(XmlAttributes)), &attributesModel_, SLOT(load(XmlAttributes)));
 }
