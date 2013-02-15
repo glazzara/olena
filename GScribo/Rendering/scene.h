@@ -30,6 +30,9 @@ class Scene :
         void select(const QRectF& rect);
         void select(const QPointF& point);
 
+        inline bool selectionEnable() const;
+        inline void setSelectionEnable(bool enable);
+
         void changeScene(const QString& filename, RootGraphicsItem *root = 0);
 
     protected:
@@ -53,6 +56,7 @@ class Scene :
 
         QPointF pressPos_;
         bool isPressing_;
+        bool isSelectionDisabled_;
 
     public slots:
         void clearAll();
@@ -65,6 +69,9 @@ class Scene :
 
         void setVisible(const GraphicsRegion::Id& region, bool visible);
         void ensureVisible(QGraphicsItem *graphicsItem);
+
+        inline void disableSelection();
+        inline void enableSelection();
 
     signals:
         void selectionCleared();
@@ -89,5 +96,17 @@ inline void Scene::select(const QPointF& point)
 
 inline void Scene::select(const QRectF& rect)
 { select(root_, QPointF(), rect); }
+
+inline void Scene::setSelectionEnable(bool enable)
+{ isSelectionDisabled_ = !enable; }
+
+inline bool Scene::selectionEnable() const
+{ return isSelectionDisabled_; }
+
+inline void Scene::disableSelection()
+{ setSelectionEnable(false); }
+
+inline void Scene::enableSelection()
+{ setSelectionEnable(true); }
 
 #endif // SCENE_H

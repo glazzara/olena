@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include <QScrollBar>
 
 class GraphicsView :
         public QGraphicsView
@@ -20,22 +21,23 @@ class GraphicsView :
 
         void wheelEvent(QWheelEvent *event);
         void keyPressEvent(QKeyEvent *event);
-        inline void mousePressEvent(QMouseEvent *event);
-        inline void mouseReleaseEvent(QMouseEvent *event);
+        void mousePressEvent(QMouseEvent *event);
+        void mouseReleaseEvent(QMouseEvent *event);
 
     private:
-        qreal scaleRatio_;
+        bool isWidthGreater_;
+        bool isContainedInView_;
+        QSizeF scaleRatio_;
+
+        bool isRightClicking_;
+        QPointF prevMousePos_;
 
     public slots:
-        void fitInView(const QGraphicsItem *item, Qt::AspectRatioMode aspectRadioMode = Qt::KeepAspectRatio);
-        void fitInView(const QRectF &rect, Qt::AspectRatioMode aspectRadioMode = Qt::KeepAspectRatio);
-        void fitInView(qreal x, qreal y, qreal w, qreal h, Qt::AspectRatioMode aspectRadioMode = Qt::KeepAspectRatio);
+        void fitInView(const QRectF& rect);
+
+    signals:
+        void beginDrag();
+        void endDrag();
 };
-
-inline void GraphicsView::mouseReleaseEvent(QMouseEvent *event)
-{ if(event->button() == Qt::RightButton) setCursor(QCursor(Qt::ArrowCursor)); QGraphicsView::mouseReleaseEvent(event); }
-
-void GraphicsView::mousePressEvent(QMouseEvent *event)
-{ if(event->buttons() == Qt::RightButton) setCursor(QCursor(Qt::ClosedHandCursor)); QGraphicsView::mousePressEvent(event); }
 
 #endif // GRAPHICSVIEW_H

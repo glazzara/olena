@@ -11,6 +11,7 @@ Concerning the scene :
 	- Can create/ fusion some region : sometimes two line regions are splitted but will not be.
 	- Optimize the collision between the rectangle item and the regions. Currently it do not take into account if the region is visible by the view before calculating the collision.
 	- Use OpenGL to speed up graphics rendering (the gui has been developped with Qt 4.7, OpenGL was still experimental so it was really slow when updating the scene).
+  - Create a little widget at the bottom of the scene with the % of scale, the possibility to fit the scene rect or to scale it at 100% (just like gwenview).
 	- May be give the possibility to change the color.
 	- May be some options one right click.
 
@@ -82,6 +83,3 @@ Create a text viewer :
 
 For other idea of interfaces using Qt :
 	- gwenview (picture visionnary, good idea here).
-
-
-	

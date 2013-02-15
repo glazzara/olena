@@ -21,6 +21,7 @@ Scene::Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
 void Scene::init()
 {
     isPressing_ = false;
+    isSelectionDisabled_ = false;
     root_ = 0;
 
     selection_.hide();
@@ -67,7 +68,7 @@ void Scene::clearSelection()
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(root_ && event->button() == Qt::LeftButton && !isPressing_)
+    if(root_ && event->button() == Qt::LeftButton && !isSelectionDisabled_)
     {
         isPressing_ = true;
 
@@ -97,7 +98,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
-      {
+    {
           isPressing_ = false;
 
           // Redraw all items in selection.
@@ -117,7 +118,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
           selection_.setRect(QRect());
           selection_.hide();
-      }
+    }
 }
 
 void Scene::select(QGraphicsItem *root, const QPointF& point, const QRectF& rect)

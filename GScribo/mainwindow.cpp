@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     initXmlWidget();
     initRegionWidget();
     initPageWidget();
-    initToolBar();
     initMenuBar();
 
     // Told the left dock widget (here the pages widget and the region widget) to fill the bottom left corner.
@@ -91,15 +90,6 @@ void MainWindow::initTextRegion()
     dockText_.hide();
 }
 
-void MainWindow::initToolBar()
-{
-    QAction *open = ui->mainToolBar->addAction(tr("Open"));
-    connect(open, SIGNAL(triggered()), this, SLOT(onOpen()));
-
-    QAction *segment = ui->mainToolBar->addAction(tr("Segment"));
-    connect(segment, SIGNAL(triggered()), this, SLOT(onSegment()));
-}
-
 void MainWindow::initMenuBar()
 {
     QMenu *menuFile = ui->menuBar->addMenu(tr("File"));
@@ -138,6 +128,9 @@ void MainWindow::connectWidgets()
 {
     // Each time the scene rect change (when a new picture is loaded), we fit the scene background rectangle in the view.
     connect(&scene_, SIGNAL(sceneRectChanged(QRectF)), &graphicsView_, SLOT(fitInView(QRectF)));
+    // When dragging with right click, disable selection.
+    connect(&graphicsView_, SIGNAL(beginDrag()), &scene_, SLOT(disableSelection()));
+    connect(&graphicsView_, SIGNAL(endDrag()), &scene_, SLOT(enableSelection()));
 
     // If double click on a picture of the page widget -> draw it on background scene.
     connect(&pagesWidget_, SIGNAL(imageSelectionned(QString)), this, SLOT(onFileChanged(QString)));
@@ -164,7 +157,7 @@ void MainWindow::connectWidgets()
 
 void MainWindow::onOpen()
 {
-    QStringList paths = QFileDialog::getOpenFileNames(this, "Open Image(s)", QDir::homePath(), "Images (*.png *.jpg *.ppm *.bmp)");
+    QStringList paths = QFileDialog::getOpenFileNames(&graphicsView_, "Open Image(s)", QDir::homePath(), "Images (*.png *.jpg *.ppm *.bmp)");
 
     if(paths.count() > 0)
     {

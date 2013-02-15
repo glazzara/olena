@@ -41,7 +41,6 @@ class MainWindow:
     private:
         void initGraphicsRegion();
         void initTextRegion();
-        void initToolBar();
         void initPageWidget();
         void initRegionWidget();
         void initXmlWidget();
