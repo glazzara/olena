@@ -66,7 +66,7 @@ image2d<bool> Runner::preprocess(const image2d<value::rgb8>& ima)
     Preprocess f;
 
     // Load config.
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     connect(&f, SIGNAL(progress()), this, SIGNAL(progress()));
     connect(&f, SIGNAL(newProgressLabel(QString)),

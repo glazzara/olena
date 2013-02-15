@@ -14,13 +14,6 @@ class Configs :
     public:
         inline static Configs *getInstance();
 
-        inline bool isRegionInit();
-        inline QColor regionColor(const GraphicsRegion::Id& region);
-        inline QString regionName(const GraphicsRegion::Id& region);
-
-        inline bool isRegionChecked(const GraphicsRegion::Id& region);
-        inline void setRegionChecked(const GraphicsRegion::Id& region, bool checked);
-
         inline bool preprocessingSubsample();
         inline void setPreprocessingSubsample(bool b);
 
@@ -64,21 +57,6 @@ class Configs :
 inline Configs *Configs::getInstance()
 { static Configs *conf = new Configs(); return conf; }
 
-inline bool Configs::isRegionInit()
-{ return value("region/init", false).toBool(); }
-
-inline bool Configs::isRegionChecked(const GraphicsRegion::Id &region)
-{ return value("region/" + QString::number(region) + "/checked", true).toBool(); }
-
-inline void Configs::setRegionChecked(const GraphicsRegion::Id &region, bool checked)
-{ setValue("region/" + QString::number(region) + "/checked", checked); }
-
-inline QColor Configs::regionColor(const GraphicsRegion::Id& region)
-{ return value("region/" + QString::number(region) + "color").value<QColor>(); }
-
-inline QString Configs::regionName(const GraphicsRegion::Id &region)
-{ beginGroup("region"); beginGroup(QString::number(region)); QString l = value("name").toString(); endGroup(); endGroup(); qDebug() << l; return l; }
-
 inline bool Configs::preprocessingSubsample()
 { return value("preprocessing/subsample", false).toBool(); }
 
@@ -104,7 +82,8 @@ inline void Configs::setPreprocessingRemoveNoise(bool b)
 { setValue("preprocessing/remove_noise", b); }
 
 inline int Configs::preprocessingBinAlgo()
-{ return value("preprocessing/bin_algo", scribo::toolchain::internal::SauvolaMs).toInt(); }
+{ return value("preprocessing/bin_algo",
+		scribo::toolchain::internal::SauvolaMs).toInt(); }
 
 inline void Configs::setPreprocessingBinAlgo(int algo)
 { setValue("preprocessing/bin_algo", algo); }
@@ -146,7 +125,8 @@ inline void Configs::setGeneralSaveXmlCustomDir(bool b)
 { setValue("general/save_xml/custom_dir", b); }
 
 inline QString Configs::generalSaveXmlCustomDirPath()
-{ return value("general/save_xml/custom_dir_path", QDir::tempPath()).toString(); }
+{ return value("general/save_xml/custom_dir_path",
+		QDir::tempPath()).toString(); }
 
 inline void Configs::setGeneralSaveXmlCustomDirPath(const QString& path)
 { setValue("general/save_xml/custom_dir_path", path); }

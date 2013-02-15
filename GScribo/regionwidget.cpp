@@ -65,6 +65,6 @@ void RegionWidget::checkStateChanged(QTreeWidgetItem *item)
             emit checkStateChanged(static_cast<GraphicsRegion::Id>(item->data(0, Qt::UserRole).toInt()), false);
         }
 
-        //Zemit checkStateChanged(filterString_);
+        //emit checkStateChanged(filterString_);
     }
 }
