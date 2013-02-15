@@ -1,7 +1,7 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-//#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
+#include <scribo/toolchain/internal/text_in_doc_preprocess_functor.hh>
 #include <QSettings>
 #include <QDir>
 #include <QDebug>
@@ -33,7 +33,7 @@ class Configs :
         inline bool preprocessingRemoveNoise();
         inline void setPreprocessingRemoveNoise(bool b);
 
-        //inline int preprocessingBinAlgo();
+        inline int preprocessingBinAlgo();
         inline void setPreprocessingBinAlgo(int algo);
 
         inline int segmentationFindSeps();
@@ -103,8 +103,8 @@ inline bool Configs::preprocessingRemoveNoise()
 inline void Configs::setPreprocessingRemoveNoise(bool b)
 { setValue("preprocessing/remove_noise", b); }
 
-//inline int Configs::preprocessingBinAlgo()
-//{ return value("preprocessing/bin_algo", scribo::toolchain::internal::SauvolaMs).toInt(); }
+inline int Configs::preprocessingBinAlgo()
+{ return value("preprocessing/bin_algo", scribo::toolchain::internal::SauvolaMs).toInt(); }
 
 inline void Configs::setPreprocessingBinAlgo(int algo)
 { setValue("preprocessing/bin_algo", algo); }

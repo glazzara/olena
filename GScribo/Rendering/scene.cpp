@@ -153,7 +153,6 @@ void Scene::select(QGraphicsItem *root, const QPointF& point, const QRectF& rect
             }
         }
     }
-
     else
     {
         foreach(child, root->childItems())

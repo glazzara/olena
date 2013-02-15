@@ -15,8 +15,8 @@ static QString get_pathto(const QString& file, const QString localdirsuffix = QS
   return "";
 }
 
-Runner::Runner(QObject *parent)
-  : QThread(parent)
+Runner::Runner(QObject *parent) :
+        QThread(parent)
 {
     moveToThread(this);
 }
@@ -134,7 +134,6 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
 
     // Perform text detection.
     f(original_ima, processed_ima);
-    //emit xml_saved(filename);
 }
 
 // Export related stuff

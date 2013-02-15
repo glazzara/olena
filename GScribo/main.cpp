@@ -1,12 +1,12 @@
 #undef MLN_WO_GLOBAL_VARS
 
-//#include <scribo/make/debug_filename.hh>
-//#include <mln/labeling/colorize.hh>
-//#include <mln/io/magick/load.hh>
-//#include <mln/literal/colors.hh>
-//#include <mln/debug/filename.hh>
+#include <scribo/make/debug_filename.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/io/magick/load.hh>
+#include <mln/literal/colors.hh>
+#include <mln/debug/filename.hh>
 #include <QtGui/QApplication>
-//#include <mln/math/pi.hh>
+#include <mln/math/pi.hh>
 
 #include "mainwindow.h"
 

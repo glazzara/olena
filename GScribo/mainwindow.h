@@ -16,7 +16,7 @@
 #include "PagesWidget/pageswidget.h"
 #include "Rendering/graphicsview.h"
 #include "XmlWidget/xmlwidget.h"
-//#include "Processing/runner.h"
+#include "Processing/runner.h"
 #include "Rendering/scene.h"
 #include "regionwidget.h"
 #include "aboutdialog.h"
@@ -71,7 +71,7 @@ class MainWindow:
         RegionWidget regionWidget_;
 
         ProgressDialog progressDialog_;
-        //Runner runner_;
+        Runner runner_;
 
         XmlWidget xmlWidget_;
         Xml xml_;

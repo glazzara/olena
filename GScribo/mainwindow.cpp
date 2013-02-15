@@ -176,11 +176,11 @@ void MainWindow::connectWidgets()
     // Connect the xml widget with the region widget.
     connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), xmlWidget_.view(), SLOT(setFilterString(QString)));
 
-    /*connect(&runner, SIGNAL(progress()), &progressDialog, SLOT(run()));
-    connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
-    connect(&runner, SIGNAL(new_progress_label(QString)), &progressDialog, SLOT(setLabelText(QString)));
-    connect(&runner, SIGNAL(finished()), &progressDialog, SLOT(close()));
-    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));*/
+    connect(&runner_, SIGNAL(progress()), &progressDialog_, SLOT(run()));
+    connect(&runner_, SIGNAL(new_progress_max_value(int)), &progressDialog_, SLOT(setMaximum(int)));
+    connect(&runner_, SIGNAL(new_progress_label(QString)), &progressDialog_, SLOT(setLabelText(QString)));
+    connect(&runner_, SIGNAL(finished()), &progressDialog_, SLOT(close()));
+    connect(&runner_, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));
 }
 
 void MainWindow::onOpen()
@@ -230,14 +230,11 @@ void MainWindow::onSegment()
 {
     QStringList filenames;
 
-    if(!pagesWidget_.isVisible())
-        filenames << scene_.backgroundPath();
-    else
-        filenames = pagesWidget_.filenames();
+    filenames << scene_.backgroundPath();
 
     // Run segmentation of page(s).
-    //progressDialog.reset();
-    //runner.start_demat(filenames);
+    progressDialog_.reset();
+    runner_.start_demat(filenames);
 }
 
 void MainWindow::onPreviewPrint()
@@ -299,7 +296,7 @@ void MainWindow::onExportation()
     if(!output.isEmpty())
     {
         progressDialog_.reset();
-        //runner_.start_export(scene_.backgroundPath(), xml_.filename(), output);
+        runner_.start_export(scene_.backgroundPath(), xml_.filename(), output);
     }
 }
 
