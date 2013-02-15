@@ -51,7 +51,6 @@ class MainWindow:
         void setActionsEnabled(bool isSegmented);
         void disableActions();
 
-        void printScene(QPrinter *printer);
         void printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options);
 
         Xml processTmpXml(const QString& filename) const;
@@ -80,6 +79,9 @@ class MainWindow:
         QAction *previewPrinting_;
         QAction *print_;
         QAction *export_;
+
+    public slots:
+        void printScene(QPrinter *printer);
 
     private slots:
         void onOpen();

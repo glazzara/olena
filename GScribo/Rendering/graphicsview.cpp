@@ -35,7 +35,6 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
     QMouseEvent *mouseEvent = new QMouseEvent(QEvent::MouseButtonPress, event->pos(), Qt::LeftButton,
                                               Qt::LeftButton, Qt::MetaModifier);
-
     event->ignore();
     QGraphicsView::mousePressEvent(mouseEvent);
 }

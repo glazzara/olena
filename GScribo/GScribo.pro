@@ -9,7 +9,8 @@ QMAKE_CXXFLAGS += -DNDEBUG \
     -DMLN_WO_GLOBAL_VARS
 LIBS += -I/usr/include/graphicsImage \
     -lGraphicsMagick++ \
-    -ltesseract_full
+    -ltesseract_full \
+    -ltiff
 TARGET = GScribo
 TEMPLATE = app
 SOURCES += regionwidget.cpp \

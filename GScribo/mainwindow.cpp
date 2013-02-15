@@ -286,6 +286,21 @@ void MainWindow::printScene(QPrinter *printer)
     scene_.clearSelection();
 }
 
+void MainWindow::printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options)
+{
+    foreach(QGraphicsItem *child, items)
+    {
+        if(child->isVisible())
+        {
+            QRect viewport = scene_.backgroundPixmap()->mapRectFromItem(child, child->boundingRect()).toRect();
+            painter->translate(abs(child->boundingRect().x() - viewport.x()),
+                               abs(child->boundingRect().y() - viewport.y()));
+            child->paint(painter, options);
+            painter->resetTransform();
+        }
+    }
+}
+
 void MainWindow::onExportation()
 {
     QFileInfo fileInfo(scene_.backgroundPath());
@@ -297,18 +312,6 @@ void MainWindow::onExportation()
     {
         progressDialog_.reset();
         runner_.start_export(scene_.backgroundPath(), xml_.filename(), output);
-    }
-}
-
-void MainWindow::printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options)
-{
-    foreach(QGraphicsItem *child, items)
-    {
-        QRect viewport = scene_.backgroundPixmap()->mapRectFromItem(child, child->boundingRect()).toRect();
-        painter->translate(abs(child->boundingRect().x() - viewport.x()),
-                           abs(child->boundingRect().y() - viewport.y()));
-        child->paint(painter, options);
-        painter->resetTransform();
     }
 }
 

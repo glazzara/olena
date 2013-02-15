@@ -102,7 +102,7 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
             this, SIGNAL(xml_saved(const QString&)));
 
     // Load config.
-    Configs * const conf = Configs::getInstance();
+    Configs *const conf = Configs::getInstance();
 
     Separator::FindSeparator find_seps = static_cast<Separator::FindSeparator>(conf->segmentationFindSeps());
     f.enable_line_seps = (find_seps == Separator::Lines
