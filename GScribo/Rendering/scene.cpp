@@ -33,17 +33,16 @@ QString Scene::backgroundPath() const
     return path;
 }
 
-void Scene::removeItems()
+void Scene::addPolygonItem(QGraphicsItem *item)
 {
-    QList<QGraphicsItem *> itemsList = items();
-    QGraphicsItem *i;
+    this->item = item;
+    addItem(item);
+}
 
-    // Remove all items on the scene expect the selection.
-    foreach(i, itemsList)
-    {
-        if(i != &selection)
-            delete i;
-    }
+void Scene::reset()
+{
+    if(item)
+        removeItem(item);
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)

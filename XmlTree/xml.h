@@ -5,29 +5,30 @@
 #include <QGraphicsItem>
 #include <QStringList>
 #include <QDomElement>
+#include <climits>
 #include <QFile>
 
 #include "polygonitem.h"
 #include "region.h"
 
-class Xml
+class Xml :
+        QObject
 {
+        Q_OBJECT
+
     public:
-        Xml();
-        explicit Xml(const QString& filename);
+        explicit Xml(const QString& filename = QString());
+
         void load(const QString& filename);
         inline QTreeWidgetItem *treeItem();
+        inline QList<QGraphicsItem *> graphicsItems();
 
     private:
-        void init(const QDomElement& root, QTreeWidgetItem *parent);
-        void processNode(const QDomElement& root, const GraphicRegion::Data& data, QTreeWidgetItem *parent);
-
-        QGraphicsItem *graphicsText(const QDomElement& root);
-        /*void graphicsLine(const QDomeElement& root, QGraphicsItem *graphicsText);
-        void graphicsTypo(const QDomeElement& root, QGraphicsItem *graphicsLine);*/
-
-        void fillTreeWidgetItem(const QDomElement& root, QTreeWidgetItem *parent);
-        QGraphicsItem *graphicsRegion(const QDomElement& root);
+        QTreeWidgetItem *init(const QDomElement& root, QTreeWidgetItem *rootTreeItem);
+        inline QTreeWidgetItem *fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem);
+        void processNode(const QDomElement& root, const GraphicRegion::Data& data, QTreeWidgetItem *rootTreeItem);
+        void processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, QTreeWidgetItem *rootTreeItem);
+        void processTypoNode(const QDomElement& root, const QPoint& xPoint, PolygonItem *rootPolygonItem);
 
         QList<QGraphicsItem *> gItems;
         QTreeWidgetItem tItems;
@@ -35,5 +36,15 @@ class Xml
 
 inline QTreeWidgetItem *Xml::treeItem()
 { return &tItems; }
+
+inline QList<QGraphicsItem *> Xml::graphicsItems()
+{ return gItems; }
+
+inline QTreeWidgetItem *Xml::fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem)
+{
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem(rootTreeItem, QStringList(tagName));
+    treeItem = new QTreeWidgetItem(treeItem, QStringList("Coords"));
+    return treeItem;
+}
 
 #endif // XML_H

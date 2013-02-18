@@ -17,8 +17,10 @@ class Scene :
         explicit Scene(QObject *parent = 0);
         explicit Scene(const QRectF &sceneRect, QObject *parent = 0);
         explicit Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+
         QString backgroundPath() const;
-        void removeItems();
+        void addPolygonItem(QGraphicsItem *item);
+        void reset();
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -28,6 +30,7 @@ class Scene :
     private:
         void init();
 
+        QGraphicsItem *item;
         QString path;
         Selection selection;
         QPointF pressPos;
@@ -38,7 +41,7 @@ class Scene :
         void setBackground(const QString& filename, const QPixmap& pixmap);
 
     signals:
-       void repaintItem(const QRectF& rect, bool clic);
+        void repaintItem(const QRectF& rect, bool clic);
     };
 
 #endif // SCENE_H

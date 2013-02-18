@@ -1,38 +1,51 @@
 #ifndef XML_H
 #define XML_H
 
+#include <QTreeWidgetItem>
 #include <QGraphicsItem>
+#include <QStringList>
 #include <QDomElement>
-#include <QTextEdit>
 #include <climits>
-#include <QString>
 #include <QFile>
 
-#include "polygonitem.h"
+#include "Rendering/polygonitem.h"
+#include "variantpointer.h"
 #include "region.h"
-#include "region.h"
-#include "scene.h"
 
-struct Node
-{
-    QDomElement root;
-    QDomElement
-};
-
-class Xml:
+class Xml :
         QObject
 {
+        Q_OBJECT
+
     public:
-        Xml();
-        static void parseItems(const QString &filename, Scene *scene);
+        explicit Xml(const QString& filename = QString());
+
+        void load(const QString& filename);
+        inline QTreeWidgetItem *treeItem();
+        inline QGraphicsItem *graphicItem();
 
     private:
-        void graphicsRegion(const QDomElement& element, const GraphicRegion::Data& data, Scene *scene);
-        void graphicsTypoRegion(const QDomElement& element, const QPoint& xPos, Scene *scene);
-        void graphicsLineRegion(const QDomElement& element, Scene *scene);
-        void graphicsTextRegion(const QDomElement& element, Scene *scene);
+        QTreeWidgetItem *init(const QDomElement& root, QTreeWidgetItem *rootTreeItem);
+        inline QTreeWidgetItem *fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem);
+        void processNode(const QDomElement& root, const GraphicRegion::Data& data, QTreeWidgetItem *rootTreeItem);
+        void processLineNode(const QDomElement& root, PolygonItem *parentPolygonItem, QTreeWidgetItem *rootTreeItem);
+        void processTypoNode(const QDomElement& root, const QPoint& xPoint, PolygonItem *rootPolygonItem);
 
-        QDomElement root;
+        QGraphicsPolygonItem gItem;
+        QTreeWidgetItem tItem;
 };
+
+inline QTreeWidgetItem *Xml::treeItem()
+{ return &tItem; }
+
+inline QGraphicsItem *Xml::graphicItem()
+{ return &gItem; }
+
+inline QTreeWidgetItem *Xml::fillWidgetItem(const QString& tagName, QTreeWidgetItem *rootTreeItem)
+{
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem(rootTreeItem, QStringList(tagName));
+    treeItem = new QTreeWidgetItem(treeItem, QStringList("Coords"));
+    return treeItem;
+}
 
 #endif // XML_H

@@ -4,6 +4,8 @@
 #include <QGraphicsPathItem>
 #include <QPen>
 
+#include "region.h"
+
 class PolygonItem :
         public QObject,
         public QGraphicsPolygonItem
@@ -13,8 +15,11 @@ class PolygonItem :
     public:
         explicit PolygonItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
         explicit PolygonItem(const QPolygonF& path, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+
         void setColor(const QColor& color);
         QColor color() const;
+
+        inline void loadData(const GraphicRegion::Data& data);
 
     private:
         void init();
@@ -27,5 +32,11 @@ class PolygonItem :
     public slots:
         void repaint(const QRectF& rect, bool clic);
 };
+
+inline void PolygonItem::loadData(const GraphicRegion::Data &data)
+{
+    setColor(data.color);
+    setZValue(data.zValue);
+}
 
 #endif // POLYGONITEM_H

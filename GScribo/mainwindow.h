@@ -14,6 +14,8 @@
 #include "PagesViewer/pageswidget.h"
 #include "Processing/runner.h"
 #include "Rendering/scene.h"
+#include "xmlwidget.h"
+#include "xml.h"
 
 namespace Ui
 {
@@ -37,6 +39,7 @@ class MainWindow:
         void initTextRegion();
         void initToolBar();
         void initPageWidget();
+        void initXmlWidget();
         void initMenuBar();
         void connectWidgets();
         void connectShortcuts();
@@ -44,16 +47,20 @@ class MainWindow:
         Ui::MainWindow *ui;
         QDockWidget dockText;
         QDockWidget dockPages;
+        QDockWidget dockXml;
         QGraphicsView graphicsView;
         Scene scene;
         QPlainTextEdit textEdit;
         PagesWidget pagesWidget;
         Runner runner;
         ProgressDialog progressDialog;
+        Xml xml;
+        XmlWidget xmlWidget;
 
     private slots:
         void onOpen();
         void onSegment();
+        void onXmlSaved(const QString& filename);
         void onPreferences();
 };
 

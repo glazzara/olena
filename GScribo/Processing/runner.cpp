@@ -134,7 +134,7 @@ void Runner::process(const image2d<value::rgb8>& original_ima,
 
     // Perform text detection.
     f(original_ima, processed_ima);
-    emit xml_saved(filename);
+    //emit xml_saved(filename);
 }
 
 // Export related stuff

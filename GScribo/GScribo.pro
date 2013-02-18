@@ -17,6 +17,7 @@ SOURCES += main.cpp \
     configs.cpp \
     Rendering/scene.cpp \
     Rendering/selection.cpp \
+    Rendering/polygonitem.cpp \
     PagesViewer/pageswidget.cpp \
     PagesViewer/listmodel.cpp \
     Preferences/segmentationoptions.cpp \
@@ -25,17 +26,18 @@ SOURCES += main.cpp \
     Preferences/generaloptions.cpp \
     Preferences/optionwidget.cpp \
     Preferences/preferencesdialog.cpp \
-    Rendering/polygonitem.cpp \
     Processing/progressdialog.cpp \
     Processing/process.cpp \
     Processing/preprocess.cpp \
     Processing/runner.cpp \
-    xml.cpp
+    xml.cpp \
+    xmlwidget.cpp
 HEADERS += mainwindow.h \
     configs.h \
     region.h \
     Rendering/scene.h \
     Rendering/selection.h \
+    Rendering/polygonitem.h \
     PagesViewer/pageswidget.h \
     PagesViewer/listmodel.h \
     Preferences/segmentationoptions.h \
@@ -44,13 +46,14 @@ HEADERS += mainwindow.h \
     Preferences/generaloptions.h \
     Preferences/optionwidget.h \
     Preferences/preferencesdialog.h \
-    Rendering/polygonitem.h \
     Processing/preprocess.h \
     Processing/progressdialog.h \
     Processing/process.h \
     dir.h \
     Processing/runner.h \
-    xml.h
+    xml.h \
+    variantpointer.h \
+    xmlwidget.h
 FORMS += mainwindow.ui \
     Preferences/preferencesdialog.ui \
     Preferences/ocroptions.ui \

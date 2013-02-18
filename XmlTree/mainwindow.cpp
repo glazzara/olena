@@ -7,10 +7,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    xml.load("/home/onix/icdar_ppm_100p/mp00032c_gui.xml");
+    xml.load("/tmp/mp00082c_gui.xml");
 
-    xmlWidget.load(xml.treeItem());
-    setCentralWidget(&xmlWidget);
+    //xmlWidget.load(xml.treeItem());
+
+    view = new QGraphicsView(new QGraphicsScene());
+
+    QGraphicsItem *item;
+    foreach(item, xml.graphicsItems())
+        view->scene()->addItem(item);
+
+    setCentralWidget(view);
 }
 
 MainWindow::~MainWindow()

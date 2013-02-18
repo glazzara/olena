@@ -3,6 +3,7 @@
 ProgressDialog::ProgressDialog(QWidget *parent, Qt::WindowFlags flags):
         QProgressDialog(parent, flags)
 {
+    setWindowFlags(Qt::Dialog);
     setModal(true);
     setAutoClose(false);
     setCancelButton(0);

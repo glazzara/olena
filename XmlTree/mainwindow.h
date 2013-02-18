@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QGraphicsView>
 #include <QMainWindow>
 
 #include "xmlwidget.h"
@@ -25,6 +26,7 @@ class MainWindow :
 
     private:
         Ui::MainWindow *ui;
+        QGraphicsView *view;
         XmlWidget xmlWidget;
         Xml xml;
 };

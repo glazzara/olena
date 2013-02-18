@@ -7,7 +7,7 @@ Configs::Configs()
 
 Configs * Configs::getInstance()
 {
-    static Configs * conf = new Configs();
+    static Configs *conf = new Configs();
     return conf;
 }
 

@@ -33,6 +33,7 @@ void Xml::graphicsRegion(const QDomElement& element, const GraphicRegion::Data& 
         polygonRegion->setData(0, QVariant::fromValue(data.region));
         polygonRegion->setColor(data.color);
         polygonRegion->setZValue(data.zValue);
+        polygonRegion->setZValue(data.zValue);
         connect(scene, SIGNAL(repaintItems(QRectF,bool)), polygonRegion, SLOT(repaint(QRectF,bool)));
         graphicsRegion(element.nextSiblingElement(data.name), data, scene);
     }

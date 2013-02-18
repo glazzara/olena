@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/////////////////////////////////////////////////REEEEEEEEESSSSSSSSEEEEEEEETTTTTTTT DDDDDDDAAAAAANNNNNNNSSSSSSS XML /////////////////////
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -8,10 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(tr("GScribo"));
-    //progressDialog.setParent(this);
 
     initGraphicsRegion();
     initTextRegion();
+    initXmlWidget();
     initPageWidget();
     initToolBar();
     initMenuBar();
@@ -44,6 +45,15 @@ void MainWindow::initPageWidget()
     dockPages.setWidget(&pagesWidget);
 
     addDockWidget(Qt::LeftDockWidgetArea, &dockPages);
+}
+
+void MainWindow::initXmlWidget()
+{
+    dockXml.setWindowTitle(tr("Xml"));
+    dockXml.setFeatures(QDockWidget::DockWidgetClosable);
+    dockXml.setWidget(&xmlWidget);
+
+    addDockWidget(Qt::BottomDockWidgetArea, &dockXml);
 }
 
 void MainWindow::initTextRegion()
@@ -84,6 +94,7 @@ void MainWindow::onOpen()
         QString path = paths[0];
         QPixmap pixmap(path);
 
+        scene.reset();
         scene.setBackground(path, pixmap);
         pagesWidget.addPixmap(path, pixmap);
 
@@ -94,6 +105,26 @@ void MainWindow::onOpen()
             pixmap.load(path);
             pagesWidget.addPixmap(path, pixmap);
         }
+
+        // Get instance of the configuration settings.
+        Configs * const conf = Configs::getInstance();
+
+        // Get xml file from image path.
+        path.remove(0, path.lastIndexOf('/')+1);
+        int pos = path.lastIndexOf('.');
+        path.remove(pos, path.length()-pos);
+        path += "_gui.xml";
+
+        // Load xml if it exists.
+        if(QDir::temp().exists(path))
+            path = QDir::tempPath() + "/" + path;
+        else if(QDir(conf->generalSaveXmlCustomDirPath()).exists(path))
+            path = conf->generalSaveXmlCustomDirPath() + "/" + path;
+        else
+            path = QString();
+
+        if(!path.isNull())
+            onXmlSaved(path);
     }
 }
 
@@ -105,13 +136,20 @@ void MainWindow::onSegment()
 
         if(!pagesWidget.isVisible())
             filenames << scene.backgroundPath();
-
         else
             filenames = pagesWidget.filenames();
 
         progressDialog.reset();
         runner.start_demat(filenames);
     }
+}
+
+void MainWindow::onXmlSaved(const QString& filename)
+{
+    xml.load(filename);
+    xmlWidget.load(xml.treeItem());
+
+    scene.addPolygonItem(xml.graphicItem());
 }
 
 void MainWindow::onPreferences()
@@ -129,6 +167,7 @@ void MainWindow::connectWidgets()
     connect(&runner, SIGNAL(new_progress_max_value(int)), &progressDialog, SLOT(setMaximum(int)));
     connect(&runner, SIGNAL(new_progress_label(QString)), &progressDialog, SLOT(setLabelText(QString)));
     connect(&runner, SIGNAL(finished()), &progressDialog, SLOT(close()));
+    connect(&runner, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));
 }
 
 void MainWindow::connectShortcuts()
