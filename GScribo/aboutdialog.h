@@ -14,7 +14,8 @@ class AboutDialog :
         public QDialog
 {
     public:
-        explicit AboutDialog() { ui = new Ui::AboutDialog; ui->setupUi(this); }
+        explicit AboutDialog(QWidget *parent = 0) : QDialog(parent, Qt::Dialog)
+        { ui = new Ui::AboutDialog; ui->setupUi(this); }
         ~AboutDialog() { delete ui; }
 
     private:

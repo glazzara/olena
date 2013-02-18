@@ -5,6 +5,7 @@
 #include <QGraphicsItem>
 #include <QStringList>
 #include <QDomElement>
+#include <QDomAttr>
 #include <climits>
 #include <QFile>
 
@@ -19,17 +20,17 @@
 static const GraphicsRegion::Data datas_[] =
 {
     /*           COLOR               |             NAME            |                 REGION                |              PARENT             |  Z */
-    { QColor::fromRgb(0, 100, 0, 90),   "TextRegion",                   GraphicsRegion::TextRegion,             GraphicsRegion::Text,           1 },
-    { QColor::fromRgb(255, 0, 0, 90),   "Line",                         GraphicsRegion::Line,                   GraphicsRegion::Text,           2 },
-    { QColor::fromRgb(0, 0, 255, 90),   "VerticalSeparatorRegion",      GraphicsRegion::VerticalSeparator,      GraphicsRegion::Separators,     2 },
-    { QColor::fromRgb(0, 0, 255, 90),   "HorizontalSeparatorRegion",    GraphicsRegion::HorizontalSeparator,    GraphicsRegion::Separators,     2 },
-    { QColor::fromRgb(0, 0, 128, 90),   "WhitespaceSeparatorRegion",    GraphicsRegion::WhiteSpaceSeparator,    GraphicsRegion::Separators,     2 },
-    { QColor::fromRgb(255, 120, 0, 90), "ImageRegion",                  GraphicsRegion::Image,                  GraphicsRegion::Miscellaneous,  1 },
-    { QColor::fromRgb(43, 39, 128, 90), "NoiseRegion",                  GraphicsRegion::Noise,                  GraphicsRegion::Miscellaneous,  2 },
-    { QColor::fromRgb(220, 246, 0, 90), "TableRegion",                  GraphicsRegion::Table,                  GraphicsRegion::Miscellaneous,  2 },
-    { QColor::fromRgb(170, 0, 255, 90), "MathsRegion",                  GraphicsRegion::Maths,                  GraphicsRegion::Miscellaneous,  2 },
-    { QColor::fromRgb(255, 0, 144, 90), "GraphicsRegion",               GraphicsRegion::Graphic,                GraphicsRegion::Miscellaneous,  2 },
-    { QColor::fromRgb(0, 204, 255, 90), "ChartRegion",                  GraphicsRegion::Chart,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(0, 100, 0, 110),   "TextRegion",                   GraphicsRegion::TextRegion,             GraphicsRegion::Text,           1 },
+    { QColor::fromRgb(255, 0, 0, 110),   "Line",                         GraphicsRegion::Line,                   GraphicsRegion::Text,           2 },
+    { QColor::fromRgb(0, 0, 255, 110),   "VerticalSeparatorRegion",      GraphicsRegion::VerticalSeparator,      GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 255, 110),   "HorizontalSeparatorRegion",    GraphicsRegion::HorizontalSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(0, 0, 128, 110),   "WhitespaceSeparatorRegion",    GraphicsRegion::WhiteSpaceSeparator,    GraphicsRegion::Separators,     2 },
+    { QColor::fromRgb(255, 120, 0, 110), "ImageRegion",                  GraphicsRegion::Image,                  GraphicsRegion::Miscellaneous,  1 },
+    { QColor::fromRgb(43, 39, 128, 110), "NoiseRegion",                  GraphicsRegion::Noise,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(220, 246, 0, 110), "TableRegion",                  GraphicsRegion::Table,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(170, 0, 255, 110), "MathsRegion",                  GraphicsRegion::Maths,                  GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(255, 0, 144, 110), "GraphicsRegion",               GraphicsRegion::Graphic,                GraphicsRegion::Miscellaneous,  2 },
+    { QColor::fromRgb(0, 204, 255, 110), "ChartRegion",                  GraphicsRegion::Chart,                  GraphicsRegion::Miscellaneous,  2 },
     { QColor::fromRgb(128, 0, 255),     "Baseline",                     GraphicsRegion::Baseline,               GraphicsRegion::Typology,       3 },
     { QColor::fromRgb(128, 0, 255),     "Meanline",                     GraphicsRegion::Meanline,               GraphicsRegion::Typology,       3 },
     { QColor::fromRgb(255, 255, 255),   "Text",                         GraphicsRegion::Text,                   GraphicsRegion::None,           0 },
@@ -48,6 +49,7 @@ class Xml
 
         inline QDomDocument document() const;
         inline QString filename() const;
+        inline bool recognized() const;
 
         static QString getPath(const QString& filename);
 
@@ -56,6 +58,7 @@ class Xml
 
     private:
         XmlItem *init(const QDomElement& root, XmlItem *rootTreeItem);
+        void isRecognized(const QDomElement& element);
 
         void processNode(const QDomElement& root, const GraphicsRegion::Data& data, XmlItem *rootTreeItem);
         void processLineNode(const QDomElement& root, XmlItem *rootTreeItem);
@@ -66,6 +69,7 @@ class Xml
 
         QDomDocument xml_;
         QString filename_;
+        bool isRecognized_;
 };
 
 inline XmlItem *Xml::xmlItem()
@@ -82,5 +86,8 @@ inline QString Xml::filename() const
 
 inline GraphicsRegion::Data Xml::dataFromRegion(GraphicsRegion::Id region)
 { return datas_[region]; }
+
+inline bool Xml::recognized() const
+{ return isRecognized_; }
 
 #endif // XML_H

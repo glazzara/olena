@@ -42,6 +42,7 @@ class MainWindow:
 
     private:
         void initGraphicsRegion();
+        void initDialogsWidget();
         void initPageWidget();
         void initRegionWidget();
         void initXmlWidget();
@@ -69,11 +70,13 @@ class MainWindow:
         PagesWidget pagesWidget_;
         RegionWidget regionWidget_;
 
-        ProgressDialog progressDialog_;
-        Runner runner_;
+        AboutDialog *aboutDialog_;
+        ProgressDialog *progressDialog_;
+        PreferencesDialog *preferencesDialog_;
 
         XmlWidget xmlWidget_;
         Xml xml_;
+        Runner runner_;
 
         QAction *segment_;
         QAction *previewPrinting_;
@@ -89,8 +92,8 @@ class MainWindow:
         void onPreviewPrint();
         void onPrint();
         void onExportation();
-        void onPreferences();
-        void onAbout();
+        inline void onPreferences();
+        inline void onAbout();
 
         void onXmlSaved(const QString& filename);
         void onFileChanged(const QString& filename);
@@ -102,6 +105,11 @@ class MainWindow:
         inline void onXmlUnselect(QList<XmlItem *> xmlItems);
 };
 
+inline void MainWindow::onPreferences()
+{ preferencesDialog_->show(); }
+
+inline void MainWindow::onAbout()
+{ aboutDialog_->show(); }
 
 inline void MainWindow::onXmlSelect(QList<XmlItem *> xmlItems)
 { onXmlChangeSelection(xmlItems, true); }

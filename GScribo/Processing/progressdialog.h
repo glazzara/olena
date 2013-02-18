@@ -9,11 +9,14 @@ class ProgressDialog :
         Q_OBJECT
 
     public:
-        explicit ProgressDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+        explicit ProgressDialog(QWidget *parent = 0);
         void reset();
 
     public slots:
-        void run();
+        inline void run();
 };
+
+void ProgressDialog::run()
+{ setValue(value()+1); }
 
 #endif // PROGRESSDIALOG_H

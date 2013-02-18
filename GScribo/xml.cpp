@@ -20,6 +20,14 @@ QString Xml::getPath(const QString& filename)
     return configs->generalSaveXmlCustomDirPath() + "/" + xmlPath;
 }
 
+void Xml::isRecognized(const QDomElement& textElement)
+{
+    QDomElement lineElement = textElement.firstChild().nextSiblingElement("Line");
+
+    // Check if the attributes "text" exists in the attributes of line in the xml file.
+    isRecognized_ = lineElement.attributeNode("text").isNull() ? false : true;
+}
+
 void Xml::load(const QString& filename)
 {
     if(filename.isEmpty())
@@ -27,6 +35,7 @@ void Xml::load(const QString& filename)
         xmlItem_ = 0;
         graphicsItem_ = 0;
         filename_ = QString();
+        isRecognized_ = false;
         return;
     }
 
@@ -53,6 +62,9 @@ void Xml::load(const QString& filename)
 
     // Run through the xml file structure by structure.
     root = root.nextSibling().firstChild().toElement();
+    // Check if the xml file has been recognized by the ocr or not.
+    isRecognized(root);
+
     processNode(root, datas_[0], parentTreeItem);
     for(int i = 2; i < 11; i++)
         processNode(root.nextSiblingElement(datas_[i].name), datas_[i], parentTreeItem);

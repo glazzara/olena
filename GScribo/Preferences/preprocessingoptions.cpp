@@ -1,7 +1,7 @@
 #include "preprocessingoptions.h"
 #include "ui_preprocessingoptions.h"
 
-//using namespace scribo::toolchain::internal;
+using namespace scribo::toolchain::internal;
 
 PreprocessingOptions::PreprocessingOptions(QWidget *parent) :
         OptionWidget(parent),
@@ -9,9 +9,9 @@ PreprocessingOptions::PreprocessingOptions(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /*ui->bin_algoCbox->insertItem(Convert, "Violent convert");
+    ui->bin_algoCbox->insertItem(Convert, "Violent convert");
     ui->bin_algoCbox->insertItem(Sauvola, "Local threshold");
-    ui->bin_algoCbox->insertItem(SauvolaMs, "Local threshold multiscale");*/
+    ui->bin_algoCbox->insertItem(SauvolaMs, "Local threshold multiscale");
 
     loadConfig();
 }
@@ -29,7 +29,7 @@ void PreprocessingOptions::loadConfig()
     ui->remove_bgCb->setChecked(conf->preprocessingRemoveBg());
     ui->deskewCb->setChecked(conf->preprocessingDeskew());
     ui->remove_noiseCb->setChecked(conf->preprocessingRemoveNoise());
-    //ui->bin_algoCbox->setCurrentIndex(conf->preprocessingBinAlgo());
+    ui->bin_algoCbox->setCurrentIndex(conf->preprocessingBinAlgo());
 }
 
 
@@ -41,5 +41,5 @@ void PreprocessingOptions::saveConfig()
     conf->setPreprocessingRemoveBg(ui->remove_bgCb->isChecked());
     conf->setPreprocessingDeskew(ui->deskewCb->isChecked());
     conf->setPreprocessingRemoveNoise(ui->remove_noiseCb->isChecked());
-    //conf->setPreprocessingBinAlgo(ui->bin_algoCbox->currentIndex());
+    conf->setPreprocessingBinAlgo(ui->bin_algoCbox->currentIndex());
 }

@@ -1,3 +1,11 @@
+* Concerning the configurations :
+	- Register the location of the different widget and if they are visible/ invisible to restore it on the next utilisation of the gui.
+
+
+* Concerning the menu bar :
+	- Assign shortcuts for each buttons.
+
+
 * Concerning the xml widget :
 	- Can modify in real time the proxy with a regular expression. When the user click on a check box in the region widget, a new regular expression is created an sent to the xml widget but the proxy is not modified by this regular expression.
 	- In the table tree (the attributes tree), set the max of the header splitter. Currently it can be moved indefinitely to the right.
@@ -25,13 +33,18 @@
 	- Load less thumbnails (just the necessary to draw it on the widget) because sometimes, pictures are heavy.
 	- May be use a progress dialog during the loading where a large number of pictures are loaded.
 	- Offer the possibility to down/ upscale thumbnails.
+	- Allow the user to move ine the widget with arrow keys.
 	- Create also a button to delete selected items (rather than the key 'delete').
 	- During the segmentation, give the possibility to segment selected thumbnails, all thumbnails or juste the current.
 	- For each thumbnails, paint at his bottom a little progress dialog to check if the picture has already been segmented, not segmented or ongoing segmentation.
 
+* Concerning the progress dialog :
+	- Center on the main window.
+
 
 * Concerning the xml file :
 	- Stop using the static array representation of the internal data structure for graphics region.
+	- Change the way we check if the user allows OCR to recognize the text or just segment.
 	- Find a better way to run through all node representing a graphics item without knowing it in advance.	For exemple, the xml file looks like this :
 
 
@@ -84,4 +97,4 @@
 
 
 * For other idea of interfaces using Qt :
-	- gwenview (picture visionnary, good idea here).
+	- gwenview (picture visionnary, good ideas here).

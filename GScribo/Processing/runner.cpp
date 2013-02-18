@@ -23,26 +23,21 @@ Runner::Runner(QObject *parent) :
 
 void Runner::run()
 {
-    switch(mode_)
+    if(mode_ == Demat)
     {
-        default:
-        case Demat:
+        image2d<value::rgb8> ima;
+        for(int i = 0; i < args_.count(); i++)
         {
-            image2d<value::rgb8> ima;
-            for(int i = 0; i < args_.count(); i++)
-            {
-                io::magick::load(ima, args_.at(i).toUtf8().constData());
-                image2d<bool> bin_ima = preprocess(ima);
-                process(ima, bin_ima, i);
-            }
-            emit finished();
+            io::magick::load(ima, args_.at(i).toUtf8().constData());
+            image2d<bool> bin_ima = preprocess(ima);
+            process(ima, bin_ima, i);
         }
-        break;
-
-        case Export:
-            export_as();
-            break;
     }
+
+    else if(mode_ == Export)
+        export_as();
+
+    emit finished();
 }
 
 void Runner::stop()

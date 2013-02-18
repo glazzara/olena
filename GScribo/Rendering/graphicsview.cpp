@@ -61,7 +61,7 @@ void GraphicsView::wheelEvent(QWheelEvent *event)
                                                            scaleRatio_.height();
         if(event->delta() > 0)
         {
-            if(nextScaleRatio <= 15)
+            if(nextScaleRatio <= 20)
             {
                 scaleRatio_ *= degrees;
                 scale(degrees, degrees);
@@ -95,7 +95,7 @@ void GraphicsView::keyPressEvent(QKeyEvent* event)
         {
             nextScaleRatio = 1.2 * isWidthGreater_ ? scaleRatio_.width() :
                                                      scaleRatio_.height();
-            if(nextScaleRatio <= 15)
+            if(nextScaleRatio <= 19)
             {
                 scaleRatio_ *= 1.2;
                 scale(1.2, 1.2);

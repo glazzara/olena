@@ -2,7 +2,7 @@
 #include "ui_preferencesdialog.h"
 
 PreferencesDialog::PreferencesDialog(QWidget *parent) :
-        QDialog(parent),
+        QDialog(parent, Qt::Dialog),
         ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);

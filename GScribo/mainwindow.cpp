@@ -8,10 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(tr("GScribo"));
-    statusBar()->hide();
-    ui->mainToolBar->hide();
+    showMaximized();
 
     initGraphicsRegion();
+    initDialogsWidget();
     initXmlWidget();
     initRegionWidget();
     initPageWidget();
@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete preferencesDialog_;
+    delete aboutDialog_;
+    delete progressDialog_;
     delete ui;
 }
 
@@ -49,6 +52,13 @@ void MainWindow::initGraphicsRegion()
     graphicsView_.setScene(&scene_);
 
     setCentralWidget(&graphicsView_);
+}
+
+void MainWindow::initDialogsWidget()
+{
+    preferencesDialog_ = new PreferencesDialog(this);
+    aboutDialog_ = new AboutDialog(this);
+    progressDialog_ = new ProgressDialog(this);
 }
 
 void MainWindow::initPageWidget()
@@ -85,7 +95,7 @@ void MainWindow::initMenuBar()
     QMenu *menuFile = ui->menuBar->addMenu(tr("File"));
 
     QAction *open = menuFile->addAction(tr("Open"));
-    connect(open, SIGNAL(triggered()), SLOT(onOpen()));
+    connect(open, SIGNAL(triggered()), this, SLOT(onOpen()));
 
     segment_ = menuFile->addAction(tr("Segment"));
     segment_->setEnabled(false);
@@ -130,10 +140,10 @@ void MainWindow::initMenuBar()
     connect(xml, SIGNAL(triggered()), &dockXml_, SLOT(switchVisibility()));
 
     QAction *preferences = ui->menuBar->addAction(tr("Preferences"));
-    connect(preferences, SIGNAL(triggered()), SLOT(onPreferences()));
+    connect(preferences, SIGNAL(triggered()), this, SLOT(onPreferences()));
 
     QAction *about = ui->menuBar->addAction(tr("About"));
-    connect(about, SIGNAL(triggered()), SLOT(onAbout()));
+    connect(about, SIGNAL(triggered()), this, SLOT(onAbout()));
 }
 
 void MainWindow::setActionsEnabled(bool isSegmented)
@@ -141,7 +151,6 @@ void MainWindow::setActionsEnabled(bool isSegmented)
     segment_->setEnabled(!isSegmented);
     print_->setEnabled(isSegmented);
     previewPrinting_->setEnabled(isSegmented);
-    export_->setEnabled(isSegmented);
 }
 
 void MainWindow::disableActions()
@@ -176,16 +185,18 @@ void MainWindow::connectWidgets()
     // Connect the xml widget with the region widget.
     connect(&regionWidget_, SIGNAL(checkStateChanged(QString)), xmlWidget_.view(), SLOT(setFilterString(QString)));
 
-    connect(&runner_, SIGNAL(progress()), &progressDialog_, SLOT(run()));
-    connect(&runner_, SIGNAL(new_progress_max_value(int)), &progressDialog_, SLOT(setMaximum(int)));
-    connect(&runner_, SIGNAL(new_progress_label(QString)), &progressDialog_, SLOT(setLabelText(QString)));
-    connect(&runner_, SIGNAL(finished()), &progressDialog_, SLOT(close()));
+    connect(&runner_, SIGNAL(progress()), progressDialog_, SLOT(run()));
+    connect(&runner_, SIGNAL(new_progress_max_value(int)), progressDialog_, SLOT(setMaximum(int)));
+    connect(&runner_, SIGNAL(new_progress_label(QString)), progressDialog_, SLOT(setLabelText(QString)));
+    connect(&runner_, SIGNAL(finished()), progressDialog_, SLOT(close()));
     connect(&runner_, SIGNAL(xml_saved(QString)), this, SLOT(onXmlSaved(QString)));
 }
 
 void MainWindow::onOpen()
 {
-    QStringList paths = QFileDialog::getOpenFileNames(&graphicsView_, "Open Image(s)", QDir::homePath(), "Images (*.png *.jpg *.ppm *.bmp)");
+    QStringList paths = QFileDialog::getOpenFileNames(this, "Open Image(s)", QDir::homePath(),
+                                                      "Images (*.png *.jpg *.ppm *.bmp)");
+    setWindowTitle(tr("GScribo"));
 
     if(paths.count() > 0)
     {
@@ -233,7 +244,7 @@ void MainWindow::onSegment()
     filenames << scene_.backgroundPath();
 
     // Run segmentation of page(s).
-    progressDialog_.reset();
+    progressDialog_->reset();
     runner_.start_demat(filenames);
 }
 
@@ -243,7 +254,7 @@ void MainWindow::onPreviewPrint()
     printer.setPaperSize(QPrinter::A4);
     printer.setResolution(300);
 
-    QPrintPreviewDialog preview(&printer);
+    QPrintPreviewDialog preview(&printer, this);
     connect(&preview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printScene(QPrinter*)));
 
     preview.exec();
@@ -255,7 +266,7 @@ void MainWindow::onPrint()
     printer.setPaperSize(QPrinter::A4);
     printer.setResolution(300);
 
-    QPrintDialog dialog(&printer);
+    QPrintDialog dialog(&printer, this);
     dialog.setWindowTitle("Print Document");
 
     if(dialog.exec() != QDialog::Accepted)
@@ -266,8 +277,6 @@ void MainWindow::onPrint()
 
 void MainWindow::printScene(QPrinter *printer)
 {
-    scene_.selectAll();
-
     QPainter painter(printer);
     QStyleOptionGraphicsItem options;
 
@@ -282,8 +291,6 @@ void MainWindow::printScene(QPrinter *printer)
 
     for(int i = GraphicsRegion::Noise; i <= GraphicsRegion::Meanline; i++)
         printItems(&painter, scene_.root()->childsFrom(static_cast<GraphicsRegion::Id>(i)), &options);
-
-    scene_.clearSelection();
 }
 
 void MainWindow::printItems(QPainter *painter, const QList<QGraphicsItem *>& items, QStyleOptionGraphicsItem *options)
@@ -303,6 +310,12 @@ void MainWindow::printItems(QPainter *painter, const QList<QGraphicsItem *>& ite
 
 void MainWindow::onExportation()
 {
+    QMessageBox messageBox(this);
+    messageBox.setWindowTitle("Information");
+    messageBox.setText("This feature is not available yet");
+    messageBox.exec();
+    return;
+
     QFileInfo fileInfo(scene_.backgroundPath());
     QString outputSuggestion = fileInfo.baseName() + ".pdf";
     QString output = QFileDialog::getSaveFileName(0, tr("Export Document As ..."), outputSuggestion,
@@ -310,21 +323,9 @@ void MainWindow::onExportation()
 
     if(!output.isEmpty())
     {
-        progressDialog_.reset();
+        progressDialog_->reset();
         runner_.start_export(scene_.backgroundPath(), xml_.filename(), output);
     }
-}
-
-void MainWindow::onPreferences()
-{
-    PreferencesDialog *preferenceDialog = new PreferencesDialog(this);
-    preferenceDialog->show();
-}
-
-void MainWindow::onAbout()
-{
-    AboutDialog *about = new AboutDialog;
-    about->show();
 }
 
 void MainWindow::onXmlSaved(const QString& filename)
@@ -334,6 +335,7 @@ void MainWindow::onXmlSaved(const QString& filename)
     scene_.setRoot(xml_.graphicsItem());
 
     setActionsEnabled(true);
+    export_->setEnabled(xml_.recognized());
 }
 
 void MainWindow::onFileChanged(const QString& filename)
@@ -360,6 +362,7 @@ void MainWindow::onFileChanged(const QString& filename)
         xml_.load(xmlPath);
         scene_.changeScene(filename, xml_.graphicsItem());
         xmlWidget_.changeView(xml_.xmlItem());
+        export_->setEnabled(xml_.recognized());
     }
 }
 
