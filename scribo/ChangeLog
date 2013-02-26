@@ -1,5 +1,9 @@
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Update.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix call to text_in_doc_preprocess().
 
 	* src/content_in_hdoc.cc,
