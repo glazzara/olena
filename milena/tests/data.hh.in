@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef TESTS_DATA_HH
-# define TESTS_DATA_HH
+#ifndef MILENA_TESTS_DATA_HH
+# define MILENA_TESTS_DATA_HH
 
 # include <string>
 
@@ -41,4 +41,4 @@
 /// The absolute path to the mesh directory of Milena.
 # define MLN_MESH_DIR "@abs_top_srcdir@/milena/mesh"
 
-#endif // ! TESTS_DATA_HH
+#endif // ! MILENA_TESTS_DATA_HH

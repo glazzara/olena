@@ -1,5 +1,9 @@
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/data.hh.in: Rename guards.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix a warning.
 
 	* mln/canvas/labeling/sorted.hh,
