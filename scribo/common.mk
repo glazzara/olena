@@ -24,5 +24,5 @@ AM_DEFAULT_SOURCE_EXT = .cc
 
 # Add paths to Scribo's headers.
 AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ \
-  -I$(top_srcdir)/milena -I$(top_builddir)/milena \
-  -I$(top_srcdir)/scribo -I$(top_builddir)/scribo
+  -I$(abs_top_srcdir)/scribo -I$(abs_top_builddir)/scribo \
+  -I$(abs_top_srcdir)/milena -I$(abs_top_builddir)/milena
