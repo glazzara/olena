@@ -385,8 +385,6 @@ namespace scribo
       if (!output_file.empty())
 	file.open(output_file.c_str());
 
-      mln_domain(I) box = line.domain();
-
       // Recognize characters.
       char* s = tess.TesseractRect(
 	(unsigned char*) &line(line.domain().pmin()),

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -132,7 +133,7 @@ namespace mln
     image2d<info>     data;
     image2d<V> label;
     V current_label = 0;
-    int N, dp_border;
+    int dp_border;
 
 //     util::timer time;
 //     time.start();
@@ -140,7 +141,6 @@ namespace mln
     // init
     {
       extension::adjust(input, nbh);
-      N = input.nelements();
       dp_border = 2 * input.border();
       extension::fill(input, false);
       initialize(data, input);

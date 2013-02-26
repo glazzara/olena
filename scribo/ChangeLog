@@ -1,5 +1,22 @@
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix various warnings.
+
+	* scribo/binarization/otsu_threshold.hh: Fix comparisons between
+	different types.
+
+	* scribo/io/xml/load.hh: Convert to float.
+
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/text/recognition.hh,
+	* src/afp/components.hh: Remove unused variables.
+
+	* src/binarization/otsu.cc: Silent warning.
+
+	* src/misc/morpho.cc: Check number of arguments.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* common.mk: Fix include paths order.
 
 2012-11-27  Guillaume Lazzara  <z@lrde.epita.fr>

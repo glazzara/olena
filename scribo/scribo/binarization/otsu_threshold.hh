@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,7 +79,7 @@ namespace scribo
 
       /* calculation of probability density */
       util::array<double> pdf(hist.nvalues());  //probability distribution
-      for(int i = 0; i< maxval; ++i)
+      for(unsigned i = 0; i< maxval; ++i)
 	pdf[i] = (double)hist[i] / nsites;
 
 
@@ -89,7 +90,7 @@ namespace scribo
       cdf[0] = pdf[0];
       myu[0] = 0.0;       /* 0.0 times prob[0] equals zero */
 
-      for(int i = 1; i < maxval; ++i)
+      for(unsigned i = 1; i < maxval; ++i)
       {
 	cdf[i] = cdf[i-1] + pdf[i];
 	myu[i] = myu[i-1] + i*pdf[i];

@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,6 +84,7 @@ int main(int argc, char *argv[])
   trace::entering("main");
 
   bool verbose = options.is_set("verbose");
+  (void) verbose;
 
   image2d<value::rgb8> input;
   io::magick::load(input, options.arg("input.*"));
