@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -96,7 +97,6 @@ namespace mln
 
 	  // Output.
 	  mln_ch_value(I, L) output;
-	  bool status; // FIXME: Is-it useful?
 
 	  // Initialization.
 	  {
@@ -167,7 +167,6 @@ namespace mln
 		{
 		  if (nlabels == mln_max(L))
 		  {
-		    status = false;
 		    trace::warning("labeling aborted! Too many labels \
 					  for this label type: nlabels > \
 					  max(label_type).");
@@ -179,7 +178,6 @@ namespace mln
 	      else
 		output.element(p) = output.element(parent.element(p));
 	    }
-	    status = true;
 	  }
 
 	  trace::exiting("canvas::impl::labeling::sorted_fastest");
