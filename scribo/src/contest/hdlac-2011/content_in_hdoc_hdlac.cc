@@ -87,6 +87,8 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> input;
   mln::io::magick::load(input, argv[1]);
 
+  mln::debug::internal::filename_prefix = basename(argv[1]);
+
   // Preprocess document
   image2d<bool> input_preproc;
   {
@@ -132,6 +134,12 @@ int main(int argc, char* argv[])
   std::cout << "Saving results..." << std::endl;
   scribo::io::xml::save(doc, argv[2], scribo::io::xml::Page);
   std::cout << "End of process - " << t << std::endl;
+
+  scribo::io::img::save(doc, mln::debug::filename("debug_wo_image.png"),
+			scribo::io::img::DebugWoImage);
+  scribo::io::img::save(doc, mln::debug::filename("debug_with_image.png"),
+			scribo::io::img::DebugWithImage);
+
 
   trace::exiting("main");
 }

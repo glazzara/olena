@@ -1,5 +1,14 @@
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix call to text_in_doc_preprocess().
+
+	* src/content_in_hdoc.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/non_text_components.cc,
+	* src/text_in_doc_preprocess.cc: Here.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix various warnings.
 
 	* scribo/binarization/otsu_threshold.hh: Fix comparisons between

@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 
   // Preprocess document
   image2d<bool>
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0.34,
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, 0.34,
 						      false, false);
 
 
