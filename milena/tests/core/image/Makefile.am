@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -37,15 +37,5 @@ check_PROGRAMS =				\
 
 noinst_HEADERS = complex_image.hh
 
-complex_image_SOURCES = complex_image.cc
-edge_image_SOURCES = edge_image.cc
-flat_image_SOURCES = flat_image.cc
-graph_image_SOURCES = graph_image.cc
-image1d_SOURCES = image1d.cc
-image2d_SOURCES = image2d.cc
-image3d_SOURCES = image3d.cc
-line_graph_image_SOURCES = line_graph_image.cc
-vertex_and_edge_image_SOURCES = vertex_and_edge_image.cc
-vertex_image_SOURCES = vertex_image.cc
 
 TESTS = $(check_PROGRAMS)

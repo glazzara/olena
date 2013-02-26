@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -27,36 +27,20 @@ check_PROGRAMS =				\
   to_rgb 					\
   to_window
 
-to_image_SOURCES = to_image.cc
-to_p_array_SOURCES = to_p_array.cc
-to_p_set_SOURCES = to_p_set.cc
-to_rgb_SOURCES = to_rgb.cc
-to_window_SOURCES = to_window.cc
-
-#<<lrde
-# FIXME: Not distributed (yet).
-check_PROGRAMS += to_hsl
-to_hsl_SOURCES = to_hsl.cc
-#>>
-
-
 
 if HAVE_QT
 
 check_PROGRAMS += to_qimage
-to_qimage_SOURCES = to_qimage.cc
 to_qimage_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
 to_qimage_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
 to_qimage_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS)
 to_qimage_LDADD    = $(QT_LIBS) $(LDADD)
 
 check_PROGRAMS += to_qimage_nocopy
-to_qimage_nocopy_SOURCES = to_qimage_nocopy.cc
 to_qimage_nocopy_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
 to_qimage_nocopy_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
 to_qimage_nocopy_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS)
 to_qimage_nocopy_LDADD    = $(QT_LIBS) $(LDADD)
-
 
 endif HAVE_QT
 

@@ -17,12 +17,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+# FIXME: Rename this test, as `builtin' is not enough relevant.
 check_PROGRAMS =				\
   builtin					\
   floatings
-
-# FIXME: Rename this test, as `builtin' is not enough relevant.
-builtin_SOURCES = builtin.cc
-floatings_SOURCES = floatings.cc
 
 TESTS = $(check_PROGRAMS)

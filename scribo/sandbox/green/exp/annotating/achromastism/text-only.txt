@@ -1,8 +1,0 @@
-mp00329c_20p.ppm
-ta00036c_20p.ppm
-ta00039c_20p.ppm
-ta00040c_20p.ppm
-ta00049c_20p.ppm
-ta00055c_20p.ppm
-ta00057c_20p.ppm
-ta00068c_20p.ppm

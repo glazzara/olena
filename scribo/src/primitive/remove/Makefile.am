@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,4 +20,3 @@ include $(top_srcdir)/scribo/scribo.mk
 noinst_PROGRAMS = 	\
   separators
 
-separators_SOURCES = separators.cc

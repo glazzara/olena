@@ -37,11 +37,6 @@
 # include <mln/value/float01_8.hh>
 # include <mln/value/float01_16.hh>
 
-//<<lrde
-# include <mln/value/gl8.hh>
-# include <mln/value/gl16.hh>
-//>>
-
 # include <mln/value/int_s8.hh>
 # include <mln/value/int_s16.hh>
 # include <mln/value/int_s32.hh>

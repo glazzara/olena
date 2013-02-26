@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -22,8 +22,5 @@ check_PROGRAMS =				\
   rotation					\
   translation
 
-composed_SOURCES = composed.cc
-rotation_SOURCES = rotation.cc
-translation_SOURCES = translation.cc
 
 TESTS = $(check_PROGRAMS)

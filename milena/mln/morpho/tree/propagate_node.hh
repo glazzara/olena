@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -121,7 +121,7 @@ namespace mln
 				    const T& t,
 				    Image<A>& a_,
 				    const mln_value(A)& v,
-				    unsigned* nb_leaves = 0)
+				    unsigned* nb_leaves)
       {
 	A& a = exact(a_);
 	mln_precondition(a.is_valid());

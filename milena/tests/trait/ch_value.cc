@@ -27,10 +27,6 @@
 #include <mln/trait/ch_value.hh>
 
 #include <mln/core/image/image2d.hh>
-//<<lrde
-#include <mln/value/stack.hh>
-//>>
-
 
 int main()
 {
@@ -39,14 +35,6 @@ int main()
   typedef image2d<int> I;
   typedef trait::ch_value<I, bool>::ret J;
   J ima1;
-
-//<<lrde
-  // Stack image.
-  typedef value::stack_image<3, I> K;
-  typedef trait::ch_value<K, float>::ret L;
-  L ima2;
-  mlc_equal(L, image2d<float>)::check();
-//>>
 
   // FIXME: Exercise more image types.
   // ...

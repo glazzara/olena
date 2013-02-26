@@ -1,5 +1,0 @@
-## configure.in
-## Made by nicuveo for owl
-
-CFIL1 = ../src/basic.cc
-CFIL2 = ../src/gradient.cc

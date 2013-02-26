@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,8 +22,5 @@ check_PROGRAMS =				\
   array						\
   value_at_index
 
-all_to_SOURCES = all_to.cc
-array_SOURCES = array.cc
-value_at_index_SOURCES = value_at_index.cc
 
 TESTS = $(check_PROGRAMS)

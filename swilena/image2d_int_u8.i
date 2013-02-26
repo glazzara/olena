@@ -1,5 +1,6 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -74,17 +75,17 @@ instantiate_morpho(mln::image2d< mln::value::int_u<8> >,
 		   mln::neighb2d)
 
 /*---------------------------------------.
-| image2d<int_u8> and image2d<int_u32>.  |
+| image2d<int_u8> and image2d<int_u24>.  |
 `---------------------------------------*/
 
-instantiate_meyer_wst(meyer_wst32,
-		      mln::value::int_u<32>,
+instantiate_meyer_wst(meyer_wst24,
+		      mln::value::int_u<24>,
 		      mln::image2d< mln::value::int_u<8> >,
 		      mln::neighb2d)
 
 // FIXME: Rearrange and move this elsewhere.
-instantiate_image2d(image2d_int_u32, mln::value::int_u<32>)
+instantiate_image2d(image2d_int_u24, mln::value::int_u<24>)
 
-%template(println32) mln::debug::println<
-  mln::image2d< mln::value::int_u<32> >
+%template(println24) mln::debug::println<
+  mln::image2d< mln::value::int_u<24> >
   >;

@@ -40,9 +40,7 @@
 # include <mln/draw/essential.hh>
 # include <mln/estim/essential.hh>
 # include <mln/extension/essential.hh>
-//<<lrde
-# include <mln/extract/essential.hh>
-//>>
+
 # include <mln/fun/essential.hh>
 # include <mln/geom/essential.hh>
 # include <mln/graph/essential.hh>
@@ -60,13 +58,9 @@
 # include <mln/norm/essential.hh>
 # include <mln/opt/essential.hh>
 # include <mln/pw/essential.hh>
-//<<lrde
-# include <mln/registration/essential.hh>
-//>>
+
 # include <mln/set/essential.hh>
-//<<lrde
-# include <mln/subsampling/essential.hh>
-//>>
+
 # include <mln/tag/essential.hh>
 # include <mln/test/essential.hh>
 # include <mln/trace/essential.hh>

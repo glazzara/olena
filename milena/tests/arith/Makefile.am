@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -24,10 +24,5 @@ check_PROGRAMS =				\
   revert					\
   times
 
-diff_abs_SOURCES = diff_abs.cc
-minus_SOURCES = minus.cc
-plus_SOURCES = plus.cc
-revert_SOURCES = revert.cc
-times_SOURCES = times.cc
 
 TESTS = $(check_PROGRAMS)

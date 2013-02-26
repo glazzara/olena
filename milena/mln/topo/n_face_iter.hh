@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -191,7 +192,7 @@ namespace mln
       : super_(c)
     {
       mln_precondition(n <= D);
-      set_cplx(c);
+      this->set_cplx(c);
       set_n(n);
       mln_postcondition(!is_valid());
     }

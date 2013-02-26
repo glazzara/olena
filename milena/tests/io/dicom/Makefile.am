@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -23,6 +23,5 @@ AM_LDFLAGS = $(GDCM_LDFLAGS)
 
 # FIXME: Upon completion, if this test only read (not write) images,
 # rename it as load.cc
-dicom_SOURCES = dicom.cc
 
 TESTS = $(check_PROGRAMS)

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,13 +58,13 @@ namespace mln
 	template <int x, int n>
 	struct pow_int_
 	{
-	  enum res_ { value = x * pow_int_<x, n-1>::value };
+	  static const int value = x * pow_int_<x, n-1>::value;
 	};
 
 	template <int x>
 	struct pow_int_< x, 0 >
 	{
-	  enum res_ { value = 1 };
+	  static const int value = 1;
 	};
 
 	template <>

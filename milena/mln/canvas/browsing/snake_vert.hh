@@ -111,7 +111,7 @@ namespace mln
       void
       snake_vert_t::operator()(F& f) const
       {
-	// Fixme: check the dimension of the input
+	// FIXME: Check the dimension of the input
 //	mlc_equal(mln_trait_image_dimension(I)(),
 //		  trait::image::dimension::two_d)::check();
 	trace::entering("canvas::browsing::snake_vert");

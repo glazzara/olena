@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,6 +25,7 @@ SUBDIRS =					\
 check_PROGRAMS =				\
   bool						\
   equiv						\
+  graylevel					\
   int_s						\
   int_s16					\
   int_u8					\
@@ -38,32 +39,8 @@ check_PROGRAMS =				\
 #  float01				
 #  float01_bis			
 #  float01_f		
-#  graylevel	
 #  graylevel_f					
 
-bool_SOURCES = bool.cc
-equiv_SOURCES = equiv.cc
-#float01_SOURCES = float01.cc
-#float01_bis_SOURCES = float01_bis.cc
-#float01_f_SOURCES = float01_f.cc
-#graylevel_SOURCES = graylevel.cc
-#graylevel_f_SOURCES = graylevel_f.cc
-int_s_SOURCES = int_s.cc
-int_s16_SOURCES = int_s16.cc
-int_u8_SOURCES = int_u8.cc
-interop_SOURCES = interop.cc
-label_SOURCES = label.cc
-proxy_SOURCES = proxy.cc
-rgb8_SOURCES = rgb8.cc
-scalar_SOURCES = scalar.cc
-set_SOURCES = set.cc
-sign_SOURCES = sign.cc
-
-#<<lrde
-# FIXME: Not distributed (yet).
-check_PROGRAMS += stack
-stack_SOURCES = stack.cc
-#>>
 
 # FIXME: Enable when make check_full works.
 # check_full_PROGRAMS =				\
@@ -71,9 +48,6 @@ stack_SOURCES = stack.cc
 #   graylevel_f_full				\
 #   rgb_full
 #
-# graylevel_f_full_SOURCES = graylevel_f_full.cc
-# graylevel_full_SOURCES = graylevel_full.cc
-# rgb_full_SOURCES = rgb_full.cc
 
 TESTS = $(check_PROGRAMS)
 # FIXME: Enable when make check_full works.

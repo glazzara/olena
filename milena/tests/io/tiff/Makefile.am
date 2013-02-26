@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -21,6 +21,5 @@ AM_LDFLAGS = $(TIFF_LDFLAGS)
 
 check_PROGRAMS = load
 
-load_SOURCES = load.cc
 
 TESTS = $(check_PROGRAMS)

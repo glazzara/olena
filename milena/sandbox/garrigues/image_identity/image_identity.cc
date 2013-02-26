@@ -1,9 +1,0 @@
-namespace sandbox
-{
-
-}
-
-int main()
-{
-
-}

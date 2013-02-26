@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -42,32 +43,8 @@ check_PROGRAMS =				\
   transform_inplace				\
   update
 
-abs_SOURCES = abs.cc
-apply_SOURCES = apply.cc
-compare_SOURCES = compare.cc
-compute_SOURCES = compute.cc
-compute_in_window_SOURCES = compute_in_window.cc
-convert_SOURCES = convert.cc
-fill_SOURCES = fill.cc
-fill_with_image_SOURCES = fill_with_image.cc
-fill_with_value_SOURCES = fill_with_value.cc
-median_SOURCES = median.cc
-median_fast_SOURCES = median_fast.cc
-memcpy__SOURCES = memcpy_.cc
-memset__SOURCES = memset_.cc
-paste_SOURCES = paste.cc
-paste_without_localization_SOURCES = paste_without_localization.cc
-saturate_SOURCES = saturate.cc
-split_SOURCES = split.cc
-sort_psites_SOURCES = sort_psites.cc
-stretch_SOURCES = stretch.cc
-transform_SOURCES = transform.cc
-transform_inplace_SOURCES = transform_inplace.cc
-update_SOURCES = update.cc
-
 # Lengthy tests.
-# FIXME: enable it when make full-check is enabled.
-#fill_full_SOURCES = fill_full.cc
+# FIXME: Enable `fill_full' it when make full-check is enabled.
 
 
 TESTS = $(check_PROGRAMS)

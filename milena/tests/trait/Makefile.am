@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -23,7 +23,5 @@ check_PROGRAMS =				\
   ch_value					\
   super
 
-ch_value_SOURCES = ch_value.cc
-super_SOURCES = super.cc
 
 TESTS = $(check_PROGRAMS)

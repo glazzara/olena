@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -27,13 +27,5 @@ check_PROGRAMS =				\
   uni						\
   unique
 
-card_SOURCES = card.cc
-compute_SOURCES = compute.cc
-compute_with_weights_SOURCES = compute_with_weights.cc
-diff_SOURCES = diff.cc
-inter_SOURCES = inter.cc
-sym_diff_SOURCES = sym_diff.cc
-uni_SOURCES = uni.cc
-unique_SOURCES = unique.cc
 
 TESTS = $(check_PROGRAMS)

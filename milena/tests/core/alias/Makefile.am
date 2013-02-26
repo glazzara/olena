@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -33,20 +34,5 @@ window1d					\
 window2d					\
 window3d
 
-box1d_SOURCES = box1d.cc
-box2d_SOURCES = box2d.cc
-box3d_SOURCES = box3d.cc
-dpoint1d_SOURCES = dpoint1d.cc
-dpoint2d_SOURCES = dpoint2d.cc
-dpoint3d_SOURCES = dpoint3d.cc
-point1d_SOURCES = point1d.cc
-point2d_SOURCES = point2d.cc
-point3d_SOURCES = point3d.cc
-w_window1d_int_SOURCES = w_window1d_int.cc
-w_window2d_int_SOURCES = w_window2d_int.cc
-w_window3d_int_SOURCES = w_window3d_int.cc
-window1d_SOURCES = window1d.cc
-window2d_SOURCES = window2d.cc
-window3d_SOURCES = window3d.cc
 
 TESTS = $(check_PROGRAMS)

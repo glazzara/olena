@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007, 2008, 2009, 2011 EPITA Research and
+// Copyright (C) 2006, 2007, 2008, 2009, 2011, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -29,8 +29,7 @@
 
 /// \file
 ///
-/// Definition of the mln::value::gray_f class.
-
+/// Declarations of the mln::value::internal::gray_f class.
 
 # include <iostream>
 
@@ -44,14 +43,28 @@
 # include <mln/value/float01_f.hh>
 # include <mln/trait/value_.hh>
 
-# include <mln/value/graylevel_f.hh>
+/* Because of mutual dependencies between the implementations of
+   mln::value::graylevel_f and mln::value::internal::gray_f, we have
+   to ensure that only the interfaces of the required classes are
+   included here.  Implementations are included later, at the bottom of
+   this file.  */
+
+# ifdef MLN_INCLUDE_ONLY
+#  include <mln/value/graylevel_f.hh>
+# else
+#  define MLN_INCLUDE_ONLY
+#  include <mln/value/graylevel_f.hh>
+#  undef MLN_INCLUDE_ONLY
+# endif
+
 
 namespace mln
 {
 
   namespace literal
   {
-    /// \{ Forward declarations.
+    /// Forward declarations.
+    /// \{
     struct black_t;
     struct medium_gray_t;
     struct white_t;
@@ -59,13 +72,16 @@ namespace mln
   }
   namespace value
   {
-    /// \{ Forward declarations.
+    /// Forward declarations.
+    /// \{
     namespace internal
     {
       template <unsigned n> class gray_;
       struct gray_f;
     }
 
+    template <unsigned n> struct graylevel;
+    struct graylevel_f;
     struct float01_f;
     /// \}
   }
@@ -94,6 +110,7 @@ namespace mln
       typedef bool ret;
     };
 
+    /* FIXME: Dead code?  */
     // Necessary??
 //     template <typename F>
 //     struct set_binary_< op::eq,
@@ -204,297 +221,10 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/value/internal/gray_.hh>
-
-
-namespace mln
-{
-
-  namespace value
-  {
-
-    namespace internal
-    {
-
 # ifndef MLN_INCLUDE_ONLY
-
-      // gray_f.
-
-      inline
-      gray_f::gray_f()
-      {
-      }
-
-      inline
-      gray_f::gray_f(const gray_f& g)
-	: Floating<gray_f>()
-      {
-	this->v_ = g.v_;
-      }
-
-      inline
-      gray_f&
-      gray_f::operator=(const gray_f& g)
-      {
-	this->v_ = g.v_;
-	return *this;
-      }
-
-      template <unsigned n>
-      gray_f::gray_f(const gray_<n>& rhs)
-      {
-	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
-	this->v_ = float(rhs.value()) / denom;
-      }
-
-      template <unsigned n>
-      gray_f&
-      gray_f::operator=(const gray_<n>& rhs)
-      {
-	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
-	this->v_ = float(rhs.value()) / denom;
-	return *this;
-      }
-
-      inline
-      gray_f::gray_f(float val)
-      {
-	this->v_ = val;
-      }
-
-      inline
-      gray_f&
-      gray_f::operator=(float val)
-      {
-	this->v_ = val;
-	return *this;
-      }
-
-      inline
-      gray_f::gray_f(const graylevel_f& rhs)
-      {
-	this->v_ = rhs.value();
-      }
-
-      inline
-      gray_f&
-      gray_f::operator=(const graylevel_f& rhs)
-      {
-	this->v_ = rhs.value();
-	return *this;
-      }
-
-      template <unsigned m>
-      inline
-      gray_f::operator graylevel<m>() const
-      {
-	return graylevel<m>(int(round(this->v_ * (mlc_pow_int(2, m) - 1))));
-      }
-
-
-      template <unsigned m>
-      inline
-      gray_f::operator gray_<m>() const
-      {
-	return gray_<m>(int(round(this->v_ * (mlc_pow_int(2, m) - 1))));
-      }
-
-      inline
-      gray_f::operator graylevel_f() const
-      {
-	return graylevel_f(this->v_);
-      }
-
-      inline
-      float
-      gray_f::value() const
-      {
-	return this->v_;
-      }
-
-      // Operators.
-
-      inline
-      std::ostream& operator<<(std::ostream& ostr, const gray_f& g)
-      {
-	return ostr << g.value() << "/gl_f"; // FIXME: Be more explicit!
-      }
-
+#  include <mln/value/internal/gray_f.hxx>
+#  include <mln/value/graylevel_f.hxx>
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::value::internal
-
-
-    // Graylevel_F operators.
-
-    // Op glf == Int
-
-    template <typename I>
-    inline
-    bool
-    operator==(const Integer<I>& lhs, const graylevel_f& rhs)
-    {
-      return rhs.value() == exact(lhs);
-    }
-
-    // Op glf == glf
-    inline
-    bool
-    operator==(const graylevel_f& lhs, const graylevel_f& rhs)
-    {
-      return rhs.value() == lhs.value();
-    }
-
-    // Op glf + glf
-    inline
-    mln_trait_op_plus_(graylevel_f, graylevel_f)
-      operator+(const graylevel_f& lhs, const graylevel_f& rhs)
-    {
-      return lhs.value() + rhs.value();
-    }
-
-    // Op glf + gl<n>
-    template <unsigned n>
-    inline
-     mln_trait_op_plus(graylevel_f, graylevel<n>)
-      operator+(const graylevel_f& lhs, const graylevel<n>& rhs)
-    {
-      return lhs.value() + graylevel_f(rhs).value();
-    }
-
-    // Op gl<n> + glf
-    template <unsigned n>
-    inline
-     mln_trait_op_plus(graylevel_f, graylevel<n>)
-      operator+(const graylevel<n>& lhs, const graylevel_f& rhs)
-    {
-      return rhs.value() + graylevel_f(lhs).value();
-    }
-
-
-    // Op glf + Another type
-    template <typename I>
-    inline
-    void
-    operator+(const graylevel_f& lhs, const I& i)
-    {
-      (void) lhs;
-      (void) i;
-      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
-    }
-
-
-    // Op  Another type + glf
-    template <typename I>
-    inline
-    void
-    operator+(const I& i, const graylevel_f& rhs)
-    {
-      (void) i;
-      (void) rhs;
-      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
-    }
-
-
-    // Op glf - Another type
-    template <typename I>
-    inline
-    void
-    operator-(const graylevel_f& lhs, const I& i)
-    {
-      (void) lhs;
-      (void) i;
-      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
-    }
-
-
-    // Op  Another type - glf
-    template <typename I>
-    inline
-    void
-    operator-(const I& i, const graylevel_f& rhs)
-    {
-      (void) i;
-      (void) rhs;
-      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
-    }
-
-    // Op glf - glf
-
-    inline
-    mln_trait_op_minus_(graylevel_f, graylevel_f)
-      operator-(const graylevel_f& lhs, const graylevel_f& rhs)
-    {
-      return lhs.value() - rhs.value();
-    }
-
-    // Op glf * glf
-    inline
-    mln_trait_op_times_(graylevel_f, graylevel_f)
-      operator*(const graylevel_f& lhs, const graylevel_f& rhs)
-    {
-      return lhs.value() * rhs.value();
-    }
-
-    // Op symm glf * Int
-
-    template <typename I>
-    inline
-    mln_trait_op_times(graylevel_f, I)
-      operator*(const graylevel_f& lhs, const Integer<I>& rhs)
-    {
-      return lhs.value() * int(exact(rhs));
-    }
-
-    template <typename I>
-    inline
-    mln_trait_op_times(I, graylevel_f)
-      operator*(const Integer<I>& lhs, const graylevel_f& rhs)
-    {
-      return rhs.value() * int(exact(lhs));
-    }
-
-    // Op symm glf * Float
-
-    template <typename F>
-    inline
-    mln_trait_op_times(graylevel_f, F)
-      operator*(const graylevel_f& lhs, const Floating<F>& rhs)
-    {
-      return lhs.value() * exact(rhs);
-    }
-
-    template <typename F>
-    inline
-    mln_trait_op_times(F, graylevel_f)
-      operator*(const Floating<F>& lhs, const graylevel_f& rhs)
-    {
-      return rhs.value() * exact(lhs);
-    }
-
-
-
-    // Op * scalar
-    template <typename S>
-    inline
-    mln_trait_op_times(graylevel_f, S)
-      operator*(const graylevel_f& lhs, const scalar_<S>& rhs)
-    {
-      return lhs.value() * rhs.to_equiv();
-    }
-
-    // Op / scalar
-    template <typename S>
-    inline
-    mln_trait_op_div(graylevel_f, S)
-      operator/(const graylevel_f& lhs, const scalar_<S>& rhs)
-    {
-      mln_precondition(rhs.to_equiv() != S(0));
-      return lhs.value() / rhs.to_equiv();
-    }
-
-  } // end of namespace mln::value
-
-} // end of namespace mln
 
 #endif // ! MLN_VALUE_INTERNAL_GRAY_F_HH

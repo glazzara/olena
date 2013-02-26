@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 EPITA
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
 # Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -34,7 +34,16 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.10 subdir-objects check-news tar-ustar dist-bzip2 nostdinc -Wall])
+#
+# Disable the -Wextra-portability option until developers can all use
+# Automake 1.11.2 or newer (Debian GNU/Linux 6 ships Automake 1.11.1
+# only), at which point we'll use the new AM_PROG_AR macro instead.
+AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
+                  parallel-tests nostdinc silent-rules
+                  -Wall -Wno-extra-portability])
+# By default, let "make" hide the compilation command and display a
+# "GEN ..." message, unless V=1 is passed to "make".
+AM_SILENT_RULES([yes])
 
 # Package metadata.
 AC_CONFIG_FILES([milena/mln/version.hh])
@@ -154,7 +163,7 @@ fi
 ## ``Enable Everything'' Switch.  ##
 ## ------------------------------ ##
 
-# Enable all bundled features (trimesh2, Swilena, apps, tools).  This
+# Enable all bundled features (Swilena, apps, tools).  This
 # option is useful to maintainers to ensure they do not break optional
 # parts while modifying the core of the project. If both
 # ``--enable-all'' is set and a given feature is disabled (say,
@@ -163,7 +172,6 @@ fi
 AC_ARG_ENABLE([all],
   [AS_HELP_STRING([--enable-all], [enable maintainer mode])],
   [if test "x$enable_all" != xno; then
-     enable_trimesh=yes
      enable_swilena=yes
      enable_scribo=yes
      enable_apps=yes
@@ -265,16 +273,6 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
              m4_do([-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF],
                    [ -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8],
                    [ -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib]))
-
-# ---------------------------- #
-# (Bundled) trimesh2 library.  #
-# ---------------------------- #
-
-AC_ARG_ENABLE([trimesh],
-              [AS_HELP_STRING([--enable-trimesh],
-                              [build the (bundled) trimesh2 library])])
-AM_CONDITIONAL([ENABLE_TRIMESH], [test "x$enable_trimesh" = xyes])
-AC_CONFIG_SUBDIRS([external/trimesh])
 
 
 ## --------- ##
@@ -406,7 +404,6 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
-    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/mesh/Makefile
@@ -537,16 +534,6 @@ AC_CONFIG_FILES([
         milena/tests/world/inter_pixel/dim2/Makefile
 ])
 
-dnl<<lrde
-AC_CONFIG_FILES([
-  milena/tests/extract/Makefile
-  milena/tests/linear/gaussian/Makefile
-  milena/tests/registration/Makefile
-  milena/tests/subsampling/Makefile
-])
-dnl>>
-
-
 ## -------------- ##
 ## Applications.  ##
 ## -------------- ##
@@ -566,6 +553,7 @@ AC_CONFIG_FILES([
     milena/apps/constrained-connectivity/Makefile
     milena/apps/graph-morpho/Makefile
     milena/apps/mesh-segm-skel/Makefile
+    milena/apps/morphers/Makefile
     milena/apps/papers/Makefile
       milena/apps/papers/levillain.09.ismm/Makefile
 ])
@@ -573,12 +561,8 @@ AC_CONFIG_FILES([
 # Configure tests.
 # FIXME: Consider using `sed' instead of `configure' to create these
 # tests for the sake of speed.
-AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-max-curv],
-                [chmod +x milena/apps/mesh-segm-skel/test-mesh-max-curv])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
-AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-segm],
-                [chmod +x milena/apps/mesh-segm-skel/test-mesh-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],
@@ -656,7 +640,6 @@ Magick++                --with-magickxx         $oln_have_magickxx
 Qt                      --with-qt               $oln_have_qt
 Tesseract               --with-tesseract@<:@=DIR@:>@  $oln_have_tesseract
 TIFF                    --with-tiff@<:@=DIR@:>@       $oln_have_tiff
-Trimesh                 --enable-trimesh        $enable_trimesh
 -------------------------------------------------------------------------------
 
 

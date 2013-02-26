@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -126,7 +126,7 @@ namespace scribo
       object_links<L>
       with_single_right_link(const component_set<L>& components,
 			     unsigned neighb_max_distance,
-			     anchor::Type anchor = anchor::MassCenter)
+			     anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link");
 

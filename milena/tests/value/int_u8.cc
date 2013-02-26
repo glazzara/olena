@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -176,7 +177,7 @@ int main()
     sym_compare_assert(c, ==, 100.f);
 
     int_u8 d = 2;
-    c /= 2;
+    c /= d;
     sym_compare_assert(c, ==, 50.f);
 
     // FIXME: Triggers a warning about signed vs unsigned comparison.

@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
@@ -23,7 +20,5 @@ check_PROGRAMS =				\
 	font_color				\
 	font_boldness
 
-font_color_SOURCES = font_color.cc
-font_boldness_SOURCES = font_boldness.cc
 
 TESTS = $(check_PROGRAMS)

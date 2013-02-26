@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,8 +42,24 @@
 namespace mln
 {
 
-  // Fwd decls.
+  /// Fwd decls.
+  /// \{
   template <typename E> struct Proxy;
+
+  namespace internal
+  {
+    template <typename T>
+    struct unproxy_rec_;
+  }
+
+  template <typename T>
+  typename mln::internal::unproxy_rec_<T>::ret
+  unproxy_rec(T& t);
+
+  template <typename T>
+  typename mln::internal::unproxy_rec_<const T>::ret
+  unproxy_rec(const T& t);
+  /// \}
 
 
   namespace internal
@@ -79,9 +96,6 @@ namespace mln
     };
 
 
-
-    template <typename T>
-    struct unproxy_rec_;
 
     template <typename O, bool is_proxy>
     struct helper_unproxy_rec;
@@ -263,8 +277,8 @@ namespace mln
 						   mlc_is_a(Subject, Proxy)::value >
     {
     public:
-      operator mlc_fix_return(Subject) ();
       operator mlc_fix_return(mlc_const_return(Subject)) () const;
+      operator mlc_fix_return(Subject) ();
     };
 
     template <typename Subject, typename E>

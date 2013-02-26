@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -195,7 +195,7 @@ namespace mln
     bool
     operator==(const object_id<Tag,V>& lhs, const Value<V2>& rhs)
     {
-      return lhs.value() == exact(rhs).to_equiv();
+      return lhs.value() == static_cast<V>(exact(rhs).to_equiv());
     }
 
     template <typename Tag, typename V>

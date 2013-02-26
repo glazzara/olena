@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -23,11 +24,6 @@ check_PROGRAMS =				\
   data	 					\
   max
 
-compute_attribute_image_SOURCES = compute_attribute_image.cc
-compute_parent_SOURCES = compute_parent.cc
-dual_input_tree_SOURCES = dual_input_tree.cc
-data_SOURCES = data.cc
-max_SOURCES = max.cc
 
 TESTS = $(check_PROGRAMS)
 

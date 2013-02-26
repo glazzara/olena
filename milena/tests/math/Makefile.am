@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -15,3 +16,7 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 include $(top_srcdir)/milena/tests/tests.mk
+
+# FIXME: Add tests.
+
+TESTS = $(check_PROGRAMS)

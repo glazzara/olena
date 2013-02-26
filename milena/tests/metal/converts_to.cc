@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,6 +26,7 @@
 
 #include <mln/metal/converts_to.hh>
 
+#include <mln/accu/math/sum.hh>
 
 
 struct from_1
@@ -38,7 +40,7 @@ struct dest
 
 struct from_2
 {
-  operator dest() const { dest* tmp; return *tmp; }
+  operator dest() const { dest* tmp = 0; return *tmp; }
 };
 
 
@@ -72,6 +74,19 @@ int main()
   metal::converts_to<derived, base>::check();
   metal::converts_to<derived, const base>::check();
 
-//   metal::converts_to<derived, base_>::check_not();
-//   metal::converts_to<derived, const base_>::check_not();
+  metal::converts_to<accu::math::sum<int, int>, int>::check();
+
+
+  metal::converts_to<from_1, float>::check_not();
+
+  metal::converts_to<base, derived>::check_not();
+  metal::converts_to<base_, derived>::check_not();
+
+  /* Unfortunately, we cannot perform the following checks, as they
+     trigger an error (*before* SFINAE comes into play) about base_'s
+     ctor(s) being protected:
+
+      metal::converts_to<derived, base_>::check_not();
+      metal::converts_to<derived, const base_>::check_not();
+  */
 }

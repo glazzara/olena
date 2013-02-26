@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -62,25 +62,15 @@ SUBDIRS =					\
   win 						\
   world
 
-#<<lrde
-SUBDIRS +=					\
-  extract					\
-  registration 					\
-  subsampling
-#>>
-
 check_PROGRAMS =				\
   all_headers 					\
   essential_headers 				\
   global_vars
 
-all_headers_SOURCES = all_headers.cc
 all_headers_CPPFLAGS = $(AM_CPPFLAGS) \
   $(CFITSIO_CPPFLAGS) $(GDCM_CPPFLAGS) $(MAGICKXX_CPPFLAGS) $(TIFF_CPPFLAGS)
 all_headers_LDFLAGS = \
   $(CFITSIO_LDFLAGS) $(GDCM_LDFLAGS) $(MAGICKXX_LDFLAGS) $(TIFF_LDFLAGS)
-
-essential_headers_SOURCES = essential_headers.cc
 
 global_vars_SOURCES = global_vars1.cc global_vars2.cc
 global_vars_CXXFLAGS = -DMLN_WO_GLOBAL_VARS

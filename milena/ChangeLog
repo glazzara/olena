@@ -121,6 +121,594 @@
 
 	* mln/accu/math/sumpow.hh: New accumulator.
 
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify more Milena Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
+
+	* apps/morphers/Makefile.am,
+	* tests/fun/v2v/Makefile.am,
+	* tests/subsampling/Makefile.am:
+	Here.
+
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use AM_DEFAULT_SOURCE_EXT to simplify Milena's Makefiles.
+
+	* common.mk: New.
+	Include it...
+	* tests/tests.mk,
+	* tools/tools.mk:
+	...here.
+	* tests/Makefile.am,
+	* tests/accu/Makefile.am,
+	* tests/accu/image/Makefile.am,
+	* tests/accu/math/Makefile.am,
+	* tests/accu/shape/Makefile.am,
+	* tests/accu/site_set/Makefile.am,
+	* tests/accu/stat/Makefile.am,
+	* tests/algebra/Makefile.am,
+	* tests/arith/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/border/Makefile.am,
+	* tests/canvas/Makefile.am,
+	* tests/canvas/browsing/Makefile.am,
+	* tests/canvas/morpho/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/convert/impl/Makefile.am,
+	* tests/core/alias/Makefile.am,
+	* tests/core/image/Makefile.am,
+	* tests/core/image/dmorph/Makefile.am,
+	* tests/core/image/imorph/Makefile.am,
+	* tests/core/image/vmorph/Makefile.am,
+	* tests/core/other/Makefile.am,
+	* tests/core/routine/Makefile.am,
+	* tests/core/site_set/Makefile.am,
+	* tests/data/Makefile.am,
+	* tests/data/approx/Makefile.am,
+	* tests/data/naive/Makefile.am,
+	* tests/debug/Makefile.am,
+	* tests/draw/Makefile.am,
+	* tests/estim/Makefile.am,
+	* tests/extension/Makefile.am,
+	* tests/fun/Makefile.am,
+	* tests/fun/i2v/Makefile.am,
+	* tests/fun/p2p/Makefile.am,
+	* tests/fun/stat/Makefile.am,
+	* tests/fun/v2i/Makefile.am,
+	* tests/fun/v2v/Makefile.am,
+	* tests/fun/vv2v/Makefile.am,
+	* tests/fun/x2x/Makefile.am,
+	* tests/geom/Makefile.am,
+	* tests/graph/Makefile.am,
+	* tests/graph/attribute/Makefile.am,
+	* tests/histo/Makefile.am,
+	* tests/io/dicom/Makefile.am,
+	* tests/io/dump/Makefile.am,
+	* tests/io/fits/Makefile.am,
+	* tests/io/fld/Makefile.am,
+	* tests/io/magick/Makefile.am,
+	* tests/io/off/Makefile.am,
+	* tests/io/pbm/Makefile.am,
+	* tests/io/pbms/Makefile.am,
+	* tests/io/pgm/Makefile.am,
+	* tests/io/pgms/Makefile.am,
+	* tests/io/ppm/Makefile.am,
+	* tests/io/ppms/Makefile.am,
+	* tests/io/tiff/Makefile.am,
+	* tests/labeling/Makefile.am,
+	* tests/linear/Makefile.am,
+	* tests/linear/local/Makefile.am,
+	* tests/literal/Makefile.am,
+	* tests/logical/Makefile.am,
+	* tests/make/Makefile.am,
+	* tests/metal/Makefile.am,
+	* tests/metal/math/Makefile.am,
+	* tests/morpho/Makefile.am,
+	* tests/morpho/approx/Makefile.am,
+	* tests/morpho/attribute/Makefile.am,
+	* tests/morpho/closing/Makefile.am,
+	* tests/morpho/closing/approx/Makefile.am,
+	* tests/morpho/elementary/Makefile.am,
+	* tests/morpho/opening/Makefile.am,
+	* tests/morpho/opening/approx/Makefile.am,
+	* tests/morpho/reconstruction/by_dilation/Makefile.am,
+	* tests/morpho/reconstruction/by_erosion/Makefile.am,
+	* tests/morpho/tree/Makefile.am,
+	* tests/morpho/tree/filter/Makefile.am,
+	* tests/morpho/watershed/Makefile.am,
+	* tests/opt/Makefile.am,
+	* tests/pw/Makefile.am,
+	* tests/set/Makefile.am,
+	* tests/test/Makefile.am,
+	* tests/topo/Makefile.am,
+	* tests/topo/skeleton/Makefile.am,
+	* tests/trait/Makefile.am,
+	* tests/trait/image/Makefile.am,
+	* tests/trait/op/Makefile.am,
+	* tests/trait/value/Makefile.am,
+	* tests/transform/Makefile.am,
+	* tests/upscaling/art/Makefile.am,
+	* tests/util/Makefile.am,
+	* tests/value/Makefile.am,
+	* tests/value/builtin/Makefile.am,
+	* tests/win/Makefile.am,
+	* tests/world/binary_2d/Makefile.am,
+	* tests/world/inter_pixel/Makefile.am,
+	* tests/world/inter_pixel/dim2/Makefile.am:
+	Remove (now useless) `*_SOURCES' variables using
+	sed -ri '/^(\s|#)*\S+_SOURCES\s*=\s*\S+.cc\s*$/d'.
+	* apps/constrained-connectivity/Makefile.am,
+	* apps/graph-morpho/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am,
+	* tools/Makefile.am:
+	Likewise.
+	Include common.mk.
+
+2012-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a script to generate a Milena header file.
+
+	* new-header: New.
+	* Makefile.am (EXTRA_DIST): Add new-header.
+
+2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing TESTS variable to Makefile.am's.
+
+	* tests/canvas/Makefile.am,
+	* tests/canvas/morpho/Makefile.am,
+	* tests/fun/Makefile.am,
+	* tests/fun/p2b/Makefile.am,
+	* tests/fun/p2v/Makefile.am,
+	* tests/io/pfm/Makefile.am,
+	* tests/io/pnm/Makefile.am,
+	* tests/math/Makefile.am,
+	* tests/metal/make/Makefile.am,
+	* tests/tag/Makefile.am,
+	* tests/trace/Makefile.am,
+	* tests/value/concept/Makefile.am:
+	Here.
+
+2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Complete and clean up tests/metal/converts_to.cc.
+
+	* tests/metal/converts_to.cc: Remove dead code and add new test
+	cases.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the generation of code excerpts for the documentation.
+
+	* doc/tools/split_sample.sh: Use $(...) instead of `...` so that
+	backslashes are interpreted uniformly.
+	Pass option `-h' to grep to prevent file names from being printed
+	on OS X.
+	Remove useless option `-R' passed to grep.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address warnings reported by clang++ in Milena.
+
+	* mln/canvas/browsing/diagonal2d.hh (diagonal2d_t::operator())
+	* mln/clustering/kmean_rgb.hh (internal::kmean_rgb_dispatch)
+	* mln/labeling/value_and_compute.hh
+	(internal::value_and_compute_tests)
+	(impl::process__)
+	* mln/metal/math/root.hh (impl::root<n, x, lo, hi>::value): Add an
+	explicit type conversion of operator<'s the right-hand side
+	operand.
+	* mln/morpho/watershed/topological.hh (topological)
+	* mln/world/rgb/invert.hh (internal::invert_dispatch):
+	Remove unused variables.
+	Do not name unused arguments.
+	* mln/util/object_id.hh
+	(operator==(const object_id<Tag,V>&, const Value<V2>&)):
+	Add an explicit type conversion of the right-hand side operand.
+	* mln/world/rgb/invert.hh,
+	* tests/core/alias/point1d.cc,
+	* tests/make/p_edges_with_mass_centers.cc,
+	* tests/make/p_vertices_with_mass_centers.cc,
+	* tests/value/int_s16.cc,
+	* tests/value/int_u8.cc:
+	Shush the compiler about unused variables.
+	* tests/trait/op/plus.cc (mln::my_image2d<T>): Complete this type
+	to have it comply with the mln::Image concept.
+	(mln::dummy_t): New (dummy) type.
+	(dummy): New (dummy) value.
+	(main): Do not use uninitialized pointers.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disambiguate operator- overload resolution with a pow_int_ operand.
+
+	* mln/metal/math/pow.hh (mln::metal::math::impl::pow_int_):
+	Use static const integers instead of enums.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive tests/value/graylevel.cc.
+
+	* mln/value/graylevel.hh: Aesthetic changes in comments.
+	* tests/value/graylevel.cc (test_conversion): Turn this macro into
+	a function template.
+	(main): Ensure all valid comparisons listed in
+	mln/value/graylevel.hh work.
+	Remove dead code.
+	Address warnings.
+	* tests/value/Makefile.am (check_PROGRAMS): Re-enable graylevel.
+	(graylevel_SOURCES): Re-enable.
+
+2013-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mutual dependencies between floating-point gray-level values.
+
+	* mln/value/graylevel_f.hh,
+	* mln/value/internal/gray_f.hh:
+	Move definitions...
+	* mln/value/graylevel_f.hxx,
+	* mln/value/internal/gray_f.hxx:
+	...here (new files).
+	* headers.mk (nobase_include_HEADERS): Regen.
+
+2013-02-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address more remaining clang++ errors in Milena.
+
+	* mln/core/concept/proxy.hxx: Add and reorder forward
+	declarations.
+	* mln/accu/site_set/rectangularity.hh (rectangularity<P>): Do not
+	re-import base class attributes as protected members, so that the
+	base class can still access them.
+	Adjust.
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/world/inter_pixel/dim2/make_edge_image.hh:
+	Add missing header inclusions.
+	* mln/io/plot/save.hh (save)
+	* mln/morpho/tree/propagate_node.hh
+	(propagate_node_to_descendants):
+	Do not provide default arguments twice.
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face_iter.hh:
+	Add `this->' qualifiers to disambiguate calls to base class
+	methods.
+	* tests/metal/converts_to.cc (from_2): Do not rely on
+	uninitialized data.
+	(main): Add a test case.
+
+2012-03-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	More clang++ support in Milena.
+
+	* mln/core/concept/proxy.hxx (get_proxy_impl<Subject, E>): Swap
+	two definitions to help clang++ properly resolve calls to the
+	overloaded conversion operator.
+
+2010-11-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start to work around clang++ deficiencies to compile Milena.
+
+	* mln/util/tracked_ptr.hh (tracked_ptr<T>::operator*): New.
+	* mln/topo/complex.hh: Decompose complex instructions.
+
+2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive headers required by the RGB component functors.
+
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/fun/component/blue.hh,
+	* mln/fun/component/green.hh,
+	* mln/fun/component/red.hh,
+	* mln/fun/component/rgb.hh,
+	* mln/fun/param.hh,
+	* mln/fun/spe/unary.hh,
+	* mln/fun/unary.hh,
+	* mln/trait/functions.hh,
+	* mln/trait/next/solve.hh,
+	* mln/trait/next/solve_binary.hh,
+	* mln/trait/next/solve_proxy.hh,
+	* mln/trait/next/solve_unary.hh:
+	New.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide typedefs mln::value::int_s24 and mln::value::int_u24.
+
+	* mln/value/int_s24.hh,
+	* mln/value/int_u24.hh:
+	New.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename Trimesh reimplementations in apps/mesh-segm-skel/.
+
+	* apps/mesh-segm-skel/trimesh/misc.hh: Move...
+	* apps/mesh-segm-skel/misc.hh: ...here.
+	Update comments.
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv.cc:
+	Adjust.
+	* apps/mesh-segm-skel/trimesh/README: Remove.
+	* apps/mesh-segm-skel/Makefile.am (noinst_HEADERS, EXTRA_DIST):
+	Adjust.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove anything depending on the Trimesh library.
+
+	* apps/mesh-segm-skel/io.hh,
+	* apps/mesh-segm-skel/mesh-max-curv.cc,
+	* apps/mesh-segm-skel/mesh-pinv-curv.cc,
+	* apps/mesh-segm-skel/mesh-segm.cc,
+	* apps/mesh-segm-skel/mesh-skel.cc,
+	* apps/mesh-segm-skel/test-mesh-max-curv.in,
+	* apps/mesh-segm-skel/test-mesh-segm.in:
+	Remove.
+	* apps/mesh-segm-skel/Makefile.am: Remove anything related to the
+	Trimesh library.
+
+2012-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove dependencies on suppressed files.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Do not include
+	mln/extract/green.hh.
+
+2012-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distcheck target.
+
+	* tests/linear/Makefile.am (MOSTLYCLEANFILES):
+	Add gaussian-out.pgm.
+
+2012-10-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address g++-4.7 compilation errors.
+
+	* apps/morphers/image2d-skel.hh (is_simple_2d::operator()):
+	Qualify a call to a base class member.
+
+2012-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix file names in apps/morphers/recorder-bft.
+
+	* apps/morphers/recorder-bft.cc,
+	* apps/morphers/Makefile.am (recorder_SOURCES):
+	s/lena/picasso/.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the (movie) output of apps/morphers/iz.
+
+	* apps/morphers/iz.cc (save_colorized): Skip consecutive identical
+	frames.
+	Swap the frame reconstruction and write operations, so that the
+	last frame is eventually saved.
+	* apps/morphers/Makefile.am (tmp_iz.avi): Use a speedup of 50
+	instead of 10.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use the lazy recorder morpher in apps/morphers/iz.
+
+	* apps/morphers/iz.cc (main): Here.
+	Save the sequence of recorder images as PNG images using Magick++.
+	(save_colorized): New function.
+	* apps/morphers/Makefile.am
+	(noinst_PROGRAMS, iz_SOURCES) [HAVE_MAGICKXX]: Build `iz' only if
+	Magick++ is available.
+	(iz_output.ppm) [HAVE_MAGICKXX]: Likewise.
+	(iz_CPPFLAGS, iz_LDFLAGS) [HAVE_MAGICKXX]: New.
+	(tmp_iz.avi) [HAVE_MAGICKXX]: New target.
+	(MOSTLYCLEANFILES): Add tmp_iz??????.png.
+
+2012-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add rules to build and run apps/morphers/iz.
+
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add iz.
+	(iz_SOURCES): New.
+	(EXTRA_DIST): Add iz_input.pbm.
+	(iz_output.ppm): New target.
+	(MOSTLYCLEANFILES): Add tmp_clo.pgm, tmp_dmap.pgm,
+	tmp_ws_superpose.ppm, tmp_ws.ppm, tmp_lab.pgm, tmp_iz.pgm,
+	tmp_iz.ppm and tmp_iz_input.ppm.
+
+2012-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New example demonstrating the use of influence zones.
+
+	* apps/morphers/iz.cc: New.
+	* apps/morphers/iz_input.pbm: New.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	New ``lazy'' recorder morpher in apps/morpher.
+
+	* apps/morphers/lazy_recorder.hh: New.
+	* apps/morphers/lazy_recorder.cc: New test.
+	* apps/morphers/Makefile.am (noinst_HEADERS):
+	Add lazy_recorder.hh.
+	(noinst_PROGRAMS): Add lazy_recorder.
+	(lazy_recorder_SOURCES): New.
+	(MOSTLYCLEANFILES): Add lena-fill-lazy??????.ppm.
+
+2012-06-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Render the recorder morpher more generic.
+
+	* apps/morphers/recorder.hh (recorder<I>::sequence): Store a
+	sequence of concrete images.
+	Add missing inline keywords.
+	Improve the documentation.
+
+2011-11-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	New morpher example: recording a breadth-first thinning.
+
+	* apps/morphers/recorder-bft.cc: New.
+	* apps/morphers/image2d-skel.hh: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-bft.
+	(recorder_wst_SOURCES): New.
+	(recorder_SOURCES, recorder_wst_SOURCES, mask_recorder_SOURCES):
+	Move recorder.hh...
+	(noinst_HEADERS): ...here (new variable).
+	(MOSTLYCLEANFILES): Add lena-bft??????.pbm.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	New morpher example: recording a watershed transform.
+
+	* apps/morphers/recorder-wst.cc: New.
+	* apps/morphers/Makefile.am (noinst_PROGRAMS): Add recorder-wst.
+	(recorder_wst_SOURCES): New.
+	(MOSTLYCLEANFILES): lena-wst??????.ppm.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around decorated_image's lack of properties, for the recorder.
+
+	* apps/morphers/recorder.hh
+	(trait::image_< decorated_image<I,D> >): Replace with..
+	(trait::image_< decorated_image<I, recorder<I> > >): ...this.
+	Add a value_storage property.
+	(ch_value_< decorated_image< image_<I>, data_< recorder<I> > >, V >):
+	New trait, to handle changes of value types in images decorated
+	with a recorder.
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/recorder.cc:
+	Simplify these programs thanks to the preceding changes.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the initialization of mln::decorated_image.
+
+	* mln/tag/init.hh (tag::data_t): New tag type.
+	 (tag::data): New tag.
+	* mln/core/image/imorph/decorated_image.hh
+	(init_(tag::data_t, D&, const decorated_image<I,D>&))
+	(init_(tag::data_t, D&, const decorated_image<I,D2>&))
+	(init_(tag::image_t, decorated_image<I,D>&, const J&)):
+	New functions.
+
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify some apps/morpher programs using mln::make::box2d.
+
+	* apps/morphers/mask+recorder.cc,
+	* apps/morphers/mask+channel.cc:
+	Here.
+
+2011-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Refactor apps/morphers.
+
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	Factor common parts...
+	* apps/morphers/recorder.hh: ...here (new file).
+	* apps/morphers/Makefile.am
+	(recorder_SOURCES, mask_recorder_SOURCES): Add recorder.hh.
+
+2011-11-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add examples of morphers.
+
+	* apps/morphers/mask+channel.cc,
+	* apps/morphers/recorder.cc,
+	* apps/morphers/mask+recorder.cc:
+	New.
+	* apps/morphers/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add morphers.
+
+2011-11-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Honor a precondition in classification examples (ISMM 2009).
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc,
+	* apps/papers/levillain.09.ismm/classif-1complex.cc:
+	Do not use a value outside the range [0, nbasins] in `canvas_wst'
+	to prevent a failed precondition in labeling::colorize (when
+	NDEBUG is not defined).
+	Reported by David Coeurjolly <david.coeurjolly at liris.cnrs.fr>.
+
+2011-10-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Graph-based version of the classification example.
+
+	* apps/papers/levillain.09.ismm/classif-graph.cc: New.
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_PROGRAMS):
+	Add classif-graph.
+	(classif_graph_SOURCES): New.
+	(noinst_DATA): Add classwst-graph.ppm.
+	(classwst-graph.ppm): New target.
+
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Rename as...
+	* apps/papers/levillain.09.ismm/classif-1complex.cc: ...this.
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS, noinst_DATA): s/classif/classif-1complex/.
+	(classif_SOURCES, classwst.pnm): Replace by...
+	(classif_1complex_SOURCES, classwst-1complex.ppm): ...these.
+
+2011-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes in apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc: Here.
+	Remove useless headers inclusions.
+	Adjust comments.
+
+2011-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and clean up apps/papers/levillain.09.ismm/classif.cc.
+
+	* apps/papers/levillain.09.ismm/classif.cc (main): Actually use
+	the chain() routine from chain.hh instead of ad hoc code.
+	Move code related to the construction of the 1-complex (graph)
+	image on which the processing chain is run...
+	(make_complex_image): ...here.
+	* apps/papers/levillain.09.ismm/Makefile.am (classwst.pnm): Change
+	the lambda (area) parameter to 4.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import the WST-based classification in apps/papers/levillain.09.ismm.
+
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(noinst_PROGRAMS): Add classif.
+	(classif_SOURCES): Add classif.cc
+	(dist_noinst_DATA): Add classseedsi.pbm.
+	(noinst_DATA): Add classwst.pnm.
+	(classwst.pnm): New target.
+	* apps/papers/levillain.09.ismm/classif.cc: New.
+	Copied and adapted from
+	sandbox/theo/esiee/laurent/presentation/classif.cc.
+	* apps/papers/levillain.09.ismm/classseedsi.pbm: New.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Split apps/papers/levillain.09.ismm/graph.cc.
+
+	* apps/papers/levillain.09.ismm/graph.cc: Misc. changes.
+	(mln::influence_zones)
+	(mln::io::neato::save):
+	Move functions...
+	* apps/papers/levillain.09.ismm/influence_zones.hh,
+	* apps/papers/levillain.09.ismm/io.hh:
+	...here (new files).
+	* apps/papers/levillain.09.ismm/Makefile.am (noinst_HEADERS):
+	Add io.hh and influence_zones.hh
+
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants (ticket #43)
@@ -559,7 +1147,8 @@
 	* mln/core/point.hh,
 	* mln/opt/element.hh: Avoid unused variable warning.
 
-	* mln/convert/impl/from_image_to_site_set.hh: Remove useless local variable.
+	* mln/convert/impl/from_image_to_site_set.hh: Remove useless local
+	variable.
 
 2010-12-10  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -1273,7 +1862,7 @@
 
 2010-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* milena/mln/core/image/vmorph/fun_image.hh: Fix an invalid
+	* mln/core/image/vmorph/fun_image.hh: Fix an invalid
 	function call.
 
 2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
@@ -1346,7 +1935,7 @@
 	HAVE_BOOST_PREPROCESSOR conditional.
 	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple:
 	Rename as...
-	* milena/tests/unit_test/cond_tests_boost-tuple: ...this.
+	* tests/unit_test/cond_tests_boost-tuple: ...this.
 	* tests/unit_test/Makefile.am (COND_TESTS):
 	s/cond_tests_boost-preprocessor_boost-tuple/cond_tests_boost-tuple/.
 	* tests/unit_test/unit-tests.mk: Regen.
@@ -1605,11 +2194,11 @@
 
 	Fix a bug in conversions from vec to point.
 
-	* milena/mln/core/concept/gpoint.hh: Fix comment.
+	* mln/core/concept/gpoint.hh: Fix comment.
 
-	* milena/mln/core/image/image1d.hh: Share a dpoint value.
+	* mln/core/image/image1d.hh: Share a dpoint value.
 
-	* milena/mln/core/point.hh: Handle point1d.
+	* mln/core/point.hh: Handle point1d.
 
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1757,12 +2346,12 @@
 
 	Add some code in my sandbox.
 
-	* milena/sandbox/lazzara/scribo/binarization_naive/main.cc,
-	* milena/sandbox/lazzara/scribo/binarization_naive/toto.cc,
-	* milena/sandbox/lazzara/scribo/fill_holes/main.cc,
-	* milena/sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
-	* milena/sandbox/lazzara/scribo/skeleton_crest/main.cc,
-	* milena/sandbox/lazzara/skeleton_crest/main.cc: New.
+	* sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* sandbox/lazzara/scribo/fill_holes/main.cc,
+	* sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* sandbox/lazzara/skeleton_crest/main.cc: New.
 
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -19877,10 +20466,6 @@
 	* mln/util/all.hh,
 	* mln/util/essential.hh: include new header.
 
-2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
-
-	configure.ac: configure milena/tests/transform.
-
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing tests in morpho.
@@ -35910,7 +36495,7 @@
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Changelog and comments.
-	* ChangeLog: Add missing entries.
+
 	* tests/core/site_set/p_image.cc: Fix comments.
 
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -43427,7 +44012,6 @@
 
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* ChangeLog: Fix my previous patch.
 	* mln/draw/box.hh: Fix licence.
 
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
@@ -46614,7 +47198,6 @@
 
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* ChangeLog: Fix my previous patch.
 	* mln/draw/box.hh: Fix licence.
 
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>

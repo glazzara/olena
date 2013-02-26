@@ -141,7 +141,7 @@ done
 
 # Requirements over bootstrap tools.
 require autoconf 2.61
-require automake 1.10
+require automake 1.11
 libtoolize=libtoolize
 for l in "$LIBTOOLIZE" glibtoolize libtoolize;
 do
@@ -164,6 +164,11 @@ require hevea 1.10 -version
 
 # Regen files stored in the repository if asked so.
 if $regen_p; then
+  # Generate `milena/headers.mk'.
+  (cd milena && ../build-aux/generate_dist_headers.sh mln headers.mk)
+  # Generate `scribo/headers.mk'.
+  (cd scribo && ../build-aux/generate_dist_headers.sh scribo headers.mk)
+
   # Generate files of Milena's documentation.
   # * Figures.
   (
@@ -175,7 +180,7 @@ if $regen_p; then
   )
   # * Examples.
   rm -f milena/doc/examples.mk.tmp
-  milena/doc/gen-make-variable EXAMPLES					    \
+  milena/doc/gen-make-variable EXAMPLES					      \
     `find milena/doc/examples -name '*.cc' | sed 's,^milena/doc,\$(srcdir),'` \
     >milena/doc/examples.mk.tmp
   mv -f milena/doc/examples.mk.tmp milena/doc/examples.mk
@@ -194,7 +199,7 @@ if $regen_p; then
     `find milena/doc/examples					\
          -name \*.cc -a \! -path milena/doc/examples/trash/\*	\
        | sed -e 's,milena/doc/examples/,,'			\
-             -e 'y,/,_,'						\
+             -e 'y,/,_,'					\
              -e 's,\(.*\)\.cc$,$(srcdir)/outputs/\1.txt,'`	\
     >milena/doc/outputs.mk.tmp
   mv -f milena/doc/outputs.mk.tmp milena/doc/outputs.mk
@@ -220,10 +225,16 @@ if $regen_p; then
   )
 fi
 
-# Generate unit test files.
-run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests mln
-
-# Generate unit test files for Scribo.
+# Generate unit tests files.  These actions are not part of the `-r'
+# option, since unit tests files are not stored in the repository.
+#
+# * Milena unit tests files.
+run . ./build-aux/build_unit_test.sh		\
+  milena/mln					\
+  milena/tests/unit_test			\
+  milena/tests/unit_test/disabled_tests		\
+  mln
+# *Scribo unit tests files.
 run . ./build-aux/build_unit_test.sh    \
   scribo/scribo				\
   scribo/tests/unit_test		\

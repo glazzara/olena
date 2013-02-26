@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+include $(top_srcdir)/milena/common.mk
+
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
@@ -24,10 +26,6 @@ STRICT_ALIASING_CXXFLAGS = @STRICT_ALIASING_CXXFLAGS@
 noinst_HEADERS = convert.hh debug.hh make.hh morpho.hh make_complex2d.hh
 
 noinst_PROGRAMS = samples-complex1d samples-image2d asf-complex1d asf-image2d
-samples_complex1d_SOURCES = samples-complex1d.cc
-samples_image2d_SOURCES = samples-image2d.cc
-asf_complex1d_SOURCES = asf-complex1d.cc
-asf_image2d_SOURCES = asf-image2d.cc
 samples_image2d_CXXFLAGS = $(AM_CXXFLAGS) $(STRICT_ALIASING_CXXFLAGS)
 
 TESTS = samples-complex1d samples-image2d

@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -21,8 +22,5 @@ check_PROGRAMS =				\
 	fld1d					\
 	fld3d
 
-fld2d_SOURCES = fld2d.cc
-fld3d_SOURCES = fld3d.cc
-fld1d_SOURCES = fld1d.cc
 
 TESTS = $(check_PROGRAMS)

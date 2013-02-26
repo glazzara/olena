@@ -1,5 +1,5 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,7 +17,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = build-aux external milena
+SUBDIRS = build-aux milena
 
 if ENABLE_SWILENA
   SUBDIRS += swilena
@@ -28,64 +28,19 @@ if ENABLE_SCRIBO
 endif ENABLE_SCRIBO
 
 # Target shortcuts delegating the actual action to milena/Makefile.
-LOCAL_RECURSIVE_TARGETS = pretty-check tests
+LOCAL_RECURSIVE_TARGETS = tests
+.PHONY: $(LOCAL_RECURSIVE_TARGETS)
 $(LOCAL_RECURSIVE_TARGETS):
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
-.PHONY: $(LOCAL_RECURSIVE_TARGETS)
+	cd scribo && $(MAKE) $(AM_MAKEFLAGS) $@
+.PHONY: pretty-check
+pretty-check:
+	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += milena scribo
 
-
-#<<lrde
-## FIXME: All of this it too much ad hoc.  Use Git branches to
-## distinguish distributed files from non distributed ones after the
-## conversion of the repository.
-
-LRDE_STRIPPED_DIST_FILES =				\
-  $(distdir)/Makefile.am				\
-  $(distdir)/configure.ac				\
-  $(distdir)/milena/mln/accu/math/all.hh		\
-  $(distdir)/milena/mln/all.hh				\
-  $(distdir)/milena/mln/core/image/vmorph/all.hh	\
-  $(distdir)/milena/mln/core/image/vmorph/fun_image.hh	\
-  $(distdir)/milena/mln/data/all.hh			\
-  $(distdir)/milena/mln/essential/routine.hh		\
-  $(distdir)/milena/mln/fun/all.hh			\
-  $(distdir)/milena/mln/fun/essential.hh		\
-  $(distdir)/milena/mln/fun/v2v/all.hh			\
-  $(distdir)/milena/mln/fun/v2v/essential.hh		\
-  $(distdir)/milena/mln/linear/all.hh			\
-  $(distdir)/milena/mln/trait/all.hh			\
-  $(distdir)/milena/mln/trait/ch_value.hh		\
-  $(distdir)/milena/mln/value/all.hh			\
-  $(distdir)/milena/mln/value/essential.hh		\
-  $(distdir)/milena/tests/Makefile.am			\
-  $(distdir)/milena/tests/convert/Makefile.am		\
-  $(distdir)/milena/tests/extract/Makefile.am		\
-  $(distdir)/milena/tests/fun/v2v/Makefile.am		\
-  $(distdir)/milena/tests/linear/Makefile.am		\
-  $(distdir)/milena/tests/linear/gaussian/Makefile.am	\
-  $(distdir)/milena/tests/registration/Makefile.am	\
-  $(distdir)/milena/tests/trait/ch_value.cc		\
-  $(distdir)/milena/tests/value/Makefile.am
-
-LRDE_NODIST_FILES =					\
-  $(distdir)/milena/tests/convert/to_hsl.cc		\
-  $(distdir)/milena/tests/extract/blue.cc		\
-  $(distdir)/milena/tests/extract/green.cc		\
-  $(distdir)/milena/tests/extract/hue.cc		\
-  $(distdir)/milena/tests/extract/lum.cc		\
-  $(distdir)/milena/tests/extract/red.cc		\
-  $(distdir)/milena/tests/extract/sat.cc		\
-  $(distdir)/milena/tests/fun/v2v/component.cc		\
-  $(distdir)/milena/tests/fun/v2v/hsl_to_rgb.cc		\
-  $(distdir)/milena/tests/fun/v2v/rgb_to_hsl.cc		\
-  $(distdir)/milena/tests/linear/gaussian.cc		\
-  $(distdir)/milena/tests/linear/gaussian/filter.cc	\
-  $(distdir)/milena/tests/registration/registration.cc	\
-  $(distdir)/milena/tests/value/stack.cc
 
 PORTFILE=distrib/macports/Portfile
 
@@ -115,41 +70,6 @@ CLEANFILES = $(PORTFILE)
 
 port: $(PORTFILE)
 
-## FIXME: Running `build-aux/build_unit_test.sh' just to update
-## `milena/tests/unit_test/unit-tests.mk' is overkill:
-##
-## 1. It recreates *all* the sources (more than 1200 `.cc' files!).
-##    => We should just regen `unit-tests.mk', not the `.cc' files.
-##
-## 2. It visits (almost) all the directories and files under
-##    milena/mln/ (which admittedly a smaller issue compared to the
-##    previous one)
-##    => Prune `unit-tests.mk' instead of regenerating it.  The
-##       simplest solution is probably to equip `unit-tests.mk' in the
-##       first place with `<<lrde'/`>>' tags, then prune it with
-##       dist-strip.
-##
-
-# Do not distribute parts tagged `lrde' (see build-aux/strip-lrde).
-dist-hook:
-	for f in $(LRDE_STRIPPED_DIST_FILES); do	\
-	  $(top_srcdir)/build-aux/strip-lrde $$f;	\
-	done;						\
-	rm -rf $(LRDE_NODIST_FILES) &&			\
-	$(top_srcdir)/build-aux/build_unit_test.sh 	\
-	    $(distdir)/milena/mln 			\
-	    $(distdir)/milena/tests/unit_test 		\
-	    $(top_srcdir)/milena/tests/unit_test/disabled_tests \
-	    mln 					\
-	&& 						\
-	(						\
-	  cd $(distdir);				\
-	  set -evx;					\
-	  autoreconf -f -v -i;				\
-	  find . -name autom4te.cache | xargs rm -rf	\
-	)
-
-
 # Set the package version to olena-x.x-snapshot-dd-mm-yy.
 #
 # Do not check NEWS file (this is not a release so there is no
@@ -163,4 +83,3 @@ snapshot:
 	&& cp -f $(srcdir)/configure.ac.tmp $(srcdir)/configure.ac 	\
 	&& $(MAKE) $(AM_MAKEFLAGS) dist 				\
 	&& mv -f $(srcdir)/configure.ac.old $(srcdir)/configure.ac
-#>>

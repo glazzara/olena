@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/scribo.mk
 
@@ -26,7 +23,6 @@ if HAVE_MAGICKXX
 
 noinst_PROGRAMS += content_in_hdoc_hdlac
 
-content_in_hdoc_hdlac_SOURCES = content_in_hdoc_hdlac.cc
 content_in_hdoc_hdlac_CPPFLAGS = $(AM_CPPFLAGS) 	\
 				 $(MAGICKXX_CPPFLAGS) 	\
 	  		    	 -I$(top_builddir)

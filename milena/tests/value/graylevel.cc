@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,28 +33,19 @@
 #include <mln/value/float01_f.hh>
 #include <mln/value/float01_.hh>
 
-
 #include <mln/literal/black.hh>
 #include <mln/literal/white.hh>
 
 
-
-// FIXME: Give a more explicit error message.
-// template <typename T>
-// void foo()
-// {
-//   typedef mln::value::gl8 g;
-// //   mln_trait_op_times(int, mln::value::Integer<g>) tmp;
-//   mln_trait_op_times(int, mln::value::Integer<g>) tmp;
-// }
-
-
-#define test_conversion(T1, T2, VAL)		\
-{						\
-  (T1)(T2)(VAL);				\
-  T1 test = (T2)(VAL);				\
-  test = (T2)(VAL);				\
+template<typename From, typename To, typename T>
+void
+test_conversion (const T& val)
+{
+  (void)(To)(From) val;
+  To test = (From)(val);
+  test = (From)(val);
 }
+
 
 int main()
 {
@@ -63,8 +55,6 @@ int main()
   using  mln::literal::white;
   using  mln::literal::black;
 
-
-  // FIXME: Make all the test pass.
 
   gl8  a(white);
   gl8  b(white);
@@ -77,6 +67,7 @@ int main()
     gl8 b(10);
 
     gl8 c = a + b;
+    (void) c;
   }
 
   {
@@ -139,34 +130,33 @@ int main()
     // Conversions.
 
     typedef mln::value::internal::gray_<8> i_gray_8;
-    test_conversion(gl8, i_gray_8, 255);
 
-    test_conversion(gl8, gray_f, 0.4);
-    test_conversion(gl8, glf, 0.4);
+    // gray_<n> -> graylevel<n>
+    test_conversion<i_gray_8, gl8>(255);
 
-    test_conversion(glf, i_gray_8, 255);
-    test_conversion(glf, gray_f, 0.4);
-    test_conversion(glf, gl8, 142);
+    // gray_f -> graylevel<n>
+    test_conversion<gray_f, gl8>(0.4);
+    // graylevel_f -> graylevel<n>
+    test_conversion<glf, gl8>(0.4);
 
-    test_conversion(gray_f, i_gray_8, 4);
-    test_conversion(glf, gray_f, 0.4);
+    // gray_<n> -> graylevel_f
+    test_conversion<i_gray_8, glf>(255);
+    // gray_f -> graylevel_f
+    test_conversion<gray_f, glf>(0.4);
+    // graylevel<n> -> graylevel_f
+    test_conversion<gl8, glf>(142);
+
+    // gray_<n> -> gray_f
+    test_conversion<i_gray_8, gray_f>(4);
+
+
+    // gray_f -> gray_<n>
+    test_conversion<gray_f, i_gray_8>(0.4);
+
+    // graylevel_f -> gray_f
+    test_conversion<glf, gray_f>(0.4);
+
+    // graylevel<n> -> gray_<n>
+    test_conversion<gl8, i_gray_8>(142);
   }
-
-//   {
-//     // FIXME: comparison with literals doesn't work
-//     c = a;
-//     mln_assertion(c == white);
-
-//     c = (a * 2) / 2;
-//     mln_assertion(c == white);
-
-//    c = c / 6;
-//    }
-
-//   {
-//     gl8 c = white;
-//     mln_assertion(c == white);
-//     mln_assertion(c.value() == float(255));
-//   }
-
 }

@@ -25,16 +25,16 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <iostream>
-#include <iomanip>
 
 #include <vector>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/routine/duplicate.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/site_set/p_queue_fast.hh>
+
 #include <mln/labeling/blobs.hh>
 #include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/data/stretch.hh>
 #include <mln/debug/println.hh>
 #include <mln/draw/line.hh>
 #include <mln/pw/all.hh>
@@ -58,245 +58,9 @@
 #include <mln/morpho/gradient.hh>
 #include <mln/labeling/colorize.hh>
 
+#include "io.hh"
+#include "influence_zones.hh"
 #include "chain.hh"
-
-
-// FIXME: Copied and adjusted from pics/graph.cc; factor.
-
-namespace mln
-{
-
-  template <typename I, typename N>
-  mln_concrete(I)
-  influence_zones(const I& input, const N& nbh)
-  {
-    mln_concrete(I) output = duplicate(input);
-
-    p_queue_fast<mln_site(I)> q;
-
-    {
-      // Initialization.
-      mln_piter(I) p(input.domain());
-      mln_niter(N) n(nbh, p);
-      for_all(p)
-	if (input(p) != 0)
-	  for_all(n) if (input.has(n))
-	    if (input(n) == 0)
-	      {
-		q.push(p);
-		break;
-	      }
-    }
-    {
-      // Body.
-      mln_site(I) p;
-      mln_niter(N) n(nbh, p);
-      while (! q.is_empty())
-	{
-	  p = q.pop_front();
-	  mln_invariant(output(p) != 0);
-	  for_all(n) if (input.has(n))
-	    if (output(n) == 0)
-	      {
-		output(n) = output(p);
-		q.push(n);
-	      }
-	}
-    }
-
-    return output;
-
-  }
-
-
-  namespace io
-  {
-
-    namespace neato
-    {
-
-      /* FIXME: This is just the gray-level version.  Handle other value
-	 types as well.  */
-      void
-      save(const complex_image<1, discrete_plane_1complex_geometry,
-	                       value::int_u8>& ima,
-	   const std::string& filename,
-	   const std::string& bgcolor = "#0000C0",
-	   const std::string& fontcolor = "#0000C0",
-	   bool empty_vertex_label = true)
-      {
-	typedef value::int_u8 V;
-	typedef complex_image<1, discrete_plane_1complex_geometry, V> I;
-	const unsigned D = 1;
-	typedef discrete_plane_1complex_geometry G;
-
-	std::ofstream g(filename.c_str());
-	g << "graph wst"  << std::endl
-	  << "{" << std::endl
-	  << "  graph [bgcolor = \"" << bgcolor << "\"]" << std::endl
-	  << "  edge [color = \"#FFFFFF\"]" << std::endl
-	  << "  node [color = \"#FFFFFF\", height=\"5\", width=\"5\","
-	  << " fontsize=\"100\", fontcolor = \"" << fontcolor << "\"]"
-	  << std::endl;
-
-	// Vertices.
-	p_n_faces_fwd_piter<D, G> v(ima.domain(), 0);
-	typedef complex_higher_neighborhood<D, G> e_nbh_t;
-	e_nbh_t e_nbh;
-	for_all(v)
-	{
-	  V vertex_color = ima(v);
-	  std::ostringstream vertex_color_str;
-	  // FIXME: Only valid for gray-level images.
-	  vertex_color_str << '#'
-			   << std::hex
-			   << std::setfill('0')
-			   << std::setw(2) << vertex_color
-			   << std::setw(2) << vertex_color
-			   << std::setw(2) << vertex_color
-			   << std::dec;
-
-	  g << "  v" << v.unproxy_().face_id()
-	    << " [pos = \""
-	    << std::fixed << std::setprecision(1)
-	    << (float)v.to_site().front()[1] << ", "
-	    << -(float)v.to_site().front()[0]
-	    << "\", color = \"" << vertex_color_str.str()
-	    << "\", fillcolor = \"" << vertex_color_str.str()
-	    << "\", pin = \"true\", style=\"filled,setlinewidth(3)\"";
-	  if (empty_vertex_label)
-	    g << ", label = \"\"";
-	  g << "];"
-	    << std::endl;
-	}
-
-	// Edges.
-	p_n_faces_fwd_piter<D, G> e(ima.domain(), 1);
-	typedef complex_lower_neighborhood<D, G> v_nbh_t;
-	v_nbh_t v_nbh;
-	mln_niter_(v_nbh_t) adj_v(v_nbh, e);
-	for_all(e)
-	{
-	  V edge_color = ima(e);
-	  std::ostringstream edge_color_str;
-	  edge_color_str << '#'
-			  << std::hex
-			  << std::setfill('0')
-			  << std::setw(2) << edge_color
-			  << std::setw(2) << edge_color
-			  << std::setw(2) << edge_color
-			  << std::dec;
-
-	  // Adjacent vertices.
-	  adj_v.start();
-	  topo::face<1> v1 = adj_v.unproxy_().face();
-	  adj_v.next();
-	  topo::face<1> v2 = adj_v.unproxy_().face();
-	  adj_v.next();
-	  mln_invariant(!adj_v.is_valid());
-
-	  g << "  v" << v1.face_id() << " -- v" << v2.face_id() << " ";
-	  g << "[color = \"" << edge_color_str.str()
-	    << "\", style=\"setlinewidth(10)\"];" << std::endl;
-	}
-
-	g << "}" << std::endl;
-	g.close();
-      }
-
-      // FIXME: Factor with the previous version.
-      void
-      save(const complex_image<1, discrete_plane_1complex_geometry,
-	                       value::rgb8>& ima,
-	   const std::string& filename,
-	   const std::string& bgcolor = "#0000C0",
-	   const std::string& fontcolor = "#0000C0",
-	   bool empty_vertex_label = true)
-      {
-	typedef value::rgb8 V;
-	typedef complex_image<1, discrete_plane_1complex_geometry, V> I;
-	const unsigned D = 1;
-	typedef discrete_plane_1complex_geometry G;
-
-	std::ofstream g(filename.c_str());
-	g << "graph wst"  << std::endl
-	  << "{" << std::endl
-	  << "  graph [bgcolor = \"" << bgcolor << "\"]" << std::endl
-	  << "  edge [color = \"#FFFFFF\"]" << std::endl
-	  << "  node [color = \"#FFFFFF\", height=\"5\", width=\"5\","
-	  << " fontsize=\"100\", fontcolor = \"" << fontcolor << "\"]"
-	  << std::endl;
-
-	// Vertices.
-	p_n_faces_fwd_piter<D, G> v(ima.domain(), 0);
-	typedef complex_higher_neighborhood<D, G> e_nbh_t;
-	e_nbh_t e_nbh;
-	for_all(v)
-	{
-	  V vertex_color = ima(v);
-	  std::ostringstream vertex_color_str;
-	  // FIXME: Only valid for gray-level images.
-	  vertex_color_str << '#'
-			   << std::hex
-			   << std::setfill('0')
-			   << std::setw(2) << vertex_color.red()
-			   << std::setw(2) << vertex_color.green()
-			   << std::setw(2) << vertex_color.blue()
-			   << std::dec;
-
-	  g << "  v" << v.unproxy_().face_id()
-	    << " [pos = \""
-	    << std::fixed << std::setprecision(1)
-	    << (float)v.to_site().front()[1] << ", "
-	    << -(float)v.to_site().front()[0]
-	    << "\", color = \"" << vertex_color_str.str()
-	    << "\", fillcolor = \"" << vertex_color_str.str()
-	    << "\", pin = \"true\", style=\"filled,setlinewidth(3)\"";
-	  if (empty_vertex_label)
-	    g << ", label = \"\"";
-	  g << "];"
-	    << std::endl;
-	}
-
-	// Edges.
-	p_n_faces_fwd_piter<D, G> e(ima.domain(), 1);
-	typedef complex_lower_neighborhood<D, G> v_nbh_t;
-	v_nbh_t v_nbh;
-	mln_niter_(v_nbh_t) adj_v(v_nbh, e);
-	for_all(e)
-	{
-	  V edge_color = ima(e);
-	  std::ostringstream edge_color_str;
-	  edge_color_str << '#'
-			 << std::hex
-			 << std::setfill('0')
-			 << std::setw(2) << edge_color.red()
-			 << std::setw(2) << edge_color.green()
-			 << std::setw(2) << edge_color.blue()
-			 << std::dec;
-
-	  // Adjacent vertices.
-	  adj_v.start();
-	  topo::face<1> v1 = adj_v.unproxy_().face();
-	  adj_v.next();
-	  topo::face<1> v2 = adj_v.unproxy_().face();
-	  adj_v.next();
-	  mln_invariant(!adj_v.is_valid());
-
-	  g << "  v" << v1.face_id() << " -- v" << v2.face_id() << " ";
-	  g << "[color = \"" << edge_color_str.str()
-	    << "\", style=\"setlinewidth(10)\"];" << std::endl;
-	}
-
-	g << "}" << std::endl;
-	g.close();
-      }
-
-    } // end of namespace mln::io::neato
-
-  } // end of namespace mln::io
-
-} // end of namespace mln
 
 
 // FIXME: Clean up and move into Milena?
@@ -328,6 +92,9 @@ make_complex_image(const mln::image2d<mln::value::int_u8>& input)
     data::paste(iz, IZ);
   }
 
+#if 0
+  io::pgm::save (data::stretch(mln::value::int_u8(), iz), "iz.pgm");
+#endif
 
   // Make graph/complex.
 
@@ -477,14 +244,16 @@ int main(int argc, char* argv[])
   // Input image computed from the graph of influence zones (IZ) of seeds.
   typedef int_u8_graph_image2d ima_t;
   ima_t ima = make_complex_image(seeds);
-  io::neato::save(ima, "apps/graph.neato");
+#if 0
+  io::neato::save(ima, "graph.neato");
+#endif
 
   // Gradient.
   input g = morpho::gradient(ima, make_elt_win(ima));
 
 #if 0
   // FIXME: get the name as argument.
-  io::neato::save(g, "apps/graph-g.neato");
+  io::neato::save(g, "graph-g.neato");
 #endif
 
   // Chain.

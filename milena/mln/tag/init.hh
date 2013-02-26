@@ -40,6 +40,7 @@ namespace mln
 
     struct bbox_t      {};
     struct border_t    {};
+    struct data_t      {};
     struct domain_t    {};
     struct extension_t {};
     struct function_t  {};
@@ -47,6 +48,7 @@ namespace mln
 
     extern bbox_t      bbox;
     extern border_t    border;
+    extern data_t      data;
     extern domain_t    domain;
     extern extension_t extension;
     extern function_t  function;
@@ -58,6 +60,7 @@ namespace mln
 
     bbox_t      bbox;
     border_t    border;
+    data_t      data;
     domain_t    domain;
     extension_t extension;
     function_t  function;

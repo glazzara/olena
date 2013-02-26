@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,7 +66,7 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
 			   unsigned lambda, double K, bool enable_deskew,
-			   bool verbose = false);
+			   bool verbose);
 
     /*! \overload
       K is set to 0.34.
@@ -74,7 +74,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   bool verbose = false);
+			   bool verbose);
 
 
     /*! \brief Preprocess a document before looking for its content.
@@ -90,7 +90,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   bool verbose = false);
+			   bool verbose);
 
     /*! \brief Preprocess a document before looking for its content.
 
@@ -108,7 +108,7 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
 			   double K, bool enable_fg_bg, Image<I>& fg,
-			   bool enable_deskew, bool verbose = false);
+			   bool enable_deskew, bool verbose);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -117,7 +117,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   bool verbose = false)
+			   bool verbose)
     {
       return text_in_doc_preprocess(input, enable_fg_bg, 0.34, verbose);
     }
@@ -126,8 +126,8 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg,
-			   unsigned lambda, double K, bool enable_deskew = false,
-			   bool verbose = false)
+			   unsigned lambda, double K, bool enable_deskew,
+			   bool verbose)
     {
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -146,7 +146,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   bool verbose = false)
+			   bool verbose)
     {
       I tmp;
       return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, false, verbose);

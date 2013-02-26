@@ -27,8 +27,3 @@ noinst_PROGRAMS =
 #  extract 				\
 #  rebuild_opening 			\
 #  rebuild_rank
-#
-#erase_SOURCES = erase.cc
-#extract_SOURCES = extract.cc
-#rebuild_opening_SOURCES = rebuild_opening.cc
-#rebuild_rank_SOURCES = rebuild_rank.cc

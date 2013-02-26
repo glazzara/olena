@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -26,13 +27,5 @@ check_PROGRAMS =				\
   influence_zone_geodesic 			\
   influence_zone_geodesic_saturated
 
-bench_closest_point_geodesic_SOURCES = bench_closest_point_geodesic.cc
-distance_and_closest_point_geodesic_SOURCES = distance_and_closest_point_geodesic.cc
-distance_front_SOURCES = distance_front.cc
-distance_geodesic_SOURCES = distance_geodesic.cc
-hough_SOURCES = hough.cc
-influence_zone_front_SOURCES = influence_zone_front.cc
-influence_zone_geodesic_SOURCES = influence_zone_geodesic.cc
-influence_zone_geodesic_saturated_SOURCES = influence_zone_geodesic_saturated.cc
 
 TESTS = $(check_PROGRAMS)

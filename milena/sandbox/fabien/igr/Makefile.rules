@@ -1,8 +1,0 @@
-CXX = g++
-CXXFLAGS = -Wall -Wextra -DNDEBUG -O1
-
-DICOM_INC = -I/lrde/dev/linux-x86/stable/gdcm/include
-DICOM_LIBS = -L/lrde/dev/linux-x86/stable/gdcm/lib -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib
-DICOM = ${DICOM_INC} ${DICOM_LIBS}
-
-MAGICK = `Magick++-config --cppflags --ldflags --libs`

@@ -33,10 +33,7 @@
 
 # include <mln/core/image/vmorph/cast_image.hh>
 # include <mln/core/image/vmorph/fun_image.hh>
-//<<lrde
-# include <mln/core/image/vmorph/thrubin_image.hh>
-# include <mln/core/image/vmorph/thru_image.hh>
-//>>
+
 # include <mln/core/image/vmorph/violent_cast_image.hh>
 
 

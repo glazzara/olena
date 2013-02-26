@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,8 +21,5 @@ check_PROGRAMS = 			\
 	hex_to_color 			\
 	component_precise_outline
 
-color_to_hex_SOURCES = color_to_hex.cc
-hex_to_color_SOURCES = hex_to_color.cc
-component_precise_outline_SOURCES = component_precise_outline.cc
 
 TESTS = $(check_PROGRAMS)

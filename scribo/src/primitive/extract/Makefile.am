@@ -29,21 +29,10 @@ noinst_PROGRAMS = 		\
   lines_thick_and_thin 		\
   lines_pattern
 
-discontinued_lines_SOURCES = discontinued_lines.cc
-discontinued_vlines_SOURCES = discontinued_vlines.cc
-discontinued_hlines_SOURCES = discontinued_hlines.cc
-separators_nonvisible_SOURCES = separators_nonvisible.cc
-thick_vlines_SOURCES = thick_vlines.cc
-thick_hlines_SOURCES = thick_hlines.cc
-lines_h_thick_and_thin_SOURCES = lines_h_thick_and_thin.cc
-lines_thick_and_thin_SOURCES = lines_thick_and_thin.cc
-lines_pattern_SOURCES = lines_pattern.cc
-
 
 if HAVE_MAGICKXX
 
     noinst_PROGRAMS    += alignments
-    alignments_SOURCES  = alignments.cc
     alignments_CPPFLAGS = $(AM_CPPFLAGS) \
 			  $(MAGICKXX_CPPFLAGS)
     alignments_LDFLAGS  = $(AM_LDFLAGS) \

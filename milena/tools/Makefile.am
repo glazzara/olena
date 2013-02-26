@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -19,8 +20,5 @@ include $(top_srcdir)/milena/tools/tools.mk
 bin_PROGRAMS =					\
   seed2tiling 					\
   area_flooding
-
-area_flooding_SOURCES = area_flooding.cc
-seed2tiling_SOURCES = seed2tiling.cc
 
 # FIXME: Add some tests for these tools.

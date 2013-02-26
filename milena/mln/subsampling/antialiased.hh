@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -33,6 +33,7 @@
 
 
 #include <mln/core/concept/image.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/border/thickness.hh>
 #include <mln/extension/adjust_duplicate.hh>
 #include <mln/core/macros.hh>

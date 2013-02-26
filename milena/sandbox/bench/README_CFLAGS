@@ -1,8 +1,0 @@
-GCC 4.2 fournit un système de détection automatique des instructions
-supportées par le processeur. L'option est :
-
--march=native
-
-
-Les flags d'optimisation à utiliser selon les processeurs :
-http://en.gentoo-wiki.com/wiki/Safe_Cflags/Intel

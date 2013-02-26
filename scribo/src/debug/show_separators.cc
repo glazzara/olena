@@ -75,7 +75,10 @@ int main(int argc, char *argv[])
   v_lines += h_lines;
 
   t.stop();
-  std::cout << t << "s" << std::endl;
+  /* FIXME: Help the compiler to ``unproxy' the float stored in the
+     timer.  There is a problem with an overload resolution of
+     `mln::unproxy_rec' here.  */
+  std::cout << t.read() << "s" << std::endl;
 
   // Save binary image.
   io::pbm::save(v_lines, argv[2]);

@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -63,17 +63,16 @@ REGEN_SUBDIRS += doc tests
 regen-am:
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       mln headers.mk nodist-headers
+	       mln headers.mk
 
-EXTRA_DIST = nodist-headers
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
-$(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh nodist-headers
+$(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       mln headers.mk nodist-headers
+	       mln headers.mk
 
 include $(srcdir)/headers.mk
 
@@ -107,7 +106,10 @@ dist_img_DATA =					\
   img/tiny.ppm					\
   img/toto.pbm
 
-EXTRA_DIST +=					\
+EXTRA_DIST =					\
   tests/img/test_rgb8.tif			\
   tests/img/test_bw.tif				\
   tests/img/test_gl.tif
+
+# Header file generator.
+EXTRA_DIST += new-header

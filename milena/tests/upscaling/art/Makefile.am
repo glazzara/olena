@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -22,8 +22,6 @@ check_PROGRAMS =				\
   scale3x
 
 
-scale2x_SOURCES = scale2x.cc
-scale3x_SOURCES = scale3x.cc
 
 
 TESTS = $(check_PROGRAMS)

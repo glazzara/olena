@@ -1,4 +1,4 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -27,7 +27,6 @@ check_PROGRAMS =
 if HAVE_MAGICKXX
 
 check_PROGRAMS += alignments
-alignments_SOURCES = alignments.cc
 alignments_CPPFLAGS = $(AM_CPPFLAGS) \
 		      $(MAGICKXX_CPPFLAGS) \
 		      -DSCRIBO_NDEBUG

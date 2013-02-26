@@ -38,7 +38,7 @@ repository::
 
 By default, `bootstrap' does not regenerate files that are stored on
 the repository.  If you want to refresh them (e.g., because your
-working copy is in a bad state), you can ask boostrap to regenerate
+working copy is in a bad state), you can ask bootstrap to regenerate
 them::
 
         ./bootstrap --regen
@@ -58,41 +58,103 @@ the following extra programs if you want to work on the Olena project.
    * If you want to make changes anywhere within the project, you will
      need:
 
-        - GNU Autoconf 2.61
+        - GNU Autoconf 2.61,
 
-        - GNU Automake 1.10
+        - GNU Automake 1.10,
 
-        - GNU Libtool 1.5.22
+        - GNU Libtool 1.5.22.
 
    * If you plan to make changes within Swilena, you must have:
 
-        - SWIG 1.3.35
+        - SWIG 1.3.35,
 
-        - Python 2.5
+        - Python 2.5.
 
    * If you want to change and/or rebuild the documentation, the
      following tools are required:
 
-        - Doxygen 1.5.6
+        - Doxygen 1.5.6,
 
-        - a fairly recent LaTeX distribution
+        - a fairly recent LaTeX distribution,
 
-        - the `listings' LaTeX package
+        - the `listings' LaTeX package,
 
-        - the `convert' utility from ImageMagick (6.3.7)
+        - the `convert' utility from ImageMagick (6.3.7),
 
         - HeVeA 1.10
+
+        - LaTeX2HTML (or at minimum, its `html.sty' style file).
 
 
 Note that `bootstrap' checks for the presence of most of these tools.
 
 
-------------
-Useful Tools
-------------
+----------------------
+Useful Developer Tools
+----------------------
 
-`rebox.el' is a useful companion to Emacs, creating boxes with comment
-delimiters.
+   * `rebox.el' is a useful companion to Emacs, creating boxes with
+     comment delimiters.
+
+
+---------
+Releasing
+---------
+
+Things to remember before releasing a new version of Olena, roughly in
+this order:
+
+   * Olena is designed to be released as a whole package
+     (`olena-x.y.tar.{gz,bz2}') *and* as seperate components
+     (`milena-x.y.tar.{gz,bz2}', `olena-scribo-x.y.tar.{gz,bz2}',
+     `swilena-x.y.tar.{gz,bz2}', etc.).  Both procedures should be
+     checked.
+
+   * Update and sync `NEWS' and `README' files in the top-level and
+     subprojects directories (milena/, scribo/, etc.).
+
+   * Likewise, update all `AUTHORS' files.  Hint: use
+     `git shortlog -s DIR' to get the list of all authors who have
+     contributed to the files under directory DIR.
+
+   * Update revision numbers in `configure.ac' in the top-level and
+     subprojects directories (`milena/', `scribo/', etc.).
+
+   * Create all packages using `make distcheck' (not just
+     `make dist').
+
+   * Install the packages in `/lrde/dload/olena/x.y/', along with the
+     Olena's `NEWS' and `README' files, and Milena's documentation (in
+     `/lrde/dload/olena/x.y./doc/') and ensure they are accessible
+     from the Web.
+
+   * Create a new page on the Olena Web site for the new release (e.g,
+     http://olena.lrde.epita.fr/OlenaXYZ for release x.y.z), update
+     the Download page (http://olena.lrde.epita.fr/Download) and make
+     an announcement on the main page (http://olena.lrde.epita.fr/).
+     Also update the link under the Download item of the left bar
+     (http://olena.lrde.epita.fr/WebContents).
+
+   * Likewise, announce the release on the Olena Trac
+     (https://trac.lrde.org/olena/).
+
+   * Make an announce on the LRDE Web site as well
+     (http://www.lrde.epita.fr/cgi-bin/twiki/view/Lrde/News).
+
+   * Finally, post an announce to annonce@lrde.epita.fr.  See the files
+     `ANNOUNCE-x.y' at the root of the repository for models.
+
+   * Tag the commit COMMIT corresponding to the release in the
+     repository, and push it to the Git server.
+
+        git tag -m "Olena release x.y." olena-x.y COMMIT
+        git push tag olena-x.y
+
+   * After the release, do not forget to append an `a' to the release
+     number in `configure.ac's (e.g., turn `1.1' into `1.1a') to
+     prevent any mistake regarding version numbers in subsequent
+     releases.  Create new (empty) sections in `NEWS' files
+     accordingly.
 
 
 

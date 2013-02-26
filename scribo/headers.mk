@@ -299,7 +299,3 @@ scribo/util/box_is_included.hh \
 scribo/util/color_to_hex.hh \
 scribo/util/component_precise_outline.hh \
 scribo/util/hex_to_color.hh
-
-#<<lrde
-nobase_include_HEADERS +=
-#>>

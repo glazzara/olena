@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -57,10 +57,10 @@ namespace scribo
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
     text_in_doc(const Image<I>& input, bool denoise,
-		const std::string& language = std::string("eng"),
-		bool find_line_seps = true,
-		bool find_whitespace_seps = true,
-		bool verbose = false)
+		const std::string& language,
+		bool find_line_seps,
+		bool find_whitespace_seps,
+		bool verbose)
     {
       internal::text_in_doc_functor<I> f;
       f.enable_denoising = denoise;

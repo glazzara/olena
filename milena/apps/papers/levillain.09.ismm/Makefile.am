@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,7 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# Illustrations from the ISMM 2009 paper.
+# Illustrations from the ISMM 2009 paper and presentation (slides).
+
+include $(top_srcdir)/milena/common.mk
 
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
@@ -22,20 +25,25 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-noinst_HEADERS = chain.hh
+noinst_HEADERS = chain.hh io.hh influence_zones.hh
 
 noinst_PROGRAMS = image2d graph complex
-image2d_SOURCES = image2d.cc
-graph_SOURCES = graph.cc
-complex_SOURCES = complex.cc
+# This example (implemented both with graph- and 1-complex-based
+# images) has been shown in the ISMM 2009 presentation only (not in
+# the paper).
+noinst_PROGRAMS += classif-graph classif-1complex
 
 # Input images.
 # FIXME: Move them to milena/img/?
-dist_noinst_DATA = seeds.pgm m283-c.off
+dist_noinst_DATA = seeds.pgm m283-c.off classseedsi.pbm
 
 # Output images.
-noinst_DATA = lena-s.ppm graph-s.png m283-s.off
+noinst_DATA =					\
+  lena-s.ppm graph-s.png m283-s.off		\
+  classwst-graph.ppm classwst-1complex.ppm
 MOSTLYCLEANFILES = $(noinst_DATA) graph-s.neato
+
+# FIXME: Also generate intermediate images (gradients, etc.).
 
 lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
 	./image2d$(EXEEXT) $< 1000 $@
@@ -47,3 +55,9 @@ graph-s.neato: seeds.pgm graph$(EXEEXT)
 
 m283-s.off: m283-c.off complex$(EXEEXT)
 	./complex$(EXEEXT) $< 100 $@
+
+classwst-graph.ppm: classseedsi.pbm classif-graph$(EXEEXT)
+	./classif-graph$(EXEEXT) $< 4 $@
+
+classwst-1complex.ppm: classseedsi.pbm classif-1complex$(EXEEXT)
+	./classif-1complex$(EXEEXT) $< 4 $@

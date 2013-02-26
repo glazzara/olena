@@ -20,9 +20,6 @@ check_PROGRAMS =				\
   union_find_on_functions			\
   union_find_on_sets
 
-union_find_on_functions_SOURCES = union_find_on_functions.cc
-union_find_on_sets_SOURCES = union_find_on_sets.cc
-
 TESTS = $(check_PROGRAMS)
 
 # Reconstruction by dilation on sets in not implemented yet.

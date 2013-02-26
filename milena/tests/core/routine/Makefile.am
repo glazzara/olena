@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -23,10 +24,5 @@ check_PROGRAMS =				\
   initialize					\
   primary
 
-duplicate_SOURCES = duplicate.cc
-exact_SOURCES = exact.cc
-extend_SOURCES = extend.cc
-initialize_SOURCES = initialize.cc
-primary_SOURCES = primary.cc
 
 TESTS = $(check_PROGRAMS)

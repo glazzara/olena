@@ -38,22 +38,8 @@ check_PROGRAMS =				\
   transform_line				\
   transform_snake
 
-all_accus_SOURCES = all_accus.cc
-compute_SOURCES = compute.cc
-histo_SOURCES = histo.cc
-line_SOURCES = line.cc
-max_site_SOURCES = max_site.cc
-nil_SOURCES = nil.cc
-pair_SOURCES = pair.cc
-transform_SOURCES = transform.cc
-transform_diagonal_SOURCES = transform_diagonal.cc
-transform_directional_SOURCES = transform_directional.cc
-transform_line_SOURCES = transform_line.cc
-transform_snake_SOURCES = transform_snake.cc
-
 if HAVE_BOOST_TUPLE
   check_PROGRAMS += tuple
-  tuple_SOURCES = tuple.cc
   tuple_CPPFLAGS = $(AM_CPPFLAGS) $(BOOST_CPPFLAGS)
 endif HAVE_BOOST_TUPLE
 

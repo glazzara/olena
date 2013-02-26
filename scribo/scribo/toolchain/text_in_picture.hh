@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -57,8 +57,8 @@ namespace scribo
     component_set<mln_ch_value(I, def::lbl_type)>
     text_in_picture(const Image<I>& input_rgb_,
 		    bool bg_removal, bool multi_scale_bin,
-		    unsigned max_dim_size = 0, unsigned lambda = 0,
-		    bool verbose = false)
+		    unsigned max_dim_size, unsigned lambda,
+		    bool verbose)
     {
       trace::entering("scribo::toolchain::text_in_picture");
 

@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
   // Preprocess document
   image2d<bool> input_preproc;
   {
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0.34,
+    input_preproc = toolchain::text_in_doc_preprocess(input, 0, false, 0.34,
 						      false, false);
 
     // Cleanup components on borders

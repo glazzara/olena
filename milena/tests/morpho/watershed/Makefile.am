@@ -21,9 +21,6 @@ check_PROGRAMS =				\
   superpose					\
   topological
 
-flooding_SOURCES = flooding.cc
-superpose_SOURCES = superpose.cc
-topological_SOURCES = topological.cc
 
 TESTS = $(check_PROGRAMS)
 

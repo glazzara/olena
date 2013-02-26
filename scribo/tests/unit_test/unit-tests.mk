@@ -35,85 +35,58 @@ scribo_text_extract_lines_wo_merge
 
 scribo_core_document_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_core_document_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_core_document_SOURCES = scribo_core_document.cc
 scribo_core_internal_doc_serializer_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_core_internal_doc_serializer_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_core_internal_doc_serializer_SOURCES = scribo_core_internal_doc_serializer.cc
 scribo_debug_text_color_image_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_debug_text_color_image_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_debug_text_color_image_SOURCES = scribo_debug_text_color_image.cc
 scribo_filter_images_in_paragraph_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_images_in_paragraph_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_images_in_paragraph_SOURCES = scribo_filter_images_in_paragraph.cc
 scribo_filter_paragraphs_in_borders_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_paragraphs_in_borders_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_paragraphs_in_borders_SOURCES = scribo_filter_paragraphs_in_borders.cc
 scribo_filter_paragraphs_in_image_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_paragraphs_in_image_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_paragraphs_in_image_SOURCES = scribo_filter_paragraphs_in_image.cc
 scribo_filter_separators_in_borders_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_separators_in_borders_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_separators_in_borders_SOURCES = scribo_filter_separators_in_borders.cc
 scribo_filter_separators_in_element_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_separators_in_element_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_separators_in_element_SOURCES = scribo_filter_separators_in_element.cc
 scribo_filter_separators_in_paragraph_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_separators_in_paragraph_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_separators_in_paragraph_SOURCES = scribo_filter_separators_in_paragraph.cc
 scribo_filter_separators_vert_in_borders_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_filter_separators_vert_in_borders_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_filter_separators_vert_in_borders_SOURCES = scribo_filter_separators_vert_in_borders.cc
 scribo_io_img_internal_debug_img_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_img_internal_debug_img_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_img_internal_debug_img_visitor_SOURCES = scribo_io_img_internal_debug_img_visitor.cc
 scribo_io_img_internal_full_img_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_img_internal_full_img_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_img_internal_full_img_visitor_SOURCES = scribo_io_img_internal_full_img_visitor.cc
 scribo_io_img_internal_non_text_img_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_img_internal_non_text_img_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_img_internal_non_text_img_visitor_SOURCES = scribo_io_img_internal_non_text_img_visitor.cc
 scribo_io_img_internal_text_img_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_img_internal_text_img_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_img_internal_text_img_visitor_SOURCES = scribo_io_img_internal_text_img_visitor.cc
 scribo_io_img_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_img_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_img_save_SOURCES = scribo_io_img_save.cc
 scribo_io_xml_internal_extended_page_xml_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_internal_extended_page_xml_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_internal_extended_page_xml_visitor_SOURCES = scribo_io_xml_internal_extended_page_xml_visitor.cc
 scribo_io_xml_internal_page_xml_visitor_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_internal_page_xml_visitor_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_internal_page_xml_visitor_SOURCES = scribo_io_xml_internal_page_xml_visitor.cc
 scribo_io_xml_internal_print_page_preambule_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_internal_print_page_preambule_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_internal_print_page_preambule_SOURCES = scribo_io_xml_internal_print_page_preambule.cc
 scribo_io_xml_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_save_SOURCES = scribo_io_xml_save.cc
 scribo_make_text_blocks_image_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_make_text_blocks_image_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_make_text_blocks_image_SOURCES = scribo_make_text_blocks_image.cc
 scribo_make_text_components_image_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_make_text_components_image_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_make_text_components_image_SOURCES = scribo_make_text_components_image.cc
 scribo_postprocessing_images_to_drop_capital_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_postprocessing_images_to_drop_capital_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_postprocessing_images_to_drop_capital_SOURCES = scribo_postprocessing_images_to_drop_capital.cc
 scribo_primitive_extract_alignments_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_primitive_extract_alignments_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_primitive_extract_alignments_SOURCES = scribo_primitive_extract_alignments.cc
 scribo_primitive_extract_non_text_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_primitive_extract_non_text_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_primitive_extract_non_text_SOURCES = scribo_primitive_extract_non_text.cc
 scribo_primitive_extract_non_text_hdoc_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_primitive_extract_non_text_hdoc_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_primitive_extract_non_text_hdoc_SOURCES = scribo_primitive_extract_non_text_hdoc.cc
 scribo_primitive_extract_non_text_kmean_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_primitive_extract_non_text_kmean_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_primitive_extract_non_text_kmean_SOURCES = scribo_primitive_extract_non_text_kmean.cc
 scribo_text_extract_lines_wo_merge_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_text_extract_lines_wo_merge_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_text_extract_lines_wo_merge_SOURCES = scribo_text_extract_lines_wo_merge.cc
 endif HAVE_MAGICKXX
 
 # Starting a conditional unit test list.
@@ -125,10 +98,8 @@ scribo_io_xml_load
 
 scribo_io_xml_internal_full_xml_visitor_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_internal_full_xml_visitor_LDFLAGS= ${QT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_internal_full_xml_visitor_SOURCES = scribo_io_xml_internal_full_xml_visitor.cc
 scribo_io_xml_load_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_io_xml_load_LDFLAGS= ${QT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_load_SOURCES = scribo_io_xml_load.cc
 endif HAVE_QT
 endif HAVE_MAGICKXX
 
@@ -142,7 +113,6 @@ scribo_toolchain_nepomuk_text_extraction
 
 scribo_toolchain_nepomuk_text_extraction_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${QT_CPPFLAGS} -DHAVE_QT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_toolchain_nepomuk_text_extraction_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${QT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_nepomuk_text_extraction_SOURCES = scribo_toolchain_nepomuk_text_extraction.cc
 endif HAVE_TIFF
 endif HAVE_TESSERACT
 endif HAVE_QT
@@ -157,10 +127,8 @@ scribo_toolchain_internal_content_in_hdoc_functor
 
 scribo_toolchain_content_in_hdoc_CPPFLAGS= ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_toolchain_content_in_hdoc_LDFLAGS= ${TESSERACT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_content_in_hdoc_SOURCES = scribo_toolchain_content_in_hdoc.cc
 scribo_toolchain_internal_content_in_hdoc_functor_CPPFLAGS= ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_toolchain_internal_content_in_hdoc_functor_LDFLAGS= ${TESSERACT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_internal_content_in_hdoc_functor_SOURCES = scribo_toolchain_internal_content_in_hdoc_functor.cc
 endif HAVE_TESSERACT
 endif HAVE_MAGICKXX
 
@@ -174,10 +142,8 @@ scribo_toolchain_internal_content_in_doc_functor
 
 scribo_toolchain_content_in_doc_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_toolchain_content_in_doc_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_content_in_doc_SOURCES = scribo_toolchain_content_in_doc.cc
 scribo_toolchain_internal_content_in_doc_functor_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 scribo_toolchain_internal_content_in_doc_functor_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_internal_content_in_doc_functor_SOURCES = scribo_toolchain_internal_content_in_doc_functor.cc
 endif HAVE_TIFF
 endif HAVE_TESSERACT
 endif HAVE_MAGICKXX
@@ -191,13 +157,10 @@ scribo_io_xml_internal_save_image_to_xml
 
 scribo_convert_from_base64_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 scribo_convert_from_base64_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_convert_from_base64_SOURCES = scribo_convert_from_base64.cc
 scribo_convert_from_qimage_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 scribo_convert_from_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_convert_from_qimage_SOURCES = scribo_convert_from_qimage.cc
 scribo_io_xml_internal_save_image_to_xml_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 scribo_io_xml_internal_save_image_to_xml_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_io_xml_internal_save_image_to_xml_SOURCES = scribo_io_xml_internal_save_image_to_xml.cc
 endif HAVE_QT
 
 # Starting a conditional unit test list.
@@ -210,13 +173,10 @@ scribo_toolchain_text_in_doc
 
 scribo_text_recognition_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${AM_CPPFLAGS}
 scribo_text_recognition_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_text_recognition_SOURCES = scribo_text_recognition.cc
 scribo_toolchain_internal_text_in_doc_functor_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${AM_CPPFLAGS}
 scribo_toolchain_internal_text_in_doc_functor_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_internal_text_in_doc_functor_SOURCES = scribo_toolchain_internal_text_in_doc_functor.cc
 scribo_toolchain_text_in_doc_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${TESSERACT_CPPFLAGS} -DHAVE_TESSERACT ${AM_CPPFLAGS}
 scribo_toolchain_text_in_doc_LDFLAGS= ${TIFF_LDFLAGS}  ${TESSERACT_LDFLAGS}  ${AM_LDFLAGS}
-scribo_toolchain_text_in_doc_SOURCES = scribo_toolchain_text_in_doc.cc
 endif HAVE_TIFF
 endif HAVE_TESSERACT
 
@@ -477,6 +437,7 @@ scribo_util_color_to_hex \
 scribo_util_component_precise_outline \
 scribo_util_hex_to_color
 
+<<<<<<< HEAD
 scribo_all_SOURCES = scribo_all.cc
 scribo_binarization_all_SOURCES = scribo_binarization_all.cc
 scribo_binarization_global_threshold_SOURCES = scribo_binarization_global_threshold.cc
@@ -731,4 +692,6 @@ scribo_util_box_is_included_SOURCES = scribo_util_box_is_included.cc
 scribo_util_color_to_hex_SOURCES = scribo_util_color_to_hex.cc
 scribo_util_component_precise_outline_SOURCES = scribo_util_component_precise_outline.cc
 scribo_util_hex_to_color_SOURCES = scribo_util_hex_to_color.cc
+=======
+>>>>>>> next
 

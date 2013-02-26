@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -23,10 +23,5 @@ check_PROGRAMS =				\
   safe_image 					\
   tr_image 
 
-decorated_image_SOURCES = decorated_image.cc
-interpolated_SOURCES = interpolated.cc
-labeled_image_SOURCES = labeled_image.cc
-safe_image_SOURCES = safe_image.cc
-tr_image_SOURCES = tr_image.cc
 
 TESTS = $(check_PROGRAMS)

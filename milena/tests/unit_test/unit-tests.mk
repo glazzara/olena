@@ -9,7 +9,6 @@ mln_accu_tuple
 
 mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS} -DHAVE_BOOST_TUPLE ${AM_CPPFLAGS}
 mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${AM_LDFLAGS}
-mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 endif HAVE_BOOST_TUPLE
 
 # Starting a conditional unit test list.
@@ -20,10 +19,8 @@ mln_io_fits_load
 
 mln_io_fits_all_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
 mln_io_fits_all_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_fits_all_SOURCES = mln_io_fits_all.cc
 mln_io_fits_load_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
 mln_io_fits_load_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_fits_load_SOURCES = mln_io_fits_load.cc
 endif HAVE_CFITSIO
 
 # Starting a conditional unit test list.
@@ -35,13 +32,10 @@ mln_io_dicom_get_header
 
 mln_io_dicom_all_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_all_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_dicom_all_SOURCES = mln_io_dicom_all.cc
 mln_io_dicom_load_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_load_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_dicom_load_SOURCES = mln_io_dicom_load.cc
 mln_io_dicom_get_header_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
 mln_io_dicom_get_header_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_dicom_get_header_SOURCES = mln_io_dicom_get_header.cc
 endif HAVE_GDCM
 
 # Starting a conditional unit test list.
@@ -53,13 +47,10 @@ mln_io_magick_save
 
 mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_all_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_all_SOURCES = mln_io_magick_all.cc
 mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_load_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_load_SOURCES = mln_io_magick_load.cc
 mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_save_SOURCES = mln_io_magick_save.cc
 endif HAVE_MAGICKXX
 
 # Starting a conditional unit test list.
@@ -70,10 +61,8 @@ mln_convert_to_qimage_nocopy
 
 mln_convert_to_qimage_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 mln_convert_to_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-mln_convert_to_qimage_SOURCES = mln_convert_to_qimage.cc
 mln_convert_to_qimage_nocopy_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
 mln_convert_to_qimage_nocopy_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-mln_convert_to_qimage_nocopy_SOURCES = mln_convert_to_qimage_nocopy.cc
 endif HAVE_QT
 
 # Starting a conditional unit test list.
@@ -84,10 +73,8 @@ mln_io_tiff_load
 
 mln_io_tiff_all_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
 mln_io_tiff_all_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
 mln_io_tiff_load_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
 mln_io_tiff_load_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
 endif HAVE_TIFF
 
 # Starting non-conditional unit test list.
@@ -123,9 +110,7 @@ mln_accu_maj_h \
 mln_accu_math_all \
 mln_accu_math_count \
 mln_accu_math_essential \
-mln_accu_math_inf \
 mln_accu_math_sum \
-mln_accu_math_sup \
 mln_accu_max_site \
 mln_accu_nil \
 mln_accu_p \
@@ -381,7 +366,6 @@ mln_core_image_vmorph_all \
 mln_core_image_vmorph_cast_image \
 mln_core_image_vmorph_fun_image \
 mln_core_image_vmorph_thru_image \
-mln_core_image_vmorph_thrubin_image \
 mln_core_image_vmorph_violent_cast_image \
 mln_core_internal_box_impl \
 mln_core_internal_check_image_all \
@@ -521,7 +505,6 @@ mln_data_to_enc \
 mln_data_transform \
 mln_data_transform_inplace \
 mln_data_update \
-mln_data_was_median \
 mln_data_wrap \
 mln_debug_all \
 mln_debug_draw_graph \
@@ -565,34 +548,14 @@ mln_extension_all \
 mln_extension_duplicate \
 mln_extension_essential \
 mln_extension_fill \
-mln_extract_all \
-mln_extract_blue \
-mln_extract_essential \
-mln_extract_green \
-mln_extract_hue \
-mln_extract_lum \
-mln_extract_red \
-mln_extract_sat \
-mln_fun_access_all \
-mln_fun_access_mean \
-mln_fun_accu_result \
 mln_fun_all \
-mln_fun_binary \
-mln_fun_binary_param \
 mln_fun_c \
 mln_fun_cast \
 mln_fun_component_blue \
-mln_fun_component_comp \
-mln_fun_component_comp_count \
 mln_fun_component_green \
-mln_fun_component_ithcomp \
 mln_fun_component_red \
 mln_fun_component_rgb \
-mln_fun_component_scomp \
-mln_fun_compose \
-mln_fun_composition \
 mln_fun_essential \
-mln_fun_from_accu \
 mln_fun_i2v_all \
 mln_fun_i2v_all_to \
 mln_fun_i2v_array \
@@ -602,24 +565,7 @@ mln_fun_internal_ch_function_value_impl \
 mln_fun_internal_resolve \
 mln_fun_internal_selector \
 mln_fun_internal_x2x_linear_impl \
-mln_fun_math_abs \
-mln_fun_math_cos \
-mln_fun_math_inf \
-mln_fun_math_norm \
-mln_fun_math_sup \
-mln_fun_meta_all \
-mln_fun_meta_blue \
-mln_fun_meta_essential \
-mln_fun_meta_first \
-mln_fun_meta_green \
-mln_fun_meta_hue \
 mln_fun_meta_impl \
-mln_fun_meta_inty \
-mln_fun_meta_lum \
-mln_fun_meta_red \
-mln_fun_meta_sat \
-mln_fun_meta_second \
-mln_fun_meta_to_enc \
 mln_fun_n2v_all \
 mln_fun_n2v_white_gaussian \
 mln_fun_ops \
@@ -640,15 +586,10 @@ mln_fun_p2v_essential \
 mln_fun_p2v_iota \
 mln_fun_p2v_ternary \
 mln_fun_param \
-mln_fun_point_col \
-mln_fun_point_row \
-mln_fun_point_sli \
-mln_fun_spe_binary \
 mln_fun_spe_unary \
 mln_fun_stat_all \
 mln_fun_stat_mahalanobis \
 mln_fun_unary \
-mln_fun_unary_param \
 mln_fun_v2b_all \
 mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
@@ -665,7 +606,6 @@ mln_fun_v2v_convert \
 mln_fun_v2v_dec \
 mln_fun_v2v_enc \
 mln_fun_v2v_essential \
-mln_fun_v2v_hsi_to_rgb \
 mln_fun_v2v_hsl_to_rgb \
 mln_fun_v2v_id \
 mln_fun_v2v_inc \
@@ -674,7 +614,6 @@ mln_fun_v2v_norm \
 mln_fun_v2v_projection \
 mln_fun_v2v_qt_rgb_to_int_u \
 mln_fun_v2v_rgb8_to_rgbn \
-mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_rgb_to_int_u \
 mln_fun_v2v_rgb_to_luma \
@@ -846,9 +785,6 @@ mln_linear_convolve_2x1d \
 mln_linear_convolve_directional \
 mln_linear_essential \
 mln_linear_gaussian \
-mln_linear_gaussian_filter \
-mln_linear_gaussian_impl \
-mln_linear_gaussian_internal_coefficients \
 mln_linear_gaussian_1d \
 mln_linear_gaussian_directional_2d \
 mln_linear_lap \
@@ -1096,13 +1032,6 @@ mln_pw_image \
 mln_pw_internal_image_base \
 mln_pw_value \
 mln_pw_var \
-mln_registration_all \
-mln_registration_essential \
-mln_registration_get_rot \
-mln_registration_get_rtransf \
-mln_registration_icp \
-mln_registration_internal_rms \
-mln_registration_registration \
 mln_set_all \
 mln_set_card \
 mln_set_compute \
@@ -1115,11 +1044,7 @@ mln_set_inter \
 mln_set_sym_diff \
 mln_set_uni \
 mln_set_unique \
-mln_subsampling_all \
 mln_subsampling_antialiased \
-mln_subsampling_essential \
-mln_subsampling_gaussian_subsampling \
-mln_subsampling_subsampling \
 mln_tag_all \
 mln_tag_essential \
 mln_tag_init \
@@ -1332,15 +1257,16 @@ mln_value_gl8 \
 mln_value_glf \
 mln_value_graylevel \
 mln_value_graylevel_f \
-mln_value_hsi \
 mln_value_hsl \
 mln_value_int_s \
 mln_value_int_s16 \
+mln_value_int_s24 \
 mln_value_int_s32 \
 mln_value_int_s8 \
 mln_value_int_u \
 mln_value_int_u12 \
 mln_value_int_u16 \
+mln_value_int_u24 \
 mln_value_int_u32 \
 mln_value_int_u8 \
 mln_value_int_u_sat \
@@ -1372,9 +1298,7 @@ mln_value_rgb16 \
 mln_value_rgb8 \
 mln_value_scalar \
 mln_value_set \
-mln_value_shell \
 mln_value_sign \
-mln_value_stack \
 mln_value_super_value \
 mln_value_value_array \
 mln_value_viter \
@@ -1422,6 +1346,7 @@ mln_world_inter_pixel_neighb2d \
 mln_world_inter_pixel_separator_to_pixels \
 mln_world_rgb_invert
 
+<<<<<<< HEAD
 mln_accu_all_SOURCES = mln_accu_all.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
 mln_accu_compute_SOURCES = mln_accu_compute.cc
@@ -2751,4 +2676,6 @@ mln_world_inter_pixel_is_separator_SOURCES = mln_world_inter_pixel_is_separator.
 mln_world_inter_pixel_neighb2d_SOURCES = mln_world_inter_pixel_neighb2d.cc
 mln_world_inter_pixel_separator_to_pixels_SOURCES = mln_world_inter_pixel_separator_to_pixels.cc
 mln_world_rgb_invert_SOURCES = mln_world_rgb_invert.cc
+=======
+>>>>>>> next
 

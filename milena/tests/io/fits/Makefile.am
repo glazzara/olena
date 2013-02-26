@@ -22,7 +22,6 @@ AM_LDFLAGS = $(CFITSIO_LDFLAGS)
 
 check_PROGRAMS = fits
 
-fits_SOURCES = fits.cc
 
 TESTS = $(check_PROGRAMS)
 

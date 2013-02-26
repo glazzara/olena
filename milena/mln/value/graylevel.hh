@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -238,19 +239,19 @@ namespace mln
 
     //     Valid Conversions are :
 
-//     gray_f -> gray_<n>
-//     gray_f -> graylevel<n>
-//     gray_f -> graylevel_f
+    //     gray_f -> gray_<n>
+    //     gray_f -> graylevel<n>
+    //     gray_f -> graylevel_f
 
-//     gray_<n> -> gray_f
-//     gray_<n> -> graylevel<n>
-//     gray_<n> -> graylevel_f
+    //     gray_<n> -> gray_f
+    //     gray_<n> -> graylevel<n>
+    //     gray_<n> -> graylevel_f
 
-//     graylevel_f -> gray_f
-//     graylevel_f -> graylevel<n>
+    //     graylevel_f -> gray_f
+    //     graylevel_f -> graylevel<n>
 
-//     graylevel_<n> -> gray_<n>
-//     graylevel_<n> -> graylevel_f<n>
+    //     graylevel<n> -> gray_<n>
+    //     graylevel<n> -> graylevel_f
 
 
     template <unsigned n>

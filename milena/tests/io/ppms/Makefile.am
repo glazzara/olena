@@ -19,7 +19,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   load
 
-load_SOURCES = load.cc
 
 TESTS = $(check_PROGRAMS)
 

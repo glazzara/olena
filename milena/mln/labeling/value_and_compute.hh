@@ -1,5 +1,4 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -74,18 +73,16 @@ namespace mln
 
       template <typename I, typename N, typename L, typename A>
       void
-      value_and_compute_tests(const Image<I>& input, const mln_value(I)& val,
-			      const Neighborhood<N>& nbh, L& nlabels,
-			      const Accumulator<A>& accu)
+      value_and_compute_tests(const Image<I>& input,
+			      const mln_value(I)& /* val */,
+			      const Neighborhood<N>& nbh, L& /* nlabels */,
+			      const Accumulator<A>& /* accu */)
       {
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
-	(void) accu;
 	(void) input;
-	(void) val;
 	(void) nbh;
-	(void) nlabels;
       }
 
     } // end of namespace mln::labeling::internal
@@ -193,7 +190,7 @@ namespace mln
 
 	template <typename V>
 	inline
-	void process__(const V&, const mln_site(I)&, const L& l)
+	void process__(const V&, const mln_site(I)&, const L& /* l */)
 	{
 	  mlc_abort(V)::check();
 	}
