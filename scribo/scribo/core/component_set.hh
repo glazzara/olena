@@ -69,7 +69,7 @@ namespace scribo
 {
 
   // Forward declaration.
-  template <typename L> struct component_set;
+  template <typename L> class component_set;
 
 
   namespace internal

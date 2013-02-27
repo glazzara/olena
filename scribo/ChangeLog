@@ -1,3 +1,11 @@
+2013-02-27  Anthony Seure  <anthony.seure@lrde.epita.fr>
+
+	Fix different forward declarations (class/struct) in scribo/core.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/line_set.hh:
+	Here.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/core/object_links.hh: Always initialize links in

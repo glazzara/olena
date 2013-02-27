@@ -56,8 +56,8 @@ namespace scribo
 {
 
   // Forward declaration.
-  template <typename L> struct line_set;
-  template <typename L> struct line_info;
+  template <typename L> class line_set;
+  template <typename L> class line_info;
 
 
   typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
