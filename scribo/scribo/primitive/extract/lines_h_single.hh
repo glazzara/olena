@@ -154,8 +154,10 @@ namespace scribo
 	mln_precondition(nbh.is_valid());
 
 	typedef mln_ch_value(I,V) L;
+  V ncomps;
 	component_set<L>
-	  output = primitive::extract::components(input, nbh, nlines);
+	  output = primitive::extract::components(input, nbh, ncomps);
+  (void) ncomps;
 
 	internal::is_line_h_single<L>
 	  is_line(output, w_h_ratio, min_line_length);
