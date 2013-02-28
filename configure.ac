@@ -264,6 +264,14 @@ OLN_WITH_TESSERACT
 
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
+# ----------------- #
+# Poppler library.  #
+# ----------------- #
+
+OLN_WITH_LIB_PKG_CONFIG([poppler-cpp], [poppler/cpp/poppler-version.h], [poppler-cpp],
+                        [poppler], [POPPLER])
+
+
 # --------------------------------- #
 # GDCM library (Grassroots DiCom).  #
 # --------------------------------- #
@@ -475,6 +483,7 @@ AC_CONFIG_FILES([
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
       milena/tests/io/pbms/Makefile
+      milena/tests/io/pdf/Makefile
       milena/tests/io/pfm/Makefile
       milena/tests/io/pgm/Makefile
       milena/tests/io/pgms/Makefile
