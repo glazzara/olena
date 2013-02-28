@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -53,3 +53,7 @@ endif HAVE_MAGICKXX
 if HAVE_TIFF
   SUBDIRS += tiff
 endif HAVE_TIFF
+
+if HAVE_POPPLER
+  SUBDIRS += pdf
+endif HAVE_POPPLER

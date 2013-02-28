@@ -1,3 +1,14 @@
+2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for loading multiple pages PDF files using libpoppler.
+
+	* mln/io/pdf/get_header.hh,
+	* mln/io/pdf/load.hh,
+	* mln/tests/io/pdf/Makefile.am,
+	* mln/tests/io/pdf/load.cc: New.
+
+	* mln/tests/io/Makefile.am: Add pdf/ subdir.
+
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Update.
