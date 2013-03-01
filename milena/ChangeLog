@@ -1,5 +1,9 @@
 2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/pdf/load.hh: Check if the PDF can be rendered.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add test images.
 
 	* tests/img/example-0.ppm,

@@ -198,6 +198,12 @@ namespace mln
 
 	  // Render Page
 	  poppler::page_renderer pr;
+	  if (! pr.can_render())
+	  {
+	    std::cout << "PDF cannot be rendered! Make sure libpoppler is "
+		      << "compiled with a render backend." << std::endl;
+	    abort();
+	  }
 	  poppler::image pima = pr.render_page(p, dpi, dpi);
 
 	  // Prepare MLN image.
