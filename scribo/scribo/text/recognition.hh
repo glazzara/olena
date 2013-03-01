@@ -66,7 +66,6 @@
 # include <tesseract/baseapi.h>
 
 # if defined HAVE_TESSERACT_3
-#  include <tesseract/ocrclass.h>
 #  include <tesseract/resultiterator.h>
 # endif // ! HAVE_TESSERACT_3
 
