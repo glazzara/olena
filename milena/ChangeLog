@@ -1,3 +1,13 @@
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add test images.
+
+	* tests/img/example-0.ppm,
+	* tests/img/example-1.ppm,
+	* tests/img/example-2.ppm,
+	* tests/img/example-3.ppm,
+	* tests/img/example.pdf: New.
+
 2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for loading multiple pages PDF files using libpoppler.
