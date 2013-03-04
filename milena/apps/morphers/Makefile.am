@@ -17,6 +17,8 @@
 
 # Illustrations of morphers.
 
+include $(top_srcdir)/milena/common.mk
+
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.

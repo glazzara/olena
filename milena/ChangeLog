@@ -1,3 +1,10 @@
+2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix apps/morphers/Makefile.am.
+
+	* apps/morphers/Makefile.am: Include
+	$(top_srcdir)/milena/common.mk.
+
 2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation Warnings with latest g++ versions.
