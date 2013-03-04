@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,5 +61,6 @@ int main()
   {
     accu::site_set::rectangularity<point2d> a;
     accu::site_set::rectangularity<point2d> b = exact(a);
+    (void) b;
   }
 }

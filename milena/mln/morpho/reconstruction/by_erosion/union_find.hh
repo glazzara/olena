@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -224,6 +224,8 @@ namespace mln
 			      const Neighborhood<N>& nbh)
 	  {
 	    // FIXME: Not yet implemented.
+	    (void) f;
+	    (void) g;
 	    (void) nbh;
 	    std::cerr
 	      << __FILE__ << ":" << __LINE__ << ": error:\n"

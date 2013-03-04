@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -56,17 +56,23 @@ void test_template()
   {
     mln_PITER(p, ima.domain());
     mln_NITER(n, neighb, p);
+    (void) n;
     mln_QITER(q, win, p);
+    (void) q;
   }
   {
     mln_FWD_PITER(p, ima.domain());
     mln_FWD_NITER(n, neighb, p);
+    (void) n;
     mln_FWD_QITER(q, win, p);
+    (void) q;
   }
   {
     mln_BKD_PITER(p, ima.domain());
     mln_BKD_NITER(n, neighb, p);
+    (void) n;
     mln_BKD_QITER(q, win, p);
+    (void) q;
   }
 
   util::array<point2d> arr;

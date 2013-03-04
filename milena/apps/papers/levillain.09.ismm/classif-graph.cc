@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -202,7 +202,6 @@ make_graph_image(const mln::image2d<bool>& seeds)
   for_all(e)
   {
     // Site associated to E.
-    site_t p = e;
     point2d p1 = e.first();
     point2d p2 = e.second();
 
@@ -275,7 +274,6 @@ main(int argc, char* argv[])
   for_all(e)
   {
     // Site associated to E.
-    util::site_pair<point2d> p = e;
     point2d p1 = e.first();
     point2d p2 = e.second();
 

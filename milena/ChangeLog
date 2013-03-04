@@ -1,5 +1,19 @@
 2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Address more compiler warnings.
+
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* apps/papers/levillain.09.ismm/classif-graph.cc:
+	Remove unused variables.
+	* mln/morpho/reconstruction/by_erosion/union_find.hh:
+	Ignore unused variables.
+	* mln/morpho/reconstruction/by_dilation/union_find.hh:
+	Style adjustment.
+
+2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix apps/morphers/Makefile.am.
 
 	* apps/morphers/Makefile.am: Include

@@ -116,6 +116,7 @@ int main()
   {
     mln_trait_op_plus_(int, float) tmp;
     tmp = 5.1f;
+    (void) tmp;
   }
   {
     my_image2d<float> ima;
