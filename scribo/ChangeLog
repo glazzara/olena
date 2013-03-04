@@ -1,3 +1,10 @@
+2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix inclusion paths.
+
+	* common.mk (AM_CPPFLAGS): Add paths to scribo/ dirs instead of
+	top-level dirs.
+
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify more Scribo Makefiles thanks to AM_DEFAULT_SOURCE_EXT.

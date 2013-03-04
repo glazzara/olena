@@ -2,7 +2,7 @@
 
 ## Common Automake parameters.
 
-## Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+## Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE).
 ##
 ## This file is part of Olena.
 ##
@@ -21,6 +21,7 @@
 # C++ sources.
 AM_DEFAULT_SOURCE_EXT = .cc
 
-# Add paths to Scribo's headers.
-AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ \
+# Add paths to Scribo's and Milena's headers.
+AM_CPPFLAGS =						\
+  -I$(top_srcdir)/scribo -I$(top_builddir)/scribo	\
   -I$(top_srcdir)/milena -I$(top_builddir)/milena
