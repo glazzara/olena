@@ -1,5 +1,6 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -149,21 +150,20 @@ namespace mln
   %template(Name) mln::morpho::opening::area< I, N >;
 %enddef
 
-/*------------------------------------.
-| Meyer's Watershed Transform (WST).  |
-`------------------------------------*/
+/*----------------------------.
+| Watershed Transform (WST).  |
+`----------------------------*/
 
 %{
-#include "mln/morpho/meyer_wst.hh"
+#include "mln/morpho/watershed/flooding.hh"
 %}
 
-%include "mln/morpho/meyer_wst.hh"
+%include "mln/morpho/watershed/flooding.hh"
 
-// FIXME: Wrap mln::morpho::watershed::flooding instead.
-%define instantiate_meyer_wst(Name, L, I, N)
+%define instantiate_watershed_flooding(Name, L, I, N)
   // Explicit instantiation of this trait for the return type.
   %template() mln::trait::ch_value< I, L >;
-  %template(Name) mln::morpho::meyer_wst< L, I, N >;
+  %template(Name) mln::morpho::watershed::flooding< L, I, N >;
 %enddef
 
 /*-------------------------.
@@ -184,5 +184,5 @@ namespace mln
   instantiate_closing_area(closing_area, I, N)
   instantiate_opening_area(opening_area, I, N)
 
-  instantiate_meyer_wst(meyer_wst, mln_value(I), I, N)
+  instantiate_watershed_flooding(watershed_flooding, mln_value(I), I, N)
 %enddef
