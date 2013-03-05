@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +60,7 @@
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/labeling/regional_minima.hh>
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -145,7 +146,7 @@ int main(int argc, char* argv[])
   wst_val_t nbasins;
   typedef edge_image<P,wst_val_t> wshed_t;
 
-  wshed_t wshed = morpho::meyer_wst(result, nbh, nbasins);
+  wshed_t wshed = morpho::watershed::flooding(result, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.

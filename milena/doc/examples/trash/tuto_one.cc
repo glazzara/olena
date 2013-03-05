@@ -17,7 +17,7 @@
 
 # include <mln/morpho/closing_area.hh>
 # include <mln/morpho/gradient.hh>
-# include <mln/morpho/meyer_wst.hh>
+# include <mln/morpho/watershed/flooding.hh>
 
 
 using namespace mln;
@@ -74,7 +74,7 @@ void do_it(const I& ima,
     clo = grad;
 
   unsigned l;
-  mln_ch_value(I, unsigned) wst = morpho::meyer_wst(clo, nbh, l);
+  mln_ch_value(I, unsigned) wst = morpho::watershed::flooding(clo, nbh, l);
 
   debug::println(labeling::regional_minima(clo, nbh, l));
   debug::println(wst);

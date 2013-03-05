@@ -1,3 +1,12 @@
+2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace remaining uses of morpho::meyer_wst in Milena.
+
+	* doc/examples/trash/tuto_bis.cc,
+	* doc/examples/trash/tuto_one.cc,
+	* tools/area_flooding.cc:
+	Here, by morpho::watershed::flooding.
+
 2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove references to mln/morpho/meyer_wst.hh in mln/morpho/.
