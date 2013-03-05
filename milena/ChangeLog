@@ -1,5 +1,22 @@
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove morpho::meyer_wst.
+
+	* mln/morpho/meyer_wst.hh: Remove.
+	Superseded by mln/morpho/watershed/flooding.hh.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen
+	* tests/morpho/meyer_wst.cc,
+	* tests/morpho/meyer_wst_long.cc:
+	Remove tests.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Remove
+	meyer_wst.cc and meyer_wst_long.cc.
+	(meyer_wst_long_CXXFLAGS): Remove.
+	(MOSTLYCLEANFILES): Adjust.
+
+2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Replace remaining uses of morpho::meyer_wst in Milena.
 
 	* doc/examples/trash/tuto_bis.cc,
