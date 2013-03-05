@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,9 +47,14 @@ namespace scribo
 
     using namespace mln;
 
+    /// \brief Bilinear subsampling.
+    /*!
+      \input[in] input An image.
+      \input[in] sub_ratio The subsampling size ratio.
+     */
     template <typename I>
     mln_concrete(I)
-    bilinear(const Image<I>& input_, int sub_ratio);
+    bilinear(const Image<I>& input, int sub_ratio);
 
 
 # ifndef MLN_INCLUDE_ONLY

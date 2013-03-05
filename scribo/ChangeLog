@@ -1,5 +1,9 @@
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/subsampling/bilinear.hh: Update documentation.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/io/img/save.hh: Add an optional reduction factor.
 
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
