@@ -1,5 +1,10 @@
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/lines_discontinued.hh: Add a missing
+	call to exact().
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/extract/lines_discontinued.hh: Fix invalid line
 	reconstruction.
 

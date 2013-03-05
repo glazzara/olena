@@ -90,15 +90,17 @@ namespace scribo
 	void
 	lines_discontinued_tests(const Image<I>& input,
 				 const Neighborhood<N>& nbh, V& nlines,
-				 const Window<W>& win, unsigned rank_k)
+				 const Window<W>& win_, unsigned rank_k)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
 	  mlc_bool(mln_site_(I)::dim == 2)::check();
 	  mlc_is_a(V, mln::value::Symbolic)::check();
 
+	  const W& win = exact(win_);
+
 	  mln_precondition(exact(input).is_valid());
 	  mln_precondition(exact(nbh).is_valid());
-	  mln_precondition(exact(win).is_valid());
+	  mln_precondition(win.is_valid());
 
 	  mln_precondition(win.length() > 2 * (rank_k + 1));
 
