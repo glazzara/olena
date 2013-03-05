@@ -1,5 +1,14 @@
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new test for lines_discontinued.
+
+	* tests/img/lines_discontinued.pbm,
+	* tests/primitive/extract/lines_discontinued.cc: New.
+
+	* tests/primitive/extract/Makefile.am: Add new target.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/primitive/extract/lines_discontinued.hh: Add a missing
 	call to exact().
 

@@ -20,9 +20,10 @@ EXTRA_DIST = 				\
 	  alignment_1.ref.pbm		\
 	  alignment_2.ref.pbm		\
 	  alignment_3.ref.pbm		\
-	  alignment_4.ref.pbm
+	  alignment_4.ref.pbm		\
+	  lines_discontinued.pbm
 
-check_PROGRAMS =
+check_PROGRAMS = lines_discontinued
 
 if HAVE_MAGICKXX
 
