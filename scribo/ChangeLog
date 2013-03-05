@@ -1,5 +1,10 @@
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/primitive/extract/lines_discontinued.hh: Fix invalid line
+	reconstruction.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/subsampling/bilinear.hh: Update documentation.
 
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>

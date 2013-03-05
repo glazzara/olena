@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,6 +68,8 @@ namespace scribo
        * \param[in]     rank_k	  Rank used for filtering.
        *
        * \return An image in which lines are labeled.
+       *
+       * \pre win.length() > 2 * (rank_k + 1)
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>
@@ -98,6 +100,8 @@ namespace scribo
 	  mln_precondition(exact(nbh).is_valid());
 	  mln_precondition(exact(win).is_valid());
 
+	  mln_precondition(win.length() > 2 * (rank_k + 1));
+
 	  (void) input;
 	  (void) nbh;
 	  (void) win;
@@ -124,11 +128,11 @@ namespace scribo
 	const N& nbh = exact(nbh_);
 	const W& win = exact(win_);
 
-	int dil;
-	if (!(rank_k % 2))
-	  dil = win.length() / 2 + 2 * rank_k + 2;
-	else
-	  dil = win.length() / 2 + 2 * rank_k + 3;
+	int dil = win.length() - 2 * (rank_k + 1);
+	mln_assertion(dil > 0);
+
+	if (! (dil % 2)) // Make sure the window have an odd size.
+	  dil += 1;
 
 	mln_ch_value(I,bool) filter
 	  = morpho::dilation(morpho::rank_filter(input, win, rank_k), W(dil));
