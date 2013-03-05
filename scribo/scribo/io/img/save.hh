@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +41,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/io/magick/save.hh>
 # include <mln/data/transform.hh>
+# include <mln/subsampling/antialiased.hh>
 
 # include <scribo/core/document.hh>
 
@@ -98,6 +99,10 @@ namespace scribo
 
       namespace internal
       {
+
+	// FIXME: should be moved as parameter of io::img::save.  This
+	// requires to update some functors.
+	unsigned reduction_factor = 1;
 
 	struct highlight_mask
 	  : Function_v2v<highlight_mask>
@@ -160,9 +165,15 @@ namespace scribo
 	save_debug_without_image(const document<L>& doc)
 	{
 	  mln_precondition(doc.is_valid());
-	  mln::image2d<value::rgb8> output(doc.image().domain());
+
+	  const box2d& ima_domain = doc.image().domain();
+	  box2d domain = make::box2d(ima_domain.pmin() / reduction_factor,
+				     ima_domain.pmax() / reduction_factor);
+	  mln::image2d<value::rgb8> output(domain);
 	  data::fill(output, literal::black);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 1);
+
+	  scribo::io::img::internal::debug_img_visitor<L> f(output,
+							    reduction_factor);
 	  doc.accept(f);
 	  return output;
 	}
@@ -175,7 +186,11 @@ namespace scribo
 	  internal::highlight_mask highlight(0.5f);
 	  mln::image2d<value::rgb8>
 	    output = data::transform(doc.image(), highlight);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 1);
+	  if (reduction_factor > 1)
+	    output = mln::subsampling::antialiased(output, reduction_factor);
+
+	  scribo::io::img::internal::debug_img_visitor<L> f(output,
+							    reduction_factor);
 	  doc.accept(f);
 	  return output;
 	}
