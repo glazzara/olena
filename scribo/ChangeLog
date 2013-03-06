@@ -1,3 +1,12 @@
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more tests for lines_*_discontinued routines.
+
+	* tests/primitive/extract/Makefile.am: New targets.
+
+	* tests/primitive/extract/lines_h_discontinued.cc,
+	* tests/primitive/extract/lines_v_discontinued.cc: New.
+
 2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new test for lines_discontinued.
