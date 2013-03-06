@@ -1,5 +1,12 @@
 2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix wrong line reconstruction with lines_*_pattern routines.
+
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh: Here.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more tests for lines_*_discontinued routines.
 
 	* tests/primitive/extract/Makefile.am: New targets.

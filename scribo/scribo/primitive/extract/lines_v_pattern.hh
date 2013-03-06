@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -88,10 +88,13 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 0, win);
 
+	unsigned vl = length;
+	if (! (vl % 2))
+	  ++vl;
+	win::rectangle2d w(vl, delta);
+
 	mln_concrete(I)
-	  output_dil = morpho::dilation(output,
-					win::rectangle2d(2 * delta + 1,
-							 length + 2));
+	  output_dil = morpho::dilation(output, w);
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 

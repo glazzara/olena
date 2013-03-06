@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -43,7 +43,6 @@
 # include <scribo/primitive/extract/lines_pattern.hh>
 
 # include <scribo/primitive/internal/rd.hh>
-
 
 namespace scribo
 {
@@ -106,10 +105,13 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 1, win);
 
+	unsigned hl = length;
+	if (! (hl % 2))
+	  ++hl;
+	win::rectangle2d w(delta, hl);
+
 	mln_concrete(I)
-	  output_dil = morpho::dilation(output,
-					win::rectangle2d(2 * delta + 1,
-							 length + 2));
+	  output_dil = morpho::dilation(output, w);
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 
