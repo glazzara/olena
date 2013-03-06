@@ -1,5 +1,16 @@
 2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add tests for lines_*_pattern routines.
+
+	* tests/primitive/extract/Makefile.am: New targets.
+
+	* tests/primitive/extract/lines_h_pattern.cc,
+	* tests/primitive/extract/lines_h_pattern.ref.pbm,
+	* tests/primitive/extract/lines_v_pattern.cc,
+	* tests/primitive/extract/lines_v_pattern.ref.pbm: New.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix wrong line reconstruction with lines_*_pattern routines.
 
 	* scribo/primitive/extract/lines_h_pattern.hh,
