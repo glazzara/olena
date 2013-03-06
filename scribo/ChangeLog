@@ -1,5 +1,19 @@
 2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename point_at_index and index_of_point.
+
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/util/init_integral_image.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh: Here.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/text/recognition.hh: Fix tesseract includes.
 
 2013-01-28  Guillaume Lazzara  <z@lrde.epita.fr>

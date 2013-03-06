@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -247,7 +247,7 @@ namespace scribo
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 		  f.full_msk.element(p) = f.full_msk.element(f.parent.element(p));
 
-		  point2d sqp = f.parent.point_at_index(f.parent.element(p)) * ratio;
+		  point2d sqp = f.parent.point_at_offset(f.parent.element(p)) * ratio;
 		  unsigned v = debug_scale_proba(point3d(i - 2, sqp.row(), sqp.col()));
 
 		  for (unsigned l = 0; l < ratio; ++l)

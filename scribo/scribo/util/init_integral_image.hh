@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -99,14 +99,14 @@ namespace scribo
 	J integral_sum_sum_2(output_domain, border);
 	V2* p_integ = integral_sum_sum_2.buffer();
 
-	const int up = integral_sum_sum_2.delta_index(dpoint2d(-1, 0));
+	const int up = integral_sum_sum_2.delta_offset(dpoint2d(-1, 0));
 
 	const unsigned nrows = scale * integral_sum_sum_2.nrows();
 	const unsigned ncols = scale * integral_sum_sum_2.ncols();
 
 	unsigned row = 0;
 
-	unsigned b_offset = integral_sum_sum_2.delta_index(dpoint2d(border,
+	unsigned b_offset = integral_sum_sum_2.delta_offset(dpoint2d(border,
 								    border));
 
 	// First row (special case)

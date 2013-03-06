@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -110,7 +111,7 @@ namespace scribo
       area = scale * scale;
 
       b_next = 2 * border;
-      unsigned b_offset = sub.delta_index(dpoint2d(border, border));
+      unsigned b_offset = sub.delta_offset(dpoint2d(border, border));
       p_sub = sub.buffer() + b_offset;
     }
 

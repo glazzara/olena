@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -107,11 +107,11 @@ namespace scribo
 	if (more_offset == - 3)
 	  more_offset = 0; // No offset needed.
 
-	next_line3 = input.delta_index(dpoint2d(+2,0))
+	next_line3 = input.delta_offset(dpoint2d(+2,0))
 	  + 2 * input.border() + more_offset;
 
-	offset1 = input.delta_index(dpoint2d(+1,0));
-	offset2 = input.delta_index(dpoint2d(+2,0));
+	offset1 = input.delta_offset(dpoint2d(+1,0));
+	offset2 = input.delta_offset(dpoint2d(+2,0));
 
 	initialize(output, input);
 	po = &output(output.domain().pmin());
