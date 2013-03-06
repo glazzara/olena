@@ -101,6 +101,13 @@ namespace scribo
 	bool is_verbose() const;
 	bool is_at_verbose_mode(VerboseMode mode) const;
 
+	/// The default verbose mode used while logging with
+	/// #operator<<.
+	bool set_default_verbose_mode(VerboseMode mode);
+	VerboseMode default_verbose_mode() const;
+
+	/// Set the current verbose mode, filtering the debug output
+	/// logged through this object.
 	bool set_verbose_mode(VerboseMode mode);
 	VerboseMode verbose_mode() const;
 
@@ -194,6 +201,7 @@ namespace scribo
 	Level level_;
 
 	VerboseMode verbose_mode_;
+	VerboseMode default_verbose_mode_;
 	std::string verbose_prefix_;
 	std::ostream& stream_;
 
@@ -235,6 +243,7 @@ namespace scribo
       logger_::logger_()
 	: level_(None),
 	  verbose_mode_(Mute),
+	  default_verbose_mode_(Low),
 	  verbose_prefix_("LOG: "),
 	  stream_(std::cerr)
       {
@@ -263,6 +272,27 @@ namespace scribo
       logger_::is_at_verbose_mode(VerboseMode mode) const
       {
 	return mode == verbose_mode_;
+      }
+
+
+      inline
+      bool
+      logger_::set_default_verbose_mode(VerboseMode mode)
+      {
+	if (mode != Invalid)
+	{
+	  default_verbose_mode_ = mode;
+	  return true;
+	}
+	return false;
+      }
+
+
+      inline
+      VerboseMode
+      logger_::default_verbose_mode() const
+      {
+	return default_verbose_mode_;
       }
 
 
@@ -476,7 +506,7 @@ namespace scribo
       logger_&
       logger_::operator<<(const V& v)
       {
-	if (verbose_mode_ >= Low)
+	if (verbose_mode_ >= default_verbose_mode_)
 	  stream_ << v;
 	return *this;
       }
@@ -486,7 +516,7 @@ namespace scribo
       logger_&
       logger_::operator<<(std::ostream& (*f)(std::ostream&))
       {
-	if (verbose_mode_ >= Low)
+	if (verbose_mode_ >= default_verbose_mode_)
 	  f(stream_);
 	return *this;
       }

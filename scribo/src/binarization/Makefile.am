@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,18 +23,18 @@ noinst_PROGRAMS = 			\
 
 if HAVE_MAGICKXX
 
-  noinst_PROGRAMS +=  			\
-   global_threshold			\
-   sauvola_debug 			\
-   sauvola_ms_debug
+  noinst_PROGRAMS += global_threshold sauvola_debug sauvola_ms_debug
 
   utilexec_PROGRAMS =                   \
+   kim					\
    niblack				\
    otsu					\
    sauvola 				\
    sauvola_ms                           \
    sauvola_ms_fg 			\
-   sauvola_ms_split
+   sauvola_ms_split			\
+   singh				\
+   wolf
 
 
   global_threshold_CPPFLAGS = $(AM_CPPFLAGS) 		\
@@ -58,11 +58,31 @@ if HAVE_MAGICKXX
   sauvola_ms_fg_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
 
+  kim_SOURCES  = kim.cc
+  kim_CPPFLAGS = $(AM_CPPFLAGS) 	\
+		 $(MAGICKXX_CPPFLAGS)
+  kim_LDFLAGS  = $(AM_LDFLAGS) 	\
+		 $(MAGICKXX_LDFLAGS)
+
+  sauvola_SOURCES  = sauvola.cc
   sauvola_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		     $(MAGICKXX_CPPFLAGS)
   sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
 		     $(MAGICKXX_LDFLAGS)
 
+  singh_SOURCES  = singh.cc
+  singh_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		   $(MAGICKXX_CPPFLAGS)
+  singh_LDFLAGS  = $(AM_LDFLAGS) 		\
+		   $(MAGICKXX_LDFLAGS)
+
+  wolf_SOURCES  = wolf.cc
+  wolf_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  $(MAGICKXX_CPPFLAGS)
+  wolf_LDFLAGS  = $(AM_LDFLAGS) 		\
+		  $(MAGICKXX_LDFLAGS)
+
+  sauvola_debug_SOURCES  = sauvola_debug.cc
   sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	  \
 			   -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			   $(MAGICKXX_CPPFLAGS)

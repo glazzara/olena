@@ -1,3 +1,449 @@
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix tesseract includes.
+
+2013-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use io::magick to save output.
+
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/wolf.cc: Here.
+
+2013-01-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization programs.
+
+	* src/binarization/sauvola_ms.cc: Add negate option.
+
+	* src/binarization/sauvola_ms_debug.cc: Fix invalid k parameter
+	value.
+
+2012-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Fix overlapping area
+	criterion.
+
+2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Add comments.
+
+2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use io::magick for sauvola binaries output.
+
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Singh algorithm.
+
+	* scribo/binarization/internal/singh_formula.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/singh.hh,
+	* src/binarization/singh.cc: New.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make the area value depends on the first scale ratio.
+
+	* scribo/binarization/sauvola_ms.hh: Change area ranges.
+
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms.ref.pbm,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm: Fix test.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid default options.
+
+	* src/binarization/sauvola_ms_split.cc: Here.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Provide original algorithms without approximations.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/wolf.hh: Restore original algorithms.
+
+	* tests/binarization/Makefile.am,
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack.ref.pbm,
+	* tests/binarization/niblack_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_wodd_hodd.ref.pbm: Adjust test results.
+
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/niblack_fast.hh,
+	* scribo/binarization/wolf_fast.hh,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm,
+	* tests/binarization/niblack_fast.cc,
+	* tests/binarization/niblack_fast.ref.pbm,
+	* tests/binarization/niblack_fast_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_hodd.ref.pbm,
+	* tests/binarization/wolf_fast.cc,
+	* tests/binarization/wolf_fast.ref.pbm,
+	* tests/binarization/wolf_fast_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_hodd.ref.pbm: New.
+
+2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/all.hh: Add more includes.
+
+2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/otsu_threshold.hh: Fix namespace ambiguities.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* scribo/binarization/internal/local_threshold_core.hh: Add a
+	missing include.
+
+	* scribo/debug/logger.hh: Fix attributes initialization order.
+
+	* scribo/text/paragraphs_closing.hh: Fix a warning related to an
+	unused-variable.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a better support for different k values in Sauvola Multiscale.
+
+	* scribo/scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/scribo/binarization/sauvola_ms.hh,
+	* scribo/scribo/binarization/sauvola_ms_split.hh,
+	* scribo/scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/scribo/toolchain/text_in_doc_preprocess.hh: Make use of
+	k2, k3 and k4 variables.
+
+	* scribo/src/binarization/sauvola_ms.cc,
+	* scribo/src/binarization/sauvola_ms_debug.cc,
+	* scribo/src/binarization/sauvola_ms_fg.cc,
+	* scribo/src/binarization/sauvola_ms_split.cc: Fix program
+	arguments.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a default verbose mode in debug::logger.
+
+	* scribo/debug/logger.hh: Here.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of logger features.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/sauvola_ms.hh: Make use of operator<< with
+	debug::logger.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/sauvola_ms.cc: Fix options handling.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix call to sauvola_ms.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of new logger features.
+
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/wolf.cc: Make use of operator<<.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup Kim's binarization.
+
+	* src/binarization/kim.cc: Move code...
+	* scribo/binarization/kim.hh: ... here.
+
+	* tests/binarization/Makefile.am: Add new target.
+
+	* tests/binarization/kim.cc,
+	* tests/binarization/kim.ref.pbm,
+	* tests/binarization/kim_weven_hodd.ref.pbm,
+	* tests/binarization/kim_wodd_heven.ref.pbm,
+	* tests/binarization/kim_wodd_hodd.ref.pbm: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make integral browsing canvas robust to large windows.
+
+	* scribo/binarization/sauvola_ms.hh: remove tests on window size.
+
+	* scribo/canvas/integral_browsing.hh: Check window size.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Several small fixes.
+
+	* scribo/estim/font_color.hh: Fix namespace ambiguities.
+
+	* src/binarization/Makefile.am: Add kim as target.
+
+	* src/binarization/kim.cc: Cleanup code.
+
+	* src/binarization/niblack.cc: Fix reverse video.
+
+	* src/binarization/sauvola_ms.cc: Handle several k values.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/kim.cc: Remove debug and useless steps.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/kim.cc: New binarization algorithm.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce a verbose mode.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Remove debug.
+
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc: Add verbose mode option.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Sauvola.
+
+	* sauvola_fast.cc: Remove.
+
+	* scribo/binarization/internal/local_threshold_debug.hh: Add more
+	debug.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Introduce k for each scale.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_split.cc: Take several k into
+	account.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Wolf's binarization algorithm.
+
+	* scribo/binarization/internal/wolf_formula.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/util/integral_sum_sum2_global_min_functor.hh,
+	* src/binarization/wolf.cc,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm: New.
+
+	* src/binarization/Makefile.am,
+	* tests/binarization/Makefile.am: Add new target.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more debug.
+
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* src/binarization/sauvola_ms_debug.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Change area thresholds.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: More fixes in debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh: Use C8
+	neighborhood for labeling.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: More fixes in debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix warning in Otsu related files.
+
+	* scribo/binarization/otsu_threshold.hh,
+	* src/binarization/otsu.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix and improve sauvola_ms debug.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* src/binarization/sauvola_ms_debug.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid line offset due to input image size.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh: Here.
+
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_wodd_hodd.ref.pbm,
+	* tests/binarization/sauvola.cc,
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm,
+	* tests/binarization/sauvola_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_wodd_hodd.ref.pbm,
+	* tests/img/lena_weven_hodd.pgm,
+	* tests/img/lena_wodd_heven.pgm,
+	* tests/img/lena_wodd_hodd.pgm: Add test case.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization tests.
+
+	* sauvola_fast.cc,
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack.ref.pbm,
+	* tests/binarization/sauvola.cc,
+	* tests/binarization/sauvola.ref.pbm: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp *_threshold functions.
+
+	* scribo/binarization/internal/sauvola_core.hh: Remove.
+
+	* scribo/binarization/internal/local_threshold_core.hh: New.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_threshold.hh: Make use of
+	local_threshold_core.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Refactor local threshold binarization algorithms.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh: Remove.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_core.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/util/compute_sub_domains.hh,
+	* scribo/util/init_integral_image.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh,
+	* scribo/util/integral_sum_sum2_functor.hh,
+	* src/binarization/pgm_niblack_threshold_image.cc: New.
+
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/binarization/trash/compute_local_threshold.hh,
+	* scribo/canvas/integral_browsing.hh: Cleanup and make use of
+	functors.
+
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc: Handle verbose/debug
+	modes.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Cleanup and add some debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Use subscaled integral image.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Fix bugs. Stable version.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: New implementation.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_threshold.hh: Add some debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Compute Sauvola on documents with light text and dark background.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh: Update formula.
+
 2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/Makefile.am: Add a missing file in EXTRA_DIST.

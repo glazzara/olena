@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,7 +38,6 @@ namespace scribo
 {
 
   using namespace mln;
-
 
   namespace binarization
   {
@@ -112,7 +111,6 @@ namespace scribo
 	  for_all(p)
 	    output(p) = (input(p) <= threshold(p));
 
-
 	  trace::exiting("scribo::binarization::impl::generic::local_threshold");
 	  return output;
 	}
@@ -139,8 +137,9 @@ namespace scribo
 	mln_pixter(const I) pi(input);
 	mln_pixter(const T) pt(threshold);
 	mln_pixter(O) po(output);
+
 	for_all_3(pi, pt, po)
-	  po.val() = pi.val() <= pt.val();
+	  po.val() = (pi.val() <= pt.val());
 
 	trace::exiting("scribo::binarization::impl::generic::local_threshold_fastest");
 	return output;
@@ -159,7 +158,7 @@ namespace scribo
 
       template <typename I, typename T>
       mln_ch_value(I, bool)
-      local_threshold_dispatch(trait::image::value_alignment::any,
+      local_threshold_dispatch(trait::image::speed::any,
 			       trait::image::speed::any,
 			       const Image<I>& input, const Image<T>& threshold)
       {
@@ -169,7 +168,7 @@ namespace scribo
 
       template <typename I, typename T>
       mln_ch_value(I, bool)
-      local_threshold_dispatch(trait::image::value_alignment::with_grid,
+      local_threshold_dispatch(trait::image::speed::fastest,
 			       trait::image::speed::fastest,
 			       const Image<I>& input, const Image<T>& threshold)
       {
@@ -181,9 +180,9 @@ namespace scribo
       local_threshold_dispatch(const Image<I>& input,
 			       const Image<T>& threshold)
       {
-	return local_threshold_dispatch(mln_trait_image_value_alignment(I)(),
-				 mln_trait_image_speed(I)(),
-				 exact(input), exact(threshold));
+	return local_threshold_dispatch(mln_trait_image_speed(I)(),
+					mln_trait_image_speed(T)(),
+					input, threshold);
       }
 
     } // end of namespace scribo::binarization::internal

@@ -32,18 +32,8 @@
 ///
 
 # include <mln/core/concept/image.hh>
-# include <mln/data/transform.hh>
-# include <mln/value/int_u8.hh>
-
-# include <scribo/binarization/sauvola_threshold.hh>
-# include <scribo/binarization/local_threshold.hh>
-# include <scribo/binarization/internal/local_threshold_debug.hh>
-
-# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-#  include <mln/io/pgm/save.hh>
-#  include <mln/io/pbm/save.hh>
-#  include <mln/data/saturate.hh>
-# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+# include <scribo/binarization/internal/sauvola_functor.hh>
+# include <scribo/binarization/internal/local_threshold_core.hh>
 
 namespace scribo
 {
@@ -94,67 +84,6 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    // Implementations.
-
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename I>
-	mln_ch_value(I, bool)
-	sauvola(const Image<I>& input, unsigned window_size, double K)
-	{
-	  trace::entering("scribo::binarization::impl::generic::sauvola");
-	  mln_precondition(exact(input).is_valid());
-
-	  mln_ch_value(I,value::int_u8)
-	    threshold_image = binarization::sauvola_threshold(input, window_size, K);
-
-	  mln_ch_value(I, bool)
-	    output = local_threshold(input, threshold_image);
-
-	  trace::exiting("scribo::binarization::impl::generic::sauvola");
-	  return output;
-	}
-
-      } // end of namespace scribo::binarization::impl::generic
-
-
-    } // end of namespace scribo::binarization::impl
-
-
-
-    // Dispatch
-
-    namespace internal
-    {
-
-      template <typename I>
-      mln_ch_value(I, bool)
-	sauvola_dispatch(const mln_value(I)&,
-			 const Image<I>& input, unsigned window_size,
-			 double K)
-      {
-	return impl::generic::sauvola(input, window_size, K);
-      }
-
-
-      template <typename I>
-      mln_ch_value(I, bool)
-      sauvola_dispatch(const Image<I>& input, unsigned window_size,
-		       double K)
-      {
-	typedef mln_value(I) V;
-	return sauvola_dispatch(V(), input, window_size, K);
-      }
-
-    } // end of namespace scribo::binarization::internal
-
-
-
     // Facades
 
     template <typename I>
@@ -165,30 +94,11 @@ namespace scribo
 
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I, bool)
-	output = internal::sauvola_dispatch(input, window_size, K);
-
-# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
-      if (internal::stddev_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_stddev),
-		      internal::stddev_image_output);
-      if (internal::mean_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_mean),
-		      internal::mean_image_output);
-      if (internal::threshold_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_threshold),
-		      internal::threshold_image_output);
-
-      if (internal::alpham_image_output)
-	io::pgm::save(data::saturate(value::int_u8(), internal::debug_alpham),
-		      internal::alpham_image_output);
-      if (internal::alphacond_image_output)
-	io::pbm::save(internal::debug_alphacond, internal::alphacond_image_output);
-# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
-
+      internal::sauvola_functor<I> f(input, K, SCRIBO_DEFAULT_SAUVOLA_R);
+      internal::local_threshold_core(input, f, window_size);
 
       trace::exiting("scribo::binarization::sauvola");
-      return output;
+      return f.output;
     }
 
 

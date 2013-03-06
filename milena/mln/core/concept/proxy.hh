@@ -186,7 +186,7 @@ namespace mln
 
 
     // Disambiguate between (Proxy Op Object) and (Object Op Literal).
- 
+
     template < template <class, class> class Op,
 	       typename P, typename L >
     struct set_binary_< Op, mln::Proxy, P, mln::Literal, L >
@@ -229,7 +229,7 @@ namespace mln
       typedef q_subject;
       q_subject subj_();
     */
-    
+
   protected:
     Proxy();
   };
@@ -261,7 +261,7 @@ namespace mln
   template <typename T>
   typename mln::internal::unproxy_rec_<const T>::ret
   unproxy_rec(const T& t);
- 
+
 
   // operator <<
 

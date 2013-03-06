@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -123,7 +124,7 @@ namespace mln
       mat<m,n,T> t() const;
 
       /// Return the inverse of the matrix.
-      /// Only compile on square matrix. 
+      /// Only compile on square matrix.
       mat<n,m,T> _1() const;
 
     private:
@@ -132,18 +133,6 @@ namespace mln
 
       void set_id_();
     };
-
-
-    template <typename T>
-    mat<2,2,T>
-    make(const T& t00, const T& t01,
-	 const T& t10, const T& t11);
-
-    template <typename T>
-    mat<3,3,T>
-    make(const T& t00, const T& t01, const T& t02,
-	 const T& t10, const T& t11, const T& t12,
-	 const T& t20, const T& t21, const T& t22);
 
 
   } // end of namespace algebra
@@ -225,7 +214,7 @@ namespace mln
     {
       typedef algebra::mat<m, m, mln_trait_op_times(T, U)> ret;
     };
-    
+
     // mat * s
 
     template < unsigned n, unsigned m, typename T,
@@ -245,7 +234,7 @@ namespace mln
     //     {
     //       typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
     //     };
-    
+
     // mat / s
 
     template < unsigned n, unsigned m, typename T,
@@ -340,6 +329,7 @@ namespace mln
 
     // Trace.
 
+    /// Compute the trace of a matrix \p m
     template<unsigned n, typename T>
     mln_sum(T)
     tr(const mat<n,n,T>& m);
@@ -347,13 +337,10 @@ namespace mln
 
     // Determinant.
 
-    template<typename T>
+    /// Compute the determinant of a matrix \p m
+    template<unsigned n, typename T>
     mln_sum_product(T,T)
-      det(const mat<2,2,T>& m);
-
-    template<typename T>
-    mln_sum_product(T,T)
-      det(const mat<3,3,T>& m);
+    det(const mat<n,n,T>& m);
 
 
 
@@ -548,6 +535,37 @@ namespace mln
     namespace internal
     {
 
+      // "Make" routines.
+
+      template <typename T>
+      inline
+      mat<2,2,T>
+      make(const T& t00, const T& t01,
+	   const T& t10, const T& t11)
+      {
+	mat<2,2,T> tmp;
+	tmp(0, 0) = t00;  tmp(0, 1) = t01;
+	tmp(1, 0) = t10;  tmp(1, 1) = t11;
+	return tmp;
+      }
+
+      template <typename T>
+      inline
+      mat<3,3,T>
+      make(const T& t00, const T& t01, const T& t02,
+	   const T& t10, const T& t11, const T& t12,
+	   const T& t20, const T& t21, const T& t22)
+      {
+	mat<3,3,T> tmp;
+	tmp(0, 0) = t00;  tmp(0, 1) = t01;  tmp(0, 2) = t02;
+	tmp(1, 0) = t10;  tmp(1, 1) = t11;  tmp(1, 2) = t12;
+	tmp(2, 0) = t20;  tmp(2, 1) = t21;  tmp(2, 2) = t22;
+	return tmp;
+      }
+
+
+      // Inverse routines.
+
       template <typename T>
       inline
       mat<2,2,float>
@@ -568,35 +586,119 @@ namespace mln
 	mln_precondition(d != 0);
 	return make<float>( det(make(m(1,1), m(1,2),
 				     m(2,1), m(2,2))),
-			
+
 			    det(make(m(0,2), m(0,1),
 				     m(2,2), m(2,1))),
-			
+
 			    det(make(m(0,1), m(0,2),
 				     m(1,1), m(1,2))),
 
-			
+
 			    det(make(m(1,2), m(1,0),
 				     m(2,2), m(2,0))),
-			
+
 			    det(make(m(0,0), m(0,2),
 				     m(2,0), m(2,2))),
-			
+
 			    det(make(m(0,2), m(0,0),
 				     m(1,2), m(1,0))),
 
 			    det(make(m(1,0), m(1,1),
 				     m(2,0), m(2,1))),
-			
+
 			    det(make(m(0,1), m(0,0),
 				     m(2,1), m(2,0))),
-			
+
 			    det(make(m(0,0), m(0,1),
 				     m(1,0), m(1,1)))
 			    ) / d;
       }
 
-    } // end of namespace algebra::inverse
+      template <typename T>
+      inline
+      mat<4,4,float>
+      inverse(const mat<4,4,T>& m)
+      {
+	mat<4,4,T> mo;
+
+	// Based on MESA implementation of the GLU library.
+	mo(0,0) =  m(1,1) * m(2,2) * m(3,3) - m(1,1) * m(2,3) * m(3,2) -
+	           m(2,1) * m(1,2) * m(3,3) + m(2,1) * m(1,3) * m(3,2) +
+	           m(3,1) * m(1,2) * m(2,3) - m(3,1) * m(1,3) * m(2,2);
+
+	mo(1,0) = -m(1,0) * m(2,2) * m(3,3) + m(1,0) * m(2,3) * m(3,2) +
+	           m(2,0) * m(1,2) * m(3,3) - m(2,0) * m(1,3) * m(3,2) -
+	           m(3,0) * m(1,2) * m(2,3) + m(3,0) * m(1,3) * m(2,2);
+
+	mo(2,0) =  m(1,0) * m(2,1) * m(3,3) - m(1,0) * m(2,3) * m(3,1) -
+	           m(2,0) * m(1,1) * m(3,3) + m(2,0) * m(1,3) * m(3,1) +
+	           m(3,0) * m(1,1) * m(2,3) - m(3,0) * m(1,3) * m(2,1);
+
+	mo(3,0) = -m(1,0) * m(2,1) * m(3,2) + m(1,0) * m(2,2) * m(3,1) +
+	           m(2,0) * m(1,1) * m(3,2) - m(2,0) * m(1,2) * m(3,1) -
+	           m(3,0) * m(1,1) * m(2,2) + m(3,0) * m(1,2) * m(2,1);
+
+	mo(0,1) = -m(0,1) * m(2,2) * m(3,3) + m(0,1) * m(2,3) * m(3,2) +
+	           m(2,1) * m(0,2) * m(3,3) - m(2,1) * m(0,3) * m(3,2) -
+	           m(3,1) * m(0,2) * m(2,3) + m(3,1) * m(0,3) * m(2,2);
+
+	mo(1,1) =  m(0,0) * m(2,2) * m(3,3) - m(0,0) * m(2,3) * m(3,2) -
+	           m(2,0) * m(0,2) * m(3,3) + m(2,0) * m(0,3) * m(3,2) +
+	           m(3,0) * m(0,2) * m(2,3) - m(3,0) * m(0,3) * m(2,2);
+
+	mo(2,1) = -m(0,0) * m(2,1) * m(3,3) + m(0,0) * m(2,3) * m(3,1) +
+	           m(2,0) * m(0,1) * m(3,3) - m(2,0) * m(0,3) * m(3,1) -
+	           m(3,0) * m(0,1) * m(2,3) + m(3,0) * m(0,3) * m(2,1);
+
+	mo(3,1) =  m(0,0) * m(2,1) * m(3,2) - m(0,0) * m(2,2) * m(3,1) -
+	           m(2,0) * m(0,1) * m(3,2) + m(2,0) * m(0,2) * m(3,1) +
+	           m(3,0) * m(0,1) * m(2,2) - m(3,0) * m(0,2) * m(2,1);
+
+	mo(0,2) =  m(0,1) * m(1,2) * m(3,3) - m(0,1) * m(1,3) * m(3,2) -
+	           m(1,1) * m(0,2) * m(3,3) + m(1,1) * m(0,3) * m(3,2) +
+	           m(3,1) * m(0,2) * m(1,3) - m(3,1) * m(0,3) * m(1,2);
+
+	mo(1,2) = -m(0,0) * m(1,2) * m(3,3) + m(0,0) * m(1,3) * m(3,2) +
+	           m(1,0) * m(0,2) * m(3,3) - m(1,0) * m(0,3) * m(3,2) -
+	           m(3,0) * m(0,2) * m(1,3) + m(3,0) * m(0,3) * m(1,2);
+
+	mo(2,2) =  m(0,0) * m(1,1) * m(3,3) - m(0,0) * m(1,3) * m(3,1) -
+	           m(1,0) * m(0,1) * m(3,3) + m(1,0) * m(0,3) * m(3,1) +
+	           m(3,0) * m(0,1) * m(1,3) - m(3,0) * m(0,3) * m(1,1);
+
+	mo(3,2) = -m(0,0) * m(1,1) * m(3,2) + m(0,0) * m(1,2) * m(3,1) +
+	           m(1,0) * m(0,1) * m(3,2) - m(1,0) * m(0,2) * m(3,1) -
+	           m(3,0) * m(0,1) * m(1,2) + m(3,0) * m(0,2) * m(1,1);
+
+	mo(0,3) = -m(0,1) * m(1,2) * m(2,3) + m(0,1) * m(1,3) * m(2,2) +
+	           m(1,1) * m(0,2) * m(2,3) - m(1,1) * m(0,3) * m(2,2) -
+	           m(2,1) * m(0,2) * m(1,3) + m(2,1) * m(0,3) * m(1,2);
+
+	mo(1,3) =  m(0,0) * m(1,2) * m(2,3) - m(0,0) * m(1,3) * m(2,2) -
+	           m(1,0) * m(0,2) * m(2,3) + m(1,0) * m(0,3) * m(2,2) +
+	           m(2,0) * m(0,2) * m(1,3) - m(2,0) * m(0,3) * m(1,2);
+
+	mo(2,3) = -m(0,0) * m(1,1) * m(2,3) + m(0,0) * m(1,3) * m(2,1) +
+	           m(1,0) * m(0,1) * m(2,3) - m(1,0) * m(0,3) * m(2,1) -
+	           m(2,0) * m(0,1) * m(1,3) + m(2,0) * m(0,3) * m(1,1);
+
+	mo(3,3) =  m(0,0) * m(1,1) * m(2,2) - m(0,0) * m(1,2) * m(2,1) -
+	           m(1,0) * m(0,1) * m(2,2) + m(1,0) * m(0,2) * m(2,1) +
+	           m(2,0) * m(0,1) * m(1,2) - m(2,0) * m(0,2) * m(1,1);
+
+	double det = m(0,0) * mo(0,0) + m(0,1) * mo(1,0) + m(0,2) * mo(2,0) + m(0,3) * mo(0,3);
+	mln_precondition(det != 0);
+
+	det = 1.0 / det;
+
+	for (int i = 0; i < 4; i++)
+	  for (int j = 0; j < 4; j++)
+	    mo(i,j) *= det;
+
+	return mo;
+      }
+
+    } // end of namespace algebra::internal
 
     template <unsigned n, unsigned m, typename T>
     inline
@@ -605,35 +707,6 @@ namespace mln
     {
       mlc_bool(m == n)::check();
       return internal::inverse(*this);
-    }
-
-
-    // "Make" routines.
-
-    template <typename T>
-    inline
-    mat<2,2,T>
-    make(const T& t00, const T& t01,
-	 const T& t10, const T& t11)
-    {
-      mat<2,2,T> tmp;
-      tmp(0, 0) = t00;  tmp(0, 1) = t01;
-      tmp(1, 0) = t10;  tmp(1, 1) = t11;
-      return tmp;
-    }
-
-    template <typename T>
-    inline
-    mat<3,3,T>
-    make(const T& t00, const T& t01, const T& t02,
-	 const T& t10, const T& t11, const T& t12,
-	 const T& t20, const T& t21, const T& t22)
-    {
-      mat<3,3,T> tmp;
-      tmp(0, 0) = t00;  tmp(0, 1) = t01;  tmp(0, 2) = t02;
-      tmp(1, 0) = t10;  tmp(1, 1) = t11;  tmp(1, 2) = t12;
-      tmp(2, 0) = t20;  tmp(2, 1) = t21;  tmp(2, 2) = t22;
-      return tmp;
     }
 
 
@@ -827,27 +900,70 @@ namespace mln
 
     // Determinant.
 
-    template<typename T>
+    namespace impl
+    {
+
+      template<unsigned n, typename T>
+      mln_sum_product(T,T)
+      det(const mat<n,n,T>& m)
+      {
+	// Not implemented.
+	mlc_abort(T)::check();
+      }
+
+      template<typename T>
+      inline
+      mln_sum_product(T,T)
+      det(const mat<2,2,T>& m)
+      {
+	return m(0,0) * m(1,1) - m(0,1) * m(1,0);
+      }
+
+      template<typename T>
+      inline
+      mln_sum_product(T,T)
+      det(const mat<3,3,T>& m)
+      {
+	return
+	  + m(0,0) * m(1,1) * m(2,2)
+	  - m(0,0) * m(1,2) * m(2,1)
+	  - m(0,1) * m(1,0) * m(2,2)
+	  + m(0,1) * m(1,2) * m(2,0)
+	  + m(0,2) * m(1,0) * m(2,1)
+	  - m(0,2) * m(1,1) * m(2,0);
+      }
+
+      template<typename T>
+      inline
+      mln_sum_product(T,T)
+      det(const mat<4,4,T>& m)
+      {
+	return m(0,3) * m(1,2) * m(2,1) * m(3,0) - m(0,2) * m(1,3) * m(2,1) * m(3,0) -
+	  m(0,3) * m(1,1) * m(2,2) * m(3,0) + m(0,1) * m(1,3) * m(2,2) * m(3,0) +
+	  m(0,2) * m(1,1) * m(2,3) * m(3,0) - m(0,1) * m(1,2) * m(2,3) * m(3,0) -
+	  m(0,3) * m(1,2) * m(2,0) * m(3,1) + m(0,2) * m(1,3) * m(2,0) * m(3,1) +
+	  m(0,3) * m(1,0) * m(2,2) * m(3,1) - m(0,0) * m(1,3) * m(2,2) * m(3,1) -
+	  m(0,2) * m(1,0) * m(2,3) * m(3,1) + m(0,0) * m(1,2) * m(2,3) * m(3,1) +
+	  m(0,3) * m(1,1) * m(2,0) * m(3,2) - m(0,1) * m(1,3) * m(2,0) * m(3,2) -
+	  m(0,3) * m(1,0) * m(2,1) * m(3,2) + m(0,0) * m(1,3) * m(2,1) * m(3,2) +
+	  m(0,1) * m(1,0) * m(2,3) * m(3,2) - m(0,0) * m(1,1) * m(2,3) * m(3,2) -
+	  m(0,2) * m(1,1) * m(2,0) * m(3,3) + m(0,1) * m(1,2) * m(2,0) * m(3,3) +
+	  m(0,2) * m(1,0) * m(2,1) * m(3,3) - m(0,0) * m(1,2) * m(2,1) * m(3,3) -
+	  m(0,1) * m(1,0) * m(2,2) * m(3,3) + m(0,0) * m(1,1) * m(2,2) * m(3,3);
+      }
+
+    } // end of namespace mln::algebra::impl
+
+
+    template<unsigned n, typename T>
     inline
     mln_sum_product(T,T)
-      det(const mat<2,2,T>& m)
+      det(const mat<n,n,T>& m)
     {
-      return m(0,0) * m(1,1) - m(0,1) * m(1,0);
+      return mln::algebra::impl::det(m);
     }
 
-    template<typename T>
-    inline
-    mln_sum_product(T,T)
-      det(const mat<3,3,T>& m)
-    {
-      return
-	+ m(0,0) * m(1,1) * m(2,2)
-	- m(0,0) * m(1,2) * m(2,1)
-	- m(0,1) * m(1,0) * m(2,2)
-	+ m(0,1) * m(1,2) * m(2,0)
-	+ m(0,2) * m(1,0) * m(2,1)
-	- m(0,2) * m(1,1) * m(2,0);
-    }
+
 
 
     // vec methods.
@@ -862,6 +978,7 @@ namespace mln
 	tmp(0,i) = data_[i];
       return tmp;
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

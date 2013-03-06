@@ -88,6 +88,25 @@ namespace scribo
 //       mln_precondition((h/2) < ima.nrows());
 //       mln_precondition((w/2) < ima.ncols());
 
+      // Adjust window size to image.
+      if (w > (ima.domain().ncols() - ima.border()))
+      {
+	w = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
+	if (! (w % 2))
+	  --w;
+	trace::warning("integral_browsing - Adjusting window width since it"
+		       " was larger than image height.");
+      }
+      if (h > (ima.domain().nrows() - ima.border()))
+      {
+	h = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
+	if (! (h % 2))
+	  --h;
+	trace::warning("integral_browsing - Adjusting window height since it"
+		       " was larger than image width.");
+      }
+
+
       const int
 	nrows = ima.nrows(),
 	ncols = ima.ncols(),
@@ -116,6 +135,12 @@ namespace scribo
       for (col = col_0; col <= max_col_mid; col += step) ;
       int w_right = ncols - col + w/2;
 
+      // tl: top left
+      // tr: top right
+      // ml: middle left
+      // mr: middle right
+      // bl: bottom left
+      // br: bottom right
       Ptr
 	d_tl_start, d_tr_start,
 	b_ml_start = 0, d_ml_start = 0, b_mr_start = 0, d_mr_start = 0,
@@ -176,7 +201,7 @@ namespace scribo
 	for (; col <= max_col_mid; col += step)
 	{
 	  // D - C
-	  internal::compute_stats(d_ima->first()   - c_ima->first(),
+	  internal::compute_stats(d_ima->first()  - c_ima->first(),
 				  d_ima->second() - c_ima->second(),
 				  size_tc * s_2,
 				  mean, stddev);
@@ -210,7 +235,7 @@ namespace scribo
 	delta_size_tr += step_2;
 	size_tr_start += delta_start_right;
 	d_tr_start += offset_down;
-
+	functor.end_of_row(row);
       }
 
 
@@ -307,6 +332,7 @@ namespace scribo
 
 	b_mr_start += offset_down;
 	d_mr_start += offset_down;
+	functor.end_of_row(row);
       }
 
 
@@ -404,6 +430,7 @@ namespace scribo
 	delta_size_br -= step_2;
 	size_br_start -= delta_start_right;
 	b_br_start += offset_down;
+	functor.end_of_row(row);
       }
 
       functor.finalize();

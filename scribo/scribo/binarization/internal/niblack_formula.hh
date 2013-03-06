@@ -59,16 +59,14 @@ namespace scribo
 	  \param[in] k Control the threshold value in the local
 	  window. The higher, the lower the threshold
 	  form the local mean m(x, y).
-	  \param[in] R Maximum value of the standard deviation (128
-	  for grayscale documents). Unused in this formula.
 
 	  \return A threshold.
 	*/
 	double operator()(const double m_x_y, const double s_x_y,
-			  const double K, const double R) const;
+			  const double K) const;
 
 	/*!
-	  \overload K = 0.34.
+	  \overload K = -0.2.
 	 */
 	double operator()(const double m_x_y, const double s_x_y) const;
 
@@ -80,7 +78,7 @@ namespace scribo
       inline
       double
       niblack_formula::operator()(const double m_x_y, const double s_x_y,
-				  const double K, const double /*R*/) const
+				  const double K) const
       {
 	return m_x_y + K * s_x_y;
       }
@@ -90,7 +88,7 @@ namespace scribo
       niblack_formula::operator()(const double m_x_y, const double s_x_y) const
       {
 	return  (*this)(m_x_y, s_x_y,
-			SCRIBO_DEFAULT_NIBLACK_K, 128);
+			SCRIBO_DEFAULT_NIBLACK_K);
       }
 
 

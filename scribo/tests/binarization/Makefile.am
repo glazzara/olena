@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,18 +18,47 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
+  kim.res.pbm					\
+  kim_wodd_heven.ref.pbm			\
+  kim_weven_hodd.ref.pbm			\
+  kim_wodd_hodd.ref.pbm				\
   niblack.res.pbm				\
+  niblack_wodd_heven.ref.pbm			\
+  niblack_weven_hodd.ref.pbm			\
+  niblack_wodd_hodd.ref.pbm			\
+  niblack_fast.res.pbm				\
+  niblack_fast_wodd_heven.ref.pbm		\
+  niblack_fast_weven_hodd.ref.pbm		\
+  niblack_fast_wodd_hodd.ref.pbm		\
   sauvola_ms.ref.pbm				\
+  sauvola_ms_wodd_heven.ref.pbm			\
+  sauvola_ms_weven_hodd.ref.pbm			\
+  sauvola_ms_wodd_hodd.ref.pbm			\
   sauvola.ref.pbm				\
-  otsu.ref.pbm
+  sauvola_wodd_heven.ref.pbm			\
+  sauvola_weven_hodd.ref.pbm			\
+  sauvola_wodd_hodd.ref.pbm			\
+  otsu.ref.pbm					\
+  wolf.ref.pbm					\
+  wolf_wodd_heven.ref.pbm			\
+  wolf_weven_hodd.ref.pbm			\
+  wolf_wodd_hodd.ref.pbm			\
+  wolf_fast.ref.pbm				\
+  wolf_fast_wodd_heven.ref.pbm			\
+  wolf_fast_weven_hodd.ref.pbm			\
+  wolf_fast_wodd_hodd.ref.pbm
 
 check_PROGRAMS =				\
   global_threshold 				\
+  kim 						\
   local_threshold	 			\
   niblack					\
+  niblack_fast					\
   otsu						\
   sauvola 					\
-  sauvola_ms
+  sauvola_ms					\
+  wolf						\
+  wolf_fast
 
 
 TESTS = $(check_PROGRAMS)

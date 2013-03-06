@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,6 +82,7 @@ namespace mln
 
 	static const E min() { return mln::value::internal::limits<E>::min(); }
 	static const E max() { return mln::value::internal::limits<E>::max(); }
+	static const E epsilon() { return mln::value::internal::limits<E>::epsilon(); }
 
 	typedef float sum;
       };

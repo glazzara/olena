@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
-# define SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
+#ifndef SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH
+# define SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH
 
 /// \file
 ///
@@ -43,6 +43,7 @@
 #  include <scribo/binarization/internal/local_threshold_debug.hh>
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
+#include <mln/value/int_u8.hh>
 
 namespace scribo
 {
@@ -53,13 +54,23 @@ namespace scribo
     namespace internal
     {
 
+      double k2 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k3 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k4 = SCRIBO_DEFAULT_SAUVOLA_K;
+
+
       using namespace mln;
 
 
       template <typename I>
-      struct first_pass_functor
+      struct sauvola_ms_functor
       {
 	const I& input;
+
+	const image2d<value::int_u8>& e_2;
+	unsigned i;
+	unsigned q;
+
 	mln_fwd_pixter(const I) pxl;
 	double res;
 	image2d<unsigned> parent;
@@ -67,18 +78,27 @@ namespace scribo
 	image2d<bool> msk;
 	image2d<value::int_u8> t_sub;
 
+#  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	image2d<bool> full_msk;
+#  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
 	unsigned n_nbhs;
 	mln::util::array<int> dp;
 
 	double K_;
 	double R_;
+	int i_;
 
 	sauvola_formula formula_;
 
-	first_pass_functor(const I& input, double K, double R);
+	sauvola_ms_functor(const I& input, double R,
+			   const image2d<value::int_u8>&e_2,
+			   unsigned i, unsigned q);
 
 	void exec(double mean, double stddev);
+	void end_of_row(int row);
 	void finalize();
+
       };
 
 
@@ -95,11 +115,17 @@ namespace scribo
 
 
       template <typename I>
-      first_pass_functor<I>::first_pass_functor(const I& input, double K, double R)
+      sauvola_ms_functor<I>::sauvola_ms_functor(const I& input,
+						double R,
+						const image2d<value::int_u8>&e_2,
+						unsigned i, unsigned q)
 	: input(input),
+	  e_2(e_2),
+	  i(i),
+	  q(q),
 	  pxl(input),
-	  K_(K),
-	  R_(R)
+	  R_(R),
+	  i_(i)
       {
 	res = 0;
 	pxl.start();
@@ -109,6 +135,8 @@ namespace scribo
 	initialize(msk, input);
 
 # ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	initialize(full_msk, input);
+	mln::extension::fill(full_msk, false);
 	initialize(debug_mean, input);
 	initialize(debug_stddev, input);
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -118,24 +146,35 @@ namespace scribo
 	initialize(card, input);
 	data::fill(card, 1);
 
-	dp = negative_offsets_wrt(input, c4());
+	dp = negative_offsets_wrt(input, c8());
 	n_nbhs = dp.nelements();
+
+	if (i == 2)
+	  K_ = binarization::internal::k2;
+	else if (i == 3)
+	  K_ = binarization::internal::k3;
+	else
+	  K_ = binarization::internal::k4;
       }
 
 
       template <typename I>
       void
-      first_pass_functor<I>::exec(double mean, double stddev)
+      sauvola_ms_functor<I>::exec(double mean, double stddev)
       {
 	mln_precondition(pxl.is_valid());
 
 	unsigned p = pxl.offset();
 
 	value::int_u8 t_p;
-	mln::convert::from_to(formula_(mean, stddev, K_, R_),
-			      t_p);
+	mln::convert::from_to(formula_(mean, stddev, K_, R_), t_p);
 
 	msk.element(p) = input.element(p) < t_p;
+
+# ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
+	full_msk.element(p) = msk.element(p);
+# endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
+
 	t_sub.element(p) = t_p;
 	if (! msk.element(p))
 	{
@@ -161,7 +200,14 @@ namespace scribo
 
 
       template <typename I>
-      void first_pass_functor<I>::finalize()
+      void
+      sauvola_ms_functor<I>::end_of_row(int row)
+      {
+	(void) row;
+      }
+
+      template <typename I>
+      void sauvola_ms_functor<I>::finalize()
       {
 	mln_assertion(! pxl.is_valid());
       }
@@ -174,4 +220,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
+#endif // SCRIBO_BINARIZATION_INTERNAL_SAUVOLA_MS_FUNCTOR_HH

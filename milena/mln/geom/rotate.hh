@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +44,8 @@
 # include <mln/data/paste.hh>
 
 # include <mln/geom/bbox.hh>
+# include <mln/geom/top_right.hh>
+# include <mln/geom/bottom_left.hh>
 
 # include <mln/extension/duplicate.hh>
 
@@ -132,7 +134,6 @@ namespace mln
       // Do not check that output_domain_ is valid. If it is not,
       // further in this routine, we define a default domain.
       typedef mln_site(I) P;
-      mln_precondition(P::dim == 2);
       mln_precondition(input.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
 //      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
@@ -142,12 +143,12 @@ namespace mln
       extension::duplicate(input);
 
       mln_site(I) c = geom::bbox(input).pcenter();
-      typedef fun::x2x::translation<2,double> trans_t;
+      typedef fun::x2x::translation<P::dim,double> trans_t;
       trans_t
 	t(-1 * c.to_vec()),
 	t_1(c.to_vec());
 
-      typedef fun::x2x::rotation<2,double> rot_t;
+      typedef fun::x2x::rotation<P::dim,double> rot_t;
       rot_t rot(math::pi * angle / 180.f, literal::origin);
 
       typedef
@@ -209,16 +210,15 @@ namespace mln
       const B& box = exact(box_);
 
       typedef mln_site(B) P;
-      mln_precondition(P::dim == 2);
       mln_precondition(box.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
 
-      typedef fun::x2x::translation<2,double> trans_t;
+      typedef fun::x2x::translation<P::dim,double> trans_t;
       trans_t
 	t(-1 * ref.to_vec()),
 	t_1(ref.to_vec());
 
-      typedef fun::x2x::rotation<2,double> rot_t;
+      typedef fun::x2x::rotation<P::dim,double> rot_t;
       rot_t rot(math::pi * angle / 180.f, literal::origin);
 
       typedef
@@ -230,10 +230,8 @@ namespace mln
       accu::shape::bbox<P> accu;
 
       P
-	top_right(box.pmin().row(),
-		  box.pmax().col()),
-	bot_left(box.pmax().row(),
-		 box.pmin().col());
+	top_right = geom::top_right(box),
+	bot_left = geom::bottom_left(box);
 
       accu.take(P(comp_transf(box.pmin().to_vec())));
       accu.take(P(comp_transf(top_right.to_vec())));

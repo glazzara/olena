@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +59,9 @@ namespace scribo
       \param[in] min_ntrue A site is set to 'True' in the output if it
                            is set to 'True' at least \p min_ntrue
                            components. Possible values: 1, 2, 3.
-      \param[in] K Sauvola's formula parameter.
+      \param[in] k2 Sauvola's formula parameter.
+      \param[in] k3 Sauvola's formula parameter.
+      \param[in] k4 Sauvola's formula parameter.
 
       \p w_1 is expressed according to the image at scale 0, i.e. the
       original size.
@@ -69,12 +71,19 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned min_ntrue,
-		     double K);
+		     unsigned s, unsigned min_ntrue, double k2,
+		     double k3, double k4);
+
+    /// \overload
+    /// k2, k3 and k4 are set to \p K.
+    template <typename I>
+    mln_ch_value(I, bool)
+    sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
+		     unsigned s, unsigned min_ntrue, double K);
 
 
     /// \overload
-    /// K is set to 0.34.
+    /// k2, k3 and k4 are set to 0.34.
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
@@ -88,8 +97,8 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned min_ntrue,
-		     double K)
+		     unsigned s, unsigned min_ntrue, double k2,
+		     double k3, double k4)
     {
       trace::entering("scribo::binarization::sauvola_ms_split");
 
@@ -107,9 +116,9 @@ namespace scribo
 
       bin_t r_b, g_b, b_b;
 
-      r_b = impl::generic::sauvola_ms(r_i, w_1, s, K);
-      g_b = impl::generic::sauvola_ms(g_i, w_1, s, K);
-      b_b = impl::generic::sauvola_ms(b_i, w_1, s, K);
+      r_b = sauvola_ms(r_i, w_1, s);
+      g_b = sauvola_ms(g_i, w_1, s);
+      b_b = sauvola_ms(b_i, w_1, s);
 
       border::resize(r_b, input_1.border());
       border::resize(g_b, input_1.border());
@@ -145,6 +154,16 @@ namespace scribo
 
       trace::exiting("scribo::binarization::sauvola_ms_split");
       return output;
+    }
+
+
+    template <typename I>
+    mln_ch_value(I, bool)
+    sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
+		     unsigned s, unsigned min_ntrue, double K)
+    {
+      return sauvola_ms_split(input_1, w_1, s, min_ntrue,
+			      K, K, K);
     }
 
 

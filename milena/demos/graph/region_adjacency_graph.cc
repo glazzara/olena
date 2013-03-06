@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,6 +68,9 @@
 #include <mln/math/diff_abs.hh>
 
 #include <mln/debug/draw_graph.hh>
+#include <mln/debug/filename.hh>
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/rgb_to_int_u.hh>
 
 namespace mln
 {
@@ -149,27 +153,42 @@ namespace mln
 
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   using namespace mln;
   using value::int_u8;
   using value::rgb8;
   using value::label_16;
 
-  image2d<int_u8> input_pgm;
-  io::pgm::load(input_pgm, "house.pgm");
+  if (argc != 3 && argc != 4)
+  {
+    std::cout << "Usage: " << argv[0] << " <input.*> <output_prefix>"
+	      << " [closing_area_value (default:25)]" << std::endl;
+    return 1;
+  }
 
+  /// Load input image.
   image2d<rgb8> input_ppm;
-  io::ppm::load(input_ppm, "house.ppm");
+  io::ppm::load(input_ppm, argv[1]);
 
+  /// Convert input image to graylevel image.
+  image2d<value::int_u8>
+    input_pgm = data::transform(input_ppm, fun::v2v::rgb_to_int_u<8>());
+
+  /// Set output filename prefix.
+  debug::internal::filename_prefix = argv[2];
+
+  unsigned area_value = 25;
+  if (argc == 4)
+    area_value = atoi(argv[3]);
 
   /// Gradient of the gray level image.
   image2d<int_u8> grad = morpho::gradient(input_pgm, win_c4p());
-  io::pgm::save(grad, "tmp_grad_c4p.pgm");
+  io::pgm::save(grad, debug::filename("grad_c4p.pgm"));
 
   /// Closing of the gradient.
-  image2d<int_u8> clo = morpho::closing::area(grad, c4(), 25);
-  io::pgm::save(clo, "tmp_clo_a100.pgm");
+  image2d<int_u8> clo = morpho::closing::area(grad, c4(), area_value);
+  io::pgm::save(clo, debug::filename("clo_a100.pgm"));
 
   /// Watershed on the closing image.
   label_16 nbasins;
@@ -178,12 +197,12 @@ int main()
   /// Output: A watershed image where each basin value is set to the basin
   /// mean value in the original ppm image.
   io::ppm::save(labeling::mean_values(input_ppm, wshed, nbasins),
-		"tmp_wshed_mean_colors.ppm");
+		debug::filename("wshed_mean_colors.ppm"));
 
 
   /// Set watershed line value to yellow.
   data::fill((input_ppm | (pw::value(wshed) == 0u)).rw(), literal::yellow);
-  io::ppm::save(input_ppm, "tmp_wshed_color.ppm");
+  io::ppm::save(input_ppm, debug::filename("wshed_color.ppm"));
 
 
   /// Build region adjacency graph.
@@ -210,5 +229,5 @@ int main()
   mln_VAR(ima_e, make::edge_image(ima_v, dist()));
 
   io::ppm::save(make_debug_graph_image(input_ppm, ima_v, ima_e, literal::white),
-				       "tmp_wst_rag_graph_image_white.ppm");
+		debug::filename("wst_rag_graph_image_white.ppm"));
 }

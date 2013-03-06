@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,10 +26,11 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/magick/load.hh>
-#include <mln/io/pbm/save.hh>
+#include <mln/io/magick/all.hh>
 #include <mln/data/transform.hh>
+#include <mln/arith/revert.hh>
 #include <mln/fun/v2v/rgb_to_luma.hh>
+#include <mln/logical/not.hh>
 
 #include <scribo/binarization/otsu.hh>
 #include <scribo/debug/option_parser.hh>
@@ -47,6 +48,8 @@ static const scribo::debug::arg_data arg_desc[] =
 static const scribo::debug::toggle_data toggle_desc[] =
 {
   // name, description, default value
+  { "negate-input", "Negate input image before binarizing.", false },
+  { "negate-output", "Negate output image before binarizing.", false },
   {0, 0, false}
 };
 
@@ -57,7 +60,8 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   {0, 0, 0, 0, 0, 0}
 };
 
@@ -93,9 +97,15 @@ int main(int argc, char *argv[])
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
+  if (options.is_enabled("negate-input"))
+    input_1_gl = arith::revert(input_1_gl);
+
   image2d<bool> out = scribo::binarization::otsu(input_1_gl);
 
-  io::pbm::save(out, options.arg("output.pbm"));
+  if (options.is_enabled("negate-output"))
+    logical::not_inplace(out);
+
+  io::magick::save(out, options.arg("output.pbm"));
 
   trace::exiting("main");
 }

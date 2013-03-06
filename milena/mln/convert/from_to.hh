@@ -102,6 +102,7 @@ namespace mln
     to = from;
   }
 
+
   // Object -> Object (F not convertible towards T)
   // No conversion exists!
   template <typename F, typename T>
@@ -115,15 +116,6 @@ namespace mln
     mlc_abort(F)::check();
   }
 
-
-  // Object -> Object
-  template <typename T>
-  inline
-  void
-  from_to_(const Object<T>& from, Object<T>& to)
-  {
-    exact(to) = exact(from);
-  }
 
   namespace convert
   {
@@ -206,6 +198,21 @@ namespace mln
 	typedef mlc_converts_to(F, T) F_converts_to_T; // FIXME: HERE we've got a problem with g++-2.95.
 	internal::from_to_dispatch(F_converts_to_T(),
 				   exact(from), exact(to));
+      }
+
+      // Object -> Object
+      template <typename T>
+      inline
+      void
+      from_to_dispatch(const Object<T>& from, Object<T>& to)
+      {
+	// // Here we would like to call from_to_ overloads in order
+	// to let the user specify its own conversion
+	// function. However, doing so may lead to ambiguous
+	// prototypes between from_to_(Object<>, Object<>) and
+	// from_to_(T, T).
+	// from_to_(exact(from), exact(to));
+	exact(to) = exact(from);
       }
 
 

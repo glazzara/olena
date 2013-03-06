@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -86,10 +86,17 @@ namespace scribo
 
        Few parameters can be set for algorithms:
 
-       - Sauvola:
+       - Sauvola Multi-scale:
          * sauvola_win, the window size used in Sauvola based
            algorithms (default 101).
-	 * sauvola_K, a user parameter for Sauvola's threshold formula
+	 * sauvola_K2, a user parameter for Sauvola's threshold formula
+	   at scale 2.
+	   (default 0.34).
+	 * sauvola_K3, a user parameter for Sauvola's threshold formula
+	   at scale 3.
+	   (default 0.34).
+	 * sauvola_K4, a user parameter for Sauvola's threshold formula
+	   at scale 4.
 	   (default 0.34).
 
        - Extract background/foreground
@@ -126,7 +133,9 @@ namespace scribo
 	Binarization_Algo binarization_algo;
 
 	unsigned sauvola_win;
-	double sauvola_K;
+	double sauvola_k2;
+	double sauvola_k3;
+	double sauvola_k4;
 	unsigned lambda;
 
 	// Results
@@ -162,7 +171,9 @@ namespace scribo
 	  enable_denoising(false),
 	  binarization_algo(SauvolaMs),
 	  sauvola_win(101),
-	  sauvola_K(0.34),
+	  sauvola_k2(0.34),
+	  sauvola_k3(0.34),
+	  sauvola_k4(0.34),
 	  lambda(0)
       {
       }
@@ -252,7 +263,10 @@ namespace scribo
 	{
 	  on_new_progress_label("Binarization (Sauvola Multi-scale)");
 	  output = scribo::binarization::sauvola_ms(intensity_ima,
-						    sauvola_win, 3, sauvola_K);
+						    sauvola_win, 3,
+						    sauvola_k2,
+						    sauvola_k3,
+						    sauvola_k4);
 	}
 	else // binarization_algo == Convert
 	{

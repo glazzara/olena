@@ -52,19 +52,26 @@ namespace scribo
     namespace internal
     {
 
-      char* stddev_image_output = 0;
-      char* mean_image_output = 0;
-      char* threshold_image_output = 0;
+      const char* stddev_image_output = 0;
+      const char* mean_image_output = 0;
+      const char* threshold_image_output = 0;
+      const char* full_threshold_image_output = 0;
+      const char * scale_proba_output = 0;
 
-      char* scale_image_output = 0;
+      const char* scale_image_output = 0;
+      const char* scale_iz_image_output = 0;
 
-      char* alpham_image_output = 0;
-      char* alphacond_image_output = 0;
+      const char* alpham_image_output = 0;
+      const char* alphacond_image_output = 0;
 
       // Declare debug images.
       image2d<double> debug_stddev;
       image2d<double> debug_mean;
       image2d<double> debug_threshold;
+
+      image3d<double> debug_scale_proba;
+
+      image2d<value::int_u8> debug_e_2;
 
       image2d<double> debug_alpham;
       image2d<bool> debug_alphacond;
@@ -72,6 +79,8 @@ namespace scribo
       double mean_debug_factor = 1.0;
       double stddev_debug_factor = 1.0;
       double alpham_debug_factor = 2.0;
+
+      mln::util::array<std::map<unsigned, unsigned> > area_histo(3);
 
     } // end of namespace scribo::binarization::internal
 
