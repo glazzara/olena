@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -23,6 +23,7 @@ EXTRA_DIST =				\
   img/alignment_3.pbm			\
   img/alignment_4.pbm			\
   img/comp_on_borders.pbm		\
+  img/lines_discontinued.pbm		\
   img/multi_scale.png			\
   img/phillip.pbm			\
   img/phillip.ppm			\

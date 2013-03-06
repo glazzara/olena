@@ -1,5 +1,9 @@
 2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/Makefile.am: Add a missing file in EXTRA_DIST.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add tests for lines_*_pattern routines.
 
 	* tests/primitive/extract/Makefile.am: New targets.
