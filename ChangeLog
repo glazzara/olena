@@ -1,3 +1,7 @@
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Do not configure scribo/demo/review anymore.
+
 2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Check for libpoppler dependency and configure
