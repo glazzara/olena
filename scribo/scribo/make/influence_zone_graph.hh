@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -64,7 +65,7 @@ namespace scribo
     ///
     /// \return a region adjacency graph.
     template <typename I, typename N, typename V>
-    util::graph
+    mln::util::graph
     influence_zone_graph(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_,
 			 const V& label_type,
@@ -74,7 +75,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N, typename V>
-    util::graph
+    mln::util::graph
     influence_zone_graph(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_,
 			 const V& label_type,
@@ -96,7 +97,7 @@ namespace scribo
 
       lbl_t iz = transform::influence_zone_geodesic(lbl, nbh, iz_dmax);
 
-      util::graph g
+      mln::util::graph g
 	= mln::make::influence_zone_adjacency_graph(
 	  iz | (pw::value(iz) != pw::cst(literal::zero)),
 	  nbh, nlabels);

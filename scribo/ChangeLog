@@ -1,3 +1,29 @@
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* scribo/binarization/local_threshold.hh,
+	* scribo/core/central_sites.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/fun/v2b/objects_large_filter.hh,
+	* scribo/make/influence_zone_graph.hh,
+	* scribo/postprocessing/fill_object_holes.hh: Fix namespace
+	ambiguities.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: Fix arguments.
+
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh: Use namespace mln.
+
+	* scribo/util/compute_sub_domains.hh,
+	* scribo/util/integral_sum_sum2_functor.hh,
+	* scribo/util/integral_sum_sum2_global_min_functor.hh,
+	* src/contest/hdibco-2010/sauvola_ms_hdibco.cc: Add missing
+	include.
+
+	* scribo/io/img/save.hh: Use box2d constructor.
+
 2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename point_at_index and index_of_point.

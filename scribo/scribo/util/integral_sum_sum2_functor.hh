@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 ///
 
 # include <mln/util/couple.hh>
+# include <mln/trait/value_.hh>
 
 namespace scribo
 {

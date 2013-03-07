@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -173,9 +173,9 @@ namespace scribo
 	  image2d<unsigned> parent, card;
 	  L bboxes_ima;
 
-	  util::array<unsigned> bg_comps(
+	  mln::util::array<unsigned> bg_comps(
 	    value::next(components.nelements()), 0);
-	  util::array<bool> bg_comps_done(
+	  mln::util::array<bool> bg_comps_done(
 	    value::next(components.nelements()), false);
 
 	  mln::fun::i2v::array<bool>
@@ -204,7 +204,7 @@ namespace scribo
 
 	  // 1st pass
 	  {
-	    util::array<int> dp = positive_offsets_wrt(lbl, nbh);
+	    mln::util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	    const unsigned n_nbhs = dp.nelements();
 
 	    mln_bkd_pixter(const L) pxl(lbl); // Backward.
@@ -338,8 +338,11 @@ namespace scribo
       typedef mln_ch_value(I, L) Li;
       typedef accu::math::count<mln_site(Li)> A;
 
-      typedef util::couple<Li, util::couple<util::array<unsigned>,
-	util::array<A> > > res_t;
+      typedef
+	mln::util::couple<Li,
+			  mln::util::couple<
+			    mln::util::array<unsigned>,
+			    mln::util::array<A> > > res_t;
 
       // Holes card Image
 
@@ -349,7 +352,7 @@ namespace scribo
 
       res_t res = labeling::blobs_and_compute(input, c8(), nlabels, A());
 
-      util::array<unsigned>& holes_card = res.second().first();
+      mln::util::array<unsigned>& holes_card = res.second().first();
       mln_ch_value(I, unsigned)
 	holes = data::transform(res.first(), holes_card);
 
@@ -363,7 +366,7 @@ namespace scribo
       I input_i = logical::not_(input);
       res = labeling::blobs_and_compute(input_i, c8(), nlabels, A());
 
-      util::array<unsigned>& card = res.second().first();
+      mln::util::array<unsigned>& card = res.second().first();
       for (unsigned i = 1; i < card.size(); ++i)
 	card(i) = unsigned(round(card(i) * ratio));
 

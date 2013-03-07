@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -162,7 +162,7 @@ namespace scribo
 			       trait::image::speed::any,
 			       const Image<I>& input, const Image<T>& threshold)
       {
-	return impl::generic::local_threshold(input, threshold);
+	return binarization::impl::generic::local_threshold(input, threshold);
       }
 
 
@@ -172,7 +172,7 @@ namespace scribo
 			       trait::image::speed::fastest,
 			       const Image<I>& input, const Image<T>& threshold)
       {
-	return impl::local_threshold_fastest(input, threshold);
+	return binarization::impl::local_threshold_fastest(input, threshold);
       }
 
       template <typename I, typename T>

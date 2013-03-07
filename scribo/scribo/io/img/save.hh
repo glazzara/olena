@@ -167,8 +167,8 @@ namespace scribo
 	  mln_precondition(doc.is_valid());
 
 	  const box2d& ima_domain = doc.image().domain();
-	  box2d domain = make::box2d(ima_domain.pmin() / reduction_factor,
-				     ima_domain.pmax() / reduction_factor);
+	  box2d domain(ima_domain.pmin() / reduction_factor,
+		       ima_domain.pmax() / reduction_factor);
 	  mln::image2d<value::rgb8> output(domain);
 	  data::fill(output, literal::black);
 

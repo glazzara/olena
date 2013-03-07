@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -171,7 +172,7 @@ namespace scribo
 
 	  // Will store the first background component id associated
 	  // to a group.
-	  util::array<unsigned> bg_comps(
+	  mln::util::array<unsigned> bg_comps(
 	    value::next(components.nelements()), 0);
 
 	  // Will 'True' if a group has at least two background
@@ -206,7 +207,7 @@ namespace scribo
 
 	  // 1st pass
 	  {
-	    util::array<int> dp = positive_offsets_wrt(lbl, nbh);
+	    mln::util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	    const unsigned n_nbhs = dp.nelements();
 
 	    mln_bkd_pixter(const L) pxl(lbl); // Backward.

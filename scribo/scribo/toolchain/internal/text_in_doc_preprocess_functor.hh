@@ -53,6 +53,8 @@ namespace scribo
     namespace internal
     {
 
+      using namespace mln;
+
       /*! \brief Enum of the binarization algorithms available.
 
 	Convert: Violently convert from color to binary.

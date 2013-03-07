@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,8 +57,8 @@ namespace scribo
     template <typename I>
     void
     save_table_image(const Image<I>& input_,
-		     util::couple<util::array<box<mln_site(I)> >,
-				  util::array<box<mln_site(I)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > > tableboxes,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename);
 
@@ -67,8 +68,8 @@ namespace scribo
     template <typename S>
     void
     save_table_image(const Site_Set<S>& input_domain,
-		     util::couple<util::array<box<mln_site(S)> >,
-				  util::array<box<mln_site(S)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(S)> >,
+				       mln::util::array<box<mln_site(S)> > > tableboxes,
 		     const value::rgb8& bg_color,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename);
@@ -80,8 +81,8 @@ namespace scribo
     template <typename I>
     void
     save_table_image(const Image<I>& input_,
-		     util::couple<util::array<box<mln_site(I)> >,
-				  util::array<box<mln_site(I)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > > tableboxes,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)
     {
@@ -102,8 +103,8 @@ namespace scribo
     template <typename S>
     void
     save_table_image(const Site_Set<S>& input_domain_,
-		     util::couple<util::array<box<mln_site(S)> >,
-				  util::array<box<mln_site(S)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(S)> >,
+				       mln::util::array<box<mln_site(S)> > > tableboxes,
 		     const value::rgb8& bg_color,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)

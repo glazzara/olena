@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,7 @@ namespace scribo
   **
   */
   template <typename P>
-  util::couple<P,P>
+  mln::util::couple<P,P>
   central_sites(const box<P>& b, unsigned dim);
 
 
@@ -69,7 +70,7 @@ namespace scribo
 
   template <typename P>
   inline
-  util::couple<P,P>
+  mln::util::couple<P,P>
   central_sites(const box<P>& b, unsigned dim)
   {
     trace::entering("scribo::central_sites");

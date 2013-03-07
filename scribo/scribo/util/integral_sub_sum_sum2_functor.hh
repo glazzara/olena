@@ -31,6 +31,9 @@
 ///
 ///
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/site_set/box.hh>
+# include <mln/make/box2d.hh>
 # include <mln/util/couple.hh>
 
 namespace scribo
@@ -38,6 +41,8 @@ namespace scribo
 
   namespace util
   {
+
+    using namespace mln;
 
     template <typename I, typename S = mln_sum(mln_value(I))>
     class integral_sub_sum_sum2_functor
