@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,12 +45,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, MILENA_IMG_DIR "/lena.pgm");
 
-    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 101, 2);
+    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 21, 2);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "/binarization/sauvola_ms.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "/binarization/sauvola_ms.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // even height and odd width
@@ -57,12 +58,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_heven.pgm");
 
-    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 101, 2);
+    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 21, 2);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/sauvola_ms_wodd_heven.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_ms_wodd_heven.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // odd height and even width
@@ -70,12 +71,12 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_weven_hodd.pgm");
 
-    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 101, 2);
+    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 21, 2);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/sauvola_ms_weven_hodd.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_ms_weven_hodd.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 
   // odd height and width
@@ -83,11 +84,11 @@ int main()
     image2d<value::int_u8> input;
     io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_hodd.pgm");
 
-    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 101, 2);
+    image2d<bool> bin = scribo::binarization::sauvola_ms(input, 21, 2);
 
     image2d<bool> ref;
-    io::pbm::save(bin, SCRIBO_TESTS_DIR "binarization/sauvola_ms_wodd_hodd.ref.pbm");
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_ms_wodd_hodd.ref.pbm");
 
-//    mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
   }
 }

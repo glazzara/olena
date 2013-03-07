@@ -1,5 +1,16 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix sauvola_ms test.
+
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms.ref.pbm,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm: Make use of
+	reference files in test.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation issues.
 
 	* scribo/binarization/local_threshold.hh,
