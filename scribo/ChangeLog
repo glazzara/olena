@@ -1,5 +1,9 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Update.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add standard support for OCR output in PAGE format.
 
 	* scribo/io/xml/internal/page_xml_visitor.hh: Here.
