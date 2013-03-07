@@ -1,5 +1,49 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove scribo/sandbox.
+
+	* sandbox/ChangeLog,
+	* sandbox/z/sauvola_ms_rv/dump_color_sign.cc,
+	* sandbox/z/sauvola_ms_rv/img/001.pgm,
+	* sandbox/z/sauvola_ms_rv/img/001_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/002.pgm,
+	* sandbox/z/sauvola_ms_rv/img/002_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/003.pgm,
+	* sandbox/z/sauvola_ms_rv/img/003_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/004.pgm,
+	* sandbox/z/sauvola_ms_rv/img/004_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/005.pgm,
+	* sandbox/z/sauvola_ms_rv/img/005_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/006.pgm,
+	* sandbox/z/sauvola_ms_rv/img/006_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/007.pgm,
+	* sandbox/z/sauvola_ms_rv/img/007_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/008.pgm,
+	* sandbox/z/sauvola_ms_rv/img/008_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/009.pgm,
+	* sandbox/z/sauvola_ms_rv/img/009_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/010.pgm,
+	* sandbox/z/sauvola_ms_rv/img/010_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/011.pgm,
+	* sandbox/z/sauvola_ms_rv/img/011_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/012.pgm,
+	* sandbox/z/sauvola_ms_rv/img/012_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/013.pgm,
+	* sandbox/z/sauvola_ms_rv/img/013_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/014.pgm,
+	* sandbox/z/sauvola_ms_rv/img/014_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/015.pgm,
+	* sandbox/z/sauvola_ms_rv/mp00082c_crop.pgm,
+	* sandbox/z/sauvola_ms_rv/pbm_color_diff.cc,
+	* sandbox/z/sauvola_ms_rv/pgm_color_diff.cc,
+	* sandbox/z/sauvola_ms_rv/pgm_local_mean.cc,
+	* sandbox/z/sauvola_ms_rv/ppm_influence_zone_geodesic.cc,
+	* sandbox/z/sauvola_ms_rv/skewness.cc,
+	* sandbox/z/sauvola_ms_rv/skewness/integral_browsing_rv.hh,
+	* sandbox/z/sauvola_ms_rv/skewness/skewness2.cc: Remove.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/unit_test/unit-tests.mk: Update.
 
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
