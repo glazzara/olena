@@ -1,5 +1,11 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add standard support for OCR output in PAGE format.
+
+	* scribo/io/xml/internal/page_xml_visitor.hh: Here.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix sauvola_ms test.
 
 	* tests/binarization/sauvola_ms.cc,
