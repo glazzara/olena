@@ -19,9 +19,6 @@ SUBDIRS =
 
 if HAVE_QT
 
-SUBDIRS += review
-
-
 
 if HAVE_MAGICKXX
 
@@ -32,7 +29,6 @@ SUBDIRS += viewer
 endif HAVE_TESSERACT
 
 endif HAVE_MAGICKXX
-
 
 
 
