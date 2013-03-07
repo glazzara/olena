@@ -54,9 +54,9 @@ namespace scribo
     namespace internal
     {
 
-      double k2 = SCRIBO_DEFAULT_SAUVOLA_K;
-      double k3 = SCRIBO_DEFAULT_SAUVOLA_K;
-      double k4 = SCRIBO_DEFAULT_SAUVOLA_K;
+      extern double k2;
+      extern double k3;
+      extern double k4;
 
 
       using namespace mln;
@@ -103,6 +103,16 @@ namespace scribo
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+#  ifndef MLN_WO_GLOBAL_VARS
+
+      double k2 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k3 = SCRIBO_DEFAULT_SAUVOLA_K;
+      double k4 = SCRIBO_DEFAULT_SAUVOLA_K;
+
+#  endif // ! MLN_WO_GLOBAL_VARS
+
 
       inline
       unsigned my_find_root(image2d<unsigned>& parent, unsigned x)

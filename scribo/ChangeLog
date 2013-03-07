@@ -1,5 +1,10 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/binarization/internal/sauvola_ms_functor.hh: Handle
+	global variables correctly.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove scribo/sandbox.
 
 	* sandbox/ChangeLog,
