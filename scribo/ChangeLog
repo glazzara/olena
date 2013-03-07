@@ -1,5 +1,14 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation related problems in viewer.
+
+	* demo/viewer/image_view.cc: Fix a warning;
+
+	* demo/viewer/main.cc: Include sauvola_ms.hh to compile related
+	global variables.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/internal/sauvola_ms_functor.hh: Handle
 	global variables correctly.
 
