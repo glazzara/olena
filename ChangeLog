@@ -1,5 +1,9 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Configure scribo/tests/layout directory.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Do not configure scribo/demo/review anymore.
 
 2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
