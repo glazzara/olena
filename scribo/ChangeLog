@@ -1,5 +1,9 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-test.mk: Regen.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Import Julien Marquegnies's implementation of XY-Cut layout
 	analysis algorithm.
 

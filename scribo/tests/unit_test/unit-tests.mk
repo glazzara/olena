@@ -320,6 +320,9 @@ scribo_io_xml_internal_compute_text_colour \
 scribo_io_xml_internal_print_box_coords \
 scribo_io_xml_internal_print_image_coords \
 scribo_io_xml_internal_time_info \
+scribo_layout_internal_hist_info \
+scribo_layout_internal_node \
+scribo_layout_xy_cut \
 scribo_make_all \
 scribo_make_debug_filename \
 scribo_make_influence_zone_graph \
