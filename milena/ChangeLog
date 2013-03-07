@@ -1,3 +1,7 @@
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* test/unit_test/unit-tests.mk: Update.
+
 2013-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/labeling/colorize.hh: Do not recompute previously computed
