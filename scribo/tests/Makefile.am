@@ -45,6 +45,7 @@ SUBDIRS =		\
   core			\
   estim			\
   filter		\
+  layout		\
   preprocessing		\
   primitive		\
   table			\

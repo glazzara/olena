@@ -1,5 +1,18 @@
 2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Import Julien Marquegnies's implementation of XY-Cut layout
+	analysis algorithm.
+
+	* scribo/layout/internal/hist_info.hh,
+	* scribo/layout/internal/node.hh,
+	* scribo/layout/xy_cut.hh,
+	* tests/layout/Makefile.am,
+	* tests/layout/xy_cut.cc: New.
+
+	* tests/Makefile.am: Add new subdir.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated programs.
 
 	* demo/demat/demat.pro,
