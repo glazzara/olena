@@ -1,3 +1,15 @@
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve look'n feel of general documentation.
+
+	* doc/Doxyfile.in: Improve documentation output.
+
+	* doc/DoxygenLayout.xml: Update menu.
+
+	* doc/Makefile.am: Rename .hh outputs to .dox.
+
+	* doc/white-paper.tex: Fix URL.
+
 2012-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/tutorial.tex: Add section about multifile compilation.

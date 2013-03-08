@@ -185,8 +185,8 @@ regen-split-examples-mk:
 
 REFMAN_deps =					\
   $(PNG_FIGURES)				\
-  $(srcdir)/tutorial.hh				\
-  $(srcdir)/ref-guide.hh
+  $(srcdir)/tutorial.dox			\
+  $(srcdir)/ref-guide.dox
 
 # ----------------------- #
 # User Reference Manual.  #
@@ -441,11 +441,7 @@ $(srcdir)/$(TUTORIAL): $(srcdir)/$(TUTORIAL).stamp
 DATA_html_dirs += $(TUTORIAL)
 
 # Intermediate product for the (Doxygen) User Reference Manual.
-#
-# This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
-# since it is later parsed by Doxygen, which complains about `.html'
-# files.
-TUTORIAL_HH = $(srcdir)/tutorial.hh
+TUTORIAL_HH = $(srcdir)/tutorial.dox
 $(TUTORIAL_HH): $(srcdir)/$(TUTORIAL).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -558,11 +554,7 @@ $(srcdir)/$(REF_GUIDE): $(srcdir)/$(REF_GUIDE).stamp
 DATA_html_dirs += $(REF_GUIDE)
 
 # Intermediate product for the (Doxygen) User Reference Manual.
-#
-# This is not a bug: REF_GUIDE_HH is meant to have a `.hh' extension,
-# since it is later parsed by Doxygen, which complains about `.html'
-# files.
-REF_GUIDE_HH = $(srcdir)/ref-guide.hh
+REF_GUIDE_HH = $(srcdir)/ref-guide.dox
 $(REF_GUIDE_HH): $(srcdir)/$(REF_GUIDE).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
