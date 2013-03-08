@@ -9,9 +9,9 @@
 	\li \ref olnpublisposters
 	\li \ref olnpublistechreps
 
-    \li \ref{burrus.03.mpool}
-    \li \ref{darbon.02.ismm}
-    \li \ref{darbon.04.ecoopphd}
+    \li \cite burrus.03.mpool
+    \li \cite darbon.02.ismm
+    \li \cite darbon.04.ecoopphd
     \li \cite duret.00.gcse
     \li \cite geraud.00.icpr
     \li \cite geraud.01.ai
@@ -34,4 +34,6 @@
 
     \subsection olnpublistechreps Student Technical Reports
 
+    \cite sauvola00pr
+    \cite besl.1992.pami
  */

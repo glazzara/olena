@@ -1,3 +1,18 @@
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve look'n feel of general documentation.
+
+	* doc/Doxyfile.in: Make use of bibliography.
+
+	* doc/bibliography.dox: Add references.
+
+	* doc/DoxygenLayout.xml,
+	* doc/doc.css,
+	* doc/doxygen.css,
+	* doc/footer.html,
+	* doc/header.html,
+	* doc/subdoc_footer.html: Improve rendering.
+
 2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix links and location of documentation.
