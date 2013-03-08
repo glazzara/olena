@@ -2,23 +2,31 @@
   <!-- Navigation index tabs for HTML output -->
   <navindex>
     <tab type="mainpage" visible="yes" title="Milena"/>
-    <tab type="pages" visible="yes" title="" intro=""/>
-    <tab type="modules" visible="yes" title="" intro=""/>
-    <tab type="namespaces" visible="yes" title="">
-      <tab type="namespacelist" visible="yes" title="" intro=""/>
-      <tab type="namespacemembers" visible="yes" title="" intro=""/>
+    <tab type="pages" visible="no" title="" intro=""/>
+    <tab type="usergroup" url="@ref mainpage" title="Getting started">
+      <tab type="user" url="@ref quickref" title="Quick Reference Guide"/>
+      <tab type="user" url="@ref tutorial" title="Tutorial"/>
     </tab>
-    <tab type="classes" visible="yes" title="">
-      <tab type="classlist" visible="yes" title="" intro=""/>
+    <tab type="modules" visible="yes" title="API Reference Manual" intro=""/>
+    <tab type="namespaces" visible="no" title="">
+      <tab type="namespacelist" visible="no" title="" intro=""/>
+      <tab type="namespacemembers" visible="no" title="" intro=""/>
+    </tab>
+    <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="All Classes"/>
+    <tab type="classes" visible="no" title="">
+      <tab type="classlist" visible="no" title="" intro=""/>
       <tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/>
-      <tab type="hierarchy" visible="yes" title="" intro=""/>
-      <tab type="classmembers" visible="yes" title="" intro=""/>
+      <tab type="hierarchy" visible="no" title="" intro=""/>
+      <tab type="classmembers" visible="no" title="" intro=""/>
     </tab>
-    <tab type="files" visible="yes" title="">
+    <tab type="files" visible="no" title="">
       <tab type="filelist" visible="yes" title="" intro=""/>
       <tab type="globals" visible="yes" title="" intro=""/>
     </tab>
-    <tab type="examples" visible="yes" title="" intro=""/>
+    <tab type="examples" visible="yes" title="Examples" intro=""/>
+    <tab type="user" url="@ref examples" title="Examples"/>
+    <tab type="user" url="@ref demos" title="Demos"/>
+    <tab type="user" url="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Publications" title="Publications"/>
   </navindex>
 
   <!-- Layout definition for a class page -->
@@ -29,20 +37,20 @@
     <collaborationgraph visible="$COLLABORATION_GRAPH"/>
     <allmemberslink visible="yes"/>
     <memberdecl>
-      <nestedclasses visible="yes" title=""/>
-      <publictypes title=""/>
-      <publicslots title=""/>
-      <signals title=""/>
       <publicmethods title=""/>
       <publicstaticmethods title=""/>
       <publicattributes title=""/>
       <publicstaticattributes title=""/>
-      <protectedtypes title=""/>
-      <protectedslots title=""/>
       <protectedmethods title=""/>
       <protectedstaticmethods title=""/>
       <protectedattributes title=""/>
       <protectedstaticattributes title=""/>
+      <publictypes title=""/>
+      <publicslots title=""/>
+      <protectedtypes title=""/>
+      <protectedslots title=""/>
+      <nestedclasses visible="yes" title=""/>
+      <signals title=""/>
       <packagetypes title=""/>
       <packagemethods title=""/>
       <packagestaticmethods title=""/>
@@ -62,15 +70,15 @@
     </memberdecl>
     <detaileddescription title=""/>
     <memberdef>
-      <inlineclasses title=""/>
-      <typedefs title=""/>
-      <enums title=""/>
       <constructors title=""/>
       <functions title=""/>
       <related title=""/>
       <variables title=""/>
       <properties title=""/>
       <events title=""/>
+      <inlineclasses title=""/>
+      <typedefs title=""/>
+      <enums title=""/>
     </memberdef>
     <usedfiles visible="$SHOW_USED_FILES"/>
     <authorsection visible="yes"/>

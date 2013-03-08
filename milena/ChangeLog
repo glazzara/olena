@@ -1,5 +1,13 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	More improvements in documentation layout.
+
+	* doc/Doxyfile.in: Do not show namespaces in names.
+
+	* doc/DoxygenLayout.xml: Improve menu.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Tag internal documentation.
 
 	* apps/graph-morpho/morpho.hh,
