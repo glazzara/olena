@@ -1,5 +1,9 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in: Make use of bibliography and .css files.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation layout.
 
 	* doc/DoxygenLayout.xml: Change menu.
