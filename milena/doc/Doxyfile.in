@@ -48,6 +48,9 @@ BUILTIN_STL_SUPPORT    = YES
 IDL_PROPERTY_SUPPORT   = NO
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
+INLINE_GROUPED_CLASSES = YES
+SORT_GROUP_NAMES       = YES
+TYPEDEF_HIDES_STRUCT   = YES
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
