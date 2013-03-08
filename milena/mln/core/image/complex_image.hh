@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,7 +53,10 @@ namespace mln
   namespace internal
   {
 
-    /// A boolean proxy, used to fool std::vector.
+    /*!
+      \internal
+      \brief A boolean proxy, used to fool std::vector.
+    */
     struct bool_proxy
     {
     public:
@@ -94,7 +98,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::complex_image.
+    /*!
+      \internal
+      \brief Data structure for \c mln::complex_image.
+    */
     template <unsigned D, typename G, typename V>
     struct data< complex_image<D, G, V> >
     {

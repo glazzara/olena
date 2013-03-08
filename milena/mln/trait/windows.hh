@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +69,10 @@ namespace mln
   namespace trait
   {
 
-    /// Pack of 'undefined' type values for properties of windows.
+    /*!
+      \internal
+      \brief Pack of 'undefined' type values for properties of windows.
+    */
     template <typename W>
     struct undefined_window_
     {
@@ -78,13 +82,15 @@ namespace mln
     };
 
 
-    /*! \brief The trait pack structure for properties of windows.
-     *
-     * This structure is specialized for every concrete class of site
-     * set so that properties are properly defined.
-     *
-     * \see mln::doc::Window for the documentation of the "window"
-     * concept.
+    /*!
+      \internal
+      \brief The trait pack structure for properties of windows.
+
+      This structure is specialized for every concrete class of site
+      set so that properties are properly defined.
+
+      \see mln::doc::Window for the documentation of the "window"
+      concept.
      */
     template <typename W>
     struct window_ : undefined_window_<W>
@@ -92,7 +98,10 @@ namespace mln
     };
 
 
-    // \internal Trait for classical windows. 
+    /*!
+      \internal
+      \brief Trait for classical windows.
+    */
     struct classical_window_
     {
       typedef mln::trait::window::size::fixed        size;

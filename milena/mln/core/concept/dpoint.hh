@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,16 +50,18 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation of delta-point classes.
-   *
-   * A delta-point is a vector defined by a couple of points.
-   *
-   * Given two points, A and B, the vector AB is mapped into the
-   * delta-point D = AB.  Practically one can write: D = B - A.   
-   *
-   * \see mln::doc::Dpoint for a complete documentation of this class
-   * contents.
-   */
+  /*!
+    \internal
+    \brief Base class for implementation of delta-point classes.
+
+    A delta-point is a vector defined by a couple of points.
+
+    Given two points, A and B, the vector AB is mapped into the
+    delta-point D = AB.  Practically one can write: D = B - A.
+
+    \see mln::doc::Dpoint for a complete documentation of this class
+    contents.
+  */
   template <typename E>
   struct Dpoint : public Delta_Point_Site<E>
   {

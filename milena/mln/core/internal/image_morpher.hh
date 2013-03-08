@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +45,12 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for images that are morphers. Parameter
-    ///
-    /// \c I is the underlying-morphed image type.
-    //
+    /*!
+      \internal
+      \brief A base class for images that are morphers.
+
+      Parameter \c I is the underlying-morphed image type.
+    */
     template <typename I, typename T, typename S, typename E>
     class image_morpher : public image_base<T, S, E>
     {

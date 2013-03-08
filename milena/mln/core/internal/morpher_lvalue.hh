@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +45,11 @@ namespace mln
   namespace internal
   {
 
-    /// Return the lvalue type when an image with type \c I
-    /// is morphed.
+    /*!
+      \internal
+      \brief Return the lvalue type when an image with type \c I
+      is morphed.
+    */
     template <typename I>
     struct morpher_lvalue_
     {

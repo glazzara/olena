@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,9 +39,10 @@
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a p_run<P>.
-   *
-   */
+  /*!
+    \internal
+    \brief Forward iterator on points of a p_run<P>.
+  */
   template <typename P>
   class p_run_fwd_piter_
     :
@@ -76,9 +78,10 @@ namespace mln
 
 
 
-  /*! \brief Backward iterator on points of a p_run<P>.
-   *
-   */
+  /*!
+    \internal
+    \brief Backward iterator on points of a p_run<P>.
+  */
   template <typename P>
   class p_run_bkd_piter_
     :

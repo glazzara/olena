@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -63,11 +63,13 @@ namespace mln
     | topo::adj_higher_face_fwd_iter<D>.  |
     `------------------------------------*/
 
-    /// \brief Forward iterator on all the adjacent (n+1)-faces of the
-    /// n-face of an mln::complex<D>.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Forward iterator on all the adjacent (n+1)-faces of the
+      n-face of an mln::complex<D>.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned D>
     class adj_higher_face_fwd_iter
       : public internal::forward_complex_relative_iterator_base< topo::face<D>,
@@ -97,11 +99,13 @@ namespace mln
     | topo::adj_higher_face_bkd_iter<D>.  |
     `------------------------------------*/
 
-    /// \brief Backward iterator on all the adjacent (n+1)-faces of
-    /// the n-face of an mln::complex<D>.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Backward iterator on all the adjacent (n+1)-faces of
+      the n-face of an mln::complex<D>.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned D>
     class adj_higher_face_bkd_iter
       : public internal::backward_complex_relative_iterator_base< topo::face<D>,

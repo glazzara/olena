@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,12 +42,18 @@
 namespace mln
 {
 
-  /// Concept-like.
+  /*!
+    \internal
+    \brief Concept-like.
+  */
   template <typename E>
   struct C_Function;
 
 
-  /// Category declaration for a unary C function.
+  /*!
+    \internal
+    \brief Category declaration for a unary C function.
+  */
   template <typename R, typename A>
   struct category< R (*)(A) >
   {

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,12 +43,14 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Basic 2D image class.
-     *
-     * The parameter \c T is the type of node's data. branch_iter is
-     * used to pre-order walk a branch.
-     *
-     */
+    /*!
+      \internal
+      \brief Iterator on branch.
+
+      The parameter \c T is the type of node's data. branch_iter is
+      used to pre-order walk a branch.
+
+    */
     template <typename T>
     class branch_iter
     {

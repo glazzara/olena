@@ -50,7 +50,10 @@ namespace mln
     namespace check
     {
 
-      /// FIXME
+      /*!
+	\internal
+	\brief Statically checks the interface of fastest images.
+      */
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {

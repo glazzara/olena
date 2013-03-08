@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,13 +40,15 @@ namespace mln
 {
 
 
-  /// Iterator on p_transformed<S,F>.
-  ///
-  /// Parameter \c S is a site set type; parameter F is a function
-  /// from point to Boolean.
-  ///
-  /// \see mln::p_transformed
-  //
+  /*!
+    \internal
+    \brief Iterator on p_transformed<S,F>.
+
+    Parameter \c S is a site set type; parameter F is a function
+    from point to Boolean.
+
+    \see mln::p_transformed
+  */
   template <typename Pi, typename S, typename F>
   struct p_transformed_piter
     : public internal::site_set_iterator_base< p_transformed<S,F>,            // Site_Set.
@@ -59,16 +62,16 @@ namespace mln
 
     /// Test the iterator validity.
     bool is_valid_() const;
-    
+
     /// Invalidate the iterator.
     void invalidate_();
-    
+
     /// Start an iteration.
     void start_();
-    
+
     /// Go to the next point.
     void next_();
-    
+
     /// Change the set site targeted by this iterator.
     void change_target(const p_transformed<S,F>& s);
 

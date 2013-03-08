@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,7 +47,10 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::ch_piter_image<I,Fwd>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::ch_piter_image<I,Fwd>.
+    */
     template <typename I, typename Fwd>
     struct data< ch_piter_image<I,Fwd> >
     {

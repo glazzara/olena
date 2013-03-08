@@ -120,10 +120,13 @@ namespace mln
 
 
 
-    /*! A base class for image morphers w.r.t. identity.
-     * Parameter \p S is a point set type.
-     *
-     */
+    /*!
+      \internal
+      \brief A base class for image morphers w.r.t. identity.
+
+      Parameter \p S is a point set type.
+
+    */
     template <typename I, typename S, typename E>
     class image_identity
       : public image_identity_impl<I, E>,

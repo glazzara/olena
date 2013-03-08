@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -52,24 +52,27 @@ namespace mln
     | topo::center_only_iter<D>.  |
     `----------------------------*/
 
-    /** \brief Iterator on all the adjacent (n-1)-faces of the n-face
-        of an mln::complex<D>.
+    /*!
+      \internal
+      \brief Iterator on all the adjacent (n-1)-faces of the n-face
+      of an mln::complex<D>.
 
-        \tparam D The dimension of the complex this iterator belongs to.
+      \tparam D The dimension of the complex this iterator belongs to.
 
-        mln::topo::center_only_iter inherits from
-        mln::topo::internal::forward_complex_relative_iterator_base,
-        but it could inherit from
-        mln::topo::internal::backward_complex_relative_iterator_base
-        as well, since it always contains a single element, the
-        center/reference face (and the traversal order is
-        meaningless).
+      mln::topo::center_only_iter inherits from
+      mln::topo::internal::forward_complex_relative_iterator_base,
+      but it could inherit from
+      mln::topo::internal::backward_complex_relative_iterator_base
+      as well, since it always contains a single element, the
+      center/reference face (and the traversal order is
+      meaningless).
 
-        This iterator is essentially used to implement other iterators.
-        \see mln::topo::centered_iter_adapter
-        \see mln::complex_lower_window
-        \see mln::complex_higher_window
-        \see mln::complex_lower_higher_window  */
+      This iterator is essentially used to implement other iterators.
+      \see mln::topo::centered_iter_adapter
+      \see mln::complex_lower_window
+      \see mln::complex_higher_window
+      \see mln::complex_lower_higher_window
+    */
     template <unsigned D>
     class center_only_iter
       : public internal::forward_complex_relative_iterator_base< topo::face<D>,

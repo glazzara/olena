@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +45,12 @@ namespace mln
   {
 
 
-    /*! \brief FIXME: Forward iterator on a set of values.
-     *
-     * The parameter \c S is the type of value set.
-     */
+    /*!
+      \internal
+      \brief FIXME: Forward iterator on a set of values.
+
+      The parameter \c S is the type of value set.
+    */
     template <typename S>
     struct fwd_viter_ : public Value_Iterator< fwd_viter_<S> >
     {
@@ -89,10 +92,12 @@ namespace mln
 
 
 
-    /*! \brief FIXME: Backward iterator on a set of values.
-     *
-     * The parameter \c S is the type of value set.
-     */
+    /*!
+      \internal
+      \brief FIXME: Backward iterator on a set of values.
+
+      The parameter \c S is the type of value set.
+    */
     template <typename S>
     struct bkd_viter_ : public Value_Iterator< bkd_viter_<S> >
     {

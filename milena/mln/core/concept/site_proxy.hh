@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,7 +45,10 @@ namespace mln
   template <typename E> struct Site_Proxy;
 
 
-  /// Site_Proxy category flag type.
+  /*!
+    \internal
+    \brief Site_Proxy category flag type.
+  */
   template <>
   struct Site_Proxy<void>
   {

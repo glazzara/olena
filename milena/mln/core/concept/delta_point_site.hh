@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,7 +66,10 @@ namespace mln
 
 
 
-  /// Delta point site category flag type.
+  /*!
+    \internal
+    \brief Delta point site category flag type.
+  */
   template <>
   struct Delta_Point_Site<void>
   {
@@ -73,8 +77,10 @@ namespace mln
   };
 
 
-  /*! \brief FIXME: Doc!
-   */
+  /*!
+    \internal
+    \brief FIXME: Doc!
+  */
   template <typename E>
   struct Delta_Point_Site : public Object<E>
   {
@@ -101,7 +107,7 @@ namespace mln
   // Operators.
 
   template <typename D>
-  std::ostream& 
+  std::ostream&
   operator<<(std::ostream& ostr, const Delta_Point_Site<D>& dp);
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +74,10 @@ namespace mln
 
 
 
-    /// \brief "converts-to" check.
+    /*!
+      \internal
+      \brief "converts-to" check.
+    */
     template <typename T, typename U>
     struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>
 					::selector(*internal::make_<mlc_const(T)>::ptr(),

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,9 +42,10 @@ namespace mln
   {
 
 
-    /*! A base class for primary images.
-     *
-     */
+    /*!
+      \internal
+      \brief A base class for primary images.
+    */
     template <typename T, typename S, typename E>
     struct image_primary : public image_base<T, S, E>
     {

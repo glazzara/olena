@@ -114,9 +114,12 @@ namespace mln
 
     namespace internal
     {
-      /// The data stored in a complex_geometry object.
-      ///
-      /// \tparam P The type of the location of a 0-face.
+      /*!
+	\internal
+	\brief The data stored in a complex_geometry object.
+
+	\tparam P The type of the location of a 0-face.
+      */
       template <typename P>
       struct complex_geometry_data
       {

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -107,27 +107,45 @@ namespace mln
     // For unary operators.
 
 
-    /// Default definition of op::uplus trait.
+    /*!
+      \internal
+      \brief Default definition of op::uplus trait.
+    */
     template <typename O>
     struct set_unary_< op::uplus, Object,O > { typedef O ret; };
 
-    /// Default definition of op::uminus trait.
+    /*!
+      \internal
+      \brief Default definition of op::uminus trait.
+    */
     template <typename O>
     struct set_unary_< op::uminus, Object,O > { typedef mln_trait_op_minus(O, O) ret; };
 
-    /// Default definition of op::preinc trait.
+    /*!
+      \internal
+      \brief Default definition of op::preinc trait.
+    */
     template <typename O>
     struct set_unary_< op::preinc, Object,O > { typedef O& ret; };
 
-    /// Default definition of op::preinc trait.
+    /*!
+      \internal
+      \brief Default definition of op::preinc trait.
+    */
     template <typename O>
     struct set_unary_< op::predec, Object,O > { typedef O& ret; };
 
-    /// Default definition of op::postinc trait.
+    /*!
+      \internal
+      \brief Default definition of op::postinc trait.
+    */
     template <typename O>
     struct set_unary_< op::postinc, Object,O > { typedef O ret; };
 
-    /// Default definition of op::postinc trait.
+    /*!
+      \internal
+      \brief Default definition of op::postinc trait.
+    */
     template <typename O>
     struct set_unary_< op::postdec, Object,O > { typedef O ret; };
 

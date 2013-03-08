@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -61,11 +61,13 @@ namespace mln
     | topo::face_fwd_iter<D>.  |
     `-------------------------*/
 
-    /// \brief Forward iterator on all the faces of an
-    /// mln::complex<D>.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Forward iterator on all the faces of an
+      mln::complex<D>.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned D>
     class face_fwd_iter
       : public internal::complex_set_iterator_base< topo::face<D>, face_fwd_iter<D> >
@@ -105,10 +107,12 @@ namespace mln
     | topo::face_bkd_iter<D>.  |
     `-------------------------*/
 
-    /// \brief Backward iterator on all the faces of an mln::complex<D>.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Backward iterator on all the faces of an mln::complex<D>.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned D>
     class face_bkd_iter
     : public internal::complex_set_iterator_base< topo::face<D>, face_bkd_iter<D> >

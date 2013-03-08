@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,10 +39,11 @@ namespace mln
   namespace internal
   {
 
-    /*! A FIXME class to make explicit in code that a type is
-     *  not yet implemented.
-     *
-     */
+    /*!
+      \internal
+      \brief A FIXME class to make explicit in code that a type is
+      not yet implemented.
+    */
     struct fixme
     {};
 

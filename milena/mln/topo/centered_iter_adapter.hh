@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,11 +49,14 @@ namespace mln
 
     // FIXME: We should deduce D from I.
 
-    /// \brief Backward complex relative iterator adapters adding the
-    /// central (reference) point to the set of iterated faces.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    /// \tparam I The adapated complex relative iterator.
+    /*!
+      \internal
+      \brief Backward complex relative iterator adapters adding the
+      central (reference) point to the set of iterated faces.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+      \tparam I The adapated complex relative iterator.
+    */
     template <unsigned D, typename I>
     class centered_fwd_iter_adapter
       : public internal::complex_relative_iterator_sequence< center_only_iter<D>,
@@ -82,11 +86,14 @@ namespace mln
 
     // FIXME: We should deduce D from I.
 
-    /// \brief Forward complex relative iterator adapters adding the
-    /// central (reference) point to the set of iterated faces.
-    ///
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    /// \tparam I The adapated complex relative iterator.
+    /*!
+      \internal
+      \brief Forward complex relative iterator adapters adding the
+      central (reference) point to the set of iterated faces.
+
+      \tparam D The dimension of the complex this iterator belongs to.
+      \tparam I The adapated complex relative iterator.
+    */
     template <unsigned D, typename I>
     class centered_bkd_iter_adapter
       : public internal::complex_relative_iterator_sequence< I,

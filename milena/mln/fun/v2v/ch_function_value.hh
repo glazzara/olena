@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,7 @@ namespace mln
     namespace v2v
     {
 
-      /// Wrap a function v2v and convert its result to another type.
+      /// \brief Wrap a function v2v and convert its result to another type.
       template <typename F, typename V>
       class ch_function_value : public Function_v2v< ch_function_value<F,V> >,
 				public internal::ch_function_value_impl<F, V>

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,14 +46,16 @@ namespace mln
   namespace metal
   {
 
-    /*! \brief "goes-to" check.
-     *
-     * FIXME: Doc!
-     */
+    /*!
+      \internal
+      \brief "goes-to" check.
+
+      FIXME: Doc!
+    */
     template <typename T, typename U>
     struct goes_to : or_< mlc_converts_to(T,U), mlc_is(T,U) >::eval
     {};
-    
+
 
   } // end of namespace mln::metal
 

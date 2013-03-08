@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,9 +58,11 @@ namespace mln
 
 
 
-    /// \brief "is" check.
-    /// Check whether T inherits from U.
-    //
+    /*!
+      \internal
+      \brief "is" check.
+      Check whether T inherits from U.
+    */
     template <typename T, typename U>
     struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
 			==

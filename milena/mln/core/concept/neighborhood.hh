@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,8 +49,10 @@ namespace mln
   template <typename E> struct Neighborhood;
 
 
-  /// Neighborhood category flag type.
-
+  /*!
+    \internal
+    \brief Neighborhood category flag type.
+  */
   template <>
   struct Neighborhood<void>
   {

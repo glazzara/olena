@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,27 +60,42 @@ namespace mln
     // FIXME: Might be moved to another file, as it's the case for
     // images and values.
 
-    /// Traits related to neighborhoods.
+    /*!
+      \internal
+      \brief Traits related to neighborhoods.
+    */
     namespace neighborhood
     {
 
-      /// Kind of neighborhood.
+      /*!
+	\internal
+	\brief Kind of neighborhood.
+      */
       struct kind
       {
-	/// The base class of the hierarchy of neighborhood traits.
+	/*!
+	  \internal
+	  \brief The base class of the hierarchy of neighborhood traits.
+	*/
 	struct any
 	{
 	  std::string name() const { return "kind::any"; }
 	};
 
-	/// A generic neighborhood, with no particular feature.
+	/*!
+	  \internal
+	  \brief A generic neighborhood, with no particular feature.
+	*/
 	struct generic : any
 	{
 	  std::string name() const { return "kind::generic"; }
 	};
 
-	/// A neighborhood on a regular grid, i.e.
-	/// holding/convertible to a window.
+	/*!
+	  \internal
+	  \brief A neighborhood on a regular grid, i.e.
+	  holding/convertible to a window.
+	*/
 	struct regular : any
 	{
 	  std::string name() const { return "kind::regular"; }

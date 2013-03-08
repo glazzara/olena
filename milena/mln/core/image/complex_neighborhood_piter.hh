@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,10 @@ namespace mln
   | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Forward iterator on complex neighborhood.
+  /*!
+    \internal
+    \brief Forward iterator on complex neighborhood.
+  */
   template <typename I, typename G, typename N>
   class complex_neighborhood_fwd_piter
     : public internal::site_relative_iterator_base< N,
@@ -119,7 +123,10 @@ namespace mln
   | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Backward iterator on complex neighborhood.
+  /*!
+    \internal
+    \brief Backward iterator on complex neighborhood.
+  */
   template <typename I, typename G, typename N>
   class complex_neighborhood_bkd_piter
     : public internal::site_relative_iterator_base< N,

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,8 +50,11 @@ namespace mln
   | p_n_faces_fwd_piter<D, G>.  |
   `----------------------------*/
 
-  /// \brief Forward iterator on the n-faces sites of an
-  /// mln::p_complex<D, G>.
+  /*!
+    \internal
+    \brief Forward iterator on the n-faces sites of an
+    mln::p_complex<D, G>.
+  */
   template <unsigned D, typename G>
   class p_n_faces_fwd_piter
     : public internal::p_complex_piter_base_< topo::n_face_fwd_iter<D>,
@@ -86,8 +89,11 @@ namespace mln
   | p_n_faces_bkd_piter<D, G>.  |
   `----------------------------*/
 
-  /// \brief Backward iterator on the n-faces sites of an
-  /// mln::p_complex<D, G>.
+  /*!
+    \internal
+    \brief Backward iterator on the n-faces sites of an
+    mln::p_complex<D, G>.
+  */
   template <unsigned D, typename G>
   class p_n_faces_bkd_piter
   /* FIXME: Rename internal::p_complex_piter_base_ to something else,
@@ -145,7 +151,7 @@ namespace mln
 
   template <unsigned D, typename G>
   inline
-  unsigned 
+  unsigned
   p_n_faces_fwd_piter<D, G>::n() const
   {
     return this->iter_.n();
@@ -158,7 +164,7 @@ namespace mln
   {
     this->iter_.set_n(n);
   }
-    
+
 
   /*----------------------------.
   | p_n_faces_bkd_piter<D, G>.  |
@@ -182,7 +188,7 @@ namespace mln
 
   template <unsigned D, typename G>
   inline
-  unsigned 
+  unsigned
   p_n_faces_bkd_piter<D, G>::n() const
   {
     return this->iter_.n();

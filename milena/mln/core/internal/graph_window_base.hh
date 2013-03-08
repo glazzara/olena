@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +36,12 @@
 namespace mln
 {
 
-  /// \tparam P Site type.
+  /*!
+    \internal
+    \brief Base class for windows on graphes.
+
+    \tparam P Site type.
+  */
   template <typename P, typename E>
   class graph_window_base : public Window<E>
   {

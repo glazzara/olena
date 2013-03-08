@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,11 +56,14 @@ namespace mln
 
   namespace internal
   {
-    /** \brief Generic neighborhood centered on the face of a complex,
-	based on an pair of (forward and backward) complex iterators.
-	
-	\tparam W The underlying window.
-	\tparam E The exact type.  */
+    /*!
+      \internal
+      \brief Generic neighborhood centered on the face of a complex,
+      based on an pair of (forward and backward) complex iterators.
+
+      \tparam W The underlying window.
+      \tparam E The exact type.
+    */
     template <typename W, typename E>
     class complex_neighborhood_base : public Neighborhood<E>
     {

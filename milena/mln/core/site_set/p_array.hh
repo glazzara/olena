@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -177,8 +177,10 @@ namespace mln
 
 
 
-  /// Psite class for indexed site sets such as p_array<P>.
-  ///
+  /*!
+    \internal
+    \brief Psite class for indexed site sets such as p_array<P>.
+  */
   template <typename S>
   class p_indexed_psite : public internal::pseudo_site_base_< const mln_element(S)&,
 							      p_indexed_psite<S> >
@@ -229,8 +231,10 @@ namespace mln
 
 
 
-  /// Forward iterator on sites of an indexed site set.
-
+  /*!
+    \internal
+    \brief Forward iterator on sites of an indexed site set.
+  */
   template <typename S>
   class p_indexed_fwd_piter
     :
@@ -270,8 +274,10 @@ namespace mln
 
 
 
-  /// Backward iterator on sites of an indexed site set.
-
+  /*!
+    \internal
+    \brief Backward iterator on sites of an indexed site set.
+  */
   template <typename S>
   class p_indexed_bkd_piter
     :

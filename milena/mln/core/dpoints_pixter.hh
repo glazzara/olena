@@ -50,10 +50,13 @@ namespace mln
   | dpoints_fwd_pixter<I>.  |
   `------------------------*/
 
-  /// \brief A generic forward iterator on the pixels of a
-  /// dpoint-based window or neighborhood.
-  ///
-  /// Parameter \c I is the image type.
+  /*!
+    \internal
+    \brief A generic forward iterator on the pixels of a
+    dpoint-based window or neighborhood.
+
+    Parameter \c I is the image type.
+  */
   template <typename I>
   class dpoints_fwd_pixter
     : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
@@ -133,10 +136,13 @@ namespace mln
   | dpoints_bkd_pixter<I>.  |
   `------------------------*/
 
-  /// \brief A generic backward iterator on the pixels of a
-  /// dpoint-based window or neighborhood.
-  ///
-  /// Parameter \c I is the image type.
+  /*!
+    \internal
+    \brief A generic backward iterator on the pixels of a
+    dpoint-based window or neighborhood.
+
+    Parameter \c I is the image type.
+  */
   template <typename I>
   class dpoints_bkd_pixter
     : public Pixel_Iterator< dpoints_bkd_pixter<I> >,

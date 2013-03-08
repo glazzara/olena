@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -89,8 +90,10 @@ namespace mln
   namespace internal
   {
 
-    /// Subject_impl (Proxy)
-
+    /*!
+      \internal
+      \brief Subject_impl (Proxy)
+    */
     template <typename G, typename F, typename E>
     struct subject_impl< const p_edges_psite<G,F>&, E >
       :	   subject_impl< const graph_psite_base< p_edges<G,F>,

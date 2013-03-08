@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
   namespace metal
   {
 
-    /// "is_not_a" static Boolean expression.
+    /*!
+      \internal
+      \brief "is_not_a" static Boolean expression.
+    */
     template <typename T, template <class> class M>
     struct is_not_a : not_< is_a<T, M> >::eval
     {

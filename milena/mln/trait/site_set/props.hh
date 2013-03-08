@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,41 +39,46 @@
 # include <mln/trait/undef.hh>
 
 
+/*!
+  \verbatim
 
-//  Properties of site sets.
-//  ========================
+    Properties of site sets.
+    ========================
 
-//  nsites:   /any/
-//              |
-//              + -- unknown
-//              |
-//              + -- known
+    nsites:   /any/
+                |
+                + -- unknown
+                |
+                + -- known
 
-//  bbox:     /any/
-//              |
-//              + -- unknown
-//              |
-//              + -- /known/
-//                     |
-//                     + -- lazy
-//                     |
-//                     + -- straight
+    bbox:     /any/
+                |
+                + -- unknown
+                |
+                + -- /known/
+                       |
+                       + -- lazy
+                       |
+                       + -- straight
 
-//  contents: /any/
-//              |
-//              + -- fixed
-//              |
-//              + -- /dynamic/
-//                     |
-//                     + -- growing
-//                     |
-//                     + -- free
+    contents: /any/
+                |
+                + -- fixed
+                |
+                + -- /dynamic/
+                       |
+                       + -- growing
+                       |
+                       + -- free
 
-//  arity:    /any/
-//              |
-//              + -- unique
-//              |
-//              + -- multiple
+    arity:    /any/
+                |
+                + -- unique
+                |
+                + -- multiple
+
+  \endverbatim
+*/
 
 
 namespace mln
@@ -85,59 +91,95 @@ namespace mln
     {
 
 
-      /// Site set property about the 'nsites' method presence.
+      /*!
+	\internal
+	\brief Site set property about the 'nsites' method presence.
+      */
       struct nsites
       {
-	/// Base class for the site set 'nsites' property.
+	/*!
+	  \internal
+	  \brief Base class for the site set 'nsites' property.
+	*/
 	struct any { protected: any() {} };
 
-	/// Property that states that the number of sites cannot be
-	/// retrieved from a site set in O(1) complexity so the site
-	/// set does not feature the 'nsites' methods.
+	/*!
+	  \internal
+	  \brief Property that states that the number of sites cannot be
+	  retrieved from a site set in O(1) complexity so the site
+	  set does not feature the 'nsites' methods.
+	*/
 	struct unknown : any { std::string name() const { return "nsites::unknown"; } };
 
-	/// Property that states that a site set features the method
-	/// 'nsites' because the number of sites is known so its
-	/// retrieval has O(1) complexity.
+	/*!
+	  \internal
+	  \brief Property that states that a site set features the method
+	  'nsites' because the number of sites is known so its
+	  retrieval has O(1) complexity.
+	*/
 	struct known   : any { std::string name() const { return "nsites::known"; } };
       };
 
 
-      /// Site set property about the 'bbox' method presence.
+      /*!
+	\internal
+	\brief Site set property about the 'bbox' method presence.
+      */
       struct bbox
       {
-	/// Base class for the site set 'bbox' property.
+	/*!
+	  \internal
+	  \brief Base class for the site set 'bbox' property.
+	*/
 	struct any { protected: any() {} };
 
-	/// Property that states that the bounding box of a site set
-	/// is not featured as a method.  This is either because the
-	/// notion of bounding box is meaningless for the site set
-	/// type, or because the bounding box cannot be retrieved in
-	/// O(1) complexity.
+	/*!
+	  \internal
+	  Property that states that the bounding box of a site set
+	  is not featured as a method.  This is either because the
+	  notion of bounding box is meaningless for the site set
+	  type, or because the bounding box cannot be retrieved in
+	  O(1) complexity.
+	*/
 	struct unknown : any { std::string name() const { return "bbox::unknown"; } };
 
-	/// Property that states that the bounding box of a site set
-	/// is featured by the 'bbox' method.  It means that the
-	/// notion of bounding box makes sense and that such a piece
-	/// of information can be retrieved in O(1) complexity.
-	/// Warning: this property is pseudo-abstract.  The more
-	/// precise properties are 'lazy' and 'straight'.
+	/*!
+	  \internal
+	  Property that states that the bounding box of a site set
+	  is featured by the 'bbox' method.  It means that the
+	  notion of bounding box makes sense and that such a piece
+	  of information can be retrieved in O(1) complexity.
+	  Warning: this property is pseudo-abstract.  The more
+	  precise properties are 'lazy' and 'straight'.
+	*/
 	struct known   : any { protected: known() {} };
 
-	/// Property that states that the bounding box of a site set
-	/// is computed by the site set in a lazy way.
+	/*!
+	  \internal
+	  Property that states that the bounding box of a site set
+	  is computed by the site set in a lazy way.
+	*/
 	struct lazy     : known { std::string name() const { return "bbox::lazy"; } };
 
-	/// Property that states that the bounding box of a site set
-	/// is always kept up to date by the site set.
+	/*!
+	  \internal
+	  Property that states that the bounding box of a site set
+	  is always kept up to date by the site set.
+	*/
 	struct straight : known { std::string name() const { return "bbox::straight"; } };
       };
 
 
-      /// Site set property about how the contents can evolve.
+      /*!
+	\internal
+	\brief Site set property about how the contents can evolve.
+      */
       struct contents
       {
-	/// Base class for the site set 'contents' property.
+	/*!
+	  \internal
+	  \brief Base class for the site set 'contents' property.
+	*/
 	struct any { protected: any() {} };
 	struct fixed   : any     { std::string name() const { return "contents::fixed"; } };
 	struct dynamic : any { protected: dynamic() {} };
@@ -145,11 +187,17 @@ namespace mln
 	struct free    : dynamic { std::string name() const { return "contents::free"; } };
       };
 
-      /// Site set property about the unicity or multiplicity of its
-      /// elements.
+      /*!
+	\internal
+	\brief Site set property about the unicity or multiplicity of its
+	elements.
+      */
       struct arity
       {
-	/// Base class for the site set 'arity' property.
+	/*!
+	  \internal
+	  \brief Base class for the site set 'arity' property.
+	*/
 	struct any { protected: any() {} };
 	struct unique   : any { std::string name() const { return "arity::unique"; } };
 	struct multiple : any { std::string name() const { return "arity::multiple"; } };

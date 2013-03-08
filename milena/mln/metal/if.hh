@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -64,10 +65,12 @@ namespace mln
     } // end of namespace mln::metal::internal
 
 
-    /*! \brief "if-then-else" expression.
-     *
-     * FIXME: Doc!
-     */
+    /*!
+      \internal
+      \brief "if-then-else" expression.
+
+      FIXME: Doc!
+    */
     template <typename Cond, typename Then, typename Else>
     struct if_ : internal::helper_if_< Cond::value, Then, Else >
     {

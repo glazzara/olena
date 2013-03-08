@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,7 +50,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::interpolated<I, F>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::interpolated<I, F>.
+    */
     template <typename I, template <class> class F>
     struct data< interpolated<I,F> >
     {

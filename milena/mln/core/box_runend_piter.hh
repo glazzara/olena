@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,10 +42,12 @@
 namespace mln
 {
 
-  /*! \brief A generic backward iterator on points by lines.
-   *
-   * The parameter \c P is the type of points.
-   */
+  /*!
+    \internal
+    \brief A generic backward iterator on points by lines.
+
+    The parameter \c P is the type of points.
+  */
   template <typename P>
   class box_runend_piter :
     public internal::site_set_iterator_base< box<P>,

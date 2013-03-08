@@ -109,9 +109,11 @@ namespace mln
     };
 
 
-    /// Implementation class to equip generalized pixel
-    /// classes based on mutable images.
-    ///
+    /*!
+      \internal
+      \brief Implementation class to equip generalized pixel
+      classes based on mutable images.
+    */
     template <typename I, typename E>
     class pixel_impl_
 
@@ -168,9 +170,11 @@ namespace mln
     };
 
 
-    /// Implementation class to equip generalized pixel
-    /// classes based on constant images.
-    ///
+    /*!
+      \internal
+      \brief Implementation class to equip generalized pixel
+      classes based on constant images.
+    */
     template <typename I, typename E>
     class pixel_impl_< const I, E >
 

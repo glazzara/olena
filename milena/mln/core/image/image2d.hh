@@ -62,7 +62,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::image2d<T>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::image2d<T>.
+    */
     template <typename T>
     struct data< image2d<T> >
     {
@@ -161,8 +164,12 @@ namespace mln
     image2d(const box2d& b, unsigned bdr = border::thickness);
 
 
+    /// @cond INTERNAL_API
+
     /// Initialize an empty image.
     void init_(const box2d& b, unsigned bdr = border::thickness);
+
+    /// @endcond
 
 
     /// Test if \p p is valid.
@@ -207,11 +214,16 @@ namespace mln
     // Specific methods:
     // -----------------
 
+    /// @cond INTERNAL_API
+
     /// Read-only access to the image value located at (\p row, \p col).
     const T& at_(mln::def::coord row, mln::def::coord col) const;
 
     /// Read-write access to the image value located at (\p row, \p col).
     T& at_(mln::def::coord row, mln::def::coord col);
+
+    /// @endcond
+
 
     /// Give the number of rows.
     unsigned nrows() const;
@@ -251,8 +263,12 @@ namespace mln
     T* buffer();
 
 
+    /// @cond INTERNAL_API
+
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
+
+    /// @endcond
   };
 
 

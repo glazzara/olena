@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,16 +47,18 @@ namespace mln
   namespace internal
   {
 
-    /// A generic iterator on points of windows and of
-    ///  neighborhoods.
-    ///
-    /// Parameter \c S is the targeted "site set definition" type.  It
-    /// can be either a Window, or a Neighborhood.
-    ///
-    /// IMPORTANT: Sub-classes have to define center_at_, do_start_, do_next_,
-    /// is_valid_, invalidate_ and compute_p_.  They shall define
-    /// NEITHER start_ NOR next_.
-    ///
+    /*!
+      \internal
+      \brief A generic iterator on points of windows and of
+      neighborhoods.
+
+      Parameter \c S is the targeted "site set definition" type.  It
+      can be either a Window, or a Neighborhood.
+
+      IMPORTANT: Sub-classes have to define center_at_, do_start_, do_next_,
+      is_valid_, invalidate_ and compute_p_.  They shall define
+      NEITHER start_ NOR next_.
+    */
     template <typename S, typename E, typename C = mln_psite(S)>
     class site_relative_iterator_base : public site_iterator_base< S, E >
     {

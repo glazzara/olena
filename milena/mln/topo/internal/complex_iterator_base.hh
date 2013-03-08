@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,10 +71,13 @@ namespace mln
     namespace internal
     {
 
-      /// Factoring class for iterators on mln::complex.
-      ///
-      /// \tparam F The type of the face handle.
-      /// \tparam E The type exact type of the iterator.
+      /*!
+	\internal
+	\brief Factoring class for iterators on mln::complex.
+
+	\tparam F The type of the face handle.
+	\tparam E The type exact type of the iterator.
+      */
       template <typename F, typename E>
       class complex_iterator_base : public Iterator<E>
       {

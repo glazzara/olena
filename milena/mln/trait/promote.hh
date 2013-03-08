@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2009  EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,7 +53,10 @@ namespace mln
   namespace trait
   {
 
-    /// Declaration of the "promote" trait.
+    /*!
+      \internal
+      \brief Declaration of the "promote" trait.
+    */
     template <typename T, typename U>
     struct promote : public solve_binary<promote, T, U>
     {
@@ -60,10 +64,11 @@ namespace mln
 
 
     /*!
-     * \brief Default case when one type is involved twice: the
-     * promotion type is the same as the input type (so actually there
-     * is no promotion).
-     */
+      \internal
+      \brief Default case when one type is involved twice: the
+      promotion type is the same as the input type (so actually there
+      is no promotion).
+    */
     template <typename T>
     struct set_binary_< promote, Object, T, Object, T >
     {

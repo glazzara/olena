@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,11 +48,14 @@ namespace mln
     namespace internal
     {
 
-      /// Base implementation of a couple of accumulators.
-      ///
-      /// The parameter \c T is the type of values.
-      ///
-      /// \todo Check that, when T is not provided, A1 and A2 have the same value.
+      /*!
+	\internal
+	\brief Base implementation of a couple of accumulators.
+
+        The parameter \c T is the type of values.
+
+        \todo Check that, when T is not provided, A1 and A2 have the same value.
+      */
       template <typename A1, typename A2, typename R, typename E>
       class couple
         : public base<R,E>,

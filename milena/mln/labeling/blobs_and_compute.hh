@@ -72,8 +72,11 @@ namespace mln
     namespace internal
     {
 
-      /// Functor not computing anything. To be passed to the labeling
-      /// blobs canvas.
+      /*!
+	\internal
+	\brief Functor not computing anything.
+	To be passed to the labeling  blobs canvas.
+      */
       template <typename L, typename A>
       struct compute_functor
       {

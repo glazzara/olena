@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,7 +48,10 @@ namespace mln
 
 
 
-  /// Pseudo_Site category flag type.
+  /*!
+    \internal
+    \brief Pseudo_Site category flag type.
+  */
   template <>
   struct Pseudo_Site<void>
   {
@@ -125,7 +128,7 @@ namespace mln
       template <>
       struct helper< /* is an Object */ true >
       {
- 
+
 	template <typename P>
 	void change_target(Pseudo_Site<P>& p,
 			   const mln_target(P)& new_target) const
@@ -138,7 +141,7 @@ namespace mln
 	{
 	  // No-op.
 	}
-	
+
       };
 
       template <>
@@ -150,7 +153,7 @@ namespace mln
 	  // No-op.
 	}
       };
-      
+
     } // namespace mln::if_possible::internal
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,8 +43,10 @@ namespace mln
   namespace internal
   {
 
-    /// Forward vertex iterator.
-
+    /*!
+      \internal
+      \brief Forward vertex iterator.
+    */
     template<typename G>
     class vertex_fwd_iterator
       : public graph_iter_base<G, util::vertex<G>, vertex_fwd_iterator<G> >
@@ -70,8 +73,10 @@ namespace mln
     };
 
 
-    /// Backward vertex iterator.
-
+    /*!
+      \internal
+      \brief Backward vertex iterator.
+    */
     template<typename G>
     class vertex_bkd_iterator
       : public graph_iter_base<G, util::vertex<G>, vertex_bkd_iterator<G> >
@@ -98,8 +103,10 @@ namespace mln
     };
 
 
-    /// Forward edge iterator.
-
+    /*!
+      \internal
+      \brief Forward edge iterator.
+    */
     template <typename G>
     class edge_fwd_iterator
       : public graph_iter_base<G, util::edge<G>, edge_fwd_iterator<G> >
@@ -126,8 +133,10 @@ namespace mln
     };
 
 
-    /// Backward edge iterator.
-
+    /*!
+      \internal
+      \brief Backward edge iterator.
+    */
     template <typename G>
     class edge_bkd_iterator
       : public graph_iter_base<G, util::edge<G>, edge_bkd_iterator<G> >

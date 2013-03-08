@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -39,11 +39,14 @@
 namespace mln
 {
 
-  /// A generic forward iterator on points of windows and of
-  ///  neighborhoods.
-  ///
-  /// The parameter \c V is the type of std::vector enclosing
-  /// structure.
+  /*!
+    \internal
+    \brief A generic forward iterator on points of windows and of
+    neighborhoods.
+
+    The parameter \c V is the type of std::vector enclosing
+    structure.
+  */
   template <typename V>
   class dpsites_fwd_piter
     : public internal::site_relative_iterator_base< V, dpsites_fwd_piter<V> >
@@ -85,11 +88,14 @@ namespace mln
   };
 
 
-  /// A generic backward iterator on points of windows and of
-  ///  neighborhoods.
-  ///
-  /// The parameter \c V is the type of std::vector enclosing
-  /// structure.
+  /*!
+    \internal
+    \brief A generic backward iterator on points of windows and of
+    neighborhoods.
+
+    The parameter \c V is the type of std::vector enclosing
+    structure.
+  */
   template <typename V>
   class dpsites_bkd_piter :
     public internal::site_relative_iterator_base< V, dpsites_bkd_piter<V> >

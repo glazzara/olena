@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,10 +40,12 @@ namespace mln
   namespace internal
   {
 
-    /// Base class for weighted window classes.
-    ///
-    /// \p W is the corresponding window type.
+    /*!
+      \internal
+      \brief Base class for weighted window classes.
 
+      \p W is the corresponding window type.
+    */
     template <typename W, typename E>
     struct weighted_window_base : public Weighted_Window<E>
     {
@@ -70,7 +73,7 @@ namespace mln
       /// method is valid iff the support is regular and the
       /// definition is not varying.
       bool is_centered() const;
-      
+
       /// Give the maximum coordinate gap; final method.  This method
       /// is valid iff the support is regular and the definition is
       /// not varying.

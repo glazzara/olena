@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,15 +58,18 @@ namespace mln
     | topo::adj_m_face_fwd_iter<D>.  |
     `-------------------------------*/
 
-    /** Forward iterator on all the m-faces transitively
-        adjacent to a (reference) n-face in a complex.
+    /*!
+      \internal
+      \brief Forward iterator on all the m-faces transitively
+      adjacent to a (reference) n-face in a complex.
 
-        \tparam D The dimension of the complex this iterator belongs to.
+      \tparam D The dimension of the complex this iterator belongs to.
 
-        The dimension parameter (\a m_) must be lower or equal to D.
+      The dimension parameter (\a m_) must be lower or equal to D.
 
-	If \a m_ is equal to the dimension of the reference face, then
-	the iterated set is empty.  */
+      If \a m_ is equal to the dimension of the reference face, then
+      the iterated set is empty.
+    */
     template <unsigned D>
     class adj_m_face_fwd_iter
       : public internal::forward_complex_relative_iterator_base< topo::face<D>,
@@ -105,15 +109,18 @@ namespace mln
     | topo::adj_m_face_bkd_iter<D>.  |
     `-------------------------------*/
 
-    /** Backward iterator on all the m-faces transitively
-        adjacent to a (reference) n-face in a complex.
+    /*!
+      \internal
+      \brief Backward iterator on all the m-faces transitively
+      adjacent to a (reference) n-face in a complex.
 
-        \tparam D The dimension of the complex this iterator belongs to.
+      \tparam D The dimension of the complex this iterator belongs to.
 
-        The dimension parameter (\a m_) must be lower or equal to D.
+      The dimension parameter (\a m_) must be lower or equal to D.
 
-	If \a m_ is equal to the dimension of the reference face, then
-	the iterated set is empty.  */
+      If \a m_ is equal to the dimension of the reference face, then
+      the iterated set is empty.
+    */
     template <unsigned D>
     class adj_m_face_bkd_iter
       : public internal::backward_complex_relative_iterator_base< topo::face<D>,

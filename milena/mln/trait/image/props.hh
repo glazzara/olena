@@ -760,7 +760,10 @@ namespace mln
 
   // FIXME: To be moved elsewhere?
 
-  /// Compute the image::space trait from a point type.
+  /*!
+    \internal
+    \brief Compute the image::space trait from a point type.
+  */
   /// \{
 
   // Fwd decl. (used by trait::image::space_from_point).
@@ -783,7 +786,10 @@ namespace mln
     namespace image
     {
 
-      /// Function mapping a point type to the corresponding space trait.
+      /*!
+	\internal
+	\brief Function mapping a point type to the corresponding space trait.
+      */
       /// \{
       template <typename P>
       struct space_from_point

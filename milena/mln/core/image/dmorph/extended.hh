@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,7 +50,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::extended<I>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::extended<I>.
+    */
     template <typename I>
     struct data< extended<I> >
     {

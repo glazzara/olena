@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,10 @@ namespace mln
   template <typename E> struct Site;
 
 
-  /// Site category flag type.
+  /*!
+    \internal
+    \brief Site category flag type.
+  */
   template <>
   struct Site<void>
   {

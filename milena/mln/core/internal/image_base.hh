@@ -146,17 +146,24 @@ namespace mln
       /// Copy constructor (performs a shallow copy).
       image_base(const image_base& rhs);
 
-      /// Give an identifier of this image.  When several image
-      /// variables designate the same image, they share the same
-      /// identifier.
+      /// @cond INTERNAL_API
+
+      /*!
+	\brief Give an identifier of this image.
+
+	When several image variables designate the same image, they
+	share the same identifier.
+      */
       const void* id_() const;
+
+      /// \brief Hook to the image data.
+      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
+
+      /// @endcond
 
 
       /// Detach data from an image (free it if nobody else hold it).
       void destroy();
-
-      /// Hook to the image data.
-      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
     protected:
 

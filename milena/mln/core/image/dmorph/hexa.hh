@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +48,10 @@ namespace mln
 
   namespace internal
   {
-    /// Data structure for \c mln::hexa<I>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::hexa<I>.
+    */
     template <typename I>
     struct data< hexa<I> >
     {
@@ -63,7 +66,10 @@ namespace mln
 
   namespace trait
   {
-    /// FIXME: use the right properties.
+    /*!
+      \internal
+      FIXME: use the right properties.
+    */
     template <typename I>
     struct image_< hexa<I> > : default_image_morpher< I, mln_value(I),
 						       hexa<I> >

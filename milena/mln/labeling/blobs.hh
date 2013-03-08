@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -74,8 +74,10 @@ namespace mln
     namespace internal
     {
 
-      /// Functor not computing anything. To be passed to the labeling
-      /// blobs canvas.
+      /*!
+	\brief Functor not computing anything. To be passed to the labeling
+	blobs canvas.
+      */
       template <typename L>
       struct dummy_functor
       {

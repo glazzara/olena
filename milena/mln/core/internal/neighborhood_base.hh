@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -112,10 +113,12 @@ namespace mln
     };
 
 
-    /// Base class for neighborhood implementation classes.
-    ///
-    /// \p W is the underlying window type.
+    /*!
+      \internal
+      \base Base class for neighborhood implementation classes.
 
+      \p W is the underlying window type.
+    */
     template <typename W, typename E>
     struct neighborhood_base : public neighborhood_impl<W,E>
     {

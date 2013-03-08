@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,26 +46,38 @@ namespace mln
 
   namespace metal
   {
-    
-    /// Negate type.
+
+    /*!
+      \internal
+      \brief Negate type.
+    */
     template <typename B>
     struct not_ : bool_<( ! B::value )>
     {};
-    
 
-    /// And type.
+
+    /*!
+      \internal
+      \brief And type.
+    */
     template <typename L, typename R>
     struct and_ : bool_<( L::value && R::value )>
     {};
-    
 
-    /// Or type.
+
+    /*!
+      \internal
+      \brief Or type.
+    */
     template <typename L, typename R>
     struct or_ : bool_<( L::value || R::value )>
     {};
-    
 
-    /// Xor type.
+
+    /*!
+      \internal
+      \brief Xor type.
+    */
     template <typename L, typename R>
     struct xor_ : bool_<( L::value ^ R::value )>
     {};

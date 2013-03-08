@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -41,14 +41,16 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for iterators on site sets.
-    ///
-    /// Parameter \c S is the targeted site set type.
-    ///
-    /// IMPORTANT: Sub-classes have to define start_, next_,
-    /// is_valid_ and invalidate_.  They may also define
-    /// change_target_.
-    //
+    /*!
+      \internal
+      \brief A base class for iterators on site sets.
+
+      Parameter \c S is the targeted site set type.
+
+      IMPORTANT: Sub-classes have to define start_, next_,
+      is_valid_ and invalidate_.  They may also define
+      change_target_.
+    */
     template <typename S, typename E>
     class site_set_iterator_base : public site_iterator_base<S, E>
     {

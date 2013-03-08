@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,7 +58,10 @@ namespace mln
         struct helper_composed_;
 
 
-        /// Helper for describing a bijective composition.
+        /*!
+	  \internal
+	  \brief Helper for describing a bijective composition.
+	*/
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,true>
           : public fun::internal::x2x_linear_impl_<mln_result(T2), typename T2::data_t, E >,
@@ -99,7 +102,10 @@ namespace mln
           T1 g_;
         };
 
-        /// Helper for describing a non bijective composition.
+        /*!
+	  \internal
+	  \brief Helper for describing a non bijective composition.
+	*/
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,false>
           : public fun::internal::x2x_linear_impl_<mln_result(T2), typename T2::data_t, E >,

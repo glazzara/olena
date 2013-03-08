@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,12 +39,14 @@
 namespace mln
 {
 
-  /// \brief A generic forward iterator on points of boxes.
-  ///
-  /// The parameter \c P is the type of points.
-  ///
-  /// \see mln::box
-  ///
+  /*!
+    \internal
+    \brief A generic forward iterator on points of boxes.
+
+    The parameter \c P is the type of points.
+
+    \see mln::box
+  */
   template <typename P>
   class box_fwd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_fwd_piter_<P> >
@@ -84,12 +87,14 @@ namespace mln
 
 
 
-  /// A generic backward iterator on points of boxes.
-  ///
-  /// The parameter \c P is the type of points.
-  ///
-  /// \see mln::box
-  ///
+  /*!
+    \internal
+    \brief A generic backward iterator on points of boxes.
+
+    The parameter \c P is the type of points.
+
+    \see mln::box
+  */
   template <typename P>
   class box_bkd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_bkd_piter_<P> >

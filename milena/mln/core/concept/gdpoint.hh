@@ -83,7 +83,10 @@ namespace mln
 
 
 
-  /// Delta point site category flag type.
+  /*!
+    \internal
+    \brief Delta point site category flag type.
+  */
   template <>
   struct Gdpoint<void>
   {

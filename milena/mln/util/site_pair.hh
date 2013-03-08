@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -97,8 +98,10 @@ namespace mln
   {
 
     /// \{
-    /// subject_impl specialization (Proxy)
-
+    /*!
+      \internal
+      \brief subject_impl specialization (Proxy)
+    */
     template <typename P, typename E>
     struct subject_impl< const util::site_pair<P>, E >
     {

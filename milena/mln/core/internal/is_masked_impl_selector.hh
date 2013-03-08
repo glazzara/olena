@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,8 +46,11 @@ namespace mln
   namespace internal
   {
 
-    /// Default implementation. D == S.
-    /// D and S are site sets.
+    /*!
+      \internal
+      \brief Default implementation. D == S.
+      D and S are site sets.
+    */
     template <typename S, typename D, typename E>
     struct is_masked_impl_selector
     {
@@ -56,7 +59,10 @@ namespace mln
 		     const mln_graph_element(S)& element) const;
     };
 
-    /// Restrict iteration on vertices according to masked edges.
+    /*!
+      \internal
+      \brief Restrict iteration on vertices according to masked edges.
+    */
     template <typename G1, typename F1, typename G2, typename F2, typename E>
     struct is_masked_impl_selector< p_vertices<G1,F1>, p_edges<G2,F2>, E >
     {
@@ -67,7 +73,10 @@ namespace mln
 		     const mln_graph_element(S)& element) const;
     };
 
-    /// Restrict iteration on edges according to masked vertices.
+    /*!
+      \internal
+      \brief Restrict iteration on edges according to masked vertices.
+    */
     template <typename G1, typename F1, typename G2, typename F2, typename E>
     struct is_masked_impl_selector< p_edges<G1,F1>, p_vertices<G2,F2>, E >
     {

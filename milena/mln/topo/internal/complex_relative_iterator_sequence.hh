@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,15 +57,18 @@ namespace mln
       };
 
 
-      /// A meta relative iterator on the faces of a complex
-      /// using two complex relative iterators sequentially.
-      ///
-      /// The first relative iterator is used, and when it becomes
-      /// invalid, the second one is used.
-      ///
-      /// \tparam I1 The type of the first relative iterator.
-      /// \tparam I2 The type of the second relative iterator.
-      /// \tparam E  The type exact type of the iterator.
+      /*!
+	\internal
+	\brief A meta relative iterator on the faces of a complex
+	using two complex relative iterators sequentially.
+
+        The first relative iterator is used, and when it becomes
+        invalid, the second one is used.
+
+        \tparam I1 The type of the first relative iterator.
+        \tparam I2 The type of the second relative iterator.
+        \tparam E  The type exact type of the iterator.
+      */
       template <typename I1, typename I2, typename E>
       class complex_relative_iterator_sequence : public Iterator<E>
       {

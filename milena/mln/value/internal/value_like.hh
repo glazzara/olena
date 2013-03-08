@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,10 +44,14 @@ namespace mln
     namespace internal
     {
 
-      /// Base class for value classes defined over another
-      /// type. Parameters are \c V the equivalent value type and
-      /// \c E the exact value type.
-      ///
+      /*!
+	\internal
+	\brief Base class for value classes defined over another
+	type.
+
+	Parameters are \c V the equivalent value type and
+	\c E the exact value type.
+      */
       template < typename V, // Equivalent.
 		 typename C, // Encoding.
 		 typename N, // Interoperation.

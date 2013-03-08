@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,16 +46,19 @@ namespace mln
   namespace internal
   {
 
-    /*! An "efficient" mathematical set class.
-     * This set class is designed to store a mathematical set and to
-     * present it to the user as a linear array (std::vector).
-     * Elements are stored by copy.  Implementation is lazy.
-     * \invariant \a v_.size() == s_.size()
-     * The parameter \c E is the element type, which shall not be
-     * const-qualified.
-     *
-     * \todo Add a remove method.
-     */
+    /*!
+      \internal
+      \brief An "efficient" mathematical set class.
+
+      This set class is designed to store a mathematical set and to
+      present it to the user as a linear array (std::vector).
+      Elements are stored by copy.  Implementation is lazy.
+      \invariant \a v_.size() == s_.size()
+      The parameter \c E is the element type, which shall not be
+      const-qualified.
+
+      \todo Add a remove method.
+    */
     template <typename E>
     class set_of_
     {

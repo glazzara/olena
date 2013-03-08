@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -62,9 +62,11 @@ namespace mln
   namespace internal
   {
 
-    /// Make the type resolution easier for the compiler.
-    /// Introduced for ICC compatibility.
-    //
+    /*!
+      \internal
+      \brief Make the type resolution easier for the compiler.
+      Introduced for ICC compatibility.
+    */
     template <typename A, typename T>
     struct meta_accu_ret_result_helper
     {
@@ -72,9 +74,11 @@ namespace mln
     };
 
 
-    /// Make the type resolution easier for the compiler.
-    /// Introduced for ICC compatibility.
-    //
+    /*!
+      \internal
+      \brief Make the type resolution easier for the compiler.
+      Introduced for ICC compatibility.
+    */
     template <typename A, typename T>
     struct accu_with_helper
     {
@@ -92,12 +96,14 @@ namespace mln
     typedef Object<void> super;
   };
 
-  /*! \brief Base class for implementation of meta accumulators.
-   *
-   * The parameter \a E is the exact type.
-   *
-   * \see mln::doc::Meta_Accumulator for a complete documentation of
-   * this class contents.
+  /*!
+    \internal
+    \brief Base class for implementation of meta accumulators.
+
+    The parameter \a E is the exact type.
+
+    \see mln::doc::Meta_Accumulator for a complete documentation of
+    this class contents.
    */
   template <typename E>
   struct Meta_Accumulator : public Object<E>

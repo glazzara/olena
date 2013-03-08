@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::tr_image<S,I,T>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::tr_image<S,I,T>.
+    */
     template <typename S, typename I, typename T>
     struct data< tr_image<S,I,T> >
     {

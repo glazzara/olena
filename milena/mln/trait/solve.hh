@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@
 
 // FIXME: Just for the record (use it...)
 
-#  ifndef MLN_DEBUG_TRAITS 
+#  ifndef MLN_DEBUG_TRAITS
 #  endif // ! MLN_DEBUG_TRAITS
 
 
@@ -60,13 +61,22 @@ namespace mln
   namespace trait
   {
 
-    /// Flag type for a not found trait.
+    /*!
+      \internal
+      \brief Flag type for a not found trait.
+    */
     struct not_found {};
 
-    /// Flag type for an undefined trait.
+    /*!
+      \internal
+      \brief Flag type for an undefined trait.
+    */
     struct undefined {};
 
-    /// Flag type for a trait that is multiply undefined.
+    /*!
+      \internal
+      \brief Flag type for a trait that is multiply undefined.
+    */
     struct multiply_defined {};
 
 
@@ -110,7 +120,7 @@ namespace mln
       typedef undefined ret;
     };
 
-    
+
     template < template <class, class> class Name,
 	       template <class> class Category_L, typename L,
 	       template <class> class Category_R, typename R >

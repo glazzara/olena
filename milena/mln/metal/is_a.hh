@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,14 +34,16 @@
 # include <mln/metal/bool.hh>
 
 
-/// \brief Expand to a "metalic" boolean expression stating whether \a
-/// T is a subclass of \a M or not.
-///
-/// In the current implementation, \a M must be template class with
-/// exactly one, non template parameter.
-///
-/// This macro is the recommended user interface of the "is_a"
-/// facility.
+/*!
+  \brief Expand to a "metalic" boolean expression stating whether \a
+  T is a subclass of \a M or not.
+
+  In the current implementation, \a M must be template class with
+  exactly one, non template parameter.
+
+  This macro is the recommended user interface of the "is_a"
+  facility.
+*/
 # define mlc_is_a(T, M) mln::metal::is_a<T, M>
 
 
@@ -87,28 +90,30 @@ namespace mln
 
 
 
-    /// \brief "is_a" check.
-    ///
-    /// Check whether T inherits from _CONCEPT_ M.
-    //
+    /*!
+      \internal
+      \brief "is_a" check.
+
+      Check whether T inherits from _CONCEPT_ M.
+    */
     template <typename T, template <class> class M>
     struct is_a : bool_<( sizeof( internal::helper_is_a_< T, M >::selector(internal::make_< T >::ptr()) )
 			  ==
 			  sizeof( internal::yes_ )  )>
     {};
-    
+
     template <typename T, template <class> class M>
     struct is_a< const T, M > : is_a< T, M >::eval
     {};
-    
+
     template <typename T, template <class> class M>
     struct is_a< T&, M > : is_a< T, M >::eval
     {};
-    
+
     template <typename T, template <class> class M>
     struct is_a< const T&, M > : is_a< T, M >::eval
     {};
-    
+
 
   } // end of namespace mln::metal
 

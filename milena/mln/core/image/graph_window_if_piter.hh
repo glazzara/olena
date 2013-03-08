@@ -44,7 +44,10 @@ namespace mln
 
 
 
-  /// Forward iterator on line graph window.
+  /*!
+    \internal
+    \brief Forward iterator on line graph window.
+  */
   template <typename S, typename W, typename I>
   class graph_window_if_piter
     : public internal::site_relative_iterator_base< W,

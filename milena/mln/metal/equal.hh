@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,9 +43,11 @@ namespace mln
   namespace metal
   {
 
-    /// Definition of a static 'equal' test.
-    /// Check whether type T1 is exactly type T2.
-    //
+    /*!
+      \internal
+      \brief Definition of a static 'equal' test.
+      Check whether type T1 is exactly type T2.
+    */
     template <typename T1, typename T2>
     struct equal : false_
     {};

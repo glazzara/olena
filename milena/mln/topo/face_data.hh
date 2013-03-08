@@ -105,7 +105,10 @@ namespace mln
     namespace internal
     {
 
-      /// Factored implementation of faces.
+      /*!
+	\internal
+	\brief Factored implementation of faces.
+      */
       /// \{
       template <unsigned N, unsigned D>
       class lower_dim_faces_data_mixin

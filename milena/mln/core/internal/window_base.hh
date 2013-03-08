@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,10 +41,12 @@ namespace mln
   {
 
 
-    /// A base class for window classes.
-    ///
-    /// \p D is a dpsite type.
-    ///
+    /*!
+      \internal
+      \brief A base class for window classes.
+
+      \p D is a dpsite type.
+    */
     template <typename D, typename E>
     struct window_base : public Window<E>
     {

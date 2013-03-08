@@ -50,7 +50,10 @@ namespace mln
   template <typename E> struct Site_Set;
 
 
-  /// Site_Set category flag type.
+  /*!
+    \internal
+    \brief Site_Set category flag type.
+  */
   template <>
   struct Site_Set<void>
   {
@@ -58,10 +61,12 @@ namespace mln
   };
 
 
-  /// Base class for implementation classes of site sets.
-  ///
-  /// \see mln::doc::Site_Set for a complete documentation of this
-  /// class contents.
+  /*!
+    \brief Base class for implementation classes of site sets.
+
+    \see mln::doc::Site_Set for a complete documentation of this
+    class contents.
+  */
   template <typename E>
   struct Site_Set : public Object<E>
   {

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +46,10 @@ namespace mln
   template <typename E> struct Function_vv2b;
 
 
-  /// Function category flag type.
+  /*!
+    \internal
+    \brief Function category flag type.
+  */
   template <>
   struct Function<void>
   {

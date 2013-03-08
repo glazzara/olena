@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,12 +46,14 @@ namespace mln
     | topo::static_n_face_fwd_iter<N, D>.  |
     `-------------------------------------*/
 
-    /// \brief Forward iterator on all the \p N-faces of a
-    /// mln::complex<D>.
-    ///
-    /// \tparam N The dimension of the face associated to this iterator.
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Forward iterator on all the \p N-faces of a
+      mln::complex<D>.
+
+      \tparam N The dimension of the face associated to this iterator.
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned N, unsigned D>
     class static_n_face_fwd_iter
       : public internal::complex_set_iterator_base< topo::face<D>,
@@ -91,12 +94,14 @@ namespace mln
     | topo::static_n_face_bkd_iter<N, D>.  |
     `-------------------------------------*/
 
-    /// \brief Backward iterator on all the \p N-faces of a
-    /// mln::complex<D>.
-    ///
-    /// \tparam N The dimension of the face associated to this iterator.
-    /// \tparam D The dimension of the complex this iterator belongs to.
-    //
+    /*!
+      \internal
+      \brief Backward iterator on all the \p N-faces of a
+      mln::complex<D>.
+
+      \tparam N The dimension of the face associated to this iterator.
+      \tparam D The dimension of the complex this iterator belongs to.
+    */
     template <unsigned N, unsigned D>
     class static_n_face_bkd_iter
       : public internal::complex_set_iterator_base< topo::face<D>,

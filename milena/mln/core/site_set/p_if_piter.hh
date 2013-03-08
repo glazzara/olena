@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,13 +40,15 @@ namespace mln
 {
 
 
-  /*! \brief Iterator on site sets conditionned by a function.
-   *
-   * Parameter \c S is a site set type; parameter F is a function
-   * from point to Boolean.
-   *
-   * \see mln::p_if
-   */
+  /*!
+    \internal
+    \brief Iterator on site sets conditionned by a function.
+
+    Parameter \c S is a site set type; parameter F is a function
+    from point to Boolean.
+
+    \see mln::p_if
+  */
   template <typename Pi, typename S, typename F>
   struct p_if_piter_
     : public internal::piter_adaptor_< Pi,                       // Adaptee.
@@ -112,7 +115,7 @@ namespace mln
       pi_.next();
     while (pi_.is_valid() && ! s_->pred(pi_));
   }
-  
+
   template <typename Pi, typename S, typename F>
   inline
   void

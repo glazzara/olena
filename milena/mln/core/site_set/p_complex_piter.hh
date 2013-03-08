@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,7 +48,10 @@ namespace mln
   | p_complex_fwd_piter_<D, G>.  |
   `-----------------------------*/
 
-  /// \brief Forward iterator on (all) the faces of an mln::p_complex<D, G>.
+  /*!
+    \internal
+    \brief Forward iterator on (all) the faces of an mln::p_complex<D, G>.
+  */
   template <unsigned D, typename G>
   class p_complex_fwd_piter_
     : public internal::p_complex_piter_base_< topo::face_fwd_iter<D>,
@@ -75,7 +78,10 @@ namespace mln
   | p_complex_bkd_piter_<D, G>.  |
   `-----------------------------*/
 
-  /// \brief Backward iterator on (all) the faces of an mln::p_complex<D, G>.
+  /*!
+    \internal
+    \brief Backward iterator on (all) the faces of an mln::p_complex<D, G>.
+  */
   template <unsigned D, typename G>
   class p_complex_bkd_piter_
     : public internal::p_complex_piter_base_< topo::face_bkd_iter<D>,

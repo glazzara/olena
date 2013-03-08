@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +60,10 @@ namespace mln
       typedef mln::value::proxy<const E> lvalue;
     };
 
-    /// Data structure for \c mln::decorated_image<I,D>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::decorated_image<I,D>.
+    */
     template <typename I, typename D>
     struct data< decorated_image<I,D> >
     {

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -81,8 +81,9 @@ namespace mln
     | Complex.  |
     `----------*/
 
-    /// \brief General complex of dimension \p D.
-    //
+    /*!
+      \brief General complex of dimension \p D.
+    */
     template <unsigned D>
     class complex
     {
@@ -240,12 +241,12 @@ namespace mln
 
                    ,-----------> higher_dim_faces_set_mixin<0, D>
                    |
-        faces_set_mixin<0, D> 
+        faces_set_mixin<0, D>
                  ^
                  |
                  | ,-----------> higher_dim_faces_set_mixin<1, D>
                  | | ,--------->  lower_dim_faces_set_mixin<1, D>
-                 | | |           
+                 | | |
         faces_set_mixin<1, D>
                  ^
                  |
@@ -257,13 +258,13 @@ namespace mln
                  |
                  | ,-----------> higher_dim_faces_set_mixin<D - 1, D>
                  | | ,--------->  lower_dim_faces_set_mixin<D - 1, D>
-                 | | |           
+                 | | |
         faces_set_mixin<D - 1, D>
                  ^
-                 |              
+                 |
                  |   ,--------->  lower_dim_faces_set_mixin<D, D>
-                 |   |           
-        faces_set_mixin<D, D> 
+                 |   |
+        faces_set_mixin<D, D>
                  ^
                  |
                  |
@@ -303,13 +304,16 @@ namespace mln
       // mln::topo::internal::faces_set_mixin.  //
       // -------------------------------------- //
 
-      /// Recursive mixins of set of faces.
+      /// \internal \brief Recursive mixins of set of faces.
       /// \{
 
       template <unsigned N, unsigned D> struct faces_set_mixin;
 
 
-      /// Faces of intermediate dimension (greater than 0, lower than \p D).
+      /*!
+	\internal
+	\brief Faces of intermediate dimension (greater than 0, lower than \p D).
+      */
       template <unsigned N, unsigned D>
       struct faces_set_mixin : public faces_set_mixin<N - 1, D>,
 			       public lower_dim_faces_set_mixin<N, D>,
@@ -340,7 +344,10 @@ namespace mln
 	/// \}
       };
 
-      /// Faces of highest dimension (\p D).
+      /*!
+	\internal
+	\brief Faces of highest dimension (\p D).
+      */
       template <unsigned D>
       struct faces_set_mixin<D, D> : public faces_set_mixin<D - 1, D>,
 				     public lower_dim_faces_set_mixin<D, D>
@@ -368,7 +375,10 @@ namespace mln
 	/// \}
       };
 
-      /// Faces of lowest dimension (0).
+      /*!
+	\internal
+	\brief Faces of lowest dimension (0).
+      */
       template <unsigned D>
       struct faces_set_mixin<0u, D> : public higher_dim_faces_set_mixin<0u, D>
       {
@@ -395,7 +405,10 @@ namespace mln
 	/// \}
       };
 
-      /// Faces of a 0-complex.
+      /*!
+	\internal
+	\brief Faces of a 0-complex.
+      */
       template <>
       struct faces_set_mixin<0u, 0u>
       {
@@ -428,7 +441,10 @@ namespace mln
       // class to be defined after the specializations of
       // 'faces_set_mixin'.
 
-      /// Complex data.
+      /*!
+	\internal
+	\brief Complex data.
+      */
       template <unsigned D>
       struct complex_data : public faces_set_mixin<D, D>
       {
@@ -441,7 +457,7 @@ namespace mln
       // mln::topo::internal::higher_dim_faces_set_mixin.  //
       // ------------------------------------------------- //
 
-      /// Mixins of mixin mln::faces_set_mixin.
+      /// \internal \brief Mixins of mixin mln::faces_set_mixin.
       /// \{
       template <unsigned N, unsigned D>
       struct lower_dim_faces_set_mixin
@@ -538,14 +554,17 @@ namespace mln
     namespace internal
     {
 
-      /// A binary meta-functor defined by:
-      ///
-      /// \code
-      /// add_size : x, c -> x + c.size()
-      /// \endcode
-      ///
-      /// \see mln::complex<D>::nfaces_of_static_dim<N> (static version).
-      /// \see mln::complex<D>::fold_left_.
+      /*!
+	\internal
+	\brief A binary meta-functor defined by:
+
+	\code
+	add_size : x, c -> x + c.size()
+	\endcode
+
+	\see mln::complex<D>::nfaces_of_static_dim<N> (static version).
+	\see mln::complex<D>::fold_left_.
+      */
       struct add_size
       {
 	template <typename T, typename Container>
@@ -555,14 +574,17 @@ namespace mln
 	}
       };
 
-      /// An unary meta-functor defined by:
-      ///
-      /// \code
-      /// add_size : c -> c.size()
-      /// \endcode
-      ///
-      /// \see mln::complex<D>::nfaces_of_dim (dynamic version).
-      /// \see mln::complex<D>::apply_if_dim_matches_.
+      /*!
+	\internal
+	\brief An unary meta-functor defined by:
+
+	\code
+	add_size : c -> c.size()
+	\endcode
+
+	\see mln::complex<D>::nfaces_of_dim (dynamic version).
+	\see mln::complex<D>::apply_if_dim_matches_.
+      */
       struct get_size
       {
 	typedef std::size_t result_type;
@@ -719,7 +741,7 @@ namespace mln
 
     template <unsigned D>
     inline
-    const void* 
+    const void*
     complex<D>::addr() const
     {
       return data_.ptr_;

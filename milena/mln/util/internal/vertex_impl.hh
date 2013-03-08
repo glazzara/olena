@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace internal
     {
 
-      /// Implementation class to equip generalized vertex classes.
+      /*!
+	\internal
+	\brief Implementation class to equip generalized vertex classes.
+      */
       template <typename G>
       class vertex_impl_
       {
@@ -51,22 +55,9 @@ namespace mln
 	  vertex_impl_();
       };
 
-    } // end of namespace internal
-
-  } // end of namespace util
-
-} // end of namespace mln
 
 #ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
-
-  namespace util
-  {
-
-    namespace internal
-    {
 
     template <typename G>
     inline
@@ -74,13 +65,13 @@ namespace mln
     {
     }
 
+
+#endif // ! MLN_INCLUDE_ONLY
+
     } // end of namespace internal
 
   } // end of namespace util
 
 } // end of namespace mln
-
-#endif // ! MLN_INCLUDE_ONLY
-
 
 #endif // ! MLN_UTIL_INTERNAL_VERTEX_IMPL_HH

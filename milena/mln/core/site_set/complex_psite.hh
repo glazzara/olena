@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -227,7 +228,7 @@ namespace mln
   complex_psite<D, G>::complex_psite(const p_complex<D, G>& pc,
 				     unsigned n, unsigned face_id)
     : pc_(&pc),
-      face_(pc.cplx(), n, face_id)  
+      face_(pc.cplx(), n, face_id)
   {
     if (is_valid())
       update_();

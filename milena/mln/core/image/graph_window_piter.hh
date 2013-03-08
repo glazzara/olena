@@ -49,8 +49,11 @@ namespace mln
   namespace internal
   {
 
-    /// The window center and the window elements are part of
-    /// different site sets.
+    /*!
+      \internal
+      \brief The window center and the window elements are part of
+      different site sets.
+    */
     template <typename C, typename P, typename E>
     struct impl_selector
     {
@@ -63,8 +66,11 @@ namespace mln
 
     };
 
-    /// The window center and the window elements are part of the same
-    /// site set.
+    /*!
+      \internal
+      \brief The window center and the window elements are part of the same
+      site set.
+    */
     template <typename C, typename E>
     struct impl_selector<C,C,E>
     {
@@ -89,12 +95,14 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  /// Forward iterator on line graph window.
-  ///
-  /// \tparam S is the site set type.
-  /// \tparam W is the window type.
-  /// \tparam I is the underlying iterator type.
-  //
+  /*!
+    \internal
+    \brief Forward iterator on line graph window.
+
+    \tparam S is the site set type.
+    \tparam W is the window type.
+    \tparam I is the underlying iterator type.
+  */
   template <typename S, typename W, typename I>
   class graph_window_piter
     : public internal::site_relative_iterator_base< W,

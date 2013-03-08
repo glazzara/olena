@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,11 +45,13 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for point iterator adaptors.
-    ///
-    /// Parameter \c Pi is the type of the point iterator adaptee;
-    /// parameter E is the exact type.
-    ///
+    /*!
+      \internal
+      \brief A base class for point iterator adaptors.
+
+      Parameter \c Pi is the type of the point iterator adaptee;
+      parameter E is the exact type.
+    */
     template <typename Pi, typename S, typename E>
     class piter_adaptor_ : public internal::site_iterator_base< S, E >
     {

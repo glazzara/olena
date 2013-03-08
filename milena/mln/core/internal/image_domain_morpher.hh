@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,13 +41,15 @@ namespace mln
   {
 
 
-    /*! A base class for image morphers w.r.t. domain.
-     *
-     * Parameter \p I is the morphed image type.
-     * Parameter \p S is the morpher site set type.
-     * Parameter \p E is the exact (morpher image) type.
-     *
-     */
+    /*!
+      \internal
+      \brief A base class for image morphers w.r.t. domain.
+
+      Parameter \p I is the morphed image type.
+      Parameter \p S is the morpher site set type.
+      Parameter \p E is the exact (morpher image) type.
+
+    */
     template <typename I, typename S, typename E>
     class image_domain_morpher : public image_morpher<I, mln_value(I), S, E>
     {

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +45,12 @@ namespace mln
   namespace metal
   {
 
-    /*! \brief "is_not" check.
-     *
-     * FIXME: Doc!
-     */
+    /*!
+      \internal
+      \brief "is_not" check.
+
+      FIXME: Doc!
+    */
     template <typename T, typename U>
     struct is_not : not_< is<T, U> >::eval
     {

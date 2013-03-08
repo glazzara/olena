@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +40,10 @@ namespace mln
   namespace internal
   {
 
-    // neighb_niter_base<W,I,E>
-
+    /*!
+      \internal
+      \brief Base implementation for neighborhood iterators.
+    */
     template <typename W, typename N, typename I, typename E>
     class neighb_niter_base
       : public internal::site_relative_iterator_base< N,

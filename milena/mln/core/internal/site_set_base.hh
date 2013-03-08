@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,12 +43,15 @@ namespace mln
   {
 
 
-    /// A base class for site set classes.
-    ///
-    /// \tparam P The psite type of what is ``contained'' in the site
-    ///           set, not the psite of the site set (which is
-    ///           different, and defined by the site set itself).
-    /// \tparam E The exact type of the site set.
+    /*!
+      \internal
+      \brief A base class for site set classes.
+
+      \tparam P The psite type of what is ``contained'' in the site
+                set, not the psite of the site set (which is
+                different, and defined by the site set itself).
+      \tparam E The exact type of the site set.
+    */
     template <typename P, typename E>
     struct site_set_base_ : public Site_Set<E>
     {
