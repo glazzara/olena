@@ -98,8 +98,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,../../../user-refman/html/,g" \
-		$(USER_REFMAN).tmp/html/index.html
+	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/html/,g" \
+		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -180,7 +180,7 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,../,g" \
+	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(DEVEL_REFMAN)/html/,g" \
 		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
