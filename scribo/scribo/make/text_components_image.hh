@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,7 +78,7 @@ namespace scribo
 	for_all_lines(l, doc.lines())
 	  if (lines(l).is_textline())
 	  {
-	    const util::array<component_id_t>&
+	    const mln::util::array<component_id_t>&
 	      comp_ids = lines(l).component_ids();
 	    const L& lbl = lines.components().labeled_image();
 	    for_all_elements(c, comp_ids)

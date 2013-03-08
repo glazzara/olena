@@ -1,5 +1,12 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix namespace ambiguities.
+
+	* scribo/make/text_components_image.hh,
+	* scribo/primitive/extract/non_text.hh: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/table/internal/align_lines.hh: Update use of math::round.
 
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>

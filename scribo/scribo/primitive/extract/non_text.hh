@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -306,7 +306,7 @@ namespace scribo
 	trace::entering("scribo::primitive::extract::non_text");
 
 
-	util::timer t;
+	mln::util::timer t;
 	t.start();
 
 	mln_precondition(doc.is_valid());
