@@ -1,5 +1,12 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix a typo.
+
+	* doc/examples/box2d-bbox.cc,
+	* doc/examples/split/box2d-bbox-1.cc.raw: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an illustration in Milena documentation.
 
 	* doc/Makefile.am: Add new png figures.
@@ -10,7 +17,7 @@
 	* doc/img/src/ydoc.cfg,
 	* doc/img/src/ydoc.cls: New.
 
-	* doc/ref-guide.tex
+	* doc/ref-guide.tex: Include tikz output.
 
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
