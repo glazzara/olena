@@ -1,5 +1,9 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/.gitignore: exclude .dox files.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation in mln/canvas.
 
 	* mln/canvas/browsing/backdiagonal2d.hh,

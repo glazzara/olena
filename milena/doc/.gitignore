@@ -8,14 +8,14 @@
 
 /figures/*.png
 
-/ref-guide.hh
+/ref-guide.dox
 /ref-guide.pdf
 /ref-guide/
 
 /technical.pdf
 /technical/
 
-/tutorial.hh
+/tutorial.dox
 /tutorial.pdf
 /tutorial/
 
