@@ -64,24 +64,22 @@ namespace mln
        *                      provided by the functor).
        *   - final()        : Will be called at the end.
        *
-       * F shall features : \n
-       * { \n
-       * --- as types: \n
-       *   I; \n
-       * --- as attributes: \n
-       *   dim; \n
-       *   dir; // and test dir < dim \n
-       *   input; \n
-       *   p; \n
-       *   length; \n
-       * --- as methods: \n
-       *   void init(); \n
-       *   void init_line(); \n
-       *   void add_point(q) \n
-       *   void remove_point(q) \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       *  F shall features : \n
+       - As types:
+         + I
+       - As attributes:
+         + dim
+         + dir // and test dir < dim
+         + input
+         + p
+         + length
+       - As methods:
+         + void init()
+         + void init_line()
+         + void add_point(q)
+         + void remove_point(q)
+         + void next()
+         + void final()
        *
        *
        * \ingroup modcanvasbrowsing

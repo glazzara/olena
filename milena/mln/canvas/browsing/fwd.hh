@@ -57,17 +57,15 @@ namespace mln
        *   - final(): Will be called at the end.
        *
        * F shall feature: \n
-       * { \n
-       *   --- as typedef: \n
-       *   I; \n
-       *   --as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as method: \n
-       *   void init(); \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       - As typedef:
+         + I
+       - As attributes:
+         + input
+         + p
+       - As method:
+         + void init()
+         + void next()
+         + void final()
        *
        * \ingroup modcanvasbrowsing
        */

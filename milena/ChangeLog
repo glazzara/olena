@@ -1,5 +1,17 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve documentation in mln/canvas.
+
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve look'n feel of general documentation.
 
 	* doc/Doxyfile.in: Improve documentation output.

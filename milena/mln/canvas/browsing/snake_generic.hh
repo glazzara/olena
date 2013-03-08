@@ -47,29 +47,27 @@ namespace mln
       /*! \brief Multidimentional Browsing in a given-way.
        *
        * F shall feature: \n
-       * { \n
-       *   --- as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as methods: \n
-       *   void init(); \n
-       *   void *() moves[]; \n
-       *   dpsite dps[]; \n
-       * } \n
+       - As attributes:
+         + input
+         + p
+       - As methods:
+         + void init()
+         + void *() moves[]
+         + dpsite dps[]
        *
-       * init is called before browsing
+       * init() is called before browsing
        *
        * The snake follow dimension using the delta point site of dps.
-       *     dps[0] = delta psite following the global dimension (forward)
-       *     dps[1] = delta psite following the 2nd dimension to follow (forward).
-       *     dps[2] = delta psite following the 2nd dimension to follow (backward).
-       *     dps[3] = delta psite following the 3nd dimension to follow (forward).
-       *     dps[3] = delta psite following the 3nd dimension to follow (backward).
+       *   -  dps[0] = delta psite following the global dimension (forward)
+       *   -  dps[1] = delta psite following the 2nd dimension to follow (forward).
+       *   -  dps[2] = delta psite following the 2nd dimension to follow (backward).
+       *   -  dps[3] = delta psite following the 3nd dimension to follow (forward).
+       *   -  dps[3] = delta psite following the 3nd dimension to follow (backward).
        *
-       * moves contains pointer to f's members. These merbers will be call in each time
-       * the snake progress in the correct dimension :
-       *
-       *      moves[i] is called at each move following the delta psite dps[i]
+       * moves contains pointer to f's members. These members will be
+       * called each time the snake progress in the correct dimension:
+       * moves[i] is called at each move following the delta psite
+       * dps[i].
        *
        *
        * \ingroup modcanvasbrowsing

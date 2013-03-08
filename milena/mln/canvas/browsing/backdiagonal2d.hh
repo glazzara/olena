@@ -58,26 +58,27 @@ namespace mln
        *   - final(): Will be called at the end.
        *
        * F shall features : \n
-       * { \n
-       * --- as types: \n
-       *   I; \n
-       * --- as attributes: \n
-       *   dim; \n
-       *   dir; // and test dir < dim \n
-       *   input; \n
-       *   p; \n
-       * --- as methods: \n
-       *   void init(); \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       - As types:
+          + I;
+       - As attributes:
+         + dim;
+         + dir; // and test dir < dim
+         + input;
+         + p;
+       - As methods:
+         + void init();
+         + void next();
+         + void final();
+       \endverbatim
        *
        * Example : \n
        *
-       *  ------->
-       * |  4 7 9
-       * |  2 5 8
-       * |  1 3 6
+       \verbatim
+       ------->
+       |  4 7 9
+       |  2 5 8
+       |  1 3 6
+       \endverbatim
        *
        * \ingroup modcanvasbrowsing
        */

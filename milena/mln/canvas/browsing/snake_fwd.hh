@@ -49,9 +49,11 @@ namespace mln
        * This canvas browse all the point of an image 'input' like
        * this :
        *
-       *     ------->
-       *     <------'
-       *     '------>
+       \verbatim
+       ------->
+       <------'
+       '------>
+       \endverbatim
        *
        * The fonctor should provide (In addition to 'input') four
        * methods :
@@ -68,16 +70,14 @@ namespace mln
        * Warning: This canvas works only on 2D.
        *
        * F shall feature: \n
-       * { \n
-       *   --- as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as methods: \n
-       *   void init(); \n
-       *   void down(); \n
-       *   void fwd(); \n
-       *   void bkd(); \n
-       * } \n
+       - As attributes:
+         + input
+         + p
+       - As methods:
+         + void init()
+         + void down()
+         + void fwd()
+         + void bkd()
        *
        *
        * \ingroup modcanvasbrowsing
