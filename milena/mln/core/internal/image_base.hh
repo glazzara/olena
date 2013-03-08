@@ -61,28 +61,27 @@ namespace mln
     };
 
 
-    /// \brief A base class for images.
-    ///
-    /// Parameter \p T is the image value type.
-    /// Parameter \p S is the image site set type.
-    ///
-    /// \internal
-    ///
-    /// \verbatim
-    ///              image_base
-    ///                   ^
-    ///                   |
-    ///       ---------------------------
-    ///      |                           |
-    /// image_primary               image_morpher
-    ///      ^                            ^
-    ///      |                            |
-    ///      |		     -----------------------------------------
-    ///	     |		    |                    |                    |
-    /// pw_image_base    image_domain_morpher  image_value_morpher   image_identity
-    ///
-    /// \endverbatim
-    //
+    /*! \internal
+      \brief A base class for images.
+
+      Parameter \p T is the image value type.
+      Parameter \p S is the image site set type.
+
+      \verbatim
+                  image_base
+                       ^
+                       |
+           ---------------------------
+          |                           |
+     image_primary               image_morpher
+          ^                            ^
+          |                            |
+          |		     -----------------------------------------
+      	  | 		    |                    |                    |
+     pw_image_base    image_domain_morpher  image_value_morpher   image_identity
+
+     \endverbatim
+    */
     template <typename T, typename S, typename E>
     struct image_base
       :
@@ -167,7 +166,6 @@ namespace mln
       // Internal data, sharable by several images.
       util::tracked_ptr< internal::data<E> > data_;
     };
-    /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

@@ -1,5 +1,9 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/internal/image_base.hh: Set documentation as internal.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update Doxygen configuration file.
 
 	* doc/Doxyfile.in: Update configuration file to latest version.
