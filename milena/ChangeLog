@@ -1,5 +1,13 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update Doxygen configuration file.
+
+	* doc/Doxyfile.in: Update configuration file to latest version.
+
+	* doc/DoxygenLayout.xml: Do not display 'dir' tab.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation layout.
 
 	* doc/Doxyfile.in: Enable some options.
