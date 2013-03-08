@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010, 2011, 2012 EPITA Research and
+// Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -75,7 +75,7 @@ namespace mln
       from_float_to_value(const float&	          from,
 			  mln::value::Integer<V>& to)
       {
-	exact(to) = math::round<V>()(from);
+	exact(to) = math::round<V>(from);
       }
 
       // Case 2:
@@ -137,7 +137,7 @@ namespace mln
   from_to_(const float& from, unsigned& to)
   {
     mln_precondition(from >= 0);
-    to = math::round<unsigned>()(from);
+    to = math::round<unsigned>(from);
   }
 
   // float-> int
@@ -145,7 +145,7 @@ namespace mln
   void
   from_to_(const float&	from, int& to)
   {
-    to = math::round<int>()(from);
+    to = math::round<int>(from);
   }
 
   // float-> short
@@ -153,7 +153,7 @@ namespace mln
   void
   from_to_(const float& from, short& to)
   {
-    to = math::round<short>()(from);
+    to = math::round<short>(from);
   }
 
 

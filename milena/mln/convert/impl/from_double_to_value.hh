@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,7 +72,7 @@ namespace mln
       from_double_to_value(const double&	    from,
 			   mln::value::Integer<V>& to)
       {
-	exact(to) = math::round<V>()(from);
+	exact(to) = math::round<V>(from);
       }
 
       // Case 2:
@@ -134,7 +134,7 @@ namespace mln
   from_to_(const double& from, unsigned& to)
   {
     mln_precondition(from >= 0);
-    to = math::round<unsigned>()(from);
+    to = math::round<unsigned>(from);
   }
 
   // double -> int
@@ -142,7 +142,7 @@ namespace mln
   void
   from_to_(const double& from, int& to)
   {
-    to = math::round<int>()(from);
+    to = math::round<int>(from);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
