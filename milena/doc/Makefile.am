@@ -83,7 +83,9 @@ SUFFIXES += .pbm .pgm .ppm .png
 PNG_FIGURES =					\
   $(PBM_FIGURES:.pbm=.png)			\
   $(PGM_FIGURES:.pgm=.png)			\
-  $(PPM_FIGURES:.ppm=.png)
+  $(PPM_FIGURES:.ppm=.png)			\
+  $(srcdir)/img/genericity.png 			\
+  $(srcdir)/img/2dgrid.png
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
 
@@ -181,7 +183,7 @@ regen-split-examples-mk:
 ## Doxygen documentation.  ##
 ## ----------------------- ##
 
-REFMAN_deps =				\
+REFMAN_deps =					\
   $(PNG_FIGURES)				\
   $(srcdir)/tutorial.hh				\
   $(srcdir)/ref-guide.hh

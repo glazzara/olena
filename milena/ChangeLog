@@ -1,5 +1,19 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an illustration in Milena documentation.
+
+	* doc/Makefile.am: Add new png figures.
+
+	* doc/img/src/2dgrid.tikz,
+	* doc/img/src/standalone.cfg,
+	* doc/img/src/standalone.cls,
+	* doc/img/src/ydoc.cfg,
+	* doc/img/src/ydoc.cls: New.
+
+	* doc/ref-guide.tex
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	More improvements in documentation layout.
 
 	* doc/Doxyfile.in: Do not show namespaces in names.

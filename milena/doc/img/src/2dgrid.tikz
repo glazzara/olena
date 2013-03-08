@@ -1,0 +1,16 @@
+\documentclass[tikz]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1]
+
+\draw[blue!20, thick] (-2, -2) grid [right=0.5cm,above=0.5cm,step=1cm] (3, 3);
+\draw[line width=1mm] (-1, -1) grid [step=1cm] (3, 3);
+\draw[black,line width=2mm,<-] (0, -2) node {y} -- (0, 4);
+\draw[black,line width=2mm,->] (-2, 3) node {x} -- (4, 3);
+
+\foreach \x in {-0.5, 0.5, 1.5, 2.5}
+  \foreach \y in {-0.5, 0.5, 1.5, 2.5}
+    \node at (\x, \y) [fill=blue!30] {};
+
+\draw[black] (2.5, 1.5) -- (4, 2) node {Point2d(1, 2)};
+\end{tikzpicture}
+\end{document}
