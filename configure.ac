@@ -414,7 +414,6 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 AC_CONFIG_FILES([
   Makefile
     doc/Makefile
-    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/mesh/Makefile

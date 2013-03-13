@@ -1,3 +1,10 @@
+2013-03-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove references to external directory.
+
+	* configure.ac,
+	* Makefile.am: Here.
+
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve look'n feel of general documentation.
