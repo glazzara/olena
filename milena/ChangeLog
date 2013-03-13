@@ -1,5 +1,9 @@
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/img/2dgrid.png: New. Add missing file.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update use of math::round.
 
 	* mln/convert/impl/from_double_to_value.hh,
