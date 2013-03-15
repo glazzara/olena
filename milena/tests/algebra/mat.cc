@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,20 +36,20 @@ int main()
   {
     using namespace algebra;
     mat<3,3,int>
-      m   = algebra::make(1, 2, 3,
-			  0, 1, 4,
-			  5, 6, 0),
-      m_1 = algebra::make(-24, +18, +05,
-			  +20, -15, -04,
-			  -05, +04, +01);
+      m   = algebra::internal::make(1, 2, 3,
+				    0, 1, 4,
+				    5, 6, 0),
+      m_1 = algebra::internal::make(-24, +18, +05,
+				    +20, -15, -04,
+				    -05, +04, +01);
     mln_assertion(m._1() == m_1);
     mln_assertion(m * m._1() == literal::identity);
   }
 
   {
     using namespace algebra;
-    mat<2,2,int> m = algebra::make(1, 0,
-				   0, 1);
+    mat<2,2,int> m = algebra::internal::make(1, 0,
+					     0, 1);
     mln_assertion(tr(m) == 2);
     mln_assertion(det(m) == 1);
     mln_assertion(m._1() == m);

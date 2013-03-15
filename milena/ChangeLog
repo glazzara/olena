@@ -1,5 +1,9 @@
 2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/algebra/mat.cc: Fix test.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Automatically initialize GraphicsMagick.
 
 	* mln/io/magick/internal/init_magick.hh: New.
