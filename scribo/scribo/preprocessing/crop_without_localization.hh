@@ -67,7 +67,7 @@ namespace scribo
     crop_without_localization(const Image<I>& input,
 			      const mln_box(I)& domain)
     {
-      trace::entering("scribo::preprocessing::crop_without_localization");
+      mln_trace("scribo::preprocessing::crop_without_localization");
       mln_assertion(exact(input).is_valid());
 
 
@@ -85,7 +85,6 @@ namespace scribo
 
       data::paste_without_localization(input | domain, output);
 
-      trace::exiting("scribo::preprocessing::crop_without_localization");
       return output;
     }
 

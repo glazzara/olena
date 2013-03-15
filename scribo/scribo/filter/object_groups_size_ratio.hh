@@ -75,7 +75,7 @@ namespace scribo
 			     float max_size_ratio,
 			     float max_invalid_ratio_per_group)
     {
-      trace::entering("scribo::filter::object_groups_size_ratio");
+      mln_trace("scribo::filter::object_groups_size_ratio");
 
       mln_precondition(groups.is_valid());
 
@@ -99,7 +99,6 @@ namespace scribo
 	    || !groups(g).is_valid())
 	  output(g).invalidate();
 
-      trace::exiting("scribo::filter::object_groups_size_ratio");
       return output;
     }
 

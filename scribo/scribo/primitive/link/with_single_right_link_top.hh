@@ -131,7 +131,7 @@ namespace scribo
       with_single_right_link_top(const component_set<L>& components,
 				 unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link_top");
+	mln_trace("scribo::primitive::link::with_single_right_link_top");
 
 	mln_precondition(components.is_valid());
 
@@ -140,7 +140,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor::Top);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link_top");
 	return output;
       }
 

@@ -78,7 +78,7 @@ namespace scribo
 			  mln::util::array<box<mln_site(I)> >& line_bboxes,
 			  unsigned max_alignment_diff)
     {
-      trace::entering("scribo::table::align_lines_verticaly");
+      mln_trace("scribo::table::align_lines_verticaly");
 
       mln_precondition(exact(input).is_valid());
       mln::util::array<int> res = internal::align_lines(geom::ncols(input),
@@ -87,7 +87,6 @@ namespace scribo
 						   line_bboxes, 1,
 						   max_alignment_diff);
 
-      trace::exiting("scribo::table::align_lines_verticaly");
       return res;
     }
 

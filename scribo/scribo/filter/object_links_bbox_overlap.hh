@@ -76,7 +76,7 @@ namespace scribo
     object_links_bbox_overlap(const object_links<L>& links,
 			      float max_overlap_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_overlap");
+      mln_trace("scribo::filter::object_links_bbox_overlap");
 
       mln_precondition(links.is_valid());
 
@@ -100,7 +100,6 @@ namespace scribo
 	    output.clear(i);
 	}
 
-      trace::exiting("scribo::filter::object_links_bbox_overlap");
       return output;
     }
 

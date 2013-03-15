@@ -61,7 +61,7 @@ namespace scribo
 		    const line_info<L>& line,
 		    const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::line_components");
+      mln_trace("scribo::draw::line_components");
 
       I& input = exact(input_);
 
@@ -102,7 +102,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::draw::line_components");
     }
 
 

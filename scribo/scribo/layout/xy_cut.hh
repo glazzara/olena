@@ -81,7 +81,7 @@ namespace scribo
       void compute_hist_info_h(const Image<I>& input_,
 			       mln_ch_value(I,internal::hist_info)& hist)
       {
-	trace::entering("compute_hist_info_h");
+	mln_trace("compute_hist_info_h");
 
 	const I& input = exact(input_);
 
@@ -102,7 +102,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("compute_hist_info_h");
       }
 
 
@@ -114,7 +113,7 @@ namespace scribo
       void compute_hist_info_v(const Image<I>& input_,
 			       mln_ch_value(I,internal::hist_info)& hist)
       {
-	trace::entering("compute_hist_info_v");
+	mln_trace("compute_hist_info_v");
 
 	const I& input = exact(input_);
 
@@ -135,7 +134,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("compute_hist_info_v");
       }
 
 
@@ -148,7 +146,7 @@ namespace scribo
 				 int& ws_min_row,
 				 int& ws_max_row)
       {
-	trace::entering("horizontal_whitespace");
+	mln_trace("horizontal_whitespace");
 
 	typedef mln_value(H) V;
 	mlc_is(V,internal::hist_info)::check();
@@ -188,7 +186,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("horizontal_whitespace");
       }
 
 
@@ -200,7 +197,7 @@ namespace scribo
 			       int& ws_min_col,
 			       int& ws_max_col)
       {
-	trace::entering("vertical_whitespace");
+	mln_trace("vertical_whitespace");
 
 	typedef mln_value(H) V;
 	mlc_is(V,internal::hist_info)::check();
@@ -240,7 +237,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("vertical_whitespace");
       }
 
 
@@ -253,7 +249,7 @@ namespace scribo
 		     const int min_height,
 		     const int min_width)
       {
-	trace::entering("do_xy_cut");
+	mln_trace("do_xy_cut");
 
 	typedef mln_value(H) V;
 	mlc_is(V,internal::hist_info)::check();
@@ -336,7 +332,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("do_xy_cut");
       }
 
 
@@ -366,7 +361,7 @@ namespace scribo
     mln::util::array<mln_box(I)>
     xy_cut(const Image<I>& ima_, int min_height, int min_width)
     {
-      trace::entering("scribo::layout::xy_cut");
+      mln_trace("scribo::layout::xy_cut");
 
       typedef mln_value(I) V;
       typedef mln_box(I) B;
@@ -391,7 +386,6 @@ namespace scribo
       // Clear temporary data.
       delete n;
 
-      trace::exiting("scribo::layout::xy_cut");
       return output;
     }
 

@@ -64,13 +64,12 @@ namespace scribo
     mln_concrete(I)
     crop(const Image<I>& input, const mln_box(I)& domain)
     {
-      trace::entering("scribo::preprocessing::crop");
+      mln_trace("scribo::preprocessing::crop");
       mln_assertion(exact(input).is_valid());
 
       mln_concrete(I) output(domain);
       data::paste(input | domain, output);
 
-      trace::exiting("scribo::preprocessing::crop");
       return output;
     }
 

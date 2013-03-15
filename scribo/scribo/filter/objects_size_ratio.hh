@@ -104,7 +104,7 @@ namespace scribo
 		       float min_size_ratio)
     {
 
-      trace::entering("scribo::primitive::objects_size_ratio");
+      mln_trace("scribo::primitive::objects_size_ratio");
 
       typedef internal::components_size_ratio_filter<L> func_t;
       func_t has_valid_size_ratio(comps, min_size_ratio);
@@ -112,7 +112,6 @@ namespace scribo
       component_set<L> output = comps.duplicate();
       output.update_tags(has_valid_size_ratio, component::Ignored);
 
-      trace::exiting("scribo::primitive::objects_size_ratio");
       return output;
     }
 

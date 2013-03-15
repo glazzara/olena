@@ -45,7 +45,7 @@ namespace scribo
     component_set<L>
     identify(const component_set<L> comps)
     {
-      mln::trace::entering("scribo::primitive::identify");
+      mln::mln_trace("scribo::primitive::identify");
 
       mln_assertion(comps.is_valid());
 
@@ -65,7 +65,6 @@ namespace scribo
       // 	    output(c).update_type(component::LineSeparator);
       // 	}
 
-      mln::trace::exiting("scribo::primitive::identify");
       //return output;
       return comps;
     }

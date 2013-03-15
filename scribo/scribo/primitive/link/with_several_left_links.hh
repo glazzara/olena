@@ -79,7 +79,7 @@ namespace scribo
       with_several_left_links(const component_set<L>& comps,
 			      unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_several_left_links");
+	mln_trace("scribo::primitive::link::with_several_left_links");
 
 	  //	  -------
 	  //  <------X  |
@@ -117,7 +117,6 @@ namespace scribo
 
 
 
-	trace::exiting("scribo::primitive::link::with_several_left_links");
 	return final_link;
       }
 

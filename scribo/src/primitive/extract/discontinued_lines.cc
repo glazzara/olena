@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 				"input.pbm length rank output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -83,5 +83,4 @@ int main(int argc, char *argv[])
   data::fill((output | (pw::value(vlines.labeled_image()) != 0u)).rw(), true);
   io::pbm::save(output, argv[4]);
 
-  trace::exiting("main");
 }

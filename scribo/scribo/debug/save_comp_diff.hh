@@ -77,7 +77,7 @@ namespace scribo
 		 const component_set<L2>& comps_new,
 		 const std::string& filename)
   {
-    trace::entering("scribo::debug::save_comp_diff");
+    mln_trace("scribo::debug::save_comp_diff");
 
     image2d<value::rgb8> output;
     initialize(output, comps_ref.labeled_image());
@@ -96,7 +96,6 @@ namespace scribo
 
     io::ppm::save(output, filename);
 
-    trace::exiting("scribo::debug::save_comp_diff");
   }
 
 

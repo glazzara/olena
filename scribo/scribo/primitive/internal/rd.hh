@@ -75,7 +75,7 @@ namespace scribo
       mln_concrete(I)
       Rd(const Image<I>& f_, const Image<J>& g_, const Neighborhood<N>& nbh_)
       {
-	trace::entering("Rd");
+	mln_trace("Rd");
 
 	const I& f = exact(f_);
 	const J& g = exact(g_);
@@ -150,7 +150,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("Rd");
 	return output;
       }
 
@@ -161,7 +160,7 @@ namespace scribo
       mln_concrete(I)
       rd(const Image<I>& ima, const Image<J>& constraint)
       {
-	trace::entering("scribo::primitive::internal::rd");
+	mln_trace("scribo::primitive::internal::rd");
 
 	mln_precondition(exact(ima).is_valid());
 	mln_precondition(exact(constraint).is_valid());
@@ -173,7 +172,6 @@ namespace scribo
 
 	mln_concrete(I) output = Rd(ima, constraint, nbh);
 
-	trace::exiting("scribo::primitive::internal::rd");
 	return output;
       }
 

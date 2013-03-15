@@ -91,7 +91,7 @@ namespace scribo
 	  lines_pattern(const Image<I>& input_, unsigned length,
 			unsigned dir, const Window<W>& win_)
 	  {
-	    trace::entering("scribo::primitive::extract::impl::generic::lines_pattern");
+	    mln_trace("scribo::primitive::extract::impl::generic::lines_pattern");
 
 	    const I& input = exact(input_);
 	    const W& win = exact(win_);
@@ -137,7 +137,6 @@ namespace scribo
 	      output(p) = is_foreground;
 	    }
 
-	    trace::exiting("scribo::primitive::extract::impl::generic::lines_pattern");
 	    return output;
 	  }
 
@@ -150,7 +149,7 @@ namespace scribo
 	lines_pattern_fast(const Image<I>& input_, unsigned length,
 			   unsigned dir, const Window<W>& win_)
 	{
-	  trace::entering("scribo::primitive::extract::impl::lines_pattern_fast");
+	  mln_trace("scribo::primitive::extract::impl::lines_pattern_fast");
 
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
@@ -212,7 +211,6 @@ namespace scribo
 	    }
 	  }
 
-	  trace::exiting("scribo::primitive::extract::impl::lines_pattern_fast");
 	  return output;
 	}
 
@@ -272,7 +270,7 @@ namespace scribo
       lines_pattern(const Image<I>& input, unsigned length,
 		    unsigned dir, const Window<W>& win)
       {
-	trace::entering("scribo::primitive::extract::lines_pattern");
+	mln_trace("scribo::primitive::extract::lines_pattern");
 
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
@@ -283,7 +281,6 @@ namespace scribo
 	mln_concrete(I)
 	  output = internal::lines_pattern_dispatch(input, length, dir, win);
 
-	trace::exiting("scribo::primitive::extract::lines_pattern");
 	return output;
       }
 

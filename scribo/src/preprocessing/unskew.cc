@@ -42,7 +42,7 @@ const char *args_desc[][2] =
 
 int main(int argc, char *argv[])
 {
-  mln::trace::entering("main");
+  mln::mln_trace("main");
   using namespace mln;
 
   if (argc != 3)
@@ -56,5 +56,4 @@ int main(int argc, char *argv[])
 
   io::pgm::save(scribo::preprocessing::deskew(input), argv[2]);
 
-  mln::trace::exiting("main");
 }

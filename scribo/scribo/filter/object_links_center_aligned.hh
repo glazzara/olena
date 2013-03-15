@@ -88,7 +88,7 @@ namespace scribo
     object_links_center_aligned(const object_links<L>& links,
 				float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_center_aligned");
+      mln_trace("scribo::filter::object_links_center_aligned");
 
       mln_precondition(links.is_valid());
 
@@ -96,7 +96,6 @@ namespace scribo
 	output = object_links_non_aligned_simple(links,
 						 anchor::Center, max_alpha);
 
-      trace::exiting("scribo::filter::object_links_center_aligned");
       return output;
     }
 

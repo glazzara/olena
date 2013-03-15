@@ -73,7 +73,7 @@ namespace scribo
 		      unsigned current_object, unsigned nbh_object,
 		      anchor::Type anchor)
       {
-	trace::entering("scribo::filter::internal::alignment_angle");
+	mln_trace("scribo::filter::internal::alignment_angle");
 
 	mln_precondition(comps.is_valid());
 
@@ -165,7 +165,6 @@ namespace scribo
 			   " Invalid anchor value... Aborting computation.");
 	}
 
-	trace::exiting("scribo::filter::internal::alignment_angle");
 	return result;
       }
 

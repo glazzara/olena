@@ -99,7 +99,7 @@ namespace scribo
 		 const Neighborhood<N>& nbh, V& ncomponents,
 		 component::Type type)
       {
-	trace::entering("scribo::components");
+	mln_trace("scribo::components");
 
 	mlc_equal(mln_value(J),bool)::check();
 //	  mlc_is_a(V, mln::value::Symbolic)::check();
@@ -113,7 +113,6 @@ namespace scribo
 
 	output = estim::components_features(input, binary_input, output);
 
-	trace::exiting("scribo::components");
 	return output;
       }
 
@@ -125,7 +124,7 @@ namespace scribo
 		 const Neighborhood<N>& nbh, V& ncomponents,
 		 component::Type type)
       {
-	trace::entering("scribo::components");
+	mln_trace("scribo::components");
 
 	mlc_equal(mln_value(I),bool)::check();
 //	  mlc_is_a(V, mln::value::Symbolic)::check();
@@ -152,7 +151,6 @@ namespace scribo
 	component_set<L>
 	  output(results.first(), ncomponents, results.second().second(), type);
 
-	trace::exiting("scribo::components");
 	return output;
       }
 

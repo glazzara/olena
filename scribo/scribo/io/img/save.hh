@@ -207,7 +207,7 @@ namespace scribo
 	   const std::string& output_name,
 	   Format format)
       {
-	trace::entering("scribo::io::img::save");
+	mln_trace("scribo::io::img::save");
 
 	mln_precondition(doc.is_open());
 
@@ -239,13 +239,11 @@ namespace scribo
 	  default:
 	    trace::warning("scribo::io::img::save - "
 			   "Invalid image format! Skip saving...");
-	    trace::exiting("scribo::io::img::save");
 	    return;
 	}
 
 	mln::io::magick::save(output, output_name.c_str());
 
-	trace::exiting("scribo::io::img::save");
       }
 
 

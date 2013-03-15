@@ -169,7 +169,7 @@ namespace scribo
 	float min_angle, float max_angle,
 	anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
+	mln_trace("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 
 	mln_precondition(components.is_valid());
 
@@ -178,7 +178,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 	return output;
       }
 

@@ -61,7 +61,7 @@ namespace scribo
 	   const std::string& output_name,
 	   const mln_site(L)& crop_shift)
       {
-	trace::entering("scribo::io::text_boxes:save");
+	mln_trace("scribo::io::text_boxes:save");
 	mln_precondition(lines.is_valid());
 
 	std::ofstream file(output_name.c_str());
@@ -86,7 +86,6 @@ namespace scribo
 	file.close();
 
 
-	trace::exiting("scribo::io::text_boxes::save");
       }
 
 

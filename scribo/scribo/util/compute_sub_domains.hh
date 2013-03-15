@@ -66,7 +66,7 @@ namespace scribo
     mln::util::array<mln::util::couple<mln_domain(I), unsigned> >
     compute_sub_domains(const Image<I>& ima_, unsigned n_scales, unsigned s)
     {
-      trace::entering("scribo::util::compute_sub_domains");
+      mln_trace("scribo::util::compute_sub_domains");
 
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
@@ -98,7 +98,6 @@ namespace scribo
       out(1).second() = std::max(out(2).first().ncols() * s - ima.ncols(),
 				 out(2).first().nrows() * s - ima.nrows());
 
-      trace::exiting("scribo::util::compute_sub_domains");
       return out;
     }
 

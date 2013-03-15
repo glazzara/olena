@@ -46,7 +46,7 @@ const char *args_desc[][2] =
 
 int main(int argc, char *argv[])
 {
-  mln::trace::entering("main");
+  mln::mln_trace("main");
   using namespace mln;
 
   if (argc != 6)
@@ -66,5 +66,4 @@ int main(int argc, char *argv[])
   io::ppm::save(bg_fg.first(), argv[5]);
   io::ppm::save(bg_fg.second(), argv[4]);
 
-  mln::trace::exiting("main");
 }

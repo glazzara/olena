@@ -121,7 +121,7 @@ namespace scribo
 		  unsigned dim,
 		  unsigned max_alignment_diff)
       {
-	trace::entering("scribo::internal::align_lines");
+	mln_trace("scribo::internal::align_lines");
 
 	mln_precondition(nsites > 0);
 
@@ -182,7 +182,6 @@ namespace scribo
 	  --max_nelts;
 	}
 
-	trace::exiting("scribo::internal::align_lines");
 	return newlines;
       }
 

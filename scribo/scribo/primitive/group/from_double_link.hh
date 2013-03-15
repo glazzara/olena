@@ -83,7 +83,7 @@ namespace scribo
       from_double_link(const object_links<L>& left_link,
 		       const object_links<L>& right_link)
       {
-	trace::entering("scribo::primitive::group::from_double_link");
+	mln_trace("scribo::primitive::group::from_double_link");
 
 	mln_precondition(left_link.nelements() == right_link.nelements());
 
@@ -102,7 +102,6 @@ namespace scribo
 
 	object_groups<L> result = from_single_link(parent);
 
-	trace::exiting("scribo::primitive::group::from_double_link");
 	return result;
       }
 

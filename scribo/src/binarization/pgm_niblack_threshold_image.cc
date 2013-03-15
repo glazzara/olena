@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 				"input.pgm output.pgm <w> <k>",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   unsigned w;
   if (argc >= 4)
@@ -74,5 +74,4 @@ int main(int argc, char *argv[])
   io::pgm::save(out, argv[2]);
 
 
-  trace::exiting("main");
 }

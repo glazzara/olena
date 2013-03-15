@@ -101,7 +101,7 @@ namespace scribo
 		   mln::util::array<box<mln_site(I)> >& tableboxes,
 		   unsigned max_discontinuity)
       {
-	trace::entering("scribo::table::internal::repair_lines");
+	mln_trace("scribo::table::internal::repair_lines");
 
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
@@ -182,7 +182,6 @@ namespace scribo
 	    result.append(tableboxes[i]);
 
 	tableboxes = result;
-	trace::exiting("scribo::table::internal::repair_lines");
       }
 
 

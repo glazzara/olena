@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 				"input.pbm output.ppm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
@@ -81,5 +81,4 @@ int main(int argc, char* argv[])
     mln::io::ppm::save(output, argv[2]);
   }
 
-  trace::exiting("main");
 }

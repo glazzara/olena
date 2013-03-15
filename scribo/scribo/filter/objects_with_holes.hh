@@ -186,7 +186,7 @@ namespace scribo
 		       unsigned min_holes_count,
 		       unsigned min_size)
     {
-      trace::entering("scribo::filter::objects_with_holes");
+      mln_trace("scribo::filter::objects_with_holes");
 
       typedef component_set<L> O;
       neighb2d nbh = c4();
@@ -325,7 +325,6 @@ namespace scribo
 
 	if (kept == components.nelements())
 	{
-	  trace::exiting("scribo::filter::objects_with_holes");
 	  return components;
 	}
 
@@ -334,7 +333,6 @@ namespace scribo
 // 	t_ = timer_;
 // 	std::cout << "init output = " << t_ << std::endl;
 
-	trace::exiting("scribo::filter::objects_with_holes");
 	return output;
       }
 
@@ -348,7 +346,7 @@ namespace scribo
     components_with_two_holes(const component_set<L>& components,
 			      unsigned min_size)
     {
-      trace::entering("scribo::filter::objects_with_holes");
+      mln_trace("scribo::filter::objects_with_holes");
 
 //       std::cout << components.nelements() << std::endl;
 
@@ -463,14 +461,12 @@ namespace scribo
 	component_set<L> output;
 	if (kept == components.nelements())
 	{
-	  trace::exiting("scribo::filter::objects_with_holes");
 	  return components;
 	}
 
 	output = components.duplicate();
 	output.update_tags(to_keep, component::Ignored);
 
-	trace::exiting("scribo::filter::objects_with_holes");
 	return output;
       }
 

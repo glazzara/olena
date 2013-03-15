@@ -125,7 +125,7 @@ namespace scribo
 			       unsigned min_line_length,
 			       float h_w_ratio)
       {
-	trace::entering("scribo::primitive::lines_v_thick_and_single");
+	mln_trace("scribo::primitive::lines_v_thick_and_single");
 
 	internal::lines_v_thick_and_single_tests(input, nbh,
 						 nlines,
@@ -136,7 +136,6 @@ namespace scribo
 
 	output = lines_v_single(output, min_line_length, h_w_ratio);
 
-	trace::exiting("scribo::primitive::lines_v_thick_and_single");
 	return output;
       }
 

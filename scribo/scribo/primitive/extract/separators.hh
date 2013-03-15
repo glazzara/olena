@@ -74,7 +74,7 @@ namespace scribo
       mln_concrete(I)
       separators(const Image<I>& input_, unsigned line_length)
       {
-	trace::entering("scribo::primitive::extract::separators");
+	mln_trace("scribo::primitive::extract::separators");
 
 	const I& input = exact(input_);
 	mlc_is(mln_value(I), bool)::check();
@@ -91,7 +91,6 @@ namespace scribo
 	border::resize(hlines, border::thickness);
 	border::resize(input, border::thickness);
 
-	trace::exiting("scribo::primitive::extract::separators");
 	return hlines;
       }
 

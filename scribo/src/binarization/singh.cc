@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   unsigned w = atoi(options.opt_value("win-size").c_str());
   double k = atof(options.opt_value("k").c_str());
@@ -100,5 +100,4 @@ int main(int argc, char *argv[])
 
   io::pbm::save(out, options.arg("output.pbm"));
 
-  trace::exiting("main");
 }

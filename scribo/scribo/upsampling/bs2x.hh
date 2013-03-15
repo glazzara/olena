@@ -61,7 +61,7 @@ namespace scribo
     mln_concrete(I)
     bs2x(const mln::Image<I>& input_)
     {
-      trace::entering("scribo::upsampling::bs2x");
+      mln_trace("scribo::upsampling::bs2x");
 
       const I& input = exact(input_);
 
@@ -132,7 +132,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::upsampling::bs2x");
       return output;
     }
 

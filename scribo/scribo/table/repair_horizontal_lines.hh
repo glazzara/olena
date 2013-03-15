@@ -72,12 +72,11 @@ namespace scribo
 					 mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			    unsigned max_discontinuity)
     {
-      trace::entering("scribo::table::repair_horizontal_lines");
+      mln_trace("scribo::table::repair_horizontal_lines");
       mln_precondition(exact(input).is_valid());
 
       internal::repair_lines<1>(input, tablebboxes.second(), max_discontinuity);
 
-      trace::exiting("scribo::table::repair_horizontal_lines");
     }
 
 

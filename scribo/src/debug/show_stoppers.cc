@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 				"out_seps_bbox.ppm out_visible_seps.pbm length delta",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -120,5 +120,4 @@ int main(int argc, char *argv[])
   v_lines += nonvisible;
   mln::io::pbm::save(v_lines, argv[2]);
 
-  trace::exiting("main");
 }

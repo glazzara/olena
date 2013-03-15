@@ -74,7 +74,7 @@ namespace scribo
     separators_in_paragraph(document<L>& doc,
 			    unsigned hmin_size, unsigned vmin_size)
     {
-      trace::entering("scribo::filter::separators_in_paragraph");
+      mln_trace("scribo::filter::separators_in_paragraph");
 
       mln_precondition(doc.is_valid());
       mln_precondition(doc.has_elements());
@@ -150,7 +150,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_in_paragraph");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

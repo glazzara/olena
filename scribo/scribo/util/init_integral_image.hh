@@ -65,13 +65,12 @@ namespace scribo
 	init_integral_image(const Image<I>& input, unsigned scale, F& f,
 			    const mln_box(I)& output_domain, unsigned border)
 	{
-	  trace::entering("scribo::util::impl::generic::init_integral_image");
+	  mln_trace("scribo::util::impl::generic::init_integral_image");
 	  typedef mln_ch_value(I, mln_result(F)) J;
 
 	  // Not implemented
 	  mlc_abort(I)::check();
 
-	  trace::exiting("scribo::util::impl::generic::init_integral_image");
 	  return J();
 	}
 
@@ -83,7 +82,7 @@ namespace scribo
       init_integral_image_fastest(const Image<I>& input_, unsigned scale, F& f,
 				  const mln_box(I)& output_domain, unsigned border)
       {
-	trace::entering("scribo::util::impl::init_integral_image_fastest");
+	mln_trace("scribo::util::impl::init_integral_image_fastest");
 
 	const I& input = exact(input_);
 	typedef mln_ch_value(I, mln_result(F)) J;
@@ -164,7 +163,6 @@ namespace scribo
 	  p_integ += b_next;
 	}
 
-	trace::exiting("scribo::util::impl::init_integral_fastest_image");
 	return integral_sum_sum_2;
       }
 
@@ -219,7 +217,7 @@ namespace scribo
     init_integral_image(const Image<I>& input_, unsigned scale, F& func,
 			const mln_box(I)& output_domain, unsigned border)
     {
-      trace::entering("scribo::util::init_integral_image");
+      mln_trace("scribo::util::init_integral_image");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -229,7 +227,6 @@ namespace scribo
 	output = internal::init_integral_image_dispatch(input, scale, func,
 							output_domain, border);
 
-      trace::exiting("scribo::util::init_integral_image");
       return output;
     }
 
@@ -237,7 +234,7 @@ namespace scribo
     mln_ch_value(I,mln_result(F))
     init_integral_image(const Image<I>& input_, unsigned scale, F& func)
     {
-      trace::entering("scribo::util::init_integral_image");
+      mln_trace("scribo::util::init_integral_image");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -251,7 +248,6 @@ namespace scribo
 	output = init_integral_image(input, scale, func,
 				 output_domain, exact(input).border());
 
-      trace::exiting("scribo::util::init_integral_image");
       return output;
     }
 

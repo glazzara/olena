@@ -78,7 +78,7 @@ namespace scribo
     component_set<L>
     components_on_border(const component_set<L>& components)
     {
-      trace::entering("scribo::filter::components_on_border");
+      mln_trace("scribo::filter::components_on_border");
 
       mln_precondition(components.is_valid());
 
@@ -87,7 +87,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::components_on_border");
       return output;
     }
 

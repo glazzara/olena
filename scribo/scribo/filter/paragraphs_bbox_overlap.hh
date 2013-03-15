@@ -100,7 +100,7 @@ namespace scribo
     paragraph_set<L>
     paragraphs_bbox_overlap(const paragraph_set<L>& parset)
     {
-      trace::entering("scribo::filter::paragraphs_bbox_overlap");
+      mln_trace("scribo::filter::paragraphs_bbox_overlap");
 
       mln_precondition(parset.is_valid());
 
@@ -242,7 +242,6 @@ namespace scribo
       	if (output(p).is_valid())
       	  output(p).force_stats_update();
 
-      trace::exiting("scribo::filter::paragraphs_bbox_overlap");
       return output;
     }
 

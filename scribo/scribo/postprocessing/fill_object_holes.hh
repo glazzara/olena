@@ -162,7 +162,7 @@ namespace scribo
 	fill_object_holes(const object_groups<L>& groups,
 			  unsigned min_size)
 	{
-	  trace::entering("scribo::postprocessing::impl::generic::fill_object_holes");
+	  mln_trace("scribo::postprocessing::impl::generic::fill_object_holes");
 
 	  // Grouping groups and relabel the underlying labeled image.
 	  // Groups are now considered as components.
@@ -278,7 +278,6 @@ namespace scribo
 
 	    if (kept == components.nelements())
 	    {
-	      trace::exiting("scribo::postprocessing::impl::generic::fill_object_holes");
 	      return groups.duplicate();
 	    }
 
@@ -288,7 +287,6 @@ namespace scribo
 		output(c) = 0;
 
 
-	    trace::exiting("scribo::postprocessing::impl::generic::fill_object_holes");
 	    return output;
 	  }
 
@@ -308,14 +306,13 @@ namespace scribo
     fill_object_holes(const object_groups<L>& groups,
 		      unsigned min_size)
     {
-      trace::entering("scribo::postprocessing::fill_object_holes");
+      mln_trace("scribo::postprocessing::fill_object_holes");
 
       mln_precondition(groups.is_valid());
 
       object_groups<L>
 	output = impl::generic::fill_object_holes(groups, min_size);
 
-      trace::exiting("scribo::postprocessing::fill_object_holes");
       return output;
     }
 
@@ -325,7 +322,7 @@ namespace scribo
     mln_concrete(I)
     fill_object_holes(const Image<I>& input_, float ratio)
     {
-      trace::entering("scribo::postprocessing::fill_object_holes");
+      mln_trace("scribo::postprocessing::fill_object_holes");
 
       const I& input = exact(input_);
 
@@ -396,7 +393,6 @@ namespace scribo
       data::fill((output | pw::value(hole_mask)).rw(), false);
 
 
-      trace::exiting("scribo::postprocessing::fill_object_holes");
       return output;
     }
 

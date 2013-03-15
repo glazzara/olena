@@ -96,14 +96,13 @@ namespace scribo
     mln_ch_value(I, bool)
       sauvola(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::sauvola");
+      mln_trace("scribo::binarization::sauvola");
 
       mln_precondition(exact(input).is_valid());
 
       internal::sauvola_functor<I> f(input, K, SCRIBO_DEFAULT_SAUVOLA_R);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::sauvola");
       return f.output;
     }
 

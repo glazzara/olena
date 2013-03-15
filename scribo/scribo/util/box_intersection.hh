@@ -58,7 +58,7 @@ namespace scribo
     box<P>
     box_intersection(const box<P>& lhs, const box<P>& rhs)
     {
-      trace::entering("scribo::util::box_intersection");
+      mln_trace("scribo::util::box_intersection");
 
       P pmin, pmax;
       for (unsigned dim = 0; dim < P::dim; ++dim)
@@ -72,7 +72,6 @@ namespace scribo
 
       box<P> output(pmin, pmax);
 
-      trace::exiting("scribo::util::box_intersection");
       return output;
     }
 

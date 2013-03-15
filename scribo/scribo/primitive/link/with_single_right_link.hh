@@ -132,7 +132,7 @@ namespace scribo
 			     unsigned neighb_max_distance,
 			     anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link");
+	mln_trace("scribo::primitive::link::with_single_right_link");
 
 	mln_precondition(components.is_valid());
 
@@ -141,7 +141,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link");
 	return output;
       }
 

@@ -99,13 +99,12 @@ namespace scribo
     void
     look_like_text_lines_inplace(scribo::line_set<L>& line)
     {
-      trace::entering("scribo::text::look_like_text_lines_inplace");
+      mln_trace("scribo::text::look_like_text_lines_inplace");
 
       for_all_lines(l, line)
 	if (internal::looks_like_a_text_line(line(l)))
 	    line(l).update_type(line::Text);
 
-      trace::exiting("scribo::text::look_like_text_lines_inplace");
     }
 
     template <typename L>
@@ -113,12 +112,11 @@ namespace scribo
     line_set<L>
     look_like_text_lines(const scribo::line_set<L>& l)
     {
-      trace::entering("scribo::text::look_like_text_lines");
+      mln_trace("scribo::text::look_like_text_lines");
       line_set<L> output = l.duplicate();
 
       look_like_text_lines_inplace(output);
 
-      trace::exiting("scribo::text::look_like_text_lines");
       return output;
     }
 

@@ -106,7 +106,7 @@ namespace scribo
 		    V& nlabels,
 		    unsigned min_size)
    {
-     trace::entering("scribo::filter::components_small");
+     mln_trace("scribo::filter::components_small");
 
      const I& input = exact(input_);
      const N& nbh = exact(nbh_);
@@ -124,7 +124,6 @@ namespace scribo
        output = mln::data::transform(lbl.labeled_image(), fv2b);
      nlabels = fv2b.nlabels_;
 
-     trace::exiting("scribo::filter::components_small");
      return output;
    }
 
@@ -135,7 +134,7 @@ namespace scribo
     components_small(const component_set<L>& components,
 		     unsigned min_size)
     {
-      trace::entering("scribo::filter::components_small");
+      mln_trace("scribo::filter::components_small");
 
       mln_precondition(components.is_valid());
 
@@ -144,7 +143,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::components_small");
       return output;
     }
 

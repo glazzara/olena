@@ -63,7 +63,7 @@ namespace scribo
     mln_concrete(I)
     eagle(const Image<I>& input_)
     {
-      trace::entering("scribo::upsampling::eagle");
+      mln_trace("scribo::upsampling::eagle");
 
       typedef mln_value(I) V;
       const I& input = exact(input_);
@@ -135,7 +135,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::upsampling::eagle");
       return output;
     }
 

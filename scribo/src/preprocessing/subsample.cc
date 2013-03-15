@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 				"input.* ratio output.ppm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<value::rgb8> I;
   I input;
@@ -63,5 +63,4 @@ int main(int argc, char *argv[])
   unsigned ratio = atoi(argv[2]);
   io::ppm::save(mln::subsampling::antialiased(input, ratio), argv[3]);
 
-  trace::exiting("main");
 }

@@ -570,7 +570,7 @@ namespace scribo
       alignments(const document<L>& doc,
 		 float dmax_ratio, unsigned delta_pixel)
       {
-	trace::entering("scribo::primitive::extract::alignments");
+	mln_trace("scribo::primitive::extract::alignments");
 	mln_precondition(doc.is_valid());
 	mln_precondition(doc.has_text());
 	const mln_ch_value(L,bool)& input = doc.binary_image();
@@ -1118,7 +1118,6 @@ namespace scribo
 				  debug, "alignments_debug");
 # endif // ! SCRIBO_NDEBUG
 
-	trace::exiting("scribo::primitive::extract::alignments");
 	return output;
       }
 

@@ -140,7 +140,7 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_thick");
+      mln_trace("scribo::filter::objects_thick");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -160,7 +160,6 @@ namespace scribo
       mln_concrete(I) output = duplicate(input);
       data::fill((output | pw::value(components) == literal::zero).rw(), false);
 
-      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 
@@ -171,7 +170,7 @@ namespace scribo
     objects_thick(const component_set<L>& components,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_thick");
+      mln_trace("scribo::filter::objects_thick");
 
       mln_precondition(components.is_valid());
 
@@ -181,7 +180,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(is_not_too_thick, component::Ignored);
 
-      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 

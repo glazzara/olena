@@ -92,7 +92,7 @@ namespace scribo
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)
     {
-      trace::entering("scribo::debug::save_table_image");
+      mln_trace("scribo::debug::save_table_image");
 //      mlc_converts_to(mln_value(I), value::rgb8)::check();
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -102,7 +102,6 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::debug::save_table_image");
     }
 
 
@@ -115,7 +114,7 @@ namespace scribo
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)
     {
-      trace::entering("scribo::debug::save_table_image");
+      mln_trace("scribo::debug::save_table_image");
       const S& input_domain = exact(input_domain_);
       mln_precondition(input_domain.is_valid());
 
@@ -125,7 +124,6 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::debug::save_table_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

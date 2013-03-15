@@ -90,7 +90,7 @@ namespace scribo
       QSet<QString>
       text_extraction(const QImage& input, const QString& language = QString("eng"))
       {
-	trace::entering("scribo::toolchain::nepomuk::text_extraction");
+	mln_trace("scribo::toolchain::nepomuk::text_extraction");
 
 	mln_precondition(!input.isNull());
 
@@ -162,7 +162,6 @@ namespace scribo
 	  output = QSet<QString>::fromList(list);
 	}
 
-	trace::exiting("scribo::toolchain::nepomuk::text_extraction");
 	return output;
       }
 

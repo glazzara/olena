@@ -102,13 +102,12 @@ namespace scribo
 		 const mln::util::array< box<mln_site(I)> >& bboxes,
 		 const value::rgb8& value)
     {
-      trace::entering("scribo::debug::bboxes_image");
+      mln_trace("scribo::debug::bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
       draw::bounding_boxes(tmp, bboxes, value);
 
-      trace::exiting("scribo::debug::bboxes_image");
       return tmp;
     }
 
@@ -120,7 +119,7 @@ namespace scribo
 		 const line_set<L>& lines,
 		 const value::rgb8& value)
     {
-      trace::entering("scribo::debug::bboxes_image");
+      mln_trace("scribo::debug::bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
@@ -130,7 +129,6 @@ namespace scribo
 	if (! lines(l).is_hidden())
 	  mln::draw::box(output, lines(l).bbox(), value);
 
-      trace::exiting("scribo::debug::bboxes_image");
       return output;
     }
 
@@ -152,7 +150,7 @@ namespace scribo
 		 const component_set<L>& comps,
 		 const value::rgb8& value)
     {
-      trace::entering("scribo::debug::bboxes_image");
+      mln_trace("scribo::debug::bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
@@ -162,7 +160,6 @@ namespace scribo
 	if (comps(c).is_valid())
 	  mln::draw::box(output, comps(c).bbox(), value);
 
-      trace::exiting("scribo::debug::bboxes_image");
       return output;
     }
 

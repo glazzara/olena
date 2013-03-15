@@ -93,7 +93,7 @@ namespace scribo
     niblack_threshold(const Image<I>& input, unsigned window_size,
 		      double K)
     {
-      trace::entering("scribo::binarization::niblack_threshold");
+      mln_trace("scribo::binarization::niblack_threshold");
 
       mln_precondition(mln_site_(I)::dim == 2);
       mln_precondition(exact(input).is_valid());
@@ -101,7 +101,6 @@ namespace scribo
       internal::niblack_threshold_functor<I> f(input, K);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::niblack_threshold");
       return f.output;
     }
 

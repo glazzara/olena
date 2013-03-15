@@ -94,7 +94,7 @@ namespace scribo
 	      const V& label_type,
 	      const Function_v2b<F>& filter)
       {
-	trace::entering("scribo::filter::internal::compute");
+	mln_trace("scribo::filter::internal::compute");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -113,7 +113,6 @@ namespace scribo
 	mln_concrete(I) output = duplicate(input);
 	data::fill((output | pw::value(components) == literal::zero).rw(), false);
 
-	trace::exiting("scribo::filter::internal::compute");
 	return output;
       }
 
@@ -124,14 +123,13 @@ namespace scribo
       compute(const component_set<L>& components,
 	      const Function_v2b<F>& filter)
       {
-	trace::entering("scribo::filter::internal::compute");
+	mln_trace("scribo::filter::internal::compute");
 
 	mln_precondition(components.is_valid());
 
 	component_set<L> output = components.duplicate();
 	output.update_tags(filter, component::Ignored);
 
-	trace::exiting("scribo::filter::internal::compute");
 	return output;
       }
 

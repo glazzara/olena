@@ -194,7 +194,7 @@ namespace scribo
       mln_ch_value(I,bool)
       text_in_doc_preprocess_functor<I>::operator()(const Image<I>& input_)
       {
-	trace::entering("scribo::toolchain::text_in_doc_preprocess");
+	mln_trace("scribo::toolchain::text_in_doc_preprocess");
 
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());

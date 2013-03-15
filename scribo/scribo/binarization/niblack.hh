@@ -94,14 +94,13 @@ namespace scribo
     mln_ch_value(I, bool)
     niblack(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::niblack");
+      mln_trace("scribo::binarization::niblack");
 
       mln_precondition(exact(input).is_valid());
 
       internal::niblack_functor<I> f(input, K);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::niblack");
       return f.output;
     }
 

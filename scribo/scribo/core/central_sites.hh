@@ -73,7 +73,7 @@ namespace scribo
   mln::util::couple<P,P>
   central_sites(const box<P>& b, unsigned dim)
   {
-    trace::entering("scribo::central_sites");
+    mln_trace("scribo::central_sites");
     mln_precondition(b.is_valid());
 
     unsigned n = b.pmax()[dim] - b.pmin()[dim];
@@ -83,7 +83,6 @@ namespace scribo
     P p2 = b.center();
     p2[dim] += n / 2;
 
-    trace::exiting("scribo::central_sites");
     return mln::make::couple(p1, p2);
   }
 

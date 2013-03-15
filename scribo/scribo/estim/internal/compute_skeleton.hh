@@ -72,7 +72,7 @@ namespace scribo
       mln_concrete(I)
       compute_skeleton(const Image<I>& input_)
       {
-	trace::entering("scribo::estim::internal::compute_skeleton");
+	mln_trace("scribo::estim::internal::compute_skeleton");
 
 	const I& input = exact(input_);
 	mlc_is(mln_value(I), bool)::check();
@@ -103,7 +103,6 @@ namespace scribo
 				       topo::skeleton::is_simple_point<nbh_t>(nbh),
 				       K, dist_map);
 
-	trace::exiting("scribo::estim::internal::compute_skeleton");
 	return skel;
       }
 

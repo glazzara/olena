@@ -70,7 +70,7 @@ namespace scribo
   mln_ch_value(I,double)
   init_integral_image(const Image<I>& input_, F& func)
   {
-    trace::entering("scribo::init_integral_image");
+    mln_trace("scribo::init_integral_image");
 
     const I& input = exact(input_);
     mln_precondition(input.is_valid());
@@ -99,7 +99,6 @@ namespace scribo
 	  - output.at_(row - 1, col - 1)
 	  + func(input.at_(row, col));
 
-    trace::exiting("scribo::init_integral_image");
     return output;
   }
 

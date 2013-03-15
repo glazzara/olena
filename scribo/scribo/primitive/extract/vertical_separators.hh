@@ -73,7 +73,7 @@ namespace scribo
       mln_concrete(I)
       vertical_separators(const Image<I>& input_, unsigned line_length)
       {
-	trace::entering("scribo::primitive::extract::vertical_separators");
+	mln_trace("scribo::primitive::extract::vertical_separators");
 
 	const I& input = exact(input_);
 	mlc_is(mln_value(I), bool)::check();
@@ -82,7 +82,6 @@ namespace scribo
 	mln_concrete(I)
 	  vlines = extract::lines_v_pattern(input, line_length, 3);
 
-	trace::exiting("scribo::primitive::extract::vertical_separators");
 	return vlines;
       }
 

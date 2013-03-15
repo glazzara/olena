@@ -81,7 +81,7 @@ namespace scribo
 			 const V& label_type,
 			 unsigned iz_dmax)
     {
-      trace::entering("scribo::make::influence_zone_graph");
+      mln_trace("scribo::make::influence_zone_graph");
 
       (void) label_type;
       I& input = exact(input_);
@@ -102,7 +102,6 @@ namespace scribo
 	  iz | (pw::value(iz) != pw::cst(literal::zero)),
 	  nbh, nlabels);
 
-      trace::exiting("scribo::make::influence_zone_graph");
       return g;
     }
 

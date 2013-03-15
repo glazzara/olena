@@ -79,7 +79,7 @@ namespace scribo
     void
     paragraphs_in_image(document<L>& doc)
     {
-      trace::entering("scribo::filter::paragraphs_in_image");
+      mln_trace("scribo::filter::paragraphs_in_image");
 
       mln_precondition(doc.has_elements());
       mln_precondition(doc.has_text());
@@ -138,7 +138,6 @@ namespace scribo
       output.invalidate(not_to_ignore);
       doc.set_paragraphs(output);
 
-      trace::exiting("scribo::filter::paragraphs_in_image");
     }
 
 

@@ -139,14 +139,13 @@ namespace scribo
 			  unsigned neighb_max_distance,
 			  anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_up_link");
+	mln_trace("scribo::primitive::link::with_single_up_link");
 
 	internal::single_up_functor<L>
 	  functor(comps, neighb_max_distance);
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_up_link");
 	return output;
       }
 

@@ -70,7 +70,7 @@ namespace scribo
 					const object_links<L>& right,
 					anchor::Type anchor_angle)
       {
-	trace::entering("scribo::primitive::link::merge_double_link_closest_aligned");
+	mln_trace("scribo::primitive::link::merge_double_link_closest_aligned");
 	mln_precondition(left.is_valid());
 	mln_precondition(right.is_valid());
 
@@ -142,7 +142,6 @@ namespace scribo
 	    }
 	  }
 
-	trace::exiting("scribo::primitive::link::merge_double_link_closest_aligned");
 	return output;
       }
 

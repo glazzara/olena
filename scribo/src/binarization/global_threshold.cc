@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   unsigned threshold = atoi(options.arg("threshold_value"));
 
@@ -98,5 +98,4 @@ int main(int argc, char *argv[])
 
   io::pbm::save(out, options.arg("output.pbm"));
 
-  trace::exiting("main");
 }

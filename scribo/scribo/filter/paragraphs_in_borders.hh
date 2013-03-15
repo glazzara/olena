@@ -80,7 +80,7 @@ namespace scribo
     void
     paragraphs_in_borders(document<L>& doc)
     {
-      trace::entering("scribo::filter::paragraphs_in_borders");
+      mln_trace("scribo::filter::paragraphs_in_borders");
 
       mln_precondition(doc.is_valid());
 
@@ -130,7 +130,6 @@ namespace scribo
 	doc.set_paragraphs(parset);
       }
 
-      trace::exiting("scribo::filter::paragraphs_in_borders");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

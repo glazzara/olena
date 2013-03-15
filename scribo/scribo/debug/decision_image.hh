@@ -107,7 +107,7 @@ namespace scribo
 		   const object_groups<L>& groups,
 		   const object_groups<L>& filtered_groups)
     {
-      trace::entering("scribo::debug::decision_image");
+      mln_trace("scribo::debug::decision_image");
       const I& input = exact(input_);
 
       const component_set<L>& components = groups.components();
@@ -128,7 +128,6 @@ namespace scribo
 	  mln::draw::box(decision_image, components(i).bbox(),
 			 literal::green);
 
-      trace::exiting("scribo::debug::decision_image");
       return decision_image;
     }
 
@@ -140,7 +139,7 @@ namespace scribo
 		   const object_links<L>& filtered_links,
 		   anchor::Type anchor)
     {
-      trace::entering("scribo::debug::decision_image");
+      mln_trace("scribo::debug::decision_image");
       const I& input = exact(input_);
 
       const component_set<L>& comps = links.components();
@@ -173,7 +172,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::debug::decision_image");
       return decision_image;
     }
 

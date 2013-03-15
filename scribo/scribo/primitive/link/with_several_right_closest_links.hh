@@ -119,7 +119,7 @@ namespace scribo
       with_several_right_closest_links(const component_set<L>& comps,
 				       unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_several_right_closest_links");
+	mln_trace("scribo::primitive::link::with_several_right_closest_links");
 
 	extension::fill(comps.labeled_image_(), 0);
 
@@ -182,7 +182,6 @@ namespace scribo
 	    final_link[i] = i;
 	}
 
-	trace::exiting("scribo::primitive::link::with_several_right_closest_links");
 	return final_link;
       }
 

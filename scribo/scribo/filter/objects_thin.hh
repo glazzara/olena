@@ -142,7 +142,7 @@ namespace scribo
 		    const V& label_type,
 		    unsigned min_thickness)
     {
-      trace::entering("scribo::filter::components_thin");
+      mln_trace("scribo::filter::components_thin");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -161,7 +161,6 @@ namespace scribo
       mln_concrete(I)
 	output = mln::data::transform(comps.labeled_image(), fv2b);
 
-      trace::exiting("scribo::filter::components_thin");
       return output;
     }
 
@@ -172,7 +171,7 @@ namespace scribo
     components_thin(const component_set<L>& components,
 		    unsigned min_thickness)
     {
-      trace::entering("scribo::filter::components_thin");
+      mln_trace("scribo::filter::components_thin");
 
       mln_precondition(components.is_valid());
 
@@ -182,7 +181,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(is_not_too_thin, component::Ignored);
 
-      trace::exiting("scribo::filter::components_thin");
       return output;
     }
 

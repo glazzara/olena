@@ -65,7 +65,7 @@ namespace scribo
     mln_value(I)
     otsu_threshold(const Image<I>& input_)
     {
-      trace::entering("scribo::binarization::otsu_threshold");
+      mln_trace("scribo::binarization::otsu_threshold");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -122,7 +122,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::binarization::otsu_threshold");
       return threshold;
     }
 

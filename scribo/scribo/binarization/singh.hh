@@ -89,14 +89,13 @@ namespace scribo
     mln_ch_value(I, bool)
       singh(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::singh");
+      mln_trace("scribo::binarization::singh");
 
       mln_precondition(exact(input).is_valid());
 
       internal::singh_functor<I> f(input, K);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::singh");
       return f.output;
     }
 

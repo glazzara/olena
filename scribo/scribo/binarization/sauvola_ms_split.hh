@@ -105,7 +105,7 @@ namespace scribo
 		     unsigned s, unsigned min_ntrue, double k2,
 		     double k3, double k4)
     {
-      trace::entering("scribo::binarization::sauvola_ms_split");
+      mln_trace("scribo::binarization::sauvola_ms_split");
 
       mln_precondition(exact(input_1_).is_valid());
       mlc_is(mln_value(I), value::rgb8)::check();
@@ -157,7 +157,6 @@ namespace scribo
 	++b_ptr;
       }
 
-      trace::exiting("scribo::binarization::sauvola_ms_split");
       return output;
     }
 

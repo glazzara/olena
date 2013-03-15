@@ -190,7 +190,7 @@ namespace scribo
 			   double k2, double k3, double k4, bool enable_fg_bg,
 			   Image<I>& fg, bool enable_deskew, bool verbose)
     {
-      trace::entering("scribo::toolchain::text_in_doc_preprocess");
+      mln_trace("scribo::toolchain::text_in_doc_preprocess");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -210,7 +210,6 @@ namespace scribo
       mln_ch_value(I,bool) output = f(input);
       exact(fg) = f.fg;
 
-      trace::exiting("scribo::toolchain::text_in_doc_preprocess");
       return output;
     }
 

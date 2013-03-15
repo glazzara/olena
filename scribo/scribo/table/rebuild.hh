@@ -98,7 +98,7 @@ namespace scribo
 	    unsigned max_dist_lines,
 	    mln_value(L)& ncells)
     {
-      trace::entering("scribo::table::rebuild");
+      mln_trace("scribo::table::rebuild");
       const I& input = exact(input_);
 
       mlc_equal(mln_value(I), bool)::check();
@@ -145,7 +145,6 @@ namespace scribo
 
       L lbl = labeling::background(res, c8(), ncells);
 
-      trace::exiting("scribo::table::rebuild");
       return mln::make::couple(lbl,
 			       mln::make::couple(vlines, hlines));
     }

@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 				" <hratio> <output.ppm>",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<bool> I;
   I input;
@@ -91,5 +91,4 @@ int main(int argc, char *argv[])
 
   io::ppm::save(out, argv[6]);
 
-  trace::exiting("main");
 }

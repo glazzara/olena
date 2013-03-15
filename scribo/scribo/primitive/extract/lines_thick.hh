@@ -111,7 +111,7 @@ namespace scribo
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  const Window<W>& win_)
       {
-	trace::entering("scribo::primitive::lines_thick");
+	mln_trace("scribo::primitive::lines_thick");
 
 	internal::lines_thick_tests(input_, nbh_, nlines, win_);
 
@@ -123,7 +123,6 @@ namespace scribo
 	component_set<mln_ch_value(I,V)> output
 	  = primitive::extract::components(filter, nbh, nlines);
 
-	trace::exiting("scribo::primitive::lines_thick");
 	return output;
       }
 

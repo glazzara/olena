@@ -96,7 +96,7 @@ namespace scribo
     void
     clean_inplace(const line_info<L>& line, Image<I>& input_)
     {
-      trace::entering("scribo::text::clean_inplace");
+      mln_trace("scribo::text::clean_inplace");
 
       I& input = exact(input_);
       mlc_bool(mln_site_(I)::dim == 2)::check();
@@ -133,7 +133,6 @@ namespace scribo
 //       else
 // 	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
 
-      trace::exiting("scribo::text::clean_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

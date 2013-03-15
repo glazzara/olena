@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 				"input.pbm min_card max_card output.ppm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

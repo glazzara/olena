@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 				"input.pbm out.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -92,5 +92,4 @@ int main(int argc, char* argv[])
     io::pbm::save(scribo::text::clean(lines(l), input),
 		  scribo::make::debug_filename("text.pbm"));
 
-  trace::exiting("main");
 }

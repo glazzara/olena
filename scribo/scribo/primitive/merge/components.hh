@@ -87,7 +87,7 @@ namespace scribo
       component_set<L>
       components(const component_set<L>& lhs, const component_set<L>& rhs)
       {
-	trace::entering("scribo::primitive::merge::components");
+	mln_trace("scribo::primitive::merge::components");
 
 	const L& lhs_lbl = lhs.labeled_image();
 	const L& rhs_lbl = rhs.labeled_image();
@@ -110,7 +110,6 @@ namespace scribo
 
  	component_set<L> output(lbl_merge, nlabels);
 
-	trace::exiting("scribo::primitive::merge::components");
 	return output;
       }
 

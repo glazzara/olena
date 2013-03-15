@@ -97,7 +97,7 @@ namespace scribo
 				 const value::rgb8& text_value,
 				 const value::rgb8& non_text_value)
     {
-      trace::entering("scribo::debug::looks_like_a_text_line_image");
+      mln_trace("scribo::debug::looks_like_a_text_line_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
@@ -111,7 +111,6 @@ namespace scribo
 	    mln::draw::box(output, lines(l).bbox(), non_text_value);
 	}
 
-      trace::exiting("scribo::debug::looks_like_a_text_line_image");
       return output;
     }
 

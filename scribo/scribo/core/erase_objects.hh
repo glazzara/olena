@@ -64,7 +64,7 @@ namespace scribo
   erase_objects(Image<I>& input_,
 		const component_set<L>& comps)
   {
-    trace::entering("scribo::erase_objects");
+    mln_trace("scribo::erase_objects");
 
     mlc_equal(mln_value(I),bool)::check();
 
@@ -75,7 +75,6 @@ namespace scribo
 			 != pw::cst(literal::zero))).rw(),
 	       false);
 
-    trace::exiting("scribo::erase_objects");
   }
 
 

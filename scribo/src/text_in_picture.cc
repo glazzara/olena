@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, options.arg("input.*"));
@@ -111,6 +111,5 @@ int main(int argc, char* argv[])
 		options.arg("output.ppm"));
 
 
-  trace::exiting("main");
   return comps.nelements() != 0;
 }

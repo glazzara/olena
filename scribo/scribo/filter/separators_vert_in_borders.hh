@@ -83,7 +83,7 @@ namespace scribo
     void
     separators_vert_in_borders(document<L>& doc)
     {
-      trace::entering("scribo::filter::separators_vert_in_borders");
+      mln_trace("scribo::filter::separators_vert_in_borders");
 
       mln_precondition(doc.is_valid());
 
@@ -135,7 +135,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_vert_in_borders");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -63,7 +63,7 @@ namespace scribo
     mln_ch_value(I,bool)
     otsu(const Image<I>& input_)
     {
-      trace::entering("scribo::binarization::otsu");
+      mln_trace("scribo::binarization::otsu");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());

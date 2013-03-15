@@ -86,7 +86,7 @@ namespace scribo
     mln_concrete(I)
     homogeneous_contrast(const Image<I>& input_, unsigned h)
     {
-      trace::entering("scribo::preprocessing::homogeneous_contrast");
+      mln_trace("scribo::preprocessing::homogeneous_contrast");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -96,7 +96,6 @@ namespace scribo
 	output = morpho::closing::leveling(input, c4(), acc, h);
       arith::minus_inplace(output, input);
 
-      trace::exiting("scribo::preprocessing::homogeneous_contrast");
       return output;
     }
 

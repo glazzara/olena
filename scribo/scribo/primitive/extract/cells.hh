@@ -86,7 +86,7 @@ namespace scribo
       cells(const Image<I>& input_,
 	    const Neighborhood<N>& nbh_, const V& label_type)
       {
-	trace::entering("scribo::primitive::cells");
+	mln_trace("scribo::primitive::cells");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -113,7 +113,6 @@ namespace scribo
 	mln::util::array<box<mln_site(I)> >
 	  cellbboxes = labeling::compute(accu::meta::shape::bbox(), cells, ncells);
 
-	trace::exiting("scribo::primitive::cells");
 	return cellbboxes;
       }
 

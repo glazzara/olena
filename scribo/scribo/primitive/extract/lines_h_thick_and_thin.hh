@@ -476,7 +476,7 @@ namespace scribo
 			     float p_few, float p_enough,
 			     float ratio)
       {
-	trace::entering("scribo::primitive::extract::lines_h_thick_and_thin");
+	mln_trace("scribo::primitive::extract::lines_h_thick_and_thin");
 
 	mlc_is(mln_value(I), bool)::check();
 
@@ -525,7 +525,6 @@ namespace scribo
 				  output, "lines_h_thick_and_thin_output");
 
 
-	trace::exiting("scribo::primitive::extract::lines_h_thick_and_thin");
 	return output;
       }
 

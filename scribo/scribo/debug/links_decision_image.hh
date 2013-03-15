@@ -68,7 +68,7 @@ namespace scribo
 			 const object_links<L>& links,
 			 const object_links<L>& filtered_links)
     {
-      trace::entering("scribo::debug::links_decision_image");
+      mln_trace("scribo::debug::links_decision_image");
       const I& input = exact(input_);
 
       const component_set<L>& comps = links.components();
@@ -100,7 +100,6 @@ namespace scribo
 	  mln::draw::line(links_decision_image, p1, p2, value);
 	}
 
-      trace::exiting("scribo::debug::links_decision_image");
       return links_decision_image;
     }
 

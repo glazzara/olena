@@ -75,7 +75,7 @@ namespace scribo
 			    unsigned dim,
 			    float max_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_ratio");
+      mln_trace("scribo::filter::object_links_bbox_ratio");
 
       mln_precondition(links.is_valid());
 
@@ -98,7 +98,6 @@ namespace scribo
 	    output.clear(i);
 	}
 
-      trace::exiting("scribo::filter::object_links_bbox_ratio");
       return output;
     }
 

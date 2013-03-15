@@ -128,7 +128,7 @@ namespace scribo
 	   const std::string& output_name,
 	   Format format)
       {
-	trace::entering("scribo::io::xml::save");
+	mln_trace("scribo::io::xml::save");
 
 	mln_precondition(doc.is_open());
 
@@ -163,7 +163,6 @@ namespace scribo
 	}
 
 	output.close();
-	trace::exiting("scribo::io::xml::save");
       }
 
 

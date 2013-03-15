@@ -80,7 +80,7 @@ namespace scribo
     components_features(const Image<I>& input_, const Image<J>& bin_input_,
 			const component_set<L>& components)
     {
-      trace::entering("scribo::estim::components_features");
+      mln_trace("scribo::estim::components_features");
 
       const I& input = exact(input_);
       const J& bin_input = exact(bin_input_);
@@ -167,7 +167,6 @@ namespace scribo
       // t.stop();
       // std::cout << "compute color and boldness " << t << std::endl;
 
-      trace::exiting("scribo::estim::components_features");
       return output;
     }
 

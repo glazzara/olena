@@ -154,7 +154,7 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_h_thick");
+      mln_trace("scribo::filter::objects_h_thick");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -166,7 +166,6 @@ namespace scribo
       mln_concrete(I)
 	output = internal::compute(input, nbh, label_type, functor);
 
-      trace::exiting("scribo::filter::objects_h_thick");
       return output;
     }
 
@@ -177,12 +176,11 @@ namespace scribo
     objects_h_thick(const component_set<L>& comps,
 		    unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_h_thick");
+      mln_trace("scribo::filter::objects_h_thick");
 
       internal::h_thick_object_filter<L> functor(comps, max_thickness);
       component_set<L> output = internal::compute(comps, functor);
 
-      trace::exiting("scribo::filter::objects_h_thick");
       return output;
     }
 

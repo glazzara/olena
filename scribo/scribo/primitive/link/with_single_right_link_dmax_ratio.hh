@@ -155,7 +155,7 @@ namespace scribo
 					const DMax_Functor<F>& dmax_f,
 					anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio");
+	mln_trace("scribo::primitive::link::with_single_right_link_dmax_ratio");
 
 	mln_precondition(components.is_valid());
 
@@ -164,7 +164,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio");
 	return output;
       }
 

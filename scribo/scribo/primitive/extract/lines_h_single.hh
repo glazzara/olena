@@ -150,7 +150,7 @@ namespace scribo
 		     unsigned min_line_length,
 		     float w_h_ratio)
       {
-	trace::entering("scribo::primitive::lines_h_single");
+	mln_trace("scribo::primitive::lines_h_single");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -168,7 +168,6 @@ namespace scribo
 
 	output.update_tags(is_line, component::Ignored);
 
-	trace::exiting("scribo::primitive::lines_h_single");
 	return output;
       }
 
@@ -181,7 +180,7 @@ namespace scribo
 		     unsigned min_line_length,
 		     float w_h_ratio)
       {
-	trace::entering("scribo::primitive::lines_h_single");
+	mln_trace("scribo::primitive::lines_h_single");
 
 	mln_precondition(components.is_valid());
 
@@ -191,7 +190,6 @@ namespace scribo
 	component_set<L> output = components.duplicate();
 	output.update_tags(is_line, component::Ignored);
 
-	trace::exiting("scribo::primitive::lines_h_single");
 	return output;
       }
 

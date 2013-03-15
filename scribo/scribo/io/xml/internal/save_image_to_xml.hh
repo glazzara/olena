@@ -67,7 +67,7 @@ namespace scribo
 	save_image_to_xml(std::ostream& output, const Image<I>& ima_,
 			  const char *qname)
 	{
-	  trace::entering("scribo::io::xml::internal::save_image");
+	  mln_trace("scribo::io::xml::internal::save_image");
 
 	  mln_precondition(exact(ima_).is_valid());
 	  const I& ima = exact(ima_);
@@ -88,7 +88,6 @@ namespace scribo
 
 	  output <<  "]]></" << qname << ">" << std::endl;
 
-	  trace::exiting("scribo::io::xml::internal::save_image");
 	}
 
 # endif // ! MLN_INCLUDE_ONLY
