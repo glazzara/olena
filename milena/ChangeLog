@@ -1,3 +1,15 @@
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Automatically initialize GraphicsMagick.
+
+	* mln/io/magick/internal/init_magick.hh: New.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Use init_magick struct and update doc.
+
+	* tests/io/magick/load.cc,
+	* tests/io/magick/save.cc: Remove references to InitializeMagick.
+
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/img/2dgrid.png: New. Add missing file.

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,11 +30,6 @@
 /// \file
 ///
 /// \brief Image output routines based on Magick++.
-///
-/// Do not forget to call Magick::InitializeMagick(*argv)
-/// <em>before</em> using any of these functions, as advised by the
-/// GraphicsMagick documentation
-/// (http://www.graphicsmagick.org/Magick++/Image.html).
 
 # include <cstdlib>
 
@@ -52,6 +47,7 @@
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 
+# include <mln/io/magick/internal/init_magick.hh>
 
 namespace mln
 {
@@ -500,6 +496,10 @@ namespace mln
 	const I& ima = exact(ima_);
 	const J& opacity_mask = exact(opacity_mask_);
 
+	// Initialize GraphicsMagick only once.
+	static internal::init_magick init;
+	(void) init;
+
 	def::coord
 	  ncols  = geom::ncols(ima),
 	  nrows  = geom::nrows(ima);
@@ -541,24 +541,6 @@ namespace mln
 	mln_ch_value(I,bool) opacity_mask;
 	save(ima, opacity_mask, filename);
       }
-
-
-      // FIXME: Unfinished?
-#if 0
-      template <typename T>
-      void
-      save(const Image< tiled2d<T> >& ima_, const std::string& filename)
-      {
-	trace::entering("mln::io::magick::save");
-
-	tiled2d<T>& ima = exact(ima_);
-
-	ima.buffer().write(filename);
-
-	trace::exiting("mln::io::magick::save");
-      }
-#endif
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

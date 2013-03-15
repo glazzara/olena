@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -30,11 +30,6 @@
 /// \file
 ///
 /// \brief Image intput routines based on Magick++.
-///
-/// Do not forget to call Magick::InitializeMagick(*argv)
-/// <em>before</em> using any of these functions, as advised by the
-/// GraphicsMagick documentation
-/// (http://www.graphicsmagick.org/Magick++/Image.html).
 
 # include <cstdlib>
 
@@ -44,6 +39,8 @@
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
+
+# include <mln/io/magick/internal/init_magick.hh>
 
 
 namespace mln
@@ -146,6 +143,10 @@ namespace mln
 
 	I& ima = exact(ima_);
 
+	// Initialize GraphicsMagick only once.
+	static internal::init_magick init;
+	(void) init;
+
 	// FIXME: Handle Magick++'s exceptions (see either
 	// ImageMagick++'s or GraphicsMagick++'s documentation).
 	Magick::Image magick_ima(filename);
@@ -202,24 +203,6 @@ namespace mln
 	trace::exiting("mln::io::magick::load");
       }
 
-
-      // FIXME: Unfinished?
-#if 0
-      template<typename T>
-      inline
-      void
-      load(Image<tiled2d<T> >& ima_, const std::string& filename)
-      {
-	trace::entering("mln::io::magick::load");
-
-	tiled2d<T>& ima = exact(ima_);
-
-	tiled2d<T> result(filename);
-
-	ima = result;
-	trace::exiting("mln::io::magick::load");
-      }
-#endif
 
 
 # endif // ! MLN_INCLUDE_ONLY

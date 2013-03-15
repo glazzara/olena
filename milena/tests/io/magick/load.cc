@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,21 +42,6 @@
 int main(int /* argc */, char* argv[])
 {
   using namespace mln;
-
-  /* From http://www.graphicsmagick.org/Magick++/Image.html:
-
-       The InitializeMagick() function MUST be invoked before
-       constructing any Magick++ objects.  This used to be optional,
-       but now it is absolutely required.  This function initalizes
-       semaphores and configuration information necessary for the
-       software to work correctly.  Failing to invoke
-       InitializeMagick() is likely to lead to a program crash or
-       thrown assertion.  If the program resides in the same directory
-       as the GraphicsMagick files, then argv[0] may be passed as an
-       argument so that GraphicsMagick knows where its files reside,
-       otherwise NULL may be passed and GraphicsMagick will try to use
-       other means (if necessary).  */
-  Magick::InitializeMagick(*argv);
 
   // Compare Milena's built-in PBM loaded and Magick++'s support for PBM.
   {
