@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -237,7 +237,6 @@ namespace scribo
   void
   document<L>::open()
   {
-    Magick::InitializeMagick(0);
     mln::io::magick::load(data_->image_, data_->filename_);
   }
 

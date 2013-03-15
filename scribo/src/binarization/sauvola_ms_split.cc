@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -120,8 +120,6 @@ int main(int argc, char *argv[])
 			  << " - k3=" << binarization::internal::k3
 			  << " - k4=" << binarization::internal::k4
 			  << std::endl;
-
-  Magick::InitializeMagick(0);
 
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, options.arg("input.*"));

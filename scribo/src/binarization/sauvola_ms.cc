@@ -99,8 +99,6 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  Magick::InitializeMagick(*argv);
-
   trace::entering("main");
 
 

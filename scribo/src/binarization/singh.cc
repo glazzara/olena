@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -80,8 +81,6 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
     scribo::debug::logger().set_level(scribo::debug::All);
   }
-
-  Magick::InitializeMagick(*argv);
 
   trace::entering("main");
 

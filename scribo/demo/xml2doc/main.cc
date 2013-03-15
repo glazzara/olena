@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -89,8 +90,6 @@ int svg_base64(const QString& xml, const QString& svg)
 
 int main(int argc, char **argv)
 {
-  Magick::InitializeMagick(argv[0]);
-
   QString man = \
     "xml_transform\n"
     "OPTIONS:\n\n"

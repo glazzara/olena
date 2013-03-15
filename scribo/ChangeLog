@@ -1,3 +1,38 @@
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove references to InitializeMagick().
+
+	* demo/viewer/main.cc,
+	* demo/xml2doc/main.cc,
+	* core/document.hh,
+	* debug/logger.hh,
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/singh.cc,
+	* src/binarization/wolf.cc,
+	* src/content_in_doc.cc,
+	* src/content_in_hdoc.cc,
+	* src/contest/DAE-2011/content_in_doc_dae.cc,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/debug/show_components_boldness.cc,
+	* src/debug/show_components_color.cc,
+	* src/non_text_components.cc,
+	* src/preprocessing/rotate.cc,
+	* src/preprocessing/rotate_90.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/text_in_doc_preprocess.cc,
+	* src/text_in_picture.cc,
+	* src/text_in_picture_dual.cc,
+	* src/text_recognition_in_picture.cc: Here.
+
 2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix namespace ambiguities.

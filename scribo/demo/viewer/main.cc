@@ -39,8 +39,6 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  Magick::InitializeMagick(*argv);
-
   Viewer* viewer = Viewer::Instance(argc, argv);
 
   if (!viewer)

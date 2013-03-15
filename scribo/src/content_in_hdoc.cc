@@ -96,8 +96,6 @@ int main(int argc, char* argv[])
 
   trace::entering("main");
 
-  Magick::InitializeMagick(*argv);
-
   mln::util::timer t;
   t.start();
 

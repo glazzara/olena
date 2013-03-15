@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -77,8 +77,6 @@ int main(int argc, char* argv[])
 				args_desc);
 
   trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
 
   mln::util::timer t;
   t.start();

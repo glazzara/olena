@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,8 +81,6 @@ int main(int argc, char* argv[])
     scribo::debug::logger().set_level(scribo::debug::None);
 
   trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;

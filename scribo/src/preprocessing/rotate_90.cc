@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,8 +55,6 @@ int main(int argc, char *argv[])
 				"Fast +90/-90 rotation",
 				"input.* output.ppm <positive>",
 				args_desc);
-
-  Magick::InitializeMagick(0);
 
   typedef image2d<value::rgb8> I;
   I ima;

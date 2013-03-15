@@ -254,7 +254,6 @@ namespace scribo
 	  verbose_prefix_("LOG: "),
 	  stream_(std::cerr)
       {
-	// Magick::InitializeMagick(0);
       }
 
 
