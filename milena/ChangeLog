@@ -1,5 +1,18 @@
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove deprecated trace system.
+
+	* mln/trace/all.hh,
+	* mln/trace/entering.hh,
+	* mln/trace/essential.hh,
+	* mln/trace/exiting.hh,
+	* mln/trace/quiet.hh,
+	* mln/trace/resume.hh,
+	* mln/trace/stop.hh,
+	* mln/trace/warning.hh: Remove.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/unit_test/unit-tests.mk: Regen.
 
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
