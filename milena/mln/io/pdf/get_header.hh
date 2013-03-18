@@ -33,6 +33,8 @@
 # include <iostream>
 # include <fstream>
 
+#include <poppler/cpp/poppler-document.h>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/initialize.hh>
 # include <mln/core/box_runstart_piter.hh>

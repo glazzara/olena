@@ -1,3 +1,20 @@
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* mln/fun/v2v/round_sat.hh,
+	* mln/io/pdf/get_header.hh: Add missing includes.
+
+	* mln/value/internal/gray_f.hxx: Update use of math::round.
+
+	* tests/data.hh.in: Add a new path.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/cond_tests_magickxx: Consider more conditional
+	tests.
+
+	* tests/unit_test/cond_tests_poppler: New.
+
 2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/algebra/mat.cc: Fix test.

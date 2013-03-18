@@ -38,6 +38,9 @@
 /// The absolute path to the img directory of Milena.
 # define MLN_TESTS_IMG_DIR "@abs_top_srcdir@/milena/tests/img"
 
+/// \brief The absolute path to the test directory of Milena.
+# define MLN_TESTS_DIR "@abs_top_srcdir@/milena/tests/"
+
 /// The absolute path to the mesh directory of Milena.
 # define MLN_MESH_DIR "@abs_top_srcdir@/milena/mesh"
 

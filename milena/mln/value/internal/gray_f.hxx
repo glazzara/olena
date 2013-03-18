@@ -117,8 +117,8 @@ namespace mln
       inline
       gray_f::operator graylevel<m>() const
       {
-	return graylevel<m>(math::round<int>()(this->v_
-					       * (mlc_pow_int(2, m) - 1)));
+	return graylevel<m>(math::round<int>(this->v_
+					     * (mlc_pow_int(2, m) - 1)));
       }
 
 
@@ -126,8 +126,8 @@ namespace mln
       inline
       gray_f::operator gray_<m>() const
       {
-	return gray_<m>(math::round<int>()(this->v_
-					   * (mlc_pow_int(2, m) - 1)));
+	return gray_<m>(math::round<int>(this->v_
+					 * (mlc_pow_int(2, m) - 1)));
       }
 
       inline

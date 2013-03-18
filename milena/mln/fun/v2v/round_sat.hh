@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 /// Round the given value considering its type as circular.
 
 # include <mln/core/concept/function.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
