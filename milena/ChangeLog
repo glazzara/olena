@@ -1,5 +1,15 @@
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Write a valid test for labeling::foreground.
+
+	* tests/labeling/Makefile.am: Add more extra-dist files.
+
+	* tests/labeling/foreground.cc: Rewrite.
+
+	* tests/labeling/foreground.ref.pgm: New.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation issues.
 
 	* mln/fun/v2v/round_sat.hh,
