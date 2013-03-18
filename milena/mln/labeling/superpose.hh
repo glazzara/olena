@@ -84,7 +84,7 @@ namespace mln
 	      const Image<J>& rhs_, const mln_value(J)& rhs_nlabels,
 	      mln_value(I)& new_nlabels)
     {
-      trace::entering("mln::labeling::superpose");
+      mln_trace("mln::labeling::superpose");
 
       const I& lhs = exact(lhs_);
       const J& rhs = exact(rhs_);
@@ -111,7 +111,6 @@ namespace mln
       new_nlabels = value::equiv(lhs_nlabels)
 	            + value::equiv(rhs_nlabels) + 1;
 
-      trace::exiting("mln::labeling::superpose");
       return output;
     }
 

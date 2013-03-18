@@ -120,10 +120,9 @@ namespace mln
       inline
       void save(const Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::pbm::save");
+	mln_trace("mln::io::pbm::save");
 	mln::metal::equal<mln_value(I), bool >::check();
 	impl::save_(exact(ima), filename);
-	trace::exiting("mln::io::pbm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

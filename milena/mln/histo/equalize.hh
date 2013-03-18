@@ -58,7 +58,7 @@ namespace mln
     mln_concrete(I)
     equalize(const Image<I>& input_)
     {
-      trace::entering("mln::histo::equalize");
+      mln_trace("mln::histo::equalize");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -94,7 +94,6 @@ namespace mln
       for_all(p)
 	output(p) = histo_correction[input(p)];
 
-      trace::exiting("mln::histo::equalize");
       return output;
     }
 

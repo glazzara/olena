@@ -93,7 +93,7 @@ namespace mln
 	  void
 	  take_as_init(Image<I>& input_, const mln_deduce(I, value, argument)& v)
 	  {
-	    trace::entering("accu::impl::image::generic::take_as_init");
+	    mln_trace("accu::impl::image::generic::take_as_init");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -104,14 +104,13 @@ namespace mln
 	    for_all(p)
 	      input(p).take_as_init(v);
 
-	    trace::exiting("accu::impl::image::generic::take_as_init");
 	  }
 
 	  template <typename I, typename J>
 	  void
 	  take_as_init(Image<I>& input_, const Image<J>& values_)
 	  {
-	    trace::entering("accu::impl::image::generic::take_as_init");
+	    mln_trace("accu::impl::image::generic::take_as_init");
 
 	    typedef mln_value(I) A;
 	    mlc_is_a(A, Accumulator)::check();
@@ -126,7 +125,6 @@ namespace mln
 	    for_all(p)
 	      input(p).take_as_init(values(p));
 
-	    trace::exiting("accu::impl::image::generic::take_as_init");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -138,7 +136,7 @@ namespace mln
 	void
 	take_as_init_fastest(Image<I>& input_, const mln_deduce(I, value, argument)& v)
 	{
-	  trace::entering("accu::impl::image::take_as_init_fastest");
+	  mln_trace("accu::impl::image::take_as_init_fastest");
 	  
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -149,14 +147,13 @@ namespace mln
 	  for_all(px)
 	    px.val().take_as_init(v);
 
-	  trace::exiting("accu::impl::image::take_as_init_fastest");
 	}
 
 	template <typename I, typename J>
 	void
 	take_as_init_fastest(Image<I>& input_, const Image<J>& values_)
 	{
-	  trace::entering("accu::impl::image::take_as_init_fastest");
+	  mln_trace("accu::impl::image::take_as_init_fastest");
 
 	  typedef mln_value(I) A;
 	  mlc_is_a(A, Accumulator)::check();
@@ -176,7 +173,6 @@ namespace mln
 	  for_all_2(p_in, p_v)
 	    p_in.val().take_as_init(p_v.val());
 
-	  trace::exiting("accu::impl::image::take_as_init_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -263,14 +259,13 @@ namespace mln
       void
       take_as_init(Image<I>& input, const mln_deduce(I, value, argument)& v)
       {
-	trace::entering("accu::image::take_as_init");
+	mln_trace("accu::image::take_as_init");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 
 	mln_precondition(exact(input).is_valid());
 	internal::take_as_init_dispatch(input, v);
 
-	trace::exiting("accu::image::take_as_init");
       }
 
       template <typename I, typename J>
@@ -278,7 +273,7 @@ namespace mln
       void
       take_as_init(Image<I>& input, const Image<J>& values)
       {
-	trace::entering("accu::image::take_as_init");
+	mln_trace("accu::image::take_as_init");
 
 	typedef mln_value(I) A;
 	mlc_is_a(A, Accumulator)::check();
@@ -287,7 +282,6 @@ namespace mln
 	internal::take_as_init_tests(input, values);
 	internal::take_as_init_dispatch(input, values);
 
-	trace::exiting("accu::image::take_as_init");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

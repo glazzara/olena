@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -80,8 +80,7 @@
 
 # include <mln/literal/zero.hh>
 
-# include <mln/trace/entering.hh>
-# include <mln/trace/exiting.hh>
+# include <mln/debug/trace.hh>
 
 # include <mln/trait/value/comp.hh>
 
@@ -243,7 +242,7 @@ namespace mln
       inline
       histo3d_rgb<V>::histo3d_rgb()
       {
-	trace::entering("mln::accu::stat::histo3d_rgb::cstor");
+	mln_trace("mln::accu::stat::histo3d_rgb::cstor");
 
 	typedef mln_trait_value_comp(V,0) comp0;
 	typedef mln_trait_value_comp(V,1) comp1;
@@ -260,7 +259,6 @@ namespace mln
 				   mln_max(comp1),
 				   mln_max(comp2))));
 
-	trace::exiting("mln::accu::stat::histo3d_rgb::cstor");
       }
 
       template <typename V>
@@ -315,7 +313,7 @@ namespace mln
       bool operator==(const histo3d_rgb<V>& histo1,
 		      const histo3d_rgb<V>& histo2)
       {
-	trace::entering("mln::accu::stat::histo3d_rgb::operator==");
+	mln_trace("mln::accu::stat::histo3d_rgb::operator==");
 
 	bool  result                  = true;
 	const image3d<unsigned>& res1 = histo1.to_result();
@@ -330,7 +328,6 @@ namespace mln
 	for_all_2(p1, p2)
 	  result &= (res1(p1) == res2(p2));
 
-	trace::exiting("mln::accu::stat::histo3d_rgb::operator==");
 	return result;
       }
 

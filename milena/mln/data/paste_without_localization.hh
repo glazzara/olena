@@ -95,7 +95,7 @@ namespace mln
 	void paste_without_localization(const Image<I>& input_,
 					Image<J>& output_)
 	{
-	  trace::entering("data::impl::generic::paste_without_localization");
+	  mln_trace("data::impl::generic::paste_without_localization");
 
 	  internal::paste_without_localization_tests(input_, output_);
 
@@ -113,7 +113,6 @@ namespace mln
 	    po.next();
 	  }
 
-	  trace::exiting("data::impl::generic::paste_without_localization");
 	}
 
 
@@ -144,7 +143,7 @@ namespace mln
       void paste_without_localization_fastest(const Image<I>& input_,
 					      Image<J>& output_)
       {
-	trace::entering("data::impl::paste_without_localization_fastest");
+	mln_trace("data::impl::paste_without_localization_fastest");
 
 	internal::paste_without_localization_tests(input_, output_);
 
@@ -154,7 +153,6 @@ namespace mln
 	typedef mln_value(I) V;
 	memcpy(output.buffer(), input.buffer(), input.nelements() * sizeof(V));
 
-	trace::exiting("data::impl::paste_without_localization_fastest");
       }
 
 
@@ -181,7 +179,7 @@ namespace mln
       void paste_without_localization_lines(const Image<I>& input_,
 					    Image<J>& output_)
       {
-	trace::entering("data::impl::paste_without_localization_fastest");
+	mln_trace("data::impl::paste_without_localization_fastest");
 
 	internal::paste_without_localization_tests(input_, output_);
 
@@ -196,7 +194,6 @@ namespace mln
 	for_all_2(pi, po)
 	  memcpy(&output(po), &input(pi), input.ncols() * sizeof(V));
 
-	trace::exiting("data::impl::paste_without_localization_fastest");
       }
 
 
@@ -222,7 +219,7 @@ namespace mln
       void paste_without_localization_fast(const Image<I>& input_,
 					   Image<J>& output_)
       {
-	trace::entering("data::impl::paste_without_localization_fast");
+	mln_trace("data::impl::paste_without_localization_fast");
 
 	internal::paste_without_localization_tests(input_, output_);
 
@@ -235,7 +232,6 @@ namespace mln
         for_all_2(pi, po)
           po.val() = pi.val();
 
-	trace::exiting("data::impl::paste_without_localization_fast");
       }
 
 
@@ -350,13 +346,12 @@ namespace mln
     inline
     void paste_without_localization(const Image<I>& input, Image<J>& output)
     {
-      trace::entering("data::paste_without_localization");
+      mln_trace("data::paste_without_localization");
 
       internal::paste_without_localization_tests(input, output);
 
       internal::paste_without_localization_dispatch(input, output);
 
-      trace::exiting("data::paste_without_localization");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

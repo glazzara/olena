@@ -74,7 +74,7 @@ namespace mln
 
       raw_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::raw::get_header");
+	mln_trace("mln::io::raw::get_header");
 
 	raw_header header;
 
@@ -126,7 +126,6 @@ namespace mln
 
 	info_file.close();
 
-	trace::exiting("mln::io::raw::get_header");
 	return header;
       }
 

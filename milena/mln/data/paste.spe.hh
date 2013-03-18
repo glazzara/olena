@@ -76,7 +76,7 @@ namespace mln
       template <typename I, typename J>
       void paste_fast(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("data::impl::paste_fast");
+        mln_trace("data::impl::paste_fast");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
@@ -92,13 +92,12 @@ namespace mln
           po.val() = static_cast<mln_value(J)>(pi.val());
           po.next();
         }
-        trace::exiting("data::impl::paste_fast");
       }
 
       template <typename I, typename J>
       void paste_fastest(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("data::impl::paste_fastest");
+        mln_trace("data::impl::paste_fastest");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
@@ -112,14 +111,13 @@ namespace mln
 
         memcpy_(dst, src, opt::nelements(input));
 
-        trace::exiting("data::impl::paste_fastest");
       }
 
       template <typename I, typename J>
       inline
       void paste_lines(const Image<I>& input_, Image<J>& output_)
       {
-	trace::entering("data::impl::paste_lines");
+	mln_trace("data::impl::paste_lines");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
@@ -133,20 +131,18 @@ namespace mln
 	  memcpy_(dst, make::pixel(input, p), p.run_length());
         }
 
-	trace::exiting("data::impl::paste_lines");
       }
 
       template <typename I, typename J>
       void paste_singleton(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("data::impl::paste_singleton");
+        mln_trace("data::impl::paste_singleton");
 
         const I& input  = exact(input_);
 
         data::fill_with_value((output_ | input.domain()).rw(),
                               opt::value(input));
 
-        trace::exiting("data::impl::paste_singleton");
       }
 
     } // end of namespace impl.

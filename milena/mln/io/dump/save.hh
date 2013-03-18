@@ -133,7 +133,7 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::dump::save");
+	mln_trace("mln::io::dump::save");
 
 	const I& ima = exact(ima_);
 
@@ -150,7 +150,6 @@ namespace mln
 
 	file.close();
 
-	trace::exiting("mln::io::dump::save");
       }
 
 

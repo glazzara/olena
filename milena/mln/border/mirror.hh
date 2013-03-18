@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -83,7 +83,7 @@ namespace mln
       inline
       void mirror_(const box1d&, const I& ima_)
       {
-	trace::entering("border::impl::mirror_");
+	mln_trace("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
 	def::coord
@@ -121,14 +121,13 @@ namespace mln
 	       ++i)
             opt::element(ima, border + nbinds + i) = ima(point1d(j));
 	}
-	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
       void mirror_(const box2d&, const I& ima_)
       {
-	trace::entering("border::impl::mirror_");
+	mln_trace("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
 	unsigned border = ima.border ();
@@ -192,15 +191,14 @@ namespace mln
             opt::element(ima, s + i + (j * real_nbcols)) =
               opt::element(ima, s + i - ((j - 1)* real_nbcols));
 
-	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
       void mirror_(const box3d&, const I& ima)
       {
-	trace::warning("border::mirror for 3D image is not implemented,"
-		       " so image borders have not been mirrored!");
+	debug::trace::warning("border::mirror for 3D image is not implemented,"
+			      " so image borders have not been mirrored!");
 	(void) ima;
 	// FIXME write it!
       }
@@ -213,7 +211,7 @@ namespace mln
     inline
     void mirror(const Image<I>& ima_)
     {
-      trace::entering("border::mirror");
+      mln_trace("border::mirror");
 
       const I& ima = exact(ima_);
 
@@ -227,7 +225,6 @@ namespace mln
 
       impl::mirror_(ima.bbox(), ima);
 
-      trace::exiting("border::mirror");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

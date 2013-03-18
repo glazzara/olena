@@ -65,7 +65,7 @@ namespace mln
       image2d<value::int_u8>
       subsample(image2d<bool>& input, unsigned n)
       {
-	trace::entering("world::binary_2d::subsample");
+	mln_trace("world::binary_2d::subsample");
 
 	mln_precondition(input.is_valid());
 
@@ -76,7 +76,6 @@ namespace mln
 	  image2d<value::int_u8>
 	    output = data::convert(int_u8(), input);
 
-	  trace::exiting("world::binary_2d::subsample");
 	  return output;
 	}
 
@@ -117,7 +116,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("world::binary_2d::subsample");
 	return output;
       }
 

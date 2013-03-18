@@ -121,7 +121,7 @@ namespace mln
 	  void
 	  take_n_times(Image<I>& input_, const Image<J>& n_times_, const Image<K>& arg_)
 	  {
-	    trace::entering("accu::impl::image::generic::take_n_times");
+	    mln_trace("accu::impl::image::generic::take_n_times");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 	    mlc_converts_to(mln_value(J), unsigned)::check();
@@ -137,7 +137,6 @@ namespace mln
 	    for_all(p)
 	      input(p).take_n_times(n_times(p), arg(p));
 
-	    trace::exiting("accu::impl::image::generic::take_n_times");
 	  }
 
 	  template <typename I, typename J>
@@ -145,7 +144,7 @@ namespace mln
 	  void
 	  take_n_times(Image<I>& input_, const Image<J>& n_times_, const mln_deduce(I, value, argument)& arg)
 	  {
-	    trace::entering("accu::impl::image::generic::take_n_times");
+	    mln_trace("accu::impl::image::generic::take_n_times");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 	    mlc_converts_to(mln_value(J), unsigned)::check();
@@ -159,7 +158,6 @@ namespace mln
 	    for_all(p)
 	      input(p).take_n_times(n_times(p), arg);
 
-	    trace::exiting("accu::impl::image::generic::take_n_times");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -172,7 +170,7 @@ namespace mln
 	void
 	take_n_times_fastest(Image<I>& input_, const Image<J>& n_times_, const mln_deduce(I, value, argument)& arg)
 	{
-	  trace::entering("accu::impl::image::take_n_times_fastest");
+	  mln_trace("accu::impl::image::take_n_times_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  mlc_converts_to(mln_value(J), unsigned)::check();
@@ -191,7 +189,6 @@ namespace mln
 	  for_all_2(p_in, p_ntm)
 	    p_in.val().take_n_times( p_ntm.val(), arg );
 
-	  trace::exiting("accu::impl::image::take_n_times_fastest");
 	}
 
 	template <typename I, typename J, typename K>
@@ -199,7 +196,7 @@ namespace mln
 	void
 	take_n_times_fastest(Image<I>& input_, const Image<J>& n_times_, const Image<K>& arg_)
 	{
-	  trace::entering("accu::impl::image::take_n_times_fastest");
+	  mln_trace("accu::impl::image::take_n_times_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  mlc_converts_to(mln_value(J), unsigned)::check();
@@ -224,7 +221,6 @@ namespace mln
 	  for_all_3(p_in, p_ntm, p_arg)
 	    p_in.val().take_n_times( p_ntm.val(), p_arg.val() );
 
-	  trace::exiting("accu::impl::image::take_n_times_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -319,7 +315,7 @@ namespace mln
       void
       take_n_times(Image<I>& input, const Image<J>& n_times, const mln_deduce(I, value, argument)& arg)
       {
-	trace::entering("accu::image::take_n_times");
+	mln_trace("accu::image::take_n_times");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 	mlc_converts_to(mln_value(J), unsigned)::check();
@@ -327,7 +323,6 @@ namespace mln
 	internal::take_n_times_tests(input, n_times);
 	internal::take_n_times_dispatch(input, n_times, arg);
 
-	trace::exiting("accu::image::take_n_times");
       }
 
       template <typename I, typename J, typename K>
@@ -335,7 +330,7 @@ namespace mln
       void
       take_n_times(Image<I>& input, const Image<J>& n_times, const Image<K>& arg)
       {
-	trace::entering("accu::image::take_n_times");
+	mln_trace("accu::image::take_n_times");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 	mlc_converts_to(mln_value(J), unsigned)::check();
@@ -344,7 +339,6 @@ namespace mln
 	internal::take_n_times_tests(input, n_times, arg);
 	internal::take_n_times_dispatch(input, n_times, arg);
 
-	trace::exiting("accu::image::take_n_times");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

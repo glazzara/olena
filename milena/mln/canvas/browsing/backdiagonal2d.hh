@@ -114,7 +114,7 @@ namespace mln
       void
       backdiagonal2d_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::backdiagonal2d");
+	mln_trace("canvas::browsing::backdiagonal2d");
 
 	typedef typename F::I I;
 	typedef mln_deduce(I, psite, delta) dpsite;
@@ -172,7 +172,6 @@ namespace mln
 	}
 
 	f.final();
-	trace::exiting("canvas::browsing::backdiagonal2d");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

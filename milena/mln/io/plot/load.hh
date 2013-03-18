@@ -68,7 +68,7 @@ namespace mln
       inline
       void load(util::array<I>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::plot::load");
+	mln_trace("mln::io::plot::load");
 
 	arr.clear();
 	std::ifstream file_in(filename.c_str());
@@ -96,7 +96,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("mln::io::plot::load");
       }
 
 

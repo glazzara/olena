@@ -71,7 +71,7 @@ namespace mln
 	erosion_by_distance_thresholding_2d(const Image<I>& input_,
 					     const Window< win::disk2d >& win_)
 	{
-	  trace::entering("morpho::approx::impl::erosion_by_distance_thresholding_2d");
+	  mln_trace("morpho::approx::impl::erosion_by_distance_thresholding_2d");
 
 	  const I& input         = exact(input_);
 	  const win::disk2d& win = exact(win_);
@@ -98,7 +98,6 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = duplicate((pw::value(dmap) > pw::cst(radius)) | input.domain());
 
-	  trace::exiting("morpho::approx::impl::erosion_by_distance_thresholding_2d");
 	  return output;
 	}
 
@@ -109,7 +108,7 @@ namespace mln
 	erosion_by_distance_thresholding_3d(const Image<I>& input_,
 					     const Window< win::sphere3d >& win_)
 	{
-	  trace::entering("morpho::approx::impl::erosion_by_distance_thresholding_3d");
+	  mln_trace("morpho::approx::impl::erosion_by_distance_thresholding_3d");
 
 	  const I& input           = exact(input_);
 	  const win::sphere3d& win = exact(win_);
@@ -141,7 +140,6 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = duplicate((pw::value(dmap) > pw::cst(radius)) | input.domain());
 
-	  trace::exiting("morpho::approx::impl::erosion_by_distance_thresholding_3d");
 	  return output;
 	}
 
@@ -193,7 +191,7 @@ namespace mln
       mln_concrete(I)
       erosion(const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::approx::erosion");
+	mln_trace("morpho::approx::erosion");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(win).is_valid());
@@ -204,7 +202,6 @@ namespace mln
 	if (exact(win).is_centered())
 	  mln_postcondition(output <= input);
 
-	trace::exiting("morpho::approx::erosion");
 	return output;
       }
 

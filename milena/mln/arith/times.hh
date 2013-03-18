@@ -192,26 +192,24 @@ namespace mln
 	inline
 	void times_(const L& lhs, const R& rhs, O& output)
 	{
-	  trace::entering("arith::impl::generic::times_");
+	  mln_trace("arith::impl::generic::times_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	    output(p) = lhs(p) * rhs(p);
 
-	  trace::exiting("arith::impl::generic::times_");
 	}
 
 	template <typename L, typename R>
 	inline
 	void times_inplace_(L& lhs, const R& rhs)
 	{
-	  trace::entering("arith::impl::generic::times_inplace_");
+	  mln_trace("arith::impl::generic::times_inplace_");
 
 	  mln_piter(R) p(rhs.domain());
 	  for_all(p)
 	  lhs(p) *= rhs(p);
 
-	  trace::exiting("arith::impl::generic::times_inplace_");
 	}
 
       } // end of namespace mln::arith::impl::generic
@@ -225,7 +223,7 @@ namespace mln
     inline
     void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
-      trace::entering("arith::times");
+      mln_trace("arith::times");
 
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
@@ -233,46 +231,42 @@ namespace mln
 		  mln_trait_image_speed(R)(), exact(rhs),
 		  mln_trait_image_speed(O)(), exact(output));
 
-      trace::exiting("arith::times");
     }
 
     template <typename I, typename V, typename O>
     inline
     void times_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
-      trace::entering("arith::times_cst");
+      mln_trace("arith::times_cst");
 
       mln_precondition(exact(output).domain() == exact(input).domain());
       times(input, pw::cst(val) | exact(input).domain(), output);
       // Calls the previous version.
 
-      trace::exiting("arith::times_cst");
     }
 
     template <typename L, typename R>
     inline
     void times_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("arith::times_inplace");
+      mln_trace("arith::times_inplace");
 
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
       impl::times_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			   mln_trait_image_speed(R)(), exact(rhs));
 
-      trace::exiting("arith::times_inplace");
     }
 
     template <typename I, typename V>
     inline
     void times_cst_inplace(Image<I>& input, const V& val)
     {
-      trace::entering("arith::times_cst_inplace");
+      mln_trace("arith::times_cst_inplace");
 
       mln_precondition(exact(input).is_valid());
       times_inplace(input, pw::cst(val) | exact(input).domain());
       // Calls the previous version.
 
-      trace::exiting("arith::times_cst_inplace");
     }
 
   } // end of namespace mln::arith

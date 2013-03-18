@@ -62,14 +62,13 @@ namespace mln
       area(const Image<I>& input, const Neighborhood<N>& nbh,
 	   unsigned lambda)
       {
-	trace::entering("morpho::closing::area");
+	mln_trace("morpho::closing::area");
 
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = closing::algebraic(input, nbh, attribute::card<I>(), lambda);
 
-	trace::exiting("morpho::closing::area");
 	return output;
       }
 

@@ -98,7 +98,7 @@ namespace mln
 					const Neighborhood<N>& nbh,
 					D max)
     {
-      trace::entering("transform::distance_closest_point_geodesic");
+      mln_trace("transform::distance_closest_point_geodesic");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -107,7 +107,6 @@ namespace mln
       mln_ch_value(I,D) dmap = mln::canvas::distance_geodesic(input, nbh,
 							      max, f);
 
-      trace::exiting("transform::distance_and_closest_point_geodesic");
       return make::couple(dmap, f.cp_ima);
     }
 
@@ -119,7 +118,7 @@ namespace mln
 					const Neighborhood<N>& nbh,
 					D max)
     {
-      trace::entering("transform::distance_and_closest_point_geodesic");
+      mln_trace("transform::distance_and_closest_point_geodesic");
 
       mln_precondition(closest_point_domain.is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -134,7 +133,6 @@ namespace mln
 
       mln_ch_value(I,D) dmap = mln::canvas::distance_geodesic(ima, nbh, max, f);
 
-      trace::exiting("transform::distance_and_closest_point_geodesic");
       return make::couple(dmap, f.cp_ima);
     }
 

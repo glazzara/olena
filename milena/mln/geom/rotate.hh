@@ -137,7 +137,7 @@ namespace mln
     rotate(const Image<I>& input_, double angle,
 	   const Ext& extension_, const Site_Set<S>& output_domain_)
     {
-      trace::entering("geom::rotate");
+      mln_trace("geom::rotate");
 
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
@@ -188,7 +188,6 @@ namespace mln
 
       data::paste(tr, output);
 
-      trace::exiting("geom::rotate");
       return output;
     }
 
@@ -217,7 +216,7 @@ namespace mln
     B
     rotate(const Box<B>& box_, double angle, const mln_site(B)& ref)
     {
-      trace::entering("geom::rotate");
+      mln_trace("geom::rotate");
 
       const B& box = exact(box_);
 
@@ -252,7 +251,6 @@ namespace mln
 
       B output = accu.to_result();
 
-      trace::exiting("geom::rotate");
       return output;
     }
 

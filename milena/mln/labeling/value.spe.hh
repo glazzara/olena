@@ -129,7 +129,7 @@ namespace mln
 		    const Neighborhood<N>& nbh,
 		    L& nlabels)
       {
-	trace::entering("labeling::impl::value_fastest");
+	mln_trace("labeling::impl::value_fastest");
 
 	// FIXME: HERE
 
@@ -142,7 +142,6 @@ namespace mln
 	nlabels = run.nlabels;
 	// FIXME: Handle run.status
 
-	trace::exiting("labeling::impl::value_fastest");
 	return run.output;
       }
 

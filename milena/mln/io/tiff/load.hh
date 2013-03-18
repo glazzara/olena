@@ -325,7 +325,7 @@ namespace mln
       inline
       void load(Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::tiff::load");
+	mln_trace("mln::io::tiff::load");
 
 	I& ima = exact(ima_);
 
@@ -344,7 +344,6 @@ namespace mln
 	mln_postcondition(ima.is_valid());
 
 	(void) TIFFClose(file);
-	trace::exiting("mln::io::tiff::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

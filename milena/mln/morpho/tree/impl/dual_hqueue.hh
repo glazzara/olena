@@ -277,7 +277,7 @@ namespace mln
 		    const Image<I>& m_,
 		    const Neighborhood<N>& neibh_)
 	{
-	  trace::entering("mln::morpho::tree::impl::dual_hqueue");
+	  mln_trace("mln::morpho::tree::impl::dual_hqueue");
 
 	  const I& f = exact(f_);
 	  const I& m = exact(m_);
@@ -387,7 +387,6 @@ namespace mln
 
 	  data<I, S> tree(fext, parent, s);
 
-	  trace::exiting("mln::morpho::tree::impl::dual_hqueue");
 
 	  return tree;
 	}

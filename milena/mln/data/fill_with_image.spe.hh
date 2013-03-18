@@ -76,7 +76,7 @@ namespace mln
       template <typename I, typename J>
       void fill_with_image_fastest(Image<I>& ima_, const Image<J>& data_)
       {
-        trace::entering("data::impl::fill_with_image_fastest");
+        mln_trace("data::impl::fill_with_image_fastest");
 
         I& ima = exact(ima_);
         const J& data      = exact(data_);
@@ -90,13 +90,12 @@ namespace mln
 
         memcpy_(dst, src, opt::nelements(ima));
 
-        trace::exiting("data::impl::fill_with_image_fastest");
       }
 
       template <typename I, typename J>
       void fill_with_image_fast(Image<I>& ima_, const Image<J>& data_)
       {
-        trace::entering("data::impl::fill_with_image_fast");
+        mln_trace("data::impl::fill_with_image_fast");
 
         I& ima               = exact(ima_);
         const J& data        = exact(data_);
@@ -112,14 +111,13 @@ namespace mln
           pi.val() = d.val();
           d.next();
         }
-        trace::exiting("data::impl::fill_with_image_fast");
       }
 
       template <typename I, typename J>
       inline
       void fill_with_image_lines(Image<I>& ima_, const Image<J>& data_)
       {
-	trace::entering("data::impl::fill_with_image_lines");
+	mln_trace("data::impl::fill_with_image_lines");
 
         I& ima        = exact(ima_);
         const J& data = exact(data_);
@@ -133,21 +131,19 @@ namespace mln
 	  memcpy_(dst, make::pixel(data, p), p.run_length());
         }
 
-	trace::exiting("data::impl::fill_with_image_lines");
       }
 
       template <typename I, typename J>
       void fill_with_image_singleton(Image<I>& ima_,
                                      const Image<J>& data_)
       {
-        trace::entering("data::impl::fill_with_image_singleton");
+        mln_trace("data::impl::fill_with_image_singleton");
 
         const J& data  = exact(data_);
         data::internal::fill_with_image_tests(ima_, data);
 
         data::fill_with_value(ima_, opt::value(data));
 
-        trace::exiting("data::impl::fill_with_image_singleton");
       }
 
     } // end of namespace mln::data::impl

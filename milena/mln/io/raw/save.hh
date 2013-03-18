@@ -137,7 +137,7 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::raw::save");
+	mln_trace("mln::io::raw::save");
 
 	mlc_bool(mln_site_(I)::dim == 2 ||  mln_site_(I)::dim == 3)::check();
 
@@ -165,7 +165,6 @@ namespace mln
 	info_file.close();
 	file.close();
 
-	trace::exiting("mln::io::raw::save");
       }
 
 

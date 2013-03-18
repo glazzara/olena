@@ -100,10 +100,9 @@ namespace mln
       inline
       void save(const Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::pfm::save");
+	mln_trace("mln::io::pfm::save");
 	mln::metal::equal<mln_value(I), float >::check();
 	impl::save_(exact(ima), filename);
-	trace::exiting("mln::io::pfm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

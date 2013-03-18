@@ -200,7 +200,7 @@ namespace mln
       void
       load(Image<I>& ima_, const char* filename)
       {
-	trace::entering("mln::io::fld::load");
+	mln_trace("mln::io::fld::load");
 
 	std::ifstream file(filename);
 	if (! file)
@@ -234,7 +234,6 @@ namespace mln
 	internal::load_raw(file, ima);
 
 	file.close();
-	trace::exiting("mln::io::fld::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

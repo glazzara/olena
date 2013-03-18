@@ -61,7 +61,7 @@ namespace mln
       mln_ch_value(I, mln_psite(I))
       max(const Image<I>& f_, const Neighborhood<N>& nbh_)
       {
-	trace::entering("morpho::tree::max");
+	mln_trace("morpho::tree::max");
 
 	const I& f   = exact(f_);
 	const N& nbh = exact(nbh_);
@@ -73,7 +73,6 @@ namespace mln
 	p_array<mln_psite(I)> s = mln::data::sort_psites_increasing(f);
 	mln_ch_value(I, mln_psite(I)) output = compute_parent(f, nbh, s);
 
-	trace::exiting("morpho::tree::max");
 	return output;
       }
 

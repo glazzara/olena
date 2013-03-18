@@ -71,13 +71,12 @@ namespace mln
       inline
       void apply_(trait::image::speed::fastest, I& input, const F& f)
       {
-	trace::entering("data::impl::apply_");
+	mln_trace("data::impl::apply_");
 
 	mln_pixter(I) pxl(input);
 	for_all(pxl)
 	  pxl.val() = f(pxl.val());
 
-	trace::exiting("data::impl::apply_");
       }
 
 

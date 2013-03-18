@@ -55,12 +55,11 @@ namespace mln
     inline
     unsigned ninds(const Image<I>& ima)
     {
-      trace::entering("mln::geom::ninds");
+      mln_trace("mln::geom::ninds");
 
       mln_precondition(exact(ima).is_valid());
       unsigned ninds = geom::max_ind(ima) - geom::min_ind(ima) + 1;
 
-      trace::exiting("mln::geom::ninds");
       return ninds;
     }
 

@@ -77,14 +77,13 @@ namespace mln
     inline
     mln_concrete(I) not_(const Image<I>& input)
     {
-      trace::entering("logical::not_");
+      mln_trace("logical::not_");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
       mln_concrete(I) output = data::transform(input, f);
 
-      trace::exiting("logical::not_");
       return output;
     }
 
@@ -92,14 +91,13 @@ namespace mln
     inline
     void not_inplace(Image<I>& input)
     {
-      trace::entering("logical::not_inplace");
+      mln_trace("logical::not_inplace");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
       data::transform_inplace(input, f);
 
-      trace::exiting("logical::not_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

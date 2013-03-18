@@ -104,7 +104,7 @@ namespace mln
       influence_zone_geodesic_fastest(const Image<I>& input_,
 				      const Neighborhood<N>& nbh_)
       {
-	trace::entering("transform::impl::influence_zone_geodesic_fastest");
+	mln_trace("transform::impl::influence_zone_geodesic_fastest");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -166,7 +166,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("transform::impl::influence_zone_geodesic_fastest");
 	return output;
       }
 
@@ -220,14 +219,13 @@ namespace mln
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh)
     {
-      trace::entering("transform::influence_zone_geodesic");
+      mln_trace("transform::influence_zone_geodesic");
 
       internal::influence_zone_geodesic_tests(input, nbh);
 
       mln_concrete(I)
 	output = internal::influence_zone_geodesic_dispatch(input, nbh);
 
-      trace::exiting("transform::influence_zone_geodesic");
       return output;
     }
 

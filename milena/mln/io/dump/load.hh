@@ -174,7 +174,7 @@ namespace mln
       template <typename I>
       void load(Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::dump::load");
+	mln_trace("mln::io::dump::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -190,7 +190,6 @@ namespace mln
 
 	mln_postcondition(exact(ima).is_valid());
 
-	trace::exiting("mln::io::dump::load");
       }
 
 

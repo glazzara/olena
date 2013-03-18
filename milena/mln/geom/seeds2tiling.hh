@@ -80,7 +80,7 @@ namespace mln
       seeds2tiling (const Image<I>& ima_,
 		    const Neighborhood<N>& nbh_)
       {
-	trace::entering("geom::impl::seed2tiling");
+	mln_trace("geom::impl::seed2tiling");
 
 	mln_precondition(exact(ima_).is_valid());
 	mln_precondition(exact(nbh_).is_valid());
@@ -124,7 +124,6 @@ namespace mln
 	    }
 	}
 
-	trace::exiting("geom::impl::seed2tiling");
 	return out;
       }
 
@@ -138,14 +137,13 @@ namespace mln
     inline
     mln_concrete(I) seeds2tiling(const Image<I>& ima_, const Neighborhood<N>& nbh)
     {
-      trace::entering("geom::seed2tiling");
+      mln_trace("geom::seed2tiling");
 
       mln_precondition(exact(ima_).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
       mln_concrete(I) output = impl::seeds2tiling(ima_, nbh);
 
-      trace::exiting("geom::seed2tiling");
       return output;
     }
 

@@ -97,7 +97,7 @@ namespace mln
 	convolve(const Image<I>& input_,
 		 const Weighted_Window<W>& w_win_)
 	{
-	  trace::entering("linear::impl::generic::convolve");
+	  mln_trace("linear::impl::generic::convolve");
 
 	  const I& input = exact(input_);
 	  const W& w_win = exact(w_win_);
@@ -122,7 +122,6 @@ namespace mln
 	    output(p) = a.to_result();
 	  }
 
-	  trace::exiting("linear::impl::generic::convolve");
 	  return output;
 	}
 
@@ -134,7 +133,7 @@ namespace mln
       convolve_fastest(const Image<I>& input_,
 		       const Weighted_Window<W>& w_win_)
       {
-	trace::entering("linear::impl::convolve_fastest");
+	mln_trace("linear::impl::convolve_fastest");
 
 	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);
@@ -161,7 +160,6 @@ namespace mln
  	    p_out.val() = a.to_result();
 	  }
 
-	trace::exiting("linear::impl::convolve_fastest");
 	return output;
       }
 
@@ -209,7 +207,7 @@ namespace mln
     mln_ch_convolve(I, W)
     convolve(const Image<I>& input, const Weighted_Window<W>& w_win)
     {
-      trace::entering("linear::convolve");
+      mln_trace("linear::convolve");
 
       internal::convolve_tests(input, w_win);
 
@@ -217,7 +215,6 @@ namespace mln
       output = internal::convolve_dispatch(mln_trait_image_speed(I)(),
 					   input, w_win);
 
-      trace::exiting("linear::convolve");
       return output;
     }
 

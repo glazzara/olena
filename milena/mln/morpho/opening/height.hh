@@ -62,13 +62,12 @@ namespace mln
       height(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::opening::height");
+	mln_trace("morpho::opening::height");
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = opening::leveling(input, nbh, attribute::height<I>(), lambda);
 
-	trace::exiting("morpho::opening::height");
 	return output;
       }
 

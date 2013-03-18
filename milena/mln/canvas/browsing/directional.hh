@@ -118,7 +118,7 @@ namespace mln
       void
       directional_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::directional");
+	mln_trace("canvas::browsing::directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -159,7 +159,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

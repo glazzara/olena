@@ -105,7 +105,7 @@ namespace mln
       void
       snake_generic_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::snake_generic");
+	mln_trace("canvas::browsing::snake_generic");
 	mln_precondition(f.input.is_valid());
 
 	// p init
@@ -158,7 +158,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("canvas::browsing::snake_generic");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -116,12 +116,11 @@ namespace mln
     mln_concrete(I)
       min(const Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::min");
+      mln_trace("morpho::min");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = impl::min_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::min");
       return output;
     }
 
@@ -129,12 +128,11 @@ namespace mln
     inline
     void min_inplace(Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::min_inplace");
+      mln_trace("morpho::min_inplace");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       impl::min_inplace_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::min_inplace_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

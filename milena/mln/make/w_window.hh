@@ -62,7 +62,7 @@ namespace mln
     mln::w_window<mln_dpsite(W), mln_result(F)>
     w_window(const Window<W>& win_, const Function_v2v<F>& wei_)
     {
-      trace::entering("make::w_window");
+      mln_trace("make::w_window");
 
       mln_is_simple_window(W)::check();
 
@@ -79,7 +79,6 @@ namespace mln
       for_all(q)
 	w_win.insert(wei(q), q - O);
 
-      trace::exiting("make::w_window");
       return w_win;
     }
 

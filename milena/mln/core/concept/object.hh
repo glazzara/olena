@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -38,7 +38,7 @@
 # include <mln/core/category.hh>
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 
 // metal
 # include <mln/metal/abort.hh>

@@ -84,7 +84,7 @@ namespace mln
       mln_concrete(I)
       top_hat_white(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::top_hat_white");
+	mln_trace("morpho::elementary::top_hat_white");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -94,7 +94,6 @@ namespace mln
 
 	mln_postcondition(test::positive(output));
 
-	trace::exiting("morpho::elementary::top_hat_white");
 	return output;
       }
 
@@ -104,7 +103,7 @@ namespace mln
       mln_concrete(I)
       top_hat_black(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::top_hat_black");
+	mln_trace("morpho::elementary::top_hat_black");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -114,7 +113,6 @@ namespace mln
 
 	mln_postcondition(test::positive(output));
 
-	trace::exiting("morpho::elementary::top_hat_black");
 	return output;
       }
 
@@ -124,7 +122,7 @@ namespace mln
       mln_concrete(I)
       top_hat_self_complementary(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::top_hat_self_complementary");
+	mln_trace("morpho::elementary::top_hat_self_complementary");
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
@@ -134,7 +132,6 @@ namespace mln
 	mln_postcondition(test::positive(output));
 	// mln_postcondition(output == white + black);
 
-	trace::exiting("morpho::elementary::top_hat_self_complementary");
 	return output;
       }
 

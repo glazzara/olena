@@ -31,7 +31,7 @@ int main()
 {
   using namespace mln;
 
-  // trace::quiet = false;
+  // debug::trace::quiet = false;
   image2d<int> ima(make::box2d(-1,-4, 2,6));
   mln_assertion(geom::nsites(ima) == ((2 - (-1) + 1) * (6 - (-4) + 1)));
 }

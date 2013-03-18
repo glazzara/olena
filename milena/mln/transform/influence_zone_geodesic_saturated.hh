@@ -80,7 +80,7 @@ namespace mln
 				      const D& max,
 				      const mln_value(I)& background_value)
     {
-      trace::entering("transform::influence_zone_geodesic_saturated");
+      mln_trace("transform::influence_zone_geodesic_saturated");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -88,7 +88,6 @@ namespace mln
       internal::influence_zone_functor<I> f(background_value);
       (void) mln::canvas::distance_geodesic(input, nbh, max, f);
 
-      trace::exiting("transform::influence_zone_geodesic_saturated");
       return f.output;
     }
 

@@ -65,7 +65,7 @@ namespace mln
       void
       save(const image2d<char>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::txt::save");
+	mln_trace("mln::io::txt::save");
 
 	mln_precondition(ima.is_valid());
 	std::ofstream ostr(filename.c_str());
@@ -83,7 +83,6 @@ namespace mln
 	}
 	ostr.close();
 
-	trace::exiting("mln::io::txt::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

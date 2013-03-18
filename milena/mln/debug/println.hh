@@ -91,12 +91,11 @@ namespace mln
     void
     println(const Image<I>& input)
     {
-      trace::entering("debug::println");
+      mln_trace("debug::println");
 
       if (!quiet)
         impl::println(geom::bbox(exact(input).domain()),
 		      exact(input));
-      trace::exiting("debug::println");
     }
 
     template <typename I>

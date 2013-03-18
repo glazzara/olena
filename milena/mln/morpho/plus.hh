@@ -88,13 +88,12 @@ namespace mln
     inline
     mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::plus");
+      mln_trace("morpho::plus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = impl::plus_(mln_trait_image_kind(I)(),
 					   exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::plus");
       return output;
     }
 

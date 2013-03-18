@@ -72,7 +72,7 @@ namespace mln
       inline
       dump_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::dump::get_header");
+	mln_trace("mln::io::dump::get_header");
 
 	dump_header header;
 
@@ -116,7 +116,6 @@ namespace mln
 	file.getline(value_type, 255);
 	header.value_type = value_type;
 
-	trace::exiting("mln::io::dump::get_header");
 	return header;
       }
 

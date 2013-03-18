@@ -469,7 +469,7 @@ namespace mln
 			    unsigned dir, double sigma,
 			    const mln_value(I)& bdr)
     {
-      trace::entering("linear::gaussian_directional_2d");
+      mln_trace("linear::gaussian_directional_2d");
 
       typedef mln_site(I) P;
       mlc_bool(P::dim == 2)::check();
@@ -519,7 +519,6 @@ namespace mln
 						bdr);
 	}
 
-      trace::exiting("linear::gaussian_directional_2d");
       return output;
     }
 

@@ -148,7 +148,7 @@ namespace mln
         void
         transform_inplace(Image<I>& ima_, const Function_v2v<F>& f_)
 	{
-          trace::entering("data::impl::generic::transform_inplace");
+          mln_trace("data::impl::generic::transform_inplace");
 
           mlc_is(mln_trait_image_pw_io(I),
                  trait::image::pw_io::read_write)::check();
@@ -162,7 +162,6 @@ namespace mln
 	  for_all(p)
 	    ima(p) = f(ima(p));
 
-	  trace::exiting("data::impl::generic::transform_inplace");
 	}
 
 	/// Generic implementation of transform_inplace.
@@ -176,7 +175,7 @@ namespace mln
 	transform_inplace(Image<I1>& ima_, const Image<I2>& aux_,
 			  const Function_vv2v<F>& f_)
 	{
-          trace::entering("data::impl::generic::transform_inplace");
+          mln_trace("data::impl::generic::transform_inplace");
 
           mlc_is(mln_trait_image_pw_io(I1),
                  trait::image::pw_io::read_write)::check();
@@ -191,7 +190,6 @@ namespace mln
 	  for_all(p)
 	    ima(p) = f(ima(p), aux(p));
 
-	  trace::exiting("data::impl::generic::transform_inplace");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -203,7 +201,7 @@ namespace mln
       transform_inplace_lowq(Image<I>& input_,
                              const Function_v2v<F>& f_)
       {
-	trace::entering("data::impl::transform_inplace_lowq");
+	mln_trace("data::impl::transform_inplace_lowq");
 
         mlc_is(mln_trait_image_pw_io(I),
                trait::image::pw_io::read_write)::check();
@@ -220,7 +218,6 @@ namespace mln
 	for_all(p)
 	  input(p) = lut(input(p));
 
-	trace::exiting("data::impl::transform_inplace_lowq");
       }
 
       template <typename I, typename F>
@@ -228,7 +225,7 @@ namespace mln
       transform_inplace_taken(Image<I>& input_,
                               const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_inplace_taken");
+        mln_trace("data::impl::transform_inplace_taken");
 
         mlc_is(mln_trait_image_pw_io(I),
                trait::image::pw_io::read_write)::check();
@@ -245,7 +242,6 @@ namespace mln
 	for_all(p)
 	  input(p) = lut(input(p));
 
-	trace::exiting("data::impl::transform_inplace_taken");
       }
 
 
@@ -254,7 +250,7 @@ namespace mln
       transform_inplace_singleton(Image<I>& input_,
                                   const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_inplace_singleton");
+        mln_trace("data::impl::transform_inplace_singleton");
 
 	I& input  = exact(input_);
 	const F& f      = exact(f_);
@@ -263,14 +259,13 @@ namespace mln
 
         opt::value(input) = f(opt::value(input));
 
-	trace::exiting("data::impl::transform_inplace_singleton");
       }
 
       template <typename I, typename F>
       void
       transform_inplace_fastest(Image<I>& ima_, const Function_v2v<F>& f_)
       {
-	trace::entering("data::impl::transform_inplace_fastest");
+	mln_trace("data::impl::transform_inplace_fastest");
 
 	I& ima = exact(ima_);
 	const F& f = exact(f_);
@@ -281,7 +276,6 @@ namespace mln
 	for_all(p)
 	  p.val() = f(p.val());
 
-	trace::exiting("data::impl::transform_inplace_fastest");
       }
 
 
@@ -290,7 +284,7 @@ namespace mln
       transform_inplace_fastest_lowq(Image<I>& input_,
                                      const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_inplace_fastest_lowq");
+        mln_trace("data::impl::transform_inplace_fastest_lowq");
 
         I& input = exact(input_);
 	const F& f     = exact(f_);
@@ -304,7 +298,6 @@ namespace mln
         for_all(pi)
           pi.val() = lut(pi.val());
 
-	trace::exiting("data::impl::transform_inplace_fastest_lowq");
       }
 
 
@@ -313,7 +306,7 @@ namespace mln
       transform_inplace_fastest(Image<I1>& ima_, const Image<I2>& aux_,
 				const Function_vv2v<F>& f_)
       {
-	trace::entering("data::impl::transform_inplace_fastest");
+	mln_trace("data::impl::transform_inplace_fastest");
 
 	mlc_is(mln_trait_image_pw_io(I1),
 	       trait::image::pw_io::read_write)::check();
@@ -329,7 +322,6 @@ namespace mln
 	for_all_2(pi, pa)
 	  pi.val() = f(pi.val(), pa.val());
 
-	trace::exiting("data::impl::transform_inplace_fastest");
       }
 
 
@@ -489,12 +481,11 @@ namespace mln
     void
     transform_inplace(Image<I>& ima, const Function_v2v<F>& f)
     {
-      trace::entering("data::transform_inplace");
+      mln_trace("data::transform_inplace");
 
       internal::transform_inplace_tests(ima, f);
       internal::transform_inplace_dispatch(ima, f);
 
-      trace::exiting("data::transform_inplace");
     }
 
     template <typename I1, typename I2, typename F>
@@ -502,12 +493,11 @@ namespace mln
     transform_inplace(Image<I1>& ima, const Image<I2>& aux,
 		      const Function_vv2v<F>& f)
     {
-      trace::entering("data::transform_inplace");
+      mln_trace("data::transform_inplace");
 
       internal::transform_inplace_tests(ima, aux, f);
       internal::transform_inplace_dispatch(ima, aux, f);
 
-      trace::exiting("data::transform_inplace");
     }
 
 

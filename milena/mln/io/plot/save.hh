@@ -83,14 +83,13 @@ namespace mln
       inline
       void save(const image1d<T>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::plot::save");
+	mln_trace("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
 	unsigned end = ima.bbox().pmax().ind();
 	for (unsigned i = ima.bbox().pmin().ind(); i <= end; ++i)
 	  file_out << i << " " << ima.at_(i) << std::endl;
 
-	trace::exiting("mln::io::plot::save");
       }
 
       template <typename T>
@@ -98,26 +97,24 @@ namespace mln
       void save(const util::array<T>& arr, const std::string& filename,
 		int start_value)
       {
-	trace::entering("mln::io::plot::save");
+	mln_trace("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
 	for (unsigned i = 0; i < arr.nelements(); ++i)
 	  file_out << start_value + i << " " << arr[i] << std::endl;
 
-	trace::exiting("mln::io::plot::save");
       }
 
       template <typename T>
       inline
       void save(const histo::array<T>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::plot::save");
+	mln_trace("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
 	for (unsigned i = 0; i < arr.nvalues(); ++i)
 	  file_out << i << " " << arr[i] << std::endl;
 
-	trace::exiting("mln::io::plot::save");
       }
 
 

@@ -81,7 +81,7 @@ namespace mln
 	   unsigned n_horizontal,
 	   const mln_value(I)& bg)
     {
-      trace::entering("debug::mosaic");
+      mln_trace("debug::mosaic");
 
       mlc_is_a(I, Image)::check();
       mlc_equal(mln_domain(I), box2d)::check();
@@ -129,7 +129,6 @@ namespace mln
 	}
       }
 
-      trace::exiting("debug::mosaic");
       return output;
     }
 

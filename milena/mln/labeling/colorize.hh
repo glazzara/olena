@@ -144,7 +144,7 @@ namespace mln
 
 	if (ntries == nelements)
 	{
-	  trace::warning("labeling::colorize - Can't find a new unique color. Returning black.");
+	  debug::trace::warning("labeling::colorize - Can't find a new unique color. Returning black.");
 	  return literal::black;
 	}
 
@@ -191,7 +191,7 @@ namespace mln
 	     const Image<L>& input,
 	     const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::colorize");
+      mln_trace("labeling::colorize");
       mln_precondition(exact(input).is_valid());
       // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
@@ -218,7 +218,6 @@ namespace mln
       mln_assertion(f.size() >= (label_count));
       mln_ch_value(L, V) output = data::transform(input, f);
 
-      trace::exiting("labeling::colorize");
       return output;
     }
 
@@ -228,7 +227,7 @@ namespace mln
     colorize(const V& value,
 	     const Image<L>& input)
     {
-      trace::entering("labeling::colorize");
+      mln_trace("labeling::colorize");
       mln_precondition(exact(input).is_valid());
 
       accu::stat::max<mln_value(L)> accu;
@@ -236,7 +235,6 @@ namespace mln
 
       mln_ch_value(L,V) output = colorize(value, input, nlabels);
 
-      trace::exiting("labeling::colorize");
       return output;
     }
 

@@ -128,14 +128,13 @@ namespace mln
     inline
     void resize(const Image<I>& ima, unsigned thickness)
     {
-      trace::entering("border::resize");
+      mln_trace("border::resize");
 
       mln_precondition(exact(ima).is_valid());
 
       // Try to resize the primary image behind ima.
       internal::resize_dispatch(primary(ima), thickness);
 
-      trace::exiting("border::resize");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

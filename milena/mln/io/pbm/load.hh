@@ -132,7 +132,7 @@ namespace mln
       inline
       image2d<bool> load(const std::string& filename)
       {
-	trace::entering("mln::io::pbm::load");
+	mln_trace("mln::io::pbm::load");
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -151,7 +151,6 @@ namespace mln
 	  if (type == '1')
 	    internal::load_ascii(file, ima);
 
-	trace::exiting("mln::io::pbm::load");
 
 	return ima;
       }

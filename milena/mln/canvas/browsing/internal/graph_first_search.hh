@@ -145,7 +145,7 @@ namespace mln
         void
         graph_first_search_t<E, C>::operator()(const Graph<G>& g_, F& f) const
         {
-          trace::entering("canvas::browsing::internal::graph_first_search");
+          mln_trace("canvas::browsing::internal::graph_first_search");
 
           const G& g = exact(g_);
           mln_precondition(g.is_valid());
@@ -175,7 +175,6 @@ namespace mln
             }
           f.final(); // <-- final
 
-          trace::exiting("canvas::browsing::internal::graph_first_search");
         }
 
 # endif // ! MLN_INCLUDE_ONLY

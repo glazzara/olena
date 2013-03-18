@@ -76,7 +76,7 @@ namespace mln
       data< I, p_array<mln_psite(I)> >
       min_tree(const Image<I>& f_, const Neighborhood<N>& nbh_)
       {
-	trace::entering("morpho::tree::min_tree");
+	mln_trace("morpho::tree::min_tree");
 
 	const I& f = exact(f_);
 	const N& nbh = exact(nbh_);
@@ -90,7 +90,6 @@ namespace mln
 	S s = mln::data::sort_psites_decreasing(f);
 	tree_t tree(f, s, nbh);
 
-	trace::exiting("morpho::tree::min_tree");
 	return tree;
       }
 
@@ -99,7 +98,7 @@ namespace mln
       data< I, p_array<mln_psite(I)> >
       max_tree(const Image<I>& f_, const Neighborhood<N>& nbh_)
       {
-	trace::entering("morpho::tree::max_tree");
+	mln_trace("morpho::tree::max_tree");
 
 	const I& f = exact(f_);
 	const N& nbh = exact(nbh_);
@@ -113,7 +112,6 @@ namespace mln
 	S s = mln::data::sort_psites_increasing(f);
 	tree_t tree(f, s, nbh);
 
-	trace::exiting("morpho::tree::max_tree");
 	return tree;
       }
 

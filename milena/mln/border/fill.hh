@@ -85,7 +85,7 @@ namespace mln
       inline
       void fill_size_1(const Image<I>& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_1");
+	mln_trace("border::impl::fill_size_1");
 
 	const I& ima = exact(ima_);
 	internal::fill_tests(ima, v);
@@ -111,7 +111,6 @@ namespace mln
 		      *(const int*)(&v),
 		      opt::nelements(ima) - st);
 
-	trace::exiting("border::impl::fill_size_1");
       }
 
 
@@ -119,7 +118,7 @@ namespace mln
       inline
       void fill_size_n(const I& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_n");
+	mln_trace("border::impl::fill_size_n");
 
 	I& ima = const_cast<I&>( exact(ima_) );
 	internal::fill_tests(ima, v);
@@ -139,7 +138,6 @@ namespace mln
 	for (unsigned i = st; i < opt::nelements(ima); ++i)
           opt::element(ima, i) = v;
 
-	trace::exiting("border::impl::fill_size_n");
       }
 
 
@@ -205,12 +203,11 @@ namespace mln
     inline
     void fill(const Image<I>& ima, const mln_value(I)& v)
     {
-      trace::entering("border::fill");
+      mln_trace("border::fill");
 
       internal::fill_tests(ima, v);
       internal::fill_dispatch(ima, v);
 
-      trace::exiting("border::fill");
     }
 
 

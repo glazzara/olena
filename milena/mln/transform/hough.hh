@@ -101,7 +101,7 @@ namespace mln
     image2d<float>
     hough(const Image<I>& input_)
     {
-      trace::entering("mln::transform::hough");
+      mln_trace("mln::transform::hough");
 
       const I& input = exact(input_);
       mlc_equal(mln_value(I), bool)::check();
@@ -136,7 +136,6 @@ namespace mln
            ++opt::at(accu, indexAngle, indexRho);
           }
 
-      trace::exiting("mln::transform::hough");
       return accu;
     }
 

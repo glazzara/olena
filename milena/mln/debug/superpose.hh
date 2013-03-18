@@ -84,7 +84,7 @@ namespace mln
     superpose(const Image<I>& input_, const Image<J>& object_,
 	      const value::rgb8& object_color)
     {
-      trace::entering("debug::superpose");
+      mln_trace("debug::superpose");
 
       const I& input = exact(input_);
       const J& object = exact(object_);
@@ -102,7 +102,6 @@ namespace mln
       data::fill((output | (pw::value(object) != pw::cst(literal::zero))).rw(),
 		  object_color);
 
-      trace::exiting("debug::superpose");
       return output;
     }
 

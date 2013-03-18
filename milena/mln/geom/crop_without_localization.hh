@@ -59,7 +59,7 @@ namespace mln
     crop_without_localization(const Image<I>& input_,
 			      const Box<B>& b_in_, const Box<B>& b_out_)
     {
-      trace::entering("mln::geom::crop_without_localization");
+      mln_trace("mln::geom::crop_without_localization");
 
       const I& input = exact(input_);
       const B& b_in = exact(b_in_);
@@ -73,7 +73,6 @@ namespace mln
       mln_concrete(I) output(b_out);
       data::paste_without_localization(input | b_in, output);
 
-      trace::exiting("mln::geom::crop_without_localization");
       return output;
     }
 

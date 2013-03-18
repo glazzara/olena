@@ -73,7 +73,7 @@ namespace mln
     fill_holes(const Image<I>& input, const Neighborhood<N>& nbh,
 	       L& nlabels)
     {
-      trace::entering("labeling::fill_holes");
+      mln_trace("labeling::fill_holes");
 
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
@@ -102,7 +102,6 @@ namespace mln
       bg_relbl(bg_lbl) = false;
       mln_ch_value(I, bool) output = data::transform(lbls, bg_relbl);
 
-      trace::exiting("labeling::fill_holes");
       return output;
     }
 

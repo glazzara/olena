@@ -33,7 +33,7 @@ namespace mln
   my_algorithm(const Image<I>& ima_,
 	       const Neighborhood<N>& nbh_)
   {
-    trace::entering("my_algorithm");
+    mln_trace("my_algorithm");
 
     const I& ima = exact(ima_);
     const N& nbh = exact(nbh_);
@@ -57,7 +57,6 @@ namespace mln
 	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(),
 		   literal::zero);
 
-    trace::exiting("my_algorithm");
     return output;
   }
 
@@ -77,7 +76,7 @@ namespace sandbox
   // \}
   {
     // \{
-    trace::entering("my_algorithm");
+    mln_trace("my_algorithm");
     // \}
 
     // \{
@@ -111,7 +110,6 @@ namespace sandbox
     // \}
 
     // \{
-    trace::exiting("my_algorithm");
     return output;
     // \}
   }

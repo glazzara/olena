@@ -81,7 +81,7 @@ namespace mln
     p_edges_with_mass_centers(const Image<W>& wst_,
 			      const Graph<G>& g_)
     {
-      trace::entering("make::p_edges_with_mass_centers");
+      mln_trace("make::p_edges_with_mass_centers");
 
       const W& wst = exact(wst_);
       const G& g = exact(g_);
@@ -105,7 +105,6 @@ namespace mln
 
       p_edges<G, edge_sites_t> pe(g, edge_sites);
 
-      trace::exiting("make::p_edges_with_mass_centers");
       return pe;
     }
 

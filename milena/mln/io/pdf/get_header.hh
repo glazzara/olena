@@ -92,7 +92,7 @@ namespace mln
       inline
       pdf_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::pdf::get_header");
+	mln_trace("mln::io::pdf::get_header");
 
 	// Load document
 	poppler::document *pdf = poppler::document::load_from_file(filename);
@@ -108,7 +108,6 @@ namespace mln
 	// Clear pdf document.
 	delete pdf;
 
-	trace::exiting("mln::io::pdf::get_header");
 	return header;
       }
 

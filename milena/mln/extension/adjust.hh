@@ -101,33 +101,29 @@ namespace mln
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Window<W>& win)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(win));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Weighted_Window<W>& wwin)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(wwin));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I, typename N>
     void adjust(const Image<I>& ima, const Neighborhood<N>& nbh)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(nbh));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I>
     void adjust(const Image<I>& ima, unsigned delta)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, delta);
-      trace::exiting("extension::adjust");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

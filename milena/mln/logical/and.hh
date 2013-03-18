@@ -80,14 +80,13 @@ namespace mln
     mln_ch_fun_vv2v(land, L, R)
     and_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::and_");
+      mln_trace("logical::and_");
 
       internal::tests(lhs, rhs);
 
       mln_fun_vv2v(land, L, R) f;
       mln_ch_fun_vv2v(land, L, R) output = data::transform(lhs, rhs, f);
 
-      trace::exiting("logical::and_");
       return output;
     }
 
@@ -95,7 +94,7 @@ namespace mln
     inline
     void and_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::and_inplace");
+      mln_trace("logical::and_inplace");
 
       mlc_converts_to(mln_fun_vv2v_result(land, L, R),
 		      mln_value(L))::check();
@@ -105,7 +104,6 @@ namespace mln
       mln_fun_vv2v(land, L, R) f;
       data::transform_inplace(lhs, rhs, f);
 
-      trace::exiting("logical::and_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

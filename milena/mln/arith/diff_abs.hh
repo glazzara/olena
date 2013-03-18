@@ -62,14 +62,13 @@ namespace mln
     mln_concrete(I)
     diff_abs(const Image<I>& lhs, const Image<I>& rhs)
     {
-      trace::entering("arith::diff_abs");
+      mln_trace("arith::diff_abs");
       mln_precondition(exact(lhs).is_valid());
       mln_precondition(exact(rhs).is_valid());
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = data::transform(lhs, rhs, fun::vv2v::diff_abs<mln_value(I)>());
 
-      trace::exiting("arith::diff_abs");
       return output;
     }
 

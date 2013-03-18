@@ -178,36 +178,32 @@ namespace mln
       void
       save(const bin_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::bin_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const int_u8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::int_u8_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const float_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::float_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const rgb8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::rgb8_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
 

@@ -117,7 +117,7 @@ namespace mln
     chamfer(const Image<I>& input_, const W& w_win_,
 	    unsigned max)
     {
-      trace::entering("mln::geom::chamfer");
+      mln_trace("mln::geom::chamfer");
       // FIXME: check that input_ is binary.
 
       const I& input = exact(input_);
@@ -128,7 +128,6 @@ namespace mln
       F f(input, w_win, max);
       canvas::chamfer<F> run(f);
 
-      trace::exiting("mln::geom::chamfer");
       return f.output;
     }
 

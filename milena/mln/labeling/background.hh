@@ -69,7 +69,7 @@ namespace mln
     background(const Image<I>& input, const Neighborhood<N>& nbh,
 	       L& nlabels)
     {
-      trace::entering("labeling::background");
+      mln_trace("labeling::background");
 
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
@@ -78,7 +78,6 @@ namespace mln
 
       mln_ch_value(I, L) output = labeling::value(input, false, nbh, nlabels);
 
-      trace::exiting("labeling::background");
       return output;
     }
 

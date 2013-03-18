@@ -57,7 +57,7 @@ namespace mln
       inline
       mln_concrete(I) closing(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::closing");
+	mln_trace("morpho::elementary::closing");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -66,7 +66,6 @@ namespace mln
 
 	mln_postcondition(output >= input);
 
-	trace::exiting("morpho::elementary::closing");
 	return output;
       }
 

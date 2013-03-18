@@ -62,14 +62,13 @@ namespace mln
       sum(const Image<I>& input, const Neighborhood<N>& nbh,
 	  unsigned lambda)
       {
-	trace::entering("morpho::closing::sum");
+	mln_trace("morpho::closing::sum");
 
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = closing::leveling(input, nbh, attribute::sum<I, float>(), lambda);
 
-	trace::exiting("morpho::closing::sum");
 	return output;
       }
 

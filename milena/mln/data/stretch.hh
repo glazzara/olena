@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -84,7 +84,7 @@ namespace mln
       mln_ch_value(I, V)
 	stretch(const V& v, const Image<I>& input)
       {
-	trace::entering("data::impl::stretch");
+	mln_trace("data::impl::stretch");
 
 	(void) v;
 	mlc_converts_to(float, V)::check();
@@ -111,10 +111,9 @@ namespace mln
 	else
 	{
 	  initialize(output, input);
-	  trace::warning("output has no significative data!");
+	  debug::trace::warning("output has no significative data!");
 	}
 
-	trace::exiting("data::impl::stretch");
 	return output;
       }
 
@@ -129,14 +128,13 @@ namespace mln
     mln_ch_value(I, V)
     stretch(const V& v, const Image<I>& input)
     {
-      trace::entering("data::stretch");
+      mln_trace("data::stretch");
 
       (void) v;
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, V) output = impl::stretch(V(), input);
 
-      trace::exiting("data::stretch");
       return output;
     }
 

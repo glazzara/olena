@@ -71,7 +71,7 @@ namespace mln
 		    const typename A::result& lambda,
 		    bool increasing)
     {
-      trace::entering("morpho::opening::algebraic_filter");
+      mln_trace("morpho::opening::algebraic_filter");
 
       mln_precondition(exact(input).is_valid());
 
@@ -87,7 +87,6 @@ namespace mln
 								   lambda,
 								   increasing);
 
-      trace::exiting("morpho::opening::algebraic_filter");
 
       return output;
     }

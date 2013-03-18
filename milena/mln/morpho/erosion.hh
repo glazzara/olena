@@ -97,7 +97,7 @@ namespace mln
       general_on_set_centered(const erosion_op&,
 			      const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::general_on_set_centered__erosion");
+	mln_trace("morpho::impl::general_on_set_centered__erosion");
 
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
@@ -119,7 +119,6 @@ namespace mln
 		break;
 	      }
 
-	trace::exiting("morpho::impl::general_on_set_centered__erosion");
 	return output;
       }
 
@@ -129,7 +128,7 @@ namespace mln
       general_on_set_centered_fastest(const erosion_op&,
 				      const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::general_on_set_centered_fastest__erosion");
+	mln_trace("morpho::impl::general_on_set_centered_fastest__erosion");
 
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
@@ -152,7 +151,6 @@ namespace mln
 		break;
 	      }
 
-	trace::exiting("morpho::impl::general_on_set_centered_fastest__erosion");
 	return output;
       }
 
@@ -165,7 +163,7 @@ namespace mln
     mln_concrete(I)
     erosion(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::erosion");
+      mln_trace("morpho::erosion");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -174,7 +172,6 @@ namespace mln
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);
 
-      trace::exiting("morpho::erosion");
       return output;
     }
 

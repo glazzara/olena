@@ -145,7 +145,7 @@ namespace mln
 				    const mln_domain(I)& output_domain,
 				    unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_fastest");
+	mln_trace("subsampling::impl::antialiased_2d_fastest");
 
 	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
@@ -155,7 +155,6 @@ namespace mln
 	// No reduction.
 	if (factor == 1)
 	{
-	  trace::exiting("subsampling::impl::antialiased_2d_fastest");
 	  return duplicate(input);
 	}
 
@@ -210,7 +209,6 @@ namespace mln
 	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_fastest");
 	return output;
       }
 
@@ -224,7 +222,7 @@ namespace mln
 				 const mln_domain(I)& output_domain,
 				 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_rgb");
+	mln_trace("subsampling::impl::antialiased_2d_rgb");
 
 	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
@@ -235,7 +233,6 @@ namespace mln
 	// No reduction.
 	if (factor == 1)
 	{
-	  trace::exiting("subsampling::impl::antialiased_2d_rgb");
 	  return duplicate(input);
 	}
 
@@ -296,7 +293,6 @@ namespace mln
 	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_rgb");
 	return output;
       }
 
@@ -413,7 +409,7 @@ namespace mln
 	    output_domain,
 	    border_thickness);
 	else
-	  trace::warning("Not implemented yet.");
+	  debug::trace::warning("Not implemented yet.");
 
 	mln_concrete(I) output;
 	return output;
@@ -433,7 +429,7 @@ namespace mln
 		const mln_domain(I)& output_domain,
 		unsigned border_thickness)
     {
-      trace::entering("subsampling::antialiased");
+      mln_trace("subsampling::antialiased");
 
       typedef mln_site(I) P;
 
@@ -445,7 +441,6 @@ namespace mln
 						output_domain,
 						border_thickness);
 
-      trace::exiting("subsampling::antialiased");
       return output;
     }
 

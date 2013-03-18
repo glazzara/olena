@@ -164,7 +164,7 @@ namespace mln
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu)
     {
-      trace::entering("labeling::blobs_and_compute");
+      mln_trace("labeling::blobs_and_compute");
 
       (void) accu;
       mlc_equal(mln_trait_image_kind(I),
@@ -181,7 +181,6 @@ namespace mln
 	result = make::couple(output,
 			      make::couple(functor.result_, functor.accus_));
 
-      trace::exiting("labeling::blobs_and_compute");
       return result;
     }
 

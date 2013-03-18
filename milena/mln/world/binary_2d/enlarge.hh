@@ -357,7 +357,7 @@ namespace mln
       mln_concrete(I)
       enlarge(const Image<I>& input, unsigned n)
       {
-	trace::entering("mln::world::binary_2d::enlarge");
+	mln_trace("mln::world::binary_2d::enlarge");
 
 	mln_precondition(exact(input).is_valid());
 	typedef mln_site(I) S;
@@ -369,7 +369,6 @@ namespace mln
 	else
 	    output = internal::enlarge_dispatch(input, n);
 
-	trace::exiting("mln::world::binary_2d::enlarge");
 	return output;
       }
 

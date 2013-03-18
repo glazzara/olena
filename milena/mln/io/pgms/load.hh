@@ -72,11 +72,10 @@ namespace mln
       void load(image3d<V>& ima,
 		const util::array<std::string>& filenames)
       {
-	trace::entering("mln::io::pgms::load");
+	mln_trace("mln::io::pgms::load");
 
 	io::pnms::load<V>(PGM, ima, filenames);
 
-	trace::exiting("mln::io::pgms::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

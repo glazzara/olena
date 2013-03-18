@@ -106,7 +106,7 @@ namespace mln
       mln_concrete(I)
       gradient_internal(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::gradient_internal");
+	mln_trace("morpho::elementary::gradient_internal");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -114,7 +114,6 @@ namespace mln
 	mln_concrete(I) output = internal::gradient_internal_dispatch(input, nbh);
 
 	mln_postcondition(output <= input);
-	trace::exiting("morpho::elementary::gradient_internal");
 	return output;
       }
 

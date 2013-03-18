@@ -193,26 +193,24 @@ namespace mln
 	inline
 	void div_(const L& lhs, const R& rhs, O& output)
 	{
-	  trace::entering("arith::impl::generic::div_");
+	  mln_trace("arith::impl::generic::div_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	    output(p) = lhs(p) / rhs(p);
 
-	  trace::exiting("arith::impl::generic::div_");
 	}
 
 	template <typename L, typename R>
 	inline
 	void div_inplace_(L& lhs, const R& rhs)
 	{
-	  trace::entering("arith::impl::generic::div_inplace_");
+	  mln_trace("arith::impl::generic::div_inplace_");
 
 	  mln_piter(R) p(rhs.domain());
 	  for_all(p)
 	  lhs(p) /= rhs(p);
 
-	  trace::exiting("arith::impl::generic::div_inplace_");
 	}
 
       } // end of namespace mln::arith::impl::generic
@@ -226,7 +224,7 @@ namespace mln
     inline
     void div(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
-      trace::entering("arith::div");
+      mln_trace("arith::div");
 
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
@@ -234,46 +232,42 @@ namespace mln
 		 mln_trait_image_speed(R)(), exact(rhs),
 		 mln_trait_image_speed(O)(), exact(output));
 
-      trace::exiting("arith::div");
     }
 
     template <typename I, typename V, typename O>
     inline
     void div_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
-      trace::entering("arith::div_cst");
+      mln_trace("arith::div_cst");
 
       mln_precondition(exact(output).domain() == exact(input).domain());
       div(input, pw::cst(val) | exact(input).domain(), output);
       // Calls the previous version.
 
-      trace::exiting("arith::div_cst");
     }
 
     template <typename L, typename R>
     inline
     void div_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("arith::div_inplace");
+      mln_trace("arith::div_inplace");
 
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
       impl::div_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			 mln_trait_image_speed(R)(), exact(rhs));
 
-      trace::exiting("arith::div_inplace");
     }
 
     template <typename I, typename V>
     inline
     void div_cst_inplace(Image<I>& input, const V& val)
     {
-      trace::entering("arith::div_cst_inplace");
+      mln_trace("arith::div_cst_inplace");
 
       mln_precondition(exact(input).is_valid());
       div_inplace(input, pw::cst(val) | exact(input).domain());
       // Calls the previous version.
 
-      trace::exiting("arith::div_cst_inplace");
     }
 
   } // end of namespace mln::arith

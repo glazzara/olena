@@ -62,12 +62,11 @@ namespace mln
     inline
     void to_enc(const Image<I>& input, Image<O>& output)
     {
-      trace::entering("data::to_enc");
+      mln_trace("data::to_enc");
 
       mln_precondition(exact(output).domain() == exact(input).domain());
       output = data::transform(input, fun::v2v::enc< mln_value(I) >());
 
-      trace::exiting("data::to_enc");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -113,7 +113,7 @@ namespace mln
 	inline
 	void paste(const Image<I>& input_, Image<J>& output_)
 	{
-	  trace::entering("data::impl::generic::paste");
+	  mln_trace("data::impl::generic::paste");
 
 	  data::internal::paste_tests(input_, output_);
 
@@ -125,7 +125,6 @@ namespace mln
 	  for_all(p)
 	    output(p) = static_cast<mln_value(J)>(input(p));
 
-	  trace::exiting("data::impl::generic::paste");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -139,14 +138,13 @@ namespace mln
     inline
     void paste(const Image<I>& input, Image<J>& output)
     {
-      trace::entering("data::paste");
+      mln_trace("data::paste");
 
       mlc_converts_to(mln_value(I), mln_value(J))::check();
 
       internal::paste_tests(input, output);
       internal::paste_dispatch(input, output);
 
-      trace::exiting("data::paste");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

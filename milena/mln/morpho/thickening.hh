@@ -91,14 +91,13 @@ namespace mln
       thickening(const Image<I>& input,
 		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thickening");
+      mln_trace("morpho::thickening");
 
       internal::thickening_tests(input, win_fg, win_bg);
 
       mln_concrete(I) output = morpho::plus( input,
 					     hit_or_miss(input, win_fg, win_bg) );
 
-      trace::exiting("morpho::thickening");
       return output;
     }
 

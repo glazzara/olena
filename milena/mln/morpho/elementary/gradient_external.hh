@@ -106,14 +106,13 @@ namespace mln
       mln_concrete(I)
       gradient_external(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::gradient_external");
+	mln_trace("morpho::elementary::gradient_external");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = internal::gradient_external_dispatch(input, nbh);
 
-	trace::exiting("morpho::elementary::gradient_external");
 	return output;
       }
 

@@ -78,14 +78,13 @@ namespace mln
     inline
     histo::array<mln_value(I)> compute(const Image<I>& input)
     {
-      trace::entering("histo::compute");
+      mln_trace("histo::compute");
       mlc_equal(mln_trait_image_quant(I), mln::trait::image::quant::low)::check();
       mln_precondition(exact(input).is_valid());
 
       histo::array<mln_value(I)> h = impl::compute_(mln_trait_image_speed(I)(),
 						    exact(input));
 
-      trace::exiting("histo::compute");
       return h;
     }
 

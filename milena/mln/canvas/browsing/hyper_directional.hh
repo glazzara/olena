@@ -104,7 +104,7 @@ namespace mln
       void
       hyper_directional_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::hyper_directional");
+	mln_trace("canvas::browsing::hyper_directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -134,7 +134,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::hyper_directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

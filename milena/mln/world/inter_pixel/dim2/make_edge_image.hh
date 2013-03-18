@@ -56,7 +56,7 @@ namespace mln
 	mln_concrete(I)
 	make_edge_image(const Image<I>& input_, const Function_vv2v<F>& f_)
 	{
-	  trace::entering("world::inter_pixel::dim2::make_edge_image");
+	  mln_trace("world::inter_pixel::dim2::make_edge_image");
 
 	  const I& input = exact(input_);
 	  const F& f = exact(f_);
@@ -88,7 +88,6 @@ namespace mln
 	    output(p) = f(vs[0], vs[1]);
 	  }
 
-	  trace::exiting("world::inter_pixel::dim2::make_edge_image");
 	  return output;
 	}
 

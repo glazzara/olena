@@ -107,7 +107,7 @@ namespace mln
 			  const Image<I>& input_,
 			  const Window<W>& win_)
 	{
-	  trace::entering("mln::impl::generic::compute_in_window");
+	  mln_trace("mln::impl::generic::compute_in_window");
 
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
@@ -130,7 +130,6 @@ namespace mln
 	  mln_ch_value(I, mln_result(A))
 	    output = accu::image::to_result(accu);
 
-	  trace::exiting("mln::impl::generic::compute_in_window");
 	  return output;
 	}
 
@@ -143,7 +142,7 @@ namespace mln
 				const Image<I>& input_,
 				const Window<W>& win_)
       {
-	trace::entering("mln::impl::generic::compute_in_window_fastest");
+	mln_trace("mln::impl::generic::compute_in_window_fastest");
 
 	const W& win = exact(win_);
 	const I& input = exact(input_);
@@ -169,7 +168,6 @@ namespace mln
 	mln_ch_value(I, mln_result(A))
 	  output = accu::image::to_result(accu);
 
-	trace::exiting("mln::impl::generic::compute_in_window_fastest");
 	return output;
       }
 
@@ -223,14 +221,13 @@ namespace mln
     compute_in_window(const Accumulator<A>& a, const Image<I>& input,
 		      const Window<W>& win)
     {
-      trace::entering("data::compute_in_window");
+      mln_trace("data::compute_in_window");
 
       internal::compute_in_window_tests(a, input, win);
 
       mln_ch_value(I, mln_result(A))
 	output = data::internal::compute_in_window_dispatch(a, input, win);
 
-      trace::exiting("data::compute_in_window");
       return output;
     }
 

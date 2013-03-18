@@ -60,7 +60,7 @@ namespace mln
     p_set<mln_site(S)>
     unique(const Site_Set<S>& s)
     {
-      trace::entering("set::unique");
+      mln_trace("set::unique");
 
       typedef mln_site(S) P;
       std::set< P, util::ord<P> > s_;
@@ -68,7 +68,6 @@ namespace mln
       p_set<P> su;
       convert::from_to(s_, su);
 
-      trace::exiting("set::unique");
       return su;
     }
 

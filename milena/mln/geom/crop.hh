@@ -54,7 +54,7 @@ namespace mln
     template <typename I, typename B>
     mln_concrete(I) crop(const Image<I>& input_, const Box<B>& b_)
     {
-      trace::entering("mln::geom::crop");
+      mln_trace("mln::geom::crop");
 
       const I& input = exact(input_);
       const B& b = exact(b_);
@@ -65,7 +65,6 @@ namespace mln
       mln_concrete(I) output(b);
       data::paste(input | b, output);
 
-      trace::exiting("mln::geom::crop");
       return output;
     }
 

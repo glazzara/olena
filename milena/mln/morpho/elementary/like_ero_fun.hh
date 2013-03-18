@@ -80,7 +80,7 @@ namespace mln
 	  like_ero_fun(const Meta_Accumulator<A>& a_, const F& f,
 		       const Image<I>& input_, const Neighborhood<N>& nbh_)
 	  {
-	    trace::entering("morpho::elementary::impl::generic::like_ero_fun");
+	    mln_trace("morpho::elementary::impl::generic::like_ero_fun");
 
 	    const I& input = exact(input_);
 	    const N& nbh   = exact(nbh_);
@@ -101,7 +101,6 @@ namespace mln
 		output(p) = f(input(p), a);
 	      }
 
-	    trace::exiting("morpho::elementary::impl::generic::like_ero_fun");
 	    return output;
 	  }
 
@@ -114,7 +113,7 @@ namespace mln
 	like_ero_fun_fastest(const Meta_Accumulator<A>& a_, const F& f,
 			     const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
-	  trace::entering("morpho::elementary::impl::like_ero_fun_fastest");
+	  mln_trace("morpho::elementary::impl::like_ero_fun_fastest");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -136,7 +135,6 @@ namespace mln
 	      p_out.val() = f(p_in.val(), a);
 	    }
 
-	  trace::exiting("morpho::elementary::impl::like_ero_fun_fastest");
 	  return output;
 	}
 

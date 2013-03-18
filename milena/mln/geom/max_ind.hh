@@ -54,12 +54,11 @@ namespace mln
     inline
     mln_deduce(I, site, coord) max_ind(const Image<I>& ima)
     {
-      trace::entering("mln::geom::max_ind");
+      mln_trace("mln::geom::max_ind");
 
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) maxind = exact(ima).bbox().pmax().ind();
 
-      trace::exiting("mln::geom::max_ind");
       return maxind;
     }
 

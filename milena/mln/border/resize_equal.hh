@@ -61,7 +61,7 @@ namespace mln
     void
     resize_equal(const Image<I>& ima1_, const Image<J>& ima2_)
     {
-      trace::entering("border::resize_equal");
+      mln_trace("border::resize_equal");
 
       // Static checks.
       mlc_equal(mln_trait_image_ext_domain(I),
@@ -88,7 +88,6 @@ namespace mln
 	  border::resize(ima2, b1);
       // else no-op when b2 == b1.
 
-      trace::exiting("border::resize_equal");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

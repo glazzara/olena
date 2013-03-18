@@ -63,7 +63,7 @@ namespace mln
       image_if<mln_ch_value(mln_unmorph(I), mln_result(F)), is_separator>
       compute(const Image<I>& input_, const Function_vv2v<F>& f_)
       {
-	trace::entering("world::inter_pixel::compute");
+	mln_trace("world::inter_pixel::compute");
 	
 	const I& input = exact(input_);
 	const F& f     = exact(f_);
@@ -86,7 +86,6 @@ namespace mln
 	  output(e) = f(input(p1), input(p2));
 	}
 
-	trace::exiting("world::inter_pixel::compute");
 	return output;
       }
 

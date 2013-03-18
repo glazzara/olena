@@ -93,14 +93,13 @@ namespace mln
     mln_ch_value(I, V)
     saturate(V, const Image<I>& input)
     {
-      trace::entering("data::saturate");
+      mln_trace("data::saturate");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f;
       mln_ch_value(I, V) output = data::transform(input, f);
 
-      trace::exiting("data::saturate");
       return output;
     }
 
@@ -110,14 +109,13 @@ namespace mln
     saturate(const Image<I>& input,
 	     const V& min, const V& max)
     {
-      trace::entering("data::saturate");
+      mln_trace("data::saturate");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f(min, max);
       mln_ch_value(I, V) output = data::transform(input, f);
 
-      trace::exiting("data::saturate");
       return output;
     }
 
@@ -126,14 +124,13 @@ namespace mln
     void saturate_inplace(Image<I>& input,
 			  const mln_value(I)& min, const mln_value(I)& max)
     {
-      trace::entering("data::saturate_inplace");
+      mln_trace("data::saturate_inplace");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<mln_value(I)> f(min, max);
       data::apply(input, f);
 
-      trace::exiting("data::saturate_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

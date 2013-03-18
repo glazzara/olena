@@ -104,7 +104,7 @@ namespace mln
     blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	  L& nlabels)
     {
-      trace::entering("labeling::blobs");
+      mln_trace("labeling::blobs");
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
       const I& input = exact(input_);
@@ -116,7 +116,6 @@ namespace mln
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
-      trace::exiting("labeling::blobs");
       return output;
     }
 

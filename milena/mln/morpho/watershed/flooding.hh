@@ -120,7 +120,7 @@ namespace mln
 	  flooding(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		   L& n_basins)
 	  {
-	    trace::entering("morpho::watershed::impl::generic::flooding");
+	    mln_trace("morpho::watershed::impl::generic::flooding");
 	    /* FIXME: Ensure the input image has scalar values.  */
 
 	    const I input = exact(input_);
@@ -207,7 +207,6 @@ namespace mln
 		  }
 	      }
 
-	    trace::exiting("morpho::watershed::impl::generic::flooding");
 	    return output;
 	  }
 
@@ -222,7 +221,7 @@ namespace mln
 	flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
 			 L& n_basins)
 	{
-	  trace::entering("morpho::watershed::impl::flooding_fastest");
+	  mln_trace("morpho::watershed::impl::flooding_fastest");
 	  /* FIXME: Ensure the input image has scalar values.  */
 
 	  const I input = exact(input_);
@@ -325,7 +324,6 @@ namespace mln
 		}
 	    }
 
-	  trace::exiting("morpho::watershed::impl::flooding_fastest");
 	  return output;
 	}
 
@@ -386,14 +384,13 @@ namespace mln
       mln_ch_value(I, L)
       flooding(const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
       {
-	trace::entering("morpho::watershed::flooding");
+	mln_trace("morpho::watershed::flooding");
 
 	// FIXME: internal::flooding_tests(input, nbh, n_basins);
 
 	mln_ch_value(I, L) output =
 	  internal::flooding_dispatch(input, nbh, n_basins);
 
-	trace::exiting("morpho::watershed::flooding");
 	return output;
       }
 

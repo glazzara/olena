@@ -38,7 +38,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-//   trace::quiet = false;
+//   debug::trace::quiet = false;
 
   image2d<int_u8> ima(3, 3, 0);
   debug::iota(ima);

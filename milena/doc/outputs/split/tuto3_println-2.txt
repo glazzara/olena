@@ -1,3 +1,10 @@
+data::fill {} 
+data::fill_with_value {} 
+data::impl::fill_with_value_one_block {} 
+data::memset_ {} 
+data::impl::memset_ {} 
+border::fill {} 
+border::impl::fill_size_1 {} 
 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 

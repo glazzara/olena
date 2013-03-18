@@ -74,7 +74,7 @@ namespace mln
       inline
       void equalize_(const I& ima1, const J& ima2, unsigned min_thickness)
       {
-	trace::entering("border::impl::equalize_");
+	mln_trace("border::impl::equalize_");
 
 	unsigned b1 = border::get(ima1), b2 = border::get(ima2);
 
@@ -103,7 +103,6 @@ namespace mln
 		}
 	  }
 
-	trace::exiting("border::impl::equalize_");
       }
 
     } // end of namespace mln::border::impl
@@ -116,7 +115,7 @@ namespace mln
     void equalize(const Image<I>& ima1_, const Image<J>& ima2_,
 		  unsigned min_thickness)
     {
-      trace::entering("border::equalize");
+      mln_trace("border::equalize");
 
       //FIXME: check border
       //mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
@@ -131,7 +130,6 @@ namespace mln
 			border::get(ima1) >= min_thickness &&
 			border::get(ima2) >= min_thickness);
 
-      trace::exiting("border::equalize");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -98,7 +98,7 @@ namespace mln
       general_on_set_centered(const dilation_op&,
 			      const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::general_on_set_centered__dilation");
+	mln_trace("morpho::impl::general_on_set_centered__dilation");
 
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
@@ -120,7 +120,6 @@ namespace mln
 		break;
 	      }
 
-	trace::exiting("morpho::impl::general_on_set_centered__dilation");
 	return output;
       }
 
@@ -130,7 +129,7 @@ namespace mln
       general_on_set_centered_fastest(const dilation_op&,
 				      const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::general_on_set_centered_fastest__dilation");
+	mln_trace("morpho::impl::general_on_set_centered_fastest__dilation");
 
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
@@ -153,7 +152,6 @@ namespace mln
 		break;
 	      }
 
-	trace::exiting("morpho::impl::general_on_set_centered_fastest__dilation");
 	return output;
       }
 
@@ -165,7 +163,7 @@ namespace mln
     mln_concrete(I)
     dilation(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::dilation");
+      mln_trace("morpho::dilation");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -174,7 +172,6 @@ namespace mln
       if (exact(win).is_centered())
 	mln_postcondition(output >= input);
 
-      trace::exiting("morpho::dilation");
       return output;
     }
 

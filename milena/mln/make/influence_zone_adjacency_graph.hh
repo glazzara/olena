@@ -107,7 +107,7 @@ namespace mln
 				       const Neighborhood<N>& nbh_,
 				       const mln_value(I)& nlabels)
 	{
-	  trace::entering("make::impl::generic::influence_zone_adjacency_graph");
+	  mln_trace("make::impl::generic::influence_zone_adjacency_graph");
 
 	  internal::influence_zone_adjacency_graph_tests(iz_, nbh_, nlabels);
 	  const I& iz = exact(iz_);
@@ -141,7 +141,6 @@ namespace mln
 	      if (adj.are_adjacent(i, j))
 		g.add_edge(i, j);
 
-	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph");
 	  return g;
 	}
 
@@ -176,13 +175,12 @@ namespace mln
 				   const Neighborhood<N>& nbh,
 				   const mln_value(I)& nlabels)
     {
-      trace::entering("make::influence_zone_adjacency_graph");
+      mln_trace("make::influence_zone_adjacency_graph");
 
       internal::influence_zone_adjacency_graph_tests(iz, nbh, nlabels);
 
       util::graph g = internal::influence_zone_adjacency_graph_dispatch(iz, nbh, nlabels);
 
-      trace::exiting("make::influence_zone_adjacency_graph");
       return g;
     }
 

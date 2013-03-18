@@ -97,7 +97,7 @@ namespace mln
         mean_values(const Image<I>& input_,
 		    const Image<L>& lbl_, mln_value(L) nlabels)
 	{
-	  trace::entering("mln::labeling::impl::generic::mean_values");
+	  mln_trace("mln::labeling::impl::generic::mean_values");
 
 	  internal::mean_values_tests(input_, lbl_, nlabels);
 
@@ -119,7 +119,6 @@ namespace mln
 
 	  mln_concrete(I) output = data::transform(lbl, m);
 
-	  trace::exiting("mln::labeling::impl::generic::mean_values");
 	  return output;
 	}
 
@@ -130,7 +129,7 @@ namespace mln
       mean_values_rgb(const Image<I>& input_,
 		      const Image<L>& lbl_, mln_value(L) nlabels)
       {
-	trace::entering("mln::labeling::impl::mean_values_rgb");
+	mln_trace("mln::labeling::impl::mean_values_rgb");
 
 	internal::mean_values_tests(input_, lbl_, nlabels);
 
@@ -151,7 +150,6 @@ namespace mln
 	    convert::to< fun::i2v::array<mln_value(I)> >(m));
 
 
-        trace::exiting("mln::labeling::impl::mean_values_rgb");
 	return output;
       }
 
@@ -199,13 +197,12 @@ namespace mln
 		const Image<L>& lbl, mln_value(L) nlabels)
 
     {
-      trace::entering("mln::labeling::mean_values");
+      mln_trace("mln::labeling::mean_values");
 
       internal::mean_values_tests(input, lbl, nlabels);
 
       mln_concrete(I) output = internal::mean_values_dispatch(input, lbl, nlabels);
 
-      trace::exiting("mln::labeling::mean_values");
       return output;
     }
 

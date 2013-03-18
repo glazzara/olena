@@ -67,7 +67,7 @@
 
 #include <mln/tag/all.hh>
 #include <mln/test/all.hh>
-#include <mln/trace/all.hh>
+#include <mln/debug/trace.hh>
 #include <mln/trait/all.hh>
 #include <mln/util/all.hh>
 #include <mln/value/all.hh>

@@ -142,7 +142,7 @@ namespace mln
       inline
       image2d<float> load(const std::string& filename)
       {
-	trace::entering("mln::io::pfm::load");
+	mln_trace("mln::io::pfm::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -157,7 +157,6 @@ namespace mln
 	image2d<float> ima(nrows, ncols);
 	internal::load_raw_2d(file, ima);
 
-	trace::exiting("mln::io::pfm::load");
 
 	return ima;
       }

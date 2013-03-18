@@ -64,7 +64,7 @@ namespace mln
 		double sigma,
 		const mln_value(I)& bdr)
     {
-      trace::entering("linear::gaussian_1d");
+      mln_trace("linear::gaussian_1d");
 
       typedef mln_site(I) P;
       mlc_bool(P::dim == 1)::check();
@@ -96,7 +96,6 @@ namespace mln
 					  dpoint1d(1),
 					  bdr);
 
-      trace::exiting("linear::gaussian_1d");
       return output;
     }
 

@@ -72,13 +72,12 @@ namespace mln
 	void replace_(Image<I>& input_, const mln_value(I)& old_value,
 		      const mln_value(I)& new_value)
 	{
-	  trace::entering("data::impl::generic::replace");
+	  mln_trace("data::impl::generic::replace");
 	  I& input = exact(input_);
 
 	  data::fill((input | (pw::value(input) == pw::cst(old_value))).rw(),
 		      new_value);
 
-	  trace::exiting("data::impl::generic::replace");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -92,13 +91,12 @@ namespace mln
     void replace(Image<I>& input,
 		 const mln_value(I)& old_value, const mln_value(I)& new_value)
     {
-      trace::entering("data::replace");
+      mln_trace("data::replace");
 
       mln_precondition(exact(input).is_valid());
 
       impl::generic::replace_<I>(exact(input), old_value, new_value);
 
-      trace::exiting("data::replace");
     }
 
 

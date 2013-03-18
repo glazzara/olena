@@ -73,7 +73,7 @@ namespace mln
 		     const Neighborhood<N>& nbh,
 		     unsigned lambda)
     {
-      trace::entering("morpho::opening::area_on_vertices");
+      mln_trace("morpho::opening::area_on_vertices");
       mln_precondition(exact(input).is_valid());
 
       typedef attribute::count_adjacent_vertices< edge_image<P,V,G> > attribute_t;
@@ -81,7 +81,6 @@ namespace mln
       edge_image<P,V,G>
 	output = opening::algebraic(input, nbh, attribute_t(), lambda);
 
-      trace::exiting("morpho::opening::area_on_vertices");
       return output;
     }
 

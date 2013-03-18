@@ -91,7 +91,7 @@ namespace mln
   inline
   bool operator == (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (==)");
+    mln_trace("data::compare (==)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -103,7 +103,6 @@ namespace mln
     typedef fun::vv2b::eq<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs, rhs, F());
 
-    trace::exiting("data::compare (==)");
     return res;
   }
 
@@ -112,7 +111,7 @@ namespace mln
   inline
   bool operator < (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (<)");
+    mln_trace("data::compare (<)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -122,7 +121,6 @@ namespace mln
     typedef fun::vv2b::lt<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs_, rhs_, F());
 
-    trace::exiting("data::compare (<)");
     return res;
   }
 
@@ -131,7 +129,7 @@ namespace mln
   inline
   bool operator <= (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (<=)");
+    mln_trace("data::compare (<=)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -141,7 +139,6 @@ namespace mln
     typedef fun::vv2b::le<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs_, rhs_, F());
 
-    trace::exiting("data::compare (<=)");
     return res;
   }
 

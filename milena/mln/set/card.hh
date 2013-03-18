@@ -60,7 +60,7 @@ namespace mln
 	template <typename S>
 	unsigned card(const Site_Set<S>& s_)
 	{
-	  trace::entering("set::impl::generic::card");
+	  mln_trace("set::impl::generic::card");
 	  const S& s = exact(s_);
 	  mln_precondition(s.is_valid());
 
@@ -69,7 +69,6 @@ namespace mln
 	  for_all(p)
 	    ++n;
 
-	  trace::exiting("set::impl::generic::card");
 	  return n;
 	}
 
@@ -82,9 +81,8 @@ namespace mln
       inline
       unsigned card_from_method(const Site_Set<S>& s)
       {
-	trace::entering("set::impl::card_from_method");
+	mln_trace("set::impl::card_from_method");
 	unsigned n = exact(s).nsites();
-	trace::exiting("set::impl::card_from_method");
 	return n;
       }
 
@@ -133,12 +131,11 @@ namespace mln
     inline
     unsigned card(const Site_Set<S>& s)
     {
-      trace::entering("set::card");
+      mln_trace("set::card");
       mln_precondition(exact(s).is_valid());
 
       unsigned n = internal::card_dispatch(s);
 
-      trace::exiting("set::card");
       return n;
     }
 

@@ -82,7 +82,7 @@ namespace mln
       seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
 			     unsigned max, const Neighborhood<N>& nbh_)
       {
-	trace::entering("geom::impl::seed2tiling_roundness");
+	mln_trace("geom::impl::seed2tiling_roundness");
 
 	I& ima = exact(ima_);
 	const N& nbh = exact(nbh_);
@@ -116,7 +116,6 @@ namespace mln
 	    }
 	}
 
-	trace::exiting("geom::impl::seed2tiling_roundness");
 	return out;
       }
 
@@ -130,12 +129,11 @@ namespace mln
     seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
 			   unsigned max, const Neighborhood<N>& nbh)
     {
-      trace::entering("geom::seed2tiling_roundness");
+      mln_trace("geom::seed2tiling_roundness");
 
       mln_precondition(exact(ima_).is_valid());
       I output = impl::seeds2tiling_roundness(ima_, w_win, max, nbh);
 
-      trace::exiting("geom::seed2tiling_roundness");
       return output;
     }
 

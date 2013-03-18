@@ -90,13 +90,12 @@ namespace mln
     mln_concrete(I)
       minus(const Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::minus");
+      mln_trace("morpho::minus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = impl::minus_(mln_trait_image_kind(I)(),
 					    exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::minus");
       return output;
     }
 

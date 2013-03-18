@@ -109,7 +109,7 @@ namespace mln
 	      const algebra::vec<mln_site_(I)::dim, V>& ref,
 	      const Ext& extension_, const Site_Set<S>& output_domain_)
     {
-      trace::entering("geom::translate");
+      mln_trace("geom::translate");
 
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
@@ -131,7 +131,6 @@ namespace mln
       mln_concrete(I) output(output_domain);
       data::fill(output, extend(tr_ima, extension) | output_domain);
 
-      trace::exiting("geom::translate");
       return output;
     }
 

@@ -114,7 +114,7 @@ namespace mln
       void
       dir_struct_elt_incr_update_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::dir_struct_elt_incr_update");
+	mln_trace("canvas::browsing::dir_struct_elt_incr_update");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -214,7 +214,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::dir_struct_elt_incr_update");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

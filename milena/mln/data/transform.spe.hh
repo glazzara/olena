@@ -104,7 +104,7 @@ namespace mln
 //       mln_ch_value(I, mln_result(F))
 // 	transform_lowq_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
 //       {
-// 	trace::entering("data::impl::transform_lowq_v2v");
+// 	mln_trace("data::impl::transform_lowq_v2v");
 
 //         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
 //                trait::image::pw_io::read_write)::check();
@@ -123,7 +123,6 @@ namespace mln
 // 	for_all(p)
 // 	  output(p) = lut(input(p));
 
-// 	trace::exiting("data::impl::transform_lowq_v2v");
 //         return output;
 //       }
 
@@ -132,7 +131,7 @@ namespace mln
       mln_ch_value(I, mln_result(F))
 	transform_lowq_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-	trace::entering("data::impl::transform_lowq");
+	mln_trace("data::impl::transform_lowq");
 
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
@@ -148,7 +147,6 @@ namespace mln
 	for_all(p)
 	  output(p) = f(input(p));
 
-	trace::exiting("data::impl::transform_lowq");
         return output;
       }
 
@@ -157,7 +155,7 @@ namespace mln
 //       mln_ch_value(I, mln_result(F))
 // 	transform_taken_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
 //       {
-//         trace::entering("data::impl::transform_taken_v2v");
+//         mln_trace("data::impl::transform_taken_v2v");
 
 //         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
 //                trait::image::pw_io::read_write)::check();
@@ -176,7 +174,6 @@ namespace mln
 // 	for_all(p)
 // 	  output(p) = lut(input(p));
 
-// 	trace::exiting("data::impl::transform_taken_v2v");
 //         return output;
 //       }
 
@@ -185,7 +182,7 @@ namespace mln
       mln_ch_value(I, mln_result(F))
 	transform_taken_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_taken_i2v");
+        mln_trace("data::impl::transform_taken_i2v");
 
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
@@ -201,7 +198,6 @@ namespace mln
 	for_all(p)
 	  output(p) = f(input(p));
 
-	trace::exiting("data::impl::transform_taken_i2v");
         return output;
       }
 
@@ -210,7 +206,7 @@ namespace mln
       mln_ch_value(I, mln_result(F))
 	transform_singleton(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_singleton");
+        mln_trace("data::impl::transform_singleton");
 
 	const I& input  = exact(input_);
 	const F& f      = exact(f_);
@@ -222,7 +218,6 @@ namespace mln
         mln_result(F) val = f(opt::value(input));
 	data::fill_with_value(output, val);
 
-	trace::exiting("data::impl::transform_singleton");
         return output;
       }
 
@@ -231,7 +226,7 @@ namespace mln
       mln_ch_value(I, mln_result(F))
 	transform_fast(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_fast");
+        mln_trace("data::impl::transform_fast");
 
         const I& input = exact(input_);
         const F& f     = exact(f_);
@@ -246,7 +241,6 @@ namespace mln
 	for_all_2(pi, po)
           po.val() = f(pi.val());
 
-	trace::exiting("data::impl::transform_fast");
         return output;
       }
 
@@ -255,7 +249,7 @@ namespace mln
       mln_ch_value(I, mln_result(F))
 	transform_fast_lowq(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        trace::entering("data::impl::transform_fast_lowq");
+        mln_trace("data::impl::transform_fast_lowq");
 
         const I& input = exact(input_);
 	const F& f     = exact(f_);
@@ -273,7 +267,6 @@ namespace mln
         for_all_2(pi, po)
           po.val() = lut(pi.val());
 
-	trace::exiting("data::impl::transform_fast_lowq");
         return output;
       }
 
@@ -283,7 +276,7 @@ namespace mln
 	transform_fastest(const Image<I1>& input1_, const Image<I2>& input2_,
 			  const Function_vv2v<F>& f_)
       {
-        trace::entering("data::impl::transform_fastest");
+        mln_trace("data::impl::transform_fastest");
 
         const I1& input1 = exact(input1_);
         const I2& input2 = exact(input2_);
@@ -300,7 +293,6 @@ namespace mln
         for_all_3(pi1, pi2, po)
           po.val() = f(pi1.val(), pi2.val());
 
-	trace::exiting("data::impl::transform_fastest");
         return output;
       }
 

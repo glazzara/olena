@@ -1,3 +1,14 @@
+data::fill {} 
+data::fill_with_value {} 
+data::impl::fill_with_value_one_block {} 
+data::memset_ {} 
+data::impl::memset_ {} 
+debug::println {} 
+data::fill {} 
+data::fill_with_value {} 
+data::impl::fill_with_value_one_block {} 
+data::memset_ {} 
+data::impl::memset_ {} 
 2 2 2 2 2 
 2 2 2 2 2 
 2 2 2 2 2 

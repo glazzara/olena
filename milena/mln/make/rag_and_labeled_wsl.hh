@@ -131,7 +131,7 @@ namespace mln
 			    const Neighborhood<N>& nbh_,
 			    const mln_value(I)& nbasins)
 	{
-	  trace::entering("make::impl::generic::rag_and_labeled_wsl");
+	  mln_trace("make::impl::generic::rag_and_labeled_wsl");
 
 	  internal::rag_and_labeled_wsl_tests(wshd_, nbh_, nbasins);
 	  const I& wshd = exact(wshd_);
@@ -194,7 +194,6 @@ namespace mln
 	  for (unsigned i = 0; i < la2c.nelements(); ++i)
 	    g.add_edge(la2c[i].first(), la2c[i].second());
 
-	  trace::exiting("make::impl::generic::rag_and_labeled_wsl");
 	  return make::couple(g, output);
 	}
 
@@ -230,14 +229,13 @@ namespace mln
 			const Neighborhood<N>& nbh,
 			const mln_value(I)& nbasins)
     {
-      trace::entering("make::rag_and_labeled_wsl");
+      mln_trace("make::rag_and_labeled_wsl");
 
       internal::rag_and_labeled_wsl_tests(wshd, nbh, nbasins);
 
       util::couple<util::graph,mln_concrete(I)>
 	result = internal::rag_and_labeled_wsl_dispatch(wshd, nbh, nbasins);
 
-      trace::exiting("make::rag_and_labeled_wsl");
       return result;
     }
 

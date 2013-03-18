@@ -70,7 +70,7 @@ namespace mln
 		  W (&horizontal_weights)[Sh],
 		  W (&  vertical_weights)[Sv])
     {
-      trace::entering("linear::convolve_2x1d");
+      mln_trace("linear::convolve_2x1d");
 
       mlc_bool(Sh % 2 == 1)::check();
       mlc_bool(Sv % 2 == 1)::check();
@@ -84,7 +84,6 @@ namespace mln
       tmp    = linear::convolve_directional(input, 1, horizontal_weights);
       output = linear::convolve_directional(  tmp, 0,   vertical_weights);
 
-      trace::exiting("linear::convolve_2x1d");
       return output;
     }
 
