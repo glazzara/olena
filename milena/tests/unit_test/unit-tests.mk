@@ -43,7 +43,8 @@ if HAVE_MAGICKXX
 check_PROGRAMS +=  \
 mln_io_magick_all \
 mln_io_magick_load \
-mln_io_magick_save
+mln_io_magick_save \
+mln_io_magick_internal_init_magick
 
 mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_all_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
@@ -51,7 +52,21 @@ mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_load_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_magick_internal_init_magick_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
+mln_io_magick_internal_init_magick_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 endif HAVE_MAGICKXX
+
+# Starting a conditional unit test list.
+if HAVE_POPPLER
+check_PROGRAMS +=  \
+mln_io_pdf_get_header \
+mln_io_pdf_load
+
+mln_io_pdf_get_header_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
+mln_io_pdf_get_header_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_pdf_load_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
+mln_io_pdf_load_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
+endif HAVE_POPPLER
 
 # Starting a conditional unit test list.
 if HAVE_QT
@@ -112,7 +127,6 @@ mln_accu_math_count \
 mln_accu_math_essential \
 mln_accu_math_sum \
 mln_accu_math_sumpow \
-mln_accu_math_sup \
 mln_accu_max_site \
 mln_accu_nil \
 mln_accu_p \
@@ -733,8 +747,6 @@ mln_io_pbm_load \
 mln_io_pbm_save \
 mln_io_pbms_all \
 mln_io_pbms_load \
-mln_io_pdf_get_header \
-mln_io_pdf_load \
 mln_io_pfm_all \
 mln_io_pfm_load \
 mln_io_pfm_save \

@@ -1,5 +1,9 @@
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Write a valid test for labeling::foreground.
 
 	* tests/labeling/Makefile.am: Add more extra-dist files.
