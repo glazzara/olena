@@ -1,4 +1,5 @@
-// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -87,7 +88,7 @@ namespace scribo
 	scribo::draw::bounding_boxes(links_image, comps, literal::blue);
 
       for_all_links(l, links)
-	if (links(l) != l)
+	if (links.is_linked(l))
 	  mln::draw::line(links_image,
 			  primitive::link::internal::compute_anchor(comps,
 								    l,

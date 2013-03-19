@@ -1,5 +1,9 @@
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/debug/links_image.hh: Make use of object_link interface.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* demo/xml2doc/main.cc: Kill warnings.
 
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
