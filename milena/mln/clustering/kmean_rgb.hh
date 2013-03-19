@@ -698,14 +698,12 @@ namespace mln
 	  while (_current_launching < _n_times)
 	  {
 	    // BEGIN LAUNCH ONE TIME
-	    mln_trace("Launch one time");
 	    {
 	      t_result1d old_variance = mln_max(t_result1d);
 	      _within_variance        = mln_max(t_result1d);
 	      _current_step           = 0;
 
 	      // BEGIN INIT_MEAN
-	      mln_trace("init mean");
 	      {
 		t_value_comp0           min_comp0 = mln_min(t_value_comp0);
 		t_value_comp0           max_comp0 = mln_max(t_value_comp0);
@@ -726,7 +724,6 @@ namespace mln
 
 
 	      // UPDATE DISTANCE
-	      mln_trace("update distance");
 
 	      for (unsigned i = 0; i < _k_center; ++i)
 	      {
@@ -754,7 +751,6 @@ namespace mln
 		old_variance = _within_variance;
 
 		// BEGIN UPDATE GROUP
-		mln_trace("update group");
 		{
 		    mln_piter(t_group_img) rgb(_group.domain());
 
@@ -780,7 +776,6 @@ namespace mln
 		// END UPDATE GROUP
 
 		// BEGIN UPDATE MEAN
-		mln_trace("update mean");
 		{
 		  mln_eiter(t_number_img) en(_number);
 		  mln_eiter(t_mean_img)   em(_mean);
@@ -821,7 +816,6 @@ namespace mln
 		  break;
 
 		// UPDATE DISTANCE
-		mln_trace("update distance");
 
 		for (unsigned i = 0; i < _k_center; ++i)
 		{
@@ -840,7 +834,6 @@ namespace mln
 		// END UPDATE DISTANCE
 
 		// BEGIN UPDATE VARIANCE
-		mln_trace("update variance");
 		{
 		  _within_variance          = literal::zero;
 		  mln_eiter(t_variance_img) l(_variance);

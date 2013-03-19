@@ -1,3 +1,21 @@
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove last references to mln::trace::*.
+
+	* mln/arith/min.hh,
+	* mln/clustering/kmean_rgb.hh,
+	* mln/world/rgb/invert.spe.hh: Remove duplicate references to
+	mln_trace.
+
+	* tests/data/fill_with_image.cc,
+	* tests/data/paste.cc,
+	* tests/linear/gaussian.cc,
+	* tests/opt/at.cc,
+	* tests/opt/element.cc,
+	* tests/opt/value.cc: Remove useless include.
+
+	* tests/unit_test/unit-tests.mk: Remove mln_trace_* tests.
+
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove deprecated trace system.

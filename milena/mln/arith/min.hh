@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -82,8 +83,6 @@ namespace mln
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	    output(p) = lhs(p) < rhs(p) ? lhs(p) : rhs(p);
-
-	  mln_trace("data::arith::generic::min_");
 	}
 
 	template <typename L, typename R>

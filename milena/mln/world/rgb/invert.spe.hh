@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,7 +79,6 @@ namespace mln
 	    op.val().blue() = mln_min(Blue) + (mln_max(Blue) - ip.val().blue());
 	  }
 
-	  mln_trace("world::rgb::impl::invert_rgb_fastest");
 	}
 
 
