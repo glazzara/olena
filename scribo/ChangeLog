@@ -1,3 +1,16 @@
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove last references to mln::trace::*.
+
+	* demo/xml2doc/main.cc,
+	* scribo/make/debug_filename.hh,
+	* scribo/primitive/identify.hh,
+	* src/afp/regroup.hh,
+	* src/misc/negate.cc,
+	* src/misc/superpose.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/preprocessing/unskew.cc: Here.
+
 2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make use of mln_trace.

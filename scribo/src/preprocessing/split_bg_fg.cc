@@ -46,7 +46,7 @@ const char *args_desc[][2] =
 
 int main(int argc, char *argv[])
 {
-  mln::mln_trace("main");
+  mln_trace("main");
   using namespace mln;
 
   if (argc != 6)

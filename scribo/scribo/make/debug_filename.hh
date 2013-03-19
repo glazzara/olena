@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,8 +32,7 @@
 /// Construct and returns a formated output file name.
 
 # include <sstream>
-# include <mln/trace/all.hh>
-
+# include <mln/debug/trace.hh>
 
 namespace scribo
 {

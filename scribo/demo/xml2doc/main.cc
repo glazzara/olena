@@ -23,7 +23,6 @@
 
 #undef MLN_WO_GLOBAL_VARS
 #include <mln/core/image/image2d.hh>
-#include <mln/trace/all.hh>
 
 #include "xml_transform.hh"
 

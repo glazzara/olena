@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 ...)
  */
 
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 # include <scribo/core/component_set.hh>
 
 namespace scribo
@@ -45,7 +46,7 @@ namespace scribo
     component_set<L>
     identify(const component_set<L> comps)
     {
-      mln::mln_trace("scribo::primitive::identify");
+      mln_trace("scribo::primitive::identify");
 
       mln_assertion(comps.is_valid());
 
