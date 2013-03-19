@@ -77,7 +77,7 @@ namespace mln
     p_vertices_with_mass_centers(const Image<W>& wst_,
 				 const Graph<G>& g_)
     {
-      trace::entering("make::p_vertices_with_mass_centers");
+      mln_trace("make::p_vertices_with_mass_centers");
 
       const W& wst = exact(wst_);
       const G& g = exact(g_);
@@ -95,7 +95,6 @@ namespace mln
 
       p_vertices<G, vertex_sites_t> pv(g, vertex_sites);
 
-      trace::exiting("make::p_vertices_with_mass_centers");
       return pv;
     }
 

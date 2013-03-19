@@ -77,7 +77,7 @@ namespace mln
 		      const Neighborhood<N>& nbh_,
 		      L& nlabels, F& f)
 	{
-	  trace::entering("canvas::impl::video_fastest");
+	  mln_trace("canvas::impl::video_fastest");
 
 	  // FIXME: Test?!
 
@@ -159,8 +159,8 @@ namespace mln
 		{
 		  if (nlabels == mln_max(L))
 		  {
-		    trace::warning("labeling aborted! Too many labels for \
-					this label type: nlabels > \
+		    mln_trace_warning("labeling aborted! Too many labels for \
+					this label type: nlabels >	\
 					max(label_type).");
 		    return output;
 		  }
@@ -178,7 +178,6 @@ namespace mln
 	  }
 
 	  f.finalize();
-	  trace::exiting("canvas::impl::video_fastest");
 	  return output;
 	}
 
@@ -246,7 +245,7 @@ namespace mln
       video(const Image<I>& input, const Neighborhood<N>& nbh,
 	    L& nlabels, F& functor)
       {
-	trace::entering("canvas::video");
+	mln_trace("canvas::video");
 
 	internal::labeling_tests(input, nbh, nlabels, functor);
 
@@ -254,7 +253,6 @@ namespace mln
 	output = internal::video_dispatch(input, nbh, nlabels,
 						   functor);
 
-	trace::exiting("canvas::video");
 	return output;
       }
 

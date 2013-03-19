@@ -84,7 +84,7 @@ namespace mln
 		       const Neighborhood<N>& nbh_, L& nlabels,
 		       const S& s, F& f)
 	{
-	  trace::entering("canvas::impl::labeling::sorted_fastest");
+	  mln_trace("canvas::impl::labeling::sorted_fastest");
 
 	  // FIXME: Test?!
 
@@ -172,7 +172,7 @@ namespace mln
 		{
 		  if (nlabels == mln_max(L))
 		  {
-		    trace::warning("labeling aborted! Too many labels \
+		    mln_trace_warning("labeling aborted! Too many labels \
 					  for this label type: nlabels > \
 					  max(label_type).");
 		    return output;
@@ -185,7 +185,6 @@ namespace mln
 	    }
 	  }
 
-	  trace::exiting("canvas::impl::labeling::sorted_fastest");
 	  return output;
 	}
 
@@ -261,7 +260,7 @@ namespace mln
       sorted(const Image<I>& input, const Neighborhood<N>& nbh,
 	     L& nlabels, F& functor, bool increasing)
       {
-	trace::entering("canvas::labeling::sorted");
+	mln_trace("canvas::labeling::sorted");
 
 	internal::labeling_tests(input, nbh, nlabels, functor);
 
@@ -269,7 +268,6 @@ namespace mln
 	output = internal::sorted_dispatch(input, nbh, nlabels,
 					   functor, increasing);
 
-	trace::exiting("canvas::labeling::sorted");
 	return output;
       }
 

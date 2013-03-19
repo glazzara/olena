@@ -160,7 +160,7 @@ namespace scribo
 	object_groups_with_holes(const object_groups<L>& groups,
 				 unsigned min_size)
 	{
-	  trace::entering("scribo::filter::impl::generic::object_groups_with_holes");
+	  mln_trace("scribo::filter::impl::generic::object_groups_with_holes");
 
 	  // Grouping groups and relabel the underlying labeled image.
 	  // Groups are now considered as components.
@@ -299,7 +299,6 @@ namespace scribo
 	  // No groups need to be invalidated.
 	  if (kept == components.nelements())
 	  {
-	    trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	    return groups.duplicate();
 	  }
 
@@ -309,7 +308,6 @@ namespace scribo
 	    if (! to_keep(group_2_comp(c)))
 	      output(c).invalidate();
 
-	  trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	  return output;
 
 	}
@@ -328,14 +326,13 @@ namespace scribo
     object_groups_with_holes(const object_groups<L>& groups,
 			     unsigned min_size)
     {
-      trace::entering("scribo::filter::object_groups_with_holes");
+      mln_trace("scribo::filter::object_groups_with_holes");
 
       mln_precondition(groups.is_valid());
 
       object_groups<L>
 	output = impl::generic::object_groups_with_holes(groups, min_size);
 
-      trace::exiting("scribo::filter::object_groups_with_holes");
       return output;
     }
 

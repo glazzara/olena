@@ -91,7 +91,7 @@ namespace scribo
     sauvola_threshold(const Image<I>& input, unsigned window_size,
 		      double K)
     {
-      trace::entering("scribo::binarization::sauvola_threshold");
+      mln_trace("scribo::binarization::sauvola_threshold");
 
       mln_precondition(mln_site_(I)::dim == 2);
       mln_precondition(exact(input).is_valid());
@@ -99,7 +99,6 @@ namespace scribo
       internal::sauvola_threshold_functor<I> f(input, K, SCRIBO_DEFAULT_SAUVOLA_R);
       internal::local_threshold_core(input, f, window_size);
 
-      trace::exiting("scribo::binarization::sauvola_threshold");
       return f.output;
     }
 

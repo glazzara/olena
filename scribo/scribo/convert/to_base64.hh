@@ -118,7 +118,7 @@ namespace scribo
     void
     to_base64(const Image<I>& input_, mln::util::array<unsigned char>& output)
     {
-      trace::entering("scribo::convert::to_base64");
+      mln_trace("scribo::convert::to_base64");
 
       mln_precondition(exact(input_).is_valid());
       using namespace internal;
@@ -171,7 +171,6 @@ namespace scribo
     	}
       }
 
-      trace::exiting("scribo::convert::to_base64");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

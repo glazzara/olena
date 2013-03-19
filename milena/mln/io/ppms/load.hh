@@ -71,11 +71,10 @@ namespace mln
       void load(image3d<V>& ima,
 		const util::array<std::string>& filenames)
       {
-	trace::entering("mln::io::ppms::load");
+	mln_trace("mln::io::ppms::load");
 
 	io::pnms::load<V>(PPM, ima, filenames);
 
-	trace::exiting("mln::io::ppms::load");
       }
 
 

@@ -95,7 +95,7 @@ namespace mln
       mln_concrete(I)
       erosion(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::erosion");
+	mln_trace("morpho::elementary::erosion");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -103,7 +103,6 @@ namespace mln
 	mln_concrete(I) output = internal::erosion_dispatch(input, nbh);
 
 	mln_postcondition(output <= input);
-	trace::exiting("morpho::elementary::erosion");
 	return output;
       }
 

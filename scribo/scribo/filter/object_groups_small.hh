@@ -71,7 +71,7 @@ namespace scribo
     object_groups_small(const object_groups<L>& groups,
 			unsigned n_links)
     {
-      trace::entering("scribo::filter::object_groups_small");
+      mln_trace("scribo::filter::object_groups_small");
 
       mln_precondition(groups.is_valid());
 
@@ -81,7 +81,6 @@ namespace scribo
 	if (output(i).is_valid() && output(i).card() < n_links)
 	  output(i).invalidate();
 
-      trace::exiting("scribo::filter::object_groups_small");
       return output;
     }
 

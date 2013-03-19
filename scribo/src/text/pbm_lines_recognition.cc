@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 				"input.pbm [lang] [file]",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
@@ -107,5 +107,4 @@ int main(int argc, char* argv[])
 
   scribo::io::text_boxes::save(lines, output);
 
-  trace::exiting("main");
 }

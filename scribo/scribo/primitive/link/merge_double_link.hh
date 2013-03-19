@@ -85,7 +85,7 @@ namespace scribo
       merge_double_link(const object_links<L>& left_link,
 			const object_links<L>& right_link)
       {
-	trace::entering("scribo::primitive::link::merge_double_link");
+	mln_trace("scribo::primitive::link::merge_double_link");
 
 	mln_precondition(left_link.is_valid());
 	mln_precondition(right_link.is_valid());
@@ -110,7 +110,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("scribo::primitive::link::merge_double_link");
 	return merge;
       }
 

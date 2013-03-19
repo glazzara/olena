@@ -61,7 +61,7 @@ namespace mln
 		const Neighborhood<N>& nbh_true_,
 		const Neighborhood<N>& nbh_false_)
     {
-      trace::entering("make::dual_neighb");
+      mln_trace("make::dual_neighb");
 
       mlc_is(mln_trait_image_kind(I), trait::image::kind::logic)::check();
 
@@ -77,7 +77,6 @@ namespace mln
 
       neighb<W> nbh(win);
 
-      trace::exiting("make::dual_neighb");
       return nbh;
     }
 

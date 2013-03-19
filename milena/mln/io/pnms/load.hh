@@ -80,7 +80,7 @@ namespace mln
 		image3d<V>& ima,
 		const util::array<std::string>& filenames)
       {
-	trace::entering("mln::io::pnms::load");
+	mln_trace("mln::io::pnms::load");
 	mln_precondition(!filenames.is_empty());
 
 	util::array<image2d<V> > slices;
@@ -94,7 +94,6 @@ namespace mln
 
 	ima = make::image3d(slices);
 
-	trace::exiting("mln::io::pnms::load");
       }
 
 
@@ -103,7 +102,7 @@ namespace mln
 		image3d<bool>& ima,
 		const util::array<std::string>& filenames)
       {
-	trace::entering("mln::io::pnms::load");
+	mln_trace("mln::io::pnms::load");
 	mln_precondition(!filenames.is_empty());
 	(void) type;
 
@@ -118,7 +117,6 @@ namespace mln
 
 	ima = make::image3d(slices);
 
-	trace::exiting("mln::io::pnms::load");
       }
 
 

@@ -145,7 +145,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const mln::util::array<box<mln_site(I)> >& bbox)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -166,7 +166,6 @@ namespace scribo
       for_all_elements(i, bbox)
 	mln::draw::box(output, bbox(i), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -176,7 +175,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const line_set<L>& lines)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -211,7 +210,6 @@ namespace scribo
 	mln::draw::box(output, lines(i).bbox(), literal::red);
       }
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -221,7 +219,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const scribo::component_set<L>& components)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -244,7 +242,6 @@ namespace scribo
 	if (components(i).is_valid())
 	  mln::draw::box(output, components(i).bbox(), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -255,7 +252,7 @@ namespace scribo
 				const scribo::component_set<L>& components,
 				double angle, box2d rb)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -293,7 +290,6 @@ namespace scribo
 	if (components(i).is_valid())
 	  mln::draw::box(output, bbox(i), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 

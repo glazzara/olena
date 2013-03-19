@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   bool verbose = options.is_set("verbose");
   (void) verbose;
@@ -105,5 +105,4 @@ int main(int argc, char *argv[])
 
   io::magick::save(out, options.arg("output.pbm"));
 
-  trace::exiting("main");
 }

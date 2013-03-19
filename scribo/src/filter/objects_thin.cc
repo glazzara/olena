@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 				"input.pbm min_thin output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<bool> I;
   I input;
@@ -70,6 +70,5 @@ int main(int argc, char *argv[])
     filtered = scribo::filter::components_thin(comps, atoi(argv[2]));
   io::pbm::save(data::convert(bool(), filtered.labeled_image()), argv[3]);
 
-  trace::exiting("main");
 
 }

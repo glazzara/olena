@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -94,16 +94,18 @@ namespace scribo
 	w = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
 	if (! (w % 2))
 	  --w;
-	trace::warning("integral_browsing - Adjusting window width since it"
-		       " was larger than image height.");
+	mln_trace_warning("integral_browsing - "
+			  "Adjusting window width since it"
+			  " was larger than image height.");
       }
       if (h > (ima.domain().nrows() - ima.border()))
       {
 	h = std::min(ima.domain().ncols(), ima.domain().nrows()) - ima.border();
 	if (! (h % 2))
 	  --h;
-	trace::warning("integral_browsing - Adjusting window height since it"
-		       " was larger than image width.");
+	mln_trace_warning("integral_browsing - "
+			  "Adjusting window height since it"
+			  " was larger than image width.");
       }
 
 

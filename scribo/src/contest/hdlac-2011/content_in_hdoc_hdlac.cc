@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 				"input.tif out.xml",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -139,5 +139,4 @@ int main(int argc, char* argv[])
 			scribo::io::img::DebugWithImage);
 
 
-  trace::exiting("main");
 }

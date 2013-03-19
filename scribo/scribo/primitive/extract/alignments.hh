@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -319,7 +320,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;
@@ -422,7 +423,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;
@@ -570,7 +571,7 @@ namespace scribo
       alignments(const document<L>& doc,
 		 float dmax_ratio, unsigned delta_pixel)
       {
-	trace::entering("scribo::primitive::extract::alignments");
+	mln_trace("scribo::primitive::extract::alignments");
 	mln_precondition(doc.is_valid());
 	mln_precondition(doc.has_text());
 	const mln_ch_value(L,bool)& input = doc.binary_image();
@@ -1118,7 +1119,6 @@ namespace scribo
 				  debug, "alignments_debug");
 # endif // ! SCRIBO_NDEBUG
 
-	trace::exiting("scribo::primitive::extract::alignments");
 	return output;
       }
 

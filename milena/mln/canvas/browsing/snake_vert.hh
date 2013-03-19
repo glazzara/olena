@@ -116,7 +116,7 @@ namespace mln
 	// FIXME: Check the dimension of the input
 //	mlc_equal(mln_trait_image_dimension(I)(),
 //		  trait::image::dimension::two_d)::check();
-	trace::entering("canvas::browsing::snake_vert");
+	mln_trace("canvas::browsing::snake_vert");
 	mln_precondition(f.input.is_valid());
 	int
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
@@ -155,7 +155,6 @@ namespace mln
 	    // change browsing
 	    down = ! down;
 	  }
-	trace::exiting("canvas::browsing::snake_vert");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

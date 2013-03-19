@@ -90,7 +90,7 @@ namespace mln
       thin_fit(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thin_fit");
+      mln_trace("morpho::thin_fit");
 
       internal::thin_fit_tests(input, win_fg, win_bg);
 
@@ -99,7 +99,6 @@ namespace mln
 				hit_or_miss_opening(input,
 						    win_fg, win_bg) );
 
-      trace::exiting("morpho::thin_fit");
       return output;
     }
 

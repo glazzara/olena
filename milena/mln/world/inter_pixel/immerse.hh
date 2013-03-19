@@ -63,7 +63,7 @@ namespace mln
       image_if<mln_concrete(I), is_pixel>
       immerse(const Image<I>& input_)
       {
-	trace::entering("world::inter_pixel::immerse");
+	mln_trace("world::inter_pixel::immerse");
 
 	mlc_is_a(mln_domain(I), Box)::check();
 
@@ -77,7 +77,6 @@ namespace mln
 
 	data::paste_without_localization(input, (output | is_pixel()).rw());
 
-	trace::exiting("world::inter_pixel::immerse");
 	return output | is_pixel();
       }
 

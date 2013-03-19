@@ -32,7 +32,7 @@ int main()
 {
   using namespace mln;
 
-  // trace::quiet = false;
+  // debug::trace::quiet = false;
 
   {
     image2d<int> ima(3,3);
@@ -72,7 +72,7 @@ int main()
 // {
 //   using namespace mln;
 
-//   // trace::quiet = false;
+//   // debug::trace::quiet = false;
 
 //   {
 //     image2d<int> ref(3,3);

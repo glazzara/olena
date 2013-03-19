@@ -118,7 +118,7 @@ namespace mln
 	  crest(const Image<I>& input_, const Image<D>& dist_map_,
 		const Neighborhood<N>& nbh_, unsigned psi_threshold)
 	  {
-	    trace::entering("topo::skeleton::impl::generic::crest");
+	    mln_trace("topo::skeleton::impl::generic::crest");
 	    const I& input = exact(input_);
 	    const D& dist_map = exact(dist_map_);
 	    const N& nbh = exact(nbh_);
@@ -159,7 +159,6 @@ namespace mln
 		is_crest(p) = true;
 	    }
 
-	    trace::exiting("topo::skeleton::impl::generic::crest");
 	    return is_crest;
 	  }
 
@@ -173,7 +172,7 @@ namespace mln
 	crest_fastest_2d(const Image<I>& input_, const Image<D>& dist_map_,
 			 const Neighborhood<N>& nbh_, unsigned psi_threshold)
 	{
-	  trace::entering("topo::skeleton::impl::crest_fastest_2d");
+	  mln_trace("topo::skeleton::impl::crest_fastest_2d");
 
 	  const I& input = exact(input_);
 	  const D& dist_map = exact(dist_map_);
@@ -225,7 +224,6 @@ namespace mln
 
 	  }
 
-	  trace::exiting("topo::skeleton::impl::crest_fastest_2d");
 	  return is_crest;
 	}
 
@@ -291,7 +289,7 @@ namespace mln
       crest(const Image<I>& input, const Image<D>& dist_map,
 	    const Neighborhood<N>& nbh, unsigned psi_threshold)
       {
-	trace::entering("topo::skeleton::crest");
+	mln_trace("topo::skeleton::crest");
 
 	mlc_equal(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
@@ -302,7 +300,6 @@ namespace mln
 	  output = internal::crest_dispatch(input, dist_map,
 					    nbh, psi_threshold);
 
-	trace::exiting("topo::skeleton::crest");
 	return output;
       }
 

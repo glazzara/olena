@@ -99,7 +99,7 @@ namespace mln
 	template <typename I, typename J>
 	void fill_with_image(Image<I>& ima_, const Image<J>& data_)
 	{
-	  trace::entering("data::impl::generic::fill_with_image");
+	  mln_trace("data::impl::generic::fill_with_image");
 	  I& ima = exact(ima_);
 	  const J& data = exact(data_);
 
@@ -109,7 +109,6 @@ namespace mln
 	  for_all(p)
 	    ima(p) = static_cast<mln_value(I)>(data(p));
 
-	  trace::exiting("data::impl::generic::fill_with_image");
 	}
 
       } // end if namespace mln::data::impl::generic
@@ -123,11 +122,10 @@ namespace mln
     inline
     void fill_with_image(Image<I>& ima, const Image<J>& data)
     {
-      trace::entering("data::fill_with_image");
+      mln_trace("data::fill_with_image");
 
       internal::fill_with_image_(ima, data);
 
-      trace::exiting("data::fill_with_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

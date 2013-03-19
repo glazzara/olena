@@ -99,7 +99,7 @@ namespace mln
 	  inline
 	  void invert(const Image<I>& input_, Image<O>& output_)
 	  {
-	    trace::entering("world::rgb::impl::generic::invert");
+	    mln_trace("world::rgb::impl::generic::invert");
 
 	    const I& input = exact(input_);
 	    O& output = exact(output_);
@@ -112,7 +112,6 @@ namespace mln
 	    for_all(p)
 	      output(p) = mln_min(V) + (mln_max(V) - input(p));
 
-	    trace::exiting("world::rgb::impl::generic::invert");
 	  }
 
 	} // end of namespace mln::world::rgb::impl::generic
@@ -180,7 +179,7 @@ namespace mln
       inline
       mln_concrete(I) invert(const Image<I>& input)
       {
-	trace::entering("world::rgb::invert");
+	mln_trace("world::rgb::invert");
 
 	mln_precondition(exact(input).is_valid());
 
@@ -188,7 +187,6 @@ namespace mln
 	initialize(output, input);
 	internal::invert_dispatch(input, output);
 
-	trace::exiting("world::rgb::invert");
 	return output;
       }
 
@@ -196,13 +194,12 @@ namespace mln
       inline
       void invert_inplace(Image<I>& input)
       {
-	trace::entering("world::rgb::invert_inplace");
+	mln_trace("world::rgb::invert_inplace");
 
 	mln_precondition(exact(input).is_valid());
 
 	internal::invert_dispatch(input, input);
 
-	trace::exiting("world::rgb::invert_inplace");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

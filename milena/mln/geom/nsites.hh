@@ -55,7 +55,7 @@ namespace mln
     inline
     unsigned nsites(const Image<I>& input_)
     {
-      trace::entering("geom::nsites");
+      mln_trace("geom::nsites");
       const I& input = exact(input_);
 
       mln_precondition(input.is_valid());
@@ -64,7 +64,6 @@ namespace mln
       // Relies on the card routine on a site set.
       unsigned n = mln::set::internal::card_dispatch(input.domain());
 
-      trace::exiting("geom::nsites");
       return n;
     }
 

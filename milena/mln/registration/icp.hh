@@ -621,7 +621,7 @@ namespace mln
 	const algebra::quat& initial_rot,
 	const mln_vec(P)& initial_translation)
     {
-      trace::entering("registration::icp");
+      mln_trace("registration::icp");
 
       (void) X;
       mln_precondition(P::dim == 3);
@@ -714,7 +714,6 @@ namespace mln
       } while ((k < 3)
 	  || norm::l2((qT - qT_old)) + norm::l2((qR - qR_old).to_vec()) > 1e-3);
 
-      trace::exiting("registration::icp");
       return std::make_pair(qR, qT);
     }
 

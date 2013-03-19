@@ -110,7 +110,7 @@ namespace mln
 			  const Image<I>& m_,
 			  const Neighborhood<N>& nbh_)
       {
-	trace::entering("morpho::tree::dual_input_max_tree");
+	mln_trace("morpho::tree::dual_input_max_tree");
 
 	const I& f = exact(f_);
 	const I& m = exact(m_);
@@ -126,7 +126,6 @@ namespace mln
 
 	tree_t tree = internal::dual_input_max_tree_dispatch(mln_trait_image_quant(I)(), f, m, nbh);
 
-	trace::exiting("morpho::tree::dual_input_max_tree");
 	return tree;
       }
 

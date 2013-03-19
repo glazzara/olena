@@ -83,7 +83,7 @@ namespace scribo
 			    component_set<L>& aligned_lines,
 			    unsigned max_alignment_diff)
     {
-      trace::entering("scribo::table::align_lines_horizontaly");
+      mln_trace("scribo::table::align_lines_horizontaly");
 
       mln_precondition(exact(input).is_valid());
       mln::util::array<int>
@@ -94,7 +94,6 @@ namespace scribo
 				     aligned_lines, 0,
 				     max_alignment_diff);
 
-      trace::exiting("scribo::table::align_lines_horizontaly");
       return res;
     }
 

@@ -75,9 +75,8 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::gdcm::load");
+	mln_trace("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
@@ -85,9 +84,8 @@ namespace mln
       inline
       image3d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::gdcm::load");
+	mln_trace("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
@@ -97,7 +95,7 @@ namespace mln
       void load(Image<I>& ima_,
 		const std::string& filename)
       {
-	trace::entering("mln::io::dicom::load");
+	mln_trace("mln::io::dicom::load");
 
 	I& ima = exact(ima_);
 
@@ -185,7 +183,6 @@ namespace mln
 
 	delete[] dataBuffer;
 
-	trace::exiting("mln::io::dicom::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,1 +1,1 @@
-    trace::entering("my_algorithm");
+    debug::trace("my_algorithm");

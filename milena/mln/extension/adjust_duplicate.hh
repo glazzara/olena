@@ -86,40 +86,36 @@ namespace mln
     void adjust_duplicate(const Image<I>& ima,
 			  const Window<W>& win)
     {
-      trace::entering("extension::adjust_duplicate");
+      mln_trace("extension::adjust_duplicate");
       extension::adjust(ima, win);
       extension::duplicate(ima);
-      trace::exiting("extension::adjust_duplicate");
     }
 
     template <typename I, typename W>
     void adjust_duplicate(const Image<I>& ima,
 			  const Weighted_Window<W>& wwin)
     {
-      trace::entering("extension::adjust_duplicate");
+      mln_trace("extension::adjust_duplicate");
       extension::adjust(ima, wwin);
       extension::duplicate(ima);
-      trace::exiting("extension::adjust_duplicate");
     }
 
     template <typename I, typename N>
     void adjust_duplicate(const Image<I>& ima,
 			  const Neighborhood<N>& nbh)
     {
-      trace::entering("extension::adjust_duplicate");
+      mln_trace("extension::adjust_duplicate");
       extension::adjust(ima, nbh);
       extension::duplicate(ima);
-      trace::exiting("extension::adjust_duplicate");
     }
 
     template <typename I>
     void adjust_duplicate(const Image<I>& ima,
 			  unsigned delta)
     {
-      trace::entering("extension::adjust_duplicate");
+      mln_trace("extension::adjust_duplicate");
       extension::adjust(ima, delta);
       extension::duplicate(ima);
-      trace::exiting("extension::adjust_duplicate");
     }
 
 

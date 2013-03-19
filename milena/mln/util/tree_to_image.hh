@@ -88,7 +88,7 @@ namespace mln
       void
       tree_to_image_rec(tree_node<T>* tree_node, Image<I>& output_)
       {
-	trace::entering("util::impl::tree_to_image_rec");
+	mln_trace("util::impl::tree_to_image_rec");
 
 	I& output = exact(output_);
 
@@ -106,7 +106,6 @@ namespace mln
 	    if (*it)
 	      tree_to_image_rec((*it), output);
 	  }
-	trace::exiting("util::impl::tree_to_image_rec");
       }
 
       template <typename T, typename J>
@@ -114,7 +113,7 @@ namespace mln
       void
       display_tree_rec(const Image<J>& ima_, tree_node<T>* tree_node, int level)
       {
-	trace::entering("util::impl::display_tree_rec");
+	mln_trace("util::impl::display_tree_rec");
 
 	const J& ima = exact(ima_);
 	display_set(ima, tree_node->elt().points);
@@ -123,7 +122,6 @@ namespace mln
 	     it != tree_node->children().end(); ++it)
 	  display_tree_rec(ima, (*it), level + 1);
 
-	trace::exiting("util::impl::display_tree_rec");
       }
 
 
@@ -132,7 +130,7 @@ namespace mln
       void
       display_branch_rec(const Image<J>& ima_, tree_node<T>* tree_node, Image<K>& output_)
       {
-	trace::entering("util::impl::display_branch_rec");
+	mln_trace("util::impl::display_branch_rec");
 
 	K& output = exact(output_);
 	const J& ima = exact(ima_);
@@ -145,7 +143,6 @@ namespace mln
 	     it != tree_node->children().end(); ++it)
 	  display_branch_rec(ima, (*it), output);
 
-	trace::exiting("util::impl::display_branch_rec");
       }
 
 
@@ -154,7 +151,7 @@ namespace mln
       void
       display_set(const Image<J>& ima_, p_set<P>& s)
       {
-	trace::entering("util::impl::display_set");
+	mln_trace("util::impl::display_set");
 
 	const J& ima = exact(ima_);
 	image2d<bool> out(ima.bbox());
@@ -164,7 +161,6 @@ namespace mln
 	for_all(p)
 	  out(p) = true;
 
-	trace::exiting("util::impl::display_set");
       }
 
 
@@ -177,12 +173,11 @@ namespace mln
     void
     tree_to_image(tree<T>& tree, Image<I>& output_)
     {
-      trace::entering("util::tree_to_image");
+      mln_trace("util::tree_to_image");
 
       I& output = exact(output_);
       impl::tree_to_image_rec(tree.root(), output);
 
-      trace::exiting("util::tree_to_image");
     }
 
 
@@ -191,7 +186,7 @@ namespace mln
     void
     display_tree(const Image<J>& ima_, tree<I>& tree)
     {
-      trace::entering("util::display_tree");
+      mln_trace("util::display_tree");
 
       mln_precondition(tree.root());
 
@@ -200,7 +195,6 @@ namespace mln
 
       impl::display_tree_rec(ima, tree.root(), level);
 
-      trace::exiting("util::display_tree");
     }
 
 
@@ -209,7 +203,7 @@ namespace mln
     void
     display_branch(const Image<J>& ima_, tree_node<I>* tree_node)
     {
-      trace::entering("util::display_branch");
+      mln_trace("util::display_branch");
 
       mln_assertion(tree_node);
 
@@ -219,7 +213,6 @@ namespace mln
       data::fill(output, false);
       impl::display_branch_rec(ima, tree_node, output);
 
-      trace::exiting("util::display_branch");
     }
 
 

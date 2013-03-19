@@ -85,9 +85,8 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::pgm::load");
+	mln_trace("mln::io::pgm::load");
 	image2d<V> ima = io::pnm::load<V>(PGM, filename);
-	trace::exiting("mln::io::pgm::load");
 	return ima;
       }
 
@@ -96,9 +95,8 @@ namespace mln
       void load(Image<I>& ima,
 		const std::string& filename)
       {
-	trace::entering("mln::io::pgm::load");
+	mln_trace("mln::io::pgm::load");
 	io::pnm::load<I>(PGM, ima, filename);
-	trace::exiting("mln::io::pgm::load");
       }
 
 

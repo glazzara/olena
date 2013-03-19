@@ -196,7 +196,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, label_, nlabels);
 
 	  const A& a = exact(a_);
@@ -211,7 +211,6 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
@@ -222,7 +221,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(A(), label_, nlabels);
 
 	  if (value::next(nlabels) != accus.size())
@@ -242,7 +241,6 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
@@ -254,7 +252,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, input_, label_, nlabels);
 
 	  const A& a = exact(a_);
@@ -270,7 +268,6 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
@@ -282,7 +279,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  //internal::compute_tests(a_, input_, label_, nlabels);
 
 	  //const A& a = exact(a_);
@@ -305,7 +302,6 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
@@ -325,7 +321,7 @@ namespace mln
 		      const Image<L>& label_,
 		      const mln_value(L)& nlabels)
       {
-	trace::entering("labeling::impl::compute_fastest");
+	mln_trace("labeling::impl::compute_fastest");
 	internal::compute_tests(a_, input_, label_, nlabels);
 
 	const A& a = exact(a_);
@@ -354,7 +350,6 @@ namespace mln
 	util::array<mln_result(A)> res;
 	convert::from_to(accus, res);
 
-	trace::exiting("labeling::impl::generic::compute_fastest");
 	return res;
       }
 
@@ -370,7 +365,7 @@ namespace mln
 		      const Image<L>& label_,
 		      const mln_value(L)& nlabels)
       {
-	trace::entering("labeling::impl::generic::compute_fastest");
+	mln_trace("labeling::impl::generic::compute_fastest");
 	//internal::compute_tests(a_, input_, label_, nlabels);
 
 	// FIXME: check image properties + add doc.
@@ -406,7 +401,6 @@ namespace mln
 	util::array<mln_result(A)> res;
 	convert::from_to(accus, res);
 
-	trace::exiting("labeling::impl::generic::compute_fastest");
 	return res;
       }
 
@@ -639,14 +633,13 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       //internal::compute_tests(a, input, label, nlabels);
 
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, input, label, nlabels);
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -658,14 +651,13 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(a, input, label, nlabels);
 
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, input, label, nlabels);
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -691,7 +683,7 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(A(), label, nlabels);
 
@@ -700,7 +692,6 @@ namespace mln
 
       mln_postcondition(res.nelements() == value::next(nlabels));
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -713,7 +704,7 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(a, label, nlabels);
 
@@ -722,7 +713,6 @@ namespace mln
 
       mln_postcondition(res.nelements() == value::next(nlabels));
 
-      trace::exiting("labeling::compute");
       return res;
     }
 

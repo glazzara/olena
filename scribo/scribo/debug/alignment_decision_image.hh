@@ -84,7 +84,7 @@ namespace scribo
 			       const object_links<L>& filtered_links,
 			       const anchor::Type& anchor)
     {
-      trace::entering("scribo::debug::alignment_decision_image");
+      mln_trace("scribo::debug::alignment_decision_image");
       const I& input = exact(input_);
 
       const component_set<L>& components = links.components();
@@ -119,7 +119,6 @@ namespace scribo
 	  mln::draw::line(decision_image, anchor_i, anchor_li, value);
 	}
 
-      trace::exiting("scribo::debug::alignment_decision_image");
       return decision_image;
     }
 

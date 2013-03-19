@@ -215,7 +215,7 @@ namespace scribo
 		       const mln_value(I)& value,
 		       anchor::Type anchor)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
 
       I& input = exact(input_);
 
@@ -232,7 +232,6 @@ namespace scribo
 	  mln::draw::line(input, p1, p2, value);
 	}
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 
@@ -258,7 +257,7 @@ namespace scribo
 		       const mln_value(I)& validated_link_value,
 		       anchor::Type anchor)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
 
       I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -303,7 +302,6 @@ namespace scribo
 
       }
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 
@@ -315,14 +313,13 @@ namespace scribo
 		       const Graph<G>& g,
 		       const mln_value(I)& link_value)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
       mln_precondition(exact(input).is_valid());
 
 
       internal::draw_graph_edges_functor<I,G> f(exact(input), link_value);
       mln::canvas::browsing::depth_first_search(g, f);
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 

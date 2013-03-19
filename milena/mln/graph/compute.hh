@@ -62,13 +62,12 @@ namespace mln
     mln_result(F)
     compute(const Graph<G>& g_, F& functor)
     {
-      trace::entering("graph::compute");
+      mln_trace("graph::compute");
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
       canvas::browsing::depth_first_search(g, functor);
 
-      trace::exiting("graph::compute");
       return functor.data;
     }
 

@@ -60,7 +60,7 @@ namespace mln
       mln_trait_op_minus_twice(mln_concrete(I))
       laplacian(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::laplacian");
+	mln_trace("morpho::elementary::laplacian");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -68,7 +68,6 @@ namespace mln
 	mln_trait_op_minus_twice(mln_concrete(I)) output;
 	output = gradient_external(input, nbh) - gradient_internal(input, nbh);
 
-	trace::exiting("morpho::elementary::laplacian");
 	return output;
       }
 

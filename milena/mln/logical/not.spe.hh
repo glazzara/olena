@@ -77,27 +77,25 @@ namespace mln
       inline
       void not_(trait::image::speed::fastest, const I& input, O& output)
       {
-	trace::entering("logical::impl::not_");
+	mln_trace("logical::impl::not_");
 
 	mln_pixter(const I) ip(input);
 	mln_pixter(O)       op(output);
 	for_all_2(ip, op)
 	  op.val() = ! ip.val();
 
-	trace::exiting("logical::impl::not_");
       }
 
       template <typename I>
       inline
       void not_inplace(trait::image::speed::fastest, I& inout)
       {
-	trace::entering("logical::impl::not_inplace");
+	mln_trace("logical::impl::not_inplace");
 
 	mln_pixter(I) p(inout);
 	for_all(p)
 	  p.val() = ! p.val();
 
-	trace::exiting("logical::impl::not_inplace");
       }
 
     } // end of namespace mln::logical::impl

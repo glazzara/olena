@@ -93,7 +93,7 @@ namespace mln
       thinning(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thinning");
+      mln_trace("morpho::thinning");
 
 
       internal::thinning_tests(input, win_fg, win_bg);
@@ -103,7 +103,6 @@ namespace mln
 
       mln_postcondition( complementation( thickening( complementation(input),
 						      win_bg, win_fg ) ) == output);
-      trace::exiting("morpho::thinning");
       return output;
     }
 

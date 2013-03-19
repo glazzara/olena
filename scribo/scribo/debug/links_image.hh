@@ -72,7 +72,7 @@ namespace scribo
 		anchor::Type anchor,
 		bool draw_bboxes)
     {
-      trace::entering("scribo::debug::links_image");
+      mln_trace("scribo::debug::links_image");
       const I& input = exact(input_);
 
       mln_precondition(input.is_valid());
@@ -97,7 +97,6 @@ namespace scribo
 								    anchor),
 			  literal::green);
 
-      trace::exiting("scribo::debug::links_image");
       return links_image;
     }
 

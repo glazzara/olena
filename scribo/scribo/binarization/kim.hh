@@ -133,7 +133,7 @@ namespace scribo
     mln_ch_value(I, bool)
     kim(const Image<I>& input_, unsigned window_size, double k)
     {
-      trace::entering("scribo::binarization::kim");
+      mln_trace("scribo::binarization::kim");
 
       const I& input = exact(input_);
 
@@ -241,7 +241,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::binarization::kim");
       return output;
     }
 

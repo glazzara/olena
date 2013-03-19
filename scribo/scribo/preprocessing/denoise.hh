@@ -82,7 +82,7 @@ namespace scribo
     denoise(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	    unsigned fg_min_card, unsigned bg_min_card)
     {
-      trace::entering("scribo::preprocessing::denoise");
+      mln_trace("scribo::preprocessing::denoise");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -94,7 +94,6 @@ namespace scribo
       output = denoise_fg(input, nbh, fg_min_card);
       output = denoise_bg(output, nbh, bg_min_card);
 
-      trace::exiting("scribo::preprocessing::denoise");
       return output;
     }
 

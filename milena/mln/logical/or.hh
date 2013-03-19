@@ -82,14 +82,13 @@ namespace mln
     mln_ch_fun_vv2v(lor, L, R)
     or_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::or_");
+      mln_trace("logical::or_");
 
       internal::tests(lhs, rhs);
 
       mln_fun_vv2v(lor, L, R) f;
       mln_ch_fun_vv2v(lor, L, R) output = data::transform(lhs, rhs, f);
 
-      trace::exiting("logical::or_");
       return output;
     }
 
@@ -97,7 +96,7 @@ namespace mln
     inline
     void or_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::or_inplace");
+      mln_trace("logical::or_inplace");
 
       mlc_converts_to(mln_fun_vv2v_result(lor, L, R),
 		      mln_value(L))::check();
@@ -107,7 +106,6 @@ namespace mln
       mln_fun_vv2v(lor, L, R) f;
       data::transform_inplace(lhs, rhs, f);
 
-      trace::exiting("logical::or_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

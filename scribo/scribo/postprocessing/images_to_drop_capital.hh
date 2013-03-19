@@ -63,7 +63,7 @@ namespace scribo
     void
     images_to_drop_capital(document<L>& doc)
     {
-      trace::entering("scribo::postprocessing::images_to_drop_capital");
+      mln_trace("scribo::postprocessing::images_to_drop_capital");
 
       mln_precondition(doc.is_valid());
 
@@ -128,7 +128,6 @@ namespace scribo
       // Ignored components are still in the separator image...
       doc.set_elements(elts);
 
-      trace::exiting("scribo::postprocessing::images_to_drop_capital");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

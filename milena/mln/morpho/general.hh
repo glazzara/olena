@@ -123,7 +123,7 @@ namespace mln
 	mln_concrete(I)
 	general_on_function(const Op& op, const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("morpho::impl::generic::general_on_function");
+	  mln_trace("morpho::impl::generic::general_on_function");
 
  	  internal::general_tests(op, input, win);
 
@@ -131,7 +131,6 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = accu::transform(input, op.accu(input), win);
 
-	  trace::exiting("morpho::impl::generic::general_on_function");
 	  return output;
 	}
 
@@ -142,7 +141,7 @@ namespace mln
 	mln_concrete(I)
 	general_on_set(const Op& op, const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("morpho::impl::generic::general_on_set");
+	  mln_trace("morpho::impl::generic::general_on_set");
 
 	  internal::general_tests(op, input, win);
 
@@ -150,7 +149,6 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = accu::transform_stop(input, op.accu(input), win);
 
-	  trace::exiting("morpho::impl::generic::general_on_set");
 	  return output;
 	}
 
@@ -167,14 +165,13 @@ namespace mln
     mln_concrete(I)
     general(const Op& op, const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::general");
+      mln_trace("morpho::general");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       internal::general_tests(op, input, win);
       mln_concrete(I) output = internal::general_dispatch(op, input, win);
 
-      trace::exiting("morpho::general");
       return output;
     }
 

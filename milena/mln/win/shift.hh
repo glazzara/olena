@@ -88,7 +88,7 @@ namespace mln
     mln_regular(W)
     shift(const Window<W>& win, const mln_dpsite(W)& dp)
     {
-      trace::entering("win::shift");
+      mln_trace("win::shift");
 
       mlc_is(mln_trait_window_support(W),
 	     trait::window::support::regular)::check();
@@ -98,7 +98,6 @@ namespace mln
       mln_regular(W) tmp = impl::shift_(mln_trait_window_definition(W)(),
 					exact(win), dp);
 
-      trace::exiting("win::shift");
       return tmp;
     }
 

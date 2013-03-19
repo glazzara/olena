@@ -75,14 +75,13 @@ namespace scribo
     object_links_bbox_w_ratio(const object_links<L>& links,
 			      float max_w_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_w_ratio");
+      mln_trace("scribo::filter::object_links_bbox_w_ratio");
 
       mln_precondition(links.is_valid());
 
       object_links<L>
 	output = object_links_bbox_ratio(links, 1, max_w_ratio);
 
-      trace::exiting("scribo::filter::object_links_bbox_w_ratio");
       return output;
     }
 

@@ -124,7 +124,7 @@ namespace mln
     pack(const Image<I>& label, mln_value(I)& new_nlabels,
 	 fun::i2v::array<mln_value(I)>& repack_fun)
     {
-      trace::entering("labeling::pack");
+      mln_trace("labeling::pack");
 
       internal::pack_tests(label, new_nlabels);
 
@@ -138,7 +138,6 @@ namespace mln
       mln_concrete(I)
 	output = data::transform(label, repack_fun);
 
-      trace::exiting("labeling::pack");
       return output;
     }
 
@@ -157,7 +156,7 @@ namespace mln
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels,
 		 fun::i2v::array<mln_value(I)>& repack_fun)
     {
-      trace::entering("labeling::pack_inplace");
+      mln_trace("labeling::pack_inplace");
 
       internal::pack_tests(label, new_nlabels);
 
@@ -169,7 +168,6 @@ namespace mln
 
       exact(label) = data::transform(label, repack_fun);
 
-      trace::exiting("labeling::pack_inplace");
     }
 
 

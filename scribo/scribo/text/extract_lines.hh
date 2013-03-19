@@ -110,7 +110,7 @@ namespace scribo
     extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		  const mln_ch_value(I,bool)& separators)
     {
-      trace::entering("scribo::text::extract_lines");
+      mln_trace("scribo::text::extract_lines");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -134,7 +134,6 @@ namespace scribo
       line_set<mln_ch_value(I,scribo::def::lbl_type)>
 	lines = extract_lines(comps);
 
-      trace::exiting("scribo::text::extract_lines");
       return lines;
     }
 
@@ -143,7 +142,7 @@ namespace scribo
     line_set<mln_ch_value(L,scribo::def::lbl_type)>
     extract_lines(const component_set<L>& comps)
     {
-      trace::entering("scribo::text::extract_lines");
+      mln_trace("scribo::text::extract_lines");
 
       mln_precondition(comps.is_valid());
 
@@ -177,7 +176,6 @@ namespace scribo
       line_set<L> lines(groups);
       lines = text::merging(lines);
 
-      trace::exiting("scribo::text::extract_lines");
       return lines;
     }
 

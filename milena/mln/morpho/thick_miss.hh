@@ -62,7 +62,7 @@ namespace mln
     thick_miss(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thick_miss");
+      mln_trace("morpho::thick_miss");
       // FIXME: Fix the following line (win_miss ??)
 //       mln_precondition(exact(win_miss).is_centered());
       mln_precondition((exact(win_fg) && exact(win_bg)).is_empty());
@@ -72,7 +72,6 @@ namespace mln
 			       hit_or_miss_background_opening(input,
 							      win_fg, win_bg) );
 
-      trace::exiting("morpho::thick_miss");
       return output;
     }
 

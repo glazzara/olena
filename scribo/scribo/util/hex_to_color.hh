@@ -109,7 +109,7 @@ namespace scribo
 
     value::rgb8 hex_to_color(const std::string& hex)
     {
-      trace::entering("scribo::util::hex_to_color");
+      mln_trace("scribo::util::hex_to_color");
 
       mln_precondition(!hex.empty());
 
@@ -132,7 +132,6 @@ namespace scribo
 		    internal::convert_from_hex(green),
 		    internal::convert_from_hex(blue));
 
-      trace::exiting("scribo::util::hex_to_color");
       return v;
     }
 

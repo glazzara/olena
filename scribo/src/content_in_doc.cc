@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
 
   bool verbose = options.is_set("verbose");
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
@@ -202,5 +202,4 @@ int main(int argc, char* argv[])
   if (options.opt_value("debug-regions") != "/dev/null")
     scribo::io::img::save(doc, options.opt_value("debug-regions"), scribo::io::img::DebugWithImage);
 
-  trace::exiting("main");
 }

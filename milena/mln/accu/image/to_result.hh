@@ -63,7 +63,7 @@ namespace mln
 	  mln_ch_value(I, mln_deduce(I, value, result))
 	    to_result(const Image<I>& input_)
 	  {
-	    trace::entering("accu::impl::image::generic::to_result");
+	    mln_trace("accu::impl::image::generic::to_result");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -78,7 +78,6 @@ namespace mln
 	    for_all(p)
 	      output(p) = input(p).to_result();
 
-	    trace::exiting("accu::impl::image::generic::to_result");
 	    return output;
 	  }
 
@@ -91,7 +90,7 @@ namespace mln
 	mln_ch_value(I, mln_deduce(I, value, result))
 	  to_result_fastest(const Image<I>& input_)
 	{
-	  trace::entering("accu::impl::image::to_result_fastest");
+	  mln_trace("accu::impl::image::to_result_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
@@ -108,7 +107,6 @@ namespace mln
 	  for_all_2(p_in, p_out)
 	    p_out.val() = p_in.val().to_result();
 
-	  trace::exiting("accu::impl::image::to_result_fastest");
 	  return output;
 	}
 
@@ -154,7 +152,7 @@ namespace mln
       mln_ch_value(I, mln_deduce(I, value, result))
 	to_result(const Image<I>& input)
       {
-	trace::entering("accu::image::to_result");
+	mln_trace("accu::image::to_result");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -164,7 +162,6 @@ namespace mln
 	mln_ch_value(I, R) output;
 	output = internal::to_result_dispatch(input);
 
-	trace::exiting("accu::image::to_result");
 	return output;
       }
 

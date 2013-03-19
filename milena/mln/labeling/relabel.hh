@@ -180,7 +180,7 @@ namespace mln
 	    const mln_value(I)&	    nlabels,
 	    const Function_v2v<F>&  fv2v)
     {
-      trace::entering("labeling::relabel");
+      mln_trace("labeling::relabel");
 
 
       mlc_not_equal(mln_result(F),bool)::check();
@@ -188,7 +188,6 @@ namespace mln
 
       mln_concrete(I) output = data::transform(label, fv2v);
 
-      trace::exiting("labeling::relabel");
       return output;
     }
 
@@ -202,7 +201,7 @@ namespace mln
 	    mln_value(I)&	    new_nlabels,
 	    const Function_v2b<F>&  fv2b)
     {
-      trace::entering("labeling::relabel");
+      mln_trace("labeling::relabel");
 
       internal::relabel_tests(label, nlabels, new_nlabels, fv2b);
 
@@ -210,7 +209,6 @@ namespace mln
       fv2v_t fv2v = make::relabelfun(fv2b, nlabels, new_nlabels);
       mln_concrete(I) output = labeling::relabel(label, new_nlabels, fv2v);
 
-      trace::exiting("labeling::relabel");
       return output;
     }
 
@@ -222,14 +220,13 @@ namespace mln
 		    const mln_value(I)&	    nlabels,
 		    const Function_v2v<F>&  fv2v)
     {
-      trace::entering("labeling::relabel_inplace");
+      mln_trace("labeling::relabel_inplace");
 
       mlc_not_equal(mln_result(F),bool)::check();
       internal::relabel_inplace_tests(label, nlabels, fv2v);
 
       data::transform_inplace(label, fv2v);
 
-      trace::exiting("labeling::relabel_inplace");
     }
 
 
@@ -241,7 +238,7 @@ namespace mln
 		    const mln_value(I)&	    nlabels,
 		    const Function_v2b<F>&  fv2b)
     {
-      trace::entering("labeling::relabel_inplace");
+      mln_trace("labeling::relabel_inplace");
 
       internal::relabel_inplace_tests(label, nlabels, fv2b);
 
@@ -250,7 +247,6 @@ namespace mln
       fv2v_t fv2v = make::relabelfun(fv2b, nlabels, tmp);
       labeling::relabel_inplace(label, tmp, fv2v);
 
-      trace::exiting("labeling::relabel_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

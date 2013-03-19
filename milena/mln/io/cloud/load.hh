@@ -91,7 +91,7 @@ namespace mln
       template <typename P>
       void load(p_array<P>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::cloud::load");
+	mln_trace("mln::io::cloud::load");
 
 	/// FIXME: do we really want this?
 	mln_precondition(P::dim == 3u);
@@ -105,7 +105,6 @@ namespace mln
 
 	internal::load_data(arr, file);
 
-	trace::exiting("mln::io::cloud::load");
       }
 
 

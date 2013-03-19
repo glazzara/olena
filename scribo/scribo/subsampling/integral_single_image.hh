@@ -100,7 +100,7 @@ namespace scribo
 		 const mln_domain(I)& output_domain,
 		 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::integral_3");
+	mln_trace("subsampling::impl::integral_3");
 
 	const unsigned scale = 3;
 
@@ -205,7 +205,6 @@ namespace scribo
 	  p_integ += b_next;
 	}
 
-	trace::exiting("subsampling::impl::integral_3");
 	return sub;
       }
 
@@ -218,7 +217,7 @@ namespace scribo
 		 const mln_domain(I)& output_domain,
 		 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::integral_2");
+	mln_trace("subsampling::impl::integral_2");
 
 	const unsigned scale = 2;
 
@@ -366,7 +365,6 @@ namespace scribo
 	  p_integ += b_next;
 	}
 
-	trace::exiting("subsampling::impl::integral_2");
 	return sub;
       }
 
@@ -408,7 +406,7 @@ namespace scribo
 	     Image<J>& integral_sum_sum_2,
 	     const mln_domain(I)& output_domain, unsigned border_thickness)
     {
-      trace::entering("subsampling::integral");
+      mln_trace("subsampling::integral");
 
       const I& input = exact(input_);
 
@@ -420,7 +418,6 @@ namespace scribo
 	output = impl::integral(input, scale, integral_sum_sum_2,
 				output_domain, border_thickness);
 
-      trace::exiting("subsampling::integral");
       return output;
     }
 
@@ -430,7 +427,7 @@ namespace scribo
     integral(const Image<I>& input_, unsigned scale,
 	     Image<J>& integral_sum_sum_2)
     {
-      trace::entering("subsampling::integral");
+      mln_trace("subsampling::integral");
 
       const I& input = exact(input_);
 
@@ -445,7 +442,6 @@ namespace scribo
       output = integral(input_, scale, integral_sum_sum_2,
 			b, mln::border::thickness);
 
-      trace::exiting("subsampling::integral");
       return output;
     }
 

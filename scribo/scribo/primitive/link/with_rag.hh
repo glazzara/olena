@@ -74,7 +74,7 @@ namespace scribo
       with_rag(const component_set<L>& comps,
 	       const Neighborhood<N>& nbh)
       {
-	trace::entering("scribo::primitive::link::with_rag");
+	mln_trace("scribo::primitive::link::with_rag");
 
 	mln_precondition(comps.is_valid());
 
@@ -87,7 +87,6 @@ namespace scribo
 							nbh,
 							comps.nelements());
 
-	trace::exiting("scribo::primitive::link::with_rag");
 	return make::couple(g, iz);
       }
 

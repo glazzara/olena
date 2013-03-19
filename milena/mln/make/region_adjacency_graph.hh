@@ -97,7 +97,7 @@ namespace mln
 			       const Neighborhood<N>& nbh_,
 			       const mln_value(I)& nbasins)
 	{
-	  trace::entering("make::impl::generic::region_adjacency_graph");
+	  mln_trace("make::impl::generic::region_adjacency_graph");
 
 	  internal::region_adjacency_graph_tests(wshd_, nbh_, nbasins);
 	  const I& wshd = exact(wshd_);
@@ -145,7 +145,6 @@ namespace mln
 		g.add_edge(i, j);
 
 
-	  trace::exiting("make::impl::generic::region_adjacency_graph");
 	  return g;
 	}
 
@@ -180,13 +179,12 @@ namespace mln
 			   const Neighborhood<N>& nbh,
 			   const mln_value(I)& nbasins)
     {
-      trace::entering("make::region_adjacency_graph");
+      mln_trace("make::region_adjacency_graph");
 
       internal::region_adjacency_graph_tests(wshd, nbh, nbasins);
 
       util::graph g = internal::region_adjacency_graph_dispatch(wshd, nbh, nbasins);
 
-      trace::exiting("make::region_adjacency_graph");
       return g;
     }
 

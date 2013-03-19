@@ -103,7 +103,7 @@ namespace mln
 	mln_result(A)
 	update(Accumulator<A>& a_, const Image<I>& input_)
 	{
-	  trace::entering("data::impl::generic::update");
+	  mln_trace("data::impl::generic::update");
 
 	  A& a = exact(a_);
 	  const I& input = exact(input_);
@@ -113,7 +113,6 @@ namespace mln
 	  for_all(p)
 	    a.take(input(p));
 
-	  trace::exiting("data::impl::generic::update");
 	  return a.to_result();
 	}
 
@@ -132,7 +131,7 @@ namespace mln
       mln_result(A)
       update_fastest(Accumulator<A>& a_, const Image<I>& input_)
       {
-	trace::entering("data::impl::update_fastest");
+	mln_trace("data::impl::update_fastest");
 
 	A& a = exact(a_);
 	const I& input = exact(input_);
@@ -142,7 +141,6 @@ namespace mln
 	for_all(pxl)
 	  a.take(pxl.val());
 
-	trace::exiting("data::impl::update_fastest");
 	return a.to_result();
       }
 
@@ -194,12 +192,11 @@ namespace mln
     mln_result(A)
     update(Accumulator<A>& a, const Image<I>& input)
     {
-      trace::entering("data::update");
+      mln_trace("data::update");
 
       data::internal::update_tests(a, input);
       mln_result(A) r = internal::update_dispatch(a, input);
 
-      trace::exiting("data::update");
       return r;
     }
 

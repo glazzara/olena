@@ -93,7 +93,7 @@ namespace scribo
     object_links_right_aligned(const object_links<L>& links,
 			       float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_right_aligned");
+      mln_trace("scribo::filter::object_links_right_aligned");
 
       mln_precondition(links.is_valid());
 
@@ -102,7 +102,6 @@ namespace scribo
 						 anchor::Right,
 						 max_alpha);
 
-      trace::exiting("scribo::filter::object_links_right_aligned");
       return output;
     }
 

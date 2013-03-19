@@ -54,12 +54,11 @@ namespace mln
     inline
     mln_deduce(I, site, coord) min_ind(const Image<I>& ima)
     {
-      trace::entering("mln::geom::min_ind");
+      mln_trace("mln::geom::min_ind");
 
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) minind = exact(ima).bbox().pmin().ind();
 
-      trace::exiting("mln::geom::min_ind");
       return minind;
     }
 

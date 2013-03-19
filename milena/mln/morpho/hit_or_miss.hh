@@ -153,14 +153,13 @@ namespace mln
 			const Window<Wh>& win_hit,
 			const Window<Wm>& win_miss)
       {
-	trace::entering("morpho::impl::hit_or_miss_logic");
+	mln_trace("morpho::impl::hit_or_miss_logic");
 	internal::hit_or_miss_tests(input, win_hit, win_miss);
 
 	mln_concrete(I) output = logical::and_(erosion(input, win_hit),
 					       erosion(complementation(input),
 						       win_miss));
 
-	trace::exiting("morpho::impl::hit_or_miss_logic");
 	return output;
       }
 
@@ -178,7 +177,7 @@ namespace mln
 		    const Window<Wh>& win_hit_,
 		    const Window<Wm>& win_miss_)
 	{
-	  trace::entering("morpho::impl::generic::hit_or_miss");
+	  mln_trace("morpho::impl::generic::hit_or_miss");
 	  internal::hit_or_miss_tests(input_, win_hit_, win_miss_);
 
 	  const I& input = exact(input_);
@@ -229,7 +228,6 @@ namespace mln
 			  pw::cst(zero_V)));
 	  }
 
-	  trace::exiting("morpho::impl::generic::hit_or_miss");
 	  return output;
 	}
 
@@ -287,13 +285,12 @@ namespace mln
 		const Window<Wh>& win_hit,
 		const Window<Wm>& win_miss)
     {
-      trace::entering("morpho::hit_or_miss");
+      mln_trace("morpho::hit_or_miss");
       internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = internal::hit_or_miss_dispatch(input,
 							      win_hit,
 							      win_miss);
-      trace::exiting("morpho::hit_or_miss");
       return output;
     }
 
@@ -305,7 +302,7 @@ namespace mln
 			const Window<Wh>& win_hit,
 			const Window<Wm>& win_miss)
     {
-      trace::entering("morpho::hit_or_miss_opening");
+      mln_trace("morpho::hit_or_miss_opening");
       internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = dilation(internal::hit_or_miss_dispatch(input,
@@ -313,7 +310,6 @@ namespace mln
 								       win_miss),
 					win::sym(win_hit));
 
-      trace::exiting("morpho::hit_or_miss_opening");
       return output;
     }
 
@@ -325,7 +321,7 @@ namespace mln
 				   const Window<Wh>& win_hit,
 				   const Window<Wm>& win_miss)
     {
-      trace::entering("morpho::hit_or_miss_background_opening");
+      mln_trace("morpho::hit_or_miss_background_opening");
       internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = hit_or_miss_opening(complementation(input),
@@ -336,7 +332,6 @@ namespace mln
 								win_hit,
 								win_miss),
 				 win::sym(win_miss)) == output);
-      trace::exiting("morpho::hit_or_miss_background_opening");
       return output;
     }
 
@@ -348,7 +343,7 @@ namespace mln
 			const Window<Wh>& win_hit,
 			const Window<Wm>& win_miss)
     {
-      trace::entering("morpho::hit_or_miss_closing");
+      mln_trace("morpho::hit_or_miss_closing");
       internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output =
@@ -356,7 +351,6 @@ namespace mln
 					      win_hit, win_miss));
 
       // FIXME: Postcondition.
-      trace::exiting("morpho::hit_or_miss_closing");
       return output;
     }
 
@@ -368,7 +362,7 @@ namespace mln
 				   const Window<Wh>& win_hit,
 				   const Window<Wm>& win_miss)
     {
-      trace::entering("morpho::hit_or_miss_background_closing");
+      mln_trace("morpho::hit_or_miss_background_closing");
       internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = hit_or_miss_closing(input, win_miss, win_hit);
@@ -376,7 +370,6 @@ namespace mln
       mln_postcondition(complementation(hit_or_miss_background_opening(
 						  complementation(input),
 						  win_hit, win_miss)) == output);
-      trace::exiting("morpho::hit_or_miss_background_closing");
       return output;
     }
 

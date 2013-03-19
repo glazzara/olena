@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 				"input.pbm out_prefix",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
@@ -196,6 +196,5 @@ int main(int argc, char* argv[])
   }
 
 
-  trace::exiting("main");
 }
 

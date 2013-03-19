@@ -150,7 +150,7 @@ namespace scribo
       const I& crop_gl = exact(crop_gl_);
       const I& input_gl = exact(input_gl_);
 
-      trace::entering("scribo::preprocessing::deskew_crop");
+      mln_trace("scribo::preprocessing::deskew_crop");
       mln_assertion(crop_gl.is_valid());
       mln_assertion(input_gl.is_valid());
       mlc_is(mln_domain(I), box2d)::check();
@@ -171,7 +171,6 @@ namespace scribo
 			      make::box2d(crop_gl.nrows(),
 					  crop_gl.ncols()));
 
-      trace::exiting("scribo::preprocessing::deskew_crop");
       return output;
     }
 

@@ -72,7 +72,7 @@ namespace scribo
     mln_ch_value(I, bool)
     global_threshold(const Image<I>& input, const mln_value(I)& threshold)
     {
-      trace::entering("scribo::binarization::global_threshold");
+      mln_trace("scribo::binarization::global_threshold");
 
       mln_precondition(exact(input).is_valid());
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
@@ -80,7 +80,6 @@ namespace scribo
       mln::fun::v2b::threshold_le<mln_value(I)> f(threshold);
       mln_ch_value(I, bool) output = data::transform(input, f);
 
-      trace::exiting("scribo::binarization::global_threshold");
       return output;
     }
 

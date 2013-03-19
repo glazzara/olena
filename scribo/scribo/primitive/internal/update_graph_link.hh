@@ -73,7 +73,7 @@ namespace scribo
 			const mln_site(I)& p, const mln_site(I)& c,
 			unsigned i, int dmax)
       {
-	trace::entering("scribo::primitive::internal::update_graph_link");
+	mln_trace("scribo::primitive::internal::update_graph_link");
 
 	const I& lbl = exact(lbl_);
 	G& g = exact(g_);
@@ -86,7 +86,6 @@ namespace scribo
 	    && (math::abs(p.col() - c.col())) < dmax)
 	  g.add_edge(lbl(p), i);
 
-	trace::exiting("scribo::primitive::internal::update_graph_link");
       }
 
 

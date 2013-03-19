@@ -98,7 +98,7 @@ namespace scribo
 				    anchor::Type anchor,
 				    float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_non_aligned_simple");
+      mln_trace("scribo::filter::object_links_non_aligned_simple");
 
       mln_precondition(links.is_valid());
 
@@ -117,7 +117,6 @@ namespace scribo
 	    output.clear(i);
 
 
-      trace::exiting("scribo::filter::object_links_non_aligned_simple");
       return output;
     }
 

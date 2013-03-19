@@ -97,7 +97,7 @@ namespace mln
   mln_regular(W1)
   operator && (const Window<W1>& win1, const Window<W2>& win2)
   {
-    trace::entering("win::inter");
+    mln_trace("win::inter");
 
     // Compatibility checks.
     mlc_equal(mln_regular(W1), mln_regular(W2))::check();
@@ -119,7 +119,6 @@ namespace mln
     mln_regular(W1) tmp = win::impl::inter(mln_trait_window_definition(W1)(),
 					   exact(win1), exact(win2));
 
-    trace::exiting("win::inter");
     return tmp;
   }
 

@@ -110,12 +110,11 @@ namespace scribo
 	  void
 	  local_threshold_core(const Image<I>& input, unsigned window_size)
 	  {
-	    trace::entering("scribo::binarization::internal::impl::generic::local_threshold_core");
+	    mln_trace("scribo::binarization::internal::impl::generic::local_threshold_core");
 
 	    // Not implemented
 	    mlc_abort(I)::check();
 
-	    trace::exiting("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  }
 
 	} // end of namespace scribo::binarization::internal::impl::generic
@@ -125,7 +124,7 @@ namespace scribo
 	void
 	local_threshold_core_fastest(const Image<I>& input, F& f, unsigned window_size)
 	{
-	  trace::entering("scribo::binarization::internal::impl::generic::local_threshold_core");
+	  mln_trace("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  mln_precondition(exact(input).is_valid());
 
 	  scribo::debug::logger().start_local_time_logging();
@@ -174,7 +173,6 @@ namespace scribo
 
 	  scribo::debug::logger().stop_local_time_logging("Binarization -");
 
-	  trace::exiting("scribo::binarization::internal::impl::generic::local_threshold_core");
 	}
 
 
@@ -227,7 +225,7 @@ namespace scribo
       void
       local_threshold_core(const Image<I>& input, F& f, unsigned window_size)
       {
-	trace::entering("scribo::binarization::internal::local_threshold_core");
+	mln_trace("scribo::binarization::internal::local_threshold_core");
 
 	mln_precondition(exact(input).is_valid());
 
@@ -252,7 +250,6 @@ namespace scribo
 			mln::debug::filename(alphacond_image_output));
 # endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-	trace::exiting("scribo::binarization::internal::local_threshold_core");
       }
 
       template <typename I, typename F>

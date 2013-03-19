@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
   else
     scribo::debug::logger().set_level(scribo::debug::None);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
@@ -123,5 +123,4 @@ int main(int argc, char* argv[])
   scribo::io::img::save(doc, out_img + "_debug_wo_image.png", scribo::io::img::DebugWoImage);
   scribo::io::img::save(doc, out_img + "_debug_with_image.png", scribo::io::img::DebugWithImage);
 
-  trace::exiting("main");
 }

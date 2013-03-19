@@ -57,7 +57,7 @@ namespace mln
     mln_ch_value(I, D)
     distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
     {
-      trace::entering("transform::distance_geodesic");
+      mln_trace("transform::distance_geodesic");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -66,7 +66,6 @@ namespace mln
       internal::distance_functor<I> f;
       output = mln::canvas::distance_geodesic(input, nbh, max, f);
 
-      trace::exiting("transform::distance_geodesic");
       return output;
     }
 

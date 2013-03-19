@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 				"input.pbm output.pbm input_wo_seps.pbm output.ppm length delta",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -97,5 +97,4 @@ int main(int argc, char *argv[])
     bbox = labeling::compute(accu::shape::bbox<point2d>(), lbl, nlabels);
   io::ppm::save(scribo::debug::bboxes_image(input, bbox, literal::red), argv[4]);
 
-  trace::exiting("main");
 }

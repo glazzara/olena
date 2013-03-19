@@ -79,7 +79,7 @@ namespace scribo
       mln_concrete(I)
       lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
-	trace::entering("scribo::primitive::extract::lines_v_pattern");
+	mln_trace("scribo::primitive::extract::lines_v_pattern");
 
 	mln_precondition(length % 2 == 1);
 
@@ -102,7 +102,6 @@ namespace scribo
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 
-	trace::exiting("scribo::primitive::extract::lines_v_pattern");
 	return output;
       }
 

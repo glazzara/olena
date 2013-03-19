@@ -73,7 +73,7 @@ namespace mln
     edge_image<util::site_pair<point2d>, V, util::graph>
     line_gradient(const mln::image2d<V>& ima)
     {
-      trace::entering("morpho::line_gradient");
+      mln_trace("morpho::line_gradient");
       mln_precondition(ima.is_valid());
 
       // FIXME: Precondition: Ensure the image is scalar.
@@ -115,7 +115,6 @@ namespace mln
       edge_image<util::site_pair<point2d>, V, util::graph>
 	lg_ima(g, edge_sites, edge_values);
 
-      trace::exiting("morpho::line_gradient");
       return lg_ima;
     }
 

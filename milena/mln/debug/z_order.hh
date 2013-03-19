@@ -143,12 +143,11 @@ namespace mln
     void
     z_order(Image<I>& input)
     {
-      trace::entering("debug::z_order");
+      mln_trace("debug::z_order");
       mln_precondition(exact(input).is_valid());
 
       internal::z_order_dispatch(input);
 
-      trace::exiting("debug::z_order");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

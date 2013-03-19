@@ -56,13 +56,12 @@ namespace mln
   mln_concrete(I) duplicate(const Image<I>& model)
   {
     // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
-    trace::entering("core::duplicate");
+    mln_trace("core::duplicate");
 
     mln_concrete(I) tmp;
     initialize(tmp, model);
     data::fill(tmp, model);
 
-    trace::exiting("core::duplicate");
     return tmp;
   }
 

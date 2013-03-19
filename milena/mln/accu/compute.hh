@@ -97,7 +97,7 @@ namespace mln
 	mln_result(A)
 	compute(const Accumulator<A>&, const Image<I>& input_)
 	{
-	  trace::entering("accu::impl::generic::compute");
+	  mln_trace("accu::impl::generic::compute");
 
 	  const I& input = exact(input_);
 	  mln_precondition(input.is_valid());
@@ -107,7 +107,6 @@ namespace mln
 	  for_all(p)
 	    a.take(make::pix(input, p));
 
-	  trace::exiting("accu::impl::generic::compute");
 	  return a.to_result();
 	}
 
@@ -136,12 +135,11 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input)
     {
-      trace::entering("accu::compute");
+      mln_trace("accu::compute");
 
       mln_precondition(exact(input).is_valid());
       mln_result(A) output = internal::compute_dispatch(a, input);
 
-      trace::exiting("accu::compute");
       return output;
     }
 
@@ -150,7 +148,7 @@ namespace mln
     mln_meta_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
-      trace::entering("accu::compute");
+      mln_trace("accu::compute");
 
       mln_precondition(exact(input).is_valid());
 
@@ -160,7 +158,6 @@ namespace mln
 
       mln_result(A_) output = internal::compute_dispatch(a_, input);
 
-      trace::exiting("accu::compute");
       return output;
     }
 

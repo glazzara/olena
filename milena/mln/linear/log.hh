@@ -75,7 +75,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_5x5(const Image<I>& input)
     {
-      trace::entering("linear::LoG_5x5");
+      mln_trace("linear::LoG_5x5");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0, -1,  0,  0,
 		   +0, -1, -2, -1,  0,
@@ -83,7 +83,6 @@ namespace mln
 		   +0, -1, -2, -1,  0,
 		   +0,  0, -1,  0,  0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_5x5");
       return output;
     }
 
@@ -94,7 +93,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_7x7(const Image<I>& input)
     {
-      trace::entering("linear::LoG_7x7");
+      mln_trace("linear::LoG_7x7");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0, -1, -1, -1,  0,  0,
 		   +0, -1, -3, -3, -3, -1,  0,
@@ -104,7 +103,6 @@ namespace mln
 		   +0, -1, -3, -3, -3, -1,  0,
 		   +0,  0, -1, -1, -1,  0,  0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_7x7");
       return output;
     }
 
@@ -115,7 +113,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_13x13(const Image<I>& input)
     {
-      trace::entering("linear::LoG_13x13");
+      mln_trace("linear::LoG_13x13");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
 		   +0,  0,  0, -1, -1, -2, -2, -2, -1, -1,  0,  0,  0,
@@ -142,7 +140,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_17x17(const Image<I>& input)
     {
-      trace::entering("linear::LoG_17x17");
+      mln_trace("linear::LoG_17x17");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0,
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
@@ -162,7 +160,6 @@ namespace mln
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
 		   +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_17x17");
       return output;
     }
 

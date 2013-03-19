@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 				"input.pbm min_holes_count output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<bool> I;
   I input;
@@ -70,6 +70,5 @@ int main(int argc, char *argv[])
 
   io::pbm::save(data::convert(bool(), filtered.valid_comps_image_()), argv[3]);
 
-  trace::exiting("main");
 
 }

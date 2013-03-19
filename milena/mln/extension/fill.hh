@@ -177,12 +177,11 @@ namespace mln
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& val)
     {
-      trace::entering("extension::fill");
+      mln_trace("extension::fill");
 
       mln_precondition(exact(ima).is_valid());
       internal::fill_dispatch(ima, val);
 
-      trace::exiting("extension::fill");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -223,7 +223,7 @@ namespace mln
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename, float dpi)
       {
-	trace::entering("mln::io::pdf::load");
+	mln_trace("mln::io::pdf::load");
 
 	// Load document
 	poppler::document *pdf = poppler::document::load_from_file(filename);
@@ -238,14 +238,13 @@ namespace mln
 
 	delete pdf;
 
-	trace::exiting("mln::io::pdf::load");
       }
 
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
 		int first_page, int last_page, float dpi)
       {
-	trace::entering("mln::io::pdf::load");
+	mln_trace("mln::io::pdf::load");
 
 	// Load document
 	poppler::document *pdf = poppler::document::load_from_file(filename);
@@ -268,7 +267,6 @@ namespace mln
 
 	delete pdf;
 
-	trace::exiting("mln::io::pdf::load");
       }
 
 
@@ -276,7 +274,7 @@ namespace mln
       void load(util::array<I>& arr, const std::string& filename,
 		util::array<int> pages, float dpi)
       {
-	trace::entering("mln::io::pdf::load");
+	mln_trace("mln::io::pdf::load");
 
 	// Load document
 	poppler::document *pdf = poppler::document::load_from_file(filename);
@@ -300,7 +298,6 @@ namespace mln
 
 	delete pdf;
 
-	trace::exiting("mln::io::pdf::load");
       }
 
 

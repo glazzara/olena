@@ -60,13 +60,12 @@ namespace mln
       volume(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::opening::volume");
+	mln_trace("morpho::opening::volume");
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = opening::leveling(input, nbh, attribute::volume<I>(), lambda);
 
-	trace::exiting("morpho::opening::volume");
 	return output;
       }
 

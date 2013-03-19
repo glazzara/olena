@@ -146,12 +146,11 @@ namespace mln
     {
       (void) nlabels;
 
-      trace::entering("labeling::compute_image");
+      mln_trace("labeling::compute_image");
 
       mln_ch_value(L, mln_result(A)) output =
 	labeling::internal::compute_image(a, labels, nlabels);
 
-      trace::exiting("labeling::compute_image");
       return output;
     }
 
@@ -163,7 +162,7 @@ namespace mln
 		    const Image<L>& labels,
 		    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute_image");
+      mln_trace("labeling::compute_image");
 
       util::array<mln_result(A)> res =
 	compute(accu, input, labels, nlabels);
@@ -171,7 +170,6 @@ namespace mln
       mln_ch_value(L, mln_result(A)) output =
 	internal::compute_image(res, labels, nlabels);
 
-      trace::exiting("labeling::compute_image");
       return output;
     }
 
@@ -183,7 +181,7 @@ namespace mln
 		    const Image<L>& labels,
 		    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute_image");
+      mln_trace("labeling::compute_image");
 
       typedef mln_meta_accu_result(A, mln_value(I)) T;
 
@@ -193,7 +191,6 @@ namespace mln
       mln_ch_value(L, T) output =
 	labeling::internal::compute_image(res, labels, nlabels);
 
-      trace::exiting("labeling::compute_image");
       return output;
     }
 

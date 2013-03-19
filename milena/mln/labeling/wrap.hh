@@ -74,7 +74,7 @@ namespace mln
     mln_ch_value(I,V)
     wrap(const V& value_type, const Image<I>& input)
     {
-      trace::entering("labeling::wrap");
+      mln_trace("labeling::wrap");
 
 //      mlc_is_a(mln_value(I), value::Symbolic)::check();
       mln_precondition(exact(input).is_valid());
@@ -82,7 +82,6 @@ namespace mln
 
       mln_ch_value(I,V) output = data::transform(input, fun::v2v::wrap<V>());
 
-      trace::exiting("labeling::wrap");
       return output;
     }
 

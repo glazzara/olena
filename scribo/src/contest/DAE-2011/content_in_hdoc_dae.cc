@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 				"input.tif output_dir",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -149,5 +149,4 @@ int main(int argc, char* argv[])
   }
 
 
-  trace::exiting("main");
 }

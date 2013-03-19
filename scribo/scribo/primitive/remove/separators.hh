@@ -78,7 +78,7 @@ namespace scribo
       mln_concrete(I)
       separators(const Image<I>& input_, const Image<I>& separators_)
       {
-	trace::entering("scribo::primitive::remove::separators");
+	mln_trace("scribo::primitive::remove::separators");
 
 	const I& input = exact(input_);
 	const I& separators = exact(separators_);
@@ -102,7 +102,6 @@ namespace scribo
 	  if (*sep_ptr++)
 	    *out_ptr = false;
 
-	trace::exiting("scribo::primitive::remove::separators");
 	return output;
       }
 

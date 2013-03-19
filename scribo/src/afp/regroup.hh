@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,7 +54,7 @@ namespace scribo
 		   const object_groups<L>& groups,
 		   unsigned dmax)
       {
-	trace::entering("scribo::primitive::group::regroup_left");
+	mln_trace("scribo::primitive::group::regroup_left");
 
 	mln_precondition(groups.is_valid());
 

@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   unsigned lambda = atoi(options.opt_value("lambda").c_str());
 

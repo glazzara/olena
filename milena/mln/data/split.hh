@@ -58,7 +58,7 @@ namespace mln
       void
       split(const Image<I>& input_, Image<J>& r_, Image<J>& g_, Image<J>& b_)
       {
-	trace::entering("mln::data::split");
+	mln_trace("mln::data::split");
 
 	const I& input = exact(input_);
 	J& r = exact(r_);
@@ -91,7 +91,6 @@ namespace mln
 	  *b_ptr++ = in_ptr->blue();
 	}
 
-	trace::exiting("mln::data::split");
       }
 
 

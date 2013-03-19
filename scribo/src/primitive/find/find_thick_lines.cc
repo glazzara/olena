@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 				"<input.pbm> <vlength> <hlength> <output.ppm>",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<bool> I;
   I input;
@@ -87,5 +87,4 @@ int main(int argc, char *argv[])
 
   io::ppm::save(out, argv[4]);
 
-  trace::exiting("main");
 }

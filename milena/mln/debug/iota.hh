@@ -90,10 +90,9 @@ namespace mln
     void
     iota(Image<I>& input, unsigned base_index)
     {
-      trace::entering("debug::iota");
+      mln_trace("debug::iota");
       mln_precondition(exact(input).is_valid());
       impl::iota(mln_trait_image_speed(I)(), exact(input), base_index);
-      trace::exiting("debug::iota");
     }
 
 

@@ -128,7 +128,7 @@ namespace scribo
       with_single_left_link(const component_set<L>& components,
 			    unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_left_link");
+	mln_trace("scribo::primitive::link::with_single_left_link");
 
 	mln_precondition(components.is_valid());
 
@@ -137,7 +137,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor);
 
-	trace::exiting("scribo::primitive::link::with_single_left_link");
 	return output;
       }
 

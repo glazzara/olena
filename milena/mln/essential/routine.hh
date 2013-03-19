@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,7 +64,7 @@
 
 # include <mln/tag/essential.hh>
 # include <mln/test/essential.hh>
-# include <mln/trace/essential.hh>
+# include <mln/debug/trace.hh>
 # include <mln/trait/essential.hh>
 # include <mln/transform/essential.hh>
 # include <mln/util/essential.hh>

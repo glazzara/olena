@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   // Window size
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());  // Scale 1

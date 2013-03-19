@@ -65,7 +65,7 @@ namespace mln
     util::array<L>
     n_max(const util::array<V>& in_arr, unsigned n)
     {
-      trace::entering("mln::labeling::n_max");
+      mln_trace("mln::labeling::n_max");
 
       mln_precondition(n < in_arr.nelements());
 
@@ -97,7 +97,6 @@ namespace mln
 	}
       }
 
-      trace::exiting("mln::labeling::n_max");
       return output;
     }
 

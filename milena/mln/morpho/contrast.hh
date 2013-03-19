@@ -59,7 +59,7 @@ namespace mln
     inline
     mln_concrete(I) contrast(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::contrast");
+      mln_trace("morpho::contrast");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -68,7 +68,6 @@ namespace mln
 		     top_hat_white(input, win) - top_hat_black(input, win),
 		     fun::v2v::saturate<mln_value(I)>() );
 
-      trace::exiting("morpho::contrast");
       return output;
     }
 

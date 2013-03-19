@@ -805,7 +805,7 @@ namespace scribo
 		   unsigned s,
 		   image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
 	{
-	  trace::entering("scribo::binarization::sauvola_ms");
+	  mln_trace("scribo::binarization::sauvola_ms");
 
 	  const I& input_1 = exact(input_1_);
 	  typedef mln_value(I) V;
@@ -1000,7 +1000,6 @@ namespace scribo
 	  scribo::debug::logger().stop_local_time_logging("5. Final binarization -");
 	  scribo::debug::logger().start_local_time_logging();
 
-	  trace::exiting("scribo::binarization::sauvola_ms");
 	  return output;
 	}
 
@@ -1017,7 +1016,7 @@ namespace scribo
     sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s,
 	       image2d<mln::util::couple<double,double> >& integral_sum_sum_2)
     {
-      trace::entering("scribo::binarization::sauvola_ms");
+      mln_trace("scribo::binarization::sauvola_ms");
 
       mln_precondition(exact(input_1_).is_valid());
       // Gray level images ONLY.
@@ -1028,7 +1027,6 @@ namespace scribo
 	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s,
 					   integral_sum_sum_2);
 
-      trace::exiting("scribo::binarization::sauvola_ms");
       return output;
     }
 
@@ -1036,7 +1034,7 @@ namespace scribo
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s)
     {
-      trace::entering("scribo::binarization::sauvola_ms");
+      mln_trace("scribo::binarization::sauvola_ms");
 
       mln_precondition(exact(input_1_).is_valid());
       // Gray level images ONLY.
@@ -1049,7 +1047,6 @@ namespace scribo
       mln_ch_value(I,bool)
 	output = sauvola_ms(input_1_, w_1, s, integral_sum_sum_2);
 
-      trace::exiting("scribo::binarization::sauvola_ms");
       return output;
     }
 

@@ -188,7 +188,7 @@ namespace scribo
     mln_concrete(L)
     paragraphs_closing(const paragraph_set<L>& parset)
     {
-      trace::entering("scribo::text::paragraphs_closing");
+      mln_trace("scribo::text::paragraphs_closing");
 
       // FIXME: 'debug' may be useless.
       mln_concrete(L) output, debug;
@@ -253,7 +253,6 @@ namespace scribo
 				output,
 				"paragraph_closing");
 
-      trace::exiting("scribo::text::paragraphs_closing");
       return output;
     }
 

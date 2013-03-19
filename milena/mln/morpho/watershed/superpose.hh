@@ -86,7 +86,7 @@ namespace mln
 		const Image<J>& ws_ima_,
 		const value::rgb8& wsl_color)
       {
-	trace::entering("morpho::watershed::superpose");
+	mln_trace("morpho::watershed::superpose");
 
 	const I& input = exact(input_);
 	const J& ws_ima = exact(ws_ima_);
@@ -98,7 +98,6 @@ namespace mln
 	data::fill((output | (pw::value(ws_ima) == pw::cst(literal::zero))).rw(),
 		   wsl_color);
 
-	trace::exiting("morpho::watershed::superpose");
 	return output;
       }
 

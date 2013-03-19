@@ -152,7 +152,7 @@ namespace scribo
       from_graph(const component_set<L>& comps,
 		 const Graph<G>& g_)
       {
-	trace::entering("scribo::primitive::group::from_graph");
+	mln_trace("scribo::primitive::group::from_graph");
 
 	const G& g = exact(g_);
 
@@ -164,7 +164,6 @@ namespace scribo
 	object_groups<L> groups(comps);
 	groups.init_(f.vertextorep);
 
-	trace::exiting("scribo::primitive::group::from_graph");
 	return groups;
       }
 

@@ -99,7 +99,7 @@ namespace scribo
     mln_concrete(I)
     clean(const line_info<L>& line, const Image<I>& input_)
     {
-      trace::entering("scribo::text::clean");
+      mln_trace("scribo::text::clean");
 
       const I& input = exact(input_);
       mlc_bool(mln_site_(I)::dim == 2)::check();
@@ -111,7 +111,6 @@ namespace scribo
 
       clean_inplace(line, output);
 
-      trace::exiting("scribo::text::clean");
       return output;
     }
 

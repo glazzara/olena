@@ -59,7 +59,7 @@ namespace mln
     distance_front(const Image<I>& input,
 		   const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max)
     {
-      trace::entering("transform::distance_front");
+      mln_trace("transform::distance_front");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -69,7 +69,6 @@ namespace mln
       internal::distance_functor<I> f;
       output = mln::canvas::distance_front(input, nbh, w_win, max, f);
 
-      trace::exiting("transform::distance_front");
       return output;
     }
 

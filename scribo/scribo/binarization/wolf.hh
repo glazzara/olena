@@ -127,7 +127,7 @@ namespace scribo
     mln_ch_value(I, bool)
       wolf(const Image<I>& input, unsigned window_size, double K)
     {
-      trace::entering("scribo::binarization::wolf");
+      mln_trace("scribo::binarization::wolf");
 
       mln_precondition(exact(input).is_valid());
 
@@ -166,7 +166,6 @@ namespace scribo
       scribo::canvas::integral_browsing(integral, 1, window_size,
 					window_size, integral_size_ratio, f);
 
-      trace::exiting("scribo::binarization::wolf");
       return f.output;
     }
 

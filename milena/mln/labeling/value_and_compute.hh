@@ -215,7 +215,7 @@ namespace mln
 		      const Neighborhood<N>& nbh, L& nlabels,
 		      const Accumulator<A>& accu)
     {
-      trace::entering("labeling::value_and_compute");
+      mln_trace("labeling::value_and_compute");
 
       internal::value_and_compute_tests(input, val, nbh, nlabels, accu);
 
@@ -229,7 +229,6 @@ namespace mln
 			      make::couple(f.result_, f.accus_));
 
 
-      trace::exiting("labeling::value_and_compute");
       return result;
     }
 

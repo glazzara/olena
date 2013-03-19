@@ -120,13 +120,12 @@ namespace mln
     inline
     mln_concrete(I) complementation(const Image<I>& input)
     {
-      trace::entering("morpho::complementation");
+      mln_trace("morpho::complementation");
       mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output = impl::complementation_(mln_trait_image_kind(I)(),
 						      input);
 
-      trace::exiting("morpho::complementation");
       return output;
     }
 
@@ -134,13 +133,12 @@ namespace mln
     inline
     void complementation_inplace(Image<I>& input)
     {
-      trace::entering("morpho::complementation_inplace");
+      mln_trace("morpho::complementation_inplace");
       mln_precondition(exact(input).is_valid());
 
       impl::complementation_inplace_(mln_trait_image_kind(I)(),
 				     input);
 
-      trace::exiting("morpho::complementation_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

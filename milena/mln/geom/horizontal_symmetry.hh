@@ -174,14 +174,13 @@ namespace mln
     mln_concrete(I)
     horizontal_symmetry(const Image<I>& input_)
     {
-      trace::entering("geom::horizontal_symmetry");
+      mln_trace("geom::horizontal_symmetry");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
       mln_concrete(I) output = internal::horizontal_symmetry_dispatch(input);
 
-      trace::exiting("geom::horizontal_symmetry");
       return output;
     }
 

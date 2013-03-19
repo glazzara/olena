@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 				"input.pbm fg_min_card output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<bool> I;
   I input;
@@ -64,5 +64,4 @@ int main(int argc, char *argv[])
 
   io::pbm::save(output, argv[3]);
 
-  trace::exiting("main");
 }

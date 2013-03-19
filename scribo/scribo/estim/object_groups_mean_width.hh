@@ -66,7 +66,7 @@ namespace scribo
     mln::util::array<float>
     object_groups_mean_width(const object_groups<L>& groups)
     {
-      trace::entering("scribo::estim::object_groups_mean_width");
+      mln_trace("scribo::estim::object_groups_mean_width");
 
       mln_precondition(groups.is_valid());
 
@@ -84,7 +84,6 @@ namespace scribo
 	else
 	  output(g) = 0;
 
-      trace::exiting("scribo::estim::object_groups_mean_width");
       return output;
     }
 

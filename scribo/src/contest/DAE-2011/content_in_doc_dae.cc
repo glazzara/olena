@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 				"input.* output_dir",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
@@ -117,5 +117,4 @@ int main(int argc, char* argv[])
     mln::io::pbm::save(output, ss.str());
   }
 
-  trace::exiting("main");
 }

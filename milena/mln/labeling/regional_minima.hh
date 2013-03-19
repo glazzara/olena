@@ -140,7 +140,7 @@ namespace mln
     regional_minima(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		    L& nlabels)
     {
-      trace::entering("labeling::regional_minima");
+      mln_trace("labeling::regional_minima");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -154,7 +154,6 @@ namespace mln
       mln_ch_value(I, L)
 	output = canvas::labeling::sorted(input, nbh, nlabels, f, false);
 
-      trace::exiting("labeling::regional_minima");
       return output;
     }
 

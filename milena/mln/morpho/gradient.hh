@@ -85,7 +85,7 @@ namespace mln
     inline
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient");
+      mln_trace("morpho::gradient");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -93,7 +93,6 @@ namespace mln
 					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient");
       return output;
     }
 
@@ -102,7 +101,7 @@ namespace mln
     inline
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient_internal");
+      mln_trace("morpho::gradient_internal");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -110,7 +109,6 @@ namespace mln
 					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient_internal");
       return output;
     }
 
@@ -119,7 +117,7 @@ namespace mln
     inline
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient_external");
+      mln_trace("morpho::gradient_external");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -127,7 +125,6 @@ namespace mln
 					     input);
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient_external");
       return output;
     }
 

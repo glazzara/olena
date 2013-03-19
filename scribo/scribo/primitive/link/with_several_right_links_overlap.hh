@@ -119,7 +119,7 @@ namespace scribo
       with_several_right_links_overlap(const object_image(L)& objects,
 				       unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_several_right_links_overlap");
+	mln_trace("scribo::primitive::link::with_several_right_links_overlap");
 
 	mln_precondition(objects.is_valid());
 
@@ -129,7 +129,6 @@ namespace scribo
 	for_all_ncomponents(current_object, objects.nlabels())
 	  internal::find_several_links(functor, current_object);
 
-	trace::exiting("scribo::primitive::link::with_several_right_links_overlap");
 	return functor.links();
       }
 

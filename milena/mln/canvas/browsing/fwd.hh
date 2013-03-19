@@ -100,7 +100,7 @@ namespace mln
       void
       fwd_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::fwd");
+	mln_trace("canvas::browsing::fwd");
 	mln_precondition(f.input.is_valid());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
@@ -111,7 +111,6 @@ namespace mln
 	    f.next();
 	  }
 	f.final();
-	trace::exiting("canvas::browsing::fwd");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

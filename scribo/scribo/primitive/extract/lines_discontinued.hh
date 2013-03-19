@@ -124,7 +124,7 @@ namespace scribo
 			 const Neighborhood<N>& nbh_, V& nlines,
 			 const Window<W>& win_, unsigned rank_k)
       {
-	trace::entering("scribo::primitive::extract::lines_discontinued");
+	mln_trace("scribo::primitive::extract::lines_discontinued");
 
 	internal::lines_discontinued_tests(input_, nbh_, nlines, win_, rank_k);
 
@@ -143,7 +143,6 @@ namespace scribo
 	component_set<mln_ch_value(I,V)> output
 	  = primitive::extract::components(filter, nbh, nlines);
 
-	trace::exiting("scribo::primitive::extract::lines_discontinued");
 	return output;
       }
 

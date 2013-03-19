@@ -91,7 +91,7 @@ namespace scribo
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
-	trace::entering("scribo::primitive::extract::lines_h_pattern");
+	mln_trace("scribo::primitive::extract::lines_h_pattern");
 
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
@@ -116,7 +116,6 @@ namespace scribo
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 
-	trace::exiting("scribo::primitive::extract::lines_h_pattern");
 	return output;
       }
 

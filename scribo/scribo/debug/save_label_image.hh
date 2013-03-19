@@ -66,13 +66,12 @@ namespace scribo
     save_label_image(const Image<I>& lbl, const mln_value(I)& nlabels,
 		     const char *filename)
     {
-      trace::entering("scribo::debug::save_label_image");
+      mln_trace("scribo::debug::save_label_image");
       mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
       mln_precondition(exact(lbl).is_valid());
 
       io::ppm::save(labeling::colorize(value::rgb8(), lbl, nlabels), filename);
 
-      trace::exiting("scribo::debug::save_label_image");
     }
 
 

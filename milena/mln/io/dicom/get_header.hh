@@ -82,7 +82,7 @@ namespace mln
 
       dicom_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::dicom::get_header");
+	mln_trace("mln::io::dicom::get_header");
 
 	dicom_header header;
 
@@ -104,7 +104,6 @@ namespace mln
 	for (unsigned i = 0; i < 2; ++i)
 	  header.size.append(dims[i]); // row, col
 
-	trace::exiting("mln::io::dicom::get_header");
 	return header;
       }
 

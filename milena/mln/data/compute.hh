@@ -111,7 +111,7 @@ namespace mln
     mln_result(A)
     compute(Accumulator<A>& a_, const Image<I>& input)
     {
-      trace::entering("data::compute");
+      mln_trace("data::compute");
 
       A a = exact(a_);
       data::internal::update_tests(a, input);
@@ -119,7 +119,6 @@ namespace mln
       a.init();
       data::internal::update_dispatch(a, input);
 
-      trace::exiting("data::compute");
       return a;
     }
 

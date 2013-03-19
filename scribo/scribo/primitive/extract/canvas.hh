@@ -87,7 +87,7 @@ namespace scribo
 	     const mln::util::array<box<mln_site(I)> >& vlines,
 	     unsigned max_dist_lines)
       {
-	trace::entering("scribo::primitive::canvas");
+	mln_trace("scribo::primitive::canvas");
 	const I& input = exact(input_);
 
 	mlc_equal(mln_value(I), bool)::check();
@@ -115,7 +115,6 @@ namespace scribo
 	for_all_elements(i, lines.second())
 	  mln::draw::box(res, lines.second()[i], true);
 
-	trace::exiting("scribo::primitive::canvas");
 	return res;
       }
 

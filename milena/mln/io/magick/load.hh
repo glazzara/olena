@@ -139,7 +139,7 @@ namespace mln
       inline
       void load(Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::magick::load");
+	mln_trace("mln::io::magick::load");
 
 	I& ima = exact(ima_);
 
@@ -200,9 +200,7 @@ namespace mln
 	    ++pixels;
 	  }
 
-	trace::exiting("mln::io::magick::load");
       }
-
 
 
 # endif // ! MLN_INCLUDE_ONLY

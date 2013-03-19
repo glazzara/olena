@@ -67,7 +67,7 @@ namespace scribo
       font_color_rgb(const Image<I>& text_ima_,
 		     const Image<J>& bin_text_ima_)
       {
-	trace::entering("scribo::estim::impl::font_color_rgb");
+	mln_trace("scribo::estim::impl::font_color_rgb");
 
 	typedef mln_value(I) V1;
 	typedef mln_value(J) V2;
@@ -106,7 +106,6 @@ namespace scribo
 	med_rgb.green() = m_green.to_result();
 	med_rgb.blue() = m_blue.to_result();
 
-	trace::exiting("scribo::estim::impl::font_color_rgb");
 	return med_rgb;
       }
 
@@ -116,7 +115,7 @@ namespace scribo
       font_color_grayscale(const Image<I>& text_ima_,
 			   const Image<J>& bin_text_ima_)
       {
-	trace::entering("scribo::estim::impl::font_color_grayscale");
+	mln_trace("scribo::estim::impl::font_color_grayscale");
 
 	typedef mln_value(I) V1;
 	typedef mln_value(J) V2;
@@ -143,7 +142,6 @@ namespace scribo
 
 	med_val = m_val.to_result();
 
-	trace::exiting("scribo::estim::impl::font_color_grayscale");
 	return med_val;
       }
 
@@ -189,11 +187,10 @@ namespace scribo
     mln_value(I)
     font_color(const Image<I>& text_ima, const Image<J>& bin_text_ima)
     {
-      trace::entering("scribo::estim::font_color");
+      mln_trace("scribo::estim::font_color");
 
       mln_value(I) output = internal::font_color_dispatch(text_ima, bin_text_ima);
 
-      trace::exiting("scribo::estim::font_color");
       return output;
     }
 

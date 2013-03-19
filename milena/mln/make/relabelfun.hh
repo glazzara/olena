@@ -84,7 +84,7 @@ namespace mln
 	       const V&		      nlabels,
 	       V&		      new_nlabels)
     {
-      trace::entering("make::relabelfun");
+      mln_trace("make::relabelfun");
 
       const F& fv2b = exact(fv2b_);
 
@@ -95,7 +95,6 @@ namespace mln
 	if (fv2b(i))
 	  fi2v(i) = ++tmp_nlabels;
       new_nlabels = tmp_nlabels;
-      trace::exiting("make::relabelfun");
       return fi2v;
     }
 
@@ -107,7 +106,7 @@ namespace mln
 	       const V&		      nlabels,
 	       V&		      new_nlabels)
     {
-      trace::entering("make::relabelfun");
+      mln_trace("make::relabelfun");
 
       const F& fv2v = exact(fv2v_);
 
@@ -131,7 +130,6 @@ namespace mln
 	  fi2v(i) = new_labels(fv2v(i));
       }
       new_nlabels = tmp_nlabels;
-      trace::exiting("make::relabelfun");
       return fi2v;
     }
 

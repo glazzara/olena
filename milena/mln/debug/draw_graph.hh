@@ -132,7 +132,7 @@ namespace mln
 	       mln_value(I) vcolor,
 	       mln_value(I) ecolor)
     {
-      trace::entering("debug::draw_graph");
+      mln_trace("debug::draw_graph");
 
       I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
@@ -150,7 +150,6 @@ namespace mln
 	  ima(p.second()) = vcolor;
       }
 
-      trace::exiting("debug::draw_graph");
     }
 
 
@@ -162,7 +161,7 @@ namespace mln
 	       mln_value(I) vcolor,
 	       mln_value(I) ecolor)
     {
-      trace::entering("debug::draw_graph");
+      mln_trace("debug::draw_graph");
 
       I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
@@ -180,7 +179,6 @@ namespace mln
 	if (ima.has(p))
 	  ima(p) = vcolor;
 
-      trace::exiting("debug::draw_graph");
     }
 
 
@@ -193,7 +191,7 @@ namespace mln
 	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_,
 	       unsigned vwidth)
     {
-      trace::entering("debug::draw_graph");
+      mln_trace("debug::draw_graph");
 
       I& ima = exact(ima_);
       const V& vcolor_f = exact(vcolor_f_);
@@ -221,7 +219,6 @@ namespace mln
 	  draw::box_plain(ima, box, vcolor_f(p.id()));
 	}
 
-      trace::exiting("debug::draw_graph");
     }
 
 
@@ -244,7 +241,7 @@ namespace mln
 	       const p_vertices<util::line_graph<G>, F>& pv,
 	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_)
     {
-      trace::entering("debug::draw_graph");
+      mln_trace("debug::draw_graph");
 
       I& ima = exact(ima_);
       const V& vcolor_f = exact(vcolor_f_);
@@ -271,7 +268,6 @@ namespace mln
 	  ima(l.end()) = vcolor_f(g.edge(vi).v2());
       }
 
-      trace::exiting("debug::draw_graph");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

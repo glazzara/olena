@@ -77,7 +77,7 @@ namespace mln
 	  F& f = exact(f_);
 	  const P& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::min");
+	  mln_trace("mln::morpho::tree::filter::min");
 
 	  mln_ch_value(F, bool) mark;
 	  initialize(mark, f);
@@ -91,7 +91,6 @@ namespace mln
 		mark(n) = true;
 	      }
 
-	  trace::exiting("mln::morpho::tree::filter::min");
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

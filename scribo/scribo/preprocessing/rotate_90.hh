@@ -76,7 +76,7 @@ namespace scribo
     mln_concrete(I)
     rotate_90(const Image<I>& input_, bool positive)
     {
-      trace::entering("scribo::preprocessing::rotate_90");
+      mln_trace("scribo::preprocessing::rotate_90");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -147,7 +147,6 @@ namespace scribo
 	out_ptr += out_next_offset;
       }
 
-      trace::exiting("scribo::preprocessing::rotate_90");
       return output;
     }
 

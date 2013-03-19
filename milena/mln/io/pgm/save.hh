@@ -83,9 +83,8 @@ namespace mln
 	mlc_is_not_a(mln_value(I), value::Vectorial)::check();
 	mlc_converts_to(mln_value(I),unsigned)::check();
 
-	trace::entering("mln::io::pgm::save");
+	mln_trace("mln::io::pgm::save");
 	io::pnm::save(PGM, exact(ima), filename);
-	trace::exiting("mln::io::pgm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

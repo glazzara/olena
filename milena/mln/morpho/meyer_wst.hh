@@ -115,7 +115,7 @@ namespace mln
     meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)
     {
-      trace::entering("morpho::meyer_wst");
+      mln_trace("morpho::meyer_wst");
       /* FIXME: Ensure the input image has scalar values.  */
 
       const I input = exact(input_);
@@ -200,7 +200,6 @@ namespace mln
 		  }
 	    }
 	}
-      trace::exiting("morpho::meyer_wst");
       return output;
     }
 

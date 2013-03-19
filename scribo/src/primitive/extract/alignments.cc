@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 				"input.pbm output.pbm [enable_debug]",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   if (argc > 3 && atoi(argv[3]))
     scribo::debug::logger().set_level(scribo::debug::All);
@@ -87,5 +87,4 @@ int main(int argc, char *argv[])
 
   mln::io::pbm::save(res.second(), argv[2]);
 
-  trace::exiting("main");
 }

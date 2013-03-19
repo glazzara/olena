@@ -84,13 +84,12 @@ namespace mln
 	mln_ch_value(I, V)
 	convert(const V& v, const Image<I>& input)
 	{
-	  trace::entering("data::impl::generic::convert");
+	  mln_trace("data::impl::generic::convert");
 	  internal::convert_tests(v, input);
 
 	  fun::v2v::convert<V> f;
 	  mln_ch_value(I, V) output = data::transform(input, f);
 
-	  trace::exiting("data::impl::generic::convert");
 	  return output;
 	}
 
@@ -102,12 +101,11 @@ namespace mln
       mln_ch_value(I,V)
       convert_identity(const V& v, const Image<I>& input)
       {
-	trace::entering("data::impl::convert_identity");
+	mln_trace("data::impl::convert_identity");
 	internal::convert_tests(v, input);
 
 	mln_concrete(I) output = duplicate(input);
 
-	trace::exiting("data::impl::convert_identity");
 	return output;
       }
 
@@ -156,13 +154,12 @@ namespace mln
     mln_ch_value(I, V)
     convert(const V& v, const Image<I>& input)
     {
-      trace::entering("data::convert");
+      mln_trace("data::convert");
 
       internal::convert_tests(v, input);
 
       mln_ch_value(I, V) output = internal::convert_dispatch(v, input);
 
-      trace::exiting("data::convert");
       return output;
     }
 

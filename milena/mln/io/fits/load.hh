@@ -89,7 +89,7 @@ namespace mln
       inline
       image2d<float> load(const std::string& filename)
       {
-	trace::entering("mln::io::fits::load");
+	mln_trace("mln::io::fits::load");
 
 	fitsfile *fptr;
 	int status,  nfound, anynull;
@@ -128,7 +128,6 @@ namespace mln
 	if (fits_close_file(fptr, &status))
 	  fits_exit(status);
 
-	trace::exiting("mln::io::fits::load");
 
 	return output;
       }

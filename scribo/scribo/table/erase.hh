@@ -76,7 +76,7 @@ namespace scribo
 	  const component_set<L>& hlines,
 	  const component_set<L>& vlines)
     {
-      trace::entering("scribo::internal::erase");
+      mln_trace("scribo::internal::erase");
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(exact(input).is_valid());
 
@@ -85,7 +85,6 @@ namespace scribo
       erase_objects(output, vlines);
       erase_objects(output, hlines);
 
-      trace::exiting("scribo::internal::erase");
       return output;
     }
 

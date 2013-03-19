@@ -103,7 +103,7 @@ namespace scribo
 					unsigned neighb_max_distance,
 					double hratio)
       {
-	trace::entering("scribo::primitive::regroup::from_single_left_link_wrt_h_ratio");
+	mln_trace("scribo::primitive::regroup::from_single_left_link_wrt_h_ratio");
 
 	mln_precondition(groups.is_valid());
 
@@ -132,7 +132,6 @@ namespace scribo
 	      output(relabel_fun(new_groups(g).component_ids()(0)))
 		.merge(output(relabel_fun(new_groups(g).component_ids()(i))));
 
-	trace::exiting("scribo::primitive::regroup::from_single_left_link_wrt_h_ratio");
 	return output;
       }
 

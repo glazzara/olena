@@ -140,13 +140,12 @@ namespace mln
     mln::edge_image<void,V,G>
     edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
       mln_precondition(exact(g).is_valid());
 
       p_edges<G> pe(g);
       mln::edge_image<void,V,G> ima(pe, fv);
 
-      trace::exiting("make::edge_image");
       return ima;
     }
 
@@ -155,7 +154,7 @@ namespace mln
     edge_image(const Graph<G>& g_,
 	       const Function_v2v<FV>& fv)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
       const G& g = exact(g_);
       const FV& f = exact(fv);
       mln_precondition(g.is_valid());
@@ -168,7 +167,6 @@ namespace mln
       for_all(e)
 	ima(e) = f(e.id());
 
-      trace::exiting("make::edge_image");
       return ima;
     }
 
@@ -180,14 +178,13 @@ namespace mln
 	       const Function_v2v<FP>& fp,
 	       const Function_v2v<FV>& fv)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
       p_edges<G,FP> pe(g,fp);
       mln::edge_image<mln_result(FP),mln_result(FV),G> ima(pe, fv);
 
-      trace::exiting("make::edge_image");
       return ima;
     }
 
@@ -200,7 +197,7 @@ namespace mln
 	       const p_edges<G,FP> pe,
 	       const Function_vv2v<FV>& fv_)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
 
       const FV& fv = exact(fv_);
       const mln::vertex_image<P,V,G>& v_ima = exact(v_ima_);
@@ -213,7 +210,6 @@ namespace mln
       for_all(e)
 	ima_e(e) = fv(e.element().v1(), e.element().v2());
 
-      trace::exiting("make::edge_image");
       return ima_e;
     }
 
@@ -225,7 +221,7 @@ namespace mln
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const Function_vv2v<FV>& fv_)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
 
       const FV& fv = exact(fv_);
       const mln::vertex_image<P,V,G>& v_ima = exact(v_ima_);
@@ -239,7 +235,6 @@ namespace mln
       for_all(e)
 	ima_e(e) = fv(v_ima(e.element().v1()), v_ima(e.element().v2()));
 
-      trace::exiting("make::edge_image");
       return ima_e;
     }
 
@@ -250,7 +245,7 @@ namespace mln
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const Function_v2b<F>& fv_)
     {
-      trace::entering("make::edge_image");
+      mln_trace("make::edge_image");
 
       const F& fv = exact(fv_);
       typedef mln::vertex_image<P,V,G> v_ima_t;
@@ -272,7 +267,6 @@ namespace mln
 	    ima_e(q) = false;
 	}
 
-      trace::exiting("make::edge_image");
       return ima_e;
     }
 

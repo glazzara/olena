@@ -111,7 +111,7 @@ namespace mln
       void
       diagonal2d_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::diagonal2d");
+	mln_trace("canvas::browsing::diagonal2d");
 
 	typedef typename F::I I;
 	typedef mln_deduce(I, psite, delta) dpsite;
@@ -165,7 +165,6 @@ namespace mln
 	}
 
 	f.final();
-	trace::exiting("canvas::browsing::diagonal2d");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

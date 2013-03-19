@@ -53,7 +53,7 @@ namespace mln
     inline
     bool positive(const Image<I>& input_)
     {
-      trace::entering("test::positive");
+      mln_trace("test::positive");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -67,7 +67,6 @@ namespace mln
 //       return test::predicate(input,
 // 			     fun::v2v::id<mln_value(I)>() >= pw::cst(0));
 
-      trace::exiting("test::positive");
       return res;
     }
 

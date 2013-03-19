@@ -98,7 +98,7 @@ namespace scribo
       object_links<scribo_support(F)>
       compute(Link_Functor<F>& functor_, anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::compute");
+	mln_trace("scribo::primitive::link::compute");
 
 	F& functor = exact(functor_);
 	const typename F::component_set_t&
@@ -111,7 +111,6 @@ namespace scribo
 	    primitive::internal::find_link(functor, current_object, anchor);
 	  }
 
-	trace::exiting("scribo::primitive::link::compute");
 	return functor.links();
       }
 

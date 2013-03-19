@@ -303,7 +303,7 @@ namespace scribo
       component_set<L>
       non_text(const document<L>& doc, unsigned nlines)
       {
-	trace::entering("scribo::primitive::extract::non_text");
+	mln_trace("scribo::primitive::extract::non_text");
 
 
 	mln::util::timer t;
@@ -353,7 +353,6 @@ namespace scribo
 				    "non_text_components");
 	}
 
-	trace::exiting("scribo::primitive::extract::non_text");
 	return elements;
       }
 

@@ -89,10 +89,9 @@ namespace mln
 		     const Window<W>& win,
 		     const mln_value(I)& val)
     {
-      trace::entering("extension::adjust_fill");
+      mln_trace("extension::adjust_fill");
       extension::adjust(ima, win);
       extension::fill(ima, val);
-      trace::exiting("extension::adjust_fill");
     }
 
     template <typename I, typename W>
@@ -100,10 +99,9 @@ namespace mln
 		     const Weighted_Window<W>& wwin,
 		     const mln_value(I)& val)
     {
-      trace::entering("extension::adjust_fill");
+      mln_trace("extension::adjust_fill");
       extension::adjust(ima, wwin);
       extension::fill(ima, val);
-      trace::exiting("extension::adjust_fill");
     }
 
     template <typename I, typename N>
@@ -111,10 +109,9 @@ namespace mln
 		     const Neighborhood<N>& nbh,
 		     const mln_value(I)& val)
     {
-      trace::entering("extension::adjust_fill");
+      mln_trace("extension::adjust_fill");
       extension::adjust(ima, nbh);
       extension::fill(ima, val);
-      trace::exiting("extension::adjust_fill");
     }
 
     template <typename I>
@@ -122,10 +119,9 @@ namespace mln
 		     unsigned delta,
 		     const mln_value(I)& val)
     {
-      trace::entering("extension::adjust_fill");
+      mln_trace("extension::adjust_fill");
       extension::adjust(ima, delta);
       extension::fill(ima, val);
-      trace::exiting("extension::adjust_fill");
     }
 
 

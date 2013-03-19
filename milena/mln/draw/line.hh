@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -78,9 +78,9 @@ namespace mln
       I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
       if (! ima.has(beg))
-	trace::warning("Begin site is not part of the given image.");
+	mln_trace_warning("Begin site is not part of the given image.");
       if (! ima.has(end))
-	trace::warning("End site is not part of the given image.");
+	mln_trace_warning("End site is not part of the given image.");
       data::paste(pw::cst(v) | p_line2d(beg, end),
 		   safe(ima).rw());
     }

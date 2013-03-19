@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
   }
 
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, argv[1]);

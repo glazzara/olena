@@ -99,7 +99,7 @@ namespace scribo
       from_single_left_link(const object_groups<L>& groups,
 			    unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::regroup::from_single_left_link");
+	mln_trace("scribo::primitive::regroup::from_single_left_link");
 
 	mln_precondition(groups.is_valid());
 
@@ -124,7 +124,6 @@ namespace scribo
 	      output(relabel_fun(new_groups(g).component_ids()(0)))
 		.merge(output(relabel_fun(new_groups(g).component_ids()(i))));
 
-	trace::exiting("scribo::primitive::regroup::from_single_left_link");
 	return output;
       }
 

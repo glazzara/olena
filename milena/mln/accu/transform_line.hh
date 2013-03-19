@@ -111,7 +111,7 @@ namespace mln
 		       const Image<I>& input_,
 		       unsigned length, unsigned dir)
 	{
-	  trace::entering("accu::impl::transform_line");
+	  mln_trace("accu::impl::transform_line");
 
 	  const I& input = exact(input_);
 	  A a = exact(a_);
@@ -194,7 +194,6 @@ namespace mln
 
 	    } while (p != pmin);
 
-	  trace::exiting("accu::impl::transform_line");
 	  return output;
 	}
 
@@ -208,7 +207,7 @@ namespace mln
 			     const Image<I>& input_,
 			     unsigned length, unsigned dir)
       {
-	trace::entering("accu::impl::transform_line_fastest");
+	mln_trace("accu::impl::transform_line_fastest");
 
 	const I& input = exact(input_);
 	A a = exact(a_);
@@ -294,7 +293,6 @@ namespace mln
 
 	  } while (p != pmin);
 
-	trace::exiting("accu::impl::transform_line_fastest");
 	return output;
       }
 
@@ -307,7 +305,7 @@ namespace mln
 			                      const Image<I>& input_,
 			                      unsigned length, unsigned dir)
       {
-	trace::entering("accu::impl::transform_line_fastest_without_border");
+	mln_trace("accu::impl::transform_line_fastest_without_border");
 
 	const I& input = exact(input_);
 	A a = exact(a_);
@@ -421,7 +419,6 @@ namespace mln
 
 	  } while (p != pmin);
 
-	trace::exiting("accu::impl::transform_line_fastest_without_border");
 	return output;
       }
 
@@ -507,7 +504,7 @@ namespace mln
 		   const Image<I>& input,
 		   unsigned length, unsigned dir)
     {
-      trace::entering("accu::transform_line");
+      mln_trace("accu::transform_line");
 
       internal::transform_line_tests(a, input);
 
@@ -516,7 +513,6 @@ namespace mln
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_line_dispatch(a, input, length, dir);
 
-      trace::exiting("accu::transform_line");
       return output;
     }
 
@@ -528,7 +524,7 @@ namespace mln
 		   const Image<I>& input,
 		   unsigned length, unsigned dir)
     {
-      trace::entering("accu::transform_line");
+      mln_trace("accu::transform_line");
 
       typedef mln_accu_with(A, mln_value(I)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());
@@ -538,7 +534,6 @@ namespace mln
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_line_dispatch(a_, input, length, dir);
 
-      trace::exiting("accu::transform_line");
       return output;
     }
 

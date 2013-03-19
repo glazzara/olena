@@ -67,7 +67,7 @@ namespace mln
     mln_ch_value(I, V)
     wrap(const V& v, const Image<I>& input_)
     {
-      trace::entering("mln::data::wrap");
+      mln_trace("mln::data::wrap");
 
       (void) v;
       const I& input = exact(input_);
@@ -77,7 +77,6 @@ namespace mln
       mln_ch_value(I, V)
 	output = data::transform(input, fun::v2v::wrap<V>());
 
-      trace::exiting("mln::data::wrap");
       return output;
     }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +73,7 @@ namespace scribo
 		      unsigned current_object, unsigned nbh_object,
 		      anchor::Type anchor)
       {
-	trace::entering("scribo::filter::internal::alignment_angle");
+	mln_trace("scribo::filter::internal::alignment_angle");
 
 	mln_precondition(comps.is_valid());
 
@@ -161,11 +161,10 @@ namespace scribo
 	  break;
 
 	  default:
-	    trace::warning("scribo::filter::internal::alignment_angle,"
-			   " Invalid anchor value... Aborting computation.");
+	    mln_trace_warning("scribo::filter::internal::alignment_angle,"
+			      " Invalid anchor value... Aborting computation.");
 	}
 
-	trace::exiting("scribo::filter::internal::alignment_angle");
 	return result;
       }
 

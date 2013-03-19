@@ -111,7 +111,7 @@ namespace scribo
       mln_concrete(I)
       separators_nonvisible(const Image<I>& in_)
       {
-	trace::entering("scribo::primitive::extract::separators_nonvisible");
+	mln_trace("scribo::primitive::extract::separators_nonvisible");
 
 	const I& in = exact(in_);
 	mln_precondition(in.is_valid());
@@ -473,7 +473,6 @@ namespace scribo
 	  // t_ = gt;
 	  // std::cout << "Non visible separators: " << t_ << std::endl;
 
-	  trace::exiting("scribo::primitive::extract::separators_nonvisible");
 	  return scribo::preprocessing::rotate_90(output, true);
 	}
       }

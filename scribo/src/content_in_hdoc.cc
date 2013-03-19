@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -212,5 +212,4 @@ int main(int argc, char* argv[])
 
 //  sleep(10);
 
-  trace::exiting("main");
 }

@@ -155,7 +155,7 @@ namespace scribo
 		   const V& label_type,
 		   unsigned min_thinness)
     {
-      trace::entering("scribo::filter::objects_h_thin");
+      mln_trace("scribo::filter::objects_h_thin");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -168,7 +168,6 @@ namespace scribo
 	output = internal::compute(input, nbh, label_type, functor);
 
 
-      trace::exiting("scribo::filter::objects_h_thin");
       return output;
     }
 
@@ -179,14 +178,13 @@ namespace scribo
     objects_h_thin(const component_set<L>& comps,
 		   unsigned min_thinness)
     {
-      trace::entering("scribo::filter::objects_h_thin");
+      mln_trace("scribo::filter::objects_h_thin");
 
       internal::objects_h_thin_filter<L>
 	is_not_too_h_thin(comps, min_thinness);
 
       component_set<L> output = internal::compute(comps, is_not_too_h_thin);
 
-      trace::exiting("scribo::filter::objects_h_thin");
       return output;
     }
 

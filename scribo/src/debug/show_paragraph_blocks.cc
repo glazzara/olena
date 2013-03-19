@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 				"lines.xml out_blocks.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   document<L> doc;
@@ -183,5 +183,4 @@ int main(int argc, char* argv[])
   mln::io::pbm::save(blocks, argv[2]);
   // mln::io::pgm::save(log, "log.pgm");
 
-  trace::exiting("main");
 }

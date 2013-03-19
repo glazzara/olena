@@ -206,13 +206,12 @@ namespace mln
     inline
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f)
     {
-      trace::entering("test::predicate");
+      mln_trace("test::predicate");
 
       internal::predicate_tests(ima, f);
       bool res = impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
 				  exact(f));
 
-      trace::exiting("test::predicate");
       return res;
     }
 
@@ -221,7 +220,7 @@ namespace mln
     inline
     bool predicate(const Image<I>& lhs_, const Image<J>& rhs_, const Function_vv2b<F>& f)
     {
-      trace::entering("test::predicate");
+      mln_trace("test::predicate");
 
       const I& lhs = exact(lhs_);
       const J& rhs = exact(rhs_);
@@ -233,7 +232,6 @@ namespace mln
 				  lhs, rhs,
 				  exact(f));
 
-      trace::exiting("test::predicate");
       return res;
     }
 
@@ -241,13 +239,12 @@ namespace mln
     inline
     bool predicate(const Site_Set<S>& pset, const Function_v2b<F>& f)
     {
-      trace::entering("test::predicate");
+      mln_trace("test::predicate");
 
       internal::predicate_tests(pset, f);
 
       bool res = impl::predicate_(exact(pset), exact(f));
 
-      trace::exiting("test::predicate");
       return res;
     }
 

@@ -106,7 +106,7 @@ namespace mln
 	distance_geodesic(const Image<I>& input_, const Neighborhood<N>& nbh_,
 			  D max, F& functor)
 	{
-	  trace::entering("canvas::impl::generic::distance_geodesic");
+	  mln_trace("canvas::impl::generic::distance_geodesic");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -167,7 +167,6 @@ namespace mln
 	      }
 	  }
 
-	  trace::exiting("canvas::impl::generic::distance_geodesic");
 	  return dmap;
 	}
 
@@ -185,7 +184,7 @@ namespace mln
 				D max,
 				F& functor)
       {
-	trace::entering("canvas::impl::distance_geodesic_fastest");
+	mln_trace("canvas::impl::distance_geodesic_fastest");
 
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
@@ -250,7 +249,6 @@ namespace mln
 	    }
 	}
 
-	trace::exiting("canvas::impl::distance_geodesic_fastest");
 	return dmap;
       }
 
@@ -324,14 +322,13 @@ namespace mln
     distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
 		      D max, F& functor)
     {
-      trace::entering("canvas::distance_geodesic");
+      mln_trace("canvas::distance_geodesic");
 
       internal::distance_geodesic_tests(input, nbh, max, functor);
 
       mln_ch_value(I,D) output;
       output = internal::distance_geodesic_dispatch(input, nbh, max, functor);
 
-      trace::exiting("canvas::distance_geodesic");
       return output;
     }
 

@@ -409,7 +409,7 @@ namespace scribo
     {
       const I& input_gl = exact(input_gl_);
 
-      trace::entering("scribo::preprocessing::deskew");
+      mln_trace("scribo::preprocessing::deskew");
       mln_assertion(input_gl.is_valid());
       mlc_is(mln_domain(I), box2d)::check();
       mlc_is_not(mln_value(I), bool)::check();
@@ -429,7 +429,6 @@ namespace scribo
 			      mln::make::box2d(input_gl.nrows(),
 					       input_gl.ncols()));
 
-      trace::exiting("scribo::preprocessing::deskew");
       return output;
     }
 

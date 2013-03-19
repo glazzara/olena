@@ -437,7 +437,7 @@ namespace mln
     transform_snake(const Accumulator<A>& a,
 		    const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::transform_snake");
+      mln_trace("accu::transform_snake");
 
       internal::transform_snake_tests(input, win);
 
@@ -445,7 +445,6 @@ namespace mln
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_snake_dispatch(a, input, win);
 
-      trace::exiting("accu::transform_snake");
       return output;
     }
 
@@ -456,7 +455,7 @@ namespace mln
     transform_snake(const Meta_Accumulator<A>& a,
 		    const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::transform_snake");
+      mln_trace("accu::transform_snake");
 
       internal::transform_snake_tests(input, win);
 
@@ -467,7 +466,6 @@ namespace mln
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_snake_dispatch(a_, input, win);
 
-      trace::exiting("accu::transform_snake");
       return output;
     }
 

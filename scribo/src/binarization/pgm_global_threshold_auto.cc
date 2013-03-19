@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 				"input.pgm output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<int_u8> input;
   io::pgm::load(input, argv[1]);
@@ -59,5 +59,4 @@ int main(int argc, char *argv[])
 		argv[2]);
 
 
-  trace::exiting("main");
 }

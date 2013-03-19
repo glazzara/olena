@@ -42,7 +42,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  trace::quiet = false;
+  debug::trace::quiet = false;
 
   typedef image2d<int_u8> I;
   I lena;

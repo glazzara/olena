@@ -64,7 +64,7 @@ namespace mln
     inline
     void adjust(const Image<I>& ima, unsigned min_thickness)
     {
-      trace::entering("border::adjust");
+      mln_trace("border::adjust");
 
       mln_precondition(exact(ima).is_valid());
 
@@ -74,7 +74,6 @@ namespace mln
       // We cannot run here a postcondition since we do not know if
       // ima (or an underlying image) has a border or not.
 
-      trace::exiting("border::adjust");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

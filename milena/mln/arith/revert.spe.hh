@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,7 +55,7 @@ namespace mln
       inline
       void revert_fastest(const Image<I>& input_, Image<O>& output_)
       {
-	trace::entering("arith::impl::revert_fastest");
+	mln_trace("arith::impl::revert_fastest");
 
 	const I& input = exact(input_);
 	O& output = exact(output_);
@@ -69,8 +69,6 @@ namespace mln
 	mln_pixter(O)       op(output);
 	for_all_2(ip, op)
 	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
-
-	trace::entering("arith::impl::revert_fastest");
       }
 
     } // end of namespace mln::arith::impl

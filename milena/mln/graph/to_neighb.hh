@@ -56,7 +56,7 @@ namespace mln
     graph_elt_neighborhood_if<mln_graph(I), mln_domain(I), M>
     to_neighb(const Image<I>& graph_image_, const Image<M>& graph_mask_image_)
     {
-      trace::entering("graph::to_neighb");
+      mln_trace("graph::to_neighb");
 
       const I& graph_image = exact(graph_image_);
       const M& graph_mask_image = exact(graph_mask_image_);
@@ -68,7 +68,6 @@ namespace mln
       typedef graph_elt_neighborhood_if<mln_graph(I), mln_domain(I), M> nbh_t;
       nbh_t nbh(graph_mask_image);
 
-      trace::exiting("graph::to_neighb");
       return nbh;
     }
 

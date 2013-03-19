@@ -281,14 +281,13 @@ namespace mln
     inline
     QImage to_qimage(const Image<I>& ima_)
     {
-      trace::entering("convert::to_qimage");
+      mln_trace("convert::to_qimage");
 
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
 
       QImage output = internal::to_qimage_dispatch(ima);
 
-      trace::exiting("convert::to_qimage");
       return output;
     }
 

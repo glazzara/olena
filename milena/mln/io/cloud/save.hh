@@ -86,7 +86,7 @@ namespace mln
       template <typename P>
       void save(const p_array<P>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::cloud::save");
+	mln_trace("mln::io::cloud::save");
 
 	std::ofstream file(filename.c_str());
 	if (! file)
@@ -97,7 +97,6 @@ namespace mln
 
 	internal::save_data(arr, file);
 
-	trace::exiting("mln::io::cloud::save");
       }
 
 

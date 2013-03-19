@@ -76,13 +76,12 @@ namespace mln
     mln::vertex_image<void,mln_result(FV),G>
     vertex_image(const Graph<G>& g, const Function_v2v<FV>& fv)
     {
-      trace::entering("make::vertex_image");
+      mln_trace("make::vertex_image");
       mln_precondition(exact(g).is_valid());
 
       p_vertices<G> pv(g);
       mln::vertex_image<void,mln_result(FV),G> ima(pv, fv);
 
-      trace::exiting("make::vertex_image");
       return ima;
     }
 
@@ -93,14 +92,13 @@ namespace mln
 		 const Function_v2v<FP>& fp,
 		 const Function_v2v<FV>& fv)
     {
-      trace::entering("make::vertex_image");
+      mln_trace("make::vertex_image");
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
       p_vertices<G,FP> pv(g,fp);
       mln::vertex_image<mln_result(FP),mln_result(FV),G> ima(pv, fv);
 
-      trace::exiting("make::vertex_image");
       return ima;
     }
 

@@ -13,13 +13,13 @@ int main()
   label_8 nlabels;
   // \{
   // ...
-  trace::quiet = false;
+  debug::trace::quiet = false;
   // \}
-  trace::quiet = true;
+  debug::trace::quiet = true;
   // \{
   labeling::blobs(ima, c4(), nlabels);
 
-  trace::quiet = true;
+  debug::trace::quiet = true;
 
   geom::bbox(ima);
   // ...

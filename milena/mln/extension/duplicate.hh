@@ -61,9 +61,8 @@ namespace mln
     template <typename I>
     void duplicate(const Image<I>& ima)
     {
-      trace::entering("extension::duplicate");
+      mln_trace("extension::duplicate");
       border::duplicate(ima);
-      trace::exiting("extension::duplicate");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

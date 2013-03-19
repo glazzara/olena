@@ -45,7 +45,7 @@ namespace mln
 	    V& v)
     {
       mlc_is_a(A_, Meta_Accumulator)::check();
-      trace::entering("accu::compute");
+      mln_trace("accu::compute");
 
       const I& input = exact(input_);
       const L& label = exact(label_);
@@ -61,7 +61,6 @@ namespace mln
       for (unsigned l = 1; l < n; ++l)
 	v(l) = a[l];
 
-      trace::exiting("accu::compute");
     }
 
   } // mln::accu

@@ -311,9 +311,8 @@ namespace mln
   inline
   fun::x2x::composed<T2,T1> compose(T2 f, T1 g)
   {
-    trace::entering("fun::x2x::compose");
+    mln_trace("fun::x2x::compose");
     fun::x2x::composed<T2,T1> comp(f, g);
-    trace::exiting("fun::x2x::compose");
     return comp;
   }
 

@@ -120,7 +120,7 @@ namespace scribo
     void
     recognition(line_set<L>& lines, const char *language)
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
       // Tesseract is known to have issues while reading training data
       // depending on the current locales in use. Training data files use
@@ -205,7 +205,6 @@ namespace scribo
       // Restore default locale.
       setlocale(LC_ALL, "");
 
-      trace::exiting("scribo::text::recognition");
     }
 
 
@@ -215,7 +214,7 @@ namespace scribo
 		const char *language,
 		const std::string& output_file)
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
@@ -283,7 +282,6 @@ namespace scribo
 	// Restore default locale.
 	setlocale(LC_ALL, "");
 
-	trace::exiting("scribo::text::recognition");
     }
 
 
@@ -296,7 +294,7 @@ namespace scribo
     void
     recognition(line_set<L>& lines, const char *language)
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
 
       // Initialize Tesseract.
@@ -365,7 +363,6 @@ namespace scribo
 	delete[] s;
       }
 
-      trace::exiting("scribo::text::recognition");
     }
 
 
@@ -376,7 +373,7 @@ namespace scribo
 		const char *language,
 		const std::string& output_file = std::string())
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
@@ -430,7 +427,6 @@ namespace scribo
 	// Restore default locale.
 	setlocale(LC_ALL, "");
 
-	trace::exiting("scribo::text::recognition");
     }
 
 

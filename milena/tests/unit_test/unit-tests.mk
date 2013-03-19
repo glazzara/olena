@@ -1109,14 +1109,6 @@ mln_topo_skeleton_breadth_first_thinning \
 mln_topo_skeleton_crest \
 mln_topo_skeleton_is_simple_point \
 mln_topo_static_n_face_iter \
-mln_trace_all \
-mln_trace_entering \
-mln_trace_essential \
-mln_trace_exiting \
-mln_trace_quiet \
-mln_trace_resume \
-mln_trace_stop \
-mln_trace_warning \
 mln_trait_accumulator_print \
 mln_trait_accumulator_props \
 mln_trait_accumulators \

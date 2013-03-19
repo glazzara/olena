@@ -75,7 +75,7 @@ namespace scribo
     text_areas_image(const Image<I>& input_rgb_,
 		     const scribo::component_set<L>& comps)
     {
-      trace::entering("scribo::debug::text_areas_image");
+      mln_trace("scribo::debug::text_areas_image");
 
       const I& input_rgb = exact(input_rgb_);
       mln_precondition(input_rgb.is_valid());
@@ -119,7 +119,6 @@ namespace scribo
 	  dv[0] += comps(i).bbox().nrows() + shift;
 	}
 
-      trace::exiting("scribo::debug::text_areas_image");
       return output;
     }
 

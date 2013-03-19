@@ -82,14 +82,13 @@ namespace mln
     mln_ch_fun_vv2v(lxor, L, R)
     xor_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::xor_");
+      mln_trace("logical::xor_");
 
       internal::tests(lhs, rhs);
 
       mln_fun_vv2v(lxor, L, R) f;
       mln_ch_fun_vv2v(lxor, L, R) output = data::transform(lhs, rhs, f);
 
-      trace::exiting("logical::xor_");
       return output;
     }
 
@@ -97,7 +96,7 @@ namespace mln
     inline
     void xor_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::xor_inplace");
+      mln_trace("logical::xor_inplace");
 
       mlc_converts_to(mln_fun_vv2v_result(lxor, L, R),
 		      mln_value(L))::check();
@@ -107,7 +106,6 @@ namespace mln
       mln_fun_vv2v(lxor, L, R) f;
       data::transform_inplace(lhs, rhs, f);
 
-      trace::exiting("logical::xor_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

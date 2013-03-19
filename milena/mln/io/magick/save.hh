@@ -151,7 +151,7 @@ namespace mln
 	  void
 	  paste_data(const Image<I>& ima_, Magick::Image& magick_ima)
 	  {
-	    trace::entering("io::magick::impl::generic::paste_data");
+	    mln_trace("io::magick::impl::generic::paste_data");
 
 	    const I& ima = exact(ima_);
 
@@ -173,7 +173,6 @@ namespace mln
 
 	    view.sync();
 
-	    trace::exiting("io::magick::impl::generic::paste_data");
 	  }
 
 	  template <typename I, typename J>
@@ -182,7 +181,7 @@ namespace mln
 			     const Image<J>& opacity_mask_,
 			     Magick::Image& magick_ima)
 	  {
-	    trace::entering("io::magick::impl::generic::paste_data_opacity");
+	    mln_trace("io::magick::impl::generic::paste_data_opacity");
 
 	    const I& ima = exact(ima_);
 	    const J& opacity_mask = exact(opacity_mask_);
@@ -211,7 +210,6 @@ namespace mln
 
 	    view.sync();
 
-	    trace::exiting("io::magick::impl::generic::paste_data_opacity");
 	  }
 
 	} // end of namespace mln::io::magick::impl::generic
@@ -475,7 +473,7 @@ namespace mln
       save(const Image<I>& ima_, const Image<J>& opacity_mask_,
 	   const std::string& filename)
       {
-	trace::entering("mln::io::magick::save");
+	mln_trace("mln::io::magick::save");
 
 	mln_precondition(mln_site_(I)::dim == 2);
 	// Turn this into a static check?
@@ -528,7 +526,6 @@ namespace mln
 
 	magick_ima.write(filename);
 
-	trace::exiting("mln::io::magick::save");
       }
 
 
@@ -541,6 +538,7 @@ namespace mln
 	mln_ch_value(I,bool) opacity_mask;
 	save(ima, opacity_mask, filename);
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

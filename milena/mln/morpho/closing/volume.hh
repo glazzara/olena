@@ -62,14 +62,13 @@ namespace mln
       volume(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::closing::volume");
+	mln_trace("morpho::closing::volume");
 
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = closing::leveling(input, nbh, attribute::volume<I>(), lambda);
 
-	trace::exiting("morpho::closing::volume");
 	return output;
       }
 

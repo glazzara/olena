@@ -100,7 +100,7 @@ namespace scribo
 			      const value::rgb8& meanline_value,
 			      const value::rgb8& baseline_value)
     {
-      trace::entering("scribo::debug::mean_and_base_lines_image");
+      mln_trace("scribo::debug::mean_and_base_lines_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
@@ -130,7 +130,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::debug::mean_and_base_lines_image");
       return output;
     }
 

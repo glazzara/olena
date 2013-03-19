@@ -190,27 +190,24 @@ namespace mln
       void
       load(bin_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::load");
+	mln_trace("mln::io::off::load");
 	internal::bin_off_loader()(ima, filename);
-	trace::exiting("mln::io::off::load");
       }
 
       inline
       void
       load(float_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::load");
+	mln_trace("mln::io::off::load");
 	internal::float_off_loader()(ima, filename);
-	trace::exiting("mln::io::off::load");
       }
 
       inline
       void
       load(rgb8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::load");
+	mln_trace("mln::io::off::load");
 	internal::rgb8_off_loader()(ima, filename);
-	trace::exiting("mln::io::off::load");
       }
 
 

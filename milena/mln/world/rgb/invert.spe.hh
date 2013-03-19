@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,7 +57,7 @@ namespace mln
 	inline
 	void invert_rgb_fastest(const Image<I>& input_, Image<O>& output_)
 	{
-	  trace::entering("world::rgb::impl::invert_rgb_fastest");
+	  mln_trace("world::rgb::impl::invert_rgb_fastest");
 
 	  const I& input = exact(input_);
 	  O& output = exact(output_);
@@ -78,7 +79,6 @@ namespace mln
 	    op.val().blue() = mln_min(Blue) + (mln_max(Blue) - ip.val().blue());
 	  }
 
-	  trace::entering("world::rgb::impl::invert_rgb_fastest");
 	}
 
 
@@ -86,7 +86,7 @@ namespace mln
 	inline
 	void invert_rgb(const Image<I>& input_, Image<O>& output_)
 	{
-	  trace::entering("world::rgb::impl::invert_rgb");
+	  mln_trace("world::rgb::impl::invert_rgb");
 
 	  const I& input = exact(input_);
 	  O& output = exact(output_);
@@ -107,7 +107,6 @@ namespace mln
 	    output(p).blue() = mln_min(Blue) + (mln_max(Blue) - input(p).blue());
 	  }
 
-	  trace::exiting("world::rgb::impl::invert_rgb");
 	}
 
 

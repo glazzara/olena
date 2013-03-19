@@ -64,7 +64,7 @@ namespace scribo
     void
     images_in_paragraph(document<L>& doc)
     {
-      trace::entering("scribo::filter::images_in_paragraph");
+      mln_trace("scribo::filter::images_in_paragraph");
 
       mln_precondition(doc.is_valid());
 
@@ -104,7 +104,6 @@ namespace scribo
       // Ignored components are still in the separator image...
       doc.set_elements(elts);
 
-      trace::exiting("scribo::filter::images_in_paragraph");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

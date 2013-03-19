@@ -73,7 +73,7 @@ namespace mln
       mln_concrete(I)
       scale3x(const Image<I>& input_)
       {
-	trace::entering("mln::upscaling::art::scale3x");
+	mln_trace("mln::upscaling::art::scale3x");
 
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
@@ -202,7 +202,6 @@ namespace mln
 
 	}
 
-	trace::exiting("mln::upscaling::art::scale3x");
 	return output;
       }
 

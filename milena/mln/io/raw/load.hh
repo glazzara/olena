@@ -185,7 +185,7 @@ namespace mln
       template <typename I>
       void load(Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::raw::load");
+	mln_trace("mln::io::raw::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -213,7 +213,6 @@ namespace mln
 	file.close();
 	info_file.close();
 
-	trace::exiting("mln::io::raw::load");
       }
 
 

@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 				"input.pgm min_holes_count output.pbm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<value::label_8> I;
   I input;
@@ -71,6 +71,5 @@ int main(int argc, char *argv[])
     filtered = scribo::filter::objects_with_holes(comps, atoi(argv[2]), 0);
   io::pbm::save(data::convert(bool(), filtered.valid_comps_image_()), argv[3]);
 
-  trace::exiting("main");
 
 }

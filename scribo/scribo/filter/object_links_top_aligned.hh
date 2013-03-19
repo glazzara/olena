@@ -94,14 +94,13 @@ namespace scribo
     object_links_top_aligned(const object_links<L>& links,
 			     float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_top_aligned");
+      mln_trace("scribo::filter::object_links_top_aligned");
 
       mln_precondition(links.is_valid());
 
       object_links<L>
 	output = object_links_aligned(links, max_alpha, anchor::Top);
 
-      trace::exiting("scribo::filter::object_links_top_aligned");
       return output;
     }
 

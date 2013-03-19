@@ -164,7 +164,7 @@ namespace scribo
 			const value::rgb8& link_value,
 			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::linked_bboxes_image");
+      mln_trace("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
@@ -172,7 +172,6 @@ namespace scribo
       draw::bounding_boxes(tmp, links.components(), box_value);
       draw::bounding_box_links(tmp, links, link_value, anchor);
 
-      trace::exiting("scribo::debug::linked_bboxes_image");
       return tmp;
     }
 
@@ -223,7 +222,7 @@ namespace scribo
 			const value::rgb8& validated_link_value,
 			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::linked_bboxes_image");
+      mln_trace("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
@@ -235,7 +234,6 @@ namespace scribo
 			       validated_link_value,
 			       anchor);
 
-      trace::exiting("scribo::debug::linked_bboxes_image");
       return tmp;
     }
 
@@ -250,7 +248,7 @@ namespace scribo
 			const value::rgb8& link_value,
 			anchor::Type anchor)
     {
-      trace::entering("scribo::debug::linked_bboxes_image");
+      mln_trace("scribo::debug::linked_bboxes_image");
       mln_precondition(exact(g).is_valid());
       mln_precondition(exact(input).is_valid());
 
@@ -260,7 +258,6 @@ namespace scribo
       draw::bounding_box_links(tmp, exact(g).components(), g, link_value,
 			       anchor);
 
-      trace::exiting("scribo::debug::linked_bboxes_image");
       return tmp;
     }
 

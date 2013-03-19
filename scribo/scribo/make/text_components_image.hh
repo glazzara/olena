@@ -63,7 +63,7 @@ namespace scribo
     mln_ch_value(L,bool)
     text_components_image(const document<L>& doc)
     {
-      trace::entering("scribo::make::text_components_image");
+      mln_trace("scribo::make::text_components_image");
 
       mln_precondition(doc.is_open());
       mln_precondition(doc.has_text());
@@ -90,7 +90,6 @@ namespace scribo
 	  }
       }
 
-      trace::exiting("scribo::make::text_components_image");
       return output;
     }
 

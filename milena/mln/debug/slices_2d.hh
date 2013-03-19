@@ -86,7 +86,7 @@ namespace mln
 	      unsigned n_horizontal, unsigned n_vertical,
 	      const mln_value(I)& bg)
     {
-      trace::entering("debug::slices_2d");
+      mln_trace("debug::slices_2d");
       mlc_equal(mln_domain(I), box3d)::check();
 
       const I& input = exact(input_);
@@ -121,7 +121,6 @@ namespace mln
 	      }
 	  }
 
-      trace::exiting("debug::slices_2d");
       return output;
     }
 
@@ -171,7 +170,7 @@ namespace mln
 	      float ratio_hv,           // horizontal / vertical
 	      const mln_value(I)& bg)
     {
-      trace::entering("debug::slices_2d");
+      mln_trace("debug::slices_2d");
       mlc_equal(mln_domain(I), box3d)::check();
 
       const I& input = exact(input_);
@@ -186,7 +185,6 @@ namespace mln
 
       image2d<mln_value(I)> output = slices_2d(input, n_horizontal, n_vertical, bg);
 
-      trace::exiting("debug::slices_2d");
       return output;
     }
 

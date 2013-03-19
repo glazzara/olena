@@ -137,7 +137,7 @@ namespace scribo
     extract_lines_wo_merge(const Image<I>& input_, const Neighborhood<N>& nbh_,
 			   const mln_ch_value(I,bool)& separators)
     {
-      trace::entering("scribo::text::extract_lines_wo_merge");
+      mln_trace("scribo::text::extract_lines_wo_merge");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -185,7 +185,6 @@ namespace scribo
 
       line_set<L> lines(groups);
 
-      trace::exiting("scribo::text::extract_lines_wo_merge");
       return lines;
     }
 

@@ -64,7 +64,7 @@ namespace scribo
     mln_concrete(I)
     bilinear(const Image<I>& input_, int sub_ratio)
     {
-      trace::entering("scribo::subsampling::bilinear");
+      mln_trace("scribo::subsampling::bilinear");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -108,7 +108,6 @@ namespace scribo
 
       }
 
-      trace::exiting("scribo::subsampling::bilinear");
       return output;
     }
 

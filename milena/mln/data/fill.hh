@@ -140,12 +140,11 @@ namespace mln
     inline
     void fill(Image<I>& ima, const D& data)
     {
-      trace::entering("data::fill");
+      mln_trace("data::fill");
 
       internal::fill_tests(ima, data);
       internal::fill_dispatch(ima, data);
 
-      trace::exiting("data::fill");
     }
 
 

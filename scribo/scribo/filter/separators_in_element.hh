@@ -68,7 +68,7 @@ namespace scribo
     void
     separators_in_element(document<L>& doc)
     {
-      trace::entering("scribo::filter::separators_in_element");
+      mln_trace("scribo::filter::separators_in_element");
 
       mln_precondition(doc.is_valid());
       mln_precondition(doc.has_elements());
@@ -140,7 +140,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_in_element");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

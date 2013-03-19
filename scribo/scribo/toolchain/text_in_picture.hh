@@ -79,7 +79,7 @@ namespace scribo
 		    unsigned max_dim_size, unsigned lambda,
 		    bool verbose)
     {
-      trace::entering("scribo::toolchain::text_in_picture");
+      mln_trace("scribo::toolchain::text_in_picture");
 
       const I& input_rgb = exact(input_rgb_);
       mln_precondition(input_rgb.is_valid());
@@ -94,7 +94,6 @@ namespace scribo
       component_set<mln_ch_value(I, def::lbl_type)>
 	output = f(input_rgb);
 
-      trace::exiting("scribo::toolchain::text_in_picture");
       return output;
     }
 

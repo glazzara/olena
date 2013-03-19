@@ -69,7 +69,7 @@ namespace mln
     mln_ch_convolve(I, W)
     convolve_directional(const Image<I>& input, unsigned dir, W (&weights)[S])
     {
-      trace::entering("linear::convolve_directional");
+      mln_trace("linear::convolve_directional");
 
       mlc_bool(S % 2 == 1)::check();
 
@@ -83,7 +83,6 @@ namespace mln
       w_window<D,W> w_win = make::w_window_directional(dp, weights);
       mln_ch_convolve(I, W) output = convolve(input, w_win);
 
-      trace::exiting("linear::convolve_directional");
       return output;
     }
 

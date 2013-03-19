@@ -61,7 +61,7 @@ namespace mln
 	    like_ero_set(bool val[5],
 			 const Image<I>& input_, const Neighborhood<N>& nbh_)
 	  {
-	    trace::entering("morpho::elementary::impl::generic::like_ero_set");
+	    mln_trace("morpho::elementary::impl::generic::like_ero_set");
 
 	    bool
 	      ext_value  = val[0],
@@ -92,7 +92,6 @@ namespace mln
 		  if (input.has(n) && input(n) == on_input_n)
 		    output(p) = output_p;
 
-	    trace::exiting("morpho::elementary::impl::generic::like_ero_set");
 	    return output;
 	  }
 
@@ -104,7 +103,7 @@ namespace mln
 	like_ero_set_fastest(bool val[5],
 			     const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
-	  trace::entering("morpho::elementary::impl::like_ero_set_fastest");
+	  mln_trace("morpho::elementary::impl::like_ero_set_fastest");
 
 	  bool
 	    ext_value  = val[0],
@@ -136,7 +135,6 @@ namespace mln
 		if (n.val() == on_input_n)
 		  p_out.val() = output_p;
 
-	  trace::exiting("morpho::elementary::impl::like_ero_set_fastest");
 	  return output;
 	}
 
