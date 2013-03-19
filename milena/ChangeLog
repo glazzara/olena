@@ -1,5 +1,14 @@
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make fld tests write in different files.
+
+	* tests/io/fld/fld1d.cc,
+	* tests/io/fld/fld2d.cc,
+	* tests/io/fld/fld3d.cc: Write in different files to allow those
+	tests to be run simultaneously.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/unit_test/unit-tests.mk: Regen.
 
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
