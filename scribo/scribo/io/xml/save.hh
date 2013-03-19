@@ -159,7 +159,8 @@ namespace scribo
 # endif // ! HAVE_QT
 
 	  default:
-	    trace::warning("scribo::io::xml::save - Invalid XML format! Skip saving...");
+	    mln_trace_warning("scribo::io::xml::save - "
+			      "Invalid XML format! Skip saving...");
 	}
 
 	output.close();

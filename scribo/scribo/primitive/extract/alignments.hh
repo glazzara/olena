@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -319,7 +320,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;
@@ -422,7 +423,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;

@@ -237,8 +237,8 @@ namespace scribo
 	    break;
 
 	  default:
-	    trace::warning("scribo::io::img::save - "
-			   "Invalid image format! Skip saving...");
+	    mln_trace_warning("scribo::io::img::save - "
+			      "Invalid image format! Skip saving...");
 	    return;
 	}
 

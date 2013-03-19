@@ -1,5 +1,17 @@
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of mln_trace_warning in Scribo.
+
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/filter/internal/alignment_angle.hh,
+	* scribo/io/img/save.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/make/debug_filename.hh,
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/link/internal/compute_anchor.hh: Here.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove last references to mln::trace::*.
 
 	* demo/xml2doc/main.cc,

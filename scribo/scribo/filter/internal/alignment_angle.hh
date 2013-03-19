@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -161,8 +161,8 @@ namespace scribo
 	  break;
 
 	  default:
-	    trace::warning("scribo::filter::internal::alignment_angle,"
-			   " Invalid anchor value... Aborting computation.");
+	    mln_trace_warning("scribo::filter::internal::alignment_angle,"
+			      " Invalid anchor value... Aborting computation.");
 	}
 
 	return result;

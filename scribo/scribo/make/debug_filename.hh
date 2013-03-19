@@ -82,7 +82,7 @@ namespace scribo
       if (! internal::debug_filename_prefix.empty())
 	os << internal::debug_filename_prefix << "_";
       else
-	mln::trace::warning("You may like to set a default filename prefix.");
+	mln_trace_warning("You may like to set a default filename prefix.");
 
       if (file_id < 10)
 	os << "0";
