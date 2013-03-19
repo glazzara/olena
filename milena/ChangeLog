@@ -1,5 +1,9 @@
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/trait/op/plus.cc: Kill warnings.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/io/magick/internal/init_magick.hh: Add a missing inline.
 
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>

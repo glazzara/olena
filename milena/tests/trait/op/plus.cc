@@ -102,12 +102,12 @@ namespace mln
     template <typename T, typename U>
     struct set_precise_binary_< op::plus, my_image2d<T>, my_image2d<U> >
     {
-      typedef mln_trait_op_plus(T, U) V; 
+      typedef mln_trait_op_plus(T, U) V;
       typedef my_image2d<V>& ret;
     };
 
   }
-  
+
 }
 
 int main()
@@ -116,11 +116,13 @@ int main()
   {
     mln_trait_op_plus_(int, float) tmp;
     tmp = 5.1f;
+    (void) tmp;
   }
   {
     my_image2d<float> ima;
     my_image2d<float>* ptr = &ima;
     mln_trait_op_plus_(my_image2d<int>, my_image2d<float>) tmp = *ptr;
     tmp.m();
+    (void) tmp;
   }
 }
