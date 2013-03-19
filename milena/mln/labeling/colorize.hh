@@ -144,7 +144,7 @@ namespace mln
 
 	if (ntries == nelements)
 	{
-	  debug::trace::warning("labeling::colorize - Can't find a new unique color. Returning black.");
+	  mln_trace_warning("labeling::colorize - Can't find a new unique color. Returning black.");
 	  return literal::black;
 	}
 

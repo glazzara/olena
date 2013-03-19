@@ -1,5 +1,22 @@
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce mln_trace_warning macro.
+
+	* mln/border/mirror.hh,
+	* mln/canvas/labeling/blobs.hh,
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* mln/data/stretch.hh,
+	* mln/debug/put_word.hh,
+	* mln/debug/trace.hh,
+	* mln/draw/dashed_line.hh,
+	* mln/draw/line.hh,
+	* mln/labeling/colorize.hh,
+	* mln/subsampling/antialiased.hh: Make use of this macro here.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove last references to mln::trace::*.
 
 	* mln/arith/min.hh,

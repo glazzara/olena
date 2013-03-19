@@ -197,7 +197,7 @@ namespace mln
       inline
       void mirror_(const box3d&, const I& ima)
       {
-	debug::trace::warning("border::mirror for 3D image is not implemented,"
+	mln_trace_warning("border::mirror for 3D image is not implemented,"
 			      " so image borders have not been mirrored!");
 	(void) ima;
 	// FIXME write it!

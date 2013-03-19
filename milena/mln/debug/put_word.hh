@@ -66,7 +66,7 @@ namespace mln
       word_end.last_coord() = static_cast<def::coord>(word_end.last_coord() + word.length() - 1);
 
       if (! inout.has(word_end))
-	debug::trace::warning("Cannot write text outside the image domain");
+	mln_trace_warning("Cannot write text outside the image domain");
 
       const unsigned n = word.length();
       point2d p = word_start;

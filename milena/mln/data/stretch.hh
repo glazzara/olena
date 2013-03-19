@@ -111,7 +111,7 @@ namespace mln
 	else
 	{
 	  initialize(output, input);
-	  debug::trace::warning("output has no significative data!");
+	  mln_trace_warning("output has no significative data!");
 	}
 
 	return output;

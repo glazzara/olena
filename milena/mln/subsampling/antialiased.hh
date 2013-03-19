@@ -409,7 +409,7 @@ namespace mln
 	    output_domain,
 	    border_thickness);
 	else
-	  debug::trace::warning("Not implemented yet.");
+	  mln_trace_warning("Not implemented yet.");
 
 	mln_concrete(I) output;
 	return output;

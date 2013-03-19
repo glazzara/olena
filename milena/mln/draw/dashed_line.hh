@@ -99,9 +99,9 @@ namespace mln
       mln_precondition(ima.is_valid());
 
       if (! ima.has(beg))
-	debug::trace::warning("Begin site is not part of the given image.");
+	mln_trace_warning("Begin site is not part of the given image.");
       if (! ima.has(end))
-	debug::trace::warning("End site is not part of the given image.");
+	mln_trace_warning("End site is not part of the given image.");
 
       data::fill(((ima | p_line2d(beg, end)).rw() | internal::dashed_line_f<I, 1>()).rw(), v);
     }

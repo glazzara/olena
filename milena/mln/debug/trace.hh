@@ -40,6 +40,8 @@
   mln::debug::trace mln_trace_(S);		\
   (void) mln_trace_;
 
+# define mln_trace_warning(S)			\
+  mln::debug::trace::warning(S);
 
 namespace mln
 {
@@ -61,6 +63,9 @@ namespace mln
         void my_function()
 	{
           mln_trace("mln::my_function");
+
+	  /// Your code
+	  /// ....
 	}
       }
       \endcode
@@ -117,6 +122,7 @@ namespace mln
 
     // Implementations.
 
+    inline
     trace::trace(const std::string& scope)
     {
       if (quiet)
@@ -136,6 +142,7 @@ namespace mln
     }
 
 
+    inline
     trace::~trace()
     {
       if (quiet)
@@ -179,12 +186,14 @@ namespace mln
     }
 
 
+    inline
     void trace::resume()
     {
        quiet = is_quiet_;
     }
 
 
+    inline
     void trace::stop()
     {
       is_quiet_ = quiet;
@@ -193,6 +202,7 @@ namespace mln
     }
 
 
+    inline
     void trace::warning(const std::string& message)
     {
       std::cerr << "Warning: " << message << std::endl;

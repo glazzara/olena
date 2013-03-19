@@ -172,7 +172,7 @@ namespace mln
 		{
 		  if (nlabels == mln_max(L))
 		  {
-		    debug::trace::warning("labeling aborted! Too many labels \
+		    mln_trace_warning("labeling aborted! Too many labels \
 					  for this label type: nlabels > \
 					  max(label_type).");
 		    return output;
