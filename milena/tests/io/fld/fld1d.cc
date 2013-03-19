@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,11 +48,11 @@ int main()
    ori.init_(b);
    debug::iota(ori);
 
-   io::fld::save(ori, "out.fld");
-   io::fld::load(test, "out.fld");
+   io::fld::save(ori, "out1d.fld");
+   io::fld::load(test, "out1d.fld");
 
    // Clean output.
-   std::remove("out.fld");
+   std::remove("out1d.fld");
 
    mln_assertion(ori == test);
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,11 +55,11 @@ int main()
     image2d<int_u8> ori, test;
     io::pgm::load(ori, MLN_IMG_DIR "/lena.pgm");
 
-    io::fld::save(ori, "out.fld");
-    io::fld::load(test, "out.fld");
+    io::fld::save(ori, "out2d.fld");
+    io::fld::load(test, "out2d.fld");
 
     // Clean output.
-    std::remove("out.fld");
+    std::remove("out2d.fld");
 
     mln_assertion(ori == test);
   }
@@ -69,11 +70,11 @@ int main()
     image2d<int_u16> ori, test;
     io::ppm::load(ori, MLN_IMG_DIR "/lena_16.ppm");
 
-    io::fld::save(ori, "out.fld");
-    io::fld::load(test, "out.fld");
+    io::fld::save(ori, "out2d.fld");
+    io::fld::load(test, "out2d.fld");
 
     // Clean output.
-    std::remove("out.fld");
+    std::remove("out2d.fld");
 
     mln_assertion(ori == test);
   }
@@ -92,11 +93,11 @@ int main()
 	ori(p) = random() / RAND_MAX;
     }
 
-    io::fld::save(ori, "out.fld");
-    io::fld::load(test, "out.fld");
+    io::fld::save(ori, "out2d.fld");
+    io::fld::load(test, "out2d.fld");
 
     // Clean output.
-    std::remove("out.fld");
+    std::remove("out2d.fld");
 
     {
       mln_piter_(image2d<float>) p(domain);
