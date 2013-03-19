@@ -51,6 +51,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+	inline
 	init_magick::init_magick()
 	{
 	  Magick::InitializeMagick(0);
