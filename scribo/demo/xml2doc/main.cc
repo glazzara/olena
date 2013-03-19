@@ -199,15 +199,19 @@ int main(int argc, char **argv)
       XmlTransform xmlt(argv[2], argv[3], dir);
       xmlt.createOpen();
 
+      // FIXME: we should check the return value of system().
+      int rvalue;
+      (void) rvalue;
+
       QString datarootdir = get_datarootdir("html/main.xsl");
-      system(QString("xsltproc \"%1/html/main.xsl\" \"%2/output.xml\" > %2/out.html")
-	     .arg(datarootdir).arg(dir).toAscii().constData());
+      rvalue = system(QString("xsltproc \"%1/html/main.xsl\" \"%2/output.xml\" > %2/out.html")
+			  .arg(datarootdir).arg(dir).toAscii().constData());
 
       qDebug() << QString("Open Document output : %1").arg(argv[4]);
 
       datarootdir = get_datarootdir("bin/ooconvert");
-      system(QString(" \"%1/bin/ooconvert\" \"%2/out.html\" \"%2/out.odt\" > /dev/null")
-	     .arg(datarootdir).arg(dir).toAscii().constData());
+      rvalue = system(QString(" \"%1/bin/ooconvert\" \"%2/out.html\" \"%2/out.odt\" > /dev/null")
+		      .arg(datarootdir).arg(dir).toAscii().constData());
 
       QString cur_dir = QDir::currentPath();
       QString tmp_dir = dir + "/oo_tmp";
@@ -215,11 +219,11 @@ int main(int argc, char **argv)
       QDir d;
       d.mkdir(tmp_dir);
       qDebug() << "unzip %1/out.odt -d %2 > /dev/null" << dir << tmp_dir;
-      system(QString("unzip %1/out.odt -d %2 > /dev/null")
-	     .arg(dir).arg(tmp_dir).toAscii().constData());
+      rvalue = system(QString("unzip %1/out.odt -d %2 > /dev/null")
+		      .arg(dir).arg(tmp_dir).toAscii().constData());
 
-      system(QString("cat %1/content.xml | sed -re 's!\\.\\./([a-zA-Z0-9])!Pictures/\\1!g' "
-		     ">> %1/tmp.xml").arg(tmp_dir).toAscii().constData());
+      rvalue = system(QString("cat %1/content.xml | sed -re 's!\\.\\./([a-zA-Z0-9])!Pictures/\\1!g' "
+			      ">> %1/tmp.xml").arg(tmp_dir).toAscii().constData());
 
       d.mkdir(tmp_dir + "/Pictures");
       d.rename(dir + "/*.png",  tmp_dir + "/Pictures/");
@@ -227,7 +231,7 @@ int main(int argc, char **argv)
 
       d.cd(tmp_dir);
       qDebug() << "zip zip.odt -r * > /dev/null";
-      system("zip zip.odt -r * > /dev/null");
+      rvalue = system("zip zip.odt -r * > /dev/null");
 
       QFile::copy("zip.odt", argv[4]);
       d.cd(cur_dir);

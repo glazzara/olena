@@ -1,3 +1,7 @@
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/xml2doc/main.cc: Kill warnings.
+
 2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove references to InitializeMagick().
