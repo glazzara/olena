@@ -1,5 +1,13 @@
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve documentation layout.
+
+	* doc/Doxyfile.in: Improve member functions presentation.
+
+	* doc/DoxygenLayout.xml: Fix invalid xml elements.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve documentation of Scribo.
 
 	* doc/scribo/binarization/binarization.dox,
