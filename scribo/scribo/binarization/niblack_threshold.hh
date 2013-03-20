@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,14 +49,12 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Compute an image of local threshold using Niblack algorithm.
+    /*! \brief Compute an image of local threshold using Niblack
+        algorithm.
 
-      \param[in]  input       A gray level image.
-      \param[in]  window_size The window size.
+      \param[in] input       A gray level image.
+      \param[in] window_size The window size.
       \param[in] K Controls the threshold value in the local window.
-      \param[out] simple      The sum of all intensities of \p input.
-      \param[out] squared     The sum of all squared intensities of \p
-                              input.
 
       \return An image of local thresholds.
 

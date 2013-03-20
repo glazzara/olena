@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,27 +47,14 @@ namespace scribo
 
     /*! \brief Kim's binarization
 
-      This algorithms performs a first rough binarization on the input
-      (here we use Sauvola's method). Then text lines are roughly
-      detected by grouping connected components. For each text lines,
-      character thickness and x height is computed. Finally, each
-      lines is binarized again, using text features as parameters for
-      adjusting the final threshold.
-
-      This algorithms considers that global and local statistics
-      should be used to compute a threshold in text areas.
-
-      This is an improvement of Sauvola's method.
+      \copydetails grpalgobinkim
 
       \param[in] input A gray-level image.
       \param[in] window_size the window size to be used for the first
       binarization.
       \param[in] k Sauvola's formula parameter.
 
-      This implementation is based on the paper "Multi-Window
-      Binarization of Camera Image for Document Recognition", In-Jung
-      Kim, Proceedings of the 9th International Workshop on Frontiers
-      in Handwriting Recognition (IWFHR-9 2004)
+      \ingroup grpalgobinkim
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -74,6 +62,8 @@ namespace scribo
 
     /*! \overload
       k is set to SCRIBO_DEFAULT_SAUVOLA_K.
+
+      \ingroup grpalgobinkim
      */
     template <typename I>
     mln_ch_value(I, bool)

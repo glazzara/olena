@@ -1,0 +1,7 @@
+/*! \namespace scribo
+    \brief The main namespace of the Scribo module.
+*/
+
+/*! \namespace scribo::component
+    \brief Namespace of classes related to components.
+*/

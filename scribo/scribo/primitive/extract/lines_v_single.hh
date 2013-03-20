@@ -57,7 +57,7 @@ namespace scribo
        * \param[in]     input	    A binary image.
        * \param[in]     nbh	    The neighborhood used for labeling image
        *			    components.
-       * \param[in,out] nlines	    Type used for labeling.
+       * \param[in]     nlines	    Type used for labeling.
        * \param[in]     min_line_length The minimum line length.
        * \param[in]     h_w_ratio   The minimum ratio height/width object
        *                            bounding boxes to consider an

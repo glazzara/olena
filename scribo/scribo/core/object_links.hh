@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -94,7 +94,7 @@ namespace scribo
     bool has_linking_enabled(unsigned comp_id) const;
 
     /// Return True if component \p comp_id has a link starting from
-    /// itself to another one.
+    /// itself to another component.
     bool is_linked(unsigned comp_id) const;
 
     unsigned nelements() const;
@@ -108,8 +108,8 @@ namespace scribo
     /// linked later.
     void clear(unsigned id);
 
-    /// Do not allow component with id \p id to be linked to anyother
-    /// ones.
+    /// Do not allow component with id \p id to be linked to another
+    /// component.
     void disable_linking(unsigned id);
 
     /// Get link id for component \p comp_id.

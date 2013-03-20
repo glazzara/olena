@@ -1,6 +1,9 @@
 /*! \defgroup grpalgobinotsu Otsu
- *
- * \brief Otsu's Binarization implementations.
- *
- * \ingroup grpalgobin
+
+   \brief Otsu's Binarization implementations.
+
+   This implementation is based on Ocropus's implementation.
+   http://code.google.com/p/ocropus/
+
+   \ingroup grpalgobin
  */

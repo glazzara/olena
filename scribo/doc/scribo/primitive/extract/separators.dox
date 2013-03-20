@@ -1,6 +1,6 @@
 /*! \defgroup extractprimitiveseps Lines and Separators extraction
- *
- * \brief All routines/algorithms to extract lines and separators.
- *
- * \ingroup grproutine
+
+    \brief All routines/algorithms to extract lines and separators.
+
+    \ingroup extractprimitive
  */

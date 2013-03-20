@@ -42,16 +42,16 @@ namespace scribo
 
     using namespace mln;
 
-    /*! Compute a global binarization threshold using Otsu's algorithm.
+    /*! \brief Compute a global binarization threshold using Otsu's
+        algorithm.
 
-      It is based on Ocropus's implementation.
-      http://code.google.com/p/ocropus/
+	\copydetails grpalgobinotsu
 
-      \param[in] input A gray-scale image.
+	\param[in] input A gray-scale image.
 
-      \return A global threshold value.
+	\return A global threshold value.
 
-      \ingroup grpalgobinotsu
+	\ingroup grpalgobinotsu
      */
     template <typename I>
     mln_value(I)

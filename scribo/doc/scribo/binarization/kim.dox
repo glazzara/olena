@@ -1,0 +1,23 @@
+/*! \defgroup grpalgobinkim Kim
+
+   \brief Kim's Binarization implementations.
+
+   This algorithms performs a first rough binarization on the input
+   (here we use Sauvola's method). Then text lines are roughly
+   detected by grouping connected components. For each text lines,
+   character thickness and x height is computed. Finally, each
+   lines is binarized again, using text features as parameters for
+   adjusting the final threshold.
+
+   This algorithms considers that global and local statistics
+   should be used to compute a threshold in text areas.
+
+   This is an improvement of Sauvola's method.
+
+   This implementation is based on the paper "Multi-Window
+   Binarization of Camera Image for Document Recognition", In-Jung
+   Kim, Proceedings of the 9th International Workshop on Frontiers
+   in Handwriting Recognition (IWFHR-9 2004)
+
+   \ingroup grpalgobin
+ */

@@ -45,9 +45,9 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-      \input[in]  K           Singh's formulae constant.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
+      \param[in]  K           Singh's formulae constant.
 
       \return A binary image.
 
@@ -62,8 +62,8 @@ namespace scribo
 
       Singh's formulae constant K is set to 0.34.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
 
       \return A binary image.
 

@@ -72,23 +72,26 @@ namespace scribo
     */
     template <typename I>
     mln_ch_value(I, bool)
-    sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
+    sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
 		     unsigned s, unsigned min_ntrue, double k2,
 		     double k3, double k4);
 
-    /// \overload
-    /// k2, k3 and k4 are set to \p K.
+    /*! \overload
+      k2, k3 and k4 are set to \p K.
+
+      \ingroup grpalgobinsauvola
+    */
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
 		     unsigned s, unsigned min_ntrue, double K);
 
 
-    /// \overload
-    /// k2, k3 and k4 are set to 0.34.
-    ///
-    /// \ingroup grpalgobinsauvola
-    //
+    /*! \overload
+      k2, k3 and k4 are set to 0.34.
+
+      \ingroup grpalgobinsauvola
+    */
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1, unsigned w_1,

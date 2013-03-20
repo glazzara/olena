@@ -69,9 +69,9 @@ namespace scribo
       /*! \brief Run Sauvola core algorithm. Use functor \p f to
 	  compute the threshold and perform computation.
 
-	\input[in]  input       An image.
-	\input[in]  f           Functor computing Sauvola's formula.
-	\input[in]  window_size The window size.
+	\param[in]  input       An image.
+	\param[in]  f           Functor computing Sauvola's formula.
+	\param[in]  window_size The window size.
 
       */
       template <typename I, typename F>

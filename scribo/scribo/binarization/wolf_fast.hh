@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,9 +47,9 @@ namespace scribo
 
     /*! \brief Convert an image into a binary image.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-      \input[in]  K           Wolf's formulae constant.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
+      \param[in]  K           Wolf's formulae constant.
 
       \return A binary image.
 
@@ -60,6 +61,7 @@ namespace scribo
       is faster than the original implementation thanks to the use of
       integral images.
 
+      \ingroup grpalgobinwolf
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -71,15 +73,18 @@ namespace scribo
 
       Wolf's formulae constant K is set to 0.34.
 
+      \ingroup grpalgobinwolf
      */
     template <typename I>
     mln_ch_value(I, bool)
     wolf_fast(const Image<I>& input, unsigned window_size);
 
 
-    /// \overload
-    /// The window size is set to 11.
-    //
+    /*! \overload
+      The window size is set to 11.
+
+      \ingroup grpalgobinwolf
+    */
     template <typename I>
     mln_ch_value(I, bool)
     wolf_fast(const Image<I>& input);

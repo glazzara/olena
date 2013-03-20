@@ -50,8 +50,8 @@ namespace scribo
 
     /*! \brief Enum defining different level of image logging
 
-      According to the debug level set in #logger_ the image may
-      be saved or not.
+      According to the debug level set in scribo::debug::logger_ the
+      image may be saved or not.
     */
     enum Level
     {
@@ -65,8 +65,8 @@ namespace scribo
 
     /*! \brief Enum defining different modes of text logging
 
-      According to the verbose mode set in #logger_ the text may
-      be logged or not.
+      According to the verbose mode set in scribo::debug::logger_ the
+      text may be logged or not.
     */
     enum VerboseMode
     {

@@ -1,0 +1,7 @@
+/*! \defgroup extractprimitivecomps Components Extraction
+
+    \brief All routines/algorithms to extract components.
+
+    \ingroup grproutine
+
+*/

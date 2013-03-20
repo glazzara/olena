@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,10 +40,9 @@ namespace scribo
 
     using namespace mln;
 
-    /*! An implementation of Otsu's binarization algorithm.
+    /*! \brief An implementation of Otsu's binarization algorithm.
 
-      It is based on Ocropus's implementation.
-      http://code.google.com/p/ocropus/
+      \copydetails grpalgobinotsu
 
       \param[in] input A gray-scale image.
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,17 +63,19 @@ namespace scribo
 
       using namespace mln;
 
-      /// \brief Extract components in a binary image.
-      ///
-      /// \param[in]	 input	  A RGB image.
-      /// \param[in] binary_input A binary image. Components must be set to 'True'.
-      ///			  and background to 'false'.
-      /// \param[in]	 nbh	  A neighborhood to be used for labeling.
-      /// \param[in,out] ncomponents Will store the numbers of components found.
-      /// \param[in]     type     The default component type set to components.
-      ///
-      /// \return An image of labeled components.
-      //
+      /*! \brief Extract components in a binary image.
+
+	\param[in]	 input	A RGB image.
+	\param[in] binary_input A binary image. Components must be set to 'True'.
+	                        and background to 'false'.
+	\param[in]	 nbh	A neighborhood to be used for labeling.
+	\param[in,out] ncomponents Will store the numbers of components found.
+	\param[in]     type     The default component type set to components.
+
+	\return An image of labeled components.
+
+	\ingroup extractprimitivecomps
+      */
       template <typename I, typename J, typename N, typename V>
       inline
       component_set<mln_ch_value(I,V)>
@@ -82,6 +84,18 @@ namespace scribo
 		 component::Type type = component::Undefined);
 
 
+      /*! \overload
+
+	\param[in] binary_input A binary image. Components must be set to 'True'.
+	                        and background to 'false'.
+	\param[in]	 nbh	A neighborhood to be used for labeling.
+	\param[in,out] ncomponents Will store the numbers of components found.
+	\param[in]     type     The default component type set to components.
+
+	\return A component_set.
+
+	\ingroup extractprimitivecomps
+       */
       template <typename I, typename N, typename V>
       inline
       component_set<mln_ch_value(I,V)>

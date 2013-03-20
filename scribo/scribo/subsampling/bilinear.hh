@@ -49,8 +49,8 @@ namespace scribo
 
     /// \brief Bilinear subsampling.
     /*!
-      \input[in] input An image.
-      \input[in] sub_ratio The subsampling size ratio.
+      \param[in] input An image.
+      \param[in] sub_ratio The subsampling size ratio.
      */
     template <typename I>
     mln_concrete(I)

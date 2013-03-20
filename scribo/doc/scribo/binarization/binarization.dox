@@ -1,6 +1,6 @@
 /*! \defgroup grpalgobin Binarization
- *
- * \brief Binarization algorithms.
- *
- * \ingroup grproutine
+
+    \brief Binarization algorithms.
+
+    \ingroup grproutine
  */

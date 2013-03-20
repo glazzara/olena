@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,12 +50,13 @@ namespace scribo
       is faster than the original implementation thanks to the use of
       integral images.
 
-      \input[in]  input       An image.
-      \input[in]  window_size The window size.
-      \input[in]  K           Sauvola's formulae constant.
+      \param[in]  input       An image.
+      \param[in]  window_size The window size.
+      \param[in]  K           Sauvola's formulae constant.
 
       \return A binary image.
 
+      \ingroup grpalgobinniblack
      */
     template <typename I>
     mln_ch_value(I, bool)
@@ -68,15 +69,18 @@ namespace scribo
       Sauvola's formulae constant K is set to
       SCRIBO_DEFAULT_NIBLACK_K.
 
+      \ingroup grpalgobinniblack
      */
     template <typename I>
     mln_ch_value(I, bool)
     niblack_fast(const Image<I>& input, unsigned window_size);
 
 
-    /// \overload
-    /// The window size is set to 11.
-    //
+    /*! \overload
+      The window size is set to 11.
+
+      \ingroup grpalgobinniblack
+    */
     template <typename I>
     mln_ch_value(I, bool)
     niblack_fast(const Image<I>& input);

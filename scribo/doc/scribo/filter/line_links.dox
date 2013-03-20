@@ -1,6 +1,6 @@
-/*! \defgroup grpalgofilterlinelink Line Links
+/*! \defgroup grpalgofilterlinelink Line Link Filtering
  *
- * \brief Line links filtering routines.
+ * \brief Line link filtering routines.
  *
  * \ingroup grpalgofilter
  */

@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,20 +60,18 @@ namespace scribo
 
 	/*! \brief Compute a threshold using Singh's formula.
 
+	  \param[in] v The current image value.
 	  \param[in] m_x_y Mean value.
-	  \param[in] s_x_y Standard deviation.
-	  \param[in] k Control the threshold value in the local
+	  \param[in] K Control the threshold value in the local
 	  window. The higher, the lower the threshold
 	  form the local mean m(x, y).
-	  \param[in] R Maximum value of the standard deviation (128
-	  for grayscale documents).
 
 	  \return A threshold.
 	*/
 	double operator()(const V& v, const double m_x_y, const double K) const;
 
-	/*!
-	  \overload K = 0.34.
+	/*! \overload
+	  K = 0.34.
 	 */
 	double operator()(const V& v, const double m_x_y) const;
 

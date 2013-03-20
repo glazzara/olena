@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,29 +47,30 @@ namespace scribo
     using namespace mln;
 
 
-    /// \brief Invalidate paragraphs located close to the image borders.
-    ///
-    /// \param[in,out] doc A document structure.
-    ///
-    /// Warning: it does not remove paragraphs from separator
-    /// image. It only invalidate separator components in their
-    /// respective component_set.
-    ///
-    /// \verbatim
-    ///
-    ///  -----------
-    ///  |_!____!__|
-    ///  | !    ! <--------- Paragraphs located in this area are
-    ///  | !    !  |         invalidated.
-    ///  | !    !  |
-    ///  |_!____!__|
-    ///  | !    !  |
-    ///  -----------
-    ///
-    /// \endverbatim
-    ///
-    /// \ingroup grpalgofilterpar
-    //
+    /*! \brief Invalidate paragraphs located close to the image
+        borders.
+
+       \param[in,out] doc A document structure.
+
+       Warning: it does not remove paragraphs from separator
+       image. It only invalidate separator components in their
+       respective component_set.
+
+       \verbatim
+
+        -----------
+        |_!____!__|
+        | !    ! <--------- Paragraphs located in this area are
+        | !    !  |         invalidated.
+        | !    !  |
+        |_!____!__|
+        | !    !  |
+        -----------
+
+       \endverbatim
+
+       \ingroup grpalgofilterpar
+    */
     template <typename L>
     void
     paragraphs_in_borders(document<L>& doc);

@@ -1,0 +1,7 @@
+/*! \defgroup extractprimitive Primitive Extraction
+
+    \brief All routines/algorithms to extract primitive objects.
+
+    \ingroup grproutine
+
+*/

@@ -48,19 +48,21 @@ namespace scribo
     using namespace mln;
 
     /// \brief XY-Cut layout analysis algorithm.
-    /*!  This algorithm is an implementation made from \cite
-      nagy.1992.computer7 : "A prototype document image analysis
-      system for technical journals.".
+    /*!  This algorithm is an implementation inspired by
+      \cite nagy1992computer, \cite kruatrachue2005waset and
+      \cite meunier2005icdar.
 
       It recusively subdivides empty spaces in the document until a
       minimum division size is reached. The latter is defined with \p
       min_height and \p min_width.
 
-      \input[in] ima A binary image.
-      \input[in] min_height The minimum height of a subdivision.
-      \input[in] min_width The minimum width of a subdivision.
+      \param[in] ima A binary image.
+      \param[in] min_height The minimum height of a subdivision.
+      \param[in] min_width The minimum width of a subdivision.
 
       \return An array of component group bounding boxes.
+
+      \ingroup grpalgolayout
      */
     template <typename I>
     mln::util::array<mln_box(I)>
