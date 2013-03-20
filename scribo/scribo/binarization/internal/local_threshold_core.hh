@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -131,9 +131,9 @@ namespace scribo
 
 	  int integral_scale_ratio = F::step;
 
-	  // Make sure the image sizes are a multiple of 3 in each
-	  // dimension. (browsing while binarizing relies on that
-	  // property).
+	  // Make sure the image sizes are a multiple of
+	  // integral_scale_ratio in each dimension. (browsing while
+	  // binarizing relies on that property).
 	  mln::util::array<mln::util::couple<box2d, unsigned> >
 	    sub_domains = scribo::util::compute_sub_domains(input, 1,
 							    integral_scale_ratio);

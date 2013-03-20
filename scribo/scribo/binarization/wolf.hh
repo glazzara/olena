@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -96,6 +97,10 @@ namespace scribo
       {
 	global_max_stddev()
 	  : max_stddev(0)
+	{
+	}
+
+	void init()
 	{
 	}
 

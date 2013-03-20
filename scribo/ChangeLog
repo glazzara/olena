@@ -1,3 +1,24 @@
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix an invalid initialization in several binarization algorithms.
+
+	* scribo/binarization/internal/local_threshold_core.hh: Fix doc.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh: Add init() member and more
+	assertions.
+
+	* scribo/canvas/integral_browsing.hh: Call init() function.
+
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/debug/links_image.hh: Make use of object_link interface.

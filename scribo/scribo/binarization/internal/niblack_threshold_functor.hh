@@ -94,9 +94,16 @@ namespace scribo
 							      double K)
 	: K_(K)
       {
-	const I& input = exact(input_);
-	mln_precondition(input.is_valid());
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+      }
 
+      template <typename I>
+      void
+      niblack_threshold_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
 	next_line3 = input.delta_offset(dpoint2d(+2,0)) + 2 * input.border() - 1;
 
 	offset1 = input.delta_offset(dpoint2d(+1,0));
@@ -110,6 +117,7 @@ namespace scribo
       void
       niblack_threshold_functor<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
 	static point2d p(0,0);
 
 	typedef mln_value(I) V;

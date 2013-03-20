@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -95,6 +95,7 @@ namespace scribo
 			   const image2d<value::int_u8>&e_2,
 			   unsigned i, unsigned q);
 
+	void init();
 	void exec(double mean, double stddev);
 	void end_of_row(int row);
 	void finalize();
@@ -137,6 +138,12 @@ namespace scribo
 	  R_(R),
 	  i_(i)
       {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(R > 0.);
+	mln_precondition(e_2.is_valid());
+	mln_precondition(q > 0);
+	mln_precondition(i > 1);
+
 	res = 0;
 	pxl.start();
 
@@ -165,6 +172,13 @@ namespace scribo
 	  K_ = binarization::internal::k3;
 	else
 	  K_ = binarization::internal::k4;
+      }
+
+
+      template <typename I>
+      void
+      sauvola_ms_functor<I>::init()
+      {
       }
 
 

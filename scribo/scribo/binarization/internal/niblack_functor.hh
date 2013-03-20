@@ -64,6 +64,8 @@ namespace scribo
 
 	niblack_functor(const Image<I>& input, double K);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -94,8 +96,16 @@ namespace scribo
 	  pi(&input(input.domain().pmin())),
 	  K_(K)
       {
-	next_line = 2 * input.border();
+	mln_precondition(exact(input).is_valid());
+      }
 
+      template <typename I>
+      void
+      niblack_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
+	next_line = 2 * input.border();
 	initialize(output, input);
 	po = &output(output.domain().pmin());
       }
@@ -104,6 +114,8 @@ namespace scribo
       void
       niblack_functor<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
+
 	double th = formula_(mean, stddev, K_);
 
 	*po++ = (*pi++ <= th);

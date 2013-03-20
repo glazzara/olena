@@ -98,6 +98,17 @@ namespace scribo
 	  pi(&input(input.domain().pmin())),
 	  K_(K)
       {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+      }
+
+      template <typename I>
+      void
+      niblack_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
+
 	// Since we iterate from a smaller image in the largest ones
 	// and image at scale 1 does not always have a size which can
 	// be divided by 3, some sites in the border may not be
@@ -120,6 +131,7 @@ namespace scribo
       void
       singh_functor<I>::exec(double mean, double stddev)
       {
+	mln_precondition(input.border() == output.border());
 	(void) stddev;
 
 

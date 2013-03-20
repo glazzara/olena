@@ -65,6 +65,8 @@ namespace scribo
 
 	sauvola_functor(const Image<I>& input, double K, double R);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -99,6 +101,19 @@ namespace scribo
 	  K_(K),
 	  R_(R)
       {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+	mln_precondition(R > 0.);
+      }
+
+
+      template <typename I>
+      void
+      sauvola_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
+
 	// Since we iterate from a smaller image in the largest ones
 	// and image at scale 1 does not always have a size which can
 	// be divided by 3, some sites in the border may not be
@@ -117,10 +132,13 @@ namespace scribo
 	po = &output(output.domain().pmin());
       }
 
+
       template <typename I>
       void
       sauvola_functor<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
+
 	double th = formula_(mean, stddev, K_, R_);
 
 	for (int i = 0; i < step; ++i, ++po, ++pi)

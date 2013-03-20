@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,6 +69,8 @@ namespace scribo
 			  const mln_value(I)& global_min,
 			  double global_max_stddev);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -105,6 +108,16 @@ namespace scribo
 	  global_min_(global_min),
 	  global_max_stddev_(global_max_stddev)
       {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+      }
+
+      template <typename I>
+      void
+      wolf_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
 	next_line = 2 * input.border();
 
 	initialize(output, input);
@@ -115,6 +128,8 @@ namespace scribo
       void
       wolf_functor<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
+
 	double th = formula_(mean, stddev, K_,
 			     global_max_stddev_, global_min_);
 

@@ -66,6 +66,8 @@ namespace scribo
 	sauvola_threshold_functor(const Image<I>& input,
 				  double K, double R);
 
+	init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -96,8 +98,17 @@ namespace scribo
 	: K_(K),
 	  R_(R)
       {
-	const I& input = exact(input_);
-	mln_precondition(input.is_valid());
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+	mln_precondition(R > 0.);
+      }
+
+      template <typename I>
+      void
+      sauvola_threshold_functor<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
 
 	next_line3 = input.delta_offset(dpoint2d(+2,0)) + 2 * input.border() - 1;
 
@@ -112,6 +123,7 @@ namespace scribo
       void
       sauvola_threshold_functor<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
 	static point2d p(0,0);
 
 	typedef mln_value(I) V;

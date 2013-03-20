@@ -98,6 +98,10 @@ namespace scribo
 	{
 	}
 
+	void init()
+	{
+	}
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev)
 	{

@@ -108,6 +108,8 @@ namespace scribo
 			  " was larger than image width.");
       }
 
+      // Initialization
+      functor.init();
 
       const int
 	nrows = ima.nrows(),

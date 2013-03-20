@@ -69,6 +69,8 @@ namespace scribo
 			  const mln_value(I)& global_min,
 			  double global_max_stddev);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -108,6 +110,17 @@ namespace scribo
 	  global_min_(global_min),
 	  global_max_stddev_(global_max_stddev)
       {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(K > 0.);
+      }
+
+      template <typename I>
+      void
+      wolf_functor_fast<I>::init()
+      {
+	// This initialization MUST be done here since input image
+	// borders may have changed!
+
 	// Since we iterate from a smaller image in the largest ones
 	// and image at scale 1 does not always have a size which can
 	// be divided by 3, some sites in the border may not be
@@ -130,6 +143,8 @@ namespace scribo
       void
       wolf_functor_fast<I>::exec(double mean, double stddev)
       {
+	mln_assertion(input.border() == output.border());
+
 	double th = formula_(mean, stddev, K_,
 			     global_max_stddev_, global_min_);
 
