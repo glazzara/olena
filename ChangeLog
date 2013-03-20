@@ -1,3 +1,11 @@
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
+	* doc/Doxyfile.in: Fix include path in documentation.
+
+	* doc/doc.bib: Add new references.
+
 2013-03-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove references to external directory.
