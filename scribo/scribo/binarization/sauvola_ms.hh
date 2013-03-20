@@ -148,6 +148,13 @@ namespace scribo
     sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s,
 	       double k2, double k3, double k4);
 
+    /// \overload
+    /// Allow to specify the same k parameter for all scales.
+    //
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s,
+	       double all_k);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -1019,6 +1026,8 @@ namespace scribo
       mln_trace("scribo::binarization::sauvola_ms");
 
       mln_precondition(exact(input_1_).is_valid());
+      mln_precondition(s > 1);
+
       // Gray level images ONLY.
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
       mlc_is_not(mln_value(I), bool)::check();
@@ -1037,6 +1046,8 @@ namespace scribo
       mln_trace("scribo::binarization::sauvola_ms");
 
       mln_precondition(exact(input_1_).is_valid());
+      mln_precondition(s > 1);
+
       // Gray level images ONLY.
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
       mlc_is_not(mln_value(I), bool)::check();
@@ -1059,6 +1070,19 @@ namespace scribo
       binarization::internal::k2 = k2;
       binarization::internal::k3 = k3;
       binarization::internal::k4 = k4;
+
+      return sauvola_ms(input_1, w_1, s);
+    }
+
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s,
+	       double all_k)
+    {
+      binarization::internal::k2 = all_k;
+      binarization::internal::k3 = all_k;
+      binarization::internal::k4 = all_k;
 
       return sauvola_ms(input_1, w_1, s);
     }
