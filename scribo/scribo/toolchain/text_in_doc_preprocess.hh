@@ -127,7 +127,7 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
 			   double k2, double k3, double k4, bool enable_fg_bg,
 			   Image<I>& fg, bool enable_deskew, bool verbose);
 

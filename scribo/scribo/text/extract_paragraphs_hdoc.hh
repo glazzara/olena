@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -64,10 +64,10 @@ namespace scribo
   {
 
     /*! \brief Extract paragraph in old documents.
+
       \ingroup grptext
      */
     template <typename L>
-    inline
     paragraph_set<L>
     extract_paragraphs_hdoc(line_set<L>& lines,
 			    const image2d<bool>& input);
@@ -1275,7 +1275,6 @@ namespace scribo
 
 
     template <typename L>
-    inline
     paragraph_set<L>
     extract_paragraphs_hdoc(line_set<L>& lines,
 			    const image2d<bool>& input)

@@ -1,5 +1,17 @@
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* scribo/primitive/extract/lines_h_single.hh: Fix an invalid
+	function name.
+
+	* scribo/text/extract_paragraphs_hdoc.hh: Remove useless inline
+	keyword.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: Fix argument name.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/sauvola_ms.hh: Add a new overload and
 	preconditions.
 
