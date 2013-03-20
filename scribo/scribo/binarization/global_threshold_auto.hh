@@ -31,7 +31,7 @@
 ///
 /// Binarize a graylevel image using an automatic global threshold.
 ///
-/// \fixme: Adapt the filtering if no threshold is found.
+/// FIXME: Adapt the filtering if no threshold is found.
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/alias/neighb1d.hh>

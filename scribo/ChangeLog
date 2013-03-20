@@ -1,5 +1,27 @@
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Replace \fixme with FIXME.
+
+	* scribo/binarization/global_threshold_auto.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/line_info.hh,
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/internal/union.hh,
+	* scribo/primitive/extract/non_text.hh,
+	* scribo/primitive/extract/non_text_hdoc.hh,
+	* scribo/primitive/extract/non_text_kmean.hh,
+	* scribo/primitive/link/internal/find_several_links.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh: Here.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix an invalid initialization in several binarization algorithms.
 
 	* scribo/binarization/internal/local_threshold_core.hh: Fix doc.

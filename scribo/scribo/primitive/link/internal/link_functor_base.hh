@@ -31,7 +31,7 @@
 ///
 /// Base class for link functors.
 ///
-/// \fixme type used for 'current_object' argument should be of type
+/// FIXME: type used for 'current_object' argument should be of type
 /// mln_value(L)
 
 # include <mln/core/concept/image.hh>

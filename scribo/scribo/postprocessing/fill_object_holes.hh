@@ -30,9 +30,9 @@
 ///
 /// \brief Fill-in object small holes.
 
-/// \FIXME share code with filter/object_groups_with_holes.hh
-/// \FIXME Merge the two following routines.
-/// \FIXME Use a size ratio in both overloads.
+/// FIXME: share code with filter/object_groups_with_holes.hh
+/// FIXME: Merge the two following routines.
+/// FIXME: Use a size ratio in both overloads.
 
 # include <sstream>
 

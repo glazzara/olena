@@ -31,10 +31,10 @@
 ///
 /// \brief Line information data structure.
 ///
-/// \fixme The meanline should not be stored! The user can deduce it
+/// FIXME: The meanline should not be stored! The user can deduce it
 /// from the x_height and the baseline.
 ///
-/// \fixme The way the meanline and the baseline are computed is not
+/// FIXME: The way the meanline and the baseline are computed is not
 /// optimal and does not work if the components are too high (because
 /// of the median accumulator and int_u12 overflows).
 

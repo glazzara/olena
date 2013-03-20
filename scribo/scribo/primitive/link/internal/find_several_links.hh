@@ -31,7 +31,7 @@
 ///
 /// Find the neighbor of a line of text if exists.
 ///
-/// \fixme do not iterate over the number of anchor types but use a
+/// FIXME: do not iterate over the number of anchor types but use a
 /// set of anchors specified in the functor.
 
 # include <mln/core/concept/image.hh>
@@ -93,7 +93,7 @@ namespace scribo
 
 	  for_all_anchors(a, functor.anchors()) // <-- nanchor && anchors
 	  {
-	    // FIXME : See fixme at the beginning of this file.
+	    // FIXME:: See fixme at the beginning of this file.
 	    anchor::Type anchor = functor.anchors()[a];
 
 	    mln_site(scribo_support_(F))

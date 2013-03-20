@@ -31,9 +31,8 @@
 ///
 /// \brief Definition of a component set.
 ///
-/// \fixme component_set should always set a component type in order
+/// FIXME: component_set should always set a component type in order
 /// to be fully supported by visitors.
-
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/function.hh>

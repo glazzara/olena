@@ -32,7 +32,7 @@
 /// \brief Routines computing a threshold using Niblack's binarization
 /// formula.
 
-// \fixme Having an unused parameter to fulfill the required interface
+// FIXME: Having an unused parameter to fulfill the required interface
 // may not be the best solution...
 
 // Setup default Niblack's formula parameters values.

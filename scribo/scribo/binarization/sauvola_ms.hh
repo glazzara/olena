@@ -33,7 +33,7 @@
 /// \brief Binarize an image using a multi-scale implementation of
 /// Sauvola's algoritm.
 ///
-/// \fixme Use the integral image for successive subsampling.
+/// FIXME: Use the integral image for successive subsampling.
 
 
 # include <mln/core/alias/neighb2d.hh>

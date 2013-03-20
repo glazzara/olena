@@ -27,7 +27,7 @@
 ///
 /// \brief Various utilities for image extraction
 ///
-/// \fixme To be cleanup
+/// FIXME: To be cleanup
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_INTERNAL_UNION_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_INTERNAL_UNION_HH

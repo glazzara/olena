@@ -28,7 +28,7 @@
 ///
 /// \brief Find in a document non text which are not text.
 ///
-/// \fixme To be optimized!
+/// FIXME: To be optimized!
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH

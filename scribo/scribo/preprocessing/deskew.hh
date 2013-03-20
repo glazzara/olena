@@ -30,7 +30,7 @@
 ///
 /// Deskew an image.
 
-/// \FIXME: provide a version for binary images.
+/// FIXME: provide a version for binary images.
 
 
 # include <queue>

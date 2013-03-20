@@ -91,7 +91,7 @@ namespace scribo
 	for_all_links(l, output)
 	  if (right(l) != l)
 	  {
-	    //FIXME Handle the case when a component is included in another one ?
+	    //FIXME: Handle the case when a component is included in another one ?
 
 	    // Update distance
 	    align_data(l).first()

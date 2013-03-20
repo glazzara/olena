@@ -31,7 +31,7 @@
 ///
 /// Compute an image of local threshold using Niblack algorithm.
 
-/// \fixme return type too restrictive!
+/// FIXME: return type too restrictive!
 
 # include <algorithm>
 # include <cmath>

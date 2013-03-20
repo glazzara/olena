@@ -29,7 +29,7 @@
 /// \file
 ///
 /// Invalidate false positive images.
-/// \fixme Share same test canvas as text::merging.
+/// FIXME: Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
