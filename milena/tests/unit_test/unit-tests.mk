@@ -537,6 +537,7 @@ mln_debug_put_word \
 mln_debug_quiet \
 mln_debug_slices_2d \
 mln_debug_superpose \
+mln_debug_trace \
 mln_debug_z_order \
 mln_display_all \
 mln_display_essential \
@@ -1053,6 +1054,7 @@ mln_pw_image \
 mln_pw_internal_image_base \
 mln_pw_value \
 mln_pw_var \
+mln_registration_all \
 mln_registration_icp \
 mln_set_all \
 mln_set_card \
