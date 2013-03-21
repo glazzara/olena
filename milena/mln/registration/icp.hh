@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -107,10 +107,7 @@ namespace mln
      *
      * \pre \p P_ and \p X must not be empty.
      *
-     * \cite besl.92.pami
-     *
-     * Reference article: "A Method for Registration of 3-D Shapes", Paul J.
-     * Besl and Neil D. McKay, IEEE, 2, February 1992.
+     * This implementation is based on \cite besl1992pami.
      *
      */
     template <typename P, typename F>

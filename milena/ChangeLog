@@ -1,5 +1,13 @@
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix documentation in registration namespace.
+
+	* mln/registration/all.hh: New.
+
+	* mln/registration/icp.hh: Fix reference.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix invalid example output in the documentation.
 
 	* doc/examples/split/tuto3_first_routine-1.cc.raw,
