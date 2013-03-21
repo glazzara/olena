@@ -1,3 +1,7 @@
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/doc.bib: Fix a reference name.
+
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve common documentation.
