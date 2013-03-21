@@ -1,5 +1,9 @@
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in: Generate namespace page.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix documentation in registration namespace.
 
 	* mln/registration/all.hh: New.
