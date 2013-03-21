@@ -1,5 +1,9 @@
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* demo/viewer/image_region.hh: Add Q_INTERFACES.

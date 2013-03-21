@@ -5,13 +5,25 @@ scribo/all.hh \
 scribo/binarization/all.hh \
 scribo/binarization/global_threshold.hh \
 scribo/binarization/global_threshold_auto.hh \
-scribo/binarization/internal/compute_local_threshold.hh \
-scribo/binarization/internal/first_pass_functor.hh \
+scribo/binarization/internal/local_threshold_core.hh \
 scribo/binarization/internal/local_threshold_debug.hh \
 scribo/binarization/internal/niblack_formula.hh \
+scribo/binarization/internal/niblack_functor.hh \
+scribo/binarization/internal/niblack_functor_fast.hh \
+scribo/binarization/internal/niblack_threshold_functor.hh \
 scribo/binarization/internal/sauvola_formula.hh \
+scribo/binarization/internal/sauvola_functor.hh \
+scribo/binarization/internal/sauvola_ms_functor.hh \
+scribo/binarization/internal/sauvola_threshold_functor.hh \
+scribo/binarization/internal/singh_formula.hh \
+scribo/binarization/internal/singh_functor.hh \
+scribo/binarization/internal/wolf_formula.hh \
+scribo/binarization/internal/wolf_functor.hh \
+scribo/binarization/internal/wolf_functor_fast.hh \
+scribo/binarization/kim.hh \
 scribo/binarization/local_threshold.hh \
 scribo/binarization/niblack.hh \
+scribo/binarization/niblack_fast.hh \
 scribo/binarization/niblack_threshold.hh \
 scribo/binarization/otsu.hh \
 scribo/binarization/otsu_threshold.hh \
@@ -19,6 +31,9 @@ scribo/binarization/sauvola.hh \
 scribo/binarization/sauvola_ms.hh \
 scribo/binarization/sauvola_ms_split.hh \
 scribo/binarization/sauvola_threshold.hh \
+scribo/binarization/singh.hh \
+scribo/binarization/wolf.hh \
+scribo/binarization/wolf_fast.hh \
 scribo/canvas/integral_browsing.hh \
 scribo/convert/from_base64.hh \
 scribo/convert/from_qimage.hh \
@@ -148,6 +163,9 @@ scribo/io/xml/internal/save_image_to_xml.hh \
 scribo/io/xml/internal/time_info.hh \
 scribo/io/xml/load.hh \
 scribo/io/xml/save.hh \
+scribo/layout/internal/hist_info.hh \
+scribo/layout/internal/node.hh \
+scribo/layout/xy_cut.hh \
 scribo/make/all.hh \
 scribo/make/debug_filename.hh \
 scribo/make/influence_zone_graph.hh \
@@ -298,4 +316,9 @@ scribo/util/box_intersection.hh \
 scribo/util/box_is_included.hh \
 scribo/util/color_to_hex.hh \
 scribo/util/component_precise_outline.hh \
-scribo/util/hex_to_color.hh
+scribo/util/compute_sub_domains.hh \
+scribo/util/hex_to_color.hh \
+scribo/util/init_integral_image.hh \
+scribo/util/integral_sub_sum_sum2_functor.hh \
+scribo/util/integral_sum_sum2_functor.hh \
+scribo/util/integral_sum_sum2_global_min_functor.hh
