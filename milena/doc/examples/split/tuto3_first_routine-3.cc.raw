@@ -1,1 +1,1 @@
-    debug::trace("my_algorithm");
+    mln_trace("my_algorithm");

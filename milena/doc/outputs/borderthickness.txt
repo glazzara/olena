@@ -1,5 +1,3 @@
-border::fill {} 
-border::impl::fill_size_1 {} 
 - - - - - - - - - 
 - - - - - - - - - 
 - - - - - - - - - 

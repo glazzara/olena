@@ -1,4 +1,0 @@
-mln::io::ppm::load {} 
-mln::io::pnm::load {} 
-mln::io::pnm::save {} 
-mln::io::pnm::save {} 

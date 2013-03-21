@@ -1,3 +1,38 @@
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid example output in the documentation.
+
+	* doc/examples/split/tuto3_first_routine-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-3.cc.raw,
+	* doc/mainpage.dox,
+	* doc/outputs/accu-right-instantiation.txt,
+	* doc/outputs/borderthickness.txt,
+	* doc/outputs/estim-sites.txt,
+	* doc/outputs/extend.txt,
+	* doc/outputs/fill-call-1.txt,
+	* doc/outputs/fill-imageif-cfun.txt,
+	* doc/outputs/fill-part-image.txt,
+	* doc/outputs/fill-subdomain-shorter.txt,
+	* doc/outputs/fill-subdomain.txt,
+	* doc/outputs/fill.txt,
+	* doc/outputs/ima-load.txt,
+	* doc/outputs/ima-save.txt,
+	* doc/outputs/ima2d-6-clone.txt,
+	* doc/outputs/ima2d-7.txt,
+	* doc/outputs/ima2d-rot.txt,
+	* doc/outputs/labeling-compute.txt,
+	* doc/outputs/logical-not.txt,
+	* doc/outputs/paste-call-1.txt,
+	* doc/outputs/split/tuto3_println-1.txt,
+	* doc/outputs/split/tuto3_println-2.txt,
+	* doc/outputs/tuto2_first_image.txt,
+	* doc/outputs/tuto3_colorize.txt,
+	* doc/outputs/tuto3_first_routine.txt,
+	* doc/outputs/tuto3_println.txt,
+	* doc/outputs/tuto3_rw_image.txt,
+	* doc/outputs/tuto4_genericity_and_algorithms.txt: Remove trace
+	logs.
+
 2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Introduce mln_trace_warning macro.

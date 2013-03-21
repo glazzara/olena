@@ -1,6 +1,0 @@
-core::initialize {} 
-data::fill {} 
-data::fill_with_image {} 
-border::get {} 
-border::get {} 
-data::impl::fill_with_image_fastest {} 

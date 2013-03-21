@@ -1,15 +1,4 @@
 // \{
-data::fill {} 
-data::fill_with_value {} 
-data::impl::fill_with_value_one_block {} 
-data::memset_ {} 
-data::impl::memset_ {} 
-debug::println {} 
-data::fill {} 
-data::fill_with_value {} 
-data::impl::fill_with_value_one_block {} 
-data::memset_ {} 
-data::impl::memset_ {} 
 2 2 2 2 2 
 2 2 2 2 2 
 2 2 2 2 2 
@@ -18,13 +7,6 @@ data::impl::memset_ {}
 
 // \}
 // \{
-data::fill {} 
-data::fill_with_value {} 
-data::impl::fill_with_value_one_block {} 
-data::memset_ {} 
-data::impl::memset_ {} 
-border::fill {} 
-border::impl::fill_size_1 {} 
 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 

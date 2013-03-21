@@ -29,7 +29,7 @@ namespace mln
   my_algorithm(const Image<I>& ima_,
 	       const Neighborhood<N>& nbh_)
   {
-    debug::trace("my_algorithm");
+    mln_trace("my_algorithm");
 
     const I& ima = exact(ima_);
     const N& nbh = exact(nbh_);

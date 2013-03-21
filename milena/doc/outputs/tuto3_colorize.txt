@@ -1,7 +1,0 @@
-labeling::colorize {} 
-data::transform {} 
-data::impl::transform_fast_lowq {} 
-core::initialize {} 
-mln::io::pgm::save {} 
-mln::io::pnm::save {} 
-mln::io::pnm::save {} 

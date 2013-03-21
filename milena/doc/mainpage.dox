@@ -101,7 +101,6 @@ image.
    \li \ref mln::tag
    \li \ref mln::test
    \li \ref mln::topo
-   \li \ref mln::trace
    \li \ref mln::trait
    \li \ref mln::transform
    \li \ref mln::util
