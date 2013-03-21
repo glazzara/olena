@@ -67,6 +67,8 @@ namespace scribo
 
 	singh_functor(const Image<I>& input, double K);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
@@ -104,7 +106,7 @@ namespace scribo
 
       template <typename I>
       void
-      niblack_functor<I>::init()
+      singh_functor<I>::init()
       {
 	// This initialization MUST be done here since input image
 	// borders may have changed!

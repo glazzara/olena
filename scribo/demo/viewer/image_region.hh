@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,7 +24,8 @@
 class ImageRegion
   : public QObject, public QGraphicsItem
 {
-  Q_OBJECT
+  Q_OBJECT;
+  Q_INTERFACES(QGraphicsItem);
 
 public:
   ImageRegion(region::RegionId id,

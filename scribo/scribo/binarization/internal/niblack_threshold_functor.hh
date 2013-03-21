@@ -66,6 +66,8 @@ namespace scribo
 	niblack_threshold_functor(const Image<I>& input,
 				  double K);
 
+	void init();
+
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
 
