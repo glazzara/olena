@@ -5,6 +5,7 @@ scribo/all.hh \
 scribo/binarization/all.hh \
 scribo/binarization/global_threshold.hh \
 scribo/binarization/global_threshold_auto.hh \
+scribo/binarization/internal/global_max_stddev_functor.hh \
 scribo/binarization/internal/local_threshold_core.hh \
 scribo/binarization/internal/local_threshold_debug.hh \
 scribo/binarization/internal/niblack_formula.hh \

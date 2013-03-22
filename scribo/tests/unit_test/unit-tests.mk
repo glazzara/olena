@@ -186,6 +186,7 @@ scribo_all \
 scribo_binarization_all \
 scribo_binarization_global_threshold \
 scribo_binarization_global_threshold_auto \
+scribo_binarization_internal_global_max_stddev_functor \
 scribo_binarization_internal_local_threshold_core \
 scribo_binarization_internal_local_threshold_debug \
 scribo_binarization_internal_niblack_formula \

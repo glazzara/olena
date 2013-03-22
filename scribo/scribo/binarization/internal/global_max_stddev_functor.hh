@@ -28,7 +28,8 @@
 
 /// \file
 ///
-///
+/// \brief Functor computing the maximum standard deviation during an
+/// integral image browsing.
 
 
 namespace scribo
@@ -36,9 +37,6 @@ namespace scribo
 
   namespace binarization
   {
-
-    using namespace mln;
-
 
     namespace internal
     {
