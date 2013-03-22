@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -65,8 +65,8 @@ namespace scribo
       /*! \brief Link objects with their left neighbor if exists.
 
 	  \param[in] components A component set.
-	  \param[in] dmax_ratio Size ratio defining the maximum lookup
-	                        distance.
+	  \param[in] dmax_f A function defining the maximum lookup
+	                    distance.
 	  \param[in] min_angle Minimum difference allowed for
 	                       alignement angle.
 	  \param[in] max_angle Maximum difference allowed for
@@ -83,17 +83,18 @@ namespace scribo
 	  where w is the bounding box width and h the bounding box height.
 
       */
-      template <typename L>
+      template <typename L, typename F>
       inline
       object_links<L>
       with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
-	float dmax_ratio,
+	const DMax_Functor<F>& dmax_f,
 	float min_angle, float max_angle,
 	anchor::Type anchor);
 
       /// \overload
       /// anchor is set to MassCenter.
+      /// dmax_f functor is set to internal::dmax_default.
       //
       template <typename L>
       inline
