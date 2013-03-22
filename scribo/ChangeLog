@@ -1,5 +1,15 @@
 2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* scribo/binarization/all.hh: Add missing includes.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh: Add
+	input image as attribute.
+
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Share a functor used in Wolf's binarization.
 
 	* scribo/binarization/internal/global_max_stddev_functor.hh: New.

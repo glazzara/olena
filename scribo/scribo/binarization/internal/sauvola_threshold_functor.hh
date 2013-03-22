@@ -66,7 +66,7 @@ namespace scribo
 	sauvola_threshold_functor(const Image<I>& input,
 				  double K, double R);
 
-	init();
+	void init();
 
 	// Run every 4 pixels.
 	void exec(double mean, double stddev);
@@ -77,6 +77,7 @@ namespace scribo
 
 	typedef mln_concrete(I) th_t;
 	th_t output;
+	mln_concrete(I) input;
 
 	mln_value(I)* po;
 
@@ -93,9 +94,10 @@ namespace scribo
 #ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
-      sauvola_threshold_functor<I>::sauvola_threshold_functor(const Image<I>& input_,
+      sauvola_threshold_functor<I>::sauvola_threshold_functor(const Image<I>& input,
 							      double K, double R)
-	: K_(K),
+	: input(input),
+	  K_(K),
 	  R_(R)
       {
 	mln_precondition(exact(input).is_valid());

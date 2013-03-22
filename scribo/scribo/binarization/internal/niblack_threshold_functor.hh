@@ -77,6 +77,7 @@ namespace scribo
 
 	typedef mln_concrete(I) th_t;
 	th_t output;
+	mln_concrete(I) input;
 
 	mln_value(I)* po;
 
@@ -94,9 +95,10 @@ namespace scribo
       template <typename I>
       niblack_threshold_functor<I>::niblack_threshold_functor(const Image<I>& input_,
 							      double K)
-	: K_(K)
+	: input(input_),
+	  K_(K)
       {
-	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(input_).is_valid());
 	mln_precondition(K > 0.);
       }
 
