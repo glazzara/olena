@@ -1,3 +1,12 @@
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share a functor used in Wolf's binarization.
+
+	* scribo/binarization/internal/global_max_stddev_functor.hh: New.
+
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh: Remove functor declaration.
+
 2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* headers.mk: Regen.

@@ -34,6 +34,7 @@
 # include <mln/core/concept/image.hh>
 # include <scribo/binarization/internal/wolf_functor.hh>
 # include <scribo/binarization/internal/local_threshold_core.hh>
+# include <scribo/binarization/internal/global_max_stddev_functor.hh>
 # include <scribo/util/integral_sum_sum2_global_min_functor.hh>
 
 namespace scribo
@@ -92,43 +93,6 @@ namespace scribo
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace internal
-    {
-
-      template <typename I>
-      struct global_max_stddev
-      {
-	global_max_stddev()
-	  : max_stddev(0)
-	{
-	}
-
-	void init()
-	{
-	}
-
-	// Run every 4 pixels.
-	void exec(double mean, double stddev)
-	{
-	  (void) mean;
-	  if (max_stddev < stddev)
-	    max_stddev = stddev;
-	}
-
-	void end_of_row(int)
-	{
-	}
-
-	void finalize()
-	{
-	}
-
-	double max_stddev;
-      };
-
-    } // end of namespace scribo::binarization::internal
-
 
     // Facades
 
