@@ -1,5 +1,9 @@
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Makefile.am: Fix EXTRA_DIST.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/unit_test/unit-tests.mk: Regen.
 
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -695,14 +695,23 @@ regen-am:
 EXTRA_DIST +=					\
   $(DATA_html_dirs)				\
   $(DOXYFILE).in				\
-  groups/accu.dox				\
-  groups/graph.dox				\
-  groups/images.dox				\
-  groups/main.dox				\
-  groups/neighb.dox				\
-  groups/site_set.dox				\
-  groups/util.dox				\
-  groups/win.dox				\
+  mln/win/win.dox				\
+  mln/main.dox					\
+  mln/morpho/morpho.dox				\
+  mln/canvas/canvas.dox				\
+  mln/data/data.dox				\
+  mln/util/graph.dox				\
+  mln/util/util.dox				\
+  mln/io/io.dox					\
+  mln/accu/accu.dox				\
+  mln/core/image/morphers.dox			\
+  mln/core/image/identity_morpher.dox		\
+  mln/core/image/images.dox			\
+  mln/core/image/domain_morpher.dox		\
+  mln/core/image/value_morpher.dox		\
+  mln/core/image/concrete.dox			\
+  mln/core/neighb.dox				\
+  mln/core/site_set/site_set.dox		\
   img/small-enlarged.png			\
   img/small.png					\
   doxyfuns.sty					\
