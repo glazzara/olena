@@ -1,5 +1,16 @@
 2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add ICDAR contests related source code.
+
+	* src/contest/Makefile.am: Add subdirs.
+
+	* src/contest/hbr-2013/Makefile.am,
+	* src/contest/hbr-2013/content_in_hdoc_hbr.cc,
+	* src/contest/hnla-2013/Makefile.am,
+	* src/contest/hnla-2013/content_in_hdoc_hnla.cc: New.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix some preconditions.
 
 	* scribo/core/document.hh: Relax some preconditions.
