@@ -1,3 +1,8 @@
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/src/contest/hnla-2013 and
+	scribo/src/contest/hbr-2013.
+
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/doc.bib: Add a reference to an article.
