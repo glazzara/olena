@@ -157,7 +157,6 @@ namespace scribo
     const mln::image2d<bool>& binary_image_wo_seps() const;
     void set_binary_image_wo_seps(const mln::image2d<bool>& binary_image_wo_seps);
 
-
   private:
     mln::util::tracked_ptr<data_t> data_;
   };
@@ -198,6 +197,7 @@ namespace scribo
 
   template <typename L>
   document<L>::document()
+    : data_(0)
   {
   }
 
@@ -221,6 +221,7 @@ namespace scribo
   const char *
   document<L>::filename() const
   {
+    mln_precondition(is_valid());
     return data_->filename_.c_str();
   }
 
@@ -229,6 +230,7 @@ namespace scribo
   void
   document<L>::set_filename(const char *filename)
   {
+    mln_precondition(is_valid());
     data_->filename_ = filename;
   }
 
@@ -237,6 +239,7 @@ namespace scribo
   void
   document<L>::open()
   {
+    mln_precondition(is_valid());
     mln::io::magick::load(data_->image_, data_->filename_);
   }
 
@@ -245,6 +248,7 @@ namespace scribo
   bool
   document<L>::is_open() const
   {
+    mln_precondition(is_valid());
     return data_->image_.is_valid();
   }
 
@@ -253,7 +257,7 @@ namespace scribo
   bool
   document<L>::is_valid() const
   {
-    return data_->image_.is_valid();
+    return data_ != 0 && data_->image_.is_valid();
   }
 
 
@@ -261,6 +265,8 @@ namespace scribo
   mln::def::coord
   document<L>::width() const
   {
+    mln_precondition(is_valid());
+    mln_precondition(data_->image_.is_valid());
     return data_->image_.ncols();
   }
 
@@ -269,6 +275,8 @@ namespace scribo
   mln::def::coord
   document<L>::height() const
   {
+    mln_precondition(is_valid());
+    mln_precondition(data_->image_.is_valid());
     return data_->image_.nrows();
   }
 
@@ -277,6 +285,7 @@ namespace scribo
   bool
   document<L>::has_text() const
   {
+    mln_precondition(is_valid());
     return data_->parset_.is_valid();
   }
 
@@ -285,6 +294,8 @@ namespace scribo
   const line_set<L>&
   document<L>::lines() const
   {
+    mln_precondition(is_valid());
+    mln_precondition(data_->parset_.is_valid());
     return data_->parset_.lines();
   }
 
@@ -292,6 +303,7 @@ namespace scribo
   const paragraph_set<L>&
   document<L>::paragraphs() const
   {
+    mln_precondition(is_valid());
     return data_->parset_;
   }
 
@@ -300,6 +312,8 @@ namespace scribo
   void
   document<L>::set_paragraphs(const paragraph_set<L>& parset)
   {
+    mln_precondition(is_valid());
+    mln_precondition(parset.is_valid());
     data_->parset_ = parset;
   }
 
@@ -308,6 +322,7 @@ namespace scribo
   const component_set<L>&
   document<L>::elements() const
   {
+    mln_precondition(is_valid());
     return data_->elements_;
   }
 
@@ -316,6 +331,7 @@ namespace scribo
   bool
   document<L>::has_elements() const
   {
+    mln_precondition(is_valid());
     return data_->elements_.is_valid();
   }
 
@@ -324,6 +340,8 @@ namespace scribo
   void
   document<L>::set_elements(const component_set<L>& elements)
   {
+    mln_precondition(is_valid());
+    mln_precondition(elements.is_valid());
     data_->elements_ = elements;
   }
 
@@ -331,6 +349,7 @@ namespace scribo
   bool
   document<L>::has_whitespace_seps() const
   {
+    mln_precondition(is_valid());
     return data_->whitespace_seps_.is_valid();
   }
 
@@ -339,6 +358,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::whitespace_seps() const
   {
+    mln_precondition(is_valid());
     return data_->whitespace_seps_;
   }
 
@@ -347,6 +367,7 @@ namespace scribo
   const component_set<L>&
   document<L>::whitespace_seps_comps() const
   {
+    mln_precondition(is_valid());
     return data_->whitespace_seps_comps_;
   }
 
@@ -356,6 +377,9 @@ namespace scribo
   document<L>::set_whitespace_separators(const image2d<bool>& whitespace_seps,
 					 const component_set<L>& whitespace_seps_comps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(whitespace_seps.is_valid());
+    mln_precondition(whitespace_seps_comps.is_valid());
     data_->whitespace_seps_ = whitespace_seps;
     data_->whitespace_seps_comps_ = whitespace_seps_comps;
   }
@@ -365,6 +389,7 @@ namespace scribo
   bool
   document<L>::has_hline_seps() const
   {
+    mln_precondition(is_valid());
     return data_->hline_seps_.is_valid();
   }
 
@@ -373,6 +398,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::hline_seps() const
   {
+    mln_precondition(is_valid());
     return data_->hline_seps_;
   }
 
@@ -381,6 +407,7 @@ namespace scribo
   const component_set<L>&
   document<L>::hline_seps_comps() const
   {
+    mln_precondition(is_valid());
     return data_->hline_seps_comps_;
   }
 
@@ -389,6 +416,8 @@ namespace scribo
   void
   document<L>::set_hline_separators(const image2d<bool>& hline_seps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(hline_seps.is_valid());
     data_->hline_seps_ = hline_seps;
 
     mln_value(L) ncomps;
@@ -404,6 +433,9 @@ namespace scribo
   document<L>::set_hline_separators(const image2d<bool>& hline_seps,
 				    const component_set<L>& hline_seps_comps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(hline_seps.is_valid());
+    mln_precondition(hline_seps_comps.is_valid());
     data_->hline_seps_ = hline_seps;
     data_->hline_seps_comps_ = hline_seps_comps;
   }
@@ -413,6 +445,7 @@ namespace scribo
   bool
   document<L>::has_vline_seps() const
   {
+    mln_precondition(is_valid());
     return data_->vline_seps_.is_valid();
   }
 
@@ -421,6 +454,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::vline_seps() const
   {
+    mln_precondition(is_valid());
     return data_->vline_seps_;
   }
 
@@ -429,6 +463,7 @@ namespace scribo
   const component_set<L>&
   document<L>::vline_seps_comps() const
   {
+    mln_precondition(is_valid());
     return data_->vline_seps_comps_;
   }
 
@@ -437,6 +472,8 @@ namespace scribo
   void
   document<L>::set_vline_separators(const image2d<bool>& vline_seps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(vline_seps.is_valid());
     data_->vline_seps_ = vline_seps;
 
     mln_value(L) ncomps;
@@ -452,6 +489,9 @@ namespace scribo
   document<L>::set_vline_separators(const image2d<bool>& vline_seps,
 				    const component_set<L>& vline_seps_comps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(vline_seps.is_valid());
+    mln_precondition(vline_seps_comps.is_valid());
     data_->vline_seps_ = vline_seps;
     data_->vline_seps_comps_ = vline_seps_comps;
   }
@@ -461,6 +501,7 @@ namespace scribo
   const mln::image2d<value::rgb8>&
   document<L>::image() const
   {
+    mln_precondition(is_valid());
     return data_->image_;
   }
 
@@ -469,6 +510,8 @@ namespace scribo
   void
   document<L>::set_image(const mln::image2d<value::rgb8>& image)
   {
+    mln_precondition(data_ != 0);
+    mln_precondition(image.is_valid());
     data_->image_ = image;
   }
 
@@ -477,6 +520,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::binary_image() const
   {
+    mln_precondition(is_valid());
     return data_->binary_image_;
   }
 
@@ -485,6 +529,8 @@ namespace scribo
   void
   document<L>::set_binary_image(const mln::image2d<bool>& binary_image)
   {
+    mln_precondition(is_valid());
+    mln_precondition(binary_image.is_valid());
     data_->binary_image_ = binary_image;
   }
 
@@ -493,6 +539,7 @@ namespace scribo
   const mln::image2d<bool>&
   document<L>::binary_image_wo_seps() const
   {
+    mln_precondition(is_valid());
     return data_->binary_image_wo_seps_;
   }
 
@@ -502,6 +549,8 @@ namespace scribo
   document<L>::set_binary_image_wo_seps(
     const mln::image2d<bool>& binary_image_wo_seps)
   {
+    mln_precondition(is_valid());
+    mln_precondition(binary_image_wo_seps.is_valid());
     data_->binary_image_wo_seps_ = binary_image_wo_seps;
   }
 
