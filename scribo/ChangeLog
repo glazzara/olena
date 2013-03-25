@@ -1,5 +1,9 @@
 2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/binarization/sauvola_ms.hh: Add overloads.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/document.hh: Add more assertions.
 
 2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>

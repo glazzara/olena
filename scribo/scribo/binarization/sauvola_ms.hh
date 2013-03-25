@@ -141,6 +141,17 @@ namespace scribo
     sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s);
 
     /// \overload
+    /// The integral image is not returned.
+    /// K is set to 0.34.
+    /// s is set to 3.
+    ///
+    /// \ingroup grpalgobinsauvola
+    //
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1);
+
+    /// \overload
     /// Allow to specify a different k parameter for each scale.
     //
     template <typename I>
@@ -1059,6 +1070,14 @@ namespace scribo
 	output = sauvola_ms(input_1_, w_1, s, integral_sum_sum_2);
 
       return output;
+    }
+
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1)
+    {
+      return sauvola_ms(input_1, w_1, 3);
     }
 
 
