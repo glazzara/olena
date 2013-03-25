@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,47 +23,22 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <vector>
+/// \file
+/// \brief Exercise mln::edge_image.
+///
+/// This test is similar to tests/core/image/line_graph_image.cc
+/// (apart from tge visualisation part).  (We might want to factor
+/// them.)
 
-#include <mln/core/image/edge_image.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/accu/shape/bbox.hh>
-#include <mln/fun/i2v/array.hh>
+
 #include <mln/util/graph.hh>
+#include <mln/fun/i2v/array.hh>
 #include <mln/util/site_pair.hh>
+#include <mln/core/image/edge_image.hh>
+
+#include <mln/accu/shape/bbox.hh>
 #include <mln/debug/draw_graph.hh>
-
-
-/* The graph is as follows:
-
-            0 1 2 3 4
-         .-----------
-         |
-       0 |  0       2
-       1 |    \   / |
-       2 |      1   |
-       3 |       \  |
-       4 |        3-4
-
-*/
-
-
-static const unsigned X = mln_max(unsigned); // Invalid id.
-
-
-// Expected neighbors for forward and backward iteration.
-// X is an invalid id.
-static unsigned expected_fwd_nb[5][3] = { { 1, 2, X },
-					  { 0, 2, 4 },
-					  { 0, 1, 3 },
-					  { 2, 4, X },
-					  { 1, 3, X } };
-
-static unsigned expected_bkd_nb[5][3] = { { 2, 1, X },
-					  { 4, 2, 0 },
-					  { 3, 1, 0 },
-					  { 4, 2, X },
-					  { 3, 1, X } };
 
 
 int main()
@@ -74,20 +49,25 @@ int main()
   | Graph.  |
   `--------*/
 
-  // Points associated to vertices.
-  typedef util::site_pair<point2d> site_t;
-  typedef fun::i2v::array<site_t> fsite_t;
-  fsite_t sites(5);
-  sites(0) = site_t(point2d(0,0),point2d(2,2)); // Site associated to edge 0.
-  sites(1) = site_t(point2d(2,2),point2d(0,4)); // Site associated to edge 1.
-  sites(2) = site_t(point2d(2,2),point2d(4,3)); // Site associated to edge 2.
-  sites(3) = site_t(point2d(4,3),point2d(4,4)); // Site associated to edge 3.
-  sites(4) = site_t(point2d(4,4),point2d(0,4)); // Site associated to edge 4.
+  /* The graph and its corresponding line graph are as follows:
 
+            0 1 2 3 4               0 1 2 3 4
+         .-----------	         .-----------
+         |		         |
+       0 |  0       2	       0 |  *       *
+       1 |    \   / |	       1 |    0   1 |
+       2 |      1   |	       2 |      *   4
+       3 |       \  |	       3 |       2  |
+       4 |        3-4	       4 |        *3*
+
+     Numbers in the graph represent the vertices and edges identifers
+     (resp.).  */
+
+  // Graph.
   util::graph g;
 
-  // Populate the graph with vertices.
-  g.add_vertices(sites.size());
+  // Populate the graph with 5 vertices.
+  g.add_vertices(5);
 
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -96,10 +76,21 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  //g.print_debug(std::cout);
+  // Sites (points) associated to edges.
+  /* FIXME: It would be nicer to deduce these pairs from points
+     attached to a vertex graph (image) rather than building them
+     manually.  */
+  typedef util::site_pair<point2d> site_t;
+  typedef fun::i2v::array<site_t> fsite_t;
+  fsite_t sites(5);
+  sites(0) = site_t(point2d(0,0), point2d(2,2)); // Site associated to edge 0.
+  sites(1) = site_t(point2d(2,2), point2d(0,4)); // Site associated to edge 1.
+  sites(2) = site_t(point2d(2,2), point2d(4,3)); // Site associated to edge 2.
+  sites(3) = site_t(point2d(4,3), point2d(4,4)); // Site associated to edge 3.
+  sites(4) = site_t(point2d(4,4), point2d(0,4)); // Site associated to edge 4.
 
   /*-------------.
-  | Graph image.  |
+  | Edge image.  |
   `-------------*/
 
   // Graph values.
@@ -111,6 +102,7 @@ int main()
   typedef edge_image<site_t,unsigned> ima_t;
   ima_t ima(g, sites, iota);
 
+  // FIXME: As of 2011-10-06, this visualization does not work.
   {
     // FIXME: Move this part to a special test case.
 
@@ -135,7 +127,7 @@ int main()
      selected by the compiler is based on a 2-D bbox, and expects the
      interface of graph_image to work with points(not psites).
      Moreover, this implementation only shows *values*, not the graph
-     itslef.
+     itself.
 
      An alternative is to use debug::graph,
      but it doesn't show the values, only the vertices and edges of the
@@ -145,8 +137,8 @@ int main()
      iterations.  */
     image2d<int> ima_rep(bbox);
 
-  // We use the value 9 in debug::graph to represent edges to distinguish it
-  // from vertices holding a value of 1.
+    // We use the value 9 in debug::graph to represent edges to distinguish it
+    // from vertices holding a value of 1.
     debug::draw_graph(ima_rep, ima.domain(), 1, 9);
   }
 
@@ -154,69 +146,89 @@ int main()
   | Iterators.  |
   `------------*/
 
-  // iteration over the domain of IMA.
+  // Invalid identifier.
+  const unsigned X = mln_max(unsigned);
+
+  // Expected neighbors for forward and backward iterations on an
+  // elementary window.
+  const unsigned expected_fwd_nbh[5][3] = { { 1, 2, X },
+					    { 0, 2, 4 },
+					    { 0, 1, 3 },
+					    { 2, 4, X },
+					    { 1, 3, X } };
+
+  const unsigned expected_bkd_nbh[5][3] = { { 2, 1, X },
+					    { 4, 2, 0 },
+					    { 3, 1, 0 },
+					    { 4, 2, X },
+					    { 3, 1, X } };
+
+  // Iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   unsigned i = 10;
   for_all(p)
     mln_assertion(ima(p) == i++);
 
+  // Elementary window.
   typedef ima_t::win_t win_t;
   win_t win;
 
   {
-    // Window - Forward iteration
-    mln_qiter_(win_t) q(win, p);
+    // Window -- Forward iteration.
+    mln_fwd_qiter_(win_t) q(win, p);
     for_all(p)
     {
       i = 0;
       for_all(q)
       {
-	mln_assertion(expected_fwd_nb[p.id()][i] == q.id());
+	mln_assertion(expected_fwd_nbh[p.id()][i] == q.id());
 	++i;
       }
     }
   }
 
   {
-    // Window - Backward iteration
+    // Window -- Backward iteration.
     mln_bkd_qiter_(win_t) q(win, p);
     for_all(p)
     {
       i = 0;
       for_all(q)
       {
-	mln_assertion(expected_bkd_nb[p.id()][i] == q.id());
+	mln_assertion(expected_bkd_nbh[p.id()][i] == q.id());
 	++i;
       }
     }
   }
 
+
+  // Elementary neighborhood.
   typedef ima_t::nbh_t nbh_t;
-  nbh_t neigh;
-  {
-    // Neighborhood - Forward iteration
-    mln_niter_(nbh_t) n(neigh, p);
+  nbh_t nbh;
 
+  {
+    // Neighborhood -- Forward iteration.
+    mln_fwd_niter_(nbh_t) n(nbh, p);
     for_all(p)
     {
       i = 0;
       for_all(n)
       {
-	mln_assertion(expected_fwd_nb[p.id()][i] == n.id());
+	mln_assertion(expected_fwd_nbh[p.id()][i] == n.id());
 	++i;
       }
     }
   }
 
   {
-    // Neighborhood - Backward iteration
-    mln_bkd_niter_(nbh_t) n(neigh, p);
+    // Neighborhood -- Backward iteration.
+    mln_bkd_niter_(nbh_t) n(nbh, p);
     for_all(p)
     {
       i = 0;
       for_all(n)
       {
-	mln_assertion(expected_bkd_nb[p.id()][i] == n.id());
+	mln_assertion(expected_bkd_nbh[p.id()][i] == n.id());
 	++i;
       }
     }

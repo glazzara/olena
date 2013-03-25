@@ -103,7 +103,6 @@ namespace mln
 
 	    // Output.
 	    mln_ch_value(I, L) output;
-	    bool status; // FIXME: Is-it useful?
 
 	    // Initialization.
 	    {
@@ -160,7 +159,6 @@ namespace mln
 		  {
 		    if (nlabels == mln_max(L))
 		    {
-		      status = false;
 		      mln_trace_warning("labeling aborted! Too many labels \
 					    for this label type: nlabels > \
 					    max(label_type).");
@@ -173,7 +171,6 @@ namespace mln
 		else
 		  output(p) = output(parent(p));
 	      }
-	      status = true;
 	    }
 
 	    return output;

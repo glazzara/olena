@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -44,8 +44,6 @@ check_PROGRAMS =				\
   lena_line_graph_image_wst2			\
   line_graph_image_wst				\
   line_graph_image_morpho			\
-  meyer_wst					\
-  meyer_wst_long				\
   rank_filter 					\
   Rd						\
   skeleton_constrained				\
@@ -74,8 +72,6 @@ lena_line_graph_image_wst1_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 lena_line_graph_image_wst2_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
-meyer_wst_long_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
-
 
 TESTS = $(check_PROGRAMS)
 
@@ -94,7 +90,5 @@ MOSTLYCLEANFILES =				\
   laplacian-out.pgm				\
   lena_line_graph_image_wst1-out.ppm		\
   lena_line_graph_image_wst2-out.ppm		\
-  meyer_wst-out.pgm				\
-  meyer_wst_long-out.ppm			\
   thinning-out.pbm				\
   thinning-out.pgm

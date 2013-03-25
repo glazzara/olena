@@ -23,7 +23,7 @@
 # include <mln/data/transform.hh>
 # include <mln/extension/fill.hh>
 
-# include <mln/morpho/meyer_wst.hh>
+# include <mln/morpho/watershed/flooding.hh>
 # include <mln/morpho/gradient.hh>
 # include <mln/morpho/dilation.hh>
 
@@ -175,9 +175,9 @@ int main()
 
 
   unsigned nbasins;
-  data::fill(wst, morpho::meyer_wst(edge, e2e, nbasins));
-  //                                       ^^^
-  //                         edge -> neighboring edges
+  data::fill(wst, morpho::watershed::flooding(edge, e2e, nbasins));
+  //                                                ^^^
+  //                                  edge -> neighboring edges
   debug::println(wst);
   //   2   2   
   // 0   0   0 

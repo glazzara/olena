@@ -1,3 +1,130 @@
+2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove morpho::meyer_wst.
+
+	* mln/morpho/meyer_wst.hh: Remove.
+	Superseded by mln/morpho/watershed/flooding.hh.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen
+	* tests/morpho/meyer_wst.cc,
+	* tests/morpho/meyer_wst_long.cc:
+	Remove tests.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Remove
+	meyer_wst.cc and meyer_wst_long.cc.
+	(meyer_wst_long_CXXFLAGS): Remove.
+	(MOSTLYCLEANFILES): Adjust.
+
+2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace remaining uses of morpho::meyer_wst in Milena.
+
+	* doc/examples/trash/tuto_bis.cc,
+	* doc/examples/trash/tuto_one.cc,
+	* tools/area_flooding.cc:
+	Here, by morpho::watershed::flooding.
+
+2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove references to mln/morpho/meyer_wst.hh in mln/morpho/.
+
+	* mln/morpho/all.hh,
+	* mln/morpho/essential.hh:
+	Here.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace uses morpho::meyer_wst by morpho::watershed::flooding.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-segm.cc:
+	Here.
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc:
+	Likewise.
+	Tidy headers inclusions.
+	* mln/make/region_adjacency_graph.hh: Adjust documentation.
+	* tests/morpho/graph_image_morpho.cc: Add a comment.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix tests/core/image/line_graph_image.cc.
+
+	* tests/core/image/line_graph_image.cc: Actually use an image
+	based on the edges of a graph, not on its vertices.
+	Adjust test.
+	Aesthetic changes.
+	* tests/core/image/edge_image.cc: Aesthetic changes.
+
+2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use mln::edge_image to implement line graph images in morpho tests.
+
+	* tests/morpho/line_graph_image_morpho.cc,
+	* tests/morpho/line_graph_image_wst.cc:
+	Here, instead of mln::vertex_image based on an
+	mln::util::line_graph adapter.
+	Aesthetic changes.
+
+2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address more compiler warnings.
+
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* apps/papers/levillain.09.ismm/classif-graph.cc:
+	Remove unused variables.
+	* mln/morpho/reconstruction/by_erosion/union_find.hh:
+	Ignore unused variables.
+	* mln/morpho/reconstruction/by_dilation/union_find.hh:
+	Style adjustment.
+
+2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix apps/morphers/Makefile.am.
+
+	* apps/morphers/Makefile.am: Include
+	$(top_srcdir)/milena/common.mk.
+
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation Warnings with latest g++ versions.
+
+	* apps/papers/levillain.09.ismm/io.hh: Remove unused variable.
+
+	* mln/canvas/labeling/sorted.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* tests/metal/unconst.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* tests/trait/super.cc: Fix unused variable warnings.
+
 2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Fix EXTRA_DIST.

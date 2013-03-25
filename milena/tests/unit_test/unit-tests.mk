@@ -987,7 +987,6 @@ mln_morpho_internal_elementary \
 mln_morpho_laplacian \
 mln_morpho_leveling_filter \
 mln_morpho_line_gradient \
-mln_morpho_meyer_wst \
 mln_morpho_min \
 mln_morpho_minus \
 mln_morpho_opening_algebraic \

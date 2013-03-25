@@ -946,7 +946,6 @@ mln/morpho/internal/elementary.hh \
 mln/morpho/laplacian.hh \
 mln/morpho/leveling_filter.hh \
 mln/morpho/line_gradient.hh \
-mln/morpho/meyer_wst.hh \
 mln/morpho/min.hh \
 mln/morpho/minus.hh \
 mln/morpho/opening/algebraic.hh \

@@ -1,3 +1,22 @@
+2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace remaining uses of mln::morpho::meyer_wst in Swilena.
+
+	* morpho.ixx: Here, by mln::morpho::watershed::flooding.
+	* image2d_int_u8.i,
+	* python/swilena.py,
+	* python/morpho-segm.py:
+	Adjust.
+
+2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	No longer wrap mln::value::int_u32.
+
+	* int_u24.i: Remove.
+	* Makefile.am (wrappers): Remove int_u32.i.
+	* python/Makefile.am: No longer generate Python wrapper from
+	int_u32.i.
+
 2012-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Swilena's build.

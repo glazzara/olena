@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,7 @@
 ///
 /// Create a region_adjacency_graph from a watershed image.
 ///
-/// \sa morpho::meyer_wst.
+/// \sa morpho::watershed::flooding.
 ///
 /// \todo add dispatch.
 

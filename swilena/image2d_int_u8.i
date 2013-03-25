@@ -1,5 +1,5 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -78,10 +78,10 @@ instantiate_morpho(mln::image2d< mln::value::int_u<8> >,
 | image2d<int_u8> and image2d<int_u24>.  |
 `---------------------------------------*/
 
-instantiate_meyer_wst(meyer_wst24,
-		      mln::value::int_u<24>,
-		      mln::image2d< mln::value::int_u<8> >,
-		      mln::neighb2d)
+instantiate_watershed_flooding(watershed_flooding24,
+			       mln::value::int_u<24>,
+			       mln::image2d< mln::value::int_u<8> >,
+			       mln::neighb2d)
 
 // FIXME: Rearrange and move this elsewhere.
 instantiate_image2d(image2d_int_u24, mln::value::int_u<24>)
