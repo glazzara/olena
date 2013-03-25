@@ -221,7 +221,7 @@ namespace scribo
   const char *
   document<L>::filename() const
   {
-    mln_precondition(is_valid());
+    mln_precondition(data_ != 0);
     return data_->filename_.c_str();
   }
 
@@ -239,7 +239,7 @@ namespace scribo
   void
   document<L>::open()
   {
-    mln_precondition(is_valid());
+    mln_precondition(data_ != 0);
     mln::io::magick::load(data_->image_, data_->filename_);
   }
 
@@ -248,7 +248,7 @@ namespace scribo
   bool
   document<L>::is_open() const
   {
-    mln_precondition(is_valid());
+    mln_precondition(data_ != 0);
     return data_->image_.is_valid();
   }
 

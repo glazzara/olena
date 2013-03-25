@@ -1,5 +1,13 @@
 2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix some preconditions.
+
+	* scribo/core/document.hh: Relax some preconditions.
+
+	* scribo/primitive/extract/alignments.hh: New precondition.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/binarization/sauvola_ms.hh: Add overloads.
 
 2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>

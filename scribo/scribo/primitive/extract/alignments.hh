@@ -575,6 +575,7 @@ namespace scribo
 	mln_precondition(doc.is_valid());
 	mln_precondition(doc.has_text());
 	const mln_ch_value(L,bool)& input = doc.binary_image();
+	mln_assertion(input.is_valid());
 
 	unsigned min_card = 3;
 	unsigned delta = 5;
