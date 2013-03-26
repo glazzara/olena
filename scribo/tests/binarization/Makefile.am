@@ -18,19 +18,18 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 EXTRA_DIST = 					\
-  kim.res.pbm					\
+  kim.ref.pbm					\
   kim_wodd_heven.ref.pbm			\
   kim_weven_hodd.ref.pbm			\
   kim_wodd_hodd.ref.pbm				\
-  niblack.res.pbm				\
+  niblack.ref.pbm				\
   niblack_wodd_heven.ref.pbm			\
   niblack_weven_hodd.ref.pbm			\
   niblack_wodd_hodd.ref.pbm			\
-  niblack_fast.res.pbm				\
+  niblack_fast.ref.pbm				\
   niblack_fast_wodd_heven.ref.pbm		\
   niblack_fast_weven_hodd.ref.pbm		\
   niblack_fast_wodd_hodd.ref.pbm		\
-  niblack.ref.pbm				\
   sauvola_ms.ref.pbm				\
   sauvola_ms_wodd_heven.ref.pbm			\
   sauvola_ms_weven_hodd.ref.pbm			\
