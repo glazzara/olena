@@ -1,5 +1,10 @@
 2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/world/binary_2d/subsample.hh: Cleanup code. Fix a memory
+	leak.
+
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add constant Boolean functions.
 
 	* mln/fun/v2b/always_false.hh,

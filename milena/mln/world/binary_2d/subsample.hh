@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -33,6 +33,7 @@
 ///
 /// FIXME: not enough generic. Does not work on image having
 ///	   the top left corner different from (0,0).
+/// FIXME: To be removed ?
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -63,7 +64,7 @@ namespace mln
 
       inline
       image2d<value::int_u8>
-      subsample(image2d<bool>& input, unsigned n)
+      subsample(const image2d<bool>& input, unsigned n)
       {
 	mln_trace("world::binary_2d::subsample");
 
@@ -79,21 +80,13 @@ namespace mln
 	  return output;
 	}
 
-	const bool** ptr = new const bool*[n];
+	const bool** ptr;
 	const unsigned nrows = input.nrows() / n;
 	const unsigned ncols = input.ncols() / n;
-	algebra::vec<2, unsigned int> vmin;
-	algebra::vec<2, unsigned int> vmax;
-	vmin[0] = 0;
-	vmin[1] = 0;
-	vmax[0] = nrows - 1;
-	vmax[1] = ncols - 1;
-	point2d pmin(vmin);
-	point2d pmax(vmax);
-	image2d<int_u8> output(box<point2d>(pmin, pmax));
+	image2d<int_u8> output;
+	initialize(output, input);
 
-	dpoint2d dp_row(1, 0);
-	const unsigned delta_row = input.delta_offset(dp_row);
+	const unsigned delta_row = input.delta_offset(down);
 	unsigned count = 0;
 
 	for (unsigned row = 0; row < nrows; ++row)
