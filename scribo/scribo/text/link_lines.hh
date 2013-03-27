@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,6 +52,10 @@ namespace scribo
 
 
     /*! \brief Link text lines to prepare paragraph construction.
+
+      Lines MUST be tagged as line::Text to be considered in this
+      processing.
+
       \ingroup grptext
     */
     template <typename L>

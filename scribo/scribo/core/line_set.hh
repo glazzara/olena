@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -132,6 +132,10 @@ namespace scribo
     /// Update tag of lines set to 'false' in \p f with \p tag.
     template <typename F>
     void update_tags(const mln::Function_v2b<F>& f, line::Tag tag);
+
+    /// Update Type of lines set to 'false' in \p f with \p tag.
+    template <typename F>
+    void update_types(const mln::Function_v2b<F>& f, line::Type type);
 
     /// Create a copy of this line_set<L>
     line_set<L> duplicate() const;
@@ -345,6 +349,19 @@ namespace scribo
 	data_->infos_[i].update_tag(tag);
   }
 
+  template <typename L>
+  template <typename F>
+  inline
+  void
+  line_set<L>::update_types(const mln::Function_v2b<F>& f_,
+			    line::Type type)
+  {
+    const F& f = exact(f_);
+
+    for_all_lines_info(i, data_->infos_)
+      if (!f(i))
+	data_->infos_[i].update_type(type);
+  }
 
   template <typename L>
   inline

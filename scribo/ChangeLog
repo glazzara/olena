@@ -1,5 +1,18 @@
 2013-03-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in scribo.
+
+	* scribo/core/line_set.hh: Add update_types().
+
+	* scribo/core/paragraph_info.hh: Set paragraph as valid when a
+	line is added.
+
+	* scribo/core/paragraph_set.hh: Add a forward declaration.
+
+	* scribo/text/link_lines.hh: Add more documentation.
+
+2013-03-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/binarization/Makefile.am: Fix EXTRA_DIST file names.
 
 2013-03-04  Roland Levillain  <roland@lrde.epita.fr>

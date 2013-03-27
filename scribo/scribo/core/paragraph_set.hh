@@ -116,6 +116,13 @@ namespace scribo
     scribo::paragraph_set<L>
     paragraph(const scribo::line_set<L>& lines);
 
+
+    /// \brief Construct a paragraph set from line links information.
+    template <typename L>
+    scribo::paragraph_set<L>
+    paragraph(const line_links<L>& llinks);
+
+
   } // end of namespace scribo::make
 
 
