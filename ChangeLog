@@ -1,3 +1,7 @@
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Allow tarballs with long filenames.
+
 2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/src/contest/hnla-2013 and

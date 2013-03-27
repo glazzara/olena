@@ -38,7 +38,7 @@ AC_CONFIG_FILES([build-aux/Makefile])
 # Disable the -Wextra-portability option until developers can all use
 # Automake 1.11.2 or newer (Debian GNU/Linux 6 ships Automake 1.11.1
 # only), at which point we'll use the new AM_PROG_AR macro instead.
-AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
+AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
                   parallel-tests nostdinc silent-rules
                   -Wall -Wno-extra-portability])
 # By default, let "make" hide the compilation command and display a
