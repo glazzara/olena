@@ -1,3 +1,10 @@
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add constant Boolean functions.
+
+	* mln/fun/v2b/always_false.hh,
+	* mln/fun/v2b/always_true.hh: New.
+
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove morpho::meyer_wst.
