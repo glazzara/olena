@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -80,6 +80,8 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 	      $(srcdir)/get_sources.dox		\
 	      $(srcdir)/subdoc_footer.html	\
 	      contributors.html			\
+	      lrde_olena.html
+
 	      $(REFMAN_IMAGES)
 
 EXTRA_DIST += $(REFMAN_deps)
