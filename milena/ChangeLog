@@ -1,3 +1,7 @@
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
 2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/world/binary_2d/subsample.hh: Cleanup code. Fix a memory

@@ -551,6 +551,8 @@ mln/fun/stat/all.hh \
 mln/fun/stat/mahalanobis.hh \
 mln/fun/unary.hh \
 mln/fun/v2b/all.hh \
+mln/fun/v2b/always_false.hh \
+mln/fun/v2b/always_true.hh \
 mln/fun/v2b/essential.hh \
 mln/fun/v2b/lnot.hh \
 mln/fun/v2b/threshold_ge.hh \
@@ -1012,6 +1014,7 @@ mln/pw/image.hh \
 mln/pw/internal/image_base.hh \
 mln/pw/value.hh \
 mln/pw/var.hh \
+mln/registration/all.hh \
 mln/registration/icp.hh \
 mln/set/all.hh \
 mln/set/card.hh \
