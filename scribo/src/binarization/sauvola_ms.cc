@@ -138,13 +138,13 @@ int main(int argc, char *argv[])
 				 mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
 
-  scribo::debug::logger().start_local_time_logging();
+  scribo::debug::logger().start_time_logging();
 
   // Binarize
   image2d<bool>
     output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s);
 
-  scribo::debug::logger().stop_local_time_logging("Binarized in");
+  scribo::debug::logger().stop_time_logging("Binarized in");
 
   if (options.is_enabled("negate"))
     io::magick::save(logical::not_(output), options.arg("output.*"));

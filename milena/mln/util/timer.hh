@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,8 +49,11 @@ namespace mln
 
       timer();
 
+      // Explicit copy constructor (in most cases should not be
+      // used...).
+      explicit timer(const timer&);
+
       // Without impl.
-      timer(const timer&);
       void operator=(const timer&);
 
       ~timer();
@@ -99,6 +102,14 @@ namespace mln
     timer::timer()
     {
       reset();
+    }
+
+    inline
+    timer::timer(const timer& t)
+    {
+      running_ = t.running_;
+      start_ = t.start_;
+      time_ = t.time_;
     }
 
     inline

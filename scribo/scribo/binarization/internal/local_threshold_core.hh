@@ -127,7 +127,7 @@ namespace scribo
 	  mln_trace("scribo::binarization::internal::impl::generic::local_threshold_core");
 	  mln_precondition(exact(input).is_valid());
 
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().start_time_logging();
 
 	  int integral_scale_ratio = F::step;
 
@@ -148,7 +148,7 @@ namespace scribo
 							 sub_domains[2].first(),
 							 sub_domains[2].second());
 
-	  scribo::debug::logger().stop_local_time_logging("image integrale -");
+	  scribo::debug::logger().stop_time_logging("image integrale -");
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
 	  initialize(internal::debug_mean, input);
@@ -159,7 +159,7 @@ namespace scribo
 	  initialize(internal::debug_alphacond, input);
 #  endif // ! SCRIBO_LOCAL_THRESHOLD_DEBUG
 
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().start_time_logging();
 
 	  window_size /= integral_scale_ratio;
 	  if (window_size % 2)
@@ -171,7 +171,7 @@ namespace scribo
 					    window_size, integral_scale_ratio,
 					    f);
 
-	  scribo::debug::logger().stop_local_time_logging("Binarization -");
+	  scribo::debug::logger().stop_time_logging("Binarization -");
 
 	}
 

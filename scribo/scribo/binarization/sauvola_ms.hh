@@ -878,7 +878,7 @@ namespace scribo
 	  typedef image2d<mln::util::couple<double,double> > integral_t;
 //	  integral_t integral_sum_sum_2;
 
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().start_time_logging();
 
 	  // Subsampling from scale 1 to 2.
 	  {
@@ -891,8 +891,8 @@ namespace scribo
 	    sub_ima.append(fi.sub);
 	  }
 
-	  scribo::debug::logger().stop_local_time_logging("1. subsampling and integral -");
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().stop_time_logging("1. subsampling and integral -");
+	  scribo::debug::logger().start_time_logging();
 
 	  // Subsampling to scale 3 and 4.
 	  //
@@ -903,8 +903,8 @@ namespace scribo
 							 sub_domains[i].first(),
 							 sub_domains[i].second()));
 
-	  scribo::debug::logger().stop_local_time_logging("2. More subsampling -");
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().stop_time_logging("2. More subsampling -");
+	  scribo::debug::logger().start_time_logging();
 
 	  // Compute threshold images.
 	  image2d<int_u8> e_2;
@@ -963,8 +963,8 @@ namespace scribo
 						     integral_sum_sum_2);
 	  }
 
-	  scribo::debug::logger().stop_local_time_logging("3. Multi-scale processing -");
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().stop_time_logging("3. Multi-scale processing -");
+	  scribo::debug::logger().start_time_logging();
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -980,8 +980,8 @@ namespace scribo
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
-	  scribo::debug::logger().stop_local_time_logging("4. Influence Zone on Scale image -");
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().stop_time_logging("4. Influence Zone on Scale image -");
+	  scribo::debug::logger().start_time_logging();
 
 
 #  ifdef SCRIBO_LOCAL_THRESHOLD_DEBUG
@@ -1015,8 +1015,7 @@ namespace scribo
 	  image2d<bool>
 	    output = internal::multi_scale_binarization(input_1, e_2, t_ima, s);
 
-	  scribo::debug::logger().stop_local_time_logging("5. Final binarization -");
-	  scribo::debug::logger().start_local_time_logging();
+	  scribo::debug::logger().stop_time_logging("5. Final binarization -");
 
 	  return output;
 	}

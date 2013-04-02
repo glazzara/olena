@@ -95,12 +95,12 @@ int main(int argc, char *argv[])
   image2d<value::int_u8>
     input_1_gl = data::transform(input, mln::fun::v2v::rgb_to_luma<value::int_u8>());
 
-  scribo::debug::logger().start_local_time_logging();
+  scribo::debug::logger().start_time_logging();
 
   // Binarize
   image2d<bool> out = scribo::binarization::sauvola(input_1_gl, w, k);
 
-  scribo::debug::logger().stop_local_time_logging("Binarized in");
+  scribo::debug::logger().stop_time_logging("Binarized in");
 
   io::magick::save(out, options.arg("output.*"));
 

@@ -31,6 +31,7 @@
 #ifndef SCRIBO_CORE_LOGGER_HH
 # define SCRIBO_CORE_LOGGER_HH
 
+# include <stack>
 # include <iostream>
 # include <ctype.h>
 # include <mln/core/concept/image.hh>
@@ -139,24 +140,15 @@ namespace scribo
 
 	/*! \brief Time Logging
 
-	  This class provides two timers in order to performs
-	  benchmarks inside a program.
-
-	  Local time logging is meant to be used for benchmarking a
-	  small portion of code, whereas global time logging is meant
-	  to benchmark a whole program.
-
-	  They can be used both at the same time.
+	  This class provides timers in order to performs benchmarks
+	  inside a program.
 
 	  Stopping time logging will output the computed time if
 	  Verbose mode is higher or equal to #Time.
 	 */
 	/// @{
-	void start_local_time_logging();
-	void stop_local_time_logging(const std::string& time_title);
-
-	void start_global_time_logging();
-	void stop_global_time_logging(const std::string& time_title);
+	void start_time_logging();
+	void stop_time_logging(const std::string& time_title);
 	/// @}
 
 
@@ -170,6 +162,8 @@ namespace scribo
       private: // Methods
 	logger_();
 	logger_(const logger_&);
+
+	~logger_();
 
 	template <unsigned n, typename I>
 	void log_image_dispatch(const value::int_u<n>&,
@@ -209,8 +203,7 @@ namespace scribo
 	std::string verbose_prefix_;
 	std::ostream& stream_;
 
-	mln::util::timer t_local_;
-	mln::util::timer t_global_;
+	std::stack<mln::util::timer> t_locals_;
       };
 
     } // end of namespace scribo::debug::internal
@@ -264,6 +257,12 @@ namespace scribo
 	abort();
       }
 
+      inline
+      logger_::~logger_()
+      {
+	// If this is not True, then a timer has not been stopped!
+	mln_assertion(t_locals_.size() == 0);
+      }
 
       inline
       bool
@@ -410,37 +409,23 @@ namespace scribo
 
       inline
       void
-      logger_::start_local_time_logging()
+      logger_::start_time_logging()
       {
-	t_local_.restart();
+	t_locals_.push(mln::util::timer());
+	t_locals_.top().restart();
       }
 
 
       inline
       void
-      logger_::stop_local_time_logging(const std::string& time_title)
+      logger_::stop_time_logging(const std::string& time_title)
       {
-	t_local_.stop();
+	mln_assertion(! t_locals_.empty());
+
+	t_locals_.top().stop();
 	if (verbose_mode_ >= Time)
-	  std::cerr << time_title << " "  << t_local_ << "s" << std::endl;
-      }
-
-
-      inline
-      void
-      logger_::start_global_time_logging()
-      {
-	t_global_.restart();
-      }
-
-
-      inline
-      void
-      logger_::stop_global_time_logging(const std::string& time_title)
-      {
-	t_global_.stop();
-	if (verbose_mode_ >= Time)
-	  std::cerr << time_title << " "  << t_global_ << "s" << std::endl;
+	  std::cerr << time_title << " "  << t_locals_.top() << "s" << std::endl;
+	t_locals_.pop();
       }
 
 

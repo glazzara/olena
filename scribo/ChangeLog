@@ -1,3 +1,18 @@
+2013-04-02  Guillaume Lazzara  <lazzara@caroussel.lrde.epita.fr>
+
+	Improve time logging in Scribo.
+
+	* scribo/debug/logger.hh: Use a stack to handle several
+	simultaneous logs.
+
+	* scribo/binarization/sauvola_ms.hh: Fix an invalid time stop.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc: Rename time logging
+	functions.
+
 2013-03-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in scribo.
