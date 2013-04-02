@@ -1,3 +1,10 @@
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix component_set comparison.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh: Here.
+
 2013-04-02  Guillaume Lazzara  <lazzara@caroussel.lrde.epita.fr>
 
 	Improve time logging in Scribo.

@@ -619,11 +619,14 @@ namespace scribo
   bool
   operator==(const component_set<L>& lhs, const component_set<L>& rhs)
   {
+    if (lhs.id_() == rhs.id_())
+      return true;
+
     if (! (lhs.labeled_image() == rhs.labeled_image()))
-      std::cout << "comp.lbl" << std::endl;
+      return false;
 
     if (! (lhs.separators() == rhs.separators()))
-      std::cout << "comp.seps" << std::endl;
+      return false;
 
     if (! (lhs.nelements() == rhs.nelements()
 	   && lhs.labeled_image() == rhs.labeled_image()
@@ -632,10 +635,7 @@ namespace scribo
 
     for_all_comps(c, lhs)
       if (! (lhs(c) == rhs(c)))
-      {
-	std::cout << "comp.info" << std::endl;
 	return false;
-      }
 
     return true;
   }
