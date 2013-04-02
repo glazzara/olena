@@ -1,5 +1,9 @@
 2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/svg/simple_svg_1.0.0.hh: Remove.
+
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
