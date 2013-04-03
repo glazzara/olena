@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,6 +63,9 @@ namespace mln
 	card  = 2
       };
       typedef value::quant::low       quant;
+
+      static int min() { return 0; }
+      static int max() { return 1; }
 
       static const char* name() { return "bool"; }
     };

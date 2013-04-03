@@ -1,3 +1,7 @@
+2013-04-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/value/builtin/symbolics.hh: Add min() and max() for Boolean.
+
 2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/io/svg/simple_svg_1.0.0.hh: Remove.
