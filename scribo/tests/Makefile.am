@@ -23,6 +23,9 @@ EXTRA_DIST =				\
   img/alignment_3.pbm			\
   img/alignment_4.pbm			\
   img/comp_on_borders.pbm		\
+  img/lena_weven_hodd.pgm		\
+  img/lena_wodd_heven.pgm		\
+  img/lena_wodd_hodd.pgm		\
   img/lines_discontinued.pbm		\
   img/multi_scale.png			\
   img/phillip.pbm			\
@@ -38,6 +41,7 @@ EXTRA_DIST =				\
   img/text_to_group_and_clean.pbm	\
   img/the_valleys.pbm			\
   img/wildly.pbm
+
 
 SUBDIRS =		\
   binarization		\

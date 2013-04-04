@@ -1,3 +1,12 @@
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization tests.
+
+	* tests/Makefile.am: Add more files in EXTRA_DIST.
+	* tests/binarization/niblack.cc,
+	* tests/binarization/wolf.cc: Load reference file instead of
+	saving it.
+
 2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix component_set comparison.
