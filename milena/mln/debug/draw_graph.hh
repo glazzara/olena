@@ -71,12 +71,14 @@ namespace mln
     /*! \brief Draw an image \p ima from a mln::p_vertices \p pv.
 
 	Colors for vertices are defined through \p vcolor_f_. Colors
-        for edges are defined though \p ecolor_f_.
+        for edges are defined though \p ecolor_f_. Vertices are drawn
+        with squares of width \p vwidth.
 
        \param[in,out] ima       The image to be drawn.
        \param[in]     pv        The p_vertices which contains vertices positions.
-       \param[in]     vcolor_f_ A function returning a color value for vertices.
-       \param[in]     ecolor_f_ A function returning a color value for edges.
+       \param[in]     vcolor_f  A function returning a color value for vertices.
+       \param[in]     ecolor_f  A function returning a color value for edges.
+       \param[in]     vwidth    Width of the squares representing the vertices.
 
        \ingroup mlndebug
      */
@@ -104,8 +106,8 @@ namespace mln
 
        \param[in,out] ima       The image to be drawn.
        \param[in]     pv        The p_vertices which contains vertices positions.
-       \param[in]     vcolor_f_ A function returning a color value for vertices.
-       \param[in]     ecolor_f_ A function returning a color value for edges.
+       \param[in]     vcolor_f  A function returning a color value for vertices.
+       \param[in]     ecolor_f  A function returning a color value for edges.
 
        \ingroup mlndebug
      */
@@ -114,7 +116,7 @@ namespace mln
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<util::line_graph<G>, F>& pv,
-	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_);
+	       const Function<V>& vcolor_f, const Function<E>& ecolor_f);
 
 
 # ifndef MLN_INCLUDE_ONLY

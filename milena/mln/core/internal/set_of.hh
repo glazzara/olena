@@ -168,7 +168,7 @@ namespace mln
     };
 
 
-    /*! Print a set \p s into the output stream \p
+    /* Print a set \p s into the output stream \p
      *  ostr.
      *
      * \param[in,out] ostr An output stream.

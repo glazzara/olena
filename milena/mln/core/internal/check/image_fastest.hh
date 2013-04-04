@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,23 +50,21 @@ namespace mln
     namespace check
     {
 
-      /*!
-	\internal
-	\brief Statically checks the interface of fastest images.
-      */
+      /// \brief Statically checks the interface of fastest images.
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {
 
-	/// \brief Give the offset of the site \p p.
-	///
-	/// \param[in] p A site.
-	///
-	/// \warning This method is final.
-	///
-	/// \pre The image has to be initialized and to own the point \p p.
-	/// \post p == point_at_offset(result)
-	///
+	/*!
+	  \brief Give the offset of the site \p p.
+
+	  \param[in] p A site.
+
+	  \warning This method is final.
+
+	  \pre The image has to be initialized and to own the point \p p.
+	  \post p == point_at_offset(result)
+	*/
 	template <typename P>
 	unsigned
 	offset_of_point(const P& p) const;

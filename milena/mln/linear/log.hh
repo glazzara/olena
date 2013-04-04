@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,25 +45,45 @@ namespace mln
   {
 
     /*! \brief Laplacian of Gaussian.
+
+      LoG_5x5  (Cf. Sonka et al., pages 85-86).
+      This is also a "mexican hat".
+
       \ingroup mlnlinear
     */
-    /// \{
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_5x5(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 7x7  (Cf. Russ, p. 250).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_7x7(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 13x13  (Cf. Russ, p. 250).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_13x13(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 17x17  (Cf. Sonka et al., pages 85-86).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_17x17(const Image<I>& input);
-    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
 

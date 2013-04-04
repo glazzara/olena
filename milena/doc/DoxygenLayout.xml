@@ -22,7 +22,7 @@
     </tab>
     <tab type="examples" visible="yes" title="Examples" intro=""/>
     <tab type="user" url="@ref examples" title="Examples"/>
-    <tab type="user" url="@ref demos" title="Demos"/>
+    <tab type="user" url="http://caroussel.lrde.epita.fr/olena/demos" title="Demos"/>
     <tab type="user" url="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Publications" title="Publications"/>
   </navindex>
 

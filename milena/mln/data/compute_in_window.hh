@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,6 +49,12 @@ namespace mln
     /*! \brief Compute an accumulator for each image pixel values
      * using neighbor pixel values.
      *
+     * \param[in] a An accumulator.
+     * \param[in] input The input image.
+     * \param[in] win A window.
+     * \return An image with the accumulator results as value for each
+     * site.
+     *
      * \ingroup mlnaccucompute
      */
     template <typename A, typename I, typename W>
@@ -60,7 +66,9 @@ namespace mln
      *
      * \param[in] a A meta-accumulator.
      * \param[in] input The input image.
-     * \return The accumulator result.
+     * \param[in] win A window.
+     * \return An image with the accumulator results as value for each
+     * site.
      *
      * \ingroup mlnaccucompute
      */

@@ -45,80 +45,93 @@ namespace mln
     namespace pdf
     {
 
-      /**! Load a multiple page PDF document using libpoppler.
+      /**! \brief Load a multiple page PDF document using libpoppler.
 
-	  \param[out] arr       An array of images.
-	  \param[in]  filename  The name of the input file.
-	  \param[in]  dpi       Document resolution.
+	 \param[out] arr       An array of images.
+	 \param[in]  filename  The name of the input file.
+	 \param[in]  dpi       Document resolution.
 
-	  Page numbering starts from 0.
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
 		float dpi);
 
-      /**! Load a range of pages from a PDF document using libpoppler.
+      /**! \overload
 
-	  \param[out] arr       An array of images.
-	  \param[in]  filename  The name of the input file.
-	  \param[in]  first_page First page number.
-	  \param[in]  last_page Last page number.
-	  \param[in]  dpi       Document resolution.
+	 \brief Load a range of pages from a PDF document using
+	 libpoppler.
 
-	  Page numbering starts from 0.
+	 \param[out] arr       An array of images.
+	 \param[in]  filename  The name of the input file.
+	 \param[in]  first_page First page number.
+	 \param[in]  last_page Last page number.
+	 \param[in]  dpi       Document resolution.
+
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
 		int first_page, int last_page, float dpi);
 
 
-      /**! Load specific pages from a PDF document using libpoppler.
+      /**! \overload
 
-	  \param[out] arr       An array of images.
-	  \param[in]  filename  The name of the input file.
-	  \param[in]  pages     An array of pages numbers.
-	  \param[in]  dpi       Document resolution.
+	 \brief Load specific pages from a PDF document using
+	 libpoppler.
 
-	  Page numbering starts from 0.
+	 \param[out] arr       An array of images.
+	 \param[in]  filename  The name of the input file.
+	 \param[in]  pages     An array of pages numbers.
+	 \param[in]  dpi       Document resolution.
+
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
 		util::array<int> pages, float dpi);
 
-      /**! Load a specific page from a PDF document using libpoppler.
+      /**! \overload
 
-	  \param[out] ima       An image.
-	  \param[in]  filename  The name of the input file.
-	  \param[in]  page      The page number.
-	  \param[in]  dpi       Document resolution.
+	 \brief Load a specific page from a PDF document using
+	 libpoppler.
 
-	  Page numbering starts from 0.
+	 \param[out] ima       An image.
+	 \param[in]  filename  The name of the input file.
+	 \param[in]  page      The page number.
+	 \param[in]  dpi       Document resolution.
+
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(Image<I>& ima, const std::string& filename,
 		int page, float dpi);
 
 
-      /**! \overload Load a multiple page PDF document using libpoppler.
+      /**! \overload
 
-	  \param[out] arr       An array of images.
-	  \param[in]  filename  The name of the input file.
+	 \brief Load a multiple page PDF document using libpoppler.
 
-	  DPI resolution is set to 300.
-	  Page numbering starts from 0.
+	 \param[out] arr       An array of images.
+	 \param[in]  filename  The name of the input file.
+
+	 DPI resolution is set to 300.
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename);
 
-      /**! \overload Load specific pages from a PDF document using
-           libpoppler.
+      /**! \overload
 
-	  \param[out] arr       An array of images.
-	  \param[in]  filename  The name of the input file.
-	  \param[in]  pages     An array of pages numbers.
+	 \brief Load specific pages from a PDF document using
+         libpoppler.
 
-	  DPI resolution is set to 300.
-	  Page numbering starts from 0.
+	 \param[out] arr       An array of images.
+	 \param[in]  filename  The name of the input file.
+	 \param[in]  pages     An array of pages numbers.
+
+	 DPI resolution is set to 300.
+	 Page numbering starts from 0.
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,

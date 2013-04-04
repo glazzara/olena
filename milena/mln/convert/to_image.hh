@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -85,14 +86,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
-    inline
     mln_image_from_grid(mln_site(S)::grid, bool)
     to_image(const Site_Set<S>& pset_, unsigned border)
     {
       const S& pset = exact(pset_);
       mln_image_from_grid(mln_site(S)::grid, bool) ima;
       ima.init_(geom::bbox(pset).to_larger(border));
-      data::fill(ima, false);
+      mln::data::fill(ima, false);
       mln_piter(S) p(pset);
       for_all(p)
 	ima(p) = true;
@@ -100,7 +100,6 @@ namespace mln
     }
 
     template <typename W>
-    inline
     mln_image_from_grid(mln_site(W)::grid, bool)
     to_image(const Window<W>& win)
     {
@@ -112,7 +111,6 @@ namespace mln
     }
 
     template <typename W>
-    inline
     mln_image_from_grid(mln_site(W)::grid, mln_weight(W))
     to_image(const Weighted_Window<W>& w_win)
     {
@@ -124,7 +122,6 @@ namespace mln
     }
 
     template <typename N>
-    inline
     mln_image_from_grid(mln_site(N)::grid, bool)
     to_image(const Neighborhood<N>& nbh)
     {
@@ -133,7 +130,6 @@ namespace mln
     }
 
     template <typename T>
-    inline
     image1d<unsigned>
     to_image(const histo::array<T>& h)
     {

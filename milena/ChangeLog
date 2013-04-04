@@ -1,5 +1,28 @@
 2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Kill Doxygen warnings.
+
+	* apps/morphers/image2d-skel.hh
+
+	* doc/DoxygenLayout.xml: Fix a page reference.
+
+	* doc/examples.dox: New.
+
+	* mln/canvas/browsing/backdiagonal2d.hh: Switch to \code.
+
+	* mln/convert/to_image.hh: Remove useless inline keyword.
+
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/data/compute_in_window.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/io/pdf/load.hh: Fix documentation.
+
+	* mln/linear/log.hh: New documentation.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup concept documentation.
 
 	* doc/mln/convert.dox,
