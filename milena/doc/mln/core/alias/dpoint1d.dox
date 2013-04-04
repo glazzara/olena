@@ -1,0 +1,30 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  struct dpoint1d
+    : public dpoint<mln::grid::tick, def::coord>,
+      public internal::mutable_coord_impl_< 1, def::coord, dpoint1d >
+  {
+      /// Constructor without argument.
+      dpoint1d();
+
+      /// Constructor from an algebra vector.
+      template <typename C2>
+      dpoint1d(const algebra::vec<dim,C2>& v);
+
+      /// Constructor from coordinates.
+      dpoint1d(def::coord ind);
+
+      /// Construct a dpoint with coordinates (0).
+      dpoint1d(const literal::zero_t&);
+
+      /// Construct a dpoint with coordinates (1).
+      dpoint1d(const literal::one_t&);
+
+      /// Constructor; coordinates are set by function \p f.
+      template <typename F>
+      dpoint1d(const Function_v2v<F>& f);
+  };
+}

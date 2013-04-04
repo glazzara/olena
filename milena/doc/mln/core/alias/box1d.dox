@@ -1,0 +1,25 @@
+// This file is necessary to help doxygen finding all the methods
+// related to typedefs.
+
+namespace mln
+{
+   class box1d : public mln::box<mln::point1d>
+   {
+   public:
+     /// \brief Constructor without argument.
+     box1d();
+
+     /*! \brief Constructor of a box going from \p pmin to \p pmax.
+
+         \sa mln::make::box1d.
+     */
+     box1d(const point1d& pmin, const point1d& pmax);
+
+     /*! \brief Construct a box1d with \p nrows rows and \p ncols columns.
+
+          The pmin() site is set to mln::point1d(0,0).
+          \sa mln::make::box1d.
+     */
+     box1d(mln_coord(mln::point1d) ncols);
+   };
+}

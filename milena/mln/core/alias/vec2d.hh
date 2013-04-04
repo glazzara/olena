@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,11 +37,30 @@
 namespace mln
 {
 
-  /// 2D vector with float coordinates.
-  typedef algebra::vec<2u,float> vec2d_f;
+  /*!
+    \class vec2d_f
+    \headerfile <>
 
-  /// 2D vector with double coordinates.
+    \brief 2D vector with float coordinates.
+
+    \ingroup mlnalgebratypes
+  */
+  /// \cond ALIAS
+  typedef algebra::vec<2u,float> vec2d_f;
+  /// \endcond
+
+
+  /*!
+    \class vec2d_f
+    \headerfile <>
+
+    \brief 2D vector with double coordinates.
+
+    \ingroup mlnalgebratypes
+  */
+  /// \cond ALIAS
   typedef algebra::vec<2u,double> vec2d_d;
+  /// \endcond
 
 
 } // end of namespace mln

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,72 +46,144 @@ namespace mln
   | 2-d plane 1-complex aliases.  |
   `------------------------------*/
 
-  /// \brief Type alias for a binary image based on a
-  /// 1-complex, where 0-faces are located at discrete (integer)
-  /// 2-dimensional points.
+  /*!
+    \class bin_1complex_image2d
+    \headerfile <>
+
+    \brief Type alias for a binary image based on a
+    1-complex, where 0-faces are located at discrete (integer)
+    2-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<1, mln::discrete_plane_1complex_geometry, bool>
   bin_1complex_image2d;
+  /// \endcond
 
-  /// \brief Type alias for an 8-bit gray-level image based on a
-  /// 1-complex, where 0-faces are located at discrete (integer)
-  /// 2-dimensional points.
+  /*!
+    \class int_u8_1complex_image2d
+    \headerfile <>
+
+    \brief Type alias for an 8-bit gray-level image based on a
+    1-complex, where 0-faces are located at discrete (integer)
+    2-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<1, mln::discrete_plane_1complex_geometry,
 		     mln::value::int_u8>
   int_u8_1complex_image2d;
+  /// \endcond
 
 
   /*------------------------------.
   | 2-d plane 2-complex aliases.  |
   `------------------------------*/
 
-  /// \brief Type alias for an 8-bit gray-level image based on a
-  /// 2-complex, where 0-faces are located at discrete (integer)
-  /// 2-dimensional points.
+  /*!
+    \class int_u8_2complex_image2d
+    \headerfile <>
+
+    \brief Type alias for an 8-bit gray-level image based on a
+    2-complex, where 0-faces are located at discrete (integer)
+    2-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::discrete_plane_2complex_geometry,
 		     mln::value::int_u8>
   int_u8_2complex_image2d;
+  /// \endcond
 
 
   /*------------------------------.
   | 3-d space 2-complex aliases.  |
   `------------------------------*/
 
-  /// \brief Type alias for a binary image based on a 2-complex, where
-  /// 0-faces are located at floating-point 3-dimensional points.
+  /*!
+    \class bin_2complex_image3df
+    \headerfile <>
+
+    \brief Type alias for a binary image based on a 2-complex, where
+    0-faces are located at floating-point 3-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, bool>
   bin_2complex_image3df;
+  /// \endcond
 
-  /// \brief Type alias for an 8-bit gray-level image based on a
-  /// 2-complex, where 0-faces are located at floating-point
-  /// 3-dimensional points.
+  /*!
+    \class int_u8_2complex_image3df
+    \headerfile <>
+
+    \brief Type alias for an 8-bit gray-level image based on a
+    2-complex, where 0-faces are located at floating-point
+    3-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, mln::value::int_u8>
   int_u8_2complex_image3df;
+  /// \endcond
 
-  /// \brief Type alias for a gray-level image based on a 2-complex,
-  /// where 0-faces are located at floating-point 3-dimensional
-  /// points.
+  /*!
+    \class unsigned_2complex_image3df
+    \headerfile <>
+
+    \brief Type alias for a gray-level image based on a 2-complex,
+    where 0-faces are located at floating-point 3-dimensional
+    points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, unsigned>
   unsigned_2complex_image3df;
+  /// \endcond
 
-  /// \brief Type alias for a floating-point image based on a
-  /// 2-complex, where 0-faces are located at floating-point
-  /// 3-dimensional points.
+  /*!
+    \class float_2complex_image3df
+    \headerfile <>
+
+    \brief Type alias for a floating-point image based on a
+    2-complex, where 0-faces are located at floating-point
+    3-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, float>
   float_2complex_image3df;
+  /// \endcond
 
-  /// \brief Type alias for a (3x8-bit) RGB image based on a
-  /// 2-complex, where 0-faces are located at floating-point
-  /// 3-dimensional points.
+  /*!
+    \class rgb8_2complex_image3df
+    \headerfile <>
+
+    \brief Type alias for a (3x8-bit) RGB image based on a
+    2-complex, where 0-faces are located at floating-point
+    3-dimensional points.
+
+    \ingroup modimageconcrete
+  */
+  /// \cond ALIAS
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, mln::value::rgb8>
   rgb8_2complex_image3df;
+  /// \endcond
 
 } // end of namespace mln
 

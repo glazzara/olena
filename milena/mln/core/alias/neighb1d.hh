@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,12 +40,67 @@
 namespace mln
 {
 
-  /// \brief Type alias for a neighborhood defined on the 1D square
-  /// grid with integer coordinates.
-  ///
-  /// \ingroup modneighb1d
-  //
+  /*!
+    \class neighb1d
+    \headerfile <>
+
+    \brief Type alias for a neighborhood defined on the 1D square
+    grid with integer coordinates.
+
+    A neigh1d can be constructed from a window1d. Compared to a
+    window, a neighborhood does not include the central point.
+
+    \verbatim
+    window1d      neighb1d
+     x x x   -->   x o x
+    \endverbatim
+
+    Common 1D neighborhoods are predefined and can be used directly:
+    mln::c2(). An exhaustive list can be found in section \ref
+    modneighb1d.
+
+    The list of dpoint1d included in a neighb1d is accessible from
+    window1d::std_vector() method or simply by iterating over this
+    list:
+
+    \code
+    neighb1d nbh = c2();
+    for (int i = 0; i < nbh.win().size(); ++i)
+      std::cout << nbh.win().dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to n-iterators, as follows:
+
+    \code
+    point1d p(2);
+    neighb1d nbh = c2();
+    mln_niter(neighb1d) n(nbh, p);
+    for_all(n)
+      // n is a point1d, neighbor of p.
+      std::cout << n << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image1d<bool> ima(4);
+    neighb1d nbh = c2();
+    mln_piter(image1d<bool>) p(ima.domain());
+    mln_niter(neighb1d) n(nbh, p);
+    for_all(p)
+      for_all(n)
+        // n is a point1d, neighbor of the current p.
+        std::cout << n << std::endl;
+    \endcode
+
+    \sa make::neighb1d, dpoint1d, window1d
+
+    \ingroup modneighb1d
+  */
+  /// \cond ALIAS
   typedef neighb<window1d> neighb1d;
+  /// \endcond
 
 
   /// \brief 2-connectivity neighborhood on the 1D grid.
@@ -53,8 +109,9 @@ namespace mln
       o x o
     \endverbatim
 
-
     \return A neighb1d.
+
+    \sa neighb1d
 
     \ingroup modneighb1d
   */

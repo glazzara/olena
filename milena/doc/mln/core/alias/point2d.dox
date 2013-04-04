@@ -1,0 +1,61 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  struct point2d
+     : public point<mln::grid::square, mln::def::coord>,
+       // We must add this inheritance here to help doxygen finding
+       // the right specialization.
+       public internal::mutable_coord_impl_< 2, C, E >
+  {
+      /// Constructor without argument.
+      point2d();
+
+      /// Construct a 2D point from an algebra vector.
+      template <typename C2>
+      point2d(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct a 2D point from an algebra vector.
+      point2d(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct a 2D point at row \p row and column \p col.
+      point2d(mln::def::coord row, mln::def::coord col);
+
+      /// \brief Construct a 2D point at (0,0).
+      point2d(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point2d(const Function_v2v<F>& f);
+  };
+
+
+  struct point2df
+        : public point<mln::grid::square, mln::def::coordf>,
+	  // We must add this inheritance here to help doxygen finding
+          // the right specialization.
+	  public internal::mutable_coord_impl_< 2, C, E >
+  {
+      /// Constructor without argument.
+      point2df();
+
+      /// Construct a 2D point from an algebra vector.
+      template <typename C2>
+      point2df(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct a 2D point from an algebra vector.
+      point2df(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct a 2D point at row \p row and column \p col.
+      point2df(mln::def::coord row, mln::def::coord col);
+
+      /// \brief Construct a 2D point at (0,0).
+      point2df(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point2df(const Function_v2v<F>& f);
+  };
+
+}

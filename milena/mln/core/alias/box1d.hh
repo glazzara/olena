@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,13 +40,41 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 1D square grid with
-   * integer coordinates.
-   *
-   * \see mln::win::rectangle1d.
-   */
-  typedef box<mln::point1d> box1d;
+  /*!
+    \class mln::box1d
+    \headerfile <>
 
+    \brief A box defined on the 1D square grid with integer
+    coordinates.
+
+    This class is a site set of mln::point1d. It represents a rectangle of
+    mln::point1d which is usually used as domain for a mln::image1d.
+
+    mln::box1d is a typedef of box<mln::point1d>.
+
+    Iteration over the mln::point1d of a mln::box1d relies on p-iterators
+    and it can be performed using the following code:
+
+    \code
+    box1d b(3);
+    mln_piter(box1d) p(b);
+    for_all(p)
+      std::cout << p << std::endl;
+    \endcode
+
+    Common sites can be retrieved through pmin(), pmax() and pcenter().
+    \verbatim
+        pmin    pcenter    pmax
+    -----X--------X---------X-------->
+    \endverbatim
+
+    \sa mln::make::box1d.
+
+    \ingroup modsitesetbasic
+  */
+  /// \cond ALIAS
+  typedef box<mln::point1d> box1d;
+  /// \endcond
 
 } // end of namespace mln
 

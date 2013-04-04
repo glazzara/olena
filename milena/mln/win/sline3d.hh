@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,11 @@ namespace mln
   namespace win
   {
 
-    /*! \brief Depth line window defined on the 3D cubic grid.
+    /*!
+      \class sline3d
+      \headerfile <>
+
+      \brief Depth line window defined on the 3D cubic grid.
 
        An sline3d is centered and symmetric; so its height and its
        width are 1 and its depth is odd.
@@ -65,7 +70,9 @@ namespace mln
 
        \ingroup modwin3d
      */
+    /// \cond ALIAS
     typedef line<grid::cube, 0, def::coord> sline3d;
+    /// \endcond
 
   } // end of namespace mln::win
 

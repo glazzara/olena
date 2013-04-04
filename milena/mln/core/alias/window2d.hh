@@ -40,12 +40,57 @@
 namespace mln
 {
 
-  /// \brief Type alias for a window with arbitrary shape, defined on
-  /// the 2D square grid with integer coordinates.
-  ///
-  /// \ingroup modwin2d
-  //
+  /*!
+    \class window2d
+    \headerfile <>
+
+    \brief Type alias for a window with arbitrary shape, defined on
+    the 2D square grid with integer coordinates.
+
+    Common 2D windows are predefined and can be used directly:
+    win_c4p(), win_c8p(). See section \ref modwin2d.
+
+    The list of dpoint2d included in a window2d is accessible from
+    std_vector() method or simply by iterating over this list:
+
+    \code
+    window2d win = win_c4p();
+    for (int i = 0; i < win.size(); ++i)
+      std::cout << win.dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to q-iterators, as follows:
+
+    \code
+    point2d p(2,2);
+    window2d win = win_c4p();
+    mln_qiter(window2d) q(win, p);
+    for_all(q)
+      // q is a point2d, neighbor of p.
+      std::cout << q << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image2d<bool> ima(4,4);
+    window2d win = win_c4p();
+    mln_piter(image2d<bool>) p(ima.domain());
+    mln_qiter(window2d) q(win, p);
+    for_all(p)
+      for_all(q)
+        // q is a point2d, neighbor of the current p.
+        std::cout << q << std::endl;
+    \endcode
+
+    \sa dpoint2d, neighb2d
+
+    \ingroup modwin2d
+  */
+  /// \cond ALIAS
   typedef window<mln::dpoint2d> window2d;
+  /// \endcond
 
   /// \brief 4-connectivity window on the 2D grid, including the
   /// center.

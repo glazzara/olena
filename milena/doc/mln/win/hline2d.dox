@@ -1,0 +1,17 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace win
+  {
+    struct hline2d
+    	   : line<grid::square, 1, def::coord>
+    {
+      /// Constructor.
+      /// \param[in] length Length of the line.
+      /// \pre \p length is odd.
+      hline2d(unsigned length);
+    };
+  }
+}

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,11 @@ namespace mln
   namespace win
   {
 
-    /*! \brief Segment window defined on the 1D grid.
+    /*!
+      \class segment1d
+      \headerfile <>
+
+      \brief Segment window defined on the 1D grid.
 
        An segment1d is centered and symmetric; so
        its height (length) is odd.
@@ -53,7 +58,9 @@ namespace mln
 
        \ingroup modwin1d
      */
+    /// \cond ALIAS
     typedef line<grid::tick, 0, def::coord> segment1d;
+    /// \endcond
 
   } // end of namespace mln::win
 

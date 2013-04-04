@@ -1,0 +1,18 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class p_run2d
+  	: public p_run<point2d>
+  {
+    /// Constructor without argument.
+    p_run2d();
+
+    /// Constructor.
+    p_run2d(const point2d& start, unsigned short len);
+
+    /// Constructor.
+    p_run2d(const point2d& start, const point2d& end);
+  };
+}

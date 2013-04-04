@@ -1,0 +1,48 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class vec2d_f
+  	: public algebra::vec<2u,float>
+  {
+  public:
+      vec2d_f();
+
+      /// Construct a vector set to (0,0).
+      vec2d_f(const literal::zero_t&);
+
+      /// Construct a vector set to (0,0).
+      vec2d_f(const literal::origin_t&);
+
+      /// Construct copy of another vector.
+      vec2d_f(const vec<2u, float>& rhs);
+
+      /// Construct copy of another vector encoded with a different
+      type.
+      template <typename U>
+      vec2d_f(const vec<2u, U>& rhs);
+  };
+
+
+  class vec2d_d
+  	: public algebra::vec<2u,double> vec2d_d
+  {
+  public:
+      vec2d_d();
+
+      /// Construct a vector set to (0,0).
+      vec2d_d(const literal::zero_t&);
+
+      /// Construct a vector set to (0,0).
+      vec2d_d(const literal::origin_t&);
+
+      /// Construct copy of another vector.
+      vec2d_d(const vec<2u, double>& rhs);
+
+      /// Construct copy of another vector encoded with a different
+      type.
+      template <typename U>
+      vec2d_d(const vec<2u, U>& rhs);
+  };
+}

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,13 +43,27 @@
 namespace mln
 {
 
-  /// Type alias for a point defined on the 1D ruler with integer
-  /// coordinates.
-  typedef point<grid::tick, def::coord> point1d;
+  /*!
+    \class point1d
+    \headerfile <>
 
-  /// Type alias for a point defined on the 1D ruler with
-  /// floating-point coordinates.
+    \brief Point defined on the 1D ruler grid with integer
+    coordinates.
+  */
+  /// \cond ALIAS
+  typedef point<grid::tick, def::coord> point1d;
+  /// \endcond
+
+  /*!
+    \class point1df
+    \headerfile <>
+
+    \brief Point defined on the 1D ruler grid with floating-point
+    coordinates.
+  */
+  /// \cond ALIAS
   typedef point<grid::tick, def::coordf> point1df;
+  /// \endcond
 
 
   namespace internal
@@ -57,6 +71,7 @@ namespace mln
 
     // Specialization.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl< const point<grid::tick, C>, E >
     {
@@ -75,6 +90,7 @@ namespace mln
 
     // Specialization for point<M,C>.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl<       point<grid::tick, C>, E > :
            subject_impl< const point<grid::tick, C>, E >

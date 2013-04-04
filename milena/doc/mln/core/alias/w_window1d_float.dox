@@ -1,0 +1,12 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  struct w_window1d_float
+  	: public w_window<dpoint1d, float>
+  {
+    /// Constructor without argument.
+    w_window1d_float();
+  }
+}

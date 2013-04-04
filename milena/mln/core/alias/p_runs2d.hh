@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,8 +39,17 @@
 namespace mln
 {
 
-  /// Type alias for a set of runs of 2d points.
+  /*!
+    \class p_runs2d
+    \headerfile <>
+
+    \brief Type alias for a set of runs of 2d points.
+
+    \ingroup modsitesetbasic
+  */
+  /// \cond ALIAS
   typedef p_set_of<p_run2d> p_runs2d;
+  /// \endcond
 
 
 } // end of namespace mln

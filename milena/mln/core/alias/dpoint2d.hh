@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -39,9 +39,32 @@
 namespace mln
 {
 
-  /// Type alias for a delta-point defined on the 2D square
-  /// grid with integer coordinates.
+  /*!
+    \class dpoint2d
+    \headerfile <>
+
+    \brief Type alias for a delta-point defined on the 2D square grid
+    with integer coordinates.
+
+    This class stored relative positions of a site.  It is meant to be
+    used with point2d to compute a new point2d.
+
+    \code
+    point2d p(2,2);
+    dpoint2d up(-1,0);
+
+    dpoint2d p_up = p + up;
+    // p_up = point2d(1,2);
+    \endcode
+
+    dpoint2d are also used in window2d to store the relative
+    neighboors.
+
+    \sa point2d, window2d
+  */
+  /// \cond ALIAS
   typedef dpoint<mln::grid::square, mln::def::coord> dpoint2d;
+  /// \endcond
 
 
 } // end of namespace mln
@@ -52,20 +75,23 @@ namespace mln
 namespace mln
 {
 
-  /// Definition of a shortcut for delta point in 2d.
-  /// \{
-
+  /// \brief Shortcut for delta point in 2d. dpoint2d(+1,0)
   extern const dpoint2d up;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(-1,0)
   extern const dpoint2d down;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(0,-1)
   extern const dpoint2d left;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(0,+1)
   extern const dpoint2d right;
 
+  /// \brief Shortcut for delta point in 2d. dpoint2d(-1,-1)
   extern const dpoint2d up_left;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(-1,+1)
   extern const dpoint2d up_right;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(+1,-1)
   extern const dpoint2d down_left;
+  /// \brief Shortcut for delta point in 2d. dpoint2d(+1,+1)
   extern const dpoint2d down_right;
-
-  /// \}
 
 
 

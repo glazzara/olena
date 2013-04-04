@@ -1,0 +1,17 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace win
+  {
+    struct sphere3d
+    	   : ball<grid::cube, def::coord>
+    {
+      /// Constructor.
+      /// \param[in] diameter Diameter of the sphere.
+      /// \pre \p diameter is odd.
+      sphere3d(unsigned diameter);
+    };
+  }
+}

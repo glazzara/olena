@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,11 +37,29 @@
 namespace mln
 {
 
-  /// 3D vector with float coordinates.
-  typedef algebra::vec<3u,float> vec3d_f;
+  /*!
+    \class vec3d_f
+    \headerfile <>
 
-  /// 3D vector with double coordinates.
+    \brief 3D vector with float coordinates.
+
+    \ingroup mlnalgebratypes
+  */
+  /// \cond ALIAS
+  typedef algebra::vec<3u,float> vec3d_f;
+  /// \endcond
+
+  /*!
+    \class vec3d_f
+    \headerfile <>
+
+    \brief 3D vector with double coordinates.
+
+    \ingroup mlnalgebratypes
+  */
+  /// \cond ALIAS
   typedef algebra::vec<3u,double> vec3d_d;
+  /// \endcond
 
 
 } // end of namespace mln
