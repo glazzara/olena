@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,20 +44,25 @@ namespace mln
   template <typename E> struct Point;
 
 
-  // Point category flag type.
+  /// \cond INTERNAL_API
+  /// Point category flag type.
   template <>
   struct Point<void>
   {
     typedef Point_Site<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation of point classes.
-   *
-   * A point is an element of a space.
-   *
-   * For instance, mln::point2d is the type of elements defined on the
-   * discrete square grid of the 2D plane.
+  /*!
+    \brief Base class for implementation of point classes.
+
+    A point is an element of a space.
+
+    For instance, mln::point2d is the type of elements defined on the
+    discrete square grid of the 2D plane.
+
+    \ingroup modconcepts
    */
   template <typename P>
   struct Point : public Point_Site<P>

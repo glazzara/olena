@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -45,7 +45,7 @@ namespace mln
   template <typename E> struct Gdpoint;
 
 
-
+  /// \cond INTERNAL_API
   namespace trait
   {
 
@@ -80,21 +80,23 @@ namespace mln
     };
 
   } // end of namespace mln::trait
+  /// \endcond
 
 
-
-  /*!
-    \internal
-    \brief Delta point site category flag type.
-  */
+  /// \cond INTERNAL_API
+  /// \brief Delta point site category flag type.
   template <>
   struct Gdpoint<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// FIXME: Doc!
+  /*!
+    \brief Grid point concept.
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Gdpoint : public Object<E>
   {
@@ -137,7 +139,10 @@ namespace mln
   operator*(const Gdpoint<D>& lhs, const value::Scalar<S>& rhs);
 
 
-  /// \internal Conversion: gdpoint -> mln_site
+  /*!
+    \brief Conversion: gdpoint -> mln_site
+    \ingroup fromto
+  */
   template <typename D>
   void
   from_to_(const Gdpoint<D>& from, mln_site(D)& to);

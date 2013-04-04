@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -71,18 +71,24 @@ namespace mln
   template <typename E> struct Image;
 
 
-  // Window category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Window category flag type.
   template <>
   struct Window<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation classes that are windows.
-  ///
-  /// \see mln::doc::Window for a complete documentation of this class
-  /// contents.
+  /*!
+    \brief Base class for implementation classes that are windows.
+
+    A window is the definition of a set of points located around a
+    central point.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Window : public Object<E>
   {
@@ -111,21 +117,29 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const Window<W>& win);
 
 
-  /// \internal Conversion: window -> image
+  /*!
+    \brief Conversion: window -> image
+    \ingroup fromto
+  */
   template <typename W, typename I>
   void
   from_to_(const Window<W>& from, Image<I>& to);
 
 
   // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   offsets_wrt(const Image<I>& ima, const Window<W>& win);
 
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   positive_offsets_wrt(const Image<I>& ima, const Window<W>& win);
 
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   negative_offsets_wrt(const Image<I>& ima, const Window<W>& win);

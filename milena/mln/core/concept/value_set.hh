@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,18 +40,20 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Value_Set;
 
-  // Value_Set category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Value_Set category flag type.
   template <>
   struct Value_Set<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of sets of values.
-   *
-   * \see mln::doc::Value_Set for a complete documentation of this
-   * class contents.
+  /*!
+    \brief Base class for implementation classes of sets of values.
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Value_Set : public Object<E>
@@ -76,6 +78,7 @@ namespace mln
   };
 
 
+  /// \relates mln::Value_Set
   template <typename E>
   std::ostream& operator<<(std::ostream& ostr, const Value_Set<E>& vs);
 
@@ -89,7 +92,7 @@ namespace mln
     typedef mln_value(E) value;
     typedef mln_fwd_viter(E) fwd_viter;
     typedef mln_bkd_viter(E) bkd_viter;
-    
+
     bool (E::*m1)(const value&) const = & E::has;
     (void) m1;
     value (E::*m2)(unsigned) const = & E::operator[];

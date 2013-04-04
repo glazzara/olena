@@ -1,0 +1,6 @@
+/*! \defgroup modconcepts Concepts
+ *
+ * \brief All the concepts in Milena.
+ *
+ * \ingroup modtypes
+ */

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,14 +39,14 @@
 namespace mln
 {
 
-  /*! \brief Base class for the implementation of pixel iterator
-   *  classes.
-   *
-   * An iterator on pixels is an iterator that is bound to a
-   * particular image and that browses over a set of image pixels.
-   *
-   * \see mln::doc::Pixel_Iterator for a complete documentation of
-   * this class contents.
+  /*!
+    \brief Base class for the implementation of pixel iterator
+    classes.
+
+    An iterator on pixels is an iterator that is bound to a
+    particular image and that browses over a set of image pixels.
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Pixel_Iterator : public Iterator<E>,

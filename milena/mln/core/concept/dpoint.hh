@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2007, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -42,16 +42,17 @@ namespace mln
   template <typename E> struct Dpoint;
 
 
-  // Dpoint category flag type.
+  /// \cond INTERNAL_API
+  /// Dpoint category flag type.
   template <>
   struct Dpoint<void>
   {
     typedef Delta_Point_Site<void> super;
   };
+  /// \endcond
 
 
   /*!
-    \internal
     \brief Base class for implementation of delta-point classes.
 
     A delta-point is a vector defined by a couple of points.
@@ -59,8 +60,7 @@ namespace mln
     Given two points, A and B, the vector AB is mapped into the
     delta-point D = AB.  Practically one can write: D = B - A.
 
-    \see mln::doc::Dpoint for a complete documentation of this class
-    contents.
+    \ingroup modconcepts
   */
   template <typename E>
   struct Dpoint : public Delta_Point_Site<E>

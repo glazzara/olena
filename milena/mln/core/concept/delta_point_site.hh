@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2007, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,7 +44,7 @@ namespace mln
   template <typename E> struct Delta_Point_Site;
 
 
-
+  /// \cond INTERNAL_API
   namespace trait
   {
 
@@ -63,23 +63,22 @@ namespace mln
     };
 
   } // end of namespace mln::trait
+  /// \endcond
 
 
-
-  /*!
-    \internal
-    \brief Delta point site category flag type.
-  */
+  /// \cond INTERNAL_API
+  /// \brief Delta point site category flag type.
   template <>
   struct Delta_Point_Site<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
   /*!
-    \internal
     \brief FIXME: Doc!
+    \ingroup modconcepts
   */
   template <typename E>
   struct Delta_Point_Site : public Object<E>

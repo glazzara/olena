@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,22 +44,23 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Site_Proxy;
 
-
-  /*!
-    \internal
-    \brief Site_Proxy category flag type.
-  */
+  /// \cond INTERNAL_API
+  /// \brief Site_Proxy category flag type.
   template <>
   struct Site_Proxy<void>
   {
     typedef Proxy<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "site proxy".
-   *
-   * FIXME: Explain...
+  /*!
+    \brief Base class for implementation classes of the notion of
+    "site proxy".
+
+    FIXME: Explain...
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Site_Proxy : public Proxy<E>

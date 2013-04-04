@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -46,23 +46,24 @@ namespace mln
   template <typename E> struct Function_vv2b;
 
 
-  /*!
-    \internal
-    \brief Function category flag type.
-  */
+
+  /// \cond INTERNAL_API
+  /// \brief Function category flag type.
   template <>
   struct Function<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// \brief Base class for implementation of function-objects.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \ingroup modfun
-  //
+  /*!
+    \brief Base class for implementation of function-objects.
+
+    The parameter \a E is the exact type.
+
+    \ingroup modfun modconcepts
+  */
   template <typename E>
   struct Function : public Object<E>
   {
@@ -87,8 +88,10 @@ namespace mln
   | Nil -> Value.  |
   `---------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Function_n2v<void> { typedef Function<void> super; };
+  /// \endcond
 
 
   /// \brief Base class for implementation of function-objects from
@@ -112,8 +115,10 @@ namespace mln
   | Value -> Value.  |
   `-----------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Function_v2v<void> { typedef Function<void> super; };
+  /// \endcond
 
 
   /// \brief Base class for implementation of function-objects from
@@ -138,8 +143,10 @@ namespace mln
   | Value -> bool.  |
   `----------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Function_v2b<void> { typedef Function_v2v<void> super; };
+  /// \endcond
 
 
   /// \brief Base class for implementation of function-objects from a
@@ -165,8 +172,10 @@ namespace mln
   | (Value, Value) -> Value.  |
   `--------------------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Function_vv2v<void> { typedef Function<void> super; };
+  /// \endcond
 
 
   /// \brief Base class for implementation of function-objects from a
@@ -190,8 +199,10 @@ namespace mln
   | (Value, Value) -> Boolean.|
   `--------------------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Function_vv2b<void> { typedef Function<void> super; };
+  /// \endcond
 
 
   /// \brief Base class for implementation of function-objects from a

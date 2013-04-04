@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,18 +40,19 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Literal;
 
-  // Literal category flag type.
+  /// \cond INTERNAL_API
+  /// Literal category flag type.
   template <>
   struct Literal<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of literals.
-   *
-   * \see mln::doc::Literal for a complete documentation of this class
-   * contents.
+  /*!
+    \brief Base class for implementation classes of literals.
+    \ingroup modconcepts
    */
   template <typename E>
   struct Literal : public Object<E>

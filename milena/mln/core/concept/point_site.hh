@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,7 @@ namespace mln
   template <typename E> struct Point_Site;
 
 
-
+  /// \cond INTERNAL_API
   namespace trait
   {
 
@@ -71,37 +72,41 @@ namespace mln
     };
 
   } // end of namespace mln::trait
+  /// \endcond
 
 
-
-
+  /// \cond INTERNAL_API
   /// Point site category flag type.
   template <>
   struct Point_Site<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "point site".
-   *
-   * A point site ("psite" for short) is an object that allows an
-   * efficient access to data associated with a point.  A point site
-   * is either a point or designates a point.
-   *
-   * When a point site is not really a point, it is automatically
-   * convertible to the point it designates.
-   *
-   *
-   * Let us take the example of a 2D image encoded as an array of runs
-   * of values.  With a point, a pair (row index, column index),
-   * retrieving the corresponding pixel value would mean to browse the
-   * array of runs to find the value location.  That would not be
-   * efficient.  Conversely, a point site dedicated to this image
-   * structure allows for value access in contant time; precisely the
-   * proper point site is a pair (index of run, index within the run).
-   */
+  /*!
+    \brief Base class for implementation classes of the notion of
+    "point site".
+
+    A point site ("psite" for short) is an object that allows an
+    efficient access to data associated with a point.  A point site
+    is either a point or designates a point.
+
+    When a point site is not really a point, it is automatically
+    convertible to the point it designates.
+
+
+    Let us take the example of a 2D image encoded as an array of runs
+    of values.  With a point, a pair (row index, column index),
+    retrieving the corresponding pixel value would mean to browse the
+    array of runs to find the value location.  That would not be
+    efficient.  Conversely, a point site dedicated to this image
+    structure allows for value access in contant time; precisely the
+    proper point site is a pair (index of run, index within the run).
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Point_Site : public Object<E>
   {
@@ -157,7 +162,7 @@ namespace mln
    * topology and with the same type of coordinates; otherwise this
    * test does not compile.
    *
-   * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp. 
+   * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp.
    *
    * \return A delta point (temporary object).
    *

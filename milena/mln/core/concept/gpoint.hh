@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,7 +47,7 @@ namespace mln
   template <typename E> struct Gpoint;
 
 
-
+  /// \cond INTERNAL_API
   namespace trait
   {
 
@@ -95,23 +95,29 @@ namespace mln
     };
 
   } // end of namespace mln::trait
+  /// \endcond
 
 
-
-  // Gpoint category flag type.
+  /// \cond INTERNAL_API
+  /// Gpoint category flag type.
   template <>
   struct Gpoint<void>
   {
     typedef Site<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation of point classes.
-  ///
-  /// A point is an element of a space.
-  ///
-  /// For instance, mln::point2d is the type of elements defined on the
-  /// discrete square grid of the 2D plane.
+  /*!
+    \brief Base class for implementation of point classes.
+
+    A point is an element of a space.
+
+    For instance, mln::point2d is the type of elements defined on the
+    discrete square grid of the 2D plane.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Gpoint : public Site<E>
   {

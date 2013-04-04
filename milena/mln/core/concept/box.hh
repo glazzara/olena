@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,12 +38,11 @@ namespace mln
 {
 
   /*! \brief Base class for implementation classes of boxes.
-   *
-   * Boxes are particular site sets useful to bound any set of
-   * sites defined on a regular grid.
-   *
-   * \see mln::doc::Box for a complete documentation of this class
-   * contents.
+
+     Boxes are particular site sets useful to bound any set of
+     sites defined on a regular grid.
+
+     \ingroup modconcepts
    */
   template <typename E>
   struct Box : public Site_Set<E>

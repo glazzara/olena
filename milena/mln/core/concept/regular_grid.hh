@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,10 @@
 namespace mln
 {
 
-  /// Base class for implementation classes of regular grids.
+  /*!
+    \brief Base class for implementation classes of regular grids.
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Regular_Grid : public Mesh<E>
   {

@@ -1,5 +1,45 @@
 2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup concept documentation.
+
+	* doc/mln/convert.dox,
+	* doc/mln/core/concept/concept.dox,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/browsing.hh,
+	* mln/core/concept/delta_point_site.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/literal.hh,
+	* mln/core/concept/mesh.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/meta_function.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/pixel_iterator.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/regular_grid.hh,
+	* mln/core/concept/site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh: Here.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Document type aliases in Doxygen.
 
 	* doc/mln/core/alias/box1d.dox,

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,11 +59,11 @@ namespace mln
   template <typename E> struct Meta_Accumulator;
 
 
+  /// \cond INTERNAL_API
   namespace internal
   {
 
     /*!
-      \internal
       \brief Make the type resolution easier for the compiler.
       Introduced for ICC compatibility.
     */
@@ -75,7 +75,6 @@ namespace mln
 
 
     /*!
-      \internal
       \brief Make the type resolution easier for the compiler.
       Introduced for ICC compatibility.
     */
@@ -85,25 +84,28 @@ namespace mln
 	typedef typename A::template with< T >::ret ret;
     };
 
-
   } // end of namespace mln::internal
+  /// \endcond
 
 
-  // Meta_Accumulator category flag type.
+  /// \cond INTERNAL_API
+  /// Meta_Accumulator category flag type.
   template <>
   struct Meta_Accumulator<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
   /*!
-    \internal
     \brief Base class for implementation of meta accumulators.
 
     The parameter \a E is the exact type.
 
     \see mln::doc::Meta_Accumulator for a complete documentation of
     this class contents.
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Meta_Accumulator : public Object<E>

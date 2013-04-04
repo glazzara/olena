@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,15 +50,14 @@ namespace mln
   template <typename E> struct Site_Set;
 
 
-  /*!
-    \internal
-    \brief Site_Set category flag type.
-  */
+  /// \cond INTERNAL_API
+  /// \brief Site_Set category flag type.
   template <>
   struct Site_Set<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
   /*!
@@ -66,6 +65,8 @@ namespace mln
 
     \see mln::doc::Site_Set for a complete documentation of this
     class contents.
+
+    \ingroup modconcepts
   */
   template <typename E>
   struct Site_Set : public Object<E>
@@ -92,7 +93,10 @@ namespace mln
   };
 
 
-  /// \internal Conversion: site_set -> std::set
+  /*!
+    \brief Conversion: site_set -> std::set
+    \ingroup fromto
+  */
   template <typename S, typename P, typename C_>
   void
   from_to_(const Site_Set<S>& from, std::set<P,C_>& to);
@@ -102,7 +106,10 @@ namespace mln
 namespace std
 {
 
-  /// \internal Conversion: std::set -> site_set
+  /*!
+    \brief Conversion: std::set -> site_set
+    \ingroup fromto
+  */
   template <typename P, typename C_, typename S>
   void
   from_to_(const set<P,C_>& from, mln::Site_Set<S>& to);

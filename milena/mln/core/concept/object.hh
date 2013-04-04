@@ -82,18 +82,23 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Object;
 
-  // Object category flag type.
+  /// \cond INTERNAL_API
+  /// Object category flag type.
   template <>
   struct Object<void>
   {
     typedef Unknown<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for almost every class defined in Milena.
-   *
-   * The parameter \a E is the exact type.
-   */
+  /*!
+    \brief Base class for almost every class defined in Milena.
+
+    The parameter \a E is the exact type.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Object
   {

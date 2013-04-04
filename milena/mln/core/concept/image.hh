@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -58,18 +58,20 @@ namespace mln
   template <typename D, typename W> struct w_window;
 
 
-  // Image category flag type.
+  /// \cond INTERNAL_API
+  /// Image category flag type.
   template <>
   struct Image<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation of image classes.
-  ///
-  /// \see mln::doc::Image for a complete documentation of this class
-  /// contents.
+  /*!
+    \brief Base class for implementation of image classes.
+    \ingroup modconcepts
+   */
   template <typename E>
   struct Image : public Object<E>
   {
@@ -122,12 +124,18 @@ namespace mln
   };
 
 
-  /// \internal Conversion: image -> w_window
+  /*!
+    \brief Conversion: image -> w_window
+    \ingroup fromto
+  */
   template <typename I, typename D, typename W>
   void
   from_to_(const Image<I>& from, w_window<D,W>& to);
 
-  /// \internal Conversion: values[] -> image
+  /*!
+    \brief Conversion: values[] -> image
+    \ingroup fromto
+  */
   template <typename V, unsigned S, typename I>
   void
   from_to_(const V (&values)[S], Image<I>& to);

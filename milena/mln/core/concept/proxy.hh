@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -207,17 +207,21 @@ namespace mln
 
 
 
-
+  /// \cond INTERNAL_API
   /// Proxy category flag type.
   template <>
   struct Proxy<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "proxy".
+  /*!
+    \brief Base class for implementation classes of the notion of
+    "proxy".
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Proxy : Object<E>
@@ -235,7 +239,10 @@ namespace mln
   };
 
 
-  /// \internal Conversion: proxy -> T
+  /*!
+    \brief Conversion: proxy -> T
+    \ingroup fromto
+  */
   template <typename P, typename T>
   void
   from_to_(const Proxy<P>& from, T& to);

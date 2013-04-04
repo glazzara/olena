@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,10 +67,9 @@
 
 namespace mln
 {
-  /*! \brief Base class for implementation classes that are iterators.
-   *
-   * \see mln::doc::Iterator for a complete documentation of this
-   * class contents.
+  /*!
+    \brief Base class for implementation classes that are iterators.
+    \ingroup modconcepts
    */
   template <typename E>
   struct Iterator : public Object<E>
@@ -89,7 +88,7 @@ namespace mln
      * defined through the \em next_ method.
      *
      * \pre The iterator is valid.
-     */ 
+     */
     void next(); // final
 
   protected:
