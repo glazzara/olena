@@ -1,3 +1,7 @@
+2013-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/filter/objects_in_borders.hh: New.
+
 2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix binarization tests.
