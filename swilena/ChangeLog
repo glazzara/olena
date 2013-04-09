@@ -1,5 +1,14 @@
 2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Makefile pattern rules generating several tests outputs.
+
+	* python/Makefile.am (%-wrap.cc %.py): Do not use `$@' in the
+	action block to represent the first output, as `$@' may stand for
+	any target of the rule; instead, rely on an explicit pattern based
+	on `$*'.
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help SWIG 2.0.9 wrap a ctor added as an extension.
 
 	* box2d.i: Here.

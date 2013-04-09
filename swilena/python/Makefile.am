@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -32,12 +32,12 @@ AM_LDFLAGS = -avoid-version -module -shared
 # Run Swig to create the C++ wrapper files, the Python interface
 # files, and the dependency Makefile snippets.
 %-wrap.cc %.py: $(top_srcdir)/swilena/%.i
-@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
+@AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $*-wrap.cc $<; then \
 @AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
 @AMDEP_TRUE@	else \
 @AMDEP_TRUE@	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
 @AMDEP_TRUE@	fi
-@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
+@AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $*-wrap.cc $<
 
 
 # Use Make to generate `data.py' and shell scripts (such as `sps' and
