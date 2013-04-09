@@ -1,3 +1,11 @@
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help SWIG 2.0.9 wrap a ctor added as an extension.
+
+	* box2d.i: Here.
+	Drop the namespace qualifier before the class name (see
+	http://sourceforge.net/p/swig/bugs/1291/).
+
 2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes in Swilena.

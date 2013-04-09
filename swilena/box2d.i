@@ -1,5 +1,6 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,8 +43,8 @@
 %extend mln::box< mln::point<mln::grid::square, mln::def::coord> >
 {
   // Provide a ctor creating an `mln::box2d' from two `int's.
-  mln::box< mln::point<mln::grid::square, mln::def::coord> > (int nrows,
-							      int ncols)
+  box< mln::point<mln::grid::square, mln::def::coord> > (int nrows,
+							 int ncols)
   {
     return new mln::box<mln::point2d>(nrows, ncols);
   }
