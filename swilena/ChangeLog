@@ -1,5 +1,11 @@
 2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify Swilena's python/Makefile.am.
+
+	* python/Makefile.am (data.py): Here.
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify some Swilena Python test cases.
 
 	* python/data.py.in (lena): Use small.pgm instead of lena.pgm.

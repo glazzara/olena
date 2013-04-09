@@ -68,9 +68,7 @@ all-local: data.py
 EXTRA_DIST = data.py.in
 data.py: data.py.in Makefile
 	rm -f $@ $@.tmp
-	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
+	$(edit) $< >$@.tmp
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
