@@ -22,7 +22,8 @@ EXTRA_DIST = 				\
 	  alignment_2.ref.pbm		\
 	  alignment_3.ref.pbm		\
 	  alignment_4.ref.pbm		\
-	  lines_v_pattern.ref.pbm
+	  lines_v_pattern.ref.pbm	\
+	  lines_h_pattern.ref.pbm
 
 check_PROGRAMS = lines_discontinued	\
 		 lines_h_discontinued	\

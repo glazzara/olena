@@ -1,5 +1,10 @@
 2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/primitive/extract/Makefile.am: Add more files in
+	EXTRA_DIST.
+
+2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* headers.mk,
 	* tests/unit-tests.mk: Regen.
 
