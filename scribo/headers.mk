@@ -125,6 +125,7 @@ scribo/filter/object_links_right_aligned.hh \
 scribo/filter/object_links_top_aligned.hh \
 scribo/filter/objects_h_thick.hh \
 scribo/filter/objects_h_thin.hh \
+scribo/filter/objects_in_borders.hh \
 scribo/filter/objects_large.hh \
 scribo/filter/objects_on_border.hh \
 scribo/filter/objects_size_ratio.hh \

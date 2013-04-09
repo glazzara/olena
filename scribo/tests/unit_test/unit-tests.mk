@@ -300,6 +300,7 @@ scribo_filter_object_links_right_aligned \
 scribo_filter_object_links_top_aligned \
 scribo_filter_objects_h_thick \
 scribo_filter_objects_h_thin \
+scribo_filter_objects_in_borders \
 scribo_filter_objects_large \
 scribo_filter_objects_on_border \
 scribo_filter_objects_size_ratio \

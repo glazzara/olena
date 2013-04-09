@@ -1,3 +1,8 @@
+2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk,
+	* tests/unit-tests.mk: Regen.
+
 2013-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/filter/objects_in_borders.hh: New.
