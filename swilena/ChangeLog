@@ -17,7 +17,7 @@
 	* python/Makefile.am (edit): Also substitute @LIBTOOL@.
 	(noinst_SCRIPTS): Add sps-gdb-local.
 	(EXTRA_DIST): Add sps-gdb-local.in.
-	(sps-gdb-local): Adda a dependency on $(srcdir)/sps-gdb-local.in.
+	(sps-gdb-local): Add a dependency on $(srcdir)/sps-gdb-local.in.
 
 2012-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
