@@ -23,4 +23,4 @@ import os
 
 top_srcdir = "@top_srcdir@"
 img_dir = os.path.join(top_srcdir, "milena", "img")
-lena = os.path.join (img_dir, "lena.pgm")
+lena = os.path.join (img_dir, "small.pgm")

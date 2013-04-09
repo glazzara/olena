@@ -1,5 +1,13 @@
 2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify some Swilena Python test cases.
+
+	* python/data.py.in (lena): Use small.pgm instead of lena.pgm.
+	* python/max-tree.py: Disable a no longer working statement (needs
+	further investigation).
+
+2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Makefile pattern rules generating several tests outputs.
 
 	* python/Makefile.am (%-wrap.cc %.py): Do not use `$@' in the

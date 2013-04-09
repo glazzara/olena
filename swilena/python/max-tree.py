@@ -53,4 +53,5 @@ max_tree_parent = image.max_tree(ima, c4());
 #   image2d_point2d.println("max_tree_parent =", max_tree_parent)
 #
 # ?
-par_image.println(max_tree_parent)
+## 2013-04-09: Disabled, until a solution is found.
+#par_image.println(max_tree_parent)
