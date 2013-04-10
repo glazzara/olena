@@ -1,4 +1,5 @@
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -235,6 +236,7 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html \
 		$(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
+	chmod -R u+w $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
 	sed -i -e "s,$(top_srcdir)/doc/$(USER_REFMAN)/html/,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/,g" \
 	       -e "s,$(top_srcdir)/milena/doc,$(DESTDIR)$(htmldir)/milena/$(USER_REFMAN),g" \
 		`find $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN) -name '*.html'`
