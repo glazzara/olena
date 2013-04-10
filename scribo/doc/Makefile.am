@@ -98,7 +98,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/html/,g" \
+	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/,g" \
+	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
 		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
@@ -180,7 +181,7 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(DEVEL_REFMAN)/html/,g" \
+	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
 		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
@@ -233,6 +234,10 @@ install-data-local:
 	rm -rf $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)/html
 	cp -r $(srcdir)/$(USER_REFMAN)/html \
 		$(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,$(top_srcdir)/doc/$(USER_REFMAN)/html/,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/,g" \
+	       -e "s,$(top_srcdir)/milena/doc,$(DESTDIR)$(htmldir)/milena/$(USER_REFMAN),g" \
+		`find $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			\
 	  rm -rf $(DESTDIR)$(htmldir)/scribo/$$d;	\

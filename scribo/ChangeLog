@@ -1,3 +1,10 @@
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to other documentations.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
 2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/primitive/extract/Makefile.am: Add more files in
