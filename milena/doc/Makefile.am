@@ -768,6 +768,7 @@ install-data-local:
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
+	chmod -R u+w $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 	sed -i -e "s,\$(top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
 		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
