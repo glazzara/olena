@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -248,7 +248,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/html/,g" \
+	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/,g" \
+	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
 		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
@@ -330,7 +331,7 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(DESTDIR)$(htmldir)/$(DEVEL_REFMAN)/html/,g" \
+	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
 		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
@@ -756,6 +757,9 @@ install-data-local:
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\$(top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
+		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			 \
 	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	 \
