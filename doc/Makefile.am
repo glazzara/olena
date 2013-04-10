@@ -211,6 +211,7 @@ install-data-local:
 #	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Fix documentation paths
+	chmod -R u+w $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	sed -i -e "s,$(abs_top_srcdir)/milena/doc,../milena,g" \
 	       -e "s,$(abs_top_srcdir)/scribo/doc,../scribo,g" \
 	       -e "s,$(abs_top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
