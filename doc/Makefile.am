@@ -121,7 +121,9 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	$(DOXYGEN) $(DOXYFILE_USER)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,,g" $(USER_REFMAN).tmp/html/index.html
+	sed -i -e "s,\@relcommondocpath\@,$(abs_top_srcdir)/,g" \
+	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
+		`find  $(USER_REFMAN).tmp/html -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -208,6 +210,11 @@ install-data-local:
 #
 #	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+# Fix documentation paths
+	sed -i -e "s,$(abs_top_srcdir)/milena/doc,../milena,g" \
+	       -e "s,$(abs_top_srcdir)/scribo/doc,../scribo,g" \
+	       -e "s,$(abs_top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
+		`find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html'`
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
 	chmod -R a+rX $(DESTDIR)$(htmldir) || \

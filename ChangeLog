@@ -1,3 +1,11 @@
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to other documentations.
+
+	* doc/Makefile.am,
+	* doc/header.html,
+	* doc/mainpage.dox: Here.
+
 2013-03-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Add a missing dependency.
