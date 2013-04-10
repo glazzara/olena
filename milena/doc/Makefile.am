@@ -226,13 +226,19 @@ MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
 
-# PDF.
-USER_REFMAN_PDF = user-refman.pdf
-dist_pdf_DATA = $(srcdir)/$(USER_REFMAN_PDF)
 
-$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
-	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
-	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
+# Disable PDF output since the file is too large to be processed
+# correctly by latex with the default configuration. This file is also
+# too large to be effectively usable by the user.
+
+# PDF.
+#USER_REFMAN_PDF = user-refman.pdf
+#dist_pdf_DATA = $(srcdir)/$(USER_REFMAN_PDF)
+dist_pdf_DATA =
+
+#$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
+#	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
+#	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
 # HTML.
 EXTRA_DIST += $(srcdir)/user-refman.stamp
@@ -309,14 +315,18 @@ MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
 DEVEL_REFMAN = devel-refman
 
+# Disable PDF output since the file is too large to be processed
+# correctly by latex with the default configuration. This file is also
+# too large to be effectively usable by the user.
+
 # PDF.
-DEVEL_REFMAN_PDF = devel-refman.pdf
+#DEVEL_REFMAN_PDF = devel-refman.pdf
 # Be warned, most LaTeX installations will not be able to compile the
 # PDF development documentation as-is, as TeX's default memory
 # capacities are usually too small to handle such a large document.
-$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
-	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
-	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
+#$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
+#	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
+#	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
 # HTML.
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp

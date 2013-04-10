@@ -1,5 +1,9 @@
 2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Makefile.am: Disable user refman PDF compilation.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Makefile.am: Fix path to other documentations.
 
 2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
