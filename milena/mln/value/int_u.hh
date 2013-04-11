@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -113,9 +113,13 @@ namespace mln
   namespace value
   {
 
-    /// Unsigned integer value class.
-    ///
-    /// The parameter is \c n the number of encoding bits.
+    /*!
+      \brief Unsigned integer value class.
+
+      The parameter is \c n the number of encoding bits.
+
+      \ingroup valueuint
+    */
     template <unsigned n>
     struct int_u
       :

@@ -1,0 +1,21 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace value
+  {
+    struct label_16
+      : label<16>
+    {
+      /// Constructor without argument.
+      label_16();
+
+      /// Constructor from an (unsigned) integer.
+      label_16(unsigned i);
+
+      /// Constructor from literal::zero.
+      label_16(const literal::zero_t& v);
+    }
+  }
+}

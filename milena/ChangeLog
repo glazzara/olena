@@ -1,5 +1,47 @@
 2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Reference value types documentation in Values group.
+
+	* doc/mln/value/hsl.dox,
+	* doc/mln/value/int_s16.dox,
+	* doc/mln/value/int_s24.dox,
+	* doc/mln/value/int_s32.dox,
+	* doc/mln/value/int_s8.dox,
+	* doc/mln/value/int_u12.dox,
+	* doc/mln/value/int_u16.dox,
+	* doc/mln/value/int_u24.dox,
+	* doc/mln/value/int_u32.dox,
+	* doc/mln/value/int_u8.dox,
+	* doc/mln/value/label_16.dox,
+	* doc/mln/value/label_32.dox,
+	* doc/mln/value/label_8.dox,
+	* doc/mln/value/rgb16.dox,
+	* doc/mln/value/rgb8.dox,
+	* doc/mln/value/value.dox: New.
+
+	* mln/value/hsl.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_s16.hh,
+	* mln/value/int_s24.hh,
+	* mln/value/int_s32.hh,
+	* mln/value/int_s8.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u12.hh,
+	* mln/value/int_u16.hh,
+	* mln/value/int_u24.hh,
+	* mln/value/int_u32.hh,
+	* mln/value/int_u8.hh,
+	* mln/value/label.hh,
+	* mln/value/label_16.hh,
+	* mln/value/label_32.hh,
+	* mln/value/label_8.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb16.hh,
+	* mln/value/rgb8.hh: Hide aliases.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a PDF I/O group in documentation.
 
 	* doc/mln/io/io.dox: Add PDF group.

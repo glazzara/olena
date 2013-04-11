@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,18 @@ namespace mln
   {
 
 
-    /// Alias for unsigned 8-bit integers.
+    /*!
+      \struct int_u8
+      \headerfile <>
+
+      \brief Alias for unsigned 8-bit integers.
+
+      \ingroup valueuint
+      \relates value::int_u
+    */
+    /// \cond ALIASES
     typedef mln::value::int_u<8> int_u8;
+    /// \endcond
 
 
   } // end of namespace mln::value

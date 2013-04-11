@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -164,9 +164,16 @@ namespace mln
     namespace qt
     {
 
-      /// Color class for red-green-blue where every component is
-      /// n-bit encoded.
+      /*!
+	\brief Color class for red-green-blue where every component is
+	8-bit encoded.
 
+	This class allows the conversion from a mln::image2d to a QImage encoded with
+	QImage::Format_RGB32 or QImage::Format_ARGB32.
+
+	\ingroup valuergb
+	\sa to_qimage_nocopy_qt_rgb32
+      */
       struct rgb32
 	:
 	public Vectorial< rgb32 >,

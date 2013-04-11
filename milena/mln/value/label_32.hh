@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,11 @@ namespace mln
   {
 
 
-    /// Alias for 32-bit integers.
+    /*!
+      \brief Alias for 32-bit integers.
+      \ingroup valuelabel
+      \relates value::label
+    */
     typedef label<32> label_32;
 
 

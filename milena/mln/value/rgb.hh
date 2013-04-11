@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -195,8 +195,12 @@ namespace mln
   namespace value
   {
 
-    /// Color class for red-green-blue where every component is
-    /// n-bit encoded.
+    /*!
+      \brief Color class for red-green-blue where every component is
+      n-bit encoded.
+
+      \ingroup valuergb
+    */
     template <unsigned n>
     struct rgb
       :

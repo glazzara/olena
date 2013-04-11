@@ -1,4 +1,5 @@
-// Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,8 +39,18 @@ namespace mln
   namespace value
   {
 
-    /// Alias for unsigned 24-bit integers.
+    /*!
+      \struct int_u24
+      \headerfile <>
+
+      \brief Alias for unsigned 24-bit integers.
+
+      \ingroup valueuint
+      \relates value::int_u
+    */
+    /// \cond ALIASES
     typedef mln::value::int_u<24> int_u24;
+    /// \endcond
 
   } // end of namespace mln::value
 

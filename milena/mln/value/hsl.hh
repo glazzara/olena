@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -182,9 +182,29 @@ namespace mln
 
 
     // FIXME: Use float01_8/float01_16 ?
-    typedef hsl_<float, float, float> hsl_f;
+    /*!
+      \class hsl_f
+      \headerfile <>
 
+      \brief HSL color based on float encoding.
+
+      \ingroup valuehsl
+    */
+    /// \cond ALIASES
+    typedef hsl_<float, float, float> hsl_f;
+    /// \endcond
+
+    /*!
+      \class hsl_d
+      \headerfile <>
+
+      \brief HSL color based on double encoding.
+
+      \ingroup valuehsl
+    */
+    /// \cond ALIASES
     typedef hsl_<double, double, double> hsl_d;
+    /// \endcond
 
 
     /// Print an hsl \p c into the output stream \p ostr.
@@ -233,6 +253,7 @@ namespace mln
     /// \}
 
 
+    /// \cond INTERNAL_API
     // Conversions
 
     /// \internal Conversion: hsl -> qt::rgb32.
@@ -242,6 +263,7 @@ namespace mln
     /// \internal Conversion: hsl -> rgb8.
     template <typename H, typename S, typename L>
     void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
+    /// \endcond
 
   } // end of namespace mln::value
 

@@ -1,0 +1,24 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace value
+  {
+    struct int_u16
+      : public int_u<16>
+    {
+    public:
+      /// Constructor without argument.
+      int_u16();
+
+      /// Constructor from an integer.
+      int_u16(int i);
+
+      /// Constructors with literals. Set to 0.
+      int_u16(const mln::literal::zero_t&);
+      /// Constructors with literals. Set to 1.
+      int_u16(const mln::literal::one_t&);
+    }
+  }
+}

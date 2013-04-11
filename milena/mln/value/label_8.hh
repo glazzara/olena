@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,18 @@ namespace mln
   {
 
 
-    /// Alias for 8-bit labels.
+    /*!
+      \struct label_8
+      \headerfile <>
+
+      \brief Alias for 8-bit labels.
+
+      \ingroup valuelabel
+      \relates value::label
+    */
+    /// \cond ALIASES
     typedef mln::value::label<8> label_8;
+    /// \endcond
 
 
   } // end of namespace mln::value

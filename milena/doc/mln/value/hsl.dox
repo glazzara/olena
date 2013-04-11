@@ -1,0 +1,37 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace value
+  {
+    struct hsl_f
+      : hsl_<float,float,float>
+    {
+    public:
+      /// Constructor without argument.
+      hsl_f();
+
+      /// Contruct a HSL color with (0,0,0) as value.
+      hsl_f(const literal::zero_t&);
+
+      /// Constructor from component values.
+      hsl_f(const H& hue, const S& sat, const L& lum);
+    };
+
+    struct hsl_d
+      : hsl_<double,double,double>
+    {
+    public:
+      /// Constructor without argument.
+      hsl_d();
+
+      /// Contruct a HSL color with (0,0,0) as value.
+      hsl_d(const literal::zero_t&);
+
+      /// Constructor from component values.
+      hsl_d(const H& hue, const S& sat, const L& lum);
+    };
+
+  }
+}
