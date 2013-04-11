@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,6 +61,8 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     fwd_pixter2d(I& image);
 
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
@@ -79,6 +81,8 @@ namespace mln
     mln_qlf_value(I)* eor_;
 
     using super_::image_;
+
+    /// \endcond
   };
 
 
@@ -104,6 +108,8 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     bkd_pixter2d(I& image);
 
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
@@ -122,6 +128,8 @@ namespace mln
     mln_qlf_value(I)* bor_;
 
     using super_::image_;
+
+    /// \endcond
   };
 
 

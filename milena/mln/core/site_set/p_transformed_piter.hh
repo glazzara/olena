@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,6 @@ namespace mln
 
 
   /*!
-    \internal
     \brief Iterator on p_transformed<S,F>.
 
     Parameter \c S is a site set type; parameter F is a function
@@ -60,6 +59,7 @@ namespace mln
     /// Constructor from a site set.
     p_transformed_piter(const p_transformed<S,F>& s);
 
+    /// \cond INTERNAL_API
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -71,6 +71,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
     /// Change the set site targeted by this iterator.
     void change_target(const p_transformed<S,F>& s);

@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -61,7 +61,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::labeled_image_base<I,E>.
     */
     template <typename I, typename E>
@@ -104,7 +103,6 @@ namespace mln
 
 
   /*!
-    \internal
     \brief Base class Morpher providing an improved interface for
     labeled image.
 

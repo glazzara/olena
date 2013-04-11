@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -201,7 +201,10 @@ namespace mln
   };
 
 
-  /// \internal Conversion: point -> point
+  /*!
+    \brief Conversion: point -> point
+    \ingroup fromto
+  */
   template <typename G, typename C1, typename C2>
   void from_to_(const point<G,C1>& from, point<G,C2>& to);
 
@@ -230,13 +233,14 @@ namespace mln
   } // end of namespace mln::internal
 
 
+  /// \cond INTERNAL_API
   /// FIXME...
   template <typename G, typename C>
   const mln::algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
-
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

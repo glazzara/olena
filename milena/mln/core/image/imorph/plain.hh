@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,7 +48,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::plain<I>.
     */
     template <typename I>
@@ -105,8 +104,10 @@ namespace mln
     /// Copy constructor from an image \p ima.
     plain(const I& ima);
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const I& ima);
+    /// \endcond
 
     /// Assignment operator.
     plain<I>& operator=(const plain<I>& rhs);

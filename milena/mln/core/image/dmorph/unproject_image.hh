@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::unproject_image<I,D,F>.
     */
     template <typename I, typename D, typename F>
@@ -113,7 +112,9 @@ namespace mln
     /// Constructor from an image \p ima, a domain \p dom, and a function \p f.
     unproject_image(I& ima, const D& dom, const F& f);
 
+    /// \cond INTERNAL_API
     void init_(I& ima, const D& dom, const F& f);
+    /// \endcond
 
 
     /// Give the definition domain.

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2007, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,7 +49,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::tr_image<S,I,T>.
     */
     template <typename S, typename I, typename T>
@@ -121,8 +120,10 @@ namespace mln
        if we do not provide set_ima().  */
     tr_image();
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const S& s, const I& ima, const T& tr);
+    /// \endcond
 
     /// Test if this image has been initialized.
     bool is_valid() const;

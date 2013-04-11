@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,7 +67,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal
+    /*!
       \brief Data structure for mln::pw::internal::image
     */
     template <typename P, typename V, typename G>
@@ -196,8 +196,11 @@ namespace mln
 
   };
 
+
+  /// \cond INTERNAL_API
   template <typename P, typename V, typename G, typename J>
   void init_(tag::image_t, edge_image<P,V,G>& target, const Image<J>& model);
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

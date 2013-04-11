@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -168,6 +168,7 @@ namespace mln
   ///
   /// Two mln::p_faces's are considered equal if they share the
   /// same complex.
+  /// \relates p_faces
   template <unsigned N, unsigned D, typename P>
   bool
   operator==(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs);
@@ -180,6 +181,7 @@ namespace mln
   ///
   /// \todo Refine this later, when we are able to express subcomplex
   /// relations.
+  /// \relates p_faces
   template <unsigned N, unsigned D, typename P>
   bool
   operator<=(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs);

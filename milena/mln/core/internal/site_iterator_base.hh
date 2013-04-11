@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,12 +75,13 @@ namespace mln
       //   ambiguities in very special cases since we inherit a couple
       //   of conversions (const and non-const)
 
-
+      /// \cond INTERNAL_API
       /// Give the subject (required by the Proxy interface).
       const mln_psite(S)& subj_();
 
       /// Give the target address.  It might be 0.
       const S*& target_();
+      /// \endcond
 
     protected:
 

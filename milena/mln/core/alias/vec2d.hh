@@ -51,7 +51,7 @@ namespace mln
 
 
   /*!
-    \class vec2d_f
+    \class vec2d_d
     \headerfile <>
 
     \brief 2D vector with double coordinates.

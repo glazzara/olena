@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,8 +94,10 @@ namespace mln
     ch_piter_image();
     ch_piter_image(I& ima);
 
+    /// \cond INTERNAL_API
     // Deferred initialization.
     void init_(I& ima);
+    /// \endcond
   };
 
 

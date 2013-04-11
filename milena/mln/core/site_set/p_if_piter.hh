@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,6 @@ namespace mln
 
 
   /*!
-    \internal
     \brief Iterator on site sets conditionned by a function.
 
     Parameter \c S is a site set type; parameter F is a function
@@ -61,6 +60,7 @@ namespace mln
     /// Constructor from a site set.
     p_if_piter_(const p_if<S,F>& s);
 
+    /// \cond INTERNAL_API
     /// Start an iteration.
     void start_();
 
@@ -69,6 +69,7 @@ namespace mln
 
     /// Change the set site targeted by pi_.
     void pi_change_target_(const p_if<S,F>& s);
+    /// \endcond
 
   private:
     typedef p_if_piter_<Pi,S,F> self_;

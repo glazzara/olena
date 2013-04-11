@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +45,6 @@ namespace mln
 
 
   /*!
-    \internal
     \brief Forward iterator on line graph window.
   */
   template <typename S, typename W, typename I>
@@ -73,6 +72,7 @@ namespace mln
 			  const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Window<W>& win, const Pref& p_ref);
@@ -97,11 +97,12 @@ namespace mln
     template <typename I2>
     void center_at_(const p_graph_piter<S, I2>& c);
 
-    /// Return the graph element pointed by this iterator.
-    const mln_graph_element(S)& element() const;
-
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
+    /// \endcond
+
+    /// Return the graph element pointed by this iterator.
+    const mln_graph_element(S)& element() const;
 
     /// Return the graph element id.
     /// FIXME: we do not want to have this member since there is an

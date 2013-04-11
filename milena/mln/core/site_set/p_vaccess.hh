@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -142,9 +142,11 @@ namespace mln
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
+    /// \cond INTERNAL_API
     // Required by p_double-related classes.
     const mln::value::set<V>& set_1_() const;
     const S& set_2_(const V& v) const;
+    /// \endcond
 
   protected:
 

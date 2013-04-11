@@ -81,7 +81,7 @@ OUTPUT_LANGUAGE        = English
 # the file and class documentation (similar to JavaDoc).
 # Set to NO to disable this.
 
-BRIEF_MEMBER_DESC      = YES
+BRIEF_MEMBER_DESC      = NO
 
 # If the REPEAT_BRIEF tag is set to YES (the default) Doxygen will prepend
 # the brief description of a member or function before the detailed description.
@@ -365,7 +365,7 @@ LOOKUP_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless
 # the EXTRACT_PRIVATE and EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class
 # will be included in the documentation.
@@ -416,7 +416,7 @@ HIDE_UNDOC_MEMBERS     = NO
 # If set to NO (the default) these classes will be included in the various
 # overviews. This option has no effect if EXTRACT_ALL is enabled.
 
-HIDE_UNDOC_CLASSES     = YES
+HIDE_UNDOC_CLASSES     = NO
 
 # If the HIDE_FRIEND_COMPOUNDS tag is set to YES, Doxygen will hide all
 # friend (class|struct|union) declarations.
@@ -732,7 +732,43 @@ EXCLUDE_PATTERNS       = *spe.hh
 # wildcard * is used, a substring. Examples: ANamespace, AClass,
 # AClass::ANamespace, ANamespace::*Test
 
-EXCLUDE_SYMBOLS        =
+EXCLUDE_SYMBOLS        = mln::*_check*				\
+		         mln::internal::check::*		\
+			 mln::internal::data<*			\
+			 mln::internal::subject_impl<*		\
+			 mln::internal::subject_impl		\
+			 mln::internal::subject_point_impl<*	\
+			 mln::internal::subject_point_impl	\
+			 mln::trait::accumulator_<*		\
+		         mln::trait::image_<*	    		\
+			 mln::trait::op_*<			\
+			 mln::trait::impl::ch_value_<*		\
+			 mln::trait::site_set_<*		\
+			 mln::trait::set_*	    		\
+			 mln::trait::value_*	    		\
+			 mln::trait::window_<*			\
+			 mln::trait::internal::merge_triplet_<* \
+			 mln::trait::next::set_binary_<*	\
+			 mln::trait::next::set_unary_<*		\
+			 mln::trait::next::helper_get_unary_<*	\
+			 mln::trait::next::helper_get_binary_<*	\
+			 mln::trait::next::helper_solve_binary_<*		\
+			 mln::trait::next::helper_solver_unary_<*		\
+			 mln::trait::next::internal::helper_get_unary_<*	\
+			 mln::trait::next::internal::helper_get_binary_<*	\
+			 mln::trait::next::internal::set_unary_<*		\
+			 mln::trait::next::internal::set_binary_<*		\
+			 mln::trait::next::internal::helper_solve_binary_<* 	\
+			 mln::trait::next::internal::helper_solver_unary_<* 	\
+			 mln::metal::*					    	\
+			 mln::trait::*						\
+			 mln::doc::*						\
+			 mln::io::*::internal::*				\
+			 mln::internal::exact_*					\
+			 mln::internal::fixme					\
+			 mln::internal::helper*category*			\
+			 mln::tag::*
+
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or
 # directories that contain example code fragments that are included (see
@@ -828,13 +864,13 @@ STRIP_CODE_COMMENTS    = YES
 # then for each documented function all documented
 # functions referencing it will be listed.
 
-REFERENCED_BY_RELATION = YES
+REFERENCED_BY_RELATION = NO
 
 # If the REFERENCES_RELATION tag is set to YES
 # then for each documented function all documented entities
 # called/used by that function will be listed.
 
-REFERENCES_RELATION    = YES
+REFERENCES_RELATION    = NO
 
 # If the REFERENCES_LINK_SOURCE tag is set to YES (the default)
 # and SOURCE_BROWSER tag is set to YES, then the hyperlinks from
@@ -1548,7 +1584,8 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator
 # instead of the = operator.
 
-PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
+PREDEFINED             = MLN_INCLUDE_ONLY \
+		         "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
                          "for_all_2(x1, x2)=for(x1.start(), x2.start();	x1.is_valid(); x1.next(), x2.next())" \
                          "for_all_3(x1, x2, x3)=for(x1.start(), x2.start(), x3.start();	x1.is_valid(); x1.next(), x2.next(), x3.next())" \
                          "for_all_remaining(x)=if (! x.is_valid()) {} else while (x.next(), x.is_valid())" \

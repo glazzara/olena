@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,16 +83,17 @@ namespace mln
   };
 
 
-  /// \internal Conversion: mixed_neighb<W> -> W
+  /// \cond INTERNAL_API
+  /// Conversion: mixed_neighb<W> -> W
   template <typename W>
   void
   from_to_(const mln::mixed_neighb<W>& from, W& to);
 
-  /// \internal Conversion: mixed_neighb<W> -> W
+  /// Conversion: mixed_neighb<W> -> W
   template <typename W>
   void
   from_to_(const W& from, mln::mixed_neighb<W>& to);
-
+  /// \endcond
 
 
   // mixed_neighb_fwd_niter<W>

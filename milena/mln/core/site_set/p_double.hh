@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,12 +56,14 @@ namespace mln
     // Target associated type.
     typedef S target;
 
+    /// \cond INTERNAL_API
     const S* target_() const;
+    /// \endcond
 
     void change_target(const S& newtarget);
 
     bool is_valid() const;
-    
+
     unsigned index() const;
     const mln_psite(Sp)& p() const;
 
@@ -68,8 +71,10 @@ namespace mln
 
     void change_p(const mln_psite(Sp)& p);
 
+    /// \cond INTERNAL_API
     // As a Proxy:
     const mln_psite(Sp)& subj_();
+    /// \endcond
 
   private:
 
@@ -98,7 +103,7 @@ namespace mln
     /// Constructor.
     p_double_piter(const S& s);
 
-    /// Change the site set targeted by this iterator. 
+    /// Change the site set targeted by this iterator.
     void change_target(const S& newtarget);
 
     /// Test if the iterator is valid.
@@ -146,7 +151,7 @@ namespace mln
   {
     return p_;
   }
-  
+
   template <typename S, typename Sp>
   inline
   const S*
@@ -194,7 +199,7 @@ namespace mln
   {
     i_ = i;
   }
-  
+
   template <typename S, typename Sp>
   inline
   void

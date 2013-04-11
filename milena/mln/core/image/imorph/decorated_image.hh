@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,7 +61,6 @@ namespace mln
     };
 
     /*!
-      \internal
       \brief Data structure for \c mln::decorated_image<I,D>.
     */
     template <typename I, typename D>
@@ -102,8 +101,10 @@ namespace mln
     decorated_image();
     decorated_image(I& ima, const D& deco);
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(I& ima, const D& deco);
+    /// \endcond
 
     /// Dtor
     ~decorated_image();
@@ -117,8 +118,10 @@ namespace mln
     /// Read-write access of pixel value at point site \p p.
     lvalue operator()(const psite& p);
 
+    /// \cond INTERNAL_API
     /// Actual read routine.
     rvalue read_(const mln_psite(I)& p) const;
+    /// \endcond
 
     /// Const promotion via conversion.
     operator decorated_image<const I, D>() const;

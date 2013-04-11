@@ -50,7 +50,7 @@ namespace mln
   /// \endcond
 
   /*!
-    \class vec3d_f
+    \class vec3d_d
     \headerfile <>
 
     \brief 3D vector with double coordinates.

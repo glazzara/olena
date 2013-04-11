@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,7 +61,7 @@ namespace mln
     };
 
 
-    /*! \internal
+    /*!
       \brief A base class for images.
 
       Parameter \p T is the image value type.
@@ -146,7 +146,8 @@ namespace mln
       /// Copy constructor (performs a shallow copy).
       image_base(const image_base& rhs);
 
-      /// @cond INTERNAL_API
+
+      /// \cond INTERNAL_API
 
       /*!
 	\brief Give an identifier of this image.
@@ -159,7 +160,7 @@ namespace mln
       /// \brief Hook to the image data.
       const util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
-      /// @endcond
+      /// \endcond
 
 
       /// Detach data from an image (free it if nobody else hold it).
@@ -170,8 +171,10 @@ namespace mln
       /// Constructor without argument.
       image_base();
 
-      // Internal data, sharable by several images.
+      /// \cond INTERNAL_API
+      /// Internal data, sharable by several images.
       util::tracked_ptr< internal::data<E> > data_;
+      /// \endcond
     };
 
 

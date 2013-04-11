@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,6 @@ namespace mln
   `-----------------------------*/
 
   /*!
-    \internal
     \brief Forward iterator on (all) the faces of an mln::p_complex<D, G>.
   */
   template <unsigned D, typename G>
@@ -79,7 +78,6 @@ namespace mln
   `-----------------------------*/
 
   /*!
-    \internal
     \brief Backward iterator on (all) the faces of an mln::p_complex<D, G>.
   */
   template <unsigned D, typename G>

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -141,14 +141,15 @@ namespace mln
   template <typename D, typename Wl, typename Wr>
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs);
 
-
-  /// \internal Conversions: w_window -> image
+  /// \cond INTERNAL_API
+  /// Conversions: w_window -> image
   template <typename D, typename W, typename I>
   void from_to_(const w_window<D,W>& from, Image<I>& to);
 
-  /// \internal Conversions: weight[] -> w_window
+  /// Conversions: weight[] -> w_window
   template <typename V, unsigned S, typename D, typename W>
   void from_to_(const V (&weight)[S], w_window<D,W>& to);
+  /// \endcond
 
 
 

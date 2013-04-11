@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -175,8 +175,10 @@ namespace mln
     /// Give the std vector of delta-points.
     const std::vector<D>& std_vector() const;
 
-    /// Hook to the set of D.
+    /// \cond INTERNAL_API
+    /// \brief Hook to the set of D.
     const mln::util::set<D>& dps_hook_() const;
+    /// \endcond
 
     /// Print the window definition into \p ostr.
     void print(std::ostream& ostr) const;

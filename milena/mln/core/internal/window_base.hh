@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -63,9 +63,15 @@ namespace mln
       /// Type of the window center
       typedef psite center_t;
 
-      /// Test if this window can be a neighborhood.
-      // This method is used in the neighborhood window-adapter.
+
+      /// \cond INTERNAL_API
+      /*!
+	\brief Test if this window can be a neighborhood.
+
+	This  method is used in the neighborhood window-adapter.
+      */
       bool is_neighbable_() const;
+      /// \endcond
 
       /// return true by default.
       bool is_valid() const;

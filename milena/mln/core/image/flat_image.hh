@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::flat_image<T,S>.
     */
     template <typename T, typename S>
@@ -128,8 +127,10 @@ namespace mln
     /// Constructor.
     flat_image(const T& val, const S& pset);
 
+    /// \cond INTERNAL_API
     /// Initialization.
     void init_(const T& val, const S& pset);
+    /// \endcond
 
     /// Give the definition domain.
     const S& domain() const;
@@ -145,15 +146,18 @@ namespace mln
     T& operator()(const mln_psite(S)& p);
 
 
+    /// \cond INTERNAL_API
     /// Specific methods.
     const T& value_() const;
     T& value_();
+    /// \endcond
   };
 
 
-
+  /// \cond INTERNAL_API
   template <typename T, typename S, typename J>
   void init_(tag::image_t, flat_image<T,S>& target, const J& model);
+  /// \endcond
 
 
 

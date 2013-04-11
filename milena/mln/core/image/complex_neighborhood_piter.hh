@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -76,6 +76,7 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
@@ -99,6 +100,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{
@@ -150,6 +152,7 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
@@ -173,6 +176,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{

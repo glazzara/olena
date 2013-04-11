@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +50,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::slice_image<I>.
     */
     template <typename I>
@@ -110,7 +109,9 @@ namespace mln
     /// Constructor from an image \p ima and a predicate \p f.
     slice_image(I& ima, def::coord sli);
 
+    /// \cond INTERNAL_API
     void init_(I& ima, def::coord sli);
+    /// \endcond
 
     template <typename V>
     void operator=(const image2d<V>& rhs);

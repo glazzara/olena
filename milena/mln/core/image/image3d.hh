@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -171,8 +171,10 @@ namespace mln
     image3d(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
 
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const box3d& b, unsigned bdr = border::thickness);
+    /// \endcond
 
 
     /// Test if \p p is valid.
@@ -205,6 +207,8 @@ namespace mln
     /// Read-write access to the image value located at offset \p i.
     T& element(unsigned i);
 
+    /// \cond INTERNAL_API
+
     /// Read-only access to the image value located at (\p sli, \p
     /// row, \p col).
     const T& at_(def::coord sli, def::coord row, def::coord col) const;
@@ -213,6 +217,7 @@ namespace mln
     /// row, \p col).
     T& at_(def::coord sli, def::coord row, def::coord col);
 
+    /// \endcond
 
     /// Give the number of slices.
     unsigned nslis() const;
@@ -238,13 +243,16 @@ namespace mln
     /// Give a hook to the value buffer.
     T* buffer();
 
+    /// \cond INTERNAL_API
+
     /// To use the track pointer inherited.
     using super_::data_;
 
 
-
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
+
+    /// \endcond
 
   };
 

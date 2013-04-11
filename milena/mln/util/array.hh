@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -196,37 +196,40 @@ namespace mln
 
 
     /// Operator<<.
+    /// \relates util::array
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
 			     const array<T>& a);
 
     /// Operator==
+    /// \relates util::array
     template <typename T>
     bool operator==(const array<T>& lhs,
 		    const array<T>& rhs);
 
 
-    /// \internal Conversion: array -> array
+    /// \cond INTERNAL_API
+    /// Conversion: array -> array
     template <typename T1, typename T2>
     void
     from_to_(const array<T1>& from, array<T2>& to);
 
-    /// \internal Conversion: array<T> -> fun::i2v::array<T>
+    /// Conversion: array<T> -> fun::i2v::array<T>
     template <typename T>
     inline
     void
     from_to_(const array<T>& from, fun::i2v::array<T>& to);
 
-    /// \internal Conversion: array<T> -> fun::i2v::array<U>
+    /// Conversion: array<T> -> fun::i2v::array<U>
     template <typename T, typename U>
     inline
     void
     from_to_(const array<T>& from, fun::i2v::array<U>& to);
 
-    /// \internal Conversion: util::array -> image1d.
+    ///Conversion: util::array -> image1d.
     template <typename V, typename T>
     void from_to_(const util::array<V>& from, image1d<T>& to);
-
+    /// \endcond
 
     // array_fwd_iter<T>
 
@@ -587,7 +590,6 @@ namespace mln
     }
 
     template <typename T>
-    inline
     void
     from_to_(const array<T>& from, fun::i2v::array<T>& to)
     {
@@ -595,7 +597,6 @@ namespace mln
     }
 
     template <typename T, typename U>
-    inline
     void
     from_to_(const array<T>& from, fun::i2v::array<U>& to)
     {
@@ -605,7 +606,6 @@ namespace mln
     }
 
     template <typename V, typename T>
-    inline
     void
     from_to_(const array<V>& from, image1d<T>& to)
     {

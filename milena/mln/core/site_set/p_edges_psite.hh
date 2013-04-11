@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -72,15 +72,17 @@ namespace mln
   };
 
 
-
+  /// \relates p_edges_psite
   template <typename G, typename F>
   bool
   operator==(const p_edges_psite<G,F>& lhs, const p_edges_psite<G,F>& rhs);
 
+  /// \relates p_edges_psite
   template <typename G, typename F>
   bool
   operator!=(const p_edges_psite<G,F>& lhs, const p_edges_psite<G,F>& rhs);
 
+  /// \relates p_edges_psite
   template <typename G, typename F>
   bool
   operator<(const p_edges_psite<G,F>& lhs, const p_edges_psite<G,F>& rhs);

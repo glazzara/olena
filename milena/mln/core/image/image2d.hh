@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -63,7 +63,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::image2d<T>.
     */
     template <typename T>
@@ -87,7 +86,6 @@ namespace mln
     };
 
   } // end of namespace mln::internal
-
 
   namespace trait
   {
@@ -164,12 +162,10 @@ namespace mln
     image2d(const box2d& b, unsigned bdr = border::thickness);
 
 
-    /// @cond INTERNAL_API
-
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const box2d& b, unsigned bdr = border::thickness);
-
-    /// @endcond
+    /// \endcond
 
 
     /// Test if \p p is valid.
@@ -214,15 +210,12 @@ namespace mln
     // Specific methods:
     // -----------------
 
-    /// @cond INTERNAL_API
-
+    /// \cond INTERNAL_API
     /// Read-only access to the image value located at (\p row, \p col).
     const T& at_(mln::def::coord row, mln::def::coord col) const;
-
     /// Read-write access to the image value located at (\p row, \p col).
     T& at_(mln::def::coord row, mln::def::coord col);
-
-    /// @endcond
+    /// \endcond
 
 
     /// Give the number of rows.
@@ -263,17 +256,17 @@ namespace mln
     T* buffer();
 
 
-    /// @cond INTERNAL_API
-
+    /// \cond INTERNAL_API
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
-
-    /// @endcond
+    /// \endcond
   };
 
 
 
   // Forward declaration
+
+  /// \cond INTERNAL_API
 
   template <typename T>
   void init_(tag::border_t, unsigned& bdr, const image2d<T>& model);
@@ -281,6 +274,7 @@ namespace mln
   template <typename T, typename J>
   void init_(tag::image_t, mln::image2d<T>& target, const J& model);
 
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

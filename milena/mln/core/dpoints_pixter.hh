@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -90,8 +90,11 @@ namespace mln
     /// \{
     /// Start an iteration.
     void start();
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
+    /// \endcond
 
     /// Invalidate the iterator.
     void invalidate();
@@ -106,6 +109,7 @@ namespace mln
     /// The value around which this iterator moves.
     const mln_value(I)& center_val() const;
 
+    /// \cond INTERNAL_API
   private:
     template <typename Dps>
     void init_(const Dps& dps);
@@ -129,6 +133,9 @@ namespace mln
     /// Reference pixel / point in the image
     const mln_psite(I)* p_ref_;
     /// \}
+
+    /// \endcond
+
   };
 
 
@@ -176,8 +183,11 @@ namespace mln
     /// \{
     /// Start an iteration.
     void start();
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
+    /// \endcond
 
     /// Invalidate the iterator.
     void invalidate();
@@ -191,6 +201,8 @@ namespace mln
 
     /// The value around which this iterator moves.
     const mln_value(I)& center_val() const;
+
+    /// \cond INTERNAL_API
 
   private:
     template <typename Dps>
@@ -215,6 +227,8 @@ namespace mln
     /// Reference pixel / point in the image
     const mln_psite(I)* p_ref_;
     /// \}
+
+    /// \endcond
   };
 
 

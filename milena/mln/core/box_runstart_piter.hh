@@ -66,10 +66,15 @@ namespace mln
      */
     box_runstart_piter(const box<P>& b);
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     void init_(const box<P>& b);
+    /// \endcond
 
     box_runstart_piter();
+
+
+    /// \cond INTERNAL_API
 
     /// Test the iterator validity.
     bool is_valid_() const;
@@ -82,6 +87,9 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+
+    /// \endcond
+
 
     /// Give the lenght of the run
     unsigned run_length() const;

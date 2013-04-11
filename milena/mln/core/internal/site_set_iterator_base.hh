@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,15 +62,17 @@ namespace mln
       /// Give the site set that this iterator browses.
       const S& site_set() const;
 
-      /// Hook to the current location.
-      const mln_psite(S)& p_hook_() const;
-
       /// Change the site set targeted by this iterator.
       void change_target(const S& s);
+
+      /// \cond INTERNAL_API
+      /// Hook to the current location.
+      const mln_psite(S)& p_hook_() const;
 
       /// Part of the change_target specific to the exact iterator
       /// type, empty by default (to be overloaded).
       void change_target_(const S& s);
+      /// \endcond
 
     protected:
 

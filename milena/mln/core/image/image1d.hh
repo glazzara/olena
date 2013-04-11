@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -163,8 +163,10 @@ namespace mln
     image1d(const box1d& b, unsigned bdr = border::thickness);
 
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const box1d& b, unsigned bdr = border::thickness);
+    /// \endcond
 
 
     /// Test if \p p is valid.
@@ -192,6 +194,8 @@ namespace mln
     // Specific methods:
     // -----------------
 
+    /// \cond INTERNAL_API
+
     /// Read-only access to the image value located at (\p offset).
     const T& at_(def::coord offset) const;
 
@@ -201,6 +205,7 @@ namespace mln
      /// Give the number of offsets.
     unsigned ninds() const;
 
+    /// \endcond
 
 
     /// Fast Image method
@@ -232,9 +237,10 @@ namespace mln
     unsigned nelements() const;
 
 
-
+    /// \cond INTERNAL_API
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
+    /// \endcond
 
   };
 

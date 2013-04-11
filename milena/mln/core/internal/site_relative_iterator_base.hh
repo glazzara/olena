@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +48,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief A generic iterator on points of windows and of
       neighborhoods.
 
@@ -70,11 +69,13 @@ namespace mln
       template <typename P>
       void center_at(const P& c);
 
+      /// \cond INTERNAL_API
       /// Start an iteration.
       void start_();
 
       /// Go to the next point.
       void next_();
+      /// \endcond
 
       /// Give the site set (neighborhood or window) that this
       /// iterator browses.
@@ -83,6 +84,7 @@ namespace mln
       /// The psite around which this iterator moves.
       const C& center() const;
 
+      /// \cond INTERNAL_API
       /// This overriding is very useful: it adds a test to prevent
       /// getting an invalid iterator when its center has moved.  Some
       /// sub-classes provide an update() method for the client to say
@@ -92,6 +94,7 @@ namespace mln
 
       /// Hook to the current location.
       const mln_psite(S)& p_hook_() const;
+      /// \endcond
 
       /// Change the site set targeted by this iterator.
       void change_target(const S& s);

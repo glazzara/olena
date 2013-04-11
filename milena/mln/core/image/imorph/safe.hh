@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,7 +49,6 @@ namespace mln
   {
 
     /*!
-      \internal
       \brief Data structure for \c mln::safe_image<I>.
     */
     template <typename I>
@@ -95,8 +94,10 @@ namespace mln
     safe_image(I& ima);
     safe_image(I& ima, const mln_value(I)& default_value);
 
+    /// \cond INTERNAL_API
     // Initialize an empty image.
     void init_(I& ima, const mln_value(I)& default_value);
+    /// \endcond
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 

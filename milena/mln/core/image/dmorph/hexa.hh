@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,7 +49,6 @@ namespace mln
   namespace internal
   {
     /*!
-      \internal
       \brief Data structure for \c mln::hexa<I>.
     */
     template <typename I>
@@ -67,7 +66,6 @@ namespace mln
   namespace trait
   {
     /*!
-      \internal
       FIXME: use the right properties.
     */
     template <typename I>
@@ -153,8 +151,10 @@ namespace mln
     /// Constructor with an base image.
     hexa(I& ima);
 
+    /// \cond INTERNAL_API
     /// Initialization.
     void init_(I& ima);
+    /// \endcond
 
     /// Give the definition domain.
     const box2d_h& domain() const;
@@ -169,8 +169,11 @@ namespace mln
     lvalue operator()(const point2d_h& p);
   };
 
+
+  /// \cond INTERNAL_API
   template <typename I, typename J>
   void init_(tag::image_t, hexa<I>& target, const J& model);
+  /// \endcond
 
 # ifndef MLN_INCLUDE_ONLY
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,7 +77,7 @@ namespace mln
     public:
      typedef p_if<S_, F_> ret;
     };
-    
+
 
   } // end of namespace internal
 
@@ -132,13 +133,13 @@ namespace mln
     unsigned nsites() const;
 
 
-    /// Insertion element associated type. 
+    /// Insertion element associated type.
     typedef psite i_element;
 
     /// Insert a site \p p.
     void insert(const psite& p);
 
-    /// Removal element associated type. 
+    /// Removal element associated type.
     typedef psite r_element;
 
     /// Remove a site \p p.
@@ -157,8 +158,10 @@ namespace mln
     void clear();
 
 
+    /// \cond INTERNAL_API
     /// Hook to the image
     const I& image_hook_() const;
+    /// \endcond
 
   private:
 
