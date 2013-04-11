@@ -52,6 +52,8 @@ namespace mln
 	 \param[in]  dpi       Document resolution.
 
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
@@ -69,6 +71,8 @@ namespace mln
 	 \param[in]  dpi       Document resolution.
 
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
@@ -86,6 +90,8 @@ namespace mln
 	 \param[in]  dpi       Document resolution.
 
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,
@@ -102,6 +108,8 @@ namespace mln
 	 \param[in]  dpi       Document resolution.
 
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(Image<I>& ima, const std::string& filename,
@@ -117,6 +125,8 @@ namespace mln
 
 	 DPI resolution is set to 300.
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename);
@@ -132,6 +142,8 @@ namespace mln
 
 	 DPI resolution is set to 300.
 	 Page numbering starts from 0.
+
+	 \ingroup iopdf
       */
       template <typename I>
       void load(util::array<I>& arr, const std::string& filename,

@@ -51,7 +51,10 @@ namespace mln
     namespace pdf
     {
 
-      /// Store pdf file header.
+      /*!
+	\brief Store pdf file header.
+	\ingroup iopdf
+      */
       struct pdf_header
       {
 	pdf_header(const poppler::document *doc);
@@ -66,7 +69,10 @@ namespace mln
       };
 
 
-      /// Retrieve header in a pdf file.
+      /*!
+	\brief Retrieve header in a pdf file.
+	\ingroup iopdf
+      */
       pdf_header get_header(const std::string& filename);
 
 

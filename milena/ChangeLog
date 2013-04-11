@@ -1,5 +1,14 @@
 2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a PDF I/O group in documentation.
+
+	* doc/mln/io/io.dox: Add PDF group.
+
+	* mln/io/pdf/get_header.hh,
+	* mln/io/pdf/load.hh: Add to PDF group.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add references to code examples
 
 	* doc/DoxygenLayout.xml: Change example section name.

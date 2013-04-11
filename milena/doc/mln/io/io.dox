@@ -108,3 +108,10 @@
  *
  * \ingroup iogroup
  */
+
+/*! \defgroup iopdf PDF
+ *
+ * \brief PDF I/O routines.
+ *
+ * \ingroup iogroup
+ */
