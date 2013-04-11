@@ -296,8 +296,6 @@ disabled.  Try to invoke configure with `--enable-shared'.])
        # Check for Python.
        AM_PATH_PYTHON([2.4], [],
                       [AC_MSG_ERROR([Python 2.4 is required for Swilena.])])
-       AS_VERSION_COMPARE([2.5], [$am_cv_python_version],
-         [AC_MSG_WARN([Python 2.6 and greater may not work with Swilena.])])
        adl_CHECK_PYTHON
        # Check for Python headers.
        save_CPPFLAGS=$CPPFLAGS

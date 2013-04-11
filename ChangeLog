@@ -1,3 +1,9 @@
+2013-04-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop warning about Python 2.6+ likely incompatible with Swilena.
+
+	* configure.ac: Here.
+
 2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Stop configuring swilena/python/sps and swilena/python/sps-local.
