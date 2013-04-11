@@ -1,7 +1,14 @@
 /*! \page examples Examples
 
-\section examplerag Region Adjacency Graph
+\section examplesgenericity Genericity
 
-\li \link region_adjacency_graph.cc
+\li \link demos/genericity/neighborhood/neighborhood.cc Classical neighborhoods \endlink
+\li \link demos/genericity/neighborhood/duality.cc Dual neighborhoods \endlink
+\li \link demos/genericity/neighborhood/permissive.cc Custom neighborhoods \endlink
+\li \link demos/inter_pixel/inter_pixel.cc Inter-pixel processings \endlink
+
+
+\section examplesgraph Graphs
+\li \link demos/graph/region_adjacency_graph.cc Region Adjacency Graph \endlink
 
 */

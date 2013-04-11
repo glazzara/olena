@@ -1,5 +1,13 @@
 2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add references to code examples
+
+	* doc/DoxygenLayout.xml: Change example section name.
+
+	* doc/examples.dox: Add more links to example files.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Hide internal API and classes in documentation.
 
 	* doc/Doxyfile.in: Exclude internal symbols and classes.

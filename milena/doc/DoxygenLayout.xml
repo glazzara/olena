@@ -20,7 +20,7 @@
       <tab type="filelist" visible="yes" title="" intro=""/>
       <tab type="globals" visible="yes" title="" intro=""/>
     </tab>
-    <tab type="examples" visible="yes" title="Examples" intro=""/>
+    <tab type="examples" visible="yes" title="Full Examples" intro=""/>
     <tab type="user" url="@ref examples" title="Examples"/>
     <tab type="user" url="http://caroussel.lrde.epita.fr/olena/demos" title="Demos"/>
     <tab type="user" url="http://www.lrde.epita.fr/cgi-bin/twiki/view/Olena/Publications" title="Publications"/>
