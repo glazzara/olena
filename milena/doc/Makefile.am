@@ -795,5 +795,5 @@ uninstall-local:
 
 
 doc-teamcity:
-	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc/,g" \
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
 		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
