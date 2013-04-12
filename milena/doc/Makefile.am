@@ -254,7 +254,7 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/,g" \
+	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
 	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
 		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
@@ -762,14 +762,14 @@ DATA_html_dirs_inst = $(WHITE_PAPER)
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	chmod -R u+w $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
-	sed -i -e "s,\$(top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
 		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			 \
@@ -792,3 +792,8 @@ uninstall-local:
 	chmod -R 700 $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 	rm -rf $(DESTDIR)$(htmldir)/milena
+
+
+doc-teamcity:
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc/,g" \
+		`find  $(top_srcdir)/milena/$(USER_REFMAN) -name '*.html'`

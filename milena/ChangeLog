@@ -1,3 +1,10 @@
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use relative paths in documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
 2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Reference value types documentation in Values group.
