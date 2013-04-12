@@ -1,3 +1,10 @@
+2013-04-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enable verbose messages in Swilena Python tests.
+
+	* run.in: Here.
+	Convert to UTF-8.
+
 2013-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify Swilena's python/Makefile.am.

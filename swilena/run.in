@@ -1,8 +1,8 @@
 #! /bin/sh
 
-# Copyright (C) 2003, 2004, 2006, 2012 Laboratoire d'Informatique de
-# Paris 6 (LIP6), département Systèmes Répartis Coopératifs (SRC),
-# Université Pierre et Marie Curie.
+# Copyright (C) 2003, 2004, 2006, 2012, 2013 Laboratoire d'Informatique de
+# Paris 6 (LIP6), dÃ©partement SystÃ¨mes RÃ©partis CoopÃ©ratifs (SRC),
+# UniversitÃ© Pierre et Marie Curie.
 #
 # This file is part of Spot, a model checking library.
 #
@@ -21,10 +21,6 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-
-# If we are running from make check (srcdir is set) and VERBOSE is
-# unset, be quiet.
-test -n "$srcdir" && test -z "$VERBOSE" && exec >/dev/null 2>&1
 
 # Darwin needs some help in figuring out where non-installed libtool
 # libraries are (on this platform libtool encodes the expected final
