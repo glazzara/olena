@@ -230,7 +230,7 @@ uninstall-local:
 
 
 doc-teamcity:
-	sed -i -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../milena.doc/,g" \
-	       -e "s,../../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc/,g" \
-	       -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc/,g" \
+	sed -i -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g" \
+	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc,g" \
+	       -e "s,../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
 		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`

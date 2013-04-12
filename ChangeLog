@@ -1,5 +1,9 @@
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Makefile.am: Remove duplicate '/' in path.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* NEWS: Add more descriptions.
 
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
