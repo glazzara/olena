@@ -1,5 +1,9 @@
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Makefile.am: Fix path to documentation.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Disable QCH file generation.
 
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
