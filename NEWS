@@ -1,5 +1,13 @@
 * Olena 2.0a
 
+  * Olena Platform
+
+	* Better documentation.
+
+	* Fix compilation with the latest g++ versions (> 4.5).
+
+	* Several bug fixes.
+
   * Milena
 
 	* Rename 'point_at_index', 'delta_index' and 'index_of_point' to
@@ -7,7 +15,7 @@
 
 	* Improve extensibility of convert::from_to.
 
-	* Fix compilation with the latest g++ versions (> 4.5).
+	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
   * Scribo
 
@@ -18,6 +26,14 @@
 
 	* New binarization algorithms: Wolf's, Otsu's, Niblack's and
           Kim's.
+
+	* Speedup Sauvola binarization algorithm.
+
+	* Improve OCR result quality and processing time.
+
+	* Add support for Tesseract 3.02.
+
+	* Add the layout analysis algorithm XY-Cut.
 
 
 * Olena 2.0	September 16, 2011
