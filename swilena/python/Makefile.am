@@ -348,7 +348,7 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
 include $(top_srcdir)/swilena/run.mk
 
-TESTS_ENVIRONMENT = $(RUN)
+LOG_COMPILER = $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
 $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is
