@@ -1,3 +1,10 @@
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use relative paths in documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
 2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Fix permissions on documentation files.

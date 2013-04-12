@@ -334,7 +334,7 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
-TAGFILES               = @builddir@/../../milena/doc/milena.tag=@top_srcdir@/milena/doc/user-refman/html
+TAGFILES               = @builddir@/../../milena/doc/milena.tag=../../../../milena/doc/user-refman/html
 GENERATE_TAGFILE       = scribo.tag
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = NO

@@ -99,7 +99,7 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/,g" \
+	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
 	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
 		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
@@ -182,7 +182,8 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
+	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
+	       -e "s,\@userrefman\@,$(DEVEL_REFMAN),g" \
 		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
@@ -229,7 +230,7 @@ maintainer-clean-local:
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
+	$(mkdir_p) $(DESTDIR)$(htmldir)/scribo/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)/html
@@ -237,8 +238,8 @@ install-data-local:
 		$(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	chmod -R u+w $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
-	sed -i -e "s,$(top_srcdir)/doc/$(USER_REFMAN)/html/,$(DESTDIR)$(htmldir)/$(USER_REFMAN)/,g" \
-	       -e "s,$(top_srcdir)/milena/doc,$(DESTDIR)$(htmldir)/milena/$(USER_REFMAN),g" \
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
+	       -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../../milena/$(USER_REFMAN)/,g" \
 		`find $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			\
@@ -261,3 +262,9 @@ uninstall-local:
 	chmod -Rf 700 $(DESTDIR)$(htmldir)/scribo/
 	rm -rf $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
 	rm -rf $(DESTDIR)$(htmldir)/scribo
+
+
+doc-teamcity:
+	sed -i -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../milena.doc/,g" \
+	       -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc/,g" \
+		`find  $(top_srcdir)/scribo/$(USER_REFMAN) -name '*.html'`
