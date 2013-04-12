@@ -19,8 +19,8 @@
       </td>
       <td>
         \li \ref moduleslist
-    	\li <a class="el" href="@relcommondocpath@milena/doc/user-refman/html/index.html">Milena</a>
-    	\li <a class="el" href="@relcommondocpath@scribo/doc/user-refman/html/index.html">Scribo</a>
+    	\li <a class="el" href="@relcommondocpath@../milena/doc/user-refman/html/index.html">Milena</a>
+    	\li <a class="el" href="@relcommondocpath@../scribo/doc/user-refman/html/index.html">Scribo</a>
     	\li Swilena
       </td>
       <td>

@@ -121,7 +121,7 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	$(DOXYGEN) $(DOXYFILE_USER)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(abs_top_srcdir)/,g" \
+	sed -i -e "s,\@relcommondocpath\@,../../,g" \
 	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
 		`find  $(USER_REFMAN).tmp/html -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
@@ -212,9 +212,9 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Fix documentation paths
 	chmod -R u+w $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	sed -i -e "s,$(abs_top_srcdir)/milena/doc,../milena,g" \
-	       -e "s,$(abs_top_srcdir)/scribo/doc,../scribo,g" \
-	       -e "s,$(abs_top_srcdir)/doc/$(USER_REFMAN)/html,$(DESTDIR)$(htmldir)/$(USER_REFMAN),g" \
+	sed -i -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena/$(USER_REFMAN),g" \
+	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo/$(USER_REFMAN),g" \
+	       -e "s,../../$(USER_REFMAN)/html,../$(USER_REFMAN),g" \
 		`find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html'`
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
@@ -227,3 +227,10 @@ uninstall-local:
 # reference manual.
 	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+
+
+doc-teamcity:
+	sed -i -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../milena.doc/,g" \
+	       -e "s,../../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc/,g" \
+	       -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc/,g" \
+		`find  $(USER_REFMAN).tmp/html -name '*.html'`

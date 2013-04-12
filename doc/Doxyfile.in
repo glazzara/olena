@@ -21,7 +21,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Olena"
-PROJECT_NUMBER         = "@PACKAGE_VERSION@"
+PROJECT_NUMBER         = "User documentation @PACKAGE_VERSION@"
 PROJECT_BRIEF	       = "An Image Processing Platform"
 PROJECT_LOGO 	       = @top_srcdir@/doc/images/logo.jpg
 OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp
@@ -320,8 +320,8 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
-TAGFILES               = @builddir@/../scribo/doc/scribo.tag=../../scribo/doc/user-refman/html \
-			 @builddir@/../milena/doc/milena.tag=../../milena/doc/user-refman/html
+TAGFILES               = @builddir@/../scribo/doc/scribo.tag=../../../scribo/doc/user-refman/html \
+			 @builddir@/../milena/doc/milena.tag=../../../milena/doc/user-refman/html
 GENERATE_TAGFILE       =
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
