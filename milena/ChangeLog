@@ -1,3 +1,9 @@
+2013-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the set of files to clean in apps/mesh-segm-skel.
+
+	* apps/mesh-segm-skel/Makefile.am (MOSTLYCLEANFILES): Here.
+
 2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make fld tests write in different files.

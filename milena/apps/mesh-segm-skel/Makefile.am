@@ -83,5 +83,5 @@ mesh_complex_skel_SOURCES = mesh-complex-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-skel
 MOSTLYCLEANFILES +=				\
   socket-max-curv-skel.off			\
-  teapot-max-curv.off				\
+  teapot-max-curv-skel.off			\
   three-triangles-skel.off
