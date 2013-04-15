@@ -1,5 +1,9 @@
 2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	* Makefile.am: Cosmetic changes.
+
+2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use Autoconf's MKDIR_P instead of Automake's obsolete mkdir_p.
 
 	* Makefile.am,

@@ -29,7 +29,7 @@ endif ENABLE_SCRIBO
 
 # We rely on Automake to ensure that the documentions are generated in
 # the right order.  Here, we make sure that the general documentation
-# will be generated after milena's and scribo'd documentation.
+# will be generated after Milena's and Scribo's documentation.
 SUBDIRS += doc
 
 # Target shortcuts delegating the actual action to milena/Makefile.
@@ -47,32 +47,28 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += milena scribo
 
 
-PORTFILE=distrib/macports/Portfile
+TARBALL_GZ = $(distdir).tar.gz
+do_subst =								       \
+  sed -e 's|@packagename[@]|$(PACKAGE_TARNAME)|g'			       \
+      -e 's|@version[@]|$(PACKAGE_VERSION)|g'				       \
+      -e "s|@package_md5[@]|`md5sum $(TARBALL_GZ) | cut -d ' ' -f 1`|g"        \
+      -e "s|@package_sha1[@]|`openssl sha1 $(TARBALL_GZ) | cut -d ' ' -f 2`|g" \
+      -e "s|@package_rmd160[@]|`openssl rmd160 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"
 
-TARBALL_GZ=$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz
-do_subst = sed -e 's|@packagename[@]|$(PACKAGE_TARNAME)|g'				\
-	       -e 's|@version[@]|$(PACKAGE_VERSION)|g'					\
-	       -e "s|@package_md5[@]|`md5sum $(TARBALL_GZ) | cut -d ' ' -f 1`|g" 	\
-	       -e "s|@package_sha1[@]|`openssl sha1 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"	\
-	       -e "s|@package_rmd160[@]|`openssl rmd160 $(TARBALL_GZ) | cut -d ' ' -f 2`|g"
-
-$(PORTFILE): $(top_srcdir)/distrib/macports/Portfile.in Makefile dist
+PORTFILE = distrib/macports/Portfile
+$(PORTFILE): distrib/macports/Portfile.in Makefile dist
 	rm -f $@ $@.tmp
 	rm -Rf distrib
 	srcdir=''; \
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(MKDIR_P) distrib/macports
-	md5=`md5sum $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
-	sha1=`openssl sha1 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
-	rmd160=`openssl rmd160 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`;
 	$(do_subst) $(srcdir)/$@.in >$@.tmp
 	chmod +x $@.tmp
 	chmod a-w $@.tmp
 	mv $@.tmp $@
-
 CLEANFILES = $(PORTFILE)
 
-
+.PHONY: port
 port: $(PORTFILE)
 
 # Set the package version to olena-x.x-snapshot-dd-mm-yy.
