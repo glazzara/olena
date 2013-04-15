@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +44,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction with a segment.
-      /*!
+      /*! \brief Browsing in a certain direction with a segment.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I', of dimension 'dim' in the direction 'dir' with
        * considering weigh the 'length' nearest points.
@@ -64,25 +64,25 @@ namespace mln
        *                      provided by the functor).
        *   - final()        : Will be called at the end.
        *
-       * F shall features : \n
-       * { \n
-       * --- as types: \n
-       *   I; \n
-       * --- as attributes: \n
-       *   dim; \n
-       *   dir; // and test dir < dim \n
-       *   input; \n
-       *   p; \n
-       *   length; \n
-       * --- as methods: \n
-       *   void init(); \n
-       *   void init_line(); \n
-       *   void add_point(q) \n
-       *   void remove_point(q) \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       *  F shall features : \n
+       - As types:
+         + I
+       - As attributes:
+         + dim
+         + dir // and test dir < dim
+         + input
+         + p
+         + length
+       - As methods:
+         + void init()
+         + void init_line()
+         + void add_point(q)
+         + void remove_point(q)
+         + void next()
+         + void final()
        *
+       *
+       * \ingroup modcanvasbrowsing
        */
       struct dir_struct_elt_incr_update_t : public Browsing< dir_struct_elt_incr_update_t >
       {
@@ -114,7 +114,7 @@ namespace mln
       void
       dir_struct_elt_incr_update_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::dir_struct_elt_incr_update");
+	mln_trace("canvas::browsing::dir_struct_elt_incr_update");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -214,7 +214,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::dir_struct_elt_incr_update");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

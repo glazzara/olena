@@ -1,0 +1,31 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class discrete_plane_1complex_geometry
+  	: public geom::complex_geometry<1, point2d>
+  {
+  public:
+	// Default constructor.
+	discrete_plane_1complex_geometry();
+  };
+
+
+  class discrete_plane_2complex_geometry
+  	: public mln::geom::complex_geometry<2, point2d>
+  {
+  public:
+	// Default constructor.
+	discrete_plane_2complex_geometry();
+  };
+
+
+  class space_2complex_geometry
+  	: public mln::geom::complex_geometry<2, point3df>
+  {
+  public:
+	// Default constructor.
+	space_2complex_geometry();
+  };
+}

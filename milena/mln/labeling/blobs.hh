@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,11 +48,11 @@ namespace mln
   namespace labeling
   {
 
-    /// Connected component labeling of the binary objects of a binary
-    ///  image.
+    /// \brief Connected component labeling of the binary objects of a
+    ///  binary image.
     ///
-    /// \param[in]  input    The input image.
-    /// \param[in]  nbh      The connexity of the objects.
+    /// \param[in] input    The input image.
+    /// \param[in] nbh      The connexity of the objects.
     /// \param[out] nlabels  The Number of labels. Its value is set in the
     ///			     algorithms.
     /// \return              The label image.
@@ -61,7 +61,7 @@ namespace mln
     ///
     /// A fast queue is used so that the algorithm is not recursive and
     /// can handle large binary objects (blobs).
-    ///
+    //
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     blobs(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -74,8 +74,10 @@ namespace mln
     namespace internal
     {
 
-      /// Functor not computing anything. To be passed to the labeling
-      /// blobs canvas.
+      /*!
+	\brief Functor not computing anything. To be passed to the labeling
+	blobs canvas.
+      */
       template <typename L>
       struct dummy_functor
       {
@@ -102,7 +104,7 @@ namespace mln
     blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	  L& nlabels)
     {
-      trace::entering("labeling::blobs");
+      mln_trace("labeling::blobs");
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
       const I& input = exact(input_);
@@ -114,7 +116,6 @@ namespace mln
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
-      trace::exiting("labeling::blobs");
       return output;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,24 +51,24 @@ namespace mln
   namespace geom
   {
 
-    /// \brief Take a labeled image \p ima_ with seeds and extend them until
-    /// creating tiles rounder than the primary version.
-    ///
-    /// \param[in,out] ima_   The labeled image with seed.
-    /// \param[in]     w_win  The weight window using by geom::chamfer to
-    ///                       compute distance.
-    /// \param[in]     max    Unsigned using by geom::chamfer to compute
-    ///                       the distance.
-    /// \param[in]     nbh_   The neighborhood to use on this algorithm.
-    ///
-    /// \pre \p ima_ has to be initialized.
-    ///
-    /// \{
+    /*! \brief Take a labeled image \p ima_ with seeds and extend them
+      until creating tiles rounder than the primary version.
+
+      \param[in,out] ima_   The labeled image with seed.
+      \param[in]     w_win  The weight window using by geom::chamfer to
+                            compute distance.
+      \param[in]     max    Unsigned using by geom::chamfer to compute
+                            the distance.
+      \param[in]     nbh_   The neighborhood to use on this algorithm.
+
+      \pre \p ima_ has to be initialized.
+
+      \ingroup mlngeom
+     */
     template <typename I, typename N>
     I
     seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win,
 			    unsigned max, const Neighborhood<N>& nbh_);
-    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -81,7 +82,7 @@ namespace mln
       seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
 			     unsigned max, const Neighborhood<N>& nbh_)
       {
-	trace::entering("geom::impl::seed2tiling_roundness");
+	mln_trace("geom::impl::seed2tiling_roundness");
 
 	I& ima = exact(ima_);
 	const N& nbh = exact(nbh_);
@@ -115,7 +116,6 @@ namespace mln
 	    }
 	}
 
-	trace::exiting("geom::impl::seed2tiling_roundness");
 	return out;
       }
 
@@ -129,12 +129,11 @@ namespace mln
     seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
 			   unsigned max, const Neighborhood<N>& nbh)
     {
-      trace::entering("geom::seed2tiling_roundness");
+      mln_trace("geom::seed2tiling_roundness");
 
       mln_precondition(exact(ima_).is_valid());
       I output = impl::seeds2tiling_roundness(ima_, w_win, max, nbh);
 
-      trace::exiting("geom::seed2tiling_roundness");
       return output;
     }
 

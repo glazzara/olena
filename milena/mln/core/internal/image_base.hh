@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,6 +33,7 @@
 ///
 /// \todo Provide coord iff the site is a grid point.
 
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
 # include <mln/core/trait/qlf_value.hh>
@@ -42,18 +43,6 @@
 # include <mln/util/tracked_ptr.hh>
 # include <mln/value/set.hh>
 # include <mln/value/super_value.hh>
-
-//              image_base
-//                   ^
-//                   |
-//       ---------------------------
-//      |                           |
-// image_primary               image_morpher
-//      ^                            ^
-//      |                            |
-//      |		     -----------------------------------------
-//	|		    |                    |                    |
-// pw_image_base    image_domain_morpher  image_value_morpher   image_identity
 
 
 namespace mln
@@ -72,12 +61,27 @@ namespace mln
     };
 
 
+    /*!
+      \brief A base class for images.
 
-    /// A base class for images.
-    ///
-    /// Parameter \p T is the image value type.
-    /// Parameter \p S is the image site set type.
-    //
+      Parameter \p T is the image value type.
+      Parameter \p S is the image site set type.
+
+      \verbatim
+                  image_base
+                       ^
+                       |
+           ---------------------------
+          |                           |
+     image_primary               image_morpher
+          ^                            ^
+          |                            |
+          |		     -----------------------------------------
+      	  | 		    |                    |                    |
+     pw_image_base    image_domain_morpher  image_value_morpher   image_identity
+
+     \endverbatim
+    */
     template <typename T, typename S, typename E>
     struct image_base
       :
@@ -142,27 +146,36 @@ namespace mln
       /// Copy constructor (performs a shallow copy).
       image_base(const image_base& rhs);
 
-      /// Give an identifier of this image.  When several image
-      /// variables designate the same image, they share the same
-      /// identifier.
+
+      /// \cond INTERNAL_API
+
+      /*!
+	\brief Give an identifier of this image.
+
+	When several image variables designate the same image, they
+	share the same identifier.
+      */
       const void* id_() const;
+
+      /// \brief Hook to the image data.
+      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
+
+      /// \endcond
 
 
       /// Detach data from an image (free it if nobody else hold it).
       void destroy();
-
-      /// Hook to the image data.
-      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
     protected:
 
       /// Constructor without argument.
       image_base();
 
-      // Internal data, sharable by several images.
+      /// \cond INTERNAL_API
+      /// Internal data, sharable by several images.
       util::tracked_ptr< internal::data<E> > data_;
+      /// \endcond
     };
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -267,6 +280,5 @@ namespace mln
   } // end of namespace mln::internal
 
 } // end of namespace mln
-
 
 #endif // ! MLN_CORE_INTERNAL_IMAGE_BASE_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,8 +70,16 @@ namespace scribo
     using namespace mln;
 
     /*! \brief Remove groups not having at least two background
-     *  components of \p min_size pixels.
+        components of \p min_size pixels.
 
+	In order to verify the property of "having two background
+	components", a component group must have at least one
+	component with a hole.
+
+	Example: the letter 'o' has two background components: outside
+	and inside the letter.
+
+	\ingroup grpalgofiltercompgroup
      */
     template <typename L>
     inline
@@ -119,7 +128,7 @@ namespace scribo
 	    unsigned
 	      nrows = geom::nrows(b),
 	      ncols = geom::ncols(b),
-	      row_offset = lbl.delta_index(D(+1, -ncols));
+	      row_offset = lbl.delta_offset(D(+1, -ncols));
 
 	    mln_value(L) *ptr = &output(b.pmin());
 	    for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)
@@ -151,7 +160,7 @@ namespace scribo
 	object_groups_with_holes(const object_groups<L>& groups,
 				 unsigned min_size)
 	{
-	  trace::entering("scribo::filter::impl::generic::object_groups_with_holes");
+	  mln_trace("scribo::filter::impl::generic::object_groups_with_holes");
 
 	  // Grouping groups and relabel the underlying labeled image.
 	  // Groups are now considered as components.
@@ -171,7 +180,7 @@ namespace scribo
 
 	  // Will store the first background component id associated
 	  // to a group.
-	  util::array<unsigned> bg_comps(
+	  mln::util::array<unsigned> bg_comps(
 	    value::next(components.nelements()), 0);
 
 	  // Will 'True' if a group has at least two background
@@ -206,7 +215,7 @@ namespace scribo
 
 	  // 1st pass
 	  {
-	    util::array<int> dp = positive_offsets_wrt(lbl, nbh);
+	    mln::util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	    const unsigned n_nbhs = dp.nelements();
 
 	    mln_bkd_pixter(const L) pxl(lbl); // Backward.
@@ -290,7 +299,6 @@ namespace scribo
 	  // No groups need to be invalidated.
 	  if (kept == components.nelements())
 	  {
-	    trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	    return groups.duplicate();
 	  }
 
@@ -300,7 +308,6 @@ namespace scribo
 	    if (! to_keep(group_2_comp(c)))
 	      output(c).invalidate();
 
-	  trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	  return output;
 
 	}
@@ -319,14 +326,13 @@ namespace scribo
     object_groups_with_holes(const object_groups<L>& groups,
 			     unsigned min_size)
     {
-      trace::entering("scribo::filter::object_groups_with_holes");
+      mln_trace("scribo::filter::object_groups_with_holes");
 
       mln_precondition(groups.is_valid());
 
       object_groups<L>
 	output = impl::generic::object_groups_with_holes(groups, min_size);
 
-      trace::exiting("scribo::filter::object_groups_with_holes");
       return output;
     }
 

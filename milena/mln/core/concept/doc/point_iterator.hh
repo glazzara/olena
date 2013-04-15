@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +36,7 @@ namespace mln
      */
     template <typename E>
     struct Site_Iterator : public Iterator<E>,
-		   public Generalized_Point<E>
+		   public Generalized_Pixel<E>
     {
       /*! \brief Point_Site associated type.
        * \invariant This type has to derive from mln::Point_Site.

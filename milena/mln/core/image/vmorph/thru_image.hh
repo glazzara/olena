@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +50,9 @@ namespace mln
     template <typename I, typename F> class thru_image_write;
     template <typename I, typename F> class thru_image_read;
 
-    /// Find correct implementation
+    /*!
+      \brief Find correct implementation
+    */
     template <typename I, typename F>
     struct thru_find_impl
     {
@@ -63,7 +65,9 @@ namespace mln
 		     write, read) ret;
     };
 
-    /// Data structure for \c mln::thru_image<I>.
+    /*!
+      \brief Data structure for \c mln::thru_image<I>.
+    */
     template <typename I, typename F>
     struct data< thru_image<I, F> >
     {
@@ -161,7 +165,10 @@ namespace mln
     thru_image(I& ima);
     thru_image(I& ima, const F& f);
 
+
+    /// \cond INTERNAL_API
     void init_(I& ima, const F& f);
+    /// \endcond
 
     /// Const promotion via conversion.
     operator thru_image<const I, F>() const;

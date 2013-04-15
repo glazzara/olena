@@ -1,0 +1,12 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class window2d
+  : public window<mln::dpoint2d>
+  {
+    ///	Default constructor.
+    window2d();
+  };
+}

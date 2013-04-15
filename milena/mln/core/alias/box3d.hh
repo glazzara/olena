@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,12 +39,52 @@
 namespace mln
 {
 
-  /// Type alias for a box defined on the 3D square grid with
-  /// integer coordinates.
-  ///
-  /// \see mln::win::rectangle3d.
-  typedef box<point3d> box3d;
+  /*!
+    \class mln::box3d
+    \headerfile <>
 
+    \brief A box defined on the 3D square grid with integer
+    coordinates.
+
+    This class is a site set of mln::point3d. It represents a rectangle of
+    mln::point3d which is usually used as domain for a mln::image3d.
+
+    mln::box3d is a typedef of box<mln::point3d>.
+
+    Iteration over the mln::point3d of a mln::box3d relies on p-iterators
+    and it can be performed using the following code:
+
+    \code
+    box3d b(3,3,3);
+    mln_piter(box3d) p(b);
+    for_all(p)
+      std::cout << p << std::endl;
+    \endcode
+
+    Common sites can be retrieved through pmin(), pmax() and pcenter().
+    \verbatim
+      pmin
+         X------------.
+        /|           /|
+       .-|---------./ |
+       | |    X    |  |
+       | .---------|--.-------->
+       |/  pcenter | /
+       |           |/
+       ------------X
+      /           pmax
+     /
+    \/
+    \endverbatim
+
+
+    \sa mln::make::box3d.
+
+    \ingroup modsitesetbasic
+  */
+  /// \cond ALIAS
+  typedef box<point3d> box3d;
+  /// \endcond
 
 } // end of namespace mln
 

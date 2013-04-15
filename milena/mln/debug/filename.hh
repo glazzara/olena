@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,18 +42,20 @@ namespace mln
   namespace debug
   {
 
-    /// Constructs and returns a formatted output file name.
-    /*!
-    ** The file name is formatted as follow:
-    **
-    ** `filename_prefix`_`id`_`filename`
-    **
-    ** Where:
-    **  - `filename_prefix` can be set through the global variable
-    **  debug::internal::filename_prefix.
-    ** - `postfix_id` is autoincremented by default. Its value can be
-         forced.
-    **  - `filename` is the given filename
+    /*! \brief Constructs and returns a formatted output file name.
+
+       The file name is formatted as follow:
+
+       `filename_prefix`_`id`_`filename`
+
+       Where:
+        \li `filename_prefix` can be set through the global variable
+           debug::internal::filename_prefix.
+        \li `postfix_id` is autoincremented by default. Its value can be
+          forced.
+        \li `filename` is the given filename
+
+	\ingroup mlndebug
     */
     std::string
     filename(const std::string& filename, int id);
@@ -62,6 +64,9 @@ namespace mln
     namespace internal
     {
 
+      /*! \brief Filename prefix used for debug images.
+	\ingroup mlndebug
+       */
       extern std::string filename_prefix;
 
     } // end of namespace mln::debug::internal

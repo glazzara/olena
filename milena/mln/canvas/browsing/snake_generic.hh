@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,33 +44,33 @@ namespace mln
     namespace browsing
     {
 
-      /// Multidimentional Browsing in a given-way.
-      /*!
-       * F shall feature: \n
-       * { \n
-       *   --- as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as methods: \n
-       *   void init(); \n
-       *   void *() moves[]; \n
-       *   dpsite dps[]; \n
-       * } \n
+      /*! \brief Multidimentional Browsing in a given-way.
        *
-       * init is called before browsing
+       * F shall feature: \n
+       - As attributes:
+         + input
+         + p
+       - As methods:
+         + void init()
+         + void *() moves[]
+         + dpsite dps[]
+       *
+       * init() is called before browsing
        *
        * The snake follow dimension using the delta point site of dps.
-       *     dps[0] = delta psite following the global dimension (forward)
-       *     dps[1] = delta psite following the 2nd dimension to follow (forward).
-       *     dps[2] = delta psite following the 2nd dimension to follow (backward).
-       *     dps[3] = delta psite following the 3nd dimension to follow (forward).
-       *     dps[3] = delta psite following the 3nd dimension to follow (backward).
+       *   -  dps[0] = delta psite following the global dimension (forward)
+       *   -  dps[1] = delta psite following the 2nd dimension to follow (forward).
+       *   -  dps[2] = delta psite following the 2nd dimension to follow (backward).
+       *   -  dps[3] = delta psite following the 3nd dimension to follow (forward).
+       *   -  dps[3] = delta psite following the 3nd dimension to follow (backward).
        *
-       * moves contains pointer to f's members. These merbers will be call in each time
-       * the snake progress in the correct dimension :
+       * moves contains pointer to f's members. These members will be
+       * called each time the snake progress in the correct dimension:
+       * moves[i] is called at each move following the delta psite
+       * dps[i].
        *
-       *      moves[i] is called at each move following the delta psite dps[i]
        *
+       * \ingroup modcanvasbrowsing
        */
 
       struct snake_generic_t : public Browsing< snake_generic_t >
@@ -105,7 +105,7 @@ namespace mln
       void
       snake_generic_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::snake_generic");
+	mln_trace("canvas::browsing::snake_generic");
 	mln_precondition(f.input.is_valid());
 
 	// p init
@@ -158,7 +158,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("canvas::browsing::snake_generic");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

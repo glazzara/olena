@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,7 +62,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::labeled_image<I>.
+    /*!
+      \brief Data structure for \c mln::labeled_image<I>.
+    */
     template <typename I>
     struct data< labeled_image<I> >
       : data< labeled_image_base<I, labeled_image<I> > >
@@ -127,15 +129,19 @@ namespace mln
 		  const util::array<mln_box(I)>& bboxes);
     /// @}
 
+    /// \cond INTERNAL_API
     /// Deferred initialization from a labeled image \p ima and the number
     /// of labels \p nlabels.
     void init_(const I& ima, const mln_value(I)& nlabels);
 
     /// Duplicate the underlying image and create a new labeled_image.
     void init_from_(const labeled_image<I>& model);
+    /// \endcond
 
   };
 
+
+  /// \cond INTERNAL_API
 
   // init_
 
@@ -144,7 +150,7 @@ namespace mln
   template <typename I, typename J>
   void init_(tag::image_t, labeled_image<I>& target,
 	     const labeled_image<J>& model);
-
+  /// \endcond
 
 
   namespace make

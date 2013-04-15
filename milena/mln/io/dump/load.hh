@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,10 +49,13 @@ namespace mln
     namespace dump
     {
 
-      /// Load a Milena image by dumped into a file.
-      ///
-      /// \param[in,out] ima_ The image to load.
-      /// \param[in] filename the destination.
+      /*! \brief Load a Milena image by dumped into a file.
+       *
+       * \param[in,out] ima_ The image to load.
+       * \param[in] filename the destination.
+       *
+       * \ingroup iodump
+       */
       template <typename I>
       void load(Image<I>& ima_, const std::string& filename);
 
@@ -170,7 +174,7 @@ namespace mln
       template <typename I>
       void load(Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::dump::load");
+	mln_trace("mln::io::dump::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -186,7 +190,6 @@ namespace mln
 
 	mln_postcondition(exact(ima).is_valid());
 
-	trace::exiting("mln::io::dump::load");
       }
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,9 +42,11 @@ namespace mln
   {
 
 
-    /*! Morphological thick-miss.
+    /*! \brief Morphological thick-miss.
      *
      * This operator is THICK_B = Id + HMTopeBG_B, where B = (Bfg, Bbg).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)
@@ -59,7 +62,7 @@ namespace mln
     thick_miss(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thick_miss");
+      mln_trace("morpho::thick_miss");
       // FIXME: Fix the following line (win_miss ??)
 //       mln_precondition(exact(win_miss).is_centered());
       mln_precondition((exact(win_fg) && exact(win_bg)).is_empty());
@@ -69,7 +72,6 @@ namespace mln
 			       hit_or_miss_background_opening(input,
 							      win_fg, win_bg) );
 
-      trace::exiting("morpho::thick_miss");
       return output;
     }
 

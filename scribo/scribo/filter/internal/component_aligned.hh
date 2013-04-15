@@ -89,7 +89,7 @@ namespace scribo
 			    unsigned current_object, unsigned nbh_object,
 			    anchor::Type anchor, float max_alpha_rad)
       {
-	trace::entering("scribo::filter::internal::component_aligned_rad");
+	mln_trace("scribo::filter::internal::component_aligned_rad");
 
 	mln_precondition(comps.is_valid());
 
@@ -98,7 +98,6 @@ namespace scribo
 
 	bool output = (angle <= max_alpha_rad);
 
-	trace::exiting("scribo::filter::internal::component_aligned_rad");
 	return output;
       }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,7 @@ namespace mln
   namespace data
   {
 
-    /*! Apply a function-object to the image \p input.
+    /*! \brief Apply a function-object to the image \p input.
      *
      * \param[in,out] input The input image.
      * \param[in] f The function-object.
@@ -56,6 +57,8 @@ namespace mln
      * but it is faster since a single iterator is required.
      *
      * \todo Add versions for lowq images.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename F>
     void apply(Image<I>& input, const Function_v2v<F>& f);
@@ -74,13 +77,12 @@ namespace mln
 	inline
 	void apply_(I& input, const F& f)
 	{
-	  trace::entering("data::impl::generic::apply_");
+	  mln_trace("data::impl::generic::apply_");
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    input(p) = f(input(p));
 
-	  trace::exiting("data::impl::generic::apply_");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -94,13 +96,12 @@ namespace mln
     inline
     void apply(Image<I>& input, const Function_v2v<F>& f)
     {
-      trace::entering("data::apply");
+      mln_trace("data::apply");
 
       mln_precondition(exact(input).is_valid());
       impl::apply_(mln_trait_image_speed(I)(), exact(input),
 		   exact(f));
 
-      trace::exiting("data::apply");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

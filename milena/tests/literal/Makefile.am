@@ -19,8 +19,13 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   black						\
+  colors					\
+  identity					\
+  max 						\
   medium_gray					\
+  min						\
   one						\
+  origin 					\
   white						\
   zero
 

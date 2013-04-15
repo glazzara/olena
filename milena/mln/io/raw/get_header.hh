@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +50,10 @@ namespace mln
     namespace raw
     {
 
-      /// Store raw file header.
+      /*! \brief Store raw file header.
+       *
+       * \ingroup ioraw
+       */
       struct raw_header
       {
 	unsigned dim;
@@ -58,7 +62,10 @@ namespace mln
       };
 
 
-      /// Retrieve header in a raw file.
+      /*! \brief Retrieve header from a raw file.
+       *
+       * \ingroup ioraw
+       */
       raw_header get_header(const std::string& filename);
 
 
@@ -67,7 +74,7 @@ namespace mln
 
       raw_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::raw::get_header");
+	mln_trace("mln::io::raw::get_header");
 
 	raw_header header;
 
@@ -119,7 +126,6 @@ namespace mln
 
 	info_file.close();
 
-	trace::exiting("mln::io::raw::get_header");
 	return header;
       }
 

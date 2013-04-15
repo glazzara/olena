@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,9 @@ namespace mln
   namespace debug
   {
 
-    /// Print the image \p input on the standard output.
+    /*! \brief Print the image \p input on the standard output.
+      \ingroup mlndebug
+     */
     template <typename I>
     void println_with_border(const Image<I>& input);
 

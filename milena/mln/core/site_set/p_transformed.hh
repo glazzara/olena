@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,6 +65,8 @@ namespace mln
   /// \param[in] f A function from site to site.
   ///
   /// \return The transformed site set.
+  ///
+  /// \relates p_transformed<S,F>
   //
   template <typename S, typename F>
   p_transformed<S, F>

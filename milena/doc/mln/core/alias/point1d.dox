@@ -1,0 +1,61 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  struct point1d
+     : public point<mln::grid::tick, mln::def::coord>,
+       // We must add this inheritance here to help doxygen finding
+       // the right specialization.
+       public internal::mutable_coord_impl_< 1, C, E >
+  {
+      /// Constructor without argument.
+      point1d();
+
+      /// Construct a 1D point from an algebra vector.
+      template <typename C2>
+      point1d(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct a 1D point from an algebra vector.
+      point1d(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct a 1D point at index \p ind.
+      point1d(mln::def::coord ind);
+
+      /// \brief Construct a 1D point at (0).
+      point1d(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point1d(const Function_v2v<F>& f);
+  };
+
+
+  struct point1df
+        : public point<mln::grid::tick, mln::def::coordf>,
+	  // We must add this inheritance here to help doxygen finding
+          // the right specialization.
+ 	  public internal::mutable_coord_impl_< 1, C, E >
+  {
+      /// Constructor without argument.
+      point1df();
+
+      /// Construct a 1D point from an algebra vector.
+      template <typename C2>
+      point1df(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct a 1D point from an algebra vector.
+      point1df(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct a 1D point at index \p ind.
+      point1df(mln::def::coord ind);
+
+      /// \brief Construct a 1D point at (0,0).
+      point1df(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point1df(const Function_v2v<F>& f);
+  };
+
+}

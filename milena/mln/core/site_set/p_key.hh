@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -124,7 +125,9 @@ namespace mln
     void insert(const K& k, const P& p);
 
 
+    /// \cond INTERNAL_API
     void unsafe_insert_(const K& k, const P& p);
+    /// \endcond
 
 
 
@@ -165,10 +168,11 @@ namespace mln
     /// Test if the \p priority exists.
     bool exists_key(const K& key) const;
 
-
+    /// \cond INTERNAL_API
     // Required by p_double-related classes.
     const util::set<K>& set_1_() const;
     const p_set<P>& set_2_(const K& key) const;
+    /// \endcond
 
 
     /// Return the size of this site set in memory.
@@ -195,7 +199,7 @@ namespace mln
   };
 
 
-
+  /// \relates p_key
   template <typename K, typename P>
   std::ostream& operator<<(std::ostream& ostr, const p_key<K,P>& pk);
 

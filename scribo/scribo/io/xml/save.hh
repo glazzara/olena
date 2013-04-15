@@ -128,7 +128,7 @@ namespace scribo
 	   const std::string& output_name,
 	   Format format)
       {
-	trace::entering("scribo::io::xml::save");
+	mln_trace("scribo::io::xml::save");
 
 	mln_precondition(doc.is_open());
 
@@ -159,11 +159,11 @@ namespace scribo
 # endif // ! HAVE_QT
 
 	  default:
-	    trace::warning("scribo::io::xml::save - Invalid XML format! Skip saving...");
+	    mln_trace_warning("scribo::io::xml::save - "
+			      "Invalid XML format! Skip saving...");
 	}
 
 	output.close();
-	trace::exiting("scribo::io::xml::save");
       }
 
 

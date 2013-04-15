@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,6 +35,8 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling/video.hh>
 # include <mln/data/fill.hh>
+# include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 
 
 
@@ -50,6 +53,7 @@ namespace mln
     /// \param[in]  val      The value to consider.
     /// \param[in]  nbh      The connectivity of components.
     /// \param[out] nlabels  The number of labels.
+    /// \param[in]  accu     The accumulator to be computed.
     /// \return              The label image.
     //
     template <typename I, typename N, typename L, typename A>
@@ -170,7 +174,7 @@ namespace mln
 	inline
 	void process__(const mln_psite(I)&, unsigned p, const L& l)
 	{
-	  accus_[l].take(input.point_at_index(p));
+	  accus_[l].take(input.point_at_offset(p));
 	}
 
 
@@ -211,7 +215,7 @@ namespace mln
 		      const Neighborhood<N>& nbh, L& nlabels,
 		      const Accumulator<A>& accu)
     {
-      trace::entering("labeling::value_and_compute");
+      mln_trace("labeling::value_and_compute");
 
       internal::value_and_compute_tests(input, val, nbh, nlabels, accu);
 
@@ -225,7 +229,6 @@ namespace mln
 			      make::couple(f.result_, f.accus_));
 
 
-      trace::exiting("labeling::value_and_compute");
       return result;
     }
 

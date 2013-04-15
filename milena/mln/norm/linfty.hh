@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,9 @@ namespace mln
   namespace norm
   {
 
-    /// L-infinity-norm of a vector \a vec.
+    /*! \brief L-infinity-norm of a vector \a vec.
+      \ingroup mlnlinear
+    */
     /// \{
     template <unsigned n, typename C>
     C linfty(const C (&vec)[n]);
@@ -53,7 +56,10 @@ namespace mln
     /// \}
 
 
-    /// L-infinity-norm distance between vectors \a vec1 and \a vec2.
+    /*! \brief L-infinity-norm distance between vectors \a vec1 and \a
+      vec2.
+      \ingroup mlnlinear
+    */
     /// \{
     template <unsigned n, typename C>
     C linfty_distance(const C (&vec1)[n], const C (&vec2)[n]);

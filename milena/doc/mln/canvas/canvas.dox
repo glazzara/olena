@@ -1,0 +1,27 @@
+/*! \defgroup modcanvas Canvas
+ *
+ * \brief All canvas.
+ *
+ */
+
+
+/*! \defgroup modcanvasbrowsing Browsing Canvas
+ *
+ * \brief All browsing canvas.
+ *
+ * \ingroup modcanvas
+ */
+
+/*! \defgroup modcanvaslabeling Labeling Canvas
+ *
+ * \brief All labeling canvas.
+ *
+ * \ingroup modcanvas
+ */
+
+/*! \defgroup modcanvasmorpho Morphology Related Canvas
+ *
+ * \brief All Morphology related canvas.
+ *
+ * \ingroup modcanvas
+ */

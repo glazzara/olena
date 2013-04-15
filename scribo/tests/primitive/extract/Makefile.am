@@ -1,4 +1,5 @@
-# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,9 +21,15 @@ EXTRA_DIST = 				\
 	  alignment_1.ref.pbm		\
 	  alignment_2.ref.pbm		\
 	  alignment_3.ref.pbm		\
-	  alignment_4.ref.pbm
+	  alignment_4.ref.pbm		\
+	  lines_v_pattern.ref.pbm	\
+	  lines_h_pattern.ref.pbm
 
-check_PROGRAMS =
+check_PROGRAMS = lines_discontinued	\
+		 lines_h_discontinued	\
+		 lines_v_discontinued	\
+		 lines_v_pattern	\
+		 lines_h_pattern
 
 if HAVE_MAGICKXX
 

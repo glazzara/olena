@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,7 +76,7 @@ namespace mln
       inline
       void fill_with_value_one_block(Image<I>& ima_, const V& val)
       {
-	trace::entering("data::impl::fill_with_value_one_block");
+	mln_trace("data::impl::fill_with_value_one_block");
 
 	I& ima = exact(ima_);
 
@@ -88,16 +89,15 @@ namespace mln
                        trait::image::value_access::direct))::check();
 
 	mln_value(I) v = static_cast<mln_value(I)>(val);
-        data::memset_(ima, ima.point_at_index(0), v, opt::nelements(ima));
+        data::memset_(ima, ima.point_at_offset(0), v, opt::nelements(ima));
 
-	trace::exiting("data::impl::fill_with_value_one_block");
       }
 
       template <typename I, typename V>
       inline
       void fill_with_value_cell_wise(Image<I>& ima_, const V& val)
       {
-	trace::entering("data::impl::fill_with_value_cell_wise");
+	mln_trace("data::impl::fill_with_value_cell_wise");
 
 	I& ima = exact(ima_);
 
@@ -107,14 +107,13 @@ namespace mln
 	for_all(v)
 	  v.change_to(val);
 
-	trace::exiting("data::impl::fill_with_value_cell_wise");
       }
 
       template <typename I, typename V>
       inline
       void fill_with_value_singleton(Image<I>& ima_, const V& val)
       {
-        trace::entering("data::impl::fill_with_value_singleton");
+        mln_trace("data::impl::fill_with_value_singleton");
 
 	I& ima = exact(ima_);
 
@@ -126,7 +125,6 @@ namespace mln
 
         opt::value(ima) = static_cast<mln_value(I)>(val);
 
-	trace::exiting("data::impl::fill_with_value_singleton");
       }
 
     } // end of namespace mln::data::impl

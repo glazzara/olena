@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too verticaly thick components.
+/// \brief Remove too verticaly thick components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -46,7 +46,8 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components verticaly thicker or equal to \p max_thickness.
+    /// \brief Remove components verticaly thicker or equal to \p
+    /// max_thickness.
     ///
     /// \param[in] input_ A binary image.
     /// \param[in] nbh_ A neighborhood used in labeling algorithms.
@@ -54,6 +55,8 @@ namespace scribo
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result A binary image without thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -64,12 +67,15 @@ namespace scribo
 		    unsigned max_thickness);
 
 
-    /// Remove components verticaly thicker or equal to \p max_thickness.
+    /// \brief Remove components verticaly thicker or equal to \p
+    /// max_thickness.
     ///
     /// \param[in] comps A component set.
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result An object image without too thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline
@@ -150,7 +156,7 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_v_thick");
+      mln_trace("scribo::filter::objects_v_thick");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -162,7 +168,6 @@ namespace scribo
       mln_concrete(I)
 	output = internal::compute(input, nbh, label_type, functor);
 
-      trace::exiting("scribo::filter::objects_v_thick");
       return output;
     }
 
@@ -173,12 +178,11 @@ namespace scribo
     objects_v_thick(const component_set<L>& comps,
 		    unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_v_thick");
+      mln_trace("scribo::filter::objects_v_thick");
 
       internal::v_thick_object_filter<L> functor(comps, max_thickness);
       component_set<L> output = internal::compute(comps, functor);
 
-      trace::exiting("scribo::filter::objects_v_thick");
       return output;
     }
 

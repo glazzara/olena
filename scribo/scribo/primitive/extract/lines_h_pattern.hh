@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +44,6 @@
 
 # include <scribo/primitive/internal/rd.hh>
 
-
 namespace scribo
 {
 
@@ -79,6 +78,7 @@ namespace scribo
 	Using a delta of 0 is equivalent to the use of a c2_row
 	neighborhood.
 
+	\ingroup extractprimitiveseps
       */
       template <typename I>
       mln_concrete(I)
@@ -91,7 +91,7 @@ namespace scribo
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
-	trace::entering("scribo::primitive::extract::lines_h_pattern");
+	mln_trace("scribo::primitive::extract::lines_h_pattern");
 
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
@@ -106,14 +106,16 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 1, win);
 
+	unsigned hl = length;
+	if (! (hl % 2))
+	  ++hl;
+	win::rectangle2d w(delta, hl);
+
 	mln_concrete(I)
-	  output_dil = morpho::dilation(output,
-					win::rectangle2d(2 * delta + 1,
-							 length + 2));
+	  output_dil = morpho::dilation(output, w);
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 
-	trace::exiting("scribo::primitive::extract::lines_h_pattern");
 	return output;
       }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +47,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::lazy_image<I>.
+    /*!
+      \brief Data structure for \c mln::lazy_image<I>.
+    */
     template <typename I, typename F, typename B>
     struct data< lazy_image<I,F,B> >
     {
@@ -115,8 +118,10 @@ namespace mln
     /// Constructors.
     lazy_image(const F& fun, const B& box);
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const F& fun, const B& box);
+    /// \endcond
 
     /// Return domain of lazyd_image.
     const box<mln_psite(I)>& domain() const;

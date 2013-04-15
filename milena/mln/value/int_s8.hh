@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,8 +42,19 @@ namespace mln
   {
 
 
-    /// Alias for signed 8-bit integers.
+    /*!
+      \struct int_s8
+      \headerfile <>
+
+      \brief Alias for signed 8-bit integers.
+
+      \ingroup valueint
+      \relates int_s
+    */
+    /// \cond ALIASES
     typedef int_s<8> int_s8;
+    /// \endcond
+
 
 
   } // end of namespace mln::value

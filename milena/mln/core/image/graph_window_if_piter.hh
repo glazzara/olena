@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,7 @@
 ///
 /// \brief Definition of a site iterator on a custom graph window.
 
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/is_masked_impl_selector.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
@@ -42,7 +44,9 @@ namespace mln
 
 
 
-  /// Forward iterator on line graph window.
+  /*!
+    \brief Forward iterator on line graph window.
+  */
   template <typename S, typename W, typename I>
   class graph_window_if_piter
     : public internal::site_relative_iterator_base< W,
@@ -68,6 +72,7 @@ namespace mln
 			  const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Window<W>& win, const Pref& p_ref);
@@ -92,11 +97,12 @@ namespace mln
     template <typename I2>
     void center_at_(const p_graph_piter<S, I2>& c);
 
-    /// Return the graph element pointed by this iterator.
-    const mln_graph_element(S)& element() const;
-
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
+    /// \endcond
+
+    /// Return the graph element pointed by this iterator.
+    const mln_graph_element(S)& element() const;
 
     /// Return the graph element id.
     /// FIXME: we do not want to have this member since there is an

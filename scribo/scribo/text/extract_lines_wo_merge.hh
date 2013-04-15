@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Extract line of text bounding boxes.
+/// \brief Extract line of text bounding boxes.
 
 
 # include <mln/core/concept/image.hh>
@@ -62,30 +63,38 @@ namespace scribo
 
     using namespace mln;
 
-    /// Extract lines of text in a binary image.
-    /*!
-    ** \param[in]     input  A binary image.
-    ** \param[in]     nbh    A neighborhood used for labeling.
-    ** \param[in]     seps   A binary image with separator information.
-    **
-    ** \return A set of lines.
-    */
+    /*! \brief Extract lines of text in a binary image.
+     *
+     * \param[in]     input  A binary image.
+     * \param[in]     nbh    A neighborhood used for labeling.
+     * \param[in]     separators A binary image with separator information.
+     *
+     * \return A set of lines.
+     *
+     * \ingroup grptext
+     */
     template <typename I, typename N>
     line_set<mln_ch_value(I,scribo::def::lbl_type)>
-    extract_lines_wo_merge(const Image<I>& input_, const Neighborhood<N>& nbh_,
+    extract_lines_wo_merge(const Image<I>& input, const Neighborhood<N>& nbh,
 			   const mln_ch_value(I,bool)& separators);
 
-    /// \overload
+    /*! \overload
+      \ingroup grptext
+    */
     template <typename I, typename N>
     line_set<mln_ch_value(I,scribo::def::lbl_type)>
     extract_lines_wo_merge(const Image<I>& input, const Neighborhood<N>& nbh);
 
-    /// \overload
+    /*! \overload
+      \ingroup grptext
+    */
     template <typename L, typename N>
     line_set<mln_ch_value(L,scribo::def::lbl_type)>
     extract_lines_wo_merge(const document<L>& doc, const Neighborhood<N>& nbh);
 
-    /// \overload
+    /*! \overload
+      \ingroup grptext
+    */
     template <typename L, typename N>
     line_set<mln_ch_value(L,scribo::def::lbl_type)>
     extract_lines_wo_merge(const document<L>& doc, const Neighborhood<N>& nbh,
@@ -128,7 +137,7 @@ namespace scribo
     extract_lines_wo_merge(const Image<I>& input_, const Neighborhood<N>& nbh_,
 			   const mln_ch_value(I,bool)& separators)
     {
-      trace::entering("scribo::text::extract_lines_wo_merge");
+      mln_trace("scribo::text::extract_lines_wo_merge");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -176,7 +185,6 @@ namespace scribo
 
       line_set<L> lines(groups);
 
-      trace::exiting("scribo::text::extract_lines_wo_merge");
       return lines;
     }
 

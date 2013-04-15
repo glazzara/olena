@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,9 +76,7 @@ int main(int argc, char* argv[])
 				"input.tif out.xml",
 				args_desc);
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -87,10 +85,13 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> input;
   mln::io::magick::load(input, argv[1]);
 
+  mln::debug::internal::filename_prefix = basename(argv[1]);
+
   // Preprocess document
   image2d<bool> input_preproc;
   {
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, 0.34);
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, 0.34,
+						      false, false);
 
     // Cleanup components on borders
     {
@@ -106,7 +107,8 @@ int main(int argc, char* argv[])
 	    || bbox(e).pmax().row() == b.pmax().row()
 	    || bbox(e).pmin().col() == b.pmin().col()
 	    || bbox(e).pmax().col() == b.pmax().col())
-	  data::fill(((input_preproc | bbox(e)).rw() | (pw::value(lbl) == pw::cst(e))).rw(), false);
+	  data::fill(((input_preproc | bbox(e)).rw()
+		      | (pw::value(lbl) == pw::cst(e))).rw(), false);
     }
   }
 
@@ -131,5 +133,10 @@ int main(int argc, char* argv[])
   scribo::io::xml::save(doc, argv[2], scribo::io::xml::Page);
   std::cout << "End of process - " << t << std::endl;
 
-  trace::exiting("main");
+  scribo::io::img::save(doc, mln::debug::filename("debug_wo_image.png"),
+			scribo::io::img::DebugWoImage);
+  scribo::io::img::save(doc, mln::debug::filename("debug_with_image.png"),
+			scribo::io::img::DebugWithImage);
+
+
 }

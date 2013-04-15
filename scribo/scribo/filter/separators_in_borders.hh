@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate false positive separators.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate false positive separators.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -46,27 +47,36 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate separators located close to the image borders.
-    ///
-    /// \param[in,out] doc A document structure.
-    ///
-    /// Warning: it does not remove separators from separator
-    /// image. It only invalidate separator components in their
-    /// respective component_set.
-    ///
-    /// \verbatim
-    ///
-    ///  -----------
-    ///  |_!____!__|
-    ///  | !    ! <--------- Separators located in this area are
-    ///  | !    !  |         invalidated.
-    ///  | !    !  |
-    ///  |_!____!__|
-    ///  | !    !  |
-    ///  -----------
-    ///
-    /// \endverbatim
-    //
+    /*! \brief Invalidate separators located close to the image
+      borders.
+
+       \param[in,out] doc A document structure.
+       \param[in] vratio Ratio to be used for evaluating the inner
+                         border size in which vertical separators
+                         will be invalidated.
+       \param[in] hratio Ratio to be used for evaluating the inner
+                         border size in which horizontal separators
+                         will be invalidated.
+
+       \warning it does not remove separators from separator image. It
+       only invalidate separator components in their respective
+       component_set.
+
+       \verbatim
+
+        -----------
+        |_!____!__|
+        | !    ! <--------- Separators located in this area are
+        | !    !  |         invalidated.
+        | !    !  |
+        |_!____!__|
+        | !    !  |
+        -----------
+
+	\endverbatim
+
+       \ingroup grpalgofilterelt
+    */
     template <typename L>
     void
     separators_in_borders(document<L>& doc, float vratio, float hratio);
@@ -78,7 +88,7 @@ namespace scribo
     void
     separators_in_borders(document<L>& doc, float vratio, float hratio)
     {
-      trace::entering("scribo::filter::separators_in_borders");
+      mln_trace("scribo::filter::separators_in_borders");
 
       mln_precondition(doc.is_valid());
 
@@ -194,7 +204,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_in_borders");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

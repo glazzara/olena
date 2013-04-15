@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,11 +42,13 @@ namespace mln
   namespace internal
   {
 
-    /*! Factorization class for run_image.
-     * Parameter \c T is the type of the image value.
-     * Parameter \c P is the type of the image point.
-     * Parameter \c E is the Exact type of the image.
-     */
+    /*!
+      \brief Factorization class for run_image.
+
+      Parameter \c T is the type of the image value.
+      Parameter \c P is the type of the image point.
+      Parameter \c E is the Exact type of the image.
+    */
     template <typename T, typename P, typename E>
     class run_image_ : public internal::image_primary< P, p_set_of< p_run<P> >, E >
     {

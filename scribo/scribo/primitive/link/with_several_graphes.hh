@@ -70,7 +70,7 @@ namespace scribo
       with_several_graphes(const component_set<L>& comps,
 			   unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_several_graphes");
+	mln_trace("scribo::primitive::link::with_several_graphes");
 
 	mln::util::graph g(comps.nelements().next());
 
@@ -112,7 +112,6 @@ namespace scribo
 
 	}
 
-	trace::exiting("scribo::primitive::link::with_several_graphes");
 	return g;
       }
 

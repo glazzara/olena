@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,7 @@
 ///
 /// Define an accumulator that counts the number of different labels.
 
+# include <vector>
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/metal/is_a.hh>

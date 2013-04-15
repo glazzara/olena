@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,12 +52,14 @@ namespace mln
     namespace pgms
     {
 
-      /// Load pgm images as slices of a 3D Milena image.
-      ///
-      /// \param[out] ima A reference to the 3D image which will receive
-      /// data.
-      /// \param[in] filenames The list of 2D images to load..
-      ///
+      /*! \brief Load pgm images as slices of a 3D Milena image.
+       *
+       * \param[out] ima A reference to the 3D image which will receive
+       * data.
+       * \param[in] filenames The list of 2D images to load..
+       *
+       * \ingroup iopgm
+       */
       template <typename V>
       void load(image3d<V>& ima,
 		const util::array<std::string>& filenames);
@@ -69,11 +72,10 @@ namespace mln
       void load(image3d<V>& ima,
 		const util::array<std::string>& filenames)
       {
-	trace::entering("mln::io::pgms::load");
+	mln_trace("mln::io::pgms::load");
 
 	io::pnms::load<V>(PGM, ima, filenames);
 
-	trace::exiting("mln::io::pgms::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -28,7 +28,7 @@
 ///
 /// \brief Find in a document non text which are not text.
 ///
-/// \fixme To be optimized!
+/// FIXME: To be optimized!
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_KMEAN_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_KMEAN_HH
@@ -109,7 +109,7 @@ namespace scribo
       component_set<L>
       non_text_kmean(const document<L>& doc, const Image<I>& input_)
       {
-	trace::entering("scribo::primitive::extract::non_text_kmean");
+	mln_trace("scribo::primitive::extract::non_text_kmean");
 
 	const I& input = exact(input_);
 	mln_precondition(doc.is_valid());
@@ -208,7 +208,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("scribo::primitive::extract::non_text_kmean");
 	return output;
       }
 

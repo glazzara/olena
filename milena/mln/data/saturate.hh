@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ namespace mln
   {
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in] v     A value of the output type.
      * \param[in] input The input image.
@@ -50,17 +51,21 @@ namespace mln
      * The saturation is based on the min and max values of the output
      * value type.  This assumes that the range of values in the input
      * image is larger than the one of the output image.
+     *
+     * \ingroup mlndata
      */
     template <typename V, typename I>
     mln_ch_value(I, V)
     saturate(V v, const Image<I>& input);
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in] input The input image.
      * \param[in] min The minimum output value.
      * \param[in] max The maximum output value.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename V>
     mln_ch_value(I, V)
@@ -68,11 +73,13 @@ namespace mln
 	     const V& min, const V& max);
 
 
-    /*! Apply the saturate function to image pixel values.
+    /*! \brief Apply the saturate function to image pixel values.
      *
      * \param[in,out] input The input image.
      * \param[in] min The minimum output value.
      * \param[in] max The maximum output value
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void saturate_inplace(Image<I>& input,
@@ -86,14 +93,13 @@ namespace mln
     mln_ch_value(I, V)
     saturate(V, const Image<I>& input)
     {
-      trace::entering("data::saturate");
+      mln_trace("data::saturate");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f;
       mln_ch_value(I, V) output = data::transform(input, f);
 
-      trace::exiting("data::saturate");
       return output;
     }
 
@@ -103,14 +109,13 @@ namespace mln
     saturate(const Image<I>& input,
 	     const V& min, const V& max)
     {
-      trace::entering("data::saturate");
+      mln_trace("data::saturate");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f(min, max);
       mln_ch_value(I, V) output = data::transform(input, f);
 
-      trace::exiting("data::saturate");
       return output;
     }
 
@@ -119,14 +124,13 @@ namespace mln
     void saturate_inplace(Image<I>& input,
 			  const mln_value(I)& min, const mln_value(I)& max)
     {
-      trace::entering("data::saturate_inplace");
+      mln_trace("data::saturate_inplace");
 
       mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<mln_value(I)> f(min, max);
       data::apply(input, f);
 
-      trace::exiting("data::saturate_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

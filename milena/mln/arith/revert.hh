@@ -92,7 +92,7 @@ namespace mln
 	inline
 	void revert(const Image<I>& input_, Image<O>& output_)
 	{
-	  trace::entering("arith::impl::generic::revert_");
+	  mln_trace("arith::impl::generic::revert_");
 
 	  const I& input = exact(input_);
 	  O& output = exact(output_);
@@ -106,7 +106,6 @@ namespace mln
 	  for_all(p)
 	    output(p) = mln_min(V) + (mln_max(V) - input(p));
 
-	  trace::exiting("arith::impl::generic::revert_");
 	}
 
       } // end of namespace mln::arith::impl::generic
@@ -157,7 +156,7 @@ namespace mln
     inline
     mln_concrete(I) revert(const Image<I>& input)
     {
-      trace::entering("arith::revert");
+      mln_trace("arith::revert");
 
       mln_precondition(exact(input).is_valid());
 
@@ -165,7 +164,6 @@ namespace mln
       initialize(output, input);
       internal::revert_dispatch(exact(input), exact(output));
 
-      trace::exiting("arith::revert");
       return output;
     }
 
@@ -173,13 +171,12 @@ namespace mln
     inline
     void revert_inplace(Image<I>& input)
     {
-      trace::entering("arith::revert_inplace");
+      mln_trace("arith::revert_inplace");
 
       mln_precondition(exact(input).is_valid());
 
       internal::revert_dispatch(exact(input), exact(input));
 
-      trace::exiting("arith::revert_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -92,17 +93,22 @@ namespace mln
     /// \pre Member face_ is valid.
     const target& site_set() const;
 
+    /// \cond INTERNAL_API
     /// Get a pointer to the target site_set.
     const target* target_() const;
+    /// \endcond
+
     /// Set the target site_set.
     void change_target(const target& new_target);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Proxy manipulators.
     /// \{
     /// Return the site corresponding to this psite.
     const mln_site(G)& subj_();
     /// \}
+    /// \endcond
 
     /// Face handle manipulators.
     /// \{
@@ -156,6 +162,7 @@ namespace mln
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
   /// mln::p_complex.
+  /// \relates mln::complex_psite<D,G>
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
   template <unsigned D, typename G>
@@ -167,6 +174,7 @@ namespace mln
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
   /// mln::p_complex.
+  /// \relates mln:complex_psite<D,G>
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
   template <unsigned D, typename G>
@@ -180,6 +188,7 @@ namespace mln
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
   /// mln::p_complex.
+  /// \relates mln::complex_psite<D,G>
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
   template <unsigned D, typename G>
@@ -188,7 +197,7 @@ namespace mln
 	     const complex_psite<D, G>& rhs);
   /// \}
 
-
+  /// \relates mln::complex_psite<D,G>
   template <unsigned D, typename G>
   inline
   std::ostream&
@@ -227,7 +236,7 @@ namespace mln
   complex_psite<D, G>::complex_psite(const p_complex<D, G>& pc,
 				     unsigned n, unsigned face_id)
     : pc_(&pc),
-      face_(pc.cplx(), n, face_id)  
+      face_(pc.cplx(), n, face_id)
   {
     if (is_valid())
       update_();

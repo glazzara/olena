@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,11 +43,13 @@ namespace mln
   {
 
 
-    /// Adapter class from window to neighborhood.
-    ///
-    /// \tparam W The underlying window type.
-    /// \tparam E The exact neighborhood type.
-    //
+    /*!
+      \internal
+      \brief Adapter class from window to neighborhood.
+
+      \tparam W The underlying window type.
+      \tparam E The exact neighborhood type.
+    */
     template <typename W, typename E>
     class neighb_base
       : public internal::neighborhood_base< W, E >,
@@ -67,8 +70,10 @@ namespace mln
       void change_window(const W& new_win);
 
 
-      /// \internal Hook to the window.
+      /// \cond INTERNAL_API
+      /// \brief Hook to the window.
       W& hook_win_();
+      /// \endcond
 
       private:
 

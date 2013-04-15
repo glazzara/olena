@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2099.5906"
+   height="1353.4995"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="genericity.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path4297"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path4294"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2956"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3030"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3104"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3253"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3363"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3437"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.32014852"
+     inkscape:cx="1160.7884"
+     inkscape:cy="650.81386"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1592"
+     inkscape:window-height="1149"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(596.74498,224.88271)">
+    <rect
+       style="fill:#fff6d5;stroke:#000000;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2885"
+       width="893.33527"
+       height="409.18506"
+       x="602.84521"
+       y="419.55798"
+       transform="translate(-596.74498,-224.88271)"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <g
+       id="g3451"
+       transform="translate(-318.60213,374.82603)"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75">
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/bunny-holefilled.png"
+         width="450"
+         height="450"
+         id="image2958"
+         x="-278.14285"
+         y="-138.3521" />
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/classgradi.png"
+         width="454.28574"
+         height="448.57144"
+         id="image3106"
+         x="-278.14285"
+         y="305.21933" />
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/lena.png"
+         width="452"
+         height="460.57141"
+         id="image3365"
+         x="-278.14285"
+         y="-599.70874" />
+    </g>
+    <g
+       id="g3456"
+       transform="translate(371.7026,371.07634)"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75">
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/bunny-holefilled-complex-pinv-curv-area-500-segm.png"
+         width="450"
+         height="450"
+         id="image3032"
+         x="681.14288"
+         y="-144.06639" />
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/classwst2b.png"
+         width="448.57144"
+         height="451.42856"
+         id="image3255"
+         x="681.14288"
+         y="305.21933" />
+      <image
+         xlink:href="file:///home/lazzara/svn/lrde-publis/trunk/lrde-a2si/levillain.10.icip/figs/lena-s.png"
+         width="449.14285"
+         height="449.14285"
+         id="image3439"
+         x="681.14288"
+         y="-595.06647" />
+    </g>
+    <g
+       id="g3471"
+       transform="translate(-74.310365,74.19173)"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75">
+      <rect
+         y="271.47461"
+         x="109.32426"
+         height="212.40141"
+         width="368.57892"
+         id="rect3463"
+         style="fill:#f9f9f9;stroke:#000000;stroke-width:0.96799999;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         id="text3465"
+         y="355.81046"
+         x="299.86081"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           style="font-size:64px;text-align:center;text-anchor:middle"
+           y="355.81046"
+           x="299.86081"
+           id="tspan3467"
+           sodipodi:role="line">Area</tspan><tspan
+           style="font-size:64px;text-align:center;text-anchor:middle"
+           id="tspan3469"
+           y="435.81046"
+           x="299.86081"
+           sodipodi:role="line">Closing</tspan></text>
+    </g>
+    <g
+       transform="translate(390.90885,74.19173)"
+       id="g3477"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75">
+      <rect
+         style="fill:#f9f9f9;stroke:#000000;stroke-width:0.96799999;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect3479"
+         width="368.57892"
+         height="212.40141"
+         x="109.32426"
+         y="271.47461" />
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         x="299.86081"
+         y="355.81046"
+         id="text3481"><tspan
+           sodipodi:role="line"
+           id="tspan3483"
+           x="299.86081"
+           y="355.81046"
+           style="font-size:64px;text-align:center;text-anchor:middle">Watershed</tspan><tspan
+           sodipodi:role="line"
+           x="299.86081"
+           y="435.81046"
+           id="tspan3485"
+           style="font-size:64px;text-align:center;text-anchor:middle">Flooding</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+       d="m -150.28848,868.07272 97.529943,0"
+       id="path3489"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m -53.008405,868.20786 0,-417.43053"
+       id="path3497"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Lend);display:inline"
+       d="m -146.72366,447.18288 176.387083,0"
+       id="path3499"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+       d="m -145.2169,33.058748 94.965307,1.096259"
+       id="path3503"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M -50.802426,34.161751 -53.005703,453.80623"
+       id="path3505"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+       d="m 399.54619,447.18288 99.84184,0"
+       id="path3507"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 870.39821,451.60025 182.96699,0"
+       id="path3511"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 971.82078,915.97919 0,-934.831771"
+       id="path3513"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 971.46519,915.4238 93.19981,0"
+       id="path3515"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+       d="m 971.65505,-18.849357 80.69205,0"
+       id="path3517"
+       inkscape:connector-type="polyline"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="181.01906"
+       y="285.25821"
+       id="text2887"
+       inkscape:export-filename="/home/lazzara/git/oln/milena/doc/img/genericity.png"
+       inkscape:export-xdpi="75"
+       inkscape:export-ydpi="75"><tspan
+         sodipodi:role="line"
+         id="tspan2889"
+         x="181.01906"
+         y="285.25821"
+         style="font-size:64px">Generic workflow</tspan></text>
+  </g>
+</svg>

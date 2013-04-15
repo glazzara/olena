@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate false positive paragraphs.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate false positive paragraphs.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -46,27 +47,30 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate paragraphs located close to the image borders.
-    ///
-    /// \param[in,out] doc A document structure.
-    ///
-    /// Warning: it does not remove paragraphs from separator
-    /// image. It only invalidate separator components in their
-    /// respective component_set.
-    ///
-    /// \verbatim
-    ///
-    ///  -----------
-    ///  |_!____!__|
-    ///  | !    ! <--------- Paragraphs located in this area are
-    ///  | !    !  |         invalidated.
-    ///  | !    !  |
-    ///  |_!____!__|
-    ///  | !    !  |
-    ///  -----------
-    ///
-    /// \endverbatim
-    //
+    /*! \brief Invalidate paragraphs located close to the image
+        borders.
+
+       \param[in,out] doc A document structure.
+
+       Warning: it does not remove paragraphs from separator
+       image. It only invalidate separator components in their
+       respective component_set.
+
+       \verbatim
+
+        -----------
+        |_!____!__|
+        | !    ! <--------- Paragraphs located in this area are
+        | !    !  |         invalidated.
+        | !    !  |
+        |_!____!__|
+        | !    !  |
+        -----------
+
+       \endverbatim
+
+       \ingroup grpalgofilterpar
+    */
     template <typename L>
     void
     paragraphs_in_borders(document<L>& doc);
@@ -78,7 +82,7 @@ namespace scribo
     void
     paragraphs_in_borders(document<L>& doc)
     {
-      trace::entering("scribo::filter::paragraphs_in_borders");
+      mln_trace("scribo::filter::paragraphs_in_borders");
 
       mln_precondition(doc.is_valid());
 
@@ -128,7 +132,6 @@ namespace scribo
 	doc.set_paragraphs(parset);
       }
 
-      trace::exiting("scribo::filter::paragraphs_in_borders");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,7 @@ namespace mln
   namespace data
   {
 
-    /*! Transform the image \p input through a function \p f.
+    /*! \brief Transform the image \p input through a function \p f.
      *
      * \param[in] input The input image.
      * \param[in] f The function.
@@ -56,13 +57,14 @@ namespace mln
      * This routine runs: \n
      * for all p of \p input, \p output(p) = \p f( \p input(p) ).
      *
+     * \ingroup mlndata
      */
     template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
     transform(const Image<I>& input, const Function_v2v<F>& f);
 
 
-    /*! Transform two images \p input1 \p input2 through a function \p f.
+    /*! \brief Transform two images \p input1 \p input2 through a function \p f.
      *
      * \param[in] input1 The 1st input image.
      * \param[in] input2 The 2nd input image.
@@ -70,6 +72,8 @@ namespace mln
      *
      * This routine runs: \n
      * for all p of \p input, \p output(p) = \p f( \p input1(p), \p input2(p) ).
+     *
+     * \ingroup mlndata
      */
     template <typename I1, typename I2, typename F>
     mln_ch_value(I1, mln_result(F))
@@ -136,7 +140,7 @@ namespace mln
         mln_ch_value(I, mln_result(F))
         transform(const Image<I>& input_, const Function_v2v<F>& f_)
 	{
-          trace::entering("data::impl::generic::transform");
+          mln_trace("data::impl::generic::transform");
 
 	  const I& input  = exact(input_);
 	  const F& f      = exact(f_);
@@ -150,7 +154,6 @@ namespace mln
 	  for_all(p)
 	    output(p) = f(input(p));
 
-	  trace::exiting("data::impl::generic::transform");
           return output;
 	}
 
@@ -167,7 +170,7 @@ namespace mln
 		  const Image<I2>& input2_,
 		  const Function_vv2v<F>& f_)
 	{
-          trace::entering("data::impl::generic::transform");
+          mln_trace("data::impl::generic::transform");
 
 	  const I1& input1  = exact(input1_);
 	  const I2& input2  = exact(input2_);
@@ -182,7 +185,6 @@ namespace mln
 	  for_all(p)
 	    output(p) = f(input1(p), input2(p));
 
-	  trace::exiting("data::impl::generic::transform");
           return output;
 	}
 
@@ -201,14 +203,13 @@ namespace mln
     mln_ch_value(I, mln_result(F))
     transform(const Image<I>& input, const Function_v2v<F>& f)
     {
-      trace::entering("data::transform");
+      mln_trace("data::transform");
 
       internal::transform_tests(input, f);
 
       mln_ch_value(I, mln_result(F)) output;
       output = internal::transform_dispatch(input, f);
 
-      trace::exiting("data::transform");
       return output;
     }
 
@@ -219,14 +220,13 @@ namespace mln
     transform(const Image<I1>& input1, const Image<I2>& input2,
 	      const Function_vv2v<F>& f)
     {
-      trace::entering("data::transform");
+      mln_trace("data::transform");
 
       internal::transform_tests(input1, input2, f);
 
       mln_ch_value(I1, mln_result(F)) output;
       output = internal::transform_dispatch(input1, input2, f);
 
-      trace::exiting("data::transform");
       return output;
     }
 

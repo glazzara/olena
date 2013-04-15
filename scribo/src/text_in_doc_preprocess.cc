@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -79,8 +79,6 @@ int main(int argc, char* argv[])
   if (!options.parse(argc, argv))
     return 1;
 
-  Magick::InitializeMagick(*argv);
-
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, options.arg("input.*"));
 
@@ -91,7 +89,7 @@ int main(int argc, char* argv[])
   image2d<bool> output;
 
   output = toolchain::text_in_doc_preprocess(input_rgb, fg_extraction,
-					     lambda, 0.34, verbose);
+					     lambda, 0.34, false, verbose);
 
   mln::io::pbm::save(output, options.arg("output.pbm"));
 }

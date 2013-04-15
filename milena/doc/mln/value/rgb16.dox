@@ -1,0 +1,69 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace value
+  {
+    struct rgb16
+      : rgb<16>
+    {
+    public:
+      /// Constructor without argument.
+      rgb16();
+
+      /// Constructor from component values.
+      rgb16(int r, int g, int b);
+
+      /// Constructor from a algebra::vec.
+      rgb16(const algebra::vec<3, int>& rhs);
+      /// Constructor from a algebra::vec.
+      rgb16(const algebra::vec<3, unsigned>& rhs);
+      /// Constructor from a algebra::vec.
+      rgb16(const algebra::vec<3, int_u<n> >& rhs);
+      /// Constructor from a algebra::vec.
+      rgb16(const algebra::vec<3, float>& rhs);
+
+      /// Constructor from literal. rgb16(255,255,255)
+      rgb16(const mln::literal::white_t&);
+      /// Constructor from literal. rgb16(0,0,0)
+      rgb16(const mln::literal::black_t&);
+
+      /// Constructor from literal.
+      rgb16(const mln::literal::light_gray_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::medium_gray_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::dark_gray_t&);
+
+      /// Constructor from literal.
+      rgb16(const mln::literal::red_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::blue_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::green_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::brown_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::lime_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::orange_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::pink_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::purple_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::teal_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::violet_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::cyan_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::magenta_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::yellow_t&);
+      /// Constructor from literal.
+      rgb16(const mln::literal::olive_t&);
+    }
+  }
+}

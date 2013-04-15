@@ -61,7 +61,7 @@ namespace scribo
 		    const line_info<L>& line,
 		    const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::line_components");
+      mln_trace("scribo::draw::line_components");
 
       I& input = exact(input_);
 
@@ -78,14 +78,14 @@ namespace scribo
 	const mln_value(L) v = c;
 	const box2d& bbox = comp_set(c).bbox();
 
-	const unsigned index = labeled_image.index_of_point(bbox.pmin());
-	const unsigned index2 = input.index_of_point(bbox.pmin());
+	const unsigned index = labeled_image.offset_of_point(bbox.pmin());
+	const unsigned index2 = input.offset_of_point(bbox.pmin());
 	const mln_value(L)* ptr_in = &(labeled_image.element(index));
 	mln_value(I)* ptr_out = &(input.element(index2));
 	const unsigned nrows = bbox.height();
 	const unsigned ncols = bbox.width();
-	const int delta = labeled_image.delta_index(dpoint2d(+1, -ncols));
-	const int delta2 = input.delta_index(dpoint2d(+1, -ncols));
+	const int delta = labeled_image.delta_offset(dpoint2d(+1, -ncols));
+	const int delta2 = input.delta_offset(dpoint2d(+1, -ncols));
 
 	for (unsigned k = 0; k < nrows; ++k)
 	{
@@ -102,7 +102,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::draw::line_components");
     }
 
 

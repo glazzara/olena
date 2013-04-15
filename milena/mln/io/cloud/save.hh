@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,10 +46,13 @@ namespace mln
     namespace cloud
     {
 
-      /// Load a cloud of points
-      ///
-      /// \param[in] arr the cloud of points to save.
-      /// \param[in] filename the destination.
+      /*! \brief Load a cloud of points
+       *
+       * \param[in] arr the cloud of points to save.
+       * \param[in] filename the destination.
+       *
+       * \ingroup iocloud
+       */
       template <typename P>
       void save(const p_array<P>& arr, const std::string& filename);
 
@@ -82,7 +86,7 @@ namespace mln
       template <typename P>
       void save(const p_array<P>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::cloud::save");
+	mln_trace("mln::io::cloud::save");
 
 	std::ofstream file(filename.c_str());
 	if (! file)
@@ -93,7 +97,6 @@ namespace mln
 
 	internal::save_data(arr, file);
 
-	trace::exiting("mln::io::cloud::save");
       }
 
 

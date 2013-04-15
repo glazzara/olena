@@ -670,7 +670,7 @@ namespace mln
 	return w_constructible(tree, p, r);
       }
 
- 
+
 
       template <class T>
       typename T::image_t topological(T &tree)
@@ -766,7 +766,7 @@ namespace mln
 		      // the
 		      // priority.
 		    }
-	      } 
+	      }
 	  } // while(!l.empty())
 
 	for_all(it)

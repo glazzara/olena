@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,9 +39,32 @@
 namespace mln
 {
 
-  /// Type alias for a delta-point defined on the 3D square
-  /// grid with integer coordinates.
+  /*!
+    \class dpoint3d
+    \headerfile <>
+
+    \brief Type alias for a delta-point defined on the 3D square grid
+    with integer coordinates.
+
+    This class stored relative positions of a site.  It is meant to be
+    used with point1d to compute a new point3d.
+
+    \code
+    point3d p(2,2,2);
+    dpoint3d up(0,-1,0);
+
+    dpoint3d p_up = p + up;
+    // p_up = point3d(2,1,2);
+    \endcode
+
+    dpoint3d are also used in window3d to store the relative
+    neighboors.
+
+    \sa point3d, window3d
+  */
+  /// \cond ALIAS
   typedef dpoint<mln::grid::cube, def::coord> dpoint3d;
+  /// \endcond
 
 
 } // end of namespace mln
@@ -51,18 +75,18 @@ namespace mln
 
 namespace mln
 {
-
-  /// Definition of a shortcut for delta point in 3d.
-  /// \{
-
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(0,0,-1)
   extern const dpoint3d sagittal_dec;
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(0,0,+1)
   extern const dpoint3d sagittal_inc;
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(0,-1,0)
   extern const dpoint3d axial_dec;
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(0,+1,0)
   extern const dpoint3d axial_inc;
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(-1,0,0)
   extern const dpoint3d coronal_dec;
+  /// Definition of a shortcut for delta point in 3d. dpoint3d(+1,0,0)
   extern const dpoint3d coronal_inc;
-
-  /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY

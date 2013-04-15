@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,6 +54,8 @@ namespace scribo
 
 
     /// \brief Draw inter character space.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -68,7 +71,7 @@ namespace scribo
     char_space_image(const Image<I>& input, const line_set<L>& line,
 		     const value::rgb8& v)
     {
-      trace::entering("scribo::debug::char_space_image");
+      mln_trace("scribo::debug::char_space_image");
 
       mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
 
@@ -99,7 +102,6 @@ namespace scribo
 
       }
 
-      trace::exiting("scribo::debug::char_space_image");
       return output;
     }
 

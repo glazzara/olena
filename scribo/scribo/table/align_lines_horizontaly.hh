@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,13 +55,16 @@ namespace scribo
     ///
     /// \param[in]	input	     Image from which the line bboxes are
     ///				     extracted from.
-    /// \param[in, out] line_bboxes horizontal lines bounding boxes.
+    /// \param[in]      lines        Component set corresponding to table lines.
+    /// \param[in,out] aligned_lines Component set where aligned table
+    ///                              lines are stored.
     /// \param[in]	max_alignment_diff max space between two lines to
     ///					   consider they are potentialy on the
     ///					   same line.
     ///
     /// \return A list of the resulting aligned rows. Each integer is actually
     ///		a row number.
+    //
     template <typename I, typename L>
     mln::util::array<int>
     align_lines_horizontaly(const Image<I>& input,
@@ -80,7 +83,7 @@ namespace scribo
 			    component_set<L>& aligned_lines,
 			    unsigned max_alignment_diff)
     {
-      trace::entering("scribo::table::align_lines_horizontaly");
+      mln_trace("scribo::table::align_lines_horizontaly");
 
       mln_precondition(exact(input).is_valid());
       mln::util::array<int>
@@ -91,7 +94,6 @@ namespace scribo
 				     aligned_lines, 0,
 				     max_alignment_diff);
 
-      trace::exiting("scribo::table::align_lines_horizontaly");
       return res;
     }
 

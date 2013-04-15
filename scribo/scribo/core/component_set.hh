@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -31,9 +31,8 @@
 ///
 /// \brief Definition of a component set.
 ///
-/// \fixme component_set should always set a component type in order
+/// FIXME: component_set should always set a component type in order
 /// to be fully supported by visitors.
-
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/function.hh>
@@ -75,7 +74,10 @@ namespace scribo
 
   namespace internal
   {
-    /// Data structure for \c scribo::component_set<I>.
+    /*! \internal \brief Data structure for \c scribo::component_set.
+
+      \ingroup grpstruct
+     */
     template <typename L>
     struct component_set_data
     {
@@ -119,6 +121,10 @@ namespace scribo
   } // end of namespace scribo::internal
 
 
+  /*! \brief Represents all the components in a document image.
+
+    \ingroup grpstruct
+  */
   template <typename L>
   class component_set : public Serializable<component_set<L> >
   {
@@ -136,27 +142,31 @@ namespace scribo
 
   public:
 
-    /// Constructors
-    /// @{
-    /// Constructor without argument.
+    // Constructors
+
+    /// Default.
     component_set();
 
-    // Constructor from internal data.
+    /// Constructor from internal data.
     component_set(const mln::util::tracked_ptr<data_t>& data);
 
-    /// Constructor from an image \p ima and the number of labels \p ncomps.
+    /// Constructor from an image \p ima and the number of labels \p
+    /// ncomps.
     component_set(const L& ima, const mln_value(L)& ncomps);
 
-    /// Constructor from an image \p ima, the number of labels \p ncomps and
-    /// attributes values (bounding box and mass center).
+    /// Constructor from an image \p ima, the number of labels \p
+    /// ncomps and attributes values (bounding box and mass center).
     component_set(const L& ima, const mln_value(L)& ncomps,
 		  const mln::util::array<pair_accu_t>& attribs,
 		  component::Type type = component::Undefined);
 
+    /// Constructor from an image \p ima, the number of labels \p
+    /// ncomps and attributes values (bounding box and mass center).
     component_set(const L& ima, const mln_value(L)& ncomps,
 		  const mln::util::array<pair_data_t>& attribs,
 		  component::Type type = component::Undefined);
-    /// @}
+
+    // Misc Members
 
     /// Return the component count.
     mln_value(L) nelements() const;
@@ -174,7 +184,8 @@ namespace scribo
     const component_info<L>& operator()(const component_id_t& id) const;
 
 
-    /// Update tag of components set to 'false' in \p f with \p tag.
+    /// Update component tag for which \p f returns 'False', with \p
+    /// tag.
     template <typename F>
     void update_tags(const mln::Function_v2b<F>& f, component::Tag tag);
 
@@ -184,55 +195,66 @@ namespace scribo
     /// Return the underlying labeled image
     const L& labeled_image() const;
 
-    /// Is this component set valid?
+    /// A component_set is considered as valid if it has been
+    /// initialized (i.e. not instantiated with the default
+    /// constructor).
     bool is_valid() const;
 
 
-    /// Separators components related routines.
-    /// @{
+    // Separators components related routines.
 
     /// Return true if an image of separator exists.
     bool has_separators() const;
 
-    /// Add separators in the underlying labeled image.
+    /// Add a new separator binary image or perform a logical OR with
+    /// the existing one.
     void add_separators(const mln_ch_value(L, bool)& ima);
 
-    /// Return the Boolean image of separators.
+    /// Return the binary image of separators.
     const mln_ch_value(L, bool)& separators() const;
 
-    /// Remove any existing separators.
+    /// Clear separator image.
     void clear_separators();
 
-    /// @}
 
+    // Internal methods
 
-
-    /// Internal methods
-    /// @{
-
+    /// \internal
     /// Return all the component infos.
+    //
     const mln::util::array<scribo::component_info<L> >& infos_() const;
 
+    /// \internal
     /// Unique set Id.
+    //
     id_t id_() const;
 
 
+    /// \internal
     /// Read/Write access to the underlying labeled image.
-    /// Careful! Write in this image at your own risks! It may lead to
+    ///
+    /// \warning Write in this image at your own risks! It may lead to
     /// non-synchronised related data.
     //
     L& labeled_image_();
 
+    /// \internal
+    /// Force replacing the underlying labeled image.  \warning Use it
+    /// at your own risks... This image may not
+    ///
+    /// reflect the component information stored in this
+    /// component_set.
+    //
     void update_labeled_image_(const L& lbl);
 
+    /// \internal
     /// Return the underlying labeled image where invalid components
     /// have been erased.
     ///
-    /// WARNING: this image is computed on the fly...!
+    /// \warning this image is computed on the fly...!
     //
     mln_concrete(L) valid_comps_image_() const;
 
-    /// @}
 
   protected:
     /// Duplicate the underlying image and create a new component_set.
@@ -597,11 +619,14 @@ namespace scribo
   bool
   operator==(const component_set<L>& lhs, const component_set<L>& rhs)
   {
+    if (lhs.id_() == rhs.id_())
+      return true;
+
     if (! (lhs.labeled_image() == rhs.labeled_image()))
-      std::cout << "comp.lbl" << std::endl;
+      return false;
 
     if (! (lhs.separators() == rhs.separators()))
-      std::cout << "comp.seps" << std::endl;
+      return false;
 
     if (! (lhs.nelements() == rhs.nelements()
 	   && lhs.labeled_image() == rhs.labeled_image()
@@ -610,10 +635,7 @@ namespace scribo
 
     for_all_comps(c, lhs)
       if (! (lhs(c) == rhs(c)))
-      {
-	std::cout << "comp.info" << std::endl;
 	return false;
-      }
 
     return true;
   }

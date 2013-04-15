@@ -121,7 +121,7 @@ namespace mln
       mln_concrete(I)
       general_line_on_function(const Op& op, const Image<I>& input_, const win::line<G,Dir,C>& win)
       {
-	trace::entering("morpho::impl::general_line");
+	mln_trace("morpho::impl::general_line");
 
 	typedef mln_site(I) P;
 	enum { dim = P::dim };
@@ -160,7 +160,6 @@ namespace mln
 	  }
 	while (p != pmin);
 
-	trace::exiting("morpho::impl::general_line");
 	return output;
       }
 
@@ -175,7 +174,7 @@ namespace mln
       mln_concrete(I)
       general_rectangle2d(const Op& op, const Image<I>& input_, const win::rectangle2d& win)
       {
-	trace::entering("morpho::impl::general_rectangle2d");
+	mln_trace("morpho::impl::general_rectangle2d");
 
 	const I& input = exact(input_);
 
@@ -183,7 +182,6 @@ namespace mln
 	temp   = morpho::general(op, input, win::hline2d(win.width()));
 	output = morpho::general(op, temp,  win::vline2d(win.height()));
 
-	trace::exiting("morpho::impl::general_rectangle2d");
 	return output;
       }
 
@@ -193,7 +191,7 @@ namespace mln
       mln_concrete(I)
       general_octagon2d(const Op& op, const Image<I>& input_, const win::octagon2d& win)
       {
-	trace::entering("morpho::impl::general_octagon2d");
+	mln_trace("morpho::impl::general_octagon2d");
 
 	const I& input = exact(input_);
 
@@ -205,7 +203,6 @@ namespace mln
 	output = morpho::general(op, output, win::diag2d(len));
 	output = morpho::general(op, output, win::backdiag2d(len));
 
-	trace::exiting("morpho::impl::general_(win::octagon2d)");
 	return output;
       }
 
@@ -215,13 +212,12 @@ namespace mln
       mln_concrete(I)
       general_arbitrary_2d(const Op& op, const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::impl:general_arbitrary_2d");
+	mln_trace("morpho::impl:general_arbitrary_2d");
 
 	extension::adjust_fill(input, geom::delta(win) + 1, op.neutral(input));
 	mln_concrete(I) output;
 	output = accu::transform_snake(op.accu_incr(input), input, win);
 
-	trace::exiting("morpho::impl:general_arbitrary_2d");
 	return output;
       }
 
@@ -231,13 +227,12 @@ namespace mln
       mln_concrete(I)
       general_directional(const Op& op, const Image<I>& input, const Window<W>& win, unsigned dir)
       {
-	trace::entering("morpho::impl:general_directional");
+	mln_trace("morpho::impl:general_directional");
 
 	extension::adjust_fill(input, geom::delta(win) + 1, op.neutral(input));
 	mln_concrete(I) output;
 	output = accu::transform_directional(op.accu_incr(input), input, win, dir);
 
-	trace::exiting("morpho::impl:general_directional");
 	return output;
       }
 
@@ -247,7 +242,7 @@ namespace mln
       mln_concrete(I)
       general_line(const Op& op, const Image<I>& input, const Window<W>& win_)
       {
-	trace::entering("morpho::impl:general_line");
+	mln_trace("morpho::impl:general_line");
 
 	const W& win = exact(win_);
 
@@ -257,7 +252,6 @@ namespace mln
 	output = accu::transform_line(op.accu_incr(input), input,
 				      win.length(), win.dir);
 
-	trace::exiting("morpho::impl:general_line");
 	return output;
       }
 
@@ -267,13 +261,12 @@ namespace mln
       mln_concrete(I)
       general_diagonal_2d(const Op& op, const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::impl:general_diagonal_2d");
+	mln_trace("morpho::impl:general_diagonal_2d");
 
 	extension::adjust_fill(input, geom::delta(win) + 1, op.neutral(input));
 	mln_concrete(I) output;
 	output = accu::transform_diagonal(op.accu_incr(input), input, win);
 
-	trace::exiting("morpho::impl:general_diagonal_2d");
 	return output;
       }
 

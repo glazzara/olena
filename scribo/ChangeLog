@@ -1,9 +1,1734 @@
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Remove duplicate '/' in path.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix path to documentation.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use relative paths in documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix permissions on documentation files.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to other documentations.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/primitive/extract/Makefile.am: Add more files in
+	EXTRA_DIST.
+
+2013-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk,
+	* tests/unit-tests.mk: Regen.
+
+2013-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/filter/objects_in_borders.hh: New.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization tests.
+
+	* tests/Makefile.am: Add more files in EXTRA_DIST.
+	* tests/binarization/niblack.cc,
+	* tests/binarization/wolf.cc: Load reference file instead of
+	saving it.
+
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix component_set comparison.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh: Here.
+
+2013-04-02  Guillaume Lazzara  <lazzara@caroussel.lrde.epita.fr>
+
+	Improve time logging in Scribo.
+
+	* scribo/debug/logger.hh: Use a stack to handle several
+	simultaneous logs.
+
+	* scribo/binarization/sauvola_ms.hh: Fix an invalid time stop.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc: Rename time logging
+	functions.
+
+2013-03-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in scribo.
+
+	* scribo/core/line_set.hh: Add update_types().
+
+	* scribo/core/paragraph_info.hh: Set paragraph as valid when a
+	line is added.
+
+	* scribo/core/paragraph_set.hh: Add a forward declaration.
+
+	* scribo/text/link_lines.hh: Add more documentation.
+
+2013-03-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/binarization/Makefile.am: Fix EXTRA_DIST file names.
+
 2013-03-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix inclusion paths.
 
 	* common.mk (AM_CPPFLAGS): Add paths to scribo/ dirs instead of
 	top-level dirs.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add ICDAR contests related source code.
+
+	* src/contest/Makefile.am: Add subdirs.
+
+	* src/contest/hbr-2013/Makefile.am,
+	* src/contest/hbr-2013/content_in_hdoc_hbr.cc,
+	* src/contest/hnla-2013/Makefile.am,
+	* src/contest/hnla-2013/content_in_hdoc_hnla.cc: New.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix some preconditions.
+
+	* scribo/core/document.hh: Relax some preconditions.
+
+	* scribo/primitive/extract/alignments.hh: New precondition.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Add overloads.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/document.hh: Add more assertions.
+
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh:
+	Fix an invalid forward declaration.
+
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* scribo/binarization/internal/global_max_stddev_functor.hh:
+	Remove reference to mln namespace.
+
+	* headers.mk,
+	* scribo/tests/unit_test/unit-tests.mk: Regen.
+
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* scribo/binarization/all.hh: Add missing includes.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh: Add
+	input image as attribute.
+
+2013-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share a functor used in Wolf's binarization.
+
+	* scribo/binarization/internal/global_max_stddev_functor.hh: New.
+
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh: Remove functor declaration.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* demo/viewer/image_region.hh: Add Q_INTERFACES.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/singh_functor.hh: Fix declaration
+	of init() member.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* scribo/primitive/extract/lines_h_single.hh: Fix an invalid
+	function name.
+
+	* scribo/text/extract_paragraphs_hdoc.hh: Remove useless inline
+	keyword.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: Fix argument name.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Add a new overload and
+	preconditions.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation layout.
+
+	* doc/Doxyfile.in: Improve member functions presentation.
+
+	* doc/DoxygenLayout.xml: Fix invalid xml elements.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation of Scribo.
+
+	* doc/scribo/binarization/binarization.dox,
+	* doc/scribo/binarization/kim.dox,
+	* doc/scribo/binarization/otsu.dox,
+	* doc/scribo/binarization/wolf.dox,
+	* doc/scribo/core/component_set.dox,
+	* doc/scribo/filter/component_groups.dox,
+	* doc/scribo/filter/component_links.dox,
+	* doc/scribo/filter/components.dox,
+	* doc/scribo/filter/elements.dox,
+	* doc/scribo/filter/line_links.dox,
+	* doc/scribo/filter/paragraphs.dox,
+	* doc/scribo/primitive/extract/separators.dox,
+	* scribo/core/component_info.hh,
+	* scribo/core/tag/component.hh: Add more documentation.
+
+	* doc/scribo/layout/layout.dox,
+	* doc/scribo/namespaces.dox,
+	* doc/scribo/primitive/extract/components.dox,
+	* doc/scribo/primitive/extract/extract.dox: New.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/singh_formula.hh,
+	* scribo/binarization/kim.hh,
+	* scribo/binarization/niblack_fast.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/otsu.hh,
+	* scribo/binarization/otsu_threshold.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/binarization/singh.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/concept/serializable.hh,
+	* scribo/core/object_links.hh,
+	* scribo/debug/logger.hh,
+	* scribo/filter/paragraphs_in_borders.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/filter/separators_vert_in_borders.hh,
+	* scribo/layout/xy_cut.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/text/merging_hdoc.hh: Fix existing documentation.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Replace \fixme with FIXME.
+
+	* scribo/binarization/global_threshold_auto.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/line_info.hh,
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/internal/union.hh,
+	* scribo/primitive/extract/non_text.hh,
+	* scribo/primitive/extract/non_text_hdoc.hh,
+	* scribo/primitive/extract/non_text_kmean.hh,
+	* scribo/primitive/link/internal/find_several_links.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh: Here.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix an invalid initialization in several binarization algorithms.
+
+	* scribo/binarization/internal/local_threshold_core.hh: Fix doc.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh: Add init() member and more
+	assertions.
+
+	* scribo/canvas/integral_browsing.hh: Call init() function.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/links_image.hh: Make use of object_link interface.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/xml2doc/main.cc: Kill warnings.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of mln_trace_warning in Scribo.
+
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/filter/internal/alignment_angle.hh,
+	* scribo/io/img/save.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/make/debug_filename.hh,
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/link/internal/compute_anchor.hh: Here.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove last references to mln::trace::*.
+
+	* demo/xml2doc/main.cc,
+	* scribo/make/debug_filename.hh,
+	* scribo/primitive/identify.hh,
+	* src/afp/regroup.hh,
+	* src/misc/negate.cc,
+	* src/misc/superpose.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/preprocessing/unskew.cc: Here.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of mln_trace.
+
+	* scribo/binarization/global_threshold.hh,
+	* scribo/binarization/global_threshold_auto.hh,
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/kim.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_fast.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/otsu.hh,
+	* scribo/binarization/otsu_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/binarization/singh.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/binarization/wolf_fast.hh,
+	* scribo/convert/from_base64.hh,
+	* scribo/convert/to_base64.hh,
+	* scribo/core/central_sites.hh,
+	* scribo/core/erase_objects.hh,
+	* scribo/core/init_integral_image.hh,
+	* scribo/debug/alignment_decision_image.hh,
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/bboxes_image.hh,
+	* scribo/debug/char_space_image.hh,
+	* scribo/debug/decision_image.hh,
+	* scribo/debug/highlight_text_area.hh,
+	* scribo/debug/line_info_image.hh,
+	* scribo/debug/linked_bboxes_image.hh,
+	* scribo/debug/links_decision_image.hh,
+	* scribo/debug/links_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_comp_diff.hh,
+	* scribo/debug/save_label_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/text_areas_image.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/draw/bounding_boxes.hh,
+	* scribo/draw/groups_bboxes.hh,
+	* scribo/draw/line_components.hh,
+	* scribo/estim/components_features.hh,
+	* scribo/estim/font_boldness.hh,
+	* scribo/estim/font_color.hh,
+	* scribo/estim/internal/compute_skeleton.hh,
+	* scribo/estim/object_groups_mean_width.hh,
+	* scribo/filter/common/objects_photo.hh,
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/internal/alignment_angle.hh,
+	* scribo/filter/internal/component_aligned.hh,
+	* scribo/filter/internal/compute.hh,
+	* scribo/filter/object_groups_mean_width.hh,
+	* scribo/filter/object_groups_size_ratio.hh,
+	* scribo/filter/object_groups_small.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/object_links_aligned.hh,
+	* scribo/filter/object_links_bbox_h_ratio.hh,
+	* scribo/filter/object_links_bbox_overlap.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/object_links_bbox_w_ratio.hh,
+	* scribo/filter/object_links_bottom_aligned.hh,
+	* scribo/filter/object_links_center_aligned.hh,
+	* scribo/filter/object_links_left_aligned.hh,
+	* scribo/filter/object_links_non_aligned_simple.hh,
+	* scribo/filter/object_links_right_aligned.hh,
+	* scribo/filter/object_links_top_aligned.hh,
+	* scribo/filter/objects_h_thick.hh,
+	* scribo/filter/objects_h_thin.hh,
+	* scribo/filter/objects_large.hh,
+	* scribo/filter/objects_on_border.hh,
+	* scribo/filter/objects_size_ratio.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thick.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/filter/objects_v_thick.hh,
+	* scribo/filter/objects_v_thin.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_borders.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh,
+	* scribo/filter/separators_vert_in_borders.hh,
+	* scribo/io/img/save.hh,
+	* scribo/io/text_boxes/save.hh,
+	* scribo/io/xml/internal/save_image_to_xml.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/layout/xy_cut.hh,
+	* scribo/make/influence_zone_graph.hh,
+	* scribo/make/text_blocks_image.hh,
+	* scribo/make/text_components_image.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/postprocessing/images_to_drop_capital.hh,
+	* scribo/preprocessing/crop.hh,
+	* scribo/preprocessing/crop_without_localization.hh,
+	* scribo/preprocessing/denoise.hh,
+	* scribo/preprocessing/denoise_bg.hh,
+	* scribo/preprocessing/denoise_fg.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/preprocessing/deskew_crop.hh,
+	* scribo/preprocessing/homogeneous_contrast.hh,
+	* scribo/preprocessing/rotate_90.hh,
+	* scribo/preprocessing/split_bg_fg.hh,
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/extract/canvas.hh,
+	* scribo/primitive/extract/cells.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/extract/horizontal_separators.hh,
+	* scribo/primitive/extract/lines_discontinued.hh,
+	* scribo/primitive/extract/lines_h_discontinued.hh,
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_h_thick.hh,
+	* scribo/primitive/extract/lines_h_thick_and_single.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/lines_thick.hh,
+	* scribo/primitive/extract/lines_v_discontinued.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/primitive/extract/lines_v_thick.hh,
+	* scribo/primitive/extract/lines_v_thick_and_single.hh,
+	* scribo/primitive/extract/non_text.hh,
+	* scribo/primitive/extract/non_text_hdoc.hh,
+	* scribo/primitive/extract/non_text_kmean.hh,
+	* scribo/primitive/extract/separators.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/extract/vertical_separators.hh,
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/group/from_double_link.hh,
+	* scribo/primitive/group/from_double_link_any.hh,
+	* scribo/primitive/group/from_graph.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/identify.hh,
+	* scribo/primitive/internal/find_graph_link.hh,
+	* scribo/primitive/internal/rd.hh,
+	* scribo/primitive/internal/update_graph_link.hh,
+	* scribo/primitive/link/compute.hh,
+	* scribo/primitive/link/compute_several.hh,
+	* scribo/primitive/link/merge_double_link.hh,
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh,
+	* scribo/primitive/link/with_graph.hh,
+	* scribo/primitive/link/with_rag.hh,
+	* scribo/primitive/link/with_several_graphes.hh,
+	* scribo/primitive/link/with_several_left_links.hh,
+	* scribo/primitive/link/with_several_right_closest_links.hh,
+	* scribo/primitive/link/with_several_right_links.hh,
+	* scribo/primitive/link/with_several_right_links_overlap.hh,
+	* scribo/primitive/link/with_single_down_link.hh,
+	* scribo/primitive/link/with_single_left_link.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh,
+	* scribo/primitive/link/with_single_right_link.hh,
+	* scribo/primitive/link/with_single_right_link_bottom.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh,
+	* scribo/primitive/link/with_single_right_link_top.hh,
+	* scribo/primitive/link/with_single_up_link.hh,
+	* scribo/primitive/merge/components.hh,
+	* scribo/primitive/regroup/from_single_left_link.hh,
+	* scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/subsampling/integral.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh,
+	* scribo/table/connect_horizontal_lines.hh,
+	* scribo/table/connect_vertical_lines.hh,
+	* scribo/table/erase.hh,
+	* scribo/table/extract.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/internal/connect_lines.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/table/rebuild.hh,
+	* scribo/table/repair_horizontal_lines.hh,
+	* scribo/table/repair_vertical_lines.hh,
+	* scribo/text/clean.hh,
+	* scribo/text/clean_inplace.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/extract_lines_with_features.hh,
+	* scribo/text/extract_lines_wo_merge.hh,
+	* scribo/text/look_like_text_lines.hh,
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/text/recognition.hh,
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/toolchain/nepomuk/text_extraction.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh,
+	* scribo/toolchain/text_in_picture.hh,
+	* scribo/upsampling/bs2x.hh,
+	* scribo/upsampling/eagle.hh,
+	* scribo/util/box_intersection.hh,
+	* scribo/util/box_is_included.hh,
+	* scribo/util/component_precise_outline.hh,
+	* scribo/util/compute_sub_domains.hh,
+	* scribo/util/hex_to_color.hh,
+	* scribo/util/init_integral_image.hh,
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/pgm_global_threshold_auto.cc,
+	* src/binarization/pgm_niblack_threshold_image.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_debug.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/singh.cc,
+	* src/binarization/wolf.cc,
+	* src/content_in_doc.cc,
+	* src/content_in_hdoc.cc,
+	* src/contest/DAE-2011/content_in_doc_dae.cc,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/debug/highlight_text_area.cc,
+	* src/debug/show_info_median_inter_characters.cc,
+	* src/debug/show_info_x_height.cc,
+	* src/debug/show_lines_boldness.cc,
+	* src/debug/show_objects_large.cc,
+	* src/debug/show_objects_large_small.cc,
+	* src/debug/show_objects_small.cc,
+	* src/debug/show_objects_thick.cc,
+	* src/debug/show_objects_thin.cc,
+	* src/debug/show_paragraph_blocks.cc,
+	* src/debug/show_separators.cc,
+	* src/debug/show_stoppers.cc,
+	* src/debug/show_text_lines.cc,
+	* src/debug/show_text_lines_wo_seps.cc,
+	* src/filter/objects_large.cc,
+	* src/filter/objects_small.cc,
+	* src/filter/objects_thick.cc,
+	* src/filter/objects_thin.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/misc/negate.cc,
+	* src/misc/superpose.cc,
+	* src/non_text_components.cc,
+	* src/pbm_text_in_doc.cc,
+	* src/postprocessing/fill_object_holes.cc,
+	* src/preprocessing/denoise_bg.cc,
+	* src/preprocessing/denoise_fg.cc,
+	* src/preprocessing/preprocess.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/preprocessing/subsample.cc,
+	* src/preprocessing/unskew.cc,
+	* src/primitive/extract/alignments.cc,
+	* src/primitive/extract/discontinued_hlines.cc,
+	* src/primitive/extract/discontinued_lines.cc,
+	* src/primitive/extract/discontinued_vlines.cc,
+	* src/primitive/extract/lines_pattern.cc,
+	* src/primitive/extract/separators_nonvisible.cc,
+	* src/primitive/extract/thick_hlines.cc,
+	* src/primitive/extract/thick_vlines.cc,
+	* src/primitive/find/find_discontinued_lines.cc,
+	* src/primitive/find/find_pattern_lines.cc,
+	* src/primitive/find/find_single_lines.cc,
+	* src/primitive/find/find_thick_and_single_lines.cc,
+	* src/primitive/find/find_thick_lines.cc,
+	* src/primitive/remove/separators.cc,
+	* src/table/erase.cc,
+	* src/table/extract.cc,
+	* src/text/cleantxt.cc,
+	* src/text/pbm_lines_recognition.cc,
+	* src/text/pbm_recognition.cc,
+	* src/text_in_picture.cc,
+	* src/text_in_picture_dual.cc,
+	* src/text_recognition_in_picture.cc,
+	* src/util/component_precise_outline.cc: Here.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove references to InitializeMagick().
+
+	* demo/viewer/main.cc,
+	* demo/xml2doc/main.cc,
+	* core/document.hh,
+	* debug/logger.hh,
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/singh.cc,
+	* src/binarization/wolf.cc,
+	* src/content_in_doc.cc,
+	* src/content_in_hdoc.cc,
+	* src/contest/DAE-2011/content_in_doc_dae.cc,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/debug/show_components_boldness.cc,
+	* src/debug/show_components_color.cc,
+	* src/non_text_components.cc,
+	* src/preprocessing/rotate.cc,
+	* src/preprocessing/rotate_90.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/text_in_doc_preprocess.cc,
+	* src/text_in_picture.cc,
+	* src/text_in_picture_dual.cc,
+	* src/text_recognition_in_picture.cc: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix namespace ambiguities.
+
+	* scribo/make/text_components_image.hh,
+	* scribo/primitive/extract/non_text.hh: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/table/internal/align_lines.hh: Update use of math::round.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Make use of bibliography and .css files.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation layout.
+
+	* doc/DoxygenLayout.xml: Change menu.
+
+	* doc/Makefile.am: Do not use relative paths.
+
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Disable the use of installdox and fix doc location.
+
+	* doc/Makefile.am,
+	* doc/Doxyfile.in: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/debug/show_lines_boldness.cc: Use mln::math::round as a
+	function.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Define new documentation groups.
+
+	* doc/scribo/primitive/extract/separators.dox,
+	* doc/scribo/text/ocr.dox,
+	* doc/scribo/text/text.dox: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add algorithms to documentation groups.
+
+	* scribo/primitive/extract/horizontal_separators.hh,
+	* scribo/primitive/extract/lines_discontinued.hh,
+	* scribo/primitive/extract/lines_h_discontinued.hh,
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_h_thick.hh,
+	* scribo/primitive/extract/lines_h_thick_and_single.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/lines_thick.hh,
+	* scribo/primitive/extract/lines_v_discontinued.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/primitive/extract/lines_v_thick.hh,
+	* scribo/primitive/extract/lines_v_thick_and_single.hh,
+	* scribo/primitive/extract/separators.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/extract/vertical_separators.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/extract_lines_with_features.hh,
+	* scribo/text/extract_lines_wo_merge.hh,
+	* scribo/text/extract_paragraphs.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh,
+	* scribo/text/link_lines.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/merging_hdoc.hh,
+	* scribo/text/recognition.hh: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/scribo/binarization/sauvola.dox: Fix documentation.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to data.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Change path to .bib files.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2011-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/binarization/Makefile.am (EXTRA_DIST): Fix invalid
+	filename.
+
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix deprecated dist files.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Scribo documentation.
+
+	* doc/Doxyfile.in: Setup PATHs.
+
+	* doc/images/comp2doc_structs.png,
+	* doc/images/input_sauvola_bench.png,
+	* doc/images/input_sauvola_sharpness.png,
+	* doc/images/olena_mp00419c.png,
+	* doc/images/olena_mp00419c_demat.png,
+	* doc/images/olena_viewer1.png,
+	* doc/images/output_k_0_03.png,
+	* doc/images/output_k_0_34.png,
+	* doc/images/output_k_0_50.png,
+	* doc/images/output_k_0_60.png,
+	* doc/images/output_sauvola.png,
+	* doc/images/output_sauvola_ms.png,
+	* doc/images/output_sauvola_ms_split.png,
+	* doc/images/src/comp2doc_structs.svg: New.
+
+	* doc/groups.dox,
+	* doc/mainpage.dox,
+	* doc/scribo/binarization/binarization.dox,
+	* doc/scribo/binarization/niblack.dox,
+	* doc/scribo/binarization/otsu.dox,
+	* doc/scribo/binarization/sauvola.dox,
+	* doc/scribo/core/datastructures.dox,
+	* doc/scribo/debug/debug.dox,
+	* doc/scribo/filter/component_groups.dox,
+	* doc/scribo/filter/component_links.dox,
+	* doc/scribo/filter/components.dox,
+	* doc/scribo/filter/elements.dox,
+	* doc/scribo/filter/filter.dox,
+	* doc/scribo/filter/line_links.dox,
+	* doc/scribo/filter/paragraphs.dox,
+	* doc/scribo/routines.dox,
+	* doc/scribo/toolchain/toolchain.dox,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/toolchain/content_in_hdoc.hh: Add documentation groups.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix and improve documentation in Scribo.
+
+	* doc/Doxyfile.in: Cleanup doxygen output.
+
+	* doc/groups.dox: Set groups.
+
+	* scribo/binarization/global_threshold.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/otsu.hh,
+	* scribo/binarization/otsu_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/core/erase_objects.hh,
+	* scribo/debug/alignment_decision_image.hh,
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/bboxes_image.hh,
+	* scribo/debug/char_space_image.hh,
+	* scribo/debug/decision_image.hh,
+	* scribo/debug/highlight_text_area.hh,
+	* scribo/debug/line_info_image.hh,
+	* scribo/debug/linked_bboxes_image.hh,
+	* scribo/debug/links_decision_image.hh,
+	* scribo/debug/links_image.hh,
+	* scribo/debug/logger.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_comp_diff.hh,
+	* scribo/debug/save_label_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/text_areas_image.hh,
+	* scribo/debug/text_color_image.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/filter/images_in_paragraph.hh,
+	* scribo/filter/line_links_x_height.hh,
+	* scribo/filter/object_groups_mean_width.hh,
+	* scribo/filter/object_groups_size_ratio.hh,
+	* scribo/filter/object_groups_small.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/object_links_aligned.hh,
+	* scribo/filter/object_links_bbox_h_ratio.hh,
+	* scribo/filter/object_links_bbox_overlap.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/object_links_bbox_w_ratio.hh,
+	* scribo/filter/object_links_bottom_aligned.hh,
+	* scribo/filter/object_links_center_aligned.hh,
+	* scribo/filter/object_links_left_aligned.hh,
+	* scribo/filter/object_links_non_aligned_simple.hh,
+	* scribo/filter/object_links_right_aligned.hh,
+	* scribo/filter/object_links_top_aligned.hh,
+	* scribo/filter/objects_h_thick.hh,
+	* scribo/filter/objects_h_thin.hh,
+	* scribo/filter/objects_large.hh,
+	* scribo/filter/objects_on_border.hh,
+	* scribo/filter/objects_size_ratio.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thick.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/filter/objects_v_thick.hh,
+	* scribo/filter/objects_v_thin.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/filter/paragraphs_bbox_overlap.hh,
+	* scribo/filter/paragraphs_in_borders.hh,
+	* scribo/filter/paragraphs_in_image.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/filter/separators_in_element.hh,
+	* scribo/filter/separators_in_paragraph.hh,
+	* scribo/filter/separators_vert_in_borders.hh,
+	* scribo/fun/v2b/objects_on_border_filter.hh,
+	* scribo/postprocessing/images_to_drop_capital.hh,
+	* scribo/preprocessing/denoise.hh,
+	* scribo/preprocessing/denoise_bg.hh,
+	* scribo/preprocessing/denoise_fg.hh,
+	* scribo/preprocessing/deskew_crop.hh,
+	* scribo/preprocessing/homogeneous_contrast.hh,
+	* scribo/preprocessing/split_bg_fg.hh,
+	* scribo/primitive/extract/alignments.hh,
+	* scribo/primitive/extract/cells.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_h_thick_and_single.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/primitive/extract/lines_v_thick_and_single.hh,
+	* scribo/primitive/group/from_double_link.hh,
+	* scribo/primitive/identify.hh,
+	* scribo/primitive/link/compute.hh,
+	* scribo/primitive/link/with_single_left_link.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio_aligned.hh,
+	* scribo/primitive/link/with_single_right_link.hh,
+	* scribo/primitive/link/with_single_right_link_bottom.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh,
+	* scribo/primitive/link/with_single_right_link_top.hh,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/rebuild.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/extract_lines_wo_merge.hh,
+	* scribo/text/recognition.hh,
+	* scribo/toolchain/content_in_doc.hh,
+	* scribo/toolchain/content_in_hdoc.hh,
+	* scribo/toolchain/internal/content_in_doc_functor.hh,
+	* scribo/toolchain/internal/content_in_hdoc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_functor.hh,
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/toolchain/internal/text_in_picture_functor.hh,
+	* scribo/toolchain/internal/toolchain_functor.hh,
+	* scribo/toolchain/nepomuk/text_extraction.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh,
+	* scribo/toolchain/text_in_picture.hh: Fix comments.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix scribo doc (un)installation.
+
+	* Makefile.am: Add doc in SUBDIRS.
+
+	* doc/Makefile.am: Fix install/uninstall rules.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-test.mk: Regen.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Import Julien Marquegnies's implementation of XY-Cut layout
+	analysis algorithm.
+
+	* scribo/layout/internal/hist_info.hh,
+	* scribo/layout/internal/node.hh,
+	* scribo/layout/xy_cut.hh,
+	* tests/layout/Makefile.am,
+	* tests/layout/xy_cut.cc: New.
+
+	* tests/Makefile.am: Add new subdir.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated programs.
+
+	* demo/demat/demat.pro,
+	* demo/demat/demat.qrc,
+	* demo/demat/src/doc_type.hh,
+	* demo/demat/src/main.cc,
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh,
+	* demo/demat/src/mln_widgets.cc,
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/process_args.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui,
+	* demo/review/Makefile.am,
+	* demo/review/icons/document-open.png,
+	* demo/review/icons/edit-find.png,
+	* demo/review/icons/format-indent-more.png,
+	* demo/review/icons/go-next.png,
+	* demo/review/icons/image-x-generic.png,
+	* demo/review/icons/list-add.png,
+	* demo/review/icons/ocr.png,
+	* demo/review/icons/text-x-generic.png,
+	* demo/review/icons/view-refresh.png,
+	* demo/review/icons/x-office-spreadsheet.png,
+	* demo/review/mainwindow.ui,
+	* demo/review/review.qrc,
+	* demo/review/src/main.cc,
+	* demo/review/src/mainwindow.cc,
+	* demo/review/src/mainwindow.hh,
+	* demo/shared/icons/Symbols-Delete-icon.png,
+	* demo/shared/icons/accept-icon.png,
+	* demo/shared/icons/close.gif,
+	* demo/shared/icons/crop-icon.png,
+	* demo/shared/icons/image-add-icon.png,
+	* demo/shared/icons/image-edit-icon.png,
+	* demo/shared/icons/image-multi-icon.png,
+	* demo/shared/icons/image-next-icon.png,
+	* demo/shared/icons/image-remove-icon.png,
+	* demo/shared/icons/next-icon.png,
+	* demo/shared/icons/olena_smaller.jpg,
+	* demo/shared/icons/page-down-icon.png,
+	* demo/shared/icons/page-search-icon.png,
+	* demo/shared/icons/rotate_ccw.png,
+	* demo/shared/icons/rotate_cw.png,
+	* demo/shared/icons/search-add-icon.png,
+	* demo/shared/icons/search-remove-icon.png,
+	* demo/shared/shared.qrc,
+	* demo/shared/src/bak/crop_item.cc,
+	* demo/shared/src/bak/crop_item.hh,
+	* demo/shared/src/bak/image_viewer.cc,
+	* demo/shared/src/bak/image_viewer.hh,
+	* demo/shared/src/bak/types.hh,
+	* demo/shared/src/browse_widget.cc,
+	* demo/shared/src/browse_widget.hh,
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/src/image_viewer.hxx,
+	* demo/shared/src/internal.bak/interactive_scene.cc,
+	* demo/shared/src/internal.bak/interactive_scene.hh,
+	* demo/shared/src/internal.bak/selection_rectangle.cc,
+	* demo/shared/src/internal.bak/selection_rectangle.hh,
+	* demo/shared/src/internal/interactive_scene.cc,
+	* demo/shared/src/internal/interactive_scene.hh,
+	* demo/shared/src/internal/selection_rectangle.cc,
+	* demo/shared/src/internal/selection_rectangle.hh,
+	* demo/shared/src/to_mln_image.hh,
+	* demo/shared/src/types.hh,
+	* demo/shared/ui/browse_widget.ui,
+	* demo/shared/ui/crop_widget.ui,
+	* demo/shared/ui/image_viewer.ui,
+	* demo/shared/ui/interactive_scene.cc,
+	* demo/shared/ui/interactive_scene.hh,
+	* demo/shared/ui/rotate_widget.ui,
+	* demo/tip/gui.pro,
+	* demo/tip/gui.qrc,
+	* demo/tip/icons/next.png,
+	* demo/tip/icons/ok.png,
+	* demo/tip/icons/photos.png,
+	* demo/tip/icons/prev.png,
+	* demo/tip/icons/remove.png,
+	* demo/tip/src/custom_delegate.cc,
+	* demo/tip/src/custom_delegate.hh,
+	* demo/tip/src/launch_dialog.cc,
+	* demo/tip/src/launch_dialog.hh,
+	* demo/tip/src/main.cc,
+	* demo/tip/src/main_window.cc,
+	* demo/tip/src/main_window.hh,
+	* demo/tip/ui/launch_dialog.ui,
+	* demo/tip/ui/main_window.ui,
+	* demo/wizard/images/dematerialization.png,
+	* demo/wizard/src/crop_page.cc,
+	* demo/wizard/src/crop_page.hh,
+	* demo/wizard/src/crop_widget.cc,
+	* demo/wizard/src/crop_widget.hh,
+	* demo/wizard/src/doc_type.hh,
+	* demo/wizard/src/doc_type_page.cc,
+	* demo/wizard/src/doc_type_page.hh,
+	* demo/wizard/src/doc_type_widget.cc,
+	* demo/wizard/src/doc_type_widget.hh,
+	* demo/wizard/src/load_page.cc,
+	* demo/wizard/src/load_page.hh,
+	* demo/wizard/src/load_widget.cc,
+	* demo/wizard/src/load_widget.hh,
+	* demo/wizard/src/main.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/main_window.hh,
+	* demo/wizard/src/mln_widgets.cc,
+	* demo/wizard/src/preprocessing_page.cc,
+	* demo/wizard/src/preprocessing_page.hh,
+	* demo/wizard/src/preprocessing_task.hh,
+	* demo/wizard/src/preprocessing_widget.cc,
+	* demo/wizard/src/preprocessing_widget.hh,
+	* demo/wizard/src/process_page.cc,
+	* demo/wizard/src/process_page.hh,
+	* demo/wizard/src/process_widget.cc,
+	* demo/wizard/src/process_widget.hh,
+	* demo/wizard/src/result_page.cc,
+	* demo/wizard/src/result_page.hh,
+	* demo/wizard/src/result_widget.cc,
+	* demo/wizard/src/result_widget.hh,
+	* demo/wizard/src/rotate_page.cc,
+	* demo/wizard/src/rotate_page.hh,
+	* demo/wizard/src/rotate_widget.cc,
+	* demo/wizard/src/rotate_widget.hh,
+	* demo/wizard/src/runner.cc,
+	* demo/wizard/src/runner.hh,
+	* demo/wizard/src/test.cc,
+	* demo/wizard/ui/doc_type_widget.ui,
+	* demo/wizard/ui/load_widget.ui,
+	* demo/wizard/ui/main_window.ui,
+	* demo/wizard/ui/preprocessing_widget.ui,
+	* demo/wizard/wizard.pro,
+	* demo/wizard/wizard.qrc: Remove.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation related problems in viewer.
+
+	* demo/viewer/image_view.cc: Fix a warning;
+
+	* demo/viewer/main.cc: Include sauvola_ms.hh to compile related
+	global variables.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh: Handle
+	global variables correctly.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove scribo/sandbox.
+
+	* sandbox/ChangeLog,
+	* sandbox/z/sauvola_ms_rv/dump_color_sign.cc,
+	* sandbox/z/sauvola_ms_rv/img/001.pgm,
+	* sandbox/z/sauvola_ms_rv/img/001_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/002.pgm,
+	* sandbox/z/sauvola_ms_rv/img/002_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/003.pgm,
+	* sandbox/z/sauvola_ms_rv/img/003_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/004.pgm,
+	* sandbox/z/sauvola_ms_rv/img/004_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/005.pgm,
+	* sandbox/z/sauvola_ms_rv/img/005_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/006.pgm,
+	* sandbox/z/sauvola_ms_rv/img/006_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/007.pgm,
+	* sandbox/z/sauvola_ms_rv/img/007_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/008.pgm,
+	* sandbox/z/sauvola_ms_rv/img/008_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/009.pgm,
+	* sandbox/z/sauvola_ms_rv/img/009_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/010.pgm,
+	* sandbox/z/sauvola_ms_rv/img/010_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/011.pgm,
+	* sandbox/z/sauvola_ms_rv/img/011_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/012.pgm,
+	* sandbox/z/sauvola_ms_rv/img/012_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/013.pgm,
+	* sandbox/z/sauvola_ms_rv/img/013_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/014.pgm,
+	* sandbox/z/sauvola_ms_rv/img/014_i.pgm,
+	* sandbox/z/sauvola_ms_rv/img/015.pgm,
+	* sandbox/z/sauvola_ms_rv/mp00082c_crop.pgm,
+	* sandbox/z/sauvola_ms_rv/pbm_color_diff.cc,
+	* sandbox/z/sauvola_ms_rv/pgm_color_diff.cc,
+	* sandbox/z/sauvola_ms_rv/pgm_local_mean.cc,
+	* sandbox/z/sauvola_ms_rv/ppm_influence_zone_geodesic.cc,
+	* sandbox/z/sauvola_ms_rv/skewness.cc,
+	* sandbox/z/sauvola_ms_rv/skewness/integral_browsing_rv.hh,
+	* sandbox/z/sauvola_ms_rv/skewness/skewness2.cc: Remove.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Update.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add standard support for OCR output in PAGE format.
+
+	* scribo/io/xml/internal/page_xml_visitor.hh: Here.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix sauvola_ms test.
+
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms.ref.pbm,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm: Make use of
+	reference files in test.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* scribo/binarization/local_threshold.hh,
+	* scribo/core/central_sites.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/fun/v2b/objects_large_filter.hh,
+	* scribo/make/influence_zone_graph.hh,
+	* scribo/postprocessing/fill_object_holes.hh: Fix namespace
+	ambiguities.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: Fix arguments.
+
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh: Use namespace mln.
+
+	* scribo/util/compute_sub_domains.hh,
+	* scribo/util/integral_sum_sum2_functor.hh,
+	* scribo/util/integral_sum_sum2_global_min_functor.hh,
+	* src/contest/hdibco-2010/sauvola_ms_hdibco.cc: Add missing
+	include.
+
+	* scribo/io/img/save.hh: Use box2d constructor.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename point_at_index and index_of_point.
+
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/util/init_integral_image.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh: Here.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix tesseract includes.
+
+2013-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use io::magick to save output.
+
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/wolf.cc: Here.
+
+2013-01-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization programs.
+
+	* src/binarization/sauvola_ms.cc: Add negate option.
+
+	* src/binarization/sauvola_ms_debug.cc: Fix invalid k parameter
+	value.
+
+2012-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Fix overlapping area
+	criterion.
+
+2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Add comments.
+
+2012-09-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use io::magick for sauvola binaries output.
+
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Singh algorithm.
+
+	* scribo/binarization/internal/singh_formula.hh,
+	* scribo/binarization/internal/singh_functor.hh,
+	* scribo/binarization/singh.hh,
+	* src/binarization/singh.cc: New.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make the area value depends on the first scale ratio.
+
+	* scribo/binarization/sauvola_ms.hh: Change area ranges.
+
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms.ref.pbm,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm: Fix test.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid default options.
+
+	* src/binarization/sauvola_ms_split.cc: Here.
+
+2012-08-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Provide original algorithms without approximations.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/wolf.hh: Restore original algorithms.
+
+	* tests/binarization/Makefile.am,
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack.ref.pbm,
+	* tests/binarization/niblack_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_wodd_hodd.ref.pbm: Adjust test results.
+
+	* scribo/binarization/internal/niblack_functor_fast.hh,
+	* scribo/binarization/internal/wolf_functor_fast.hh,
+	* scribo/binarization/niblack_fast.hh,
+	* scribo/binarization/wolf_fast.hh,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm,
+	* tests/binarization/niblack_fast.cc,
+	* tests/binarization/niblack_fast.ref.pbm,
+	* tests/binarization/niblack_fast_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_fast_wodd_hodd.ref.pbm,
+	* tests/binarization/wolf_fast.cc,
+	* tests/binarization/wolf_fast.ref.pbm,
+	* tests/binarization/wolf_fast_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_fast_wodd_hodd.ref.pbm: New.
+
+2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/all.hh: Add more includes.
+
+2012-06-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/otsu_threshold.hh: Fix namespace ambiguities.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* scribo/binarization/internal/local_threshold_core.hh: Add a
+	missing include.
+
+	* scribo/debug/logger.hh: Fix attributes initialization order.
+
+	* scribo/text/paragraphs_closing.hh: Fix a warning related to an
+	unused-variable.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a better support for different k values in Sauvola Multiscale.
+
+	* scribo/scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/scribo/binarization/sauvola_ms.hh,
+	* scribo/scribo/binarization/sauvola_ms_split.hh,
+	* scribo/scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/scribo/toolchain/text_in_doc_preprocess.hh: Make use of
+	k2, k3 and k4 variables.
+
+	* scribo/src/binarization/sauvola_ms.cc,
+	* scribo/src/binarization/sauvola_ms_debug.cc,
+	* scribo/src/binarization/sauvola_ms_fg.cc,
+	* scribo/src/binarization/sauvola_ms_split.cc: Fix program
+	arguments.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a default verbose mode in debug::logger.
+
+	* scribo/debug/logger.hh: Here.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of logger features.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/sauvola_ms.hh: Make use of operator<< with
+	debug::logger.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/sauvola_ms.cc: Fix options handling.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix call to sauvola_ms.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of new logger features.
+
+	* src/binarization/global_threshold.cc,
+	* src/binarization/kim.cc,
+	* src/binarization/niblack.cc,
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc,
+	* src/binarization/wolf.cc: Make use of operator<<.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup Kim's binarization.
+
+	* src/binarization/kim.cc: Move code...
+	* scribo/binarization/kim.hh: ... here.
+
+	* tests/binarization/Makefile.am: Add new target.
+
+	* tests/binarization/kim.cc,
+	* tests/binarization/kim.ref.pbm,
+	* tests/binarization/kim_weven_hodd.ref.pbm,
+	* tests/binarization/kim_wodd_heven.ref.pbm,
+	* tests/binarization/kim_wodd_hodd.ref.pbm: New.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make integral browsing canvas robust to large windows.
+
+	* scribo/binarization/sauvola_ms.hh: remove tests on window size.
+
+	* scribo/canvas/integral_browsing.hh: Check window size.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Several small fixes.
+
+	* scribo/estim/font_color.hh: Fix namespace ambiguities.
+
+	* src/binarization/Makefile.am: Add kim as target.
+
+	* src/binarization/kim.cc: Cleanup code.
+
+	* src/binarization/niblack.cc: Fix reverse video.
+
+	* src/binarization/sauvola_ms.cc: Handle several k values.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/kim.cc: Remove debug and useless steps.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/binarization/kim.cc: New binarization algorithm.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce a verbose mode.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Remove debug.
+
+	* src/binarization/otsu.cc,
+	* src/binarization/sauvola.cc: Add verbose mode option.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Sauvola.
+
+	* sauvola_fast.cc: Remove.
+
+	* scribo/binarization/internal/local_threshold_debug.hh: Add more
+	debug.
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh: Introduce k for each scale.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_split.cc: Take several k into
+	account.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Wolf's binarization algorithm.
+
+	* scribo/binarization/internal/wolf_formula.hh,
+	* scribo/binarization/internal/wolf_functor.hh,
+	* scribo/binarization/wolf.hh,
+	* scribo/util/integral_sum_sum2_global_min_functor.hh,
+	* src/binarization/wolf.cc,
+	* tests/binarization/wolf.cc,
+	* tests/binarization/wolf.ref.pbm,
+	* tests/binarization/wolf_weven_hodd.ref.pbm,
+	* tests/binarization/wolf_wodd_heven.ref.pbm,
+	* tests/binarization/wolf_wodd_hodd.ref.pbm: New.
+
+	* src/binarization/Makefile.am,
+	* tests/binarization/Makefile.am: Add new target.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more debug.
+
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* src/binarization/sauvola_ms_debug.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: Change area thresholds.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: More fixes in debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/internal/sauvola_ms_functor.hh: Use C8
+	neighborhood for labeling.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_ms.hh: More fixes in debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix warning in Otsu related files.
+
+	* scribo/binarization/otsu_threshold.hh,
+	* src/binarization/otsu.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix and improve sauvola_ms debug.
+
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* src/binarization/sauvola_ms_debug.cc: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid line offset due to input image size.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh: Here.
+
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack_weven_hodd.ref.pbm,
+	* tests/binarization/niblack_wodd_heven.ref.pbm,
+	* tests/binarization/niblack_wodd_hodd.ref.pbm,
+	* tests/binarization/sauvola.cc,
+	* tests/binarization/sauvola_ms.cc,
+	* tests/binarization/sauvola_ms_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_ms_wodd_hodd.ref.pbm,
+	* tests/binarization/sauvola_weven_hodd.ref.pbm,
+	* tests/binarization/sauvola_wodd_heven.ref.pbm,
+	* tests/binarization/sauvola_wodd_hodd.ref.pbm,
+	* tests/img/lena_weven_hodd.pgm,
+	* tests/img/lena_wodd_heven.pgm,
+	* tests/img/lena_wodd_hodd.pgm: Add test case.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix binarization tests.
+
+	* sauvola_fast.cc,
+	* scribo/binarization/internal/local_threshold_core.hh,
+	* tests/binarization/niblack.cc,
+	* tests/binarization/niblack.ref.pbm,
+	* tests/binarization/sauvola.cc,
+	* tests/binarization/sauvola.ref.pbm: Here.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp *_threshold functions.
+
+	* scribo/binarization/internal/sauvola_core.hh: Remove.
+
+	* scribo/binarization/internal/local_threshold_core.hh: New.
+
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_threshold.hh: Make use of
+	local_threshold_core.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Refactor local threshold binarization algorithms.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh: Remove.
+
+	* scribo/binarization/internal/niblack_functor.hh,
+	* scribo/binarization/internal/niblack_threshold_functor.hh,
+	* scribo/binarization/internal/sauvola_core.hh,
+	* scribo/binarization/internal/sauvola_functor.hh,
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/internal/sauvola_threshold_functor.hh,
+	* scribo/util/compute_sub_domains.hh,
+	* scribo/util/init_integral_image.hh,
+	* scribo/util/integral_sub_sum_sum2_functor.hh,
+	* scribo/util/integral_sum_sum2_functor.hh,
+	* src/binarization/pgm_niblack_threshold_image.cc: New.
+
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/binarization/trash/compute_local_threshold.hh,
+	* scribo/canvas/integral_browsing.hh: Cleanup and make use of
+	functors.
+
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc: Handle verbose/debug
+	modes.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Cleanup and add some debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Use subscaled integral image.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: Fix bugs. Stable version.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sauvola_fast.cc: New implementation.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/binarization/sauvola_threshold.hh: Add some debug.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Compute Sauvola on documents with light text and dark background.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/local_threshold.hh: Update formula.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/Makefile.am: Add a missing file in EXTRA_DIST.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add tests for lines_*_pattern routines.
+
+	* tests/primitive/extract/Makefile.am: New targets.
+
+	* tests/primitive/extract/lines_h_pattern.cc,
+	* tests/primitive/extract/lines_h_pattern.ref.pbm,
+	* tests/primitive/extract/lines_v_pattern.cc,
+	* tests/primitive/extract/lines_v_pattern.ref.pbm: New.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix wrong line reconstruction with lines_*_pattern routines.
+
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh: Here.
+
+2013-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more tests for lines_*_discontinued routines.
+
+	* tests/primitive/extract/Makefile.am: New targets.
+
+	* tests/primitive/extract/lines_h_discontinued.cc,
+	* tests/primitive/extract/lines_v_discontinued.cc: New.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new test for lines_discontinued.
+
+	* tests/img/lines_discontinued.pbm,
+	* tests/primitive/extract/lines_discontinued.cc: New.
+
+	* tests/primitive/extract/Makefile.am: Add new target.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/primitive/extract/lines_discontinued.hh: Add a missing
+	call to exact().
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/primitive/extract/lines_discontinued.hh: Fix invalid line
+	reconstruction.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/subsampling/bilinear.hh: Update documentation.
+
+2013-03-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/io/img/save.hh: Add an optional reduction factor.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Update.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix call to text_in_doc_preprocess().
+
+	* src/content_in_hdoc.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/non_text_components.cc,
+	* src/text_in_doc_preprocess.cc: Here.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various warnings.
+
+	* scribo/binarization/otsu_threshold.hh: Fix comparisons between
+	different types.
+
+	* scribo/io/xml/load.hh: Convert to float.
+
+	* scribo/text/paragraphs_closing.hh,
+	* scribo/text/recognition.hh,
+	* src/afp/components.hh: Remove unused variables.
+
+	* src/binarization/otsu.cc: Silent warning.
+
+	* src/misc/morpho.cc: Check number of arguments.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* common.mk: Fix include paths order.
+
+2012-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Save full size region debug image.
+
+	* src/content_in_doc.cc: Set output format to DebugWithImage.
+
+	* scribo/io/img/save.hh: Do not subsample output image.
+
+2012-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/content_in_doc.cc: Add more options.
 
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -142,6 +1867,162 @@
 	* scribo/text/recognition.hh: Fix code for Tesseract 3.01
 	compatibility.
 
+2012-09-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/src/content_in_doc.cc: Add more debug images.
+
+2012-09-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/logger.hh: Fix attributes initialization order.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+ 	Take OCR confidence into account in HTML reconstruction.
+
+	* demo/xml2doc/templates/html/main.xsl,
+	* demo/xml2doc/templates/html/main_base64.xsl: Here.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/afp/components.hh: Rename index_of_point to offset_of_point.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/logger.hh: Add missing inline keywords.
+
+2012-09-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Take OCR confidence into account in document reconstruction.
+
+	* demo/xml2doc/templates/pdf/line.xsl: Do not print lines with
+	confidence < 60%.
+
+	* scribo/core/line_info.hh: Add access to text confidence.
+
+	* scribo/io/xml/internal/extended_page_xml_visitor.hh,
+	* scribo/io/xml/internal/full_xml_visitor.hh: Save text confidence.
+
+	* scribo/io/xml/load.hh: Load text confidence.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename point_at_index, delta_index and index_of_point.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/draw/line_components.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/rotate_90.hh,
+	* scribo/primitive/extract/internal/union.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/primitive/internal/rd.hh,
+	* scribo/subsampling/integral.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/merging_hdoc.hh: Rename point_at_index,
+	delta_index and index_of_point to point_at_offset, delta_offset
+	and offset_of_point.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve option parser.
+
+	* scribo/debug/option_check.hh: New function for verbose mode.
+
+	* scribo/debug/option_parser.hh: Fix a bug with misplaced options.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Readme files about contests.
+
+	* src/contest/DAE-2011/README,
+	* src/contest/hdibco-2010/README,
+	* src/contest/hdlac-2011/README: New.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation in Scribo.
+
+	* scribo/primitive/link/merge_double_link_closest_aligned.hh: Add
+	a missing include.
+
+	* src/content_in_hdoc.cc,
+	* src/contest/DAE-2011/content_in_doc_dae.cc,
+	* src/contest/DAE-2011/content_in_hdoc_dae.cc,
+	* src/contest/hdlac-2011/content_in_hdoc_hdlac.cc,
+	* src/non_text_components.cc: Add mandatory arguments.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/logger.hh: Improve log system.
+
+2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove useless targets in scribo/src/binarization.
+
+	* scribo/src/binarization/Makefile.am: Remove targets.
+
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/pgm_sauvola_threshold_image.cc,
+	* src/binarization/ppm_sauvola.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_fg.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: Remove.
+
+2012-04-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup text_in_picture_dual.
+
+	* src/Makefile.am: Update target name.
+
+	* src/text_in_picture_neg.cc: Rename as...
+	* src/text_in_picture_dual.cc: ... this. Use option parser.
+
+2012-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make unskew an option in content_in_doc.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh,
+	* src/content_in_doc.cc: Make unskew an option.
+
+2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/subsampling/integral_single_image.hh: Fix forward
+	declarations.
+
+2011-12-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/Makefile.am: Remove -lpthread.
+
+2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Make some includes conditional.
+
+2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Do not compile scribo-viewer if Tesseract is not present.
+
+	* demo/Makefile.am: Add guards.
+
+2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make recognition faster and store recognition confidence.
+
+	* scribo/core/line_info.hh,
+	* scribo/text/recognition.hh: Here.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regenerate mk files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2011-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Mention the ICDAR 2011 paper in SCRIBO's README.
@@ -149,6 +2030,95 @@
 	* README (Bibliography): Here.
 	Fix copyright header.
 	* src/README: Fix copyright header.
+
+2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix test of Niblack's algorithm.
+
+	* tests/binarization/niblack.ref.pbm: Update.
+
+2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update use of the threshold function.
+
+	* scribo/binarization/global_threshold.hh: Here.
+
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/text/clean.hh,
+	* scribo/text/clean_inplace.hh: Remove useless include.
+
+2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* README: update requirements information.
+
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/text/recognition.hh: Fix code for Tesseract 3.01
+	compatibility.
+
+2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move Otsu's threshold computation in a separate routine.
+
+	* scribo/binarization/otsu.hh,
+	* scribo/binarization/otsu_threshold.hh: Move threshold
+	computation in a separate routine.
+
+2011-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Niblack's binarization algorithm.
+
+	* scribo/binarization/all.hh: Update includes.
+
+	* scribo/binarization/internal/compute_local_threshold.hh,
+	* scribo/binarization/internal/compute_sauvola_threshold.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/internal/local_threshold_debug.hh,
+	* scribo/binarization/internal/sauvola_debug.hh,
+	* scribo/binarization/internal/sauvola_formula.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/binarization/sauvola_threshold_image.hh: Revamp code in
+	order to share some parts with Niblack's algorithm.
+
+	* scribo/binarization/internal/niblack_formula.hh,
+	* scribo/binarization/niblack.hh,
+	* scribo/binarization/niblack_threshold.hh: New.
+
+	* src/binarization/Makefile.am
+	* tests/binarization/Makefile.am: Add new targets.
+
+	* src/binarization/niblack.cc: New tool.
+
+	* tests/binarization/niblack.cc: New test.
+
+	* tests/binarization/niblack.ref.pbm: New test data.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new tool for global thresholding.
+
+	* src/binarization/Makefile.am: Add a new target.
+
+	* src/binarization/global_threshold.cc: New.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/binarization/global_threshold.cc: Fix test.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Otsu's binarization implementation.
+
+	* scribo/binarization/otsu.hh: New routine.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/otsu.cc: New tool.
+
+	* tests/binarization/Makefile.am,
+	* tests/binarization/otsu.cc,
+	* tests/binarization/otsu.ref.pbm: New test data.
 
 2011-09-19  Guillaume Lazzara  <z@lrde.epita.fr>
 

@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 				"alphacond.pbm <mean_factor> <stddev_factor> <alphamfact> <w> <k>",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   unsigned w;
   if (argc >= 12)
@@ -128,5 +128,4 @@ int main(int argc, char *argv[])
 
 //io::pgm::save(data::saturate(value::int_u8(), thres), "thres_saturated.pgm");
 
-  trace::exiting("main");
 }

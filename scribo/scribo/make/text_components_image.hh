@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,7 +63,7 @@ namespace scribo
     mln_ch_value(L,bool)
     text_components_image(const document<L>& doc)
     {
-      trace::entering("scribo::make::text_components_image");
+      mln_trace("scribo::make::text_components_image");
 
       mln_precondition(doc.is_open());
       mln_precondition(doc.has_text());
@@ -77,7 +78,7 @@ namespace scribo
 	for_all_lines(l, doc.lines())
 	  if (lines(l).is_textline())
 	  {
-	    const util::array<component_id_t>&
+	    const mln::util::array<component_id_t>&
 	      comp_ids = lines(l).component_ids();
 	    const L& lbl = lines.components().labeled_image();
 	    for_all_elements(c, comp_ids)
@@ -89,7 +90,6 @@ namespace scribo
 	  }
       }
 
-      trace::exiting("scribo::make::text_components_image");
       return output;
     }
 

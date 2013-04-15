@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +60,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::labeled_image_base<I,E>.
+    /*!
+      \brief Data structure for \c mln::labeled_image_base<I,E>.
+    */
     template <typename I, typename E>
     struct data< labeled_image_base<I,E> >
     {
@@ -100,17 +102,17 @@ namespace mln
 
 
 
-  /*! \brief Base class Morpher providing an improved interface for
-      labeled image.
+  /*!
+    \brief Base class Morpher providing an improved interface for
+    labeled image.
 
-      \tparam I The label image type.
+    \tparam I The label image type.
 
-      This image type allows to access every site set at a given
-      label.
+    This image type allows to access every site set at a given
+    label.
 
-      This image type guaranties that labels are contiguous (from 1 to
-      n).
-
+    This image type guaranties that labels are contiguous (from 1 to
+    n).
   */
   template <typename I, typename E>
   class labeled_image_base

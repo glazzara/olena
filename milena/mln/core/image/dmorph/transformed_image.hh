@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::transformed_image<I,F>.
+    /*!
+      \brief Data structure for \c mln::transformed_image<I,F>.
+    */
     template <typename I, typename F>
     struct data< transformed_image<I,F> >
     {
@@ -106,8 +108,10 @@ namespace mln
     /// Constructor.
     transformed_image(I& ima, const F& f);
 
+    /// \cond INTERNAL_API
     /// Initialization.
     void init_(I& ima, const F& f);
+    /// \endcond
 
 
     /// Give the definition domain.

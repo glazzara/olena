@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -94,9 +94,7 @@ int main(int argc, char* argv[])
     scribo::make::internal::debug_filename_prefix = argv[argc - 1];
   }
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -118,7 +116,8 @@ int main(int argc, char* argv[])
       std::cout << "Using K = " << K << std::endl;
     }
 
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, K);
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, K,
+						      false, false);
 
     // Cleanup components on borders
     {
@@ -213,5 +212,4 @@ int main(int argc, char* argv[])
 
 //  sleep(10);
 
-  trace::exiting("main");
 }

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +48,9 @@ namespace mln
 
   namespace internal
   {
-    /// Data structure for \c mln::fun_image<T,I>.
+    /*!
+      \brief Data structure for \c mln::fun_image<T,I>.
+    */
     template <typename F, typename I>
     struct data< fun_image<F,I> >
     {
@@ -121,8 +123,10 @@ namespace mln
     /// Constructor.
     fun_image(const Image<I>& ima);
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const Function_v2v<F>& f, const Image<I>& ima);
+    /// \endcond
 
     /// Read-only access of pixel value at point site \p p.
     mln_result(F) operator()(const mln_psite(I)& p) const;

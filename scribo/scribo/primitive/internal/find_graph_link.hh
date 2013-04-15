@@ -82,7 +82,7 @@ namespace scribo
 		      int dmax,
 		      const mln_site(L)& c)
       {
-	trace::entering("scribo::primitive::internal::find_graph_link");
+	mln_trace("scribo::primitive::internal::find_graph_link");
 
 	G& g = exact(g_);
 	mln_precondition(g.is_valid());
@@ -100,7 +100,6 @@ namespace scribo
 
 	update_graph_link(comps, g, p, c, current_comp, dmax);
 
-	trace::exiting("scribo::primitive::internal::find_graph_link");
       }
 
 # endif // MLN_INCLUDE_ONLY

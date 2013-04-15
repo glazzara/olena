@@ -93,14 +93,13 @@ namespace mln
     labeling<F>::labeling(F& f)
       : f(f)
     {
-      trace::entering("canvas::labeling");
+      mln_trace("canvas::labeling");
 
       init();
       f.init(); // Client initialization.
       pass_1();
       pass_2();
 
-      trace::exiting("canvas::labeling");
     }
 
     template <typename F>
@@ -251,7 +250,7 @@ namespace mln
     level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	  L& nlabels)
     {
-      trace::entering("labeling::value");
+      mln_trace("labeling::value");
 
       typedef level_functor<I,N,L> F;
       F f(exact(input), val, exact(nbh));
@@ -259,7 +258,6 @@ namespace mln
 	  
       nlabels = run.nlabels;
       
-      trace::exiting("labeling::value");
       return run.output;
     }
 

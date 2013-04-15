@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,11 +45,12 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for point iterator adaptors.
-    ///
-    /// Parameter \c Pi is the type of the point iterator adaptee;
-    /// parameter E is the exact type.
-    ///
+    /*!
+      \brief A base class for point iterator adaptors.
+
+      Parameter \c Pi is the type of the point iterator adaptee;
+      parameter E is the exact type.
+    */
     template <typename Pi, typename S, typename E>
     class piter_adaptor_ : public internal::site_iterator_base< S, E >
     {
@@ -60,6 +62,7 @@ namespace mln
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
 
+      /// \cond INTERNAL_API
       /// Test the iterator validity.
       bool is_valid_() const;
 
@@ -75,12 +78,13 @@ namespace mln
       /// Hook to the current location.
       const mln_psite(S)& p_hook_() const;
 
-      /// Change the site set targeted by this iterator.
-      void change_target(const S& s);
-
       /// Change the site set targeted by pi_.  This default impl is a
       /// no-op.  This method might be overridden.
       void pi_change_target_(const S& s);
+      /// \endcond
+
+      /// Change the site set targeted by this iterator.
+      void change_target(const S& s);
 
     protected:
 

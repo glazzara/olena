@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +40,7 @@
 # include <mln/trait/windows.hh>
 
 # include <mln/core/site_set/p_array.hh>
-# include <mln/core/internal/geom_bbox.hh> // For use in convert::from_to.
-# include <mln/convert/from_to.hxx>
+# include <mln/core/internal/geom_bbox.hh> // For use in from_to_.
 # include <mln/util/array.hh>
 
 
@@ -72,18 +71,24 @@ namespace mln
   template <typename E> struct Image;
 
 
-  // Window category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Window category flag type.
   template <>
   struct Window<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation classes that are windows.
-  ///
-  /// \see mln::doc::Window for a complete documentation of this class
-  /// contents.
+  /*!
+    \brief Base class for implementation classes that are windows.
+
+    A window is the definition of a set of points located around a
+    central point.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Window : public Object<E>
   {
@@ -112,34 +117,32 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const Window<W>& win);
 
 
+  /*!
+    \brief Conversion: window -> image
+    \ingroup fromto
+  */
+  template <typename W, typename I>
+  void
+  from_to_(const Window<W>& from, Image<I>& to);
+
+
   // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   offsets_wrt(const Image<I>& ima, const Window<W>& win);
-  
+
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   positive_offsets_wrt(const Image<I>& ima, const Window<W>& win);
-  
+
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Window
   template <typename I, typename W>
   util::array<int>
   negative_offsets_wrt(const Image<I>& ima, const Window<W>& win);
-  
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W, typename I>
-      void
-      from_to_(const Window<W>& from, Image<I>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
 
@@ -305,7 +308,7 @@ namespace mln
 	}
       ostr << " ]";
     }
-    
+
   } // end of namespace mln::internal
 
   template <typename W>
@@ -323,6 +326,35 @@ namespace mln
   }
 
 
+  template <typename W, typename I>
+  void
+  from_to_(const Window<W>& win_, Image<I>& ima_)
+  {
+    mln_is_simple_window(W)::check();
+    typedef mln_psite(I) P;
+    mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
+    mlc_equal(mln_value(I), bool)::check();
+
+    const W& win = exact(win_);
+    I& ima = exact(ima_);
+
+    mln_precondition(win.is_valid());
+    mln_precondition(! ima.is_valid());
+
+    // Hack (below) to avoid circular dependency.
+    ima.init_(mln::internal::geom_bbox(win));
+    {
+      // data::fill(ima, false) is:
+      mln_piter(I) p(ima.domain());
+      for_all(p)
+	ima(p) = false;
+    }
+    unsigned n = win.size();
+    for (unsigned i = 0; i < n; ++i)
+      ima(convert::to<P>(win.dp(i))) = true;
+  }
+
+
   template <typename I, typename W>
   inline
   util::array<int>
@@ -337,9 +369,9 @@ namespace mln
 
     util::array<int> arr;
     unsigned n = win.size();
-    
+
     for (unsigned i = 0; i < n; ++i)
-      arr.append(ima.delta_index(win.dp(i)));
+      arr.append(ima.delta_offset(win.dp(i)));
 
     return arr;
   }
@@ -359,10 +391,10 @@ namespace mln
 
     util::array<int> arr;
     unsigned n = win.size();
-    
+
     for (unsigned i = 0; i < n; ++i)
       {
-	int offset = ima.delta_index(win.dp(i));
+	int offset = ima.delta_offset(win.dp(i));
 	if (offset > 0)
 	  arr.append(offset);
       }
@@ -385,55 +417,16 @@ namespace mln
 
     util::array<int> arr;
     unsigned n = win.size();
-    
+
     for (unsigned i = 0; i < n; ++i)
       {
-	int offset = ima.delta_index(win.dp(i));
+	int offset = ima.delta_offset(win.dp(i));
 	if (offset < 0)
 	  arr.append(offset);
       }
 
     return arr;
   }
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W, typename I>
-      void
-      from_to_(const Window<W>& win_, Image<I>& ima_)
-      {
-	mln_is_simple_window(W)::check();
-	typedef mln_psite(I) P;
-	mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
-	mlc_equal(mln_value(I), bool)::check();
-
-	const W& win = exact(win_);
-	I& ima = exact(ima_);
-
-	mln_precondition(win.is_valid());
-	mln_precondition(! ima.is_valid());
-
-	// Hack (below) to avoid circular dependency.
-	ima.init_(mln::internal::geom_bbox(win));
-	{
-	  // data::fill(ima, false) is:
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
-	    ima(p) = false;
-	}
-	unsigned n = win.size();
-	for (unsigned i = 0; i < n; ++i)
-	  ima(convert::to<P>(win.dp(i))) = true;
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

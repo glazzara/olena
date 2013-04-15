@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,8 @@
 /// Definition of the mln::point3d and mln::point3df aliases and of
 /// their construction routines.
 
+# include <mln/core/def/coord.hh>
+# include <mln/core/def/coordf.hh>
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl:
 # include <mln/core/concept/site_proxy.hh>
@@ -39,19 +42,36 @@
 namespace mln
 {
 
-  /// Type alias for a point defined on the 3D square grid with
-  /// integer coordinates.
-  typedef point<grid::cube, def::coord> point3d;
+  /*!
+    \class point3d
+    \headerfile <>
 
-  /// Type alias for a point defined on the 3D square grid with
-  /// floating-point coordinates.
+    \brief Point defined on the 3D square grid with integer
+    coordinates.
+  */
+  /// \cond ALIAS
+  typedef point<grid::cube, def::coord> point3d;
+  /// \endcond
+
+
+  /*!
+    \class point3df
+    \headerfile <>
+
+    \brief Point defined on the 3D square grid with floating-point
+    coordinates.
+  */
+  /// \cond ALIAS
   typedef point<grid::cube, def::coordf> point3df;
+
+  /// \endcond
 
   namespace internal
   {
 
     // Specialization.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl< const point<grid::cube, C>, E >
       : subject_point_impl< point<grid::cube, C>, E >
@@ -77,6 +97,7 @@ namespace mln
 
     // Specialization for point<M,C>.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl<       point<grid::cube, C>, E > :
            subject_impl< const point<grid::cube, C>, E >

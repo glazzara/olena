@@ -1,5 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,9 +24,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// \brief Logger class used to save debug images.
+
 #ifndef SCRIBO_CORE_LOGGER_HH
 # define SCRIBO_CORE_LOGGER_HH
 
+# include <stack>
+# include <iostream>
+# include <ctype.h>
 # include <mln/core/concept/image.hh>
 # include <mln/data/wrap.hh>
 # include <mln/value/int_u8.hh>
@@ -34,6 +41,7 @@
 # include <mln/io/pbm/save.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/io/ppm/save.hh>
+# include <mln/util/timer.hh>
 
 namespace scribo
 {
@@ -41,14 +49,47 @@ namespace scribo
   namespace debug
   {
 
+    /*! \brief Enum defining different level of image logging
+
+      According to the debug level set in scribo::debug::logger_ the
+      image may be saved or not.
+    */
     enum Level
     {
       None = 0,
       Special, // Reserved
       Results,
       AuxiliaryResults,
-      All
+      All,
+      InvalidLevel // Reserved
     };
+
+    /*! \brief Enum defining different modes of text logging
+
+      According to the verbose mode set in scribo::debug::logger_ the
+      text may be logged or not.
+    */
+    enum VerboseMode
+    {
+      Mute = 0,
+      UserDebug, // Reserved
+      Time,
+      Low,
+      Medium,
+      Full,
+      Invalid, // Reserved
+    };
+
+
+    /*! \brief returns the corresponding verboseMode from its name.
+
+      \internal
+      \warning Don't forget to update this function if a VerboseMode
+      value is added.
+      \endinternal
+     */
+    VerboseMode txt_to_verbose_mode(const std::string& name);
+
 
 
     namespace internal
@@ -60,6 +101,29 @@ namespace scribo
       public:
 	static logger_& instance();
 
+	/// Text Logging
+	/// @{
+	bool is_verbose() const;
+	bool is_at_verbose_mode(VerboseMode mode) const;
+
+	/// The default verbose mode used while logging with
+	/// #operator<<.
+	bool set_default_verbose_mode(VerboseMode mode);
+	VerboseMode default_verbose_mode() const;
+
+	/// Set the current verbose mode, filtering the debug output
+	/// logged through this object.
+	bool set_verbose_mode(VerboseMode mode);
+	VerboseMode verbose_mode() const;
+
+	void set_verbose_prefix(const std::string& prefix);
+
+	void log(VerboseMode mode, const std::string& text);
+	/// @}
+
+
+	/// Image Logging
+	/// @{
 	bool is_enabled() const;
 	bool is_at_level(Level level) const;
 
@@ -72,10 +136,34 @@ namespace scribo
 	template <typename I>
 	void log_image(Level dbg_level,
 		       const Image<I>& ima, const char *name);
+	/// @}
+
+	/*! \brief Time Logging
+
+	  This class provides timers in order to performs benchmarks
+	  inside a program.
+
+	  Stopping time logging will output the computed time if
+	  Verbose mode is higher or equal to #Time.
+	 */
+	/// @{
+	void start_time_logging();
+	void stop_time_logging(const std::string& time_title);
+	/// @}
+
+
+	/*! \brief Quickly logs text.
+	  It uses the default log mode to know if the text
+	*/
+	template <typename V>
+	logger_& operator<<(const V&v);
+	logger_& operator<<(std::ostream& (*f)(std::ostream&));
 
       private: // Methods
 	logger_();
 	logger_(const logger_&);
+
+	~logger_();
 
 	template <unsigned n, typename I>
 	void log_image_dispatch(const value::int_u<n>&,
@@ -110,12 +198,21 @@ namespace scribo
       private: // Attributes
 	Level level_;
 
+	VerboseMode verbose_mode_;
+	VerboseMode default_verbose_mode_;
+	std::string verbose_prefix_;
+	std::ostream& stream_;
+
+	std::stack<mln::util::timer> t_locals_;
       };
 
     } // end of namespace scribo::debug::internal
 
 
-    // Return a reference to the logger.
+    /*! \brief Return a reference to the logger.
+
+      \ingroup grpalgodebug
+     */
     scribo::debug::internal::logger_& logger();
 
 
@@ -123,6 +220,15 @@ namespace scribo
 
     namespace internal
     {
+
+      inline
+      std::string to_upper(const std::string& s)
+      {
+	std::string out(s);
+	for (size_t i = 0; i < s.size(); ++i)
+	  out[i] = toupper(s[i]);
+	return out;
+      }
 
       inline
       logger_&
@@ -135,16 +241,105 @@ namespace scribo
 
       inline
       logger_::logger_()
-	: level_(None)
+	: level_(None),
+	  verbose_mode_(Mute),
+	  default_verbose_mode_(Low),
+	  verbose_prefix_("LOG: "),
+	  stream_(std::cerr)
       {
-	// Magick::InitializeMagick(0);
       }
 
 
       inline
       logger_::logger_(const logger_&)
+	: stream_(std::cerr)
       {
 	abort();
+      }
+
+      inline
+      logger_::~logger_()
+      {
+	// If this is not True, then a timer has not been stopped!
+	mln_assertion(t_locals_.size() == 0);
+      }
+
+      inline
+      bool
+      logger_::is_verbose() const
+      {
+	return verbose_mode_ > Mute;
+      }
+
+
+      inline
+      bool
+      logger_::is_at_verbose_mode(VerboseMode mode) const
+      {
+	return mode == verbose_mode_;
+      }
+
+
+      inline
+      bool
+      logger_::set_default_verbose_mode(VerboseMode mode)
+      {
+	if (mode != Invalid)
+	{
+	  default_verbose_mode_ = mode;
+	  return true;
+	}
+	return false;
+      }
+
+
+      inline
+      VerboseMode
+      logger_::default_verbose_mode() const
+      {
+	return default_verbose_mode_;
+      }
+
+
+      inline
+      bool
+      logger_::set_verbose_mode(VerboseMode mode)
+      {
+	if (mode != Invalid)
+	{
+	  verbose_mode_ = mode;
+	  return true;
+	}
+	return false;
+      }
+
+
+      inline
+      VerboseMode
+      logger_::verbose_mode() const
+      {
+	return verbose_mode_;
+      }
+
+
+      inline
+      void
+      logger_::set_verbose_prefix(const std::string& prefix)
+      {
+	verbose_prefix_ = prefix;
+      }
+
+
+      inline
+      void
+      logger_::log(VerboseMode mode, const std::string& text)
+      {
+# ifndef SCRIBO_NDEBUG
+	if (verbose_mode_ < mode)
+	  return;
+
+	std::cerr << verbose_prefix_ << text << std::endl;
+# endif // ! SCRIBO_NDEBUG
       }
 
 
@@ -212,6 +407,30 @@ namespace scribo
       }
 
 
+      inline
+      void
+      logger_::start_time_logging()
+      {
+	t_locals_.push(mln::util::timer());
+	t_locals_.top().restart();
+      }
+
+
+      inline
+      void
+      logger_::stop_time_logging(const std::string& time_title)
+      {
+	mln_assertion(! t_locals_.empty());
+
+	t_locals_.top().stop();
+	if (verbose_mode_ >= Time)
+	  std::cerr << time_title << " "  << t_locals_.top() << "s" << std::endl;
+	t_locals_.pop();
+      }
+
+
+      // Private dispatch
+
       template <unsigned n, typename I>
       void
       logger_::log_image_dispatch(const value::int_u<n>&, const Image<I>& ima, const char *name)
@@ -273,6 +492,27 @@ namespace scribo
 			   mln::debug::filename(name + ".pgm"));
       }
 
+
+      template <typename V>
+      logger_&
+      logger_::operator<<(const V& v)
+      {
+	if (verbose_mode_ >= default_verbose_mode_)
+	  stream_ << v;
+	return *this;
+      }
+
+
+      inline
+      logger_&
+      logger_::operator<<(std::ostream& (*f)(std::ostream&))
+      {
+	if (verbose_mode_ >= default_verbose_mode_)
+	  f(stream_);
+	return *this;
+      }
+
+
     } // end of namespace scribo::debug::internal
 
 
@@ -283,6 +523,33 @@ namespace scribo
       return scribo::debug::internal::logger_::instance();
     }
 
+
+    inline
+    VerboseMode txt_to_verbose_mode(const std::string& name)
+    {
+      struct mode_name
+      {
+	const char *name;
+	VerboseMode mode;
+      };
+      static const mode_name mode[] = {
+	{ "MUTE", Mute },
+	{ "USERDEBUG", UserDebug },
+	{ "TIME", Time },
+	{ "LOW", Low },
+	{ "MEDIUM", Medium },
+	{ "FULL", Full },
+	{ "INVALID", Invalid }
+      };
+
+      unsigned i;
+      std::string name_ = internal::to_upper(name);
+      for (i = 0; mode[i].mode != Invalid; ++i)
+	if (mode[i].name == name_)
+	  break;
+
+      return mode[i].mode;
+    };
 
 # endif // ! MLN_INCLUDE_ONLY
 

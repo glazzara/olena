@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,10 +65,12 @@ namespace mln
 
           A fast queue is used so that the algorithm is not recursive and
           can handle large binary objects (blobs).
+
+	  \ingroup modcanvaslabeling
       */
       template <typename I, typename N, typename L, typename F>
       mln_ch_value(I, L)
-      blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
+      blobs(const Image<I>& input, const Neighborhood<N>& nbh,
 	    L& nlabels, F& functor);
 
 
@@ -118,7 +120,7 @@ namespace mln
 		// Label this point component.
 		if (nlabels == mln_max(L))
 		{
-		  trace::warning("labeling aborted! Too many labels \
+		  mln_trace_warning("labeling aborted! Too many labels \
 for this label type: nlabels > max(label_type).");
 
 		  return output;
@@ -167,7 +169,7 @@ for this label type: nlabels > max(label_type).");
       blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	    L& nlabels, F& functor)
       {
-	trace::entering("labeling::blobs");
+	mln_trace("labeling::blobs");
 	mlc_equal(mln_trait_image_kind(I),
 		  mln::trait::image::kind::binary)::check();
 	const I& input = exact(input_);
@@ -178,7 +180,6 @@ for this label type: nlabels > max(label_type).");
 	mln_ch_value(I, L)
 	  output = impl::generic::blobs(input, nbh, nlabels, functor);
 
-	trace::exiting("labeling::blobs");
 	return output;
       }
 

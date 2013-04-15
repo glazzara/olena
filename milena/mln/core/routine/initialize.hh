@@ -55,16 +55,15 @@ namespace mln
   inline
   void initialize(Image<I>& target, const Image<J>& model)
   {
-    trace::entering("core::initialize");
+    mln_trace("core::initialize");
     mln_precondition(! exact(target).is_valid());
     mln_precondition(exact(model).is_valid());
 
-    trace::stop();
+    debug::trace::stop();
     init_(tag::image, exact(target), exact(model));
-    trace::resume();
+    debug::trace::resume();
 
     mln_postcondition(exact(target).is_valid());
-    trace::exiting("core::initialize");
   }
 
 # endif // ! MLN_INCLUDE_ONLY

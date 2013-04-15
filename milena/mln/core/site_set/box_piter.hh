@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,12 +39,13 @@
 namespace mln
 {
 
-  /// \brief A generic forward iterator on points of boxes.
-  ///
-  /// The parameter \c P is the type of points.
-  ///
-  /// \see mln::box
-  ///
+  /*!
+    \brief A generic forward iterator on points of boxes.
+
+    The parameter \c P is the type of points.
+
+    \see mln::box
+  */
   template <typename P>
   class box_fwd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_fwd_piter_<P> >
@@ -65,6 +67,7 @@ namespace mln
     ///
     box_fwd_piter_(const mln::box<P>& b);
 
+    /// \cond INTERNAL_API
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -76,6 +79,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
   protected:
     using super_::p_;
@@ -84,12 +88,13 @@ namespace mln
 
 
 
-  /// A generic backward iterator on points of boxes.
-  ///
-  /// The parameter \c P is the type of points.
-  ///
-  /// \see mln::box
-  ///
+  /*!
+    \brief A generic backward iterator on points of boxes.
+
+    The parameter \c P is the type of points.
+
+    \see mln::box
+  */
   template <typename P>
   class box_bkd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_bkd_piter_<P> >
@@ -111,6 +116,7 @@ namespace mln
     ///
     box_bkd_piter_(const box<P>& b);
 
+    /// \cond INTERNAL_API
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -122,6 +128,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
   protected:
     using super_::p_;

@@ -81,7 +81,7 @@ namespace mln
 	mln_result(A)
 	compute(const Accumulator<A>& a_, const Site_Set<S>& s_)
 	{
-	  trace::entering("set::impl::generic::compute");
+	  mln_trace("set::impl::generic::compute");
 
 	  mlc_converts_to(mln_site(S), mln_argument(A))::check();
 
@@ -93,7 +93,6 @@ namespace mln
 	  for_all(p)
 	    a.take(p);
 
-	  trace::exiting("set::impl::generic::compute");
 	  return a.to_result();
 	}
 
@@ -111,13 +110,12 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a, const Site_Set<S>& s)
     {
-      trace::entering("set::compute");
+      mln_trace("set::compute");
 
       mlc_converts_to(mln_site(S), mln_argument(A))::check();
 
       mln_result(A) r = impl::generic::compute(a, s);
 
-      trace::exiting("set::compute");
       return r;
     }
 
@@ -126,14 +124,13 @@ namespace mln
     mln_meta_accu_result(A, mln_site(S))
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s)
     {
-      trace::entering("set::compute");
+      mln_trace("set::compute");
 
       typedef mln_accu_with(A, mln_site(S)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_site(S)());
 
       mln_result(A_) r = impl::generic::compute(a_, s);
 
-      trace::exiting("set::compute");
       return r;
     }
 

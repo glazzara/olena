@@ -209,7 +209,7 @@ namespace mln
       inline
       image2d<V> load(char type_, const std::string& filename)
       {
-	trace::entering("mln::io::pnm::load");
+	mln_trace("mln::io::pnm::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -244,7 +244,6 @@ namespace mln
 	  if (type == (type_ - 3))
 	    pnm::internal::load_ascii_dispatch(file, ima, mlc_is_a(V, mln::Value)());
 
-	trace::exiting("mln::io::pnm::load");
 
 	return ima;
       }
@@ -258,7 +257,7 @@ namespace mln
 		Image<I>& ima_,
 		const std::string& filename)
       {
-	trace::entering("mln::io::pnm::load");
+	mln_trace("mln::io::pnm::load");
 
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -296,7 +295,6 @@ namespace mln
 	  if (type == (type_ - 3))
 	    pnm::internal::load_ascii_dispatch(file, ima, mlc_is_a(mln_value(I), mln::Value)());
 
-	trace::exiting("mln::io::pnm::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

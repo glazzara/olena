@@ -77,13 +77,12 @@ namespace scribo
       object_groups<L>
       from_single_link(const object_links<L>& links)
       {
-	trace::entering("scribo::primitive::group::from_single_link");
+	mln_trace("scribo::primitive::group::from_single_link");
 
 	mln_precondition(links.is_valid());
 
 	object_groups<L> parent(links);
 
-	trace::exiting("scribo::primitive::group::from_single_link");
 	return parent;
       }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,11 +40,13 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for site iterator identity adaptors.
-    ///
-    /// Parameter \c Pi is the type of the site iterator adaptee;
-    /// parameter E is the exact type.
-    ///
+    /*!
+      \internal
+      \brief A base class for site iterator identity adaptors.
+
+      Parameter \c Pi is the type of the site iterator adaptee;
+      parameter E is the exact type.
+    */
     template <typename Pi, typename E>
     class piter_identity_ : public piter_adaptor_< Pi,            // Adaptee.
 						   mln_pset(Pi),  // Site set.

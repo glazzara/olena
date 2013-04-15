@@ -42,12 +42,15 @@ namespace mln
   namespace data
   {
 
-    /*! Set the \p output image with the encoding values of the image \p input pixels.
+    /*! \brief Set the \p output image with the encoding values of the
+     *  image \p input pixels.
      *
      * \param[in] input The input image.
      * \param[out] output The result image.
      *
      * \pre \p output.domain >= \p input.domain
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename O>
     void to_enc(const Image<I>& input, Image<O>& output);
@@ -59,12 +62,11 @@ namespace mln
     inline
     void to_enc(const Image<I>& input, Image<O>& output)
     {
-      trace::entering("data::to_enc");
+      mln_trace("data::to_enc");
 
       mln_precondition(exact(output).domain() == exact(input).domain());
       output = data::transform(input, fun::v2v::enc< mln_value(I) >());
 
-      trace::exiting("data::to_enc");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

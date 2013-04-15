@@ -1,5 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,9 +77,7 @@ int main(int argc, char* argv[])
 				"input.tif output_dir",
 				args_desc);
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   mln::util::timer t;
   t.start();
@@ -91,7 +89,8 @@ int main(int argc, char* argv[])
   // Preprocess document
   image2d<bool> input_preproc;
   {
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0.34);
+    input_preproc = toolchain::text_in_doc_preprocess(input, 0, false, 0.34,
+						      false, false);
 
     // Cleanup components on borders
     {
@@ -150,5 +149,4 @@ int main(int argc, char* argv[])
   }
 
 
-  trace::exiting("main");
 }

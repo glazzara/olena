@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,11 +44,14 @@ namespace mln
 
     namespace fld
     {
-      /// Write the AVS header in a file.
-      ///
-      /// \param file The file to write.
-      /// \param h The AVS header.
-      ///
+
+      /*! Write the AVS header in a file.
+       *
+       * \param file The file to write.
+       * \param h The AVS header.
+       *
+       * \ingroup iofld
+       */
       void write_header(std::ostream& file, const fld_header& h);
 
 # ifndef MLN_INCLUDE_ONLY

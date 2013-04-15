@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,18 +35,62 @@
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/metal/math/sqrt.hh>
-# include <mln/convert/from_to.hxx>
 
 
 namespace mln
 {
 
-  /// \brief Type alias for a window with arbitrary shape, defined on
-  /// the 2D square grid with integer coordinates.
-  ///
-  /// \ingroup modwin2d
-  //
+  /*!
+    \class window2d
+    \headerfile <>
+
+    \brief Type alias for a window with arbitrary shape, defined on
+    the 2D square grid with integer coordinates.
+
+    Common 2D windows are predefined and can be used directly:
+    win_c4p(), win_c8p(). See section \ref modwin2d.
+
+    The list of dpoint2d included in a window2d is accessible from
+    std_vector() method or simply by iterating over this list:
+
+    \code
+    window2d win = win_c4p();
+    for (int i = 0; i < win.size(); ++i)
+      std::cout << win.dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to q-iterators, as follows:
+
+    \code
+    point2d p(2,2);
+    window2d win = win_c4p();
+    mln_qiter(window2d) q(win, p);
+    for_all(q)
+      // q is a point2d, neighbor of p.
+      std::cout << q << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image2d<bool> ima(4,4);
+    window2d win = win_c4p();
+    mln_piter(image2d<bool>) p(ima.domain());
+    mln_qiter(window2d) q(win, p);
+    for_all(p)
+      for_all(q)
+        // q is a point2d, neighbor of the current p.
+        std::cout << q << std::endl;
+    \endcode
+
+    \sa dpoint2d, neighb2d
+
+    \ingroup modwin2d
+  */
+  /// \cond ALIAS
   typedef window<mln::dpoint2d> window2d;
+  /// \endcond
 
   /// \brief 4-connectivity window on the 2D grid, including the
   /// center.
@@ -81,22 +125,13 @@ namespace mln
   const window2d& win_c8p();
 
 
-  namespace convert
-  {
+  /// \internal Conversion: bool[] -> window2d
+  template <unsigned S>
+  void from_to_(const bool (&values)[S], window2d& win);
 
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void from_to_(const bool (&values)[S], window2d& win);
-
-      template <unsigned R, unsigned C>
-      void from_to_(const bool (&values)[R][C], window2d& win);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[][] -> window2d
+  template <unsigned R, unsigned C>
+  void from_to_(const bool (&values)[R][C], window2d& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -138,50 +173,40 @@ namespace mln
   }
 
 
-  namespace convert
+  template <unsigned S>
+  void
+  from_to_(const bool (&values)[S], window2d& win)
   {
+    enum { H = mlc_sqrt_int(S) / 2 };
+    mlc_bool((2 * H + 1) * (2 * H + 1) == S)::check();
+    win.clear();
+    unsigned i = 0;
+    const def::coord
+      h  = static_cast<def::coord>(H),
+      _h = static_cast<def::coord>(-h);
+    for (def::coord row = _h; row <= h; ++row)
+      for (def::coord col = _h; col <= h; ++col)
+	if (values[i++])
+	  win.insert(row, col);
+  }
 
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void
-      from_to_(const bool (&values)[S], window2d& win)
-      {
-	enum { H = mlc_sqrt_int(S) / 2 };
-	mlc_bool((2 * H + 1) * (2 * H + 1) == S)::check();
-	win.clear();
-	unsigned i = 0;
-	const def::coord
-	  h  = static_cast<def::coord>(H),
-	  _h = static_cast<def::coord>(-h);
-	for (def::coord row = _h; row <= h; ++row)
-	  for (def::coord col = _h; col <= h; ++col)
-	    if (values[i++])
-	      win.insert(row, col);
-      }
-
-      template <unsigned R, unsigned C>
-      void
-      from_to_(const bool (&values)[R][C], window2d& win)
-      {
-	mlc_bool(R % 2 == 1)::check();
-	mlc_bool(C % 2 == 1)::check();
-	win.clear();
-	const def::coord
-	  drow  = static_cast<def::coord>(R / 2),
-	  _drow = static_cast<def::coord>(- drow),
-	  dcol  = static_cast<def::coord>(C / 2),
-	  _dcol = static_cast<def::coord>(- dcol);
-	for (def::coord row = _drow; row <= drow; ++row)
-	  for (def::coord col = _dcol; col <= dcol; ++col)
-	    if (values[row + drow][col + dcol])
-	      win.insert(row, col);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  template <unsigned R, unsigned C>
+  void
+  from_to_(const bool (&values)[R][C], window2d& win)
+  {
+    mlc_bool(R % 2 == 1)::check();
+    mlc_bool(C % 2 == 1)::check();
+    win.clear();
+    const def::coord
+      drow  = static_cast<def::coord>(R / 2),
+      _drow = static_cast<def::coord>(- drow),
+      dcol  = static_cast<def::coord>(C / 2),
+      _dcol = static_cast<def::coord>(- dcol);
+    for (def::coord row = _drow; row <= drow; ++row)
+      for (def::coord col = _dcol; col <= dcol; ++col)
+	if (values[row + drow][col + dcol])
+	  win.insert(row, col);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different height or
-/// width.
+/// \brief Invalidate links between two objects with too different
+/// height or width.
 
 
 # include <mln/util/array.hh>
@@ -56,6 +56,8 @@ namespace scribo
 	                     bounding boxes.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -73,7 +75,7 @@ namespace scribo
 			    unsigned dim,
 			    float max_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_ratio");
+      mln_trace("scribo::filter::object_links_bbox_ratio");
 
       mln_precondition(links.is_valid());
 
@@ -96,7 +98,6 @@ namespace scribo
 	    output.clear(i);
 	}
 
-      trace::exiting("scribo::filter::object_links_bbox_ratio");
       return output;
     }
 

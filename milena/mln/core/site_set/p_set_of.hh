@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -134,10 +135,12 @@ namespace mln
     const util::set<S>& set_hook_() const;
 
 
+    /// \cond INTERNAL_API
     // Required by p_double-related classes.
     const util::set<S>& set_1_() const;
     template <typename I>
     const S& set_2_(const I& it) const;
+    /// \endcond
 
   protected:
 
@@ -146,7 +149,7 @@ namespace mln
   };
 
 
-
+  /// \relates mln::p_set_of
   template <typename S>
   std::ostream& operator<<(std::ostream& ostr, const p_set_of<S>& s);
 

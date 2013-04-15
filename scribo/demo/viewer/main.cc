@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,9 +23,10 @@
 #include <mln/labeling/colorize.hh>
 #include <mln/math/pi.hh>
 #include <mln/io/magick/load.hh>
-#include <scribo/make/debug_filename.hh>
 #include <mln/debug/filename.hh>
 #include <mln/literal/colors.hh>
+#include <scribo/make/debug_filename.hh>
+#include <scribo/binarization/sauvola_ms.hh>
 
 int main(int argc, char** argv)
 {
@@ -37,8 +38,6 @@ int main(int argc, char** argv)
 	      << argv[0] << " <image dir>" << std::endl;
     return 0;
   }
-
-  Magick::InitializeMagick(*argv);
 
   Viewer* viewer = Viewer::Instance(argc, argv);
 

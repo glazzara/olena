@@ -121,7 +121,7 @@ namespace mln
 	    union_find(const Image<I>& f_, const Image<J>& g_,
 		       const Neighborhood<N>& nbh_)
 	    {
-	      trace::entering("morpho::reconstruction::by_dilation::impl::generic::union_find");
+	      mln_trace("morpho::reconstruction::by_dilation::impl::generic::union_find");
 
 	      const I& f = exact(f_);
 	      const J& g = exact(g_);
@@ -203,7 +203,6 @@ namespace mln
 	      mln_postcondition(output >= f);
 	      mln_postcondition(output <= g);
 
-	      trace::exiting("morpho::reconstruction::by_dilation::impl::generic::union_find");
 	      return output;
 	    }
 
@@ -272,14 +271,13 @@ namespace mln
 	union_find(const Image<I>& f, const Image<J>& g,
 		   const Neighborhood<N>& nbh)
 	{
-	  trace::entering("morpho::reconstruction::by_dilation::union_find");
+	  mln_trace("morpho::reconstruction::by_dilation::union_find");
 
 	  internal::union_find_tests(f, g, nbh);
 
 	  mln_concrete(I) output;
 	  output = internal::union_find_dispatch(f, g, nbh);
 
-	  trace::exiting("morpho::reconstruction::by_dilation::union_find");
 	  return output;
 	}
 

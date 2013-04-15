@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,6 @@
 
 # include <mln/value/ops.hh>
 
-# include <mln/fun/v2v/hsl_to_rgb.hh>
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
@@ -46,28 +45,18 @@ namespace mln
 {
 
   // Forward declaration.
-  namespace value { template <unsigned n> struct rgb; }
+  namespace value {
+    template <unsigned n> struct rgb;
+    template <typename H, typename S, typename L> class hsl_;
 
-
-
-   namespace fun
-   {
-
-     namespace v2v
-     {
-
-       template <typename T_rgb>
-       struct f_hsl_to_rgb_;
-
-       typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
-//       typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
-
-       extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
-//       extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
-
-     }
-
-   }
+  }
+  namespace fun {
+    namespace v2v {
+      template <typename T_hsl> struct f_rgb_to_hsl_;
+      typedef f_rgb_to_hsl_<value::hsl_<float, float, float> > f_rgb_to_hsl_f_t;
+      extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
+    }
+  }
 
 
   namespace literal
@@ -103,42 +92,6 @@ namespace mln
    {
      template <typename H, typename S, typename L> class hsl_;
    }
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // algebra::vec -> rgb.
-      template <typename T, unsigned m>
-      void from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to_);
-
-      // bool -> rgb.
-      template <unsigned m>
-      void from_to_(bool from, value::rgb<m>& to);
-
-      // int_u -> rgb.
-      template <unsigned m>
-      void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
-
-       // hsl -> rgb8.
-       template <typename H, typename S, typename L>
-       void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
-
-//       // hsl -> rgb16.
-//       template <typename H, typename S, typename L>
-//       void from_to_(const value::hsl_<H,S,L>&, value::rgb<16>& to);
-
-      // rgb -> bool.
-      template <unsigned m>
-      void from_to_(const value::rgb<m>& from, bool& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace trait
   {
@@ -242,8 +195,12 @@ namespace mln
   namespace value
   {
 
-    /// Color class for red-green-blue where every component is
-    /// n-bit encoded.
+    /*!
+      \brief Color class for red-green-blue where every component is
+      n-bit encoded.
+
+      \ingroup valuergb
+    */
     template <unsigned n>
     struct rgb
       :
@@ -395,14 +352,38 @@ namespace mln
     operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
     /// \}
 
+  } // end of namespace mln::value
+
+
+  // Conversions
+
+  namespace value
+  {
+
+    /// \internal Conversion: rgb -> bool.
+    template <unsigned m>
+    void from_to_(const value::rgb<m>& from, bool& to);
+
+    /// \internal Conversion: rgb to hsl_
+    void
+    from_to_(const rgb<16>& from, hsl_<float,float,float>& to);
+
+    /// \internal Conversion: rgb to hsl_
+    void
+    from_to_(const rgb<8>& from, hsl_<float,float,float>& to);
+
+    /// \internal Conversion: bool -> rgb.
+    template <unsigned m>
+    void from_to_(bool from, value::rgb<m>& to);
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-// // Needed by from_to_.
-// # include <mln/fun/v2v/rgb_to_hsl.hh>
+// Used in from_to
+# include <mln/value/hsl.hh>
+# include <mln/fun/v2v/rgb_to_hsl.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -755,75 +736,46 @@ namespace mln
       return istr >> c.red() >> c.green() >> c.blue();
     }
 
-  } // end of namespace mln::value
 
+    // Conversions
 
-  namespace convert
-  {
-
-    namespace over_load
+    template <unsigned m>
+    void
+    from_to_(const rgb<m>& from, bool& to)
     {
+      to = (from.red() != 0 && from.green() != 0 && from.blue() != 0);
+    }
 
-      // algebra::vec -> rgb.
-      template <typename T, unsigned m>
-      inline
-      void
-      from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to)
-      {
-	algebra::vec<3, unsigned> tmp;
-	for (unsigned i = 0; i < 3; ++i)
-	  tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to_ instead of cast.
+    inline
+    void
+    from_to_(const rgb<16>& from, hsl_<float,float,float>& to)
+    {
+      to = fun::v2v::f_rgb_to_hsl_f(from);
+    }
 
-	to = value::rgb<m>(tmp);
-      }
+    inline
+    void
+    from_to_(const rgb<8>& from, hsl_<float,float,float>& to)
+    {
+      to = fun::v2v::f_rgb_to_hsl_f(from);
+    }
 
-      // bool -> rgb.
-      template <unsigned m>
-      void
-      from_to_(bool from, value::rgb<m>& to)
-      {
-	static literal::white_t* white_ = 0;
-	static literal::black_t* black_ = 0;
-	// We do not use literal::white (the object) so that we
-	// do not introduce any coupling with the file where
-	// literals are defined.
-	if (from)
-	  to = *white_;
-	else
-	  to = *black_;
-      }
+    template <unsigned m>
+    void
+    from_to_(bool from, mln::value::rgb<m>& to)
+    {
+      static mln::literal::white_t* white_ = 0;
+      static mln::literal::black_t* black_ = 0;
+      // We do not use literal::white (the object) so that we
+      // do not introduce any coupling with the file where
+      // literals are defined.
+      if (from)
+	to = *white_;
+      else
+	to = *black_;
+    }
 
-      template <unsigned m>
-      void
-      from_to_(const value::int_u<m>& from, value::rgb<m>& to)
-      {
-	to = value::rgb<m>(from, from, from);
-      }
-
-       template <typename H, typename S, typename L>
-       void
-       from_to_(const value::hsl_<H,S,L>& from, value::rgb<8>& to)
-       {
-	 to = fun::v2v::f_hsl_to_rgb_3x8(from);
-       }
-
-//       template <typename H, typename S, typename L>
-//       void
-//       from_to_(const value::hsl_<H,S,L>& from, value::rgb<16>& to)
-//       {
-// 	to = fun::v2v::f_hsl_to_rgb_3x16(from);
-//       }
-
-      template <unsigned m>
-      void
-      from_to_(const value::rgb<m>& from, bool& to)
-      {
-	to = (from.red() != 0 && from.green() != 0 && from.blue() != 0);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  } // end of namespace mln::value
 
 } // end of namespace mln
 

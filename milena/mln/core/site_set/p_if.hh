@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,6 +66,8 @@ namespace mln
    * \param[in] s A site set.
    * \param[in] f A function from point to Boolean.
    * \return A subset of points.
+   *
+   * \relates p_if
    */
   template <typename S, typename F>
   p_if<S, F>

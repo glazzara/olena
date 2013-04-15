@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,16 +70,19 @@ namespace scribo
     using namespace mln;
 
 
-    /// \brief Merge text component in order to reconstruct text lines.
-    ///
-    /// \param[in] lines A line set.
-    ///
-    /// \return A new line set.  Line ids are preserved and merged
-    /// lines (not valid anymore) are tagged with line::Merged.  The
-    /// lines produced with this algorithm (valid lines) are tagged
-    /// with line::None. Line type is also set either with line::Text
-    /// or line::Punctuation.
-    //
+    /*! \brief Merge text component in order to reconstruct text
+        lines.
+
+        \param[in] lines A line set.
+
+        \return A new line set.  Line ids are preserved and merged
+        lines (not valid anymore) are tagged with line::Merged.  The
+        lines produced with this algorithm (valid lines) are tagged
+        with line::None. Line type is also set either with line::Text
+        or line::Punctuation.
+
+	\ingroup grptext
+    */
     template <typename L>
     line_set<L>
     merging(const scribo::line_set<L>& lines);
@@ -98,7 +102,7 @@ namespace scribo
       void draw_box(image2d<T>& input, const box2d& b, T2 l)
       {
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = b.nrows(),
 	  ncols = b.ncols();
 	T* p_start = & input(b.pmin());
@@ -133,7 +137,7 @@ namespace scribo
 	if (pmax_col > input_ncols_1) pmax_col = input_ncols_1;
 
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = pmax_row - pmin_row + 1,
 	  ncols = pmax_col - pmin_col + 1;
 	T* p_start = & input.at_(pmin_row, pmin_col);

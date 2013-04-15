@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,10 +32,10 @@
 /// Define function that fills border using nearer pixels with a
 /// mirroring effect.
 ///
-/// \fixme 2D version is not correct if the border is larger than the
+/// \todo 2D version is not correct if the border is larger than the
 /// image domain.
 ///
-///  \todo Awful code: rewrite it!
+/// \todo Awful code: rewrite it!
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
@@ -59,14 +59,16 @@ namespace mln
   namespace border
   {
 
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
+    /*! \brief Mirror the virtual (outer) border of image \p ima with
+     *  the (inner) level contents of this image.
      *
      * \param[in,out] ima The image whose border is to be mirrored.
      *
      * \pre \p ima has to be initialized.
      *
      * \todo Implement 3d version + optimize with memset if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void mirror(const Image<I>& ima);
@@ -81,7 +83,7 @@ namespace mln
       inline
       void mirror_(const box1d&, const I& ima_)
       {
-	trace::entering("border::impl::mirror_");
+	mln_trace("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
 	def::coord
@@ -119,14 +121,13 @@ namespace mln
 	       ++i)
             opt::element(ima, border + nbinds + i) = ima(point1d(j));
 	}
-	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
       void mirror_(const box2d&, const I& ima_)
       {
-	trace::entering("border::impl::mirror_");
+	mln_trace("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
 	unsigned border = ima.border ();
@@ -190,15 +191,14 @@ namespace mln
             opt::element(ima, s + i + (j * real_nbcols)) =
               opt::element(ima, s + i - ((j - 1)* real_nbcols));
 
-	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
       void mirror_(const box3d&, const I& ima)
       {
-	trace::warning("border::mirror for 3D image is not implemented,"
-		       " so image borders have not been mirrored!");
+	mln_trace_warning("border::mirror for 3D image is not implemented,"
+			      " so image borders have not been mirrored!");
 	(void) ima;
 	// FIXME write it!
       }
@@ -211,7 +211,7 @@ namespace mln
     inline
     void mirror(const Image<I>& ima_)
     {
-      trace::entering("border::mirror");
+      mln_trace("border::mirror");
 
       const I& ima = exact(ima_);
 
@@ -225,7 +225,6 @@ namespace mln
 
       impl::mirror_(ima.bbox(), ima);
 
-      trace::exiting("border::mirror");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

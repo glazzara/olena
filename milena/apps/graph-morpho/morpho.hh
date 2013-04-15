@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,7 +69,10 @@
 
 namespace trait
 {
-  /// Graph traits.
+  /*!
+    \internal
+    \brief Graph traits.
+  */
   template <typename I>
   struct graph
   {
@@ -89,7 +93,10 @@ namespace trait
   // Graph traits for (mln::image2d-based) cubical 2-complexes.  //
   // ----------------------------------------------------------- //
 
-  /// Graph traits for mln::image2d.
+  /*!
+    \internal
+    \brief Graph traits for mln::image2d.
+  */
   template <typename T>
   struct graph< mln::image2d<T> >
   {
@@ -128,7 +135,10 @@ namespace trait
   // Graph traits for (general) 1-complexes.  //
   // ---------------------------------------- //
 
-  /// Graph traits for 1-complexes images.
+  /*!
+    \internal
+    \brief Graph traits for 1-complexes images.
+  */
   template <typename G, typename V>
   struct graph< mln::complex_image<1, G, V> >
   {

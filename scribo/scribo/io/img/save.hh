@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +40,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/io/magick/save.hh>
+# include <mln/data/transform.hh>
 # include <mln/subsampling/antialiased.hh>
-# include <mln/data/transform_inplace.hh>
 
 # include <scribo/core/document.hh>
 
@@ -98,6 +99,10 @@ namespace scribo
 
       namespace internal
       {
+
+	// FIXME: should be moved as parameter of io::img::save.  This
+	// requires to update some functors.
+	unsigned reduction_factor = 1;
 
 	struct highlight_mask
 	  : Function_v2v<highlight_mask>
@@ -160,11 +165,15 @@ namespace scribo
 	save_debug_without_image(const document<L>& doc)
 	{
 	  mln_precondition(doc.is_valid());
-	  mln::image2d<value::rgb8>
-	    output(box2d(doc.image().domain().pmin() / 4,
-			 doc.image().domain().pmax() / 4));
+
+	  const box2d& ima_domain = doc.image().domain();
+	  box2d domain(ima_domain.pmin() / reduction_factor,
+		       ima_domain.pmax() / reduction_factor);
+	  mln::image2d<value::rgb8> output(domain);
 	  data::fill(output, literal::black);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
+
+	  scribo::io::img::internal::debug_img_visitor<L> f(output,
+							    reduction_factor);
 	  doc.accept(f);
 	  return output;
 	}
@@ -174,11 +183,14 @@ namespace scribo
 	save_debug_with_image(const document<L>& doc)
 	{
 	  mln_precondition(doc.is_valid());
-	  mln::image2d<value::rgb8>
-	    output = mln::subsampling::antialiased(doc.image(), 4);
 	  internal::highlight_mask highlight(0.5f);
-	  data::transform_inplace(output, highlight);
-	  scribo::io::img::internal::debug_img_visitor<L> f(output, 4);
+	  mln::image2d<value::rgb8>
+	    output = data::transform(doc.image(), highlight);
+	  if (reduction_factor > 1)
+	    output = mln::subsampling::antialiased(output, reduction_factor);
+
+	  scribo::io::img::internal::debug_img_visitor<L> f(output,
+							    reduction_factor);
 	  doc.accept(f);
 	  return output;
 	}
@@ -195,7 +207,7 @@ namespace scribo
 	   const std::string& output_name,
 	   Format format)
       {
-	trace::entering("scribo::io::img::save");
+	mln_trace("scribo::io::img::save");
 
 	mln_precondition(doc.is_open());
 
@@ -225,15 +237,13 @@ namespace scribo
 	    break;
 
 	  default:
-	    trace::warning("scribo::io::img::save - "
-			   "Invalid image format! Skip saving...");
-	    trace::exiting("scribo::io::img::save");
+	    mln_trace_warning("scribo::io::img::save - "
+			      "Invalid image format! Skip saving...");
 	    return;
 	}
 
 	mln::io::magick::save(output, output_name.c_str());
 
-	trace::exiting("scribo::io::img::save");
       }
 
 

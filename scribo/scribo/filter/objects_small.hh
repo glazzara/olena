@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove small components in a binary image.
+/// \brief Remove small components in a binary image.
 
 
 # include <mln/core/concept/image.hh>
@@ -57,30 +57,38 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove small components in a binary image.
+    /// \brief Remove small components in a binary image.
+    ///
     /// Set to 'false' all the removed components.
     ///
-    /// \param[in] input_     A binary image.
-    /// \param[in] nbh_	      A neighborhood used for labeling \p input_.
-    /// \param[in] label_type The label type used for labeling.
+    /// \param[in] input      A binary image.
+    /// \param[in] nbh	      A neighborhood used for labeling \p input_.
+    /// \param[out] nlabels Return the number of components. Defines
+    ///                     also the type used for labeling.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
     /// \return A binary image without small components.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    components_small(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_,
+    components_small(const Image<I>& input,
+		     const Neighborhood<N>& nbh,
 		     V& nlabels,
 		     unsigned min_size);
 
 
-    /// Remove too small components.
+    /// \brief Remove too small components.
     ///
     /// \param[in] components    An object image.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
     /// \return A component set with small components set to
     /// component::Ignored.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename L>
     component_set<L>
     components_small(const component_set<L>& components,
@@ -98,7 +106,7 @@ namespace scribo
 		    V& nlabels,
 		    unsigned min_size)
    {
-     trace::entering("scribo::filter::components_small");
+     mln_trace("scribo::filter::components_small");
 
      const I& input = exact(input_);
      const N& nbh = exact(nbh_);
@@ -116,7 +124,6 @@ namespace scribo
        output = mln::data::transform(lbl.labeled_image(), fv2b);
      nlabels = fv2b.nlabels_;
 
-     trace::exiting("scribo::filter::components_small");
      return output;
    }
 
@@ -127,7 +134,7 @@ namespace scribo
     components_small(const component_set<L>& components,
 		     unsigned min_size)
     {
-      trace::entering("scribo::filter::components_small");
+      mln_trace("scribo::filter::components_small");
 
       mln_precondition(components.is_valid());
 
@@ -136,7 +143,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::components_small");
       return output;
     }
 

@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two components having their bounding box
-/// overlapping too much.
+/// \brief Invalidate links between two components having their
+/// bounding box overlapping too much.
 
 
 # include <mln/math/min.hh>
@@ -59,6 +59,8 @@ namespace scribo
 	                             areas.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -74,7 +76,7 @@ namespace scribo
     object_links_bbox_overlap(const object_links<L>& links,
 			      float max_overlap_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_overlap");
+      mln_trace("scribo::filter::object_links_bbox_overlap");
 
       mln_precondition(links.is_valid());
 
@@ -98,7 +100,6 @@ namespace scribo
 	    output.clear(i);
 	}
 
-      trace::exiting("scribo::filter::object_links_bbox_overlap");
       return output;
     }
 

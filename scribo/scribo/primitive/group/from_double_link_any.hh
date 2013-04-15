@@ -97,7 +97,7 @@ namespace scribo
       from_double_link_any(const object_links<L>& left_link,
 			   const object_links<L>& right_link)
       {
-	trace::entering("scribo::primitive::group::from_double_link_any");
+	mln_trace("scribo::primitive::group::from_double_link_any");
 
 	object_links<L> merged_link(left_link.components());
 	merged_link.init();
@@ -138,7 +138,6 @@ namespace scribo
 
 	object_groups<L> output(merged_link);
 
-	trace::exiting("scribo::primitive::group::from_double_link_any");
 	return output;
       }
 

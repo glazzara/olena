@@ -32,6 +32,8 @@
 #include <mln/core/var.hh>
 #include <mln/core/alias/neighb2d.hh>
 
+#include <mln/binarization/binarization.hh>
+
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/accu/stat/max.hh>
@@ -46,8 +48,6 @@
 #include <mln/data/fill.hh>
 
 #include <mln/pw/all.hh>
-
-#include <mln/binarization/threshold.hh>
 
 #include <mln/labeling/colorize.hh>
 #include <mln/labeling/blobs.hh>
@@ -92,14 +92,14 @@ int main()
   lena = duplicate(lena_bak);
   // \{
   p_array<point2d> arr;
-  for (def::coord row = geom::min_row(lena); row < geom::max_row(lena); ++row)
-    for (def::coord col = geom::min_row(lena); col < geom::max_col(lena); ++col)
+  for (def::coord row = geom::min_row(lena); row <= geom::max_row(lena); ++row)
+    for (def::coord col = geom::min_row(lena); col <= geom::max_col(lena); ++col)
       if (((row + col) % 2) == 0)
 	arr.append(point2d(row, col));
   // \}
   // \{
-  for (def::coord row = geom::min_row(lena); row < geom::max_row(lena); ++row)
-    for (def::coord col = geom::min_row(lena); col < geom::max_col(lena); ++col)
+  for (def::coord row = geom::min_row(lena); row <= geom::max_row(lena); ++row)
+    for (def::coord col = geom::min_row(lena); col <= geom::max_col(lena); ++col)
       if (((row + col) % 2) == 0)
         opt::at(lena, row, col) = literal::green;
   // \}

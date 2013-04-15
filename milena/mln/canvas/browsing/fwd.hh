@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +44,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Canvas for forward browsing
-      /*!
+      /*! \brief Canvas for forward browsing
+       *
        * This canvas browse all the points of an image 'input' of type
        * 'I' from left to right and from top to bottom
        *
@@ -57,18 +57,17 @@ namespace mln
        *   - final(): Will be called at the end.
        *
        * F shall feature: \n
-       * { \n
-       *   --- as typedef: \n
-       *   I; \n
-       *   --as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as method: \n
-       *   void init(); \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       - As typedef:
+         + I
+       - As attributes:
+         + input
+         + p
+       - As method:
+         + void init()
+         + void next()
+         + void final()
        *
+       * \ingroup modcanvasbrowsing
        */
       struct fwd_t : public Browsing< fwd_t >
       {
@@ -101,7 +100,7 @@ namespace mln
       void
       fwd_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::fwd");
+	mln_trace("canvas::browsing::fwd");
 	mln_precondition(f.input.is_valid());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
@@ -112,7 +111,6 @@ namespace mln
 	    f.next();
 	  }
 	f.final();
-	trace::exiting("canvas::browsing::fwd");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

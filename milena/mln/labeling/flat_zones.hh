@@ -124,7 +124,7 @@ namespace mln
     flat_zones(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	       L& nlabels)
     {
-      trace::entering("labeling::flat_zones");
+      mln_trace("labeling::flat_zones");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -136,7 +136,6 @@ namespace mln
       mln_ch_value(I, L)
 	output = canvas::labeling::video(input, nbh, nlabels, f);
 
-      trace::exiting("labeling::flat_zones");
       return output;
     }
 

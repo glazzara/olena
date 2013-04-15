@@ -30,7 +30,6 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
 
 #include <scribo/binarization/sauvola.hh>
 
@@ -40,13 +39,55 @@ int main()
 {
   using namespace mln;
 
-  image2d<value::int_u8> input;
-  io::pgm::load(input, MILENA_IMG_DIR "/lena.pgm");
+  // even height and width
+  {
+    image2d<value::int_u8> input;
+    io::pgm::load(input, MILENA_IMG_DIR "/lena.pgm");
 
-  image2d<bool> bin = scribo::binarization::sauvola(input, 101);
+    image2d<bool> bin = scribo::binarization::sauvola(input, 101);
 
-  image2d<bool> ref;
-  io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola.ref.pbm");
+    image2d<bool> ref;
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola.ref.pbm");
 
-  mln_assertion(bin == ref);
+    mln_assertion(bin == ref);
+  }
+
+  // even height and odd width
+  {
+    image2d<value::int_u8> input;
+    io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_heven.pgm");
+
+    image2d<bool> bin = scribo::binarization::sauvola(input, 101);
+
+    image2d<bool> ref;
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_wodd_heven.ref.pbm");
+
+    mln_assertion(bin == ref);
+  }
+
+  // odd height and even width
+  {
+    image2d<value::int_u8> input;
+    io::pgm::load(input, SCRIBO_IMG_DIR "/lena_weven_hodd.pgm");
+
+    image2d<bool> bin = scribo::binarization::sauvola(input, 101);
+
+    image2d<bool> ref;
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_weven_hodd.ref.pbm");
+
+    mln_assertion(bin == ref);
+  }
+
+  // odd height and width
+  {
+    image2d<value::int_u8> input;
+    io::pgm::load(input, SCRIBO_IMG_DIR "/lena_wodd_hodd.pgm");
+
+    image2d<bool> bin = scribo::binarization::sauvola(input, 101);
+
+    image2d<bool> ref;
+    io::pbm::load(ref, SCRIBO_TESTS_DIR "binarization/sauvola_wodd_hodd.ref.pbm");
+
+    mln_assertion(bin == ref);
+  }
 }

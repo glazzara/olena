@@ -1,0 +1,6 @@
+/*! \defgroup grpalgofiltercomp Component Filtering
+ *
+ * \brief Component filtering routines.
+ *
+ * \ingroup grpalgofilter
+ */

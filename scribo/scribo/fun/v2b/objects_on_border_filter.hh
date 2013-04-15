@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Remove large components in a binary image.
+/// \brief Remove components in image inner border.
 
 
 
@@ -66,14 +66,13 @@ namespace scribo
 	/// Constructor
 	///
 	/// \param[in] components Component bounding boxes.
-	/// \param[in] max_size Maximum component size.
 	//
 	components_on_border_filter(const component_set<L>& components);
 
 
 	/// Check if the component is large enough.
 	///
-	/// \param l A label.
+	/// \param[in] l A label.
 	///
 	/// \return false if the component area is strictly inferion to
 	/// \p max_size_.

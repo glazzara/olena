@@ -29,10 +29,15 @@
 
 /// \file
 ///
-/// Passes the text bounding boxes to an OCR (Tesseract).
+/// \brief Recognize text using an OCR (Tesseract).
 ///
 /// \todo For each text bbox, we create a new image. We may like to avoid that.
 /// \todo Do not store the result in an image?
+
+# if !defined HAVE_TESSERACT_2 && !defined HAVE_TESSERACT_3
+#  define HAVE_TESSERACT_2
+# endif
+
 
 # include <ostream>
 # include <clocale>
@@ -61,10 +66,10 @@
 
 # include <tesseract/baseapi.h>
 
+# if defined HAVE_TESSERACT_3
+#  include <tesseract/resultiterator.h>
+# endif // ! HAVE_TESSERACT_3
 
-# if !defined HAVE_TESSERACT_2 && !defined HAVE_TESSERACT_3
-#  define HAVE_TESSERACT_2
-# endif
 
 
 
@@ -76,20 +81,29 @@ namespace scribo
 
     using namespace mln;
 
-    /// Passes the text bboxes to Tesseract (OCR).
-    ///
-    /// \param[in] lines       The lines of text.
-    /// \param[in] language    The language which should be recognized by
-    ///		               Tesseract. (fra, en, ...)
-    /// \param[in] output_file If set, store the recognized text in
-    ///                        this file.
-    //
+    /*! \brief Passes the text bboxes to Tesseract (OCR).
+
+       \param[in] lines       The lines of text.
+       \param[in] language    The language which should be recognized by
+      		               Tesseract. (fra, en, ...)
+
+       \ingroup grpocr
+    */
     template <typename L>
     void
     recognition(line_set<L>& lines, const char *language);
 
 
-    /// Recognize text from an image.
+    /*! \brief Recognize text from an image.
+
+      \param[in] line        Image of text line.
+      \param[in] language    The language which should be recognized by
+    		             Tesseract. (fra, en, ...)
+      \param[in] output_file If set, store the recognized text in
+                             this file.
+
+      \ingroup grpocr
+    */
     template <typename I>
     void
     recognition(const Image<I>& line,
@@ -101,11 +115,12 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
+#  ifdef HAVE_TESSERACT_2
     template <typename L>
     void
     recognition(line_set<L>& lines, const char *language)
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
       // Tesseract is known to have issues while reading training data
       // depending on the current locales in use. Training data files use
@@ -115,18 +130,7 @@ namespace scribo
       setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
-#  ifdef HAVE_TESSERACT_2
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
-#  else // HAVE_TESSERACT_3
-      tesseract::TessBaseAPI tess;
-      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
-      {
-	std::cout << "Error: cannot initialize tesseract!" << std::endl;
-	abort();
-      }
-      tess.SetPageSegMode(tesseract::PSM_SINGLE_LINE);
-
-#  endif // HAVE_TESSERACT_2
 
       typedef mln_ch_value(L,bool) I;
 
@@ -155,7 +159,8 @@ namespace scribo
 	for_all_elements(e, lines(i).component_ids())
 	{
 	  unsigned comp_id = comps(e);
-	  data::fill(((text_ima | comp_set(comp_id).bbox()).rw() | (pw::value(lbl) == pw::cst(comp_id))).rw(),
+	  data::fill(((text_ima | comp_set(comp_id).bbox()).rw()
+		      | (pw::value(lbl) == pw::cst(comp_id))).rw(),
 		     true);
 	}
 
@@ -177,7 +182,6 @@ namespace scribo
 	data::paste_without_localization(text_ima, line_image);
 
 	// Recognize characters.
-#  ifdef HAVE_TESSERACT_2
 	char* s = TessBaseAPI::TesseractRect(
 	    (unsigned char*) line_image.buffer(),
 	    sizeof (bool),			 // Pixel size.
@@ -186,15 +190,6 @@ namespace scribo
 	    0,					 // Top
 	    line_image.ncols(),		         // n cols
 	    line_image.nrows());		 // n rows
-#  else // HAVE_TESSERACT_3
-	tess.SetImage(
-	  (unsigned char*) line_image.buffer(),
-	  line_image.ncols(),		         // n cols
-	  line_image.nrows(),		         // n rows
-	  sizeof (bool),			 // Pixel size.
-	  line_image.ncols() * sizeof (bool));    // Row_offset
-	char* s = tess.GetUTF8Text();
-#  endif // ! HAVE_TESSERACT_2
 
 	if (s != 0)
 	{
@@ -210,7 +205,6 @@ namespace scribo
       // Restore default locale.
       setlocale(LC_ALL, "");
 
-      trace::exiting("scribo::text::recognition");
     }
 
 
@@ -220,7 +214,7 @@ namespace scribo
 		const char *language,
 		const std::string& output_file)
     {
-      trace::entering("scribo::text::recognition");
+      mln_trace("scribo::text::recognition");
 
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
@@ -233,16 +227,7 @@ namespace scribo
       setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
-#  ifdef HAVE_TESSERACT_2
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
-#  else // HAVE_TESSERACT_3
-      tesseract::TessBaseAPI tess;
-      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
-      {
-	std::cout << "Error: cannot initialize tesseract!" << std::endl;
-	abort();
-      }
-#  endif // ! HAVE_TESSERACT_2
 
       std::ofstream file;
       if (!output_file.empty())
@@ -261,7 +246,6 @@ namespace scribo
       border::resize(text_ima, 0);
 
       // Recognize characters.
-#  ifdef HAVE_TESSERACT_2
       char* s = TessBaseAPI::TesseractRect(
 	(unsigned char*) text_ima.buffer(),
 	sizeof (bool),			  // Pixel size.
@@ -270,16 +254,6 @@ namespace scribo
 	0,				  // Top
 	text_ima.ncols(),		  // n cols
 	text_ima.nrows());		  // n rows
-#  else // HAVE_TESSERACT_3
-      char* s = tess.TesseractRect(
-	(unsigned char*) text_ima.buffer(),
-	sizeof (bool),			  // Pixel size.
-	text_ima.ncols() * sizeof (bool), // Row_offset
-	0,				  // Left
-	0,				  // Top
-	text_ima.ncols(),		  // n cols
-	text_ima.nrows());		  // n rows
-#  endif // ! HAVE_TESSERACT_2
 
 	if (s != 0)
 	{
@@ -308,8 +282,156 @@ namespace scribo
 	// Restore default locale.
 	setlocale(LC_ALL, "");
 
-	trace::exiting("scribo::text::recognition");
     }
+
+
+
+#  else // HAVE_TESSERACT_3
+
+
+
+    template <typename L>
+    void
+    recognition(line_set<L>& lines, const char *language)
+    {
+      mln_trace("scribo::text::recognition");
+
+
+      // Initialize Tesseract.
+      tesseract::TessBaseAPI tess;
+      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
+      {
+	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	abort();
+      }
+      tess.SetPageSegMode(tesseract::PSM_SINGLE_LINE);
+
+      typedef mln_ch_value(L,bool) I;
+
+
+      /// Use text bboxes with Tesseract
+      for_all_lines(i, lines)
+      {
+	if (! lines(i).is_textline())
+	  continue;
+
+	mln_domain(I) box = lines(i).bbox();
+
+	// Make sure characters are isolated from the borders.
+	// Help Tesseract.
+	// FIXME: not needed anymore in tesseract 3 ?
+	//
+	box.enlarge(2);
+
+	I text_ima(box);
+	data::fill(text_ima, false);
+
+	// Careful : background is set to 'False'
+	const component_set<L>& comp_set = lines.components();
+	const L& lbl = comp_set.labeled_image();
+
+	// Extract each character components to create the line image.
+	const mln::util::array<component_id_t>& comps = lines(i).component_ids();
+	for_all_elements(e, lines(i).component_ids())
+	{
+	  unsigned comp_id = comps(e);
+	  data::fill(((text_ima | comp_set(comp_id).bbox()).rw()
+		      | (pw::value(lbl) == pw::cst(comp_id))).rw(),
+		     true);
+	}
+
+	/// Improve text quality.
+	text::clean_inplace(lines(i), text_ima);
+
+	// Recognize characters.
+	tess.SetImage(
+	  (unsigned char*) &text_ima(text_ima.domain().pmin()),
+	  text_ima.ncols(),		         // n cols
+	  text_ima.nrows(),		         // n rows
+	  sizeof (bool),			 // Pixel size.
+	  text_ima.ncols() * sizeof (bool) + 2 * text_ima.border());    // Row_offset
+
+	char *s = tess.GetUTF8Text();
+	if (s != 0)
+	{
+	  tesseract::ResultIterator *it = tess.GetIterator();
+	  std::string str(s);
+	  str = str.substr(0, str.length() - 2);
+	  lines(i).update_text(str, it->Confidence(tesseract::RIL_TEXTLINE));
+	}
+
+	delete[] s;
+      }
+
+    }
+
+
+
+    template <typename I>
+    void
+    recognition(const Image<I>& line_,
+		const char *language,
+		const std::string& output_file = std::string())
+    {
+      mln_trace("scribo::text::recognition");
+
+      const I& line = exact(line_);
+      mln_precondition(line.is_valid());
+
+      // Initialize Tesseract.
+      tesseract::TessBaseAPI tess;
+      if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
+      {
+	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	abort();
+      }
+
+      std::ofstream file;
+      if (!output_file.empty())
+	file.open(output_file.c_str());
+
+      // Recognize characters.
+      char* s = tess.TesseractRect(
+	(unsigned char*) &line(line.domain().pmin()),
+	sizeof (bool),			  // Pixel size.
+	line.ncols() * sizeof (bool) + line.border() * 2, // Row_offset
+	0,				  // Left
+	0,				  // Top
+	line.ncols(),		  // n cols
+	line.nrows());		  // n rows
+
+	if (s != 0)
+	{
+	  if (!output_file.empty())
+	  {
+	    std::string str(s);
+	    str = str.substr(0, str.length() - 1);
+	    file << line.domain().bbox().pmin().row()
+		 << " "
+		 << line.domain().bbox().pmin().col()
+		 << " "
+		 << line.domain().bbox().pmax().row()
+		 << " "
+		 << line.domain().bbox().pmax().col()
+		 << " "
+		 << str;
+	  }
+	}
+
+	// The string has been allocated by Tesseract. We must free it.
+	delete [] s;
+
+	if (!output_file.empty())
+	  file.close();
+
+	// Restore default locale.
+	setlocale(LC_ALL, "");
+
+    }
+
+
+#  endif // ! HAVE_TESSERACT_2
+
 
 
 

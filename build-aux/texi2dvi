@@ -709,7 +709,7 @@ move_to_dest ()
       false:*) destfile=$oname
                destdir=`dirname "$destfile"`;;
     esac
- 
+
     # We want to compare the source location and the output location,
     # and if they are different, do the move.  But if they are the
     # same, we must preserve the source.  Since we can't assume
@@ -1717,7 +1717,7 @@ while test x"$1" != x"$arg_sep"; do
     -r | --recode) recode=true;;
     --recode-from) shift; recode=true; recode_from="$1";;
     --src-specials) src_specials=--src-specials;;
-    --shell-escape) shell_escape=--shell-escape;;  
+    --shell-escape) shell_escape=--shell-escape;;
     --tex4ht) latex2html=tex4ht;;
     -t | --texinfo | --command ) shift; textra="$textra\\
 "`echo "$1" | sed 's/\\\\/\\\\\\\\/g'`;;
@@ -1819,12 +1819,12 @@ fi
 
 
 # Enable tracing, and auxiliary tools output.
-# 
+#
 # This fd should be used where you'd typically use /dev/null to throw
 # output away.  But sometimes it is convenient to see that output (e.g.,
 # from a grep) to aid debugging.  Especially debugging at distance, via
 # the user.
-# 
+#
 if $debug; then
   exec 6>&1
   set -vx

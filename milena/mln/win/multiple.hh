@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 ///
 /// \todo Implementation of the bkd_qiter (see FIXME).
 
-# include <mln/core/internal/window_base.hh>
+# include <mln/core/window.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 # include <mln/util/array.hh>
 

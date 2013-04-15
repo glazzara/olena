@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -167,8 +167,10 @@ namespace mln
     /// Return the corresponding std::vector of points.
     const std::vector<P>& std_vector() const;
 
+    /// \cond INTERNAL_API
     /// Hook to the std::vector.
     std::vector<P>& hook_std_vector_();
+    /// \endcond
 
   protected:
 
@@ -177,8 +179,10 @@ namespace mln
 
 
 
-  /// Psite class for indexed site sets such as p_array<P>.
-  ///
+  /*!
+    \internal
+    \brief Psite class for indexed site sets such as p_array<P>.
+  */
   template <typename S>
   class p_indexed_psite : public internal::pseudo_site_base_< const mln_element(S)&,
 							      p_indexed_psite<S> >
@@ -194,8 +198,10 @@ namespace mln
     typedef S target_t; // To please g++-2.95.
     // Also read the 'todo' in mln/core/concept/pseudo_site.hh.
 
-    // As a Proxy:
+    /// \cond INTERNAL_API
+    /// As a Proxy:
     const element& subj_();
+    /// \endcond
 
     // As Itself.
 
@@ -209,7 +215,10 @@ namespace mln
     void inc_index();
     void dec_index();
 
+    /// \cond INTERNAL_API
     const S* target_() const;
+    /// \endcond
+
     void change_target(const S& newtarget);
 
     bool is_valid() const;
@@ -218,7 +227,9 @@ namespace mln
     operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int.
     operator unsigned() const; // To avoid ambiguity when an unsigned is expected.
 
+    /// \cond INTERNAL_API
     void update_() const;
+    /// \endcond
 
   private:
 
@@ -229,8 +240,9 @@ namespace mln
 
 
 
-  /// Forward iterator on sites of an indexed site set.
-
+  /*!
+    \brief Forward iterator on sites of an indexed site set.
+  */
   template <typename S>
   class p_indexed_fwd_piter
     :
@@ -248,6 +260,7 @@ namespace mln
     /// Constructor.
     p_indexed_fwd_piter(const S& s);
 
+    /// \cond INTERNAL_API
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -259,6 +272,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
     /// Return the current index.
     int index() const;
@@ -270,8 +284,9 @@ namespace mln
 
 
 
-  /// Backward iterator on sites of an indexed site set.
-
+  /*!
+    \brief Backward iterator on sites of an indexed site set.
+  */
   template <typename S>
   class p_indexed_bkd_piter
     :
@@ -289,6 +304,7 @@ namespace mln
     /// Constructor.
     p_indexed_bkd_piter(const S& s);
 
+    /// \cond INTERNAL_API
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -300,6 +316,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
     /// Return the current index.
     int index() const;
@@ -316,15 +333,19 @@ namespace mln
   template <typename P, typename S>
   int index_of_in(const P&, const S&);
 
+  /// \relates p_indexed_psite
   template <typename S>
   int index_of_in(const p_indexed_psite<S>& p, const S& s);
 
+  /// \relates p_indexed_psite
   template <typename S, typename A>
   int index_of_in(const p_indexed_psite<S>& p, const A& a);
 
+  /// \relates p_indexed_psite
   template <typename S, typename A>
   int index_of_in(const p_indexed_fwd_piter<S>& p, const A& arr);
 
+  /// \relates p_indexed_psite
   template <typename S, typename A>
   int index_of_in(const p_indexed_bkd_piter<S>& p, const A& arr);
 

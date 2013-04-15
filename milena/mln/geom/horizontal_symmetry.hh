@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// \brief Perfoms a horizontal symmetry.
-    //
+    /*! \brief Perfoms a horizontal symmetry.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_concrete(I)
     horizontal_symmetry(const Image<I>& input);
@@ -171,14 +174,13 @@ namespace mln
     mln_concrete(I)
     horizontal_symmetry(const Image<I>& input_)
     {
-      trace::entering("geom::horizontal_symmetry");
+      mln_trace("geom::horizontal_symmetry");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
       mln_concrete(I) output = internal::horizontal_symmetry_dispatch(input);
 
-      trace::exiting("geom::horizontal_symmetry");
       return output;
     }
 

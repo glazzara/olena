@@ -184,14 +184,13 @@ namespace mln
       inline
       void save(char type, const Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::pnm::save");
+	mln_trace("mln::io::pnm::save");
 	const I& ima = exact(ima_);
 	std::ofstream file(filename.c_str());
 	io::pnm::save_header(type, ima, filename, file);
 
 	impl::save_data_(file,
 			 mln_trait_image_speed(I)(), ima);
-	trace::exiting("mln::io::pnm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

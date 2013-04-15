@@ -141,7 +141,7 @@ namespace mln
 	mln_result(A)
 	compute_with_weights(const Accumulator<A>& a_, const Image<I>& w_)
 	{
-	  trace::entering("set::impl::generic::compute_with_weights");
+	  mln_trace("set::impl::generic::compute_with_weights");
 
 	  mlc_converts_to(mln_site(I), mln_argument(A))::check();
 	  mlc_converts_to(mln_value(I), unsigned)::check();
@@ -154,7 +154,6 @@ namespace mln
 	  for_all(p)
 	    a.take_n_times(w(p), p);
 
-	  trace::exiting("set::impl::generic::compute_with_weights");
 	  return a.to_result();
 	}
 
@@ -177,7 +176,7 @@ namespace mln
 			     const Image<L>& label_,
 			     const mln_value(L)& nlabels)
 	{
-	  trace::entering("set::impl::generic::compute_with_weights");
+	  mln_trace("set::impl::generic::compute_with_weights");
 
 	  mlc_equal(mln_site(I), mln_site(L))::check();
 	  mlc_converts_to(mln_site(I), mln_argument(A))::check();
@@ -198,7 +197,6 @@ namespace mln
 	  util::array<mln_result(A)> r;
 	  convert::from_to(accus, r);
 
-	  trace::exiting("set::impl::generic::compute_with_weights");
 	  return r;
 	}
 
@@ -216,7 +214,7 @@ namespace mln
     mln_result(A)
     compute_with_weights(const Accumulator<A>& a, const Image<I>& w)
     {
-      trace::entering("set::compute_with_weights");
+      mln_trace("set::compute_with_weights");
 
       mlc_converts_to(mln_site(I), mln_argument(A))::check();
       mlc_converts_to(mln_value(I), unsigned)::check();
@@ -224,7 +222,6 @@ namespace mln
 
       mln_result(A) r = impl::generic::compute_with_weights(a, w);
 
-      trace::exiting("set::compute_with_weights");
       return r;
     }
 
@@ -236,7 +233,7 @@ namespace mln
 			 const Image<L>& label,
 			 const mln_value(L)& nlabels)
     {
-      trace::entering("set::compute_with_weights");
+      mln_trace("set::compute_with_weights");
 
       mlc_equal(mln_site(I), mln_site(L))::check();
       mlc_converts_to(mln_site(I), mln_argument(A))::check();
@@ -247,7 +244,6 @@ namespace mln
       util::array<mln_result(A)> r;
       r = impl::generic::compute_with_weights(a, w, label, nlabels);
 
-      trace::exiting("set::compute_with_weights");
       return r;
     }
 
@@ -257,7 +253,7 @@ namespace mln
     mln_meta_accu_result(A, mln_site(I))
     compute_with_weights(const Meta_Accumulator<A>& a, const Image<I>& w)
     {
-      trace::entering("set::compute_with_weights");
+      mln_trace("set::compute_with_weights");
 
       mlc_converts_to(mln_value(I), unsigned)::check();
 
@@ -269,7 +265,6 @@ namespace mln
 
       mln_result(A_) r = impl::generic::compute_with_weights(a_, w);
 
-      trace::exiting("set::compute_with_weights");
       return r;
     }
 

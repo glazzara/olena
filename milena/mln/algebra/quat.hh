@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +45,8 @@
 # include <mln/math/abs.hh>
 # include <mln/norm/l2.hh>
 
+# include <mln/util/couple.hh>
+# include <mln/math/pi.hh>
 // FIXME: pow, exp etc... are def here and in value::...
 
 
@@ -120,6 +123,9 @@ namespace mln
   {
 
     // FIXME value::Vectorial ??? value ???
+    /*! \brief Quaternion values.
+      \ingroup mlnalgebratypes
+    */
     class quat
       :
       public value::Vectorial< quat >
@@ -260,7 +266,27 @@ namespace mln
     quat slerp_5(const quat& p, const quat& q, float h);
 
 
+    /// \internal Conversion: quaternion -> (angle_degrees, axis).
+    template <typename C>
+    void from_to_(const quat& from, mln::util::couple<C, algebra::vec<3,C> >& to);
+
+  } // end of namespace mln::algebra
+
+
+  namespace make
+  {
+
+    template <typename C>
+    mln::algebra::quat
+    quat(double angle, const mln::algebra::vec<3,C>& axis);
+
+  }
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+  namespace algebra
+  {
 
     // Constructors.
 
@@ -673,9 +699,53 @@ namespace mln
       return tmp;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+
+    // Conversions.
+
+    template <typename C>
+    void from_to_(const quat& from, mln::util::couple<C, algebra::vec<3,C> >& to)
+    {
+      quat tmp = from;
+      tmp.set_unit();
+
+      C	w  = tmp.to_vec()[0],
+	angle      = std::acos(w) * 2 * 180/math::pi;
+
+      C sa = std::sin(std::acos(w));
+      if (std::fabs( sa ) < 0.0005 )
+	sa = 1;
+
+      to.first() = angle;
+      to.second()[0] = tmp.to_vec()[1] / sa;
+      to.second()[1] = tmp.to_vec()[2] / sa;
+      to.second()[2] = tmp.to_vec()[3] / sa;
+    }
 
   } // end of namespace mln::algebra
+
+
+  namespace make
+  {
+
+    template <typename C>
+    mln::algebra::quat
+    quat(double angle, const mln::algebra::vec<3,C>& axis)
+    {
+      angle *= mln::math::pi/180;
+      C s = std::sin(angle / 2);
+
+      C x = axis[0] * s,
+	y = axis[1] * s,
+	z = axis[2] * s,
+	w = std::cos(angle / 2);
+
+      return mln::algebra::quat(w, x, y, z);
+    }
+
+  } // end of namespace mln::make
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

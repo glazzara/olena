@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove large objects in a binary image.
+/// \brief Remove large objects in a binary image.
 
 
 # include <mln/core/concept/image.hh>
@@ -56,7 +56,8 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove large objects in a binary image.
+    /// \brief Remove large objects in a binary image.
+    ///
     /// Set to 'false' all the removed objects.
     ///
     /// \param[in] input_     A binary image.
@@ -65,6 +66,9 @@ namespace scribo
     /// \param[in] max_size   The minimum cardinality of an object.
     ///
     /// \return A binary image without large objects.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename I, typename N, typename V>
     mln_concrete(I)
     components_large(const Image<I>& input_,
@@ -72,13 +76,16 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_size);
 
-    /// Remove too large components.
+    /// \brief Remove too large components.
     ///
     /// \param[in] components    An object image.
     /// \param[in] max_size   The maximum cardinality of an object.
     ///
     /// \return A component set with large components set to
     /// component::Ignored.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename L>
     inline
     component_set<L>
@@ -98,7 +105,7 @@ namespace scribo
 		    V& nlabels,
 		    unsigned min_size)
    {
-     trace::entering("scribo::filter::components_large");
+     mln_trace("scribo::filter::components_large");
 
      const I& input = exact(input_);
      const N& nbh = exact(nbh_);
@@ -116,7 +123,6 @@ namespace scribo
        output = mln::data::transform(lbl.labeled_image(), fv2b);
      nlabels = fv2b.nlabels_;
 
-     trace::exiting("scribo::filter::components_large");
      return output;
    }
 
@@ -128,7 +134,7 @@ namespace scribo
     components_large(const component_set<L>& components,
 		     unsigned max_size)
     {
-      trace::entering("scribo::filter::components_large");
+      mln_trace("scribo::filter::components_large");
 
       mln_precondition(components.is_valid());
 
@@ -137,7 +143,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::components_large");
       return output;
     }
 

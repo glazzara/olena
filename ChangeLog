@@ -1,3 +1,350 @@
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Remove duplicate '/' in path.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Add more descriptions.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix path to documentation.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use relative paths in documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am,
+	* doc/header.html,
+	* doc/mainpage.dox: Here.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix permissions on documentation files.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to other documentations.
+
+	* doc/Makefile.am,
+	* doc/header.html,
+	* doc/mainpage.dox: Here.
+
+2013-03-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Add a missing dependency.
+
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Allow tarballs with long filenames.
+
+2013-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/src/contest/hnla-2013 and
+	scribo/src/contest/hbr-2013.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/doc.bib: Add a reference to an article.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/doc.bib: Fix a reference name.
+
+2013-03-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
+	* doc/Doxyfile.in: Fix include path in documentation.
+
+	* doc/doc.bib: Add new references.
+
+2013-03-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove references to external directory.
+
+	* configure.ac,
+	* Makefile.am: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve look'n feel of general documentation.
+
+	* doc/Doxyfile.in: Make use of bibliography.
+
+	* doc/bibliography.dox: Add references.
+
+	* doc/DoxygenLayout.xml,
+	* doc/doc.css,
+	* doc/doxygen.css,
+	* doc/footer.html,
+	* doc/header.html,
+	* doc/subdoc_footer.html: Improve rendering.
+
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix links and location of documentation.
+
+	* doc/Makefile.am,
+	* doc/header.html,
+	* doc/mainpage.dox: Fix paths and disable the use of installdox
+	(deprecated)
+
+	* doc/doxygen.css,
+	* doc/footer.html: Fix footer.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* build-aux/texi2dvi: Fix Dash incompatibility.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve main documentation.
+
+	* doc/Makefile.am: Update dependencies.
+
+	* doc/about.dox,
+	* doc/doxygen.css,
+	* doc/license.dox,
+	* doc/license_commercial.dox,
+	* doc/licensing.dox,
+	* doc/mainpage.dox: Improve titles and presentation.
+
+	* doc/supported_platforms.dox: New.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Fix path to data and fix cleanup.
+
+2011-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Add more missing files in EXTRA_DIST.
+
+2011-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Add missing files in EXTRA_DIST.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix dependencies in Makefiles.
+
+	* Makefile.am,
+	* doc/Makefile.am: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Path to Olena logo.
+
+	* doc/logo.jpg: Move...
+	* doc/images/logo.jpg: ... here.
+
+	* doc/Doxyfile.in,
+	* milena/doc/Doxyfile.in,
+	* scribo/doc/Doxyfile.in: Fix path.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix titles.
+
+	* doc/contributors.dox,
+	* doc/license.dox,
+	* doc/license_commercial.dox,
+	* doc/mainpage.dox: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a description about Olena.
+
+	* doc/Doxyfile.in: Add IMAGE_PATH entry.
+
+	* doc/Makefile.am: Add image dependency.
+
+	* doc/about.dox: New.
+
+	* doc/doc.bib: New reference.
+
+	* doc/images/olena_layers.png,
+	* doc/images/olena_layers.svg: New.
+
+	* doc/mainpage.dox: Rename section.
+
+2011-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more content in general documentation.
+
+	* doc/Makefile.am: New dependencies.
+
+	* doc/license_commercial.dox,
+	* doc/mainpage.dox,
+	* doc/modules_list.dox: More content.
+
+	* doc/get_sources.dox,
+	* doc/online_resources.dox: New.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add details about licensing.
+
+	* doc/Doxyfile.in
+	* doc/Makefile.am
+	* doc/license.dox
+	* doc/license_commercial.dox
+	* doc/mainpage.dox
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Do not warn if undocumented.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new groups in Scribo documentation.
+
+	* doc/Doxyfile.in: Refine settings.
+
+	* doc/groups.dox: Add new groups.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/document.hh,
+	* scribo/core/line_links.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh,
+	* scribo/core/paragraph_set.hh: Set to a documentation group.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
+	* AUTHORS: Use RST syntax.
+
+	* doc/Doxyfile.in: Use .dox files for documentation.
+
+	* doc/DoxygenLayout.xml: Improve layout.
+
+	* doc/Makefile.am: Add dependencies.
+
+	* doc/lrde.bib,
+	* doc/contributors.dox: New.
+
+	* doc/bibliography.hh,
+	* doc/mainpage.hh,
+	* doc/modules_list.hh: Rename to...
+
+	* doc/bibliography.dox,
+	* doc/mainpage.dox,
+	* doc/modules_list.dox: ...this.
+
+	* doc/olena.qhcp: Remove.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve common documentation.
+
+	* Makefile.am: Add doc to SUBDIRS.
+
+	* doc/Doxyfile.in: Include bib file.
+
+	* doc/Makefile.am: Fix uninstall/install rules.
+
+	* doc/mainpage.hh: Improve layout.
+
+	* doc/bibliography.hh,
+	* doc/doc.bib,
+	* doc/modules_list.hh,
+	* doc/olena.bib: New.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve layout and content of Milena's doc.
+
+	* milena/doc/Doxyfile.in: Generate tag file and fine tune output.
+
+	* milena/doc/DoxygenLayout.xml,
+	* milena/doc/milena.qhcp: New.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of Scribo documentation.
+
+	* scribo/doc/.gitignore,
+	* scribo/doc/Doxyfile.in,
+	* scribo/doc/DoxygenLayout.xml,
+	* scribo/doc/Makefile.am,
+	* scribo/doc/doxyfuns.sty,
+	* scribo/doc/examples-outputs.mk,
+	* scribo/doc/examples.mk,
+	* scribo/doc/examples/dummy.cc,
+	* scribo/doc/figures.mk,
+	* scribo/doc/gen-examples-outputs-mk,
+	* scribo/doc/gen-figures-mk,
+	* scribo/doc/gen-make-variable,
+	* scribo/doc/gen-split-examples-mk,
+	* scribo/doc/gen-split-outputs-mk,
+	* scribo/doc/graphicx.hva,
+	* scribo/doc/outputs.mk,
+	* scribo/doc/outputs/dummy.txt,
+	* scribo/doc/programs-examples.mk,
+	* scribo/doc/scribo.qhcp,
+	* scribo/doc/scribo.sty,
+	* scribo/doc/split-examples.mk,
+	* scribo/doc/split-outputs.mk,
+	* scribo/doc/tools/todoxygen.sh,
+	* scribo/doc/tutorial.tex: New.
+
+2012-01-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of common documentation.
+
+	* configure.ac: Add new makefiles.
+
+	* doc/.gitignore,
+	* doc/Doxyfile.in,
+	* doc/DoxygenLayout.xml,
+	* doc/Makefile.am,
+	* doc/doxygen.css,
+	* doc/footer.html,
+	* doc/header.html,
+	* doc/logo.jpg,
+	* doc/mainpage.hh,
+	* doc/olena.qhcp,
+	* doc/subdoc_footer.html: New.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/tests/layout directory.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Do not configure scribo/demo/review anymore.
+
+2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Check for libpoppler dependency and configure
+	pdf::load test directory.
+
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Link to libGraphicsMagick++ if GraphicsMagick++ is
+	enabled.
+
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/oln-with-lib.m4: Lookup for multiple AND single libraries
+	while checking Tesseract availability.
+
+2012-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* distrib/macports/Portfile.in: Apply changes required by MacPorts
+	team.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* NEWS: Start populating the changes list.
+
 2013-04-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Stop warning about Python 2.6+ likely incompatible with Swilena.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -166,10 +167,11 @@ namespace mln
     /// \pre ! is_empty()
     const P lowest_priority() const;
 
-
+    /// \cond INTERNAL_API
     // Required by p_double-related classes.
     const util::set<P>& set_1_() const;
     const Q& set_2_(const P& priority) const;
+    /// \endcond
 
 
     /// Return the size of this site set in memory.
@@ -189,7 +191,7 @@ namespace mln
   };
 
 
-
+  /// \relates p_priority
   template <typename P, typename Q>
   std::ostream& operator<<(std::ostream& ostr, const p_priority<P,Q>& pq);
 

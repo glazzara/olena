@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,18 +45,24 @@ namespace mln
   {
 
 
-    /*! Apply the absolute value (abs) function to image pixel values.
+    /*! \brief Apply the absolute value (abs) function to image pixel
+     *  values.
      *
      * \param[in] input The input image.
      * \param[out] output The output image.
+     *
+     * \ingroup mlndata
      */
     template <typename I, typename O>
     void abs(const Image<I>& input, Image<O>& output);
 
 
-    /*! Apply the absolute value (abs) function to image pixel values.
+    /*! \brief Apply the absolute value (abs) function to image pixel
+     *  values.
      *
      * \param[in,out] input The input image.
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void abs_inplace(Image<I>& input);
@@ -67,24 +74,22 @@ namespace mln
     inline
     void abs(const Image<I>& input, Image<O>& output)
     {
-      trace::entering("data::abs");
+      mln_trace("data::abs");
 
       mln_precondition(exact(input).domain() == exact(output).domain());
       exact(output) = data::transform(input, fun::v2v::abs<mln_value(I)>());
 
-      trace::exiting("data::abs");
     }
 
     template <typename I>
     inline
     void abs_inplace(Image<I>& input)
     {
-      trace::entering("data::abs_inplace");
+      mln_trace("data::abs_inplace");
 
       mln_precondition(exact(input).is_valid());
       data::apply(input, fun::v2v::abs<mln_value(I)>());
 
-      trace::exiting("data::abs_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

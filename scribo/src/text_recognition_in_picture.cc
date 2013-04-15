@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -171,9 +171,7 @@ int main(int argc, char* argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   typedef image2d<value::rgb8> I;
   I input_rgb;
@@ -220,6 +218,5 @@ int main(int argc, char* argv[])
   if (verbose)
     std::cout << output.nelements() << " text lines found." << std::endl;
 
-  trace::exiting("main");
   return 0;
 }

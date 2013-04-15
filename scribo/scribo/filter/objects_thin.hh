@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too thin components.
+/// \brief Remove too thin components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -52,7 +52,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components thinner or equal to \p min_thickness.
+    /// \brief Remove components thinner or equal to \p min_thickness.
     ///
     /// \param[in] input_ a binary image.
     /// \param[in] nbh_ a neighborhood used in labeling algorithms.
@@ -60,6 +60,8 @@ namespace scribo
     /// \param[in] min_thickness the minimum thickness value.
     ///
     /// \result A binary image without thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -69,17 +71,20 @@ namespace scribo
 		    const V& label_type,
 		    unsigned min_thickness);
 
-    /// Remove lines of text thinner or equal to \p min_thickness.
+    /// \brief Remove lines of text thinner or equal to \p
+    /// min_thickness.
     ///
     /// \param[in] components An object image.
     /// \param[in] min_thickness the minimum thickness value.
     ///
     /// \result An object image without too thin components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline
     component_set<L>
-    components_thin(const component_set<L>& text,
+    components_thin(const component_set<L>& components,
 		    unsigned min_thickness);
 
 
@@ -137,7 +142,7 @@ namespace scribo
 		    const V& label_type,
 		    unsigned min_thickness)
     {
-      trace::entering("scribo::filter::components_thin");
+      mln_trace("scribo::filter::components_thin");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -156,7 +161,6 @@ namespace scribo
       mln_concrete(I)
 	output = mln::data::transform(comps.labeled_image(), fv2b);
 
-      trace::exiting("scribo::filter::components_thin");
       return output;
     }
 
@@ -167,7 +171,7 @@ namespace scribo
     components_thin(const component_set<L>& components,
 		    unsigned min_thickness)
     {
-      trace::entering("scribo::filter::components_thin");
+      mln_trace("scribo::filter::components_thin");
 
       mln_precondition(components.is_valid());
 
@@ -177,7 +181,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(is_not_too_thin, component::Ignored);
 
-      trace::exiting("scribo::filter::components_thin");
       return output;
     }
 

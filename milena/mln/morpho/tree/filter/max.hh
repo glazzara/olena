@@ -76,7 +76,7 @@ namespace mln
 	  F& f = exact(f_);
 	  const P& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::max");
+	  mln_trace("mln::morpho::tree::filter::max");
 
 	  mln_ch_value(F, bool) mark;
 	  initialize(mark, f);
@@ -101,7 +101,6 @@ namespace mln
 		f(n) = f(tree.parent(n));
 	  }
 
-	  trace::exiting("mln::morpho::tree::filter::max");
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

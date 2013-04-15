@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,13 +52,15 @@ namespace mln
   namespace data
   {
 
-    /*! Compute in \p output the median filter of image \p input by
-     *  the window \p win.
+    /*! \brief Compute in \p output the median filter of image \p
+     *  input by the window \p win.
      *
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
      *
      * \pre \p input have to be initialized.
+     *
+     * \ingroup mlndatafilter
      */
     template <typename I, typename W>
     mln_concrete(I)
@@ -186,7 +189,7 @@ namespace mln
 	mln_concrete(I)
 	median(const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("data::impl::generic::median");
+	  mln_trace("data::impl::generic::median");
 
 	  mlc_equal(mln_trait_image_quant(I),
 		    trait::image::quant::low)::check();
@@ -200,7 +203,6 @@ namespace mln
 	  median_t<I,W,O> f(exact(input), exact(win), output);
 	  canvas::browsing::snake_fwd(f);
 
-	  trace::exiting("data::impl::generic::median");
 	  return output;
 	}
 
@@ -213,7 +215,7 @@ namespace mln
       mln_concrete(I)
       median_line(const Image<I>& input, const win::line<M,i,C>& win)
       {
-	trace::entering("data::impl::median_line");
+	mln_trace("data::impl::median_line");
 
 	mlc_equal(mln_trait_image_quant(I),
 		  trait::image::quant::low)::check();
@@ -222,7 +224,6 @@ namespace mln
 	accu::stat::median_h<mln_value(I)> a;
 	mln_concrete(I) output = accu::transform_line(a, input, win.length(), i);
 
-	trace::exiting("data::impl::median_line");
 	return output;
       }
 
@@ -269,7 +270,7 @@ namespace mln
     mln_concrete(I)
     median(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("data::median");
+      mln_trace("data::median");
 
       mlc_equal(mln_trait_image_quant(I),
 		trait::image::quant::low)::check();
@@ -278,7 +279,6 @@ namespace mln
       mln_concrete(I) output;
       output = internal::median_dispatch(input, win);
 
-      trace::exiting("data::median");
       return output;
     }
 

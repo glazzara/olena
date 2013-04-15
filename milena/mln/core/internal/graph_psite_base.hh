@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -101,8 +101,10 @@ namespace mln
       /// Explicit conversion towards the graph element (vertex or edge).
       const typename S::graph_element& element() const;
 
+      /// \cond INTERNAL_API
       /// Return the underlying element.
       const typename S::graph_element& p_hook_() const;
+      /// \endcond
 
     protected:
 
@@ -159,7 +161,9 @@ namespace mln
 
 
     /// \{
-    /// subject_impl specialization (Proxy)
+    /*!
+      \brief subject_impl specialization (Proxy)
+    */
     template <typename S, typename P, typename E>
     struct subject_impl< const graph_psite_base<S,P>&, E >
     {

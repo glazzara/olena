@@ -1,0 +1,23 @@
+	-*- outline -*-
+
+* Conference
+ICDAR 2011
+
+* Contest
+Document Analysis Algorithm Contributions in End-to-End Applications
+
+* Description
+This contest aims to provide a metric giving indications on the
+influence of individual specific document analysis tools to overall
+end-to-end applications. Contestants are provided with a full, working
+pipeline operating on a raw document page image and proceeding to
+extract some final information. The pipeline is built with clearly
+identified analysis stages (e.g. binarization, skew detection, layout
+analysis, OCR ...) that have a formalized input and
+output. Contestants are invited to contribute their own algorithms as
+an alternative to one or more of the initially provided stages and
+evaluation will be done on the overall impact of the contributed
+algorithm to the final (end of pipeline) result.
+
+* Paper
+http://hal.inria.fr/inria-00608371/

@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -28,7 +28,7 @@
 ///
 /// \brief Find in a document non text which are not text.
 ///
-/// \fixme To be optimized!
+/// FIXME: To be optimized!
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HH
@@ -303,10 +303,10 @@ namespace scribo
       component_set<L>
       non_text(const document<L>& doc, unsigned nlines)
       {
-	trace::entering("scribo::primitive::extract::non_text");
+	mln_trace("scribo::primitive::extract::non_text");
 
 
-	util::timer t;
+	mln::util::timer t;
 	t.start();
 
 	mln_precondition(doc.is_valid());
@@ -353,7 +353,6 @@ namespace scribo
 				    "non_text_components");
 	}
 
-	trace::exiting("scribo::primitive::extract::non_text");
 	return elements;
       }
 

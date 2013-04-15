@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 				"input.* ocr_text.txt output.ppm",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<value::rgb8> input;
   io::magick::load(input, argv[1]);
@@ -93,5 +93,4 @@ int main(int argc, char *argv[])
 
   io::ppm::save(scribo::debug::highlight_text_area(input, bbox), argv[3]);
 
-  trace::exiting("main");
 }

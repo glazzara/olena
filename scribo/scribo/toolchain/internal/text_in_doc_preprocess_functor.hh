@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,6 +27,11 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_PREPROCESS_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TEXT_IN_DOC_PREPROCESS_FUNCTOR_HH
 
+/// \file
+///
+/// \brief Functor performing custom preprocessing algorithms on
+///        documents.
+
 #include <mln/core/concept/image.hh>
 #include <mln/data/transform.hh>
 #include <mln/data/convert.hh>
@@ -52,6 +57,8 @@ namespace scribo
 
     namespace internal
     {
+
+      using namespace mln;
 
       /*! \brief Enum of the binarization algorithms available.
 
@@ -86,10 +93,17 @@ namespace scribo
 
        Few parameters can be set for algorithms:
 
-       - Sauvola:
+       - Sauvola Multi-scale:
          * sauvola_win, the window size used in Sauvola based
            algorithms (default 101).
-	 * sauvola_K, a user parameter for Sauvola's threshold formula
+	 * sauvola_K2, a user parameter for Sauvola's threshold formula
+	   at scale 2.
+	   (default 0.34).
+	 * sauvola_K3, a user parameter for Sauvola's threshold formula
+	   at scale 3.
+	   (default 0.34).
+	 * sauvola_K4, a user parameter for Sauvola's threshold formula
+	   at scale 4.
 	   (default 0.34).
 
        - Extract background/foreground
@@ -126,7 +140,9 @@ namespace scribo
 	Binarization_Algo binarization_algo;
 
 	unsigned sauvola_win;
-	double sauvola_K;
+	double sauvola_k2;
+	double sauvola_k3;
+	double sauvola_k4;
 	unsigned lambda;
 
 	// Results
@@ -162,7 +178,9 @@ namespace scribo
 	  enable_denoising(false),
 	  binarization_algo(SauvolaMs),
 	  sauvola_win(101),
-	  sauvola_K(0.34),
+	  sauvola_k2(0.34),
+	  sauvola_k3(0.34),
+	  sauvola_k4(0.34),
 	  lambda(0)
       {
       }
@@ -176,7 +194,7 @@ namespace scribo
       mln_ch_value(I,bool)
       text_in_doc_preprocess_functor<I>::operator()(const Image<I>& input_)
       {
-	trace::entering("scribo::toolchain::text_in_doc_preprocess");
+	mln_trace("scribo::toolchain::text_in_doc_preprocess");
 
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
@@ -252,7 +270,10 @@ namespace scribo
 	{
 	  on_new_progress_label("Binarization (Sauvola Multi-scale)");
 	  output = scribo::binarization::sauvola_ms(intensity_ima,
-						    sauvola_win, 3, sauvola_K);
+						    sauvola_win, 3,
+						    sauvola_k2,
+						    sauvola_k3,
+						    sauvola_k4);
 	}
 	else // binarization_algo == Convert
 	{

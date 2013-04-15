@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,28 +46,41 @@ namespace mln
   {
 
 
-    /// Compute the minimum and maximum points of point set \p s.
+    /*! \brief Compute the minimum and maximum points of point set \p
+        s.
+
+      \ingroup mlngeom
+     */
     template <typename S>
     std::pair<mln_site(S), mln_site(S)>
     pmin_pmax(const Site_Set<S>& s);
 
 
-    /// Compute the minimum and maximum points, \p pmin and \p max,
-    /// of point set \p s.
+    /*! \brief Compute the minimum and maximum points, \p pmin and \p
+      max, of point set \p s.
+
+      \ingroup mlngeom
+     */
     template <typename S>
     void
     pmin_pmax(const Site_Set<S>& s,  mln_site(S)& pmin, mln_site(S)& pmax);
 
 
-    /// Compute the minimum and maximum points when browsing with
-    /// iterator \p p.
+    /*! \brief Compute the minimum and maximum points when browsing
+      with iterator \p p.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     std::pair<mln_site(I), mln_site(I)>
     pmin_pmax(const Site_Iterator<I>& p);
 
 
-    /// Compute the minimum and maximum points, \p pmin and \p max,
-    /// when browsing with iterator \p p.
+    /*! \brief Compute the minimum and maximum points, \p pmin and \p
+      max, when browsing with iterator \p p.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     void
     pmin_pmax(const Site_Iterator<I>& p,  mln_site(I)& pmin, mln_site(I)& pmax);
@@ -76,7 +90,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    // Versions with point iterator. 
+    // Versions with point iterator.
 
     template <typename I>
     inline
@@ -112,7 +126,7 @@ namespace mln
     }
 
 
-    // Versions with point set. 
+    // Versions with point set.
 
     namespace impl
     {

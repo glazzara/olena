@@ -38,20 +38,41 @@
 namespace mln
 {
 
-  /// \brief Type alias for the geometry of a 1-complex (e.g., a
-  /// graph) located in a discrete 2-dimensional plane (with integer
-  /// coordinates).
+  /*!
+    \class discrete_plane_1complex_geometry
+    \headerfile <>
+
+    \brief Type alias for the geometry of a 1-complex (e.g., a
+    graph) located in a discrete 2-dimensional plane (with integer
+    coordinates).
+  */
+  /// \cond ALIAS
   typedef mln::geom::complex_geometry<1, point2d>
   discrete_plane_1complex_geometry;
+  /// \endcond
 
-  /// \brief Type alias for the geometry of a 2-complex located in a
-  /// discrete 2-dimensional plane (with integer coordinates).
+  /*!
+    \class discrete_plane_2complex_geometry
+    \headerfile <>
+
+    \brief Type alias for the geometry of a 2-complex located in a
+    discrete 2-dimensional plane (with integer coordinates).
+  */
+  /// \cond ALIAS
   typedef mln::geom::complex_geometry<2, point2d>
   discrete_plane_2complex_geometry;
+  /// \endcond
 
-  /// \brief Type alias for the geometry of a 2-complex located in a
-  /// 3-dimensional space (with floating-point coordinates).
+  /*!
+    \class space_2complex_geometry
+    \headerfile <>
+
+    \brief Type alias for the geometry of a 2-complex located in a
+    3-dimensional space (with floating-point coordinates).
+  */
+  /// \cond ALIAS
   typedef mln::geom::complex_geometry<2, point3df> space_2complex_geometry;
+  /// \endcond
 
 } // end of namespace mln
 

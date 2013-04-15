@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
  * \brief File that includes essential functions from point to value.
  */
 
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
+# include <mln/fun/v2b/threshold_le.hh>
 
 #endif // ! MLN_FUN_V2B_ESSENTIAL_HH

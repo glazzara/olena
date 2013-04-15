@@ -106,7 +106,7 @@ namespace mln
     mln_regular(W1)
     diff(const Window<W1>& win1_, const Window<W2>& win2_)
     {
-      trace::entering("win::diff");
+      mln_trace("win::diff");
 
       mln_is_simple_window(W1)::check();
       mln_is_simple_window(W2)::check();
@@ -123,7 +123,6 @@ namespace mln
 	  tmp.insert(win1.dp(i));
 	}
 
-      trace::exiting("win::diff");
       return tmp;
     }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,60 +55,91 @@ namespace scribo
 
       \param[in] input An image.
       \param[in] enable_fg_bg Enable/Disable background removal.
-      \param[in] K Binarization threshold parameter. (Default 0.34)
+      \param[in] lambda Parameter to the background removal. Maximum
+                        area of foreground objects.
+      \param[in] K Binarization threshold parameter. Use the same
+                   value for all scales.(Default 0.34)
+      \param[in] enable_deskew Deskew document.
+      \param[in] verbose Enable/Disable debug output on std::cout.
 
       If \p enable_fg_bg is set to 'True' then a background removal is
       performed. Its parameter lambda is automatically set according
       to the input image size.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   unsigned lambda, double K,
-			   bool verbose = false);
+			   unsigned lambda, double K, bool enable_deskew,
+			   bool verbose);
 
     /*! \overload
       K is set to 0.34.
+
+      \ingroup grptoolchaindocpreproc
     */
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, bool enable_fg_bg,
-			   bool verbose = false);
+			   bool verbose);
 
 
     /*! \brief Preprocess a document before looking for its content.
 
       \param[in] input An image.
       \param[in] lambda Parameter to the background removal.
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
 
       If lambda is set to '0' no background removal is
       performed. Otherwise, a background removal is performed with the
       given \p lambda value.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   bool verbose = false);
+			   bool verbose);
 
     /*! \brief Preprocess a document before looking for its content.
+      This methods relies on a multi-scale implementation of Sauvola's
+      binarization.
 
       \param[in] input An image.
       \param[in] lambda Parameter to the background removal.
-      \param[in] K Binarization threshold parameter. (Default 0.34)
+      \param[in] k2 Binarization threshold parameter for scale 2. (Default 0.34)
+      \param[in] k3 Binarization threshold parameter for scale 3. (Default 0.34)
+      \param[in] k4 Binarization threshold parameter for scale 4. (Default 0.34)
+      \param[in] enable_fg_bg If set to True tries to identify
+                              background components and remove them.
       \param[in,out] fg The foreground layer of \p input.
+      \param[in] enable_deskew Deskew document.
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
 
       If lambda is set to '0' no background removal is
       performed. Otherwise, a background removal is performed with the
       given \p lambda value.
 
+      \ingroup grptoolchaindocpreproc
      */
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
-			   double K, bool enable_fg_bg, Image<I>& fg,
-			   bool verbose = false);
+			   double k2, double k3, double k4, bool enable_fg_bg,
+			   Image<I>& fg, bool enable_deskew, bool verbose);
+
+    /*! \overload
+
+      \ingroup grptoolchaindocpreproc
+    */
+    template <typename I>
+    mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
+			   bool enable_fg_bg, Image<I>& fg,
+			   bool enable_deskew, bool verbose);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -126,7 +157,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg,
-			   unsigned lambda, double K,
+			   unsigned lambda, double K, bool enable_deskew,
 			   bool verbose)
     {
       const I& input = exact(input_);
@@ -137,8 +168,8 @@ namespace scribo
 
       mln_concrete(I) tmp_fg;
       mln_ch_value(I,bool)
-	output = text_in_doc_preprocess(input, lambda, K,
-					enable_fg_bg, tmp_fg, verbose);
+	output = text_in_doc_preprocess(input, lambda, K, K, K,
+					enable_fg_bg, tmp_fg, enable_deskew, verbose);
 
       return output;
     }
@@ -149,17 +180,17 @@ namespace scribo
 			   bool verbose)
     {
       I tmp;
-      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, verbose);
+      return text_in_doc_preprocess(input, lambda, 0.34, true, tmp, false, verbose);
     }
 
 
     template <typename I>
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
-			   double K, bool enable_fg_bg, Image<I>& fg,
-			   bool verbose)
+			   double k2, double k3, double k4, bool enable_fg_bg,
+			   Image<I>& fg, bool enable_deskew, bool verbose)
     {
-      trace::entering("scribo::toolchain::text_in_doc_preprocess");
+      mln_trace("scribo::toolchain::text_in_doc_preprocess");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -167,19 +198,32 @@ namespace scribo
       internal::text_in_doc_preprocess_functor<I> f;
 
       // Setup functor.
-      f.sauvola_K = K;
+      f.sauvola_k2 = k2;
+      f.sauvola_k3 = k3;
+      f.sauvola_k4 = k4;
       f.enable_fg_extraction = enable_fg_bg;
       f.lambda = lambda;
+      f.enable_deskew = enable_deskew;
       f.verbose = verbose;
 
       // Get results.
       mln_ch_value(I,bool) output = f(input);
       exact(fg) = f.fg;
 
-      trace::exiting("scribo::toolchain::text_in_doc_preprocess");
       return output;
     }
 
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
+			   bool enable_fg_bg, Image<I>& fg,
+			   bool enable_deskew, bool verbose)
+    {
+      text_in_doc_preprocess(input, lambda, SCRIBO_DEFAULT_SAUVOLA_K,
+			     SCRIBO_DEFAULT_SAUVOLA_K, SCRIBO_DEFAULT_SAUVOLA_K,
+			     enable_fg_bg, fg, enable_deskew, verbose);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -56,7 +56,7 @@ namespace mln
     graph_elt_window_if<mln_graph(I), mln_domain(I), M>
     to_win(const Image<I>& graph_image_, const Image<M>& graph_mask_image_)
     {
-      trace::entering("graph::to_win");
+      mln_trace("graph::to_win");
 
       const I& graph_image = exact(graph_image_);
       const M& graph_mask_image = exact(graph_mask_image_);
@@ -68,7 +68,6 @@ namespace mln
       typedef graph_elt_window_if<mln_graph(I), mln_domain(I), M> win_t;
       win_t win(graph_mask_image);
 
-      trace::exiting("graph::to_win");
       return win;
     }
 

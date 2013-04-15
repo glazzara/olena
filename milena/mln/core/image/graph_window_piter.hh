@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +31,7 @@
 ///
 /// Definition of a graph element iterator on a graph window.
 ///
-/// \fixme Split into graph_window_piter, graph_mixed_window_piter and
+/// \todo Split into graph_window_piter, graph_mixed_window_piter and
 /// graph_window_piter_base.
 
 # include <mln/core/concept/site_set.hh>
@@ -49,8 +49,11 @@ namespace mln
   namespace internal
   {
 
-    /// The window center and the window elements are part of
-    /// different site sets.
+    /*!
+      \internal
+      \brief The window center and the window elements are part of
+      different site sets.
+    */
     template <typename C, typename P, typename E>
     struct impl_selector
     {
@@ -63,8 +66,11 @@ namespace mln
 
     };
 
-    /// The window center and the window elements are part of the same
-    /// site set.
+    /*!
+      \internal
+      \brief The window center and the window elements are part of the same
+      site set.
+    */
     template <typename C, typename E>
     struct impl_selector<C,C,E>
     {
@@ -89,12 +95,14 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  /// Forward iterator on line graph window.
-  ///
-  /// \tparam S is the site set type.
-  /// \tparam W is the window type.
-  /// \tparam I is the underlying iterator type.
-  //
+  /*!
+    \internal
+    \brief Forward iterator on line graph window.
+
+    \tparam S is the site set type.
+    \tparam W is the window type.
+    \tparam I is the underlying iterator type.
+  */
   template <typename S, typename W, typename I>
   class graph_window_piter
     : public internal::site_relative_iterator_base< W,
@@ -156,6 +164,7 @@ namespace mln
 		       const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     /// \{
     template <typename Pref>
@@ -185,11 +194,12 @@ namespace mln
     template <typename S2, typename I2>
     void center_at_(const p_graph_piter<S2, I2>& c);
 
-    /// Return the graph element pointed by this iterator.
-    const graph_element& element() const;
-
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
+    /// \endcond
+
+    /// Return the graph element pointed by this iterator.
+    const graph_element& element() const;
 
     /// Return the graph element id.
     /// FIXME: we do not want to have this member since there is an

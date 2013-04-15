@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+
 #include <mln/literal/grays.hh>
 #include <mln/value/graylevel.hh>
 #include <mln/value/gl8.hh>
@@ -33,20 +36,12 @@ int main()
 {
   using namespace mln;
 
-  using literal::medium_gray;
-  using value::gl8;
-  using value::gl16;
+  value::gl8 a = literal::medium_gray;
+  mln_assertion(a == value::gl8(128));
 
-  gl8 a;
-  gl16 b;
+  value::gl16 b = a;
+  mln_assertion(b == value::gl16(32768));
 
-  a = medium_gray;
-
-  std::cout << int(a.value()) << std::endl;
-
-  b = a;
-  std::cout << int(b.value()) << std::endl;
-
-  b = medium_gray;
-  std::cout << int(b.value()) << std::endl;
+  b = literal::medium_gray;
+  mln_assertion(b == value::gl16(32768));
 }

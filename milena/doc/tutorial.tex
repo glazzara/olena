@@ -952,34 +952,141 @@ result.
 
 \doxysubsection{tuto3howtocompile}{Include path}
 
-If Milena has been installed in a custom directory, e.g. not /usr/include or
-/usr/local/include, the path to the library headers must be passed to the
-compiler.
+If Milena has been installed in a custom directory, e.g. not
+/usr/include or /usr/local/include, the path to the library headers
+must be passed to the compiler.
 
 With g++ and MinGW, the option  is \B{-I$<$path$>$}.
 \begin{verbatim}
 $ g++ -Ipath/to/mln my_program.cc
 \end{verbatim}
 
-For other compilers, please look at the documentation and search for ``include
-path''.
-
+For other compilers, please look at the documentation and search for
+``include path''.
 
 \doxysubsection{tuto3liblink}{Library linking}
-As it is usually expected when using a library, no library linking is needed for
-the library itself.
-Milena is a ``header only'' library and is compiled ``on demand'' with your
-program.
+As it is usually expected when using a library, no library linking is
+needed for the library itself.  Milena is a ``header only'' library
+and is compiled ``on demand'' with your program.
 
-If you use specific input/output you may need to link your program with the
-right graphic library. For more information, please refer to section
-\doxyref{inputoutput} in the Quick Reference Guide.
+If you use specific input/output you may need to link your program
+with the right graphic library. For more information, please refer to
+section \doxyref{inputoutput} in the Quick Reference Guide.
 
+
+\doxysubsection{tuto3multifile}{Multifile Compilation}
+
+In some cases, one might want to use Olena in a more complex program
+compiled through several independant files.
+
+Let's consider the program is composed of two files both including
+Milena headers:
+\begin{itemize}
+  \item main.cc
+  \item task.cc
+\end{itemize}
+
+Content of main.cc
+\begin{verbatim}
+#include <mln/core/image/image2d.hh>
+
+// Main.cc
+
+// Forward declaration.
+void f();
+
+int main()
+{
+  mln::image2d<int> ima;
+}
+\end{verbatim}
+
+Content of task.cc
+\begin{verbatim}
+#include <mln/core/image/image2d.hh>
+
+// task.cc
+
+void f()
+{
+  mln::image2d<int> ima;
+}
+
+\end{verbatim}
+
+The following call to the compiler will fail:
+\begin{verbatim}
+$ g++ -Ipath/to/mln main.cc task.cc
+/tmp/ccRaVKO2.o:(.data+0x0): multiple definition of `mln::trace::quiet'
+/tmp/ccAArtQl.o:(.data+0x0): first defined here
+/tmp/ccRaVKO2.o:(.bss+0x0): multiple definition of `mln::trace::tab'
+/tmp/ccAArtQl.o:(.bss+0x0): first defined here
+/tmp/ccRaVKO2.o:(.bss+0x4): multiple definition of `mln::trace::full_trace'
+/tmp/ccAArtQl.o:(.bss+0x4): first defined here
+/tmp/ccRaVKO2.o:(.bss+0x8): multiple definition of `mln::trace::internal::max_tab'
+[...]
+collect2: ld returned 1 exit status
+\end{verbatim}
+
+This issue is due to the ``header only'' architecture of the library
+and to global variables. global variable symbols are compiled for each
+files and it leads to symbols conflicts.
+
+The solution is to force the compiler to compile these symbols only
+once. Olena provided a mechanism to do this.
+
+In one of the files including olena headers, at the very top of
+the file (before any includes), add the following line:
+\begin{verbatim}
+#undef MLN_WO_GLOBAL_VARS
+\end{verbatim}
+
+For instance, we would have in main.cc:
+\begin{verbatim}
+#undef MLN_WO_GLOBAL_VARS
+#include <mln/core/image/image2d.hh>
+
+// Main.cc
+
+// Forward declaration.
+void f();
+
+int main()
+{
+  f();
+}
+
+\end{verbatim}
+
+The compile the sources again with the define:
+\begin{verbatim}
+$ g++ -DMLN_WO_GLOBAL_VARS -Ipath/to/mln main.cc task.cc
+\end{verbatim}
+
+The previous duplicate symbols will then be compiled thanks to main.cc
+which force the effective declaration of the global symbols. Because
+of the default define at compile time, any .cc files including headers
+from the library will just declare but not define global symbols.
+
+For that reason, sometimes one may also encounter the following error
+after defining MLN\_WO\_GLOBAL\_VARS.
+\begin{verbatim}
+g++ -DMLN_WO_GLOBAL_VARS  -I$PWD/milena/ main.cc task.cc
+/tmp/cc4Ys1xX.o: In function `f()':
+task.cc:(.text+0x6): undefined reference to `mln::border::thickness'
+collect2: ld returned 1 exit status
+\end{verbatim}
+
+In our case, it would be because task.cc includes and uses global
+symbols which are not included in main.cc. Therefore, they are defined
+but never compiled. Here, the file main.cc should include the
+corresponding headers.
 
 \doxysubsection{tuto3compildndebug}{Disable Debug}
-By default, Olena enables a lot of internal pre and post conditions. Usually,
-this is a useful feature and it should be enabled. It can heavily slow down a
-program though and these tests can be disabled by compiling using -DNDEBUG:
+By default, Olena enables a lot of internal pre and post
+conditions. Usually, this is a useful feature and it should be
+enabled. It can heavily slow down a program though and these tests can
+be disabled by compiling using -DNDEBUG:
 
 \begin{verbatim}
 $ g++ -DNDEBUG -Ipath/to/mln my_program.cc
@@ -987,20 +1094,22 @@ $ g++ -DNDEBUG -Ipath/to/mln my_program.cc
 
 \doxysubsection{tuto3compoptimflags}{Compiler optimization flags}
 
-In this section you will find remarks about the compiler optimization flags and
-their impact on the compilation and execution time.
+In this section you will find remarks about the compiler optimization
+flags and their impact on the compilation and execution time.
 
 
 \doxysubsubsection{tuto3compoptimgcc}{GCC}
 
 \begin{itemize}
-  \item \B{-O0}, combined with -DNDEBUG, it leads to the fastest compilation
-  time. The execution is somewhat slow though since dispatch functions and one
-  line members are not inlined by the compiler.
-  \item \B{-O1}, best compromise between compilation time and execution time.
-  \item \B{-O2}, \B{-O3}, combined with -DNDEBUG, it leads to the best execution
-  time. However these optimizations dramatically slow down the compilation and
-  requires much more memory at compile time.
+  \item \B{-O0}, combined with -DNDEBUG, it leads to the fastest
+    compilation time. The execution is somewhat slow though since
+    dispatch functions and one line members are not inlined by the
+    compiler.
+  \item \B{-O1}, best compromise between compilation time and
+    execution time.
+  \item \B{-O2}, \B{-O3}, combined with -DNDEBUG, it leads to the best
+    execution time. However these optimizations dramatically slow down
+    the compilation and requires much more memory at compile time.
 \end{itemize}
 
 \doxysubsubsection{tuto3compoptimother}{Other compilers}

@@ -76,14 +76,13 @@ namespace mln
     p_vertices<G,pw::cst_<P> >
     dummy_p_vertices(const Graph<G>& g_, const P& dummy_site)
     {
-      trace::entering("dummy_p_vertices");
+      mln_trace("dummy_p_vertices");
 
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
       p_vertices< G, pw::cst_<P> > pe(g, pw::cst(dummy_site));
 
-      trace::exiting("dummy_p_vertices");
       return pe;
     }
 

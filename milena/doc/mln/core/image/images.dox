@@ -1,0 +1,8 @@
+/*! \defgroup modimage Images
+ *
+ * \brief All the generic image types provided in Olena.
+ *
+ * \ingroup modtypes
+ */
+
+

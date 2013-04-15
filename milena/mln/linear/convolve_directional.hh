@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,17 +43,19 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by a line-shaped
-     *  (directional) weighted window defined by the array of \p
-     *  weights.
-     *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre input.is_valid
+    /*! \brief Convolution of an image \p input by a line-shaped
+        (directional) weighted window defined by the array of \p
+        weights.
+
+       \warning Computation of \p output(p) is performed with the
+       value type of \p output.
+
+       \warning The weighted window is used as-is, considering that
+       its symmetrization is handled by the client.
+
+       \pre input.is_valid
+
+       \ingroup mlnlinear
      */
     template <typename I, typename W, unsigned S>
     mln_ch_convolve(I, W)
@@ -66,7 +69,7 @@ namespace mln
     mln_ch_convolve(I, W)
     convolve_directional(const Image<I>& input, unsigned dir, W (&weights)[S])
     {
-      trace::entering("linear::convolve_directional");
+      mln_trace("linear::convolve_directional");
 
       mlc_bool(S % 2 == 1)::check();
 
@@ -80,7 +83,6 @@ namespace mln
       w_window<D,W> w_win = make::w_window_directional(dp, weights);
       mln_ch_convolve(I, W) output = convolve(input, w_win);
 
-      trace::exiting("linear::convolve_directional");
       return output;
     }
 

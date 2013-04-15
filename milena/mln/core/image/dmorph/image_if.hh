@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::image_if<I,F>.
+    /*!
+      \brief Data structure for \c mln::image_if<I,F>.
+    */
     template <typename I, typename F>
     struct data< image_if<I,F> >
     {
@@ -103,7 +106,9 @@ namespace mln
     /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
 
+    /// \cond INTERNAL_API
     void init_(I& ima, const F& f);
+    /// \endcond
 
     /// Give the definition domain.
     const p_if<mln_domain(I), F>& domain() const;

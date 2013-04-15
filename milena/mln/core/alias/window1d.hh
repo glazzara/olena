@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,53 +40,78 @@
 namespace mln
 {
 
-  /// \brief Type alias for a window with arbitrary shape, defined on
-  /// the 1D square grid with integer coordinates.
-  ///
-  /// \ingroup modwin1d
-  //
+  /*!
+    \class window1d
+    \headerfile <>
+
+    \brief Type alias for a window with arbitrary shape, defined on
+    the 1D square grid with integer coordinates.
+
+    Common 1D windows are predefined and can be used directly. See
+    section \ref modwin1d.
+
+    The list of dpoint1d included in a window1d is accessible from
+    std_vector() method or simply by iterating over this list:
+
+    \code
+    window1d win;
+    for (int i = 0; i < win.size(); ++i)
+      std::cout << win.dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to q-iterators, as follows:
+
+    \code
+    point1d p(2);
+    window1d win;
+    mln_qiter(window1d) q(win, p);
+    for_all(q)
+      // q is a point1d, neighbor of p.
+      std::cout << q << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image1d<bool> ima(4);
+    window1d win;
+    mln_piter(image1d<bool>) p(ima.domain());
+    mln_qiter(window1d) q(win, p);
+    for_all(p)
+      for_all(q)
+        // q is a point1d, neighbor of the current p.
+        std::cout << q << std::endl;
+    \endcode
+
+    \sa dpoint1d, neighb1d
+
+    \ingroup modwin1d
+  */
+  /// \cond ALIAS
   typedef window<mln::dpoint1d> window1d;
+  /// \endcond
 
 
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void from_to_(const bool (&values)[M], window1d& win);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[] -> window1d
+  template <unsigned M>
+  void from_to_(const bool (&values)[M], window1d& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace convert
+  template <unsigned M>
+  void
+  from_to_(bool const (&values)[M], window1d& win)
   {
-
-    namespace over_load
-    {
-
-      template <unsigned M>
-      void
-      from_to_(bool const (&values)[M], window1d& win)
-      {
-	mlc_bool(M % 2 == 1)::check();
-	win.clear();
-	const int h = int(M) / 2;
-	unsigned i = 0;
-	for (int ind = - h; ind <= h; ++ind)
-	  if (values[i++])
-	    win.insert(ind);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    mlc_bool(M % 2 == 1)::check();
+    win.clear();
+    const int h = int(M) / 2;
+    unsigned i = 0;
+    for (int ind = - h; ind <= h; ++ind)
+      if (values[i++])
+	win.insert(ind);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

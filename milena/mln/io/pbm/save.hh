@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-// 2011 EPITA Research and Development Laboratory (LRDE)
+// 2011, 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,10 +58,12 @@ namespace mln
     namespace pbm
     {
 
-      /*! Save a Milena image as a pbm image.
+      /*! \brief Save a Milena image as a pbm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.
+       *
+       * \ingroup iopbm
        */
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);
@@ -118,10 +120,9 @@ namespace mln
       inline
       void save(const Image<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::pbm::save");
+	mln_trace("mln::io::pbm::save");
 	mln::metal::equal<mln_value(I), bool >::check();
 	impl::save_(exact(ima), filename);
-	trace::exiting("mln::io::pbm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

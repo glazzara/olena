@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,22 +44,24 @@ namespace mln
   namespace data
   {
 
-    /// \brief Paste the contents of image \p input into the image \p
-    /// output.
-    ///
-    /// \param[in] input The input image providing pixels values.
-    /// \param[in,out] output The image in which values are
-    /// assigned.
-    ///
-    /// This routine runs: \n
-    /// for all p of \p input, \p output(p) = \p input(p).
-    ///
-    /// \warning The definition domain of \p input has to be included in
-    /// the one of \p output; so using mln::safe_image does not
-    /// make pasting outside the output domain work.
-    ///
-    /// \pre \p input.domain <= \p output.domain
-    ///
+    /*!\brief Paste the contents of image \p input into the image \p
+     * output.
+     *
+     * \param[in] input The input image providing pixels values.
+     * \param[in,out] output The image in which values are
+     * assigned.
+     *
+     * This routine runs: \n
+     * for all p of \p input, \p output(p) = \p input(p).
+     *
+     * \warning The definition domain of \p input has to be included in
+     * the one of \p output; so using mln::safe_image does not
+     * make pasting outside the output domain work.
+     *
+     * \pre \p input.domain <= \p output.domain
+     *
+     * \ingroup mlndata
+     */
     template <typename I, typename J>
     void paste(const Image<I>& input, Image<J>& output);
 
@@ -110,7 +113,7 @@ namespace mln
 	inline
 	void paste(const Image<I>& input_, Image<J>& output_)
 	{
-	  trace::entering("data::impl::generic::paste");
+	  mln_trace("data::impl::generic::paste");
 
 	  data::internal::paste_tests(input_, output_);
 
@@ -122,7 +125,6 @@ namespace mln
 	  for_all(p)
 	    output(p) = static_cast<mln_value(J)>(input(p));
 
-	  trace::exiting("data::impl::generic::paste");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -136,14 +138,13 @@ namespace mln
     inline
     void paste(const Image<I>& input, Image<J>& output)
     {
-      trace::entering("data::paste");
+      mln_trace("data::paste");
 
       mlc_converts_to(mln_value(I), mln_value(J))::check();
 
       internal::paste_tests(input, output);
       internal::paste_dispatch(input, output);
 
-      trace::exiting("data::paste");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

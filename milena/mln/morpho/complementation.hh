@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,17 +45,21 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological complementation: either a logical "not" (if
-     *  morpho on sets) or an arithmetical complementation (if morpho
-     *  on functions).
+    /*! \brief Morphological complementation: either a logical "not"
+     *  (if morpho on sets) or an arithmetical complementation (if
+     *  morpho on functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I>
     mln_concrete(I) complementation(const Image<I>& input);
 
 
-    /*! Morphological complementation, inplace version: either a
-     *  logical "not" (if morpho on sets) or an arithmetical
+    /*! \brief Morphological complementation, inplace version: either
+     *  a logical "not" (if morpho on sets) or an arithmetical
      *  complementation (if morpho on functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I>
     void complementation_inplace(Image<I>& input);
@@ -115,13 +120,12 @@ namespace mln
     inline
     mln_concrete(I) complementation(const Image<I>& input)
     {
-      trace::entering("morpho::complementation");
+      mln_trace("morpho::complementation");
       mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output = impl::complementation_(mln_trait_image_kind(I)(),
 						      input);
 
-      trace::exiting("morpho::complementation");
       return output;
     }
 
@@ -129,13 +133,12 @@ namespace mln
     inline
     void complementation_inplace(Image<I>& input)
     {
-      trace::entering("morpho::complementation_inplace");
+      mln_trace("morpho::complementation_inplace");
       mln_precondition(exact(input).is_valid());
 
       impl::complementation_inplace_(mln_trait_image_kind(I)(),
 				     input);
 
-      trace::exiting("morpho::complementation_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

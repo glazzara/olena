@@ -72,7 +72,7 @@ namespace scribo
 		   const mln::util::array< box<mln_site(I)> >& boxes,
 		   const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::bounding_boxes");
+      mln_trace("scribo::draw::bounding_boxes");
 
       I& input = exact(input_);
 
@@ -82,7 +82,6 @@ namespace scribo
         if (boxes[i].is_valid())
 	  mln::draw::box(input, boxes[i], value);
 
-      trace::exiting("scribo::draw::bounding_boxes");
     }
 
 
@@ -93,7 +92,7 @@ namespace scribo
 		   const component_set<L>& components,
 		   const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::bounding_boxes");
+      mln_trace("scribo::draw::bounding_boxes");
 
       I& input = exact(input_);
 
@@ -103,7 +102,6 @@ namespace scribo
 	if (components(i).is_valid())
 	  mln::draw::box(input, components(i).bbox(), value);
 
-      trace::exiting("scribo::draw::bounding_boxes");
     }
 
 

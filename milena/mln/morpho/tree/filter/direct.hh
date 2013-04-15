@@ -75,14 +75,13 @@ namespace mln
 	  F& f = exact(f_);
 	  const P& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::direct");
+	  mln_trace("mln::morpho::tree::filter::direct");
 
 	  mln_dn_node_piter(T) n(tree);
 	  for_all(n)
 	    if (!pred(n))
 	      f(n) = f(tree.parent(n));
 
-	  trace::exiting("mln::morpho::tree::filter::direct");
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

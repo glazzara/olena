@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,7 @@
 /// \todo Add the bkd iter.
 /// \todo Code is_valid() and change_target() for the site set.
 
-
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 
@@ -144,6 +145,7 @@ namespace mln
     /// Constructor.
     p_centered_piter(const p_centered<W>& s);
 
+    /// \cond INTERNAL_API
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -155,6 +157,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
   protected:
     using super_::p_;

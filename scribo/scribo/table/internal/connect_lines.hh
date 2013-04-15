@@ -86,7 +86,7 @@ namespace scribo
 		    unsigned dim_size,
 		    unsigned max_distance)
       {
-	trace::entering("scribo::table::internal::connect_lines");
+	mln_trace("scribo::table::internal::connect_lines");
 
 	image1d<int> l(dim_size);
 	data::fill(l, -1);
@@ -108,7 +108,6 @@ namespace scribo
 	    boxes[i].pmax()[dim] = opt::at(l, cp.second()[dim]);
 	}
 
-	trace::exiting("scribo::table::internal::connect_lines");
       }
 
 

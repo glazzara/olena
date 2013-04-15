@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,8 +45,8 @@ namespace mln
   namespace border
   {
 
-    /*! Fill the virtual (outer) border of image \p ima with the
-     *  single value \p v.
+    /*! \brief Fill the virtual (outer) border of image \p ima with
+     *  the single value \p v.
      *
      * \param[in,out] ima The image whose border is to be filled.
      * \param[in] v The value to assign to all border pixels.
@@ -54,6 +54,8 @@ namespace mln
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memset if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& v);
@@ -83,7 +85,7 @@ namespace mln
       inline
       void fill_size_1(const Image<I>& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_1");
+	mln_trace("border::impl::fill_size_1");
 
 	const I& ima = exact(ima_);
 	internal::fill_tests(ima, v);
@@ -97,7 +99,7 @@ namespace mln
 
 	for_all (pl)
 	{
-	  unsigned end = ima.index_of_point (pl);
+	  unsigned end = ima.offset_of_point (pl);
 	  if (st < end)
 	    std::memset((void*)&opt::element(ima, st),
 			*(const int*)(&v),
@@ -109,7 +111,6 @@ namespace mln
 		      *(const int*)(&v),
 		      opt::nelements(ima) - st);
 
-	trace::exiting("border::impl::fill_size_1");
       }
 
 
@@ -117,7 +118,7 @@ namespace mln
       inline
       void fill_size_n(const I& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_n");
+	mln_trace("border::impl::fill_size_n");
 
 	I& ima = const_cast<I&>( exact(ima_) );
 	internal::fill_tests(ima, v);
@@ -129,7 +130,7 @@ namespace mln
 
 	for_all (pl)
 	{
-	  unsigned end = ima.index_of_point (pl);
+	  unsigned end = ima.offset_of_point (pl);
 	  for (unsigned i = st; i < end; ++i)
 	    opt::element(ima, i) = v;
 	  st = end + len_r;
@@ -137,7 +138,6 @@ namespace mln
 	for (unsigned i = st; i < opt::nelements(ima); ++i)
           opt::element(ima, i) = v;
 
-	trace::exiting("border::impl::fill_size_n");
       }
 
 
@@ -203,12 +203,11 @@ namespace mln
     inline
     void fill(const Image<I>& ima, const mln_value(I)& v)
     {
-      trace::entering("border::fill");
+      mln_trace("border::fill");
 
       internal::fill_tests(ima, v);
       internal::fill_dispatch(ima, v);
 
-      trace::exiting("border::fill");
     }
 
 

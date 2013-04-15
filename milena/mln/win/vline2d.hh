@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,11 @@ namespace mln
   namespace win
   {
 
-    /*! \brief Vertical line window defined on the 2D square grid.
+    /*!
+      \class vline2d
+      \headerfile <>
+
+      \brief Vertical line window defined on the 2D square grid.
 
        An vline2d is centered and symmetric; so its width is 1 and
        its height (length) is odd.
@@ -55,7 +60,9 @@ namespace mln
 
        \ingroup modwin2d
      */
+    /// \cond ALIAS
     typedef line<grid::square, 0, def::coord> vline2d;
+    /// \endcond
 
   } // end of namespace mln::win
 

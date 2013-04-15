@@ -63,7 +63,7 @@ namespace mln
       mln_concrete(I)
       full2image(const Image<I>& input_)
       {
-	trace::entering("world::inter_pixel::full2image");
+	mln_trace("world::inter_pixel::full2image");
 
 	mlc_is_a(mln_domain(I), Box)::check();
 
@@ -77,7 +77,6 @@ namespace mln
 
 	data::paste_without_localization(input | is_pixel(), output);
 
-	trace::exiting("world::inter_pixel::full2image");
 	return output;
       }
 

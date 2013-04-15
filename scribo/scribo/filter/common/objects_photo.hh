@@ -65,7 +65,7 @@ namespace scribo
       component_set<L>
       components_photo(const component_set<L>& components)
       {
-	trace::entering("scribo::filter::common::components_photo");
+	mln_trace("scribo::filter::common::components_photo");
 
 	mln_precondition(components.is_valid());
 
@@ -81,7 +81,6 @@ namespace scribo
 // 					  math::min(input.ncols(),
 // 						    input.nrows()) / 5);
 
-	trace::exiting("scribo::filter::common::components_photo");
 	return filtered_components;
       }
 

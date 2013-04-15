@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,39 +60,44 @@ namespace mln
     namespace watershed
     {
 
-      /// Meyer's Watershed Transform (WST) algorithm.
-      ///
-      /// \param[in]  input    The input image.
-      /// \param[in]  nbh      The connexity of markers.
-      /// \param[out] n_basins The number of basins.
-      ///
-      /// \li \p L is the type of labels, used to number the watershed
-      /// itself (with the minimal value), and the basins.
-      /// \li \p I is the exact type of the input image.
-      /// \li \p N is the exact type of the neighborhood used to express
-      /// \a input's connexity.
-
+      /*!  \brief Meyer's Watershed Transform (WST) algorithm.
+       *
+       *  \param[in]  input    The input image.
+       *  \param[in]  nbh      The connexity of markers.
+       *  \param[out] n_basins The number of basins.
+       *
+       *  \li \p L is the type of labels, used to number the watershed
+       *  itself (with the minimal value), and the basins.
+       *  \li \p I is the exact type of the input image.
+       *  \li \p N is the exact type of the neighborhood used to express
+       *  \a input's connexity.
+       *
+       * \ingroup mlnmorphowst
+       */
       template <typename L, typename I, typename N>
       mln_ch_value(I, L)
       flooding(const Image<I>& input, const Neighborhood<N>& nbh,
 	       L& n_basins);
 
-      /// \brief Meyer's Watershed Transform (WST) algorithm, with no
-      /// count of basins.
-      /// 
-      /// \param[in]  input   The input image.
-      /// \param[in]  nbh     The connexity of markers.
-      /// 
-      /// \li \p L is the type of labels, used to number the watershed
-      /// itself (with the minimal value), and the basins.
-      /// \li \p I is the exact type of the input image.
-      /// \li \p N is the exact type of the neighborhood used to express
-      /// \a input's connexity.
-      /// 
-      /// Note that the first parameter, \p L, is not automatically
-      /// valued from the type of the actual argument during implicit
-      /// instantiation: you have to explicitly pass this parameter at
-      /// call sites.
+      /*! \brief Meyer's Watershed Transform (WST) algorithm, with no
+       *  count of basins.
+       *
+       *  \param[in]  input   The input image.
+       *  \param[in]  nbh     The connexity of markers.
+       *
+       *  \li \p L is the type of labels, used to number the watershed
+       *  itself (with the minimal value), and the basins.
+       *  \li \p I is the exact type of the input image.
+       *  \li \p N is the exact type of the neighborhood used to express
+       *  \a input's connexity.
+       *
+       *  Note that the first parameter, \p L, is not automatically
+       *  valued from the type of the actual argument during implicit
+       *  instantiation: you have to explicitly pass this parameter at
+       *  call sites.
+       *
+       *  \ingroup mlnmorphowst
+       */
     template <typename L, typename I, typename N>
     mln_ch_value(I, L)
     flooding(const Image<I>& input, const Neighborhood<N>& nbh);
@@ -114,7 +120,7 @@ namespace mln
 	  flooding(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		   L& n_basins)
 	  {
-	    trace::entering("morpho::watershed::impl::generic::flooding");
+	    mln_trace("morpho::watershed::impl::generic::flooding");
 	    /* FIXME: Ensure the input image has scalar values.  */
 
 	    const I input = exact(input_);
@@ -201,7 +207,6 @@ namespace mln
 		  }
 	      }
 
-	    trace::exiting("morpho::watershed::impl::generic::flooding");
 	    return output;
 	  }
 
@@ -216,7 +221,7 @@ namespace mln
 	flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
 			 L& n_basins)
 	{
-	  trace::entering("morpho::watershed::impl::flooding_fastest");
+	  mln_trace("morpho::watershed::impl::flooding_fastest");
 	  /* FIXME: Ensure the input image has scalar values.  */
 
 	  const I input = exact(input_);
@@ -319,7 +324,6 @@ namespace mln
 		}
 	    }
 
-	  trace::exiting("morpho::watershed::impl::flooding_fastest");
 	  return output;
 	}
 
@@ -380,14 +384,13 @@ namespace mln
       mln_ch_value(I, L)
       flooding(const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
       {
-	trace::entering("morpho::watershed::flooding");
+	mln_trace("morpho::watershed::flooding");
 
 	// FIXME: internal::flooding_tests(input, nbh, n_basins);
 
 	mln_ch_value(I, L) output =
 	  internal::flooding_dispatch(input, nbh, n_basins);
 
-	trace::exiting("morpho::watershed::flooding");
 	return output;
       }
 

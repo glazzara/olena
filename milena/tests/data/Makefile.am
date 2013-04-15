@@ -24,6 +24,7 @@ check_PROGRAMS =				\
   apply						\
   compare					\
   compute					\
+  compute_in_window				\
   convert					\
   fill						\
   fill_with_image				\
@@ -41,7 +42,6 @@ check_PROGRAMS =				\
   transform					\
   transform_inplace				\
   update
-
 
 # Lengthy tests.
 # FIXME: Enable `fill_full' it when make full-check is enabled.

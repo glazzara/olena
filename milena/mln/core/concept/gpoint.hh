@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +47,7 @@ namespace mln
   template <typename E> struct Gpoint;
 
 
-
+  /// \cond INTERNAL_API
   namespace trait
   {
 
@@ -95,23 +95,29 @@ namespace mln
     };
 
   } // end of namespace mln::trait
+  /// \endcond
 
 
-
-  // Gpoint category flag type.
+  /// \cond INTERNAL_API
+  /// Gpoint category flag type.
   template <>
   struct Gpoint<void>
   {
     typedef Site<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation of point classes.
-  ///
-  /// A point is an element of a space.
-  ///
-  /// For instance, mln::point2d is the type of elements defined on the
-  /// discrete square grid of the 2D plane.
+  /*!
+    \brief Base class for implementation of point classes.
+
+    A point is an element of a space.
+
+    For instance, mln::point2d is the type of elements defined on the
+    discrete square grid of the 2D plane.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Gpoint : public Site<E>
   {
@@ -126,30 +132,6 @@ namespace mln
   protected:
     Gpoint();
   };
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename P>
-      void
-      from_to_(const Gpoint<P>& from, mln_delta(P)& to);
-
-      template <typename P, unsigned n, typename T>
-      void
-      from_to_(const Gpoint<P>& from, algebra::vec<n,T>& to);
-
-      template <unsigned n, typename T, typename P>
-      void
-      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   /// Equality comparison between a couple of grid point \p lhs
@@ -289,6 +271,17 @@ namespace mln
   // FIXME : add operators and traits?
 
 
+  /// \internal Conversion: gpoint -> mln_delta
+  template <typename P>
+  void
+  from_to_(const Gpoint<P>& from, mln_delta(P)& to);
+
+  /// \internal Conversion: gpoint -> algebra::vec
+  template <typename P, unsigned n, typename T>
+  void
+  from_to_(const Gpoint<P>& from, algebra::vec<n,T>& to);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -305,59 +298,6 @@ namespace mln
     vec (E::*m)() const = & E::to_vec;
     (void) m;
   }
-
-
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // Gpoint -> delta
-      template <typename P>
-      inline
-      void
-      from_to_(const Gpoint<P>& p_, mln_delta(P)& dp)
-      {
-	// Instead of "dp.to_vec() = exact(p).to_vec();" that
-	// does not compile (cause to_vec returns const), we
-	// have:
-	enum { n = P::dim };
-	const P& p = exact(p_);
-	for (unsigned i = 0; i < n; ++i)
-	  dp[i] = p[i];
-      }
-
-      // Gpoint -> algebra::vec.
-      template <typename P, unsigned n, typename T>
-      inline
-      void
-      from_to_(const Gpoint<P>& from_, algebra::vec<n,T>& to)
-      {
-	mlc_bool(n == P::dim)::check();
-	const P& from = exact(from_);
-	for (unsigned i = 0; i < n; ++i)
-	  to[i] = static_cast< T >(from[i]); // FIXME: cast -> best effort...
-      }
-
-      // algebra::vec -> Gpoint.
-      template <unsigned n, typename T, typename P>
-      inline
-      void
-      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to_)
-      {
-	mlc_bool(P::dim == n)::check();
-	P& to = exact(to_);
-	for (unsigned i = 0; i < n; ++i)
-	  to[i] = static_cast< typename P::coord >(from[i]); // FIXME: cast -> best effort...
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   // Operators.
 
@@ -453,6 +393,36 @@ namespace mln
       tmp[i] /= s;
     return tmp;
   }
+
+
+
+  // Conversions
+
+  template <typename P>
+  inline
+  void
+  from_to_(const Gpoint<P>& p_, mln_delta(P)& dp)
+  {
+    // Instead of "dp.to_vec() = exact(p).to_vec();" that
+    // does not compile (cause to_vec returns const), we
+    // have:
+    enum { n = P::dim };
+    const P& p = exact(p_);
+    for (unsigned i = 0; i < n; ++i)
+      dp[i] = p[i];
+  }
+
+  template <typename P, unsigned n, typename T>
+  inline
+  void
+  from_to_(const Gpoint<P>& from_, algebra::vec<n,T>& to)
+  {
+    mlc_bool(n == P::dim)::check();
+    const P& from = exact(from_);
+    for (unsigned i = 0; i < n; ++i)
+      to[i] = static_cast< T >(from[i]); // FIXME: cast -> best effort...
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

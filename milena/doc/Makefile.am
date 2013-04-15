@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -83,7 +83,9 @@ SUFFIXES += .pbm .pgm .ppm .png
 PNG_FIGURES =					\
   $(PBM_FIGURES:.pbm=.png)			\
   $(PGM_FIGURES:.pgm=.png)			\
-  $(PPM_FIGURES:.ppm=.png)
+  $(PPM_FIGURES:.ppm=.png)			\
+  $(srcdir)/img/genericity.png 			\
+  $(srcdir)/img/2dgrid.png
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
 
@@ -181,10 +183,10 @@ regen-split-examples-mk:
 ## Doxygen documentation.  ##
 ## ----------------------- ##
 
-REFMAN_deps =				\
+REFMAN_deps =					\
   $(PNG_FIGURES)				\
-  $(srcdir)/tutorial.hh				\
-  $(srcdir)/ref-guide.hh
+  $(srcdir)/tutorial.dox			\
+  $(srcdir)/ref-guide.dox
 
 # ----------------------- #
 # User Reference Manual.  #
@@ -210,9 +212,11 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
 	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
+	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
 	   -e 's,@top_builddir\@,$(top_builddir),g'		\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
+	   -e 's,@builddir\@,$(builddir),g'			\
+	   -e 's,@boostcppflags\@,$(BOOST_CPPFLAGS),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
@@ -222,13 +226,19 @@ MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
 
-# PDF.
-USER_REFMAN_PDF = user-refman.pdf
-dist_pdf_DATA = $(srcdir)/$(USER_REFMAN_PDF)
 
-$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
-	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
-	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
+# Disable PDF output since the file is too large to be processed
+# correctly by latex with the default configuration. This file is also
+# too large to be effectively usable by the user.
+
+# PDF.
+#USER_REFMAN_PDF = user-refman.pdf
+#dist_pdf_DATA = $(srcdir)/$(USER_REFMAN_PDF)
+dist_pdf_DATA =
+
+#$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
+#	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
+#	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
 # HTML.
 EXTRA_DIST += $(srcdir)/user-refman.stamp
@@ -243,6 +253,10 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 ## Check some files before deeming the output as acceptable.
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
+	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
+		`find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -301,14 +315,18 @@ MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
 DEVEL_REFMAN = devel-refman
 
+# Disable PDF output since the file is too large to be processed
+# correctly by latex with the default configuration. This file is also
+# too large to be effectively usable by the user.
+
 # PDF.
-DEVEL_REFMAN_PDF = devel-refman.pdf
+#DEVEL_REFMAN_PDF = devel-refman.pdf
 # Be warned, most LaTeX installations will not be able to compile the
 # PDF development documentation as-is, as TeX's default memory
 # capacities are usually too small to handle such a large document.
-$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
-	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
-	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
+#$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
+#	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
+#	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
 # HTML.
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
@@ -322,6 +340,9 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 ## Check some files before deeming the output as acceptable.
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
+## Fix path to the main page of the documentation.
+	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
+		$(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
@@ -431,11 +452,7 @@ $(srcdir)/$(TUTORIAL): $(srcdir)/$(TUTORIAL).stamp
 DATA_html_dirs += $(TUTORIAL)
 
 # Intermediate product for the (Doxygen) User Reference Manual.
-#
-# This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
-# since it is later parsed by Doxygen, which complains about `.html'
-# files.
-TUTORIAL_HH = $(srcdir)/tutorial.hh
+TUTORIAL_HH = $(srcdir)/tutorial.dox
 $(TUTORIAL_HH): $(srcdir)/$(TUTORIAL).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -548,11 +565,7 @@ $(srcdir)/$(REF_GUIDE): $(srcdir)/$(REF_GUIDE).stamp
 DATA_html_dirs += $(REF_GUIDE)
 
 # Intermediate product for the (Doxygen) User Reference Manual.
-#
-# This is not a bug: REF_GUIDE_HH is meant to have a `.hh' extension,
-# since it is later parsed by Doxygen, which complains about `.html'
-# files.
-REF_GUIDE_HH = $(srcdir)/ref-guide.hh
+REF_GUIDE_HH = $(srcdir)/ref-guide.dox
 $(REF_GUIDE_HH): $(srcdir)/$(REF_GUIDE).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -693,14 +706,23 @@ regen-am:
 EXTRA_DIST +=					\
   $(DATA_html_dirs)				\
   $(DOXYFILE).in				\
-  groups/accu.hh				\
-  groups/graph.hh				\
-  groups/images.hh				\
-  groups/main.hh				\
-  groups/neighb.hh				\
-  groups/site_set.hh				\
-  groups/util.hh				\
-  groups/win.hh					\
+  mln/win/win.dox				\
+  mln/main.dox					\
+  mln/morpho/morpho.dox				\
+  mln/canvas/canvas.dox				\
+  mln/data/data.dox				\
+  mln/util/graph.dox				\
+  mln/util/util.dox				\
+  mln/io/io.dox					\
+  mln/accu/accu.dox				\
+  mln/core/image/morphers.dox			\
+  mln/core/image/identity_morpher.dox		\
+  mln/core/image/images.dox			\
+  mln/core/image/domain_morpher.dox		\
+  mln/core/image/value_morpher.dox		\
+  mln/core/image/concrete.dox			\
+  mln/core/neighb.dox				\
+  mln/core/site_set/site_set.dox		\
   img/small-enlarged.png			\
   img/small.png					\
   doxyfuns.sty					\
@@ -708,7 +730,8 @@ EXTRA_DIST +=					\
   tools/clearbanner.sh				\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
-  tools/todoxygen.sh
+  tools/todoxygen.sh				\
+  mainpage.dox
 
 
 ## ---------- ##
@@ -739,28 +762,38 @@ DATA_html_dirs_inst = $(WHITE_PAPER)
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html
+	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+## Fix path to the main page of the documentation.
+	chmod -R u+w $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
+		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
-	for d in $(DATA_html_dirs_inst); do			\
-	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
-	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir);	\
+	for d in $(DATA_html_dirs_inst); do			 \
+	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	 \
+	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir)/milena/;\
 	done
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
-	chmod -R a+rX $(DESTDIR)$(htmldir) || \
-	find $(DESTDIR)$(htmldir) \( -type d -a -exec chmod a+rx {} \; \) \
+	chmod -R a+rX $(DESTDIR)$(htmldir)/milena/ || \
+	find $(DESTDIR)$(htmldir)/milena/ \( -type d -a -exec chmod a+rx {} \; \) \
              -o -exec chmod a+r {} \;
 
 uninstall-local:
 	for d in $(DATA_html_dirs_inst); do			\
-	  chmod -R 700 $(DESTDIR)$(htmldir)/$$d;	\
-	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
+	  chmod -R 700 $(DESTDIR)$(htmldir)/milena/$$d;	\
+	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	\
 	done
 # Same remark as above regarding the special case of the user
 # reference manual.
-	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	chmod -R 700 $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/milena
+
+
+doc-teamcity:
+	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
+		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`

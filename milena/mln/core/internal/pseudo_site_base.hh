@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,10 +41,11 @@ namespace mln
   namespace internal
   {
 
-    /*! A base class for pseudo sites.
-     *
-     * Parameter \c P is FIXME: a point site type.
-     */
+    /*!
+      \brief A base class for pseudo sites.
+
+      Parameter \c P is FIXME: a point site type.
+    */
     template <typename P, typename E>
     struct pseudo_site_base_ : Pseudo_Site<E>,
                                proxy_impl<P, E>

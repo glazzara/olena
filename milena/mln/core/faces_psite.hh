@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -86,16 +86,21 @@ namespace mln
     /// \pre Member face_ is valid.
     const target& site_set() const;
 
+    /// \cond INTERNAL_API
     /// Get a pointer to the target site_set.
     const target* target_() const;
+    /// \endcond
+
     /// Set the target site_set.
     void change_target(const target& new_target);
     /// \}
 
     /// Proxy manipulators.
     /// \{
+    /// \cond INTERNAL_API
     /// Return the site corresponding to this psite.
     const P& subj_();
+    /// \endcond
     /// \}
 
     /// Face handle manipulators.

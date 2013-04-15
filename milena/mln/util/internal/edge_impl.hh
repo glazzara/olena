@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace internal
     {
 
-      /// Implementation class to equip generalized edge classes.
+      /*!
+	\internal
+	\brief Implementation class to equip generalized edge classes.
+      */
       template <typename G>
       class edge_impl_
       {
@@ -51,36 +55,24 @@ namespace mln
 	  edge_impl_();
       };
 
-    } // end of namespace internal
-
-  } // end of namespace util
-
-} // end of namespace mln
 
 #ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
 
-  namespace util
-  {
+      template <typename G>
+      inline
+      edge_impl_<G>::edge_impl_()
+      {
+      }
 
-    namespace internal
-    {
+#endif // ! MLN_INCLUDE_ONLY
 
-    template <typename G>
-    inline
-    edge_impl_<G>::edge_impl_()
-    {
-    }
 
     } // end of namespace internal
 
   } // end of namespace util
 
 } // end of namespace mln
-
-#endif // ! MLN_INCLUDE_ONLY
 
 
 #endif // ! MLN_UTIL_INTERNAL_EDGE_IMPL_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,6 +60,8 @@ namespace scribo
        * \param[in]     line_length The minimum line length.
        *
        * \return An image in which lines are labeled.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>
@@ -104,7 +107,7 @@ namespace scribo
 		    const Neighborhood<N>& nbh, V& nlines,
 		    unsigned line_length)
       {
-	trace::entering("scribo::primitive::lines_h_thick");
+	mln_trace("scribo::primitive::lines_h_thick");
 
 	internal::lines_h_thick_tests(input, nbh, nlines,
 	    line_length);
@@ -114,7 +117,6 @@ namespace scribo
 	component_set<mln_ch_value(I,V)>
 	  output = lines_thick(input, nbh, nlines, win);
 
-	trace::exiting("scribo::primitive::lines_h_thick");
 	return output;
       }
 

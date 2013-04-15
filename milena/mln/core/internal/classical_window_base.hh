@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,8 +48,8 @@ namespace mln
   namespace internal
   {
 
-    /*! FIXME.
-     *
+    /*!
+      \brief Base class for classes based on a set of dpoints.
      */
     template <typename D, typename E>
     class classical_window_base : public window_base<D, E>

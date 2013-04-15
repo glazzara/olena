@@ -28,7 +28,7 @@
 ///
 /// \brief Find in a document non text which are not text.
 ///
-/// \fixme To be optimized!
+/// FIXME: To be optimized!
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HDOC_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_NON_TEXT_HDOC_HH
@@ -90,7 +90,7 @@ namespace scribo
       component_set<L>
       non_text_hdoc(const document<L>& doc, unsigned closing_size)
       {
-	trace::entering("scribo::primitive::extract::non_text_hdoc");
+	mln_trace("scribo::primitive::extract::non_text_hdoc");
 
 	mln_precondition(doc.is_valid());
 	mln_precondition(doc.has_text());
@@ -143,7 +143,6 @@ namespace scribo
 				    "non_text_hdoc_components");
 	}
 
-	trace::exiting("scribo::primitive::extract::non_text_hdoc");
 	return elements;
       }
 

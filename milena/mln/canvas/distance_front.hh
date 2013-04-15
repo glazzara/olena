@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,11 @@ namespace mln
   namespace canvas
   {
 
-    /// Canvas of discrete distance computation by thick front propagation.
+    /*! \brief Canvas of discrete distance computation by thick front
+     *  propagation.
+     *
+     * \ingroup modcanvas
+     */
     template <typename I,
 	      typename N, typename W, typename D,
 	      typename F>
@@ -111,7 +116,7 @@ namespace mln
 			 D max,
 			 F& functor)
 	{
-	  trace::entering("canvas::impl::generic::distance_front");
+	  mln_trace("canvas::impl::generic::distance_front");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -200,8 +205,7 @@ namespace mln
 		bucket_d.clear();
 	      }
 	  } // end of Propagation.
-	  
-	  trace::exiting("canvas::impl::generic::distance_front");
+
 	  return dmap;
 	}
 
@@ -220,7 +224,7 @@ namespace mln
 			       const Weighted_Window<W>& w_win_,
 			       D max, F& functor)
       {
-	trace::entering("canvas::impl::distance_front_fastest");
+	mln_trace("canvas::impl::distance_front_fastest");
 
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
@@ -321,7 +325,6 @@ namespace mln
 	    }
 	} // end of Propagation.
 
-	trace::exiting("canvas::impl::distance_front_fastest");
 	return dmap;
       }
 
@@ -398,14 +401,13 @@ namespace mln
 		     const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win,
 		     D max, F& functor)
     {
-      trace::entering("canvas::distance_front");
+      mln_trace("canvas::distance_front");
 
       internal::distance_front_tests(input, nbh, w_win, max, functor);
 
       mln_ch_value(I,D) output;
       output = internal::distance_front_dispatch(input, nbh, w_win, max, functor);
 
-      trace::exiting("canvas::distance_front");
       return output;
     }
 

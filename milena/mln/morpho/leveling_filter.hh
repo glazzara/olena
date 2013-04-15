@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,9 @@ namespace mln
   namespace morpho
   {
 
-
+    /*!
+     * \ingroup mlndatafilter
+     */
     template <typename I, typename N, typename A>
     mln_concrete(I)
     leveling_filter(const Image<I>& input,
@@ -70,7 +73,7 @@ namespace mln
 		    const typename A::result& lambda,
 		    bool increasing)
     {
-      trace::entering("morpho::leveling_filter");
+      mln_trace("morpho::leveling_filter");
 
       mln_precondition(exact(input).is_valid());
 
@@ -82,7 +85,6 @@ namespace mln
       mln_concrete(I) output;
       output = canvas::morpho::attribute_filter(input, nbh, a, lambda, increasing);
 
-      trace::exiting("morpho::leveling_filter");
 
       return output;
     }

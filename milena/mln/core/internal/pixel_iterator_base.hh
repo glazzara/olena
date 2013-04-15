@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,10 @@ namespace mln
     | internal::pixel_iterator_base_<I, E>.  |
     `---------------------------------------*/
 
-    /// A base class for pixel iterators.
+    /*!
+      \internal
+      \brief A base class for pixel iterators.
+    */
     template <typename I, typename E>
     class pixel_iterator_base_ : public Pixel_Iterator<E>,
 				 public internal::pixel_impl_<I, E>
@@ -73,7 +77,10 @@ namespace mln
     | internal::forward_pixel_iterator_base_<I, E>.  |
     `-----------------------------------------------*/
 
-    /// A base class for forward pixel iterators.
+    /*!
+      \internal
+      \brief A base class for forward pixel iterators.
+    */
     template <typename I, typename E>
     class forward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
     {
@@ -102,7 +109,10 @@ namespace mln
     | internal::backward_pixel_iterator_base_<I, E>.  |
     `------------------------------------------------*/
 
-    /// A base class for backward pixel iterators.
+    /*!
+      \internal
+      \brief A base class for backward pixel iterators.
+    */
     template <typename I, typename E>
     class backward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
     {

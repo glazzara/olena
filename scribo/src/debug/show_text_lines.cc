@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 				"input.pbm input_seps.pbm out_text_boxes.ppm out_text_boxes.pbm out_text_comps.pbm out_lines.xml",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
@@ -124,5 +124,4 @@ int main(int argc, char* argv[])
   scribo::io::xml::save(doc, argv[6], scribo::io::xml::Full);
 
 
-  trace::exiting("main");
 }

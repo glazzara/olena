@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,12 +42,18 @@ namespace mln
   namespace win
   {
 
-    /// \brief 2D disk window; precisely, ball-shaped window defined on the
-    /// 2D square grid.
-    ///
-    /// \ingroup modwin2d
-    //
+    /*!
+      \class disk2d
+      \headerfile <>
+
+      \brief 2D disk window; precisely, ball-shaped window defined on the
+      2D square grid.
+
+       \ingroup modwin2d
+    */
+    /// \cond ALIAS
     typedef ball<grid::square, def::coord> disk2d;
+    /// \endcond
 
 
   } // end of namespace mln::win

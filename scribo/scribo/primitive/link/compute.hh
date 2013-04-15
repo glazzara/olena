@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,6 +50,8 @@ namespace scribo
       /*! \brief Compute links between objects according a given functor.
 
 	  \param[in,out] functor Linking policy.
+	  \param[in] anchor Lookup anchor. Starts looking for
+	                    neighbors from there.
 
 	  \return Object links.
 
@@ -96,7 +98,7 @@ namespace scribo
       object_links<scribo_support(F)>
       compute(Link_Functor<F>& functor_, anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::compute");
+	mln_trace("scribo::primitive::link::compute");
 
 	F& functor = exact(functor_);
 	const typename F::component_set_t&
@@ -109,7 +111,6 @@ namespace scribo
 	    primitive::internal::find_link(functor, current_object, anchor);
 	  }
 
-	trace::exiting("scribo::primitive::link::compute");
 	return functor.links();
       }
 

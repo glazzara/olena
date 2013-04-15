@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,12 +43,78 @@
 namespace mln
 {
 
-  /// \brief Type alias for a neighborhood defined on the 3D square
-  /// grid with integer coordinates.
-  ///
-  /// \ingroup modneighb3d
-  //
+  /*!
+    \class neighb3d
+    \headerfile <>
+
+    \brief Type alias for a neighborhood defined on the 3D square
+    grid with integer coordinates.
+
+    A neigh3d can be constructed from a window3d. Compared to a
+    window, a neighborhood does not include the central point.
+
+    \verbatim
+    window3d     neighb3d
+      . o .        . o .
+     o o o        o o o
+    . o .        . o .
+
+      o o o        o o o
+     o o o  -->   o x o
+    o o o        o o o
+
+      . o .        . o .
+     o o o        o o o
+    . o .        . o .
+    \endverbatim
+
+    Common 3D neighborhoods are predefined and can be used directly:
+    mln::c2_3d_sli(), mln::c4_3d(), mln::c8_3d(), mln::c18(),
+    mln::c26(). An exhaustive list can be found in section \ref
+    modneighb3d.
+
+    The list of dpoint3d included in a neighb3d is accessible from
+    window3d::std_vector() method or simply by iterating over this
+    list:
+
+    \code
+    neighb3d nbh = c4_3d();
+    for (int i = 0; i < nbh.win().size(); ++i)
+      std::cout << nbh.win().dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to n-iterators, as follows:
+
+    \code
+    point3d p(2,2,2);
+    neighb3d nbh = c4_3d();
+    mln_niter(neighb3d) n(nbh, p);
+    for_all(n)
+      // n is a point3d, neighbor of p.
+      std::cout << n << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image3d<bool> ima(4,4,4);
+    neighb3d nbh = c4_3d();
+    mln_piter(image3d<bool>) p(ima.domain());
+    mln_niter(neighb3d) n(nbh, p);
+    for_all(p)
+      for_all(n)
+        // n is a point3d, neighbor of the current p.
+        std::cout << n << std::endl;
+    \endcode
+
+    \sa make::neighb3d, dpoint3d, window3d
+
+    \ingroup modneighb3d
+  */
+  /// \cond ALIAS
   typedef neighb<window3d> neighb3d;
+  /// \endcond
 
 
   /// \brief depth 2-connectivity neighborhood on the 3D grid.
@@ -68,8 +135,9 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
@@ -94,8 +162,9 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
@@ -119,8 +188,9 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
@@ -145,8 +215,9 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
@@ -170,8 +241,9 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
@@ -195,29 +267,18 @@ namespace mln
 
     \endverbatim
 
-
     \return A neighb3d.
+
+    \sa neighb3d
 
     \ingroup modneighb3d
   */
   const neighb3d& c26();
 
 
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void from_to_(const bool (&values)[S], neighb3d& nbh);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  /// \internal Conversion: bool[] -> neighb3d
+  template <unsigned S>
+  void from_to_(const bool (&values)[S], neighb3d& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -259,10 +320,16 @@ namespace mln
     static neighb3d it;
     if (it.size() == 0)
       {
-	static const bool vals[] = { 1, 1, 1,
-				     1, 0, 1,
-				     1, 1, 1 };
-	convert::from_to(vals, it);
+	window3d& win = it.hook_win_();
+	win
+	  .insert(0, 0, 0)
+	  .insert(0, 0, 1)
+	  .insert(0, 0, 2)
+	  .insert(0, 1, 2)
+	  .insert(0, 2, 2)
+	  .insert(0, 2, 1)
+	  .insert(0, 2, 0)
+	  .insert(0, 1, 0);
       }
     return it;
   }
@@ -325,29 +392,19 @@ namespace mln
   }
 
 
-  namespace convert
+  template <unsigned S>
+  void
+  from_to_(const bool (&values)[S], neighb3d& nbh)
   {
-
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void
-      from_to_(const bool (&values)[S], neighb3d& nbh)
-      {
 # ifndef NDEBUG
-	const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
-	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
+    const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
+    mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
 # endif // ! NDEBUG
-	window3d win;
-	from_to_(values, win);
-	mln_precondition(win.is_neighbable_());
-	nbh.change_window(win);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    window3d win;
+    from_to_(values, win);
+    mln_precondition(win.is_neighbable_());
+    nbh.change_window(win);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

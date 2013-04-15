@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,15 +35,23 @@
 # include <mln/morpho/leveling_filter.hh>
 
 
-namespace mln {
-  namespace morpho {
-    namespace opening {
+namespace mln
+{
 
-    /// Morphological leveling opening.
-    template <typename I, typename N, typename A>
-    mln_concrete(I)
-    leveling(const Image<I>& input, const Neighborhood<N>& nbh,
-	      const Accumulator<A>& accu, const mln_result(A)& lambda);
+  namespace morpho
+  {
+
+    namespace opening
+    {
+
+      /*! \brief Morphological leveling opening.
+       *
+       * \ingroup mlnmorphoopening
+       */
+      template <typename I, typename N, typename A>
+      mln_concrete(I)
+      leveling(const Image<I>& input, const Neighborhood<N>& nbh,
+	       const Accumulator<A>& accu, const mln_result(A)& lambda);
 
 
 
@@ -56,7 +65,7 @@ namespace mln {
     leveling(const Image<I>& input, const Neighborhood<N>& nbh,
 	      const Accumulator<A>& accu, const mln_result(A)& lambda)
     {
-      trace::entering("morpho::opening::leveling");
+      mln_trace("morpho::opening::leveling");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(mlc_not_equal(mln_trait_accumulator_when_pix(A),
@@ -68,7 +77,6 @@ namespace mln {
 
       mln_postcondition(output <= input);
 
-      trace::exiting("morpho::opening::leveling");
       return output;
     }
 

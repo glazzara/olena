@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Save table line bounding boxes in an image.
+/// \brief Save table line bounding boxes in an image.
 
 # include <string>
 
@@ -53,22 +54,28 @@ namespace scribo
 
     /// Save lines bounding boxes in a copy of \p input_.
     /// Bounding boxes are displayed with \p bbox_color.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I>
     void
     save_table_image(const Image<I>& input_,
-		     util::couple<util::array<box<mln_site(I)> >,
-				  util::array<box<mln_site(I)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > > tableboxes,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename);
 
     /// Save lines bounding boxes in an image defined on \p input_domain
     /// filled with \p bg_color.
     /// Bounding boxes are displayed with \p bbox_color.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename S>
     void
     save_table_image(const Site_Set<S>& input_domain,
-		     util::couple<util::array<box<mln_site(S)> >,
-				  util::array<box<mln_site(S)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(S)> >,
+				       mln::util::array<box<mln_site(S)> > > tableboxes,
 		     const value::rgb8& bg_color,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename);
@@ -80,12 +87,12 @@ namespace scribo
     template <typename I>
     void
     save_table_image(const Image<I>& input_,
-		     util::couple<util::array<box<mln_site(I)> >,
-				  util::array<box<mln_site(I)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > > tableboxes,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)
     {
-      trace::entering("scribo::debug::save_table_image");
+      mln_trace("scribo::debug::save_table_image");
 //      mlc_converts_to(mln_value(I), value::rgb8)::check();
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -95,20 +102,19 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::debug::save_table_image");
     }
 
 
     template <typename S>
     void
     save_table_image(const Site_Set<S>& input_domain_,
-		     util::couple<util::array<box<mln_site(S)> >,
-				  util::array<box<mln_site(S)> > > tableboxes,
+		     mln::util::couple<mln::util::array<box<mln_site(S)> >,
+				       mln::util::array<box<mln_site(S)> > > tableboxes,
 		     const value::rgb8& bg_color,
 		     const value::rgb8& bbox_color,
 		     const std::string& filename)
     {
-      trace::entering("scribo::debug::save_table_image");
+      mln_trace("scribo::debug::save_table_image");
       const S& input_domain = exact(input_domain_);
       mln_precondition(input_domain.is_valid());
 
@@ -118,7 +124,6 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::debug::save_table_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

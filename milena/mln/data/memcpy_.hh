@@ -76,7 +76,7 @@ namespace mln
       inline
       void memcpy__(Pd& dest, const Ps& src, std::size_t n)
       {
-	// trace::entering("data::impl::memcpy__");
+	// mln_trace("data::impl::memcpy__");
 
 	typedef mln_image(Pd) Id;
 	typedef mln_image(Ps) Is;
@@ -114,7 +114,6 @@ namespace mln
 	    *p_d++ = *p_s++;
 	}
 
-	// trace::exiting("data::impl::memcpy__");
       }
 
     }
@@ -125,7 +124,7 @@ namespace mln
 		 const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {
-      // trace::entering("data::memcpy_");
+      // mln_trace("data::memcpy_");
 
       typedef mln_image(Pd) Id;
       metal::is_not_const<Id>::check();
@@ -152,7 +151,6 @@ namespace mln
 
       impl::memcpy__(dest, src, n);
 
-      // trace::exiting("data::memcpy_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

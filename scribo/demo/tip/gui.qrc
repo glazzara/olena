@@ -1,9 +1,0 @@
-<RCC>
-  <qresource prefix="/" >
-    <file>icons/next.png</file>
-    <file>icons/ok.png</file>
-    <file>icons/photos.png</file>
-    <file>icons/prev.png</file>
-    <file>icons/remove.png</file>
-  </qresource>
-</RCC>

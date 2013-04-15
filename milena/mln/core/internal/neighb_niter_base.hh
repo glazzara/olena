@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +40,9 @@ namespace mln
   namespace internal
   {
 
-    // neighb_niter_base<W,I,E>
-
+    /*!
+      \brief Base implementation for neighborhood iterators.
+    */
     template <typename W, typename N, typename I, typename E>
     class neighb_niter_base
       : public internal::site_relative_iterator_base< N,
@@ -56,6 +58,7 @@ namespace mln
       template <typename P>
       neighb_niter_base(const N& nbh, const P& c);
 
+      /// \cond INTERNAL_API
       /// Test the iterator validity.
       bool is_valid_() const;
 
@@ -70,7 +73,7 @@ namespace mln
 
       /// Compute the current psite.
       mln_psite(W) compute_p_() const;
-
+      /// \endcond
     protected:
 
       I i_;

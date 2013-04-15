@@ -38,6 +38,7 @@ int main()
   p[0] = 4;
   algebra::vec<1,float> v = p;
   mln_assertion(v[0] == 4);
+  (void) v;
 
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);

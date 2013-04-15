@@ -70,7 +70,7 @@ namespace mln
 		       const Accumulator<A>& a_,
 		       const Window<W>& win_)
 	{
-	  trace::entering("accu::impl::generic::transform_stop");
+	  mln_trace("accu::impl::generic::transform_stop");
 
 	  const I& input = exact(input_);
 	  const W& win   = exact(win_);
@@ -98,7 +98,6 @@ namespace mln
 	    output(p) = a.to_result();
 	  }
 
-	  trace::exiting("accu::impl::generic::transform_stop");
 	  return output;
 	}
 
@@ -111,7 +110,7 @@ namespace mln
       mln_ch_value(I, mln_result(A))
       transform_stop_fastest(const Image<I>& input_, const Accumulator<A>& a_, const Window<W>& win_)
       {
-	trace::entering("accu::impl::transform_stop_fastest");
+	mln_trace("accu::impl::transform_stop_fastest");
 
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
@@ -141,7 +140,6 @@ namespace mln
 	    o.val() = a.to_result();
 	  }
 
-	trace::exiting("accu::impl::transform_stop_fastest");
 	return output;
       }
 
@@ -188,7 +186,7 @@ namespace mln
     mln_ch_value(I, mln_result(A))
     transform_stop(const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
     {
-      trace::entering("accu::transform_stop");
+      mln_trace("accu::transform_stop");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(win).is_valid());
@@ -196,7 +194,6 @@ namespace mln
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_stop_dispatch(input, a, win);
 
-      trace::exiting("accu::transform_stop");
       return output;
     }
 
@@ -204,7 +201,7 @@ namespace mln
     mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform_stop(const Image<I>& input, const Meta_Accumulator<A>& a, const Window<W>& win)
     {
-      trace::entering("accu::transform_stop");
+      mln_trace("accu::transform_stop");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(win).is_valid());
@@ -215,7 +212,6 @@ namespace mln
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_stop_dispatch(input, a_, win);
 
-      trace::exiting("accu::transform_stop");
       return output;
     }
 

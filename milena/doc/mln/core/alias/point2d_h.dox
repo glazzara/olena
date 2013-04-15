@@ -1,0 +1,63 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  struct point2d_h
+     : public point<mln::grid::hexa, mln::def::coord>,
+       // We must add this inheritance here to help doxygen finding
+       // the right specialization.
+       public internal::mutable_coord_impl_< 2, C, E >
+  {
+      /// Constructor without argument.
+      point2d_h();
+
+      /// Construct an hexagonal 2D point from an algebra vector.
+      template <typename C2>
+      point2d_h(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct an hexagonal 2D point from an algebra
+      /// vector.
+      point2d_h(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct an hexagonal 2D point at row \p row and
+      /// column \p col.
+      point2d_h(mln::def::coord row, mln::def::coord col);
+
+      /// \brief Construct an hexagonal 2D point at (0,0).
+      point2d_h(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point2d_h(const Function_v2v<F>& f);
+  };
+
+
+  struct point2df_h
+        : public point<mln::grid::hexa, mln::def::coordf>,
+	  // We must add this inheritance here to help doxygen finding
+          // the right specialization.
+	  public internal::mutable_coord_impl_< 2, C, E >
+  {
+      /// Constructor without argument.
+      point2df_h();
+
+      /// Construct an hexagonal 2D point from an algebra vector.
+      template <typename C2>
+      point2df_h(const mln::algebra::vec<dim,C2>& v);
+
+      /// \brief Construct an hexagonal 2D point from an algebra vector.
+      point2df_h(const mln::algebra::vec<dim,mln::def::coord>& v);
+
+      /// \brief Construct an hexagonal 2D point at row \p row and column \p col.
+      point2df_h(mln::def::coord row, mln::def::coord col);
+
+      /// \brief Construct an hexagonal 2D point at (0,0).
+      point2df_h(const literal::origin_t&);
+
+      /// \brief Coordinates are set by function \p f.
+      template <typename F>
+      point2df_h(const Function_v2v<F>& f);
+  };
+
+}

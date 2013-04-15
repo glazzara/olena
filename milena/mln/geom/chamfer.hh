@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +40,10 @@ namespace mln
   namespace geom
   {
 
-    /// Apply chamfer algorithm to a binary image.
+    /*! \brief Apply chamfer algorithm to a binary image.
+
+      \ingroup mlngeom
+     */
     template <typename I, typename W>
     mln_ch_value(I, unsigned)
     chamfer(const Image<I>& input_, const W& w_win_,
@@ -114,7 +117,7 @@ namespace mln
     chamfer(const Image<I>& input_, const W& w_win_,
 	    unsigned max)
     {
-      trace::entering("mln::geom::chamfer");
+      mln_trace("mln::geom::chamfer");
       // FIXME: check that input_ is binary.
 
       const I& input = exact(input_);
@@ -125,7 +128,6 @@ namespace mln
       F f(input, w_win, max);
       canvas::chamfer<F> run(f);
 
-      trace::exiting("mln::geom::chamfer");
       return f.output;
     }
 

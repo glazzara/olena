@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,6 @@
 
 # include <mln/core/site_set/p_run.hh>
 # include <mln/metal/converts_to.hh>
-
-# include <mln/convert/from_to.hxx>
 
 namespace mln
 {
@@ -93,7 +92,7 @@ namespace mln
       {
 	// No concept based conversion. Trying to find more specific
 	// conversion with other from_to overloads.
-	convert::over_load::from_to_(exact(from), exact(to));
+	from_to_(exact(from), exact(to));
       }
 
 

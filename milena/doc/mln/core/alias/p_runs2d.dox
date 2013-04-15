@@ -1,0 +1,12 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class p_runs2d
+  	: public p_set_of<p_run<point2d> >
+  {
+    /// Constructor without arguments.
+    p_runs2d();
+  };
+}

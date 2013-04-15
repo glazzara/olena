@@ -1,1 +1,1 @@
-    trace::entering("my_algorithm");
+    mln_trace("my_algorithm");

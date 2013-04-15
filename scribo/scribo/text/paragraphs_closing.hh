@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -188,7 +188,7 @@ namespace scribo
     mln_concrete(L)
     paragraphs_closing(const paragraph_set<L>& parset)
     {
-      trace::entering("scribo::text::paragraphs_closing");
+      mln_trace("scribo::text::paragraphs_closing");
 
       // FIXME: 'debug' may be useless.
       mln_concrete(L) output, debug;
@@ -209,7 +209,6 @@ namespace scribo
 	  const paragraph_info<L>& current_par = parset(p);
 	  const mln::util::array<line_id_t>& line_ids = current_par.line_ids();
 
-	  line_id_t last_id = line_ids[0];
 	  for_all_elements(i, line_ids)
 	  {
 	    const line_id_t& line_id = line_ids(i);
@@ -233,8 +232,6 @@ namespace scribo
 	      last_comp = c;
 	    }
 
-	    // mln::draw::line(debug, current_line.bbox().pcenter(), lines(last_id).bbox().pcenter(), p);
-	    // last_id = line_id;
 	  }
 
 	  int delta_baseline = current_par.delta_baseline();
@@ -256,7 +253,6 @@ namespace scribo
 				output,
 				"paragraph_closing");
 
-      trace::exiting("scribo::text::paragraphs_closing");
       return output;
     }
 

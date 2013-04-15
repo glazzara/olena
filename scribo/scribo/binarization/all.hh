@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,11 +46,25 @@ namespace scribo
 # include <scribo/binarization/global_threshold.hh>
 # include <scribo/binarization/global_threshold_auto.hh>
 
+# include <scribo/binarization/kim.hh>
+
 # include <scribo/binarization/local_threshold.hh>
+
+# include <scribo/binarization/niblack.hh>
+# include <scribo/binarization/niblack_fast.hh>
+# include <scribo/binarization/niblack_threshold.hh>
+
+# include <scribo/binarization/otsu.hh>
+# include <scribo/binarization/otsu_threshold.hh>
 
 # include <scribo/binarization/sauvola.hh>
 # include <scribo/binarization/sauvola_ms.hh>
 # include <scribo/binarization/sauvola_ms_split.hh>
-# include <scribo/binarization/sauvola_threshold_image.hh>
+# include <scribo/binarization/sauvola_threshold.hh>
+
+# include <scribo/binarization/singh.hh>
+
+# include <scribo/binarization/wolf.hh>
+# include <scribo/binarization/wolf_fast.hh>
 
 #endif // ! SCRIBO_BINARIZATION_ALL_HH

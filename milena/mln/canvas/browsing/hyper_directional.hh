@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,8 +43,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction.
-      /*!
+      /*! \brief Browsing in a certain direction.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -71,6 +71,7 @@ namespace mln
        *   void final(); \n
        * } \n
        *
+       * \brief modcanvasbrowsing
        */
       struct hyper_directional_t : public Browsing< hyper_directional_t >
       {
@@ -103,7 +104,7 @@ namespace mln
       void
       hyper_directional_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::hyper_directional");
+	mln_trace("canvas::browsing::hyper_directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -133,7 +134,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::hyper_directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

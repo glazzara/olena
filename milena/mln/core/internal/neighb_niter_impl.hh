@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,25 +54,31 @@ namespace mln
   namespace internal
   {
 
-    /// Default optional implementation.
+    /*!
+      \internal
+      \brief Default optional implementation.
+    */
     template <typename W, typename E>
     struct neighb_niter_impl
     {
 
     };
 
-    /// Add more implementation for neighborhoods made from
-    /// graph_window_base windows.
-    ///
-    /// FIXME: we need to redeclare the graph element interface.
-    /// Here, a neighb niter iterator encapsulates a window qiter iterator.
-    /// A window qiter iterator is a Proxy on a site P and can convert towards
-    /// a graph element through its member element().
-    ///
-    /// The window qiter iterator cannot have an automatic conversion towards
-    /// a graph element since there would be an ambiguity between this
-    /// conversion and the conversion to a psite P, if P is also a graph
-    /// element.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from
+      graph_window_base windows.
+
+      FIXME: we need to redeclare the graph element interface.
+      Here, a neighb niter iterator encapsulates a window qiter iterator.
+      A window qiter iterator is a Proxy on a site P and can convert towards
+      a graph element through its member element().
+
+      The window qiter iterator cannot have an automatic conversion towards
+      a graph element since there would be an ambiguity between this
+      conversion and the conversion to a psite P, if P is also a graph
+      element.
+    */
     template <typename P, typename E>
     struct neighb_niter_impl_graph_window
     {
@@ -83,29 +89,38 @@ namespace mln
 
     };
 
-    /// In this case, The site P is a util::vertex which means this iterator
-    /// can automatically converts towards this type.
-    /// There would be an ambiguity between util::vertex members and the one
-    /// declared in neighb_niter_impl_graph_window<P,E> if this
-    /// specialization did not exist.
+    /*!
+      \internal
+      In this case, The site P is a util::vertex which means this iterator
+      can automatically converts towards this type.
+      There would be an ambiguity between util::vertex members and the one
+      declared in neighb_niter_impl_graph_window<P,E> if this
+      specialization did not exist.
+    */
     template <typename G, typename E>
     struct neighb_niter_impl_graph_window< util::vertex<G>, E >
     {
     };
 
-    /// In this case, The site P is a util::vertex which means this iterator
-    /// can automatically converts towards this type.
-    /// There would be an ambiguity between util::edge members and the one
-    /// declared in neighb_niter_impl_graph_window<P,E> if this
-    /// specialization did not exist.
+    /*!
+      \internal
+      In this case, The site P is a util::vertex which means this iterator
+      can automatically converts towards this type.
+      There would be an ambiguity between util::edge members and the one
+      declared in neighb_niter_impl_graph_window<P,E> if this
+      specialization did not exist.
+    */
     template <typename G, typename E>
     struct neighb_niter_impl_graph_window< util::edge<G>, E >
     {
     };
 
 
-    /// Add more implementation for neighborhoods made from
-    /// graph_window_base windows.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from
+      graph_window_base windows.
+    */
     template <typename P, typename T, typename E>
     struct neighb_niter_impl< graph_window_base<P, T>, E >
       : neighb_niter_impl_graph_window<P,E>
@@ -124,8 +139,11 @@ namespace mln
 
 
 
-    /// Add more implementation for neighborhoods made from a
-    /// graph_window_piter.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from a
+       graph_window_piter.
+    */
     template <typename G, typename S, typename E>
     struct neighb_niter_impl<graph_elt_window<G,S>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
@@ -135,8 +153,11 @@ namespace mln
 
     };
 
-    /// Add more implementation for neighborhoods made from a
-    /// line_graph_window_piter.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from a
+      line_graph_window_piter.
+    */
     template <typename G, typename F, typename E>
     struct neighb_niter_impl<line_graph_elt_window<G,F>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(F),
@@ -147,8 +168,11 @@ namespace mln
     };
 
 
-    /// Add more implementation for neighborhoods made from a
-    /// graph_window_if_piter.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from a
+      graph_window_if_piter.
+    */
     template <typename G, typename S, typename I, typename E>
     struct neighb_niter_impl<graph_elt_window_if<G,S,I>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
@@ -159,8 +183,11 @@ namespace mln
     };
 
 
-    /// Add more implementation for neighborhoods made from a
-    /// graph_window_piter.
+    /*!
+      \internal
+      \brief Add more implementation for neighborhoods made from a
+      graph_window_piter.
+    */
     template <typename G, typename S, typename S2, typename E>
     struct neighb_niter_impl<graph_elt_mixed_window<G,S,S2>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S2::fun_t),

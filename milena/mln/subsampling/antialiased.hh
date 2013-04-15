@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,6 +51,7 @@ namespace mln
       \param[in] output_domain Force output domain.
       \param[in] border_thickness Force output border thickness.
 
+      \ingroup mlngeom
      */
     template <typename I>
     inline
@@ -62,6 +63,7 @@ namespace mln
 
 
     /*! \overload
+      \ingroup mlngeom
      */
     template <typename I>
     mln_concrete(I)
@@ -143,7 +145,7 @@ namespace mln
 				    const mln_domain(I)& output_domain,
 				    unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_fastest");
+	mln_trace("subsampling::impl::antialiased_2d_fastest");
 
 	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
@@ -153,7 +155,6 @@ namespace mln
 	// No reduction.
 	if (factor == 1)
 	{
-	  trace::exiting("subsampling::impl::antialiased_2d_fastest");
 	  return duplicate(input);
 	}
 
@@ -188,7 +189,7 @@ namespace mln
 	const unsigned
 	  factor_2 = factor * factor,
 	  factor_round = factor_2 / 2;
-	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
+	unsigned offset = input.delta_offset(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{
@@ -208,7 +209,6 @@ namespace mln
 	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_fastest");
 	return output;
       }
 
@@ -222,7 +222,7 @@ namespace mln
 				 const mln_domain(I)& output_domain,
 				 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_rgb");
+	mln_trace("subsampling::impl::antialiased_2d_rgb");
 
 	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
@@ -233,7 +233,6 @@ namespace mln
 	// No reduction.
 	if (factor == 1)
 	{
-	  trace::exiting("subsampling::impl::antialiased_2d_rgb");
 	  return duplicate(input);
 	}
 
@@ -268,7 +267,7 @@ namespace mln
 	const unsigned
 	  factor_2 = factor * factor,
 	  factor_round = factor_2 / 2;
-	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
+	unsigned offset = input.delta_offset(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{
@@ -294,7 +293,6 @@ namespace mln
 	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_rgb");
 	return output;
       }
 
@@ -411,7 +409,7 @@ namespace mln
 	    output_domain,
 	    border_thickness);
 	else
-	  trace::warning("Not implemented yet.");
+	  mln_trace_warning("Not implemented yet.");
 
 	mln_concrete(I) output;
 	return output;
@@ -431,7 +429,7 @@ namespace mln
 		const mln_domain(I)& output_domain,
 		unsigned border_thickness)
     {
-      trace::entering("subsampling::antialiased");
+      mln_trace("subsampling::antialiased");
 
       typedef mln_site(I) P;
 
@@ -443,7 +441,6 @@ namespace mln
 						output_domain,
 						border_thickness);
 
-      trace::exiting("subsampling::antialiased");
       return output;
     }
 

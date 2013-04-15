@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,20 +53,18 @@ namespace scribo
 
       \param[in] input An image of Scalar.
       \param[in] scale The scale factor.
-      \param[in] integral_sum Integral image of mean values.
-      \param[in] integral_sum_2 Integral image of squared mean values.
+      \param[in] integral_sum_sum_2 Integral image of mean and squared mean values.
       \param[in] output_domain The domain of the subscaled image.
       \param[in] border_thickness Border of the integral and subscaled images.
 
-      \p integral_sum, \p integral_sum_2 and output image have the same domain.
+      \p integral_sum_sum_2 and output image have the same domain.
       The output domain is set with \p output_domain.
 
      */
     template <typename I, typename J>
-    inline
     mln_concrete(I)
-    integral(const Image<I>& input, unsigned scale,
-	     Image<J>& integral_sum, Image<J>& integral_sum_2,
+    integral(const Image<I>& input_, unsigned scale,
+	     Image<J>& integral_sum_sum_2,
 	     const mln_domain(I)& output_domain, unsigned border_thickness);
 
     /*! \overload
@@ -83,10 +81,8 @@ namespace scribo
     template <typename I, typename J>
     inline
     mln_concrete(I)
-    integral(const Image<I>& input, unsigned scale,
-	     Image<J>& integral_sum, Image<J>& integral_sum_2);
-
-
+    integral(const Image<I>& input_, unsigned scale,
+	     Image<J>& integral_sum_sum_2);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -104,7 +100,7 @@ namespace scribo
 		 const mln_domain(I)& output_domain,
 		 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::integral_3");
+	mln_trace("subsampling::impl::integral_3");
 
 	const unsigned scale = 3;
 
@@ -126,14 +122,14 @@ namespace scribo
 	integral_sum_sum_2.init_(output_domain, border_thickness);
 	V2* p_integ = integral_sum_sum_2.buffer();
 
-	const int up = sub.delta_index(dpoint2d(-1, 0));
+	const int up = sub.delta_offset(dpoint2d(-1, 0));
 
 	const unsigned nrows = 3 * output_domain.nrows();
 	const unsigned ncols = 3 * output_domain.ncols();
 
 	unsigned row = 0;
 
-	unsigned b_offset = sub.delta_index(dpoint2d(border_thickness,
+	unsigned b_offset = sub.delta_offset(dpoint2d(border_thickness,
 						     border_thickness));
 	p_sub += b_offset;
 	p_integ += b_offset;
@@ -209,7 +205,6 @@ namespace scribo
 	  p_integ += b_next;
 	}
 
-	trace::exiting("subsampling::impl::integral_3");
 	return sub;
       }
 
@@ -222,7 +217,7 @@ namespace scribo
 		 const mln_domain(I)& output_domain,
 		 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::integral_2");
+	mln_trace("subsampling::impl::integral_2");
 
 	const unsigned scale = 2;
 
@@ -245,14 +240,14 @@ namespace scribo
 	integral_sum_sum_2.init_(output_domain, border_thickness);
 	V2* p_integ = integral_sum_sum_2.buffer();
 
-	const int up = sub.delta_index(dpoint2d(-1, 0));
+	const int up = sub.delta_offset(dpoint2d(-1, 0));
 
 	const unsigned nrows = 2 * output_domain.nrows();
 	const unsigned ncols = 2 * output_domain.ncols();
 
   	extension::fill(sub, 0);
 
-	unsigned b_offset = sub.delta_index(dpoint2d(border_thickness,
+	unsigned b_offset = sub.delta_offset(dpoint2d(border_thickness,
 						     border_thickness));
 	p_sub += b_offset;
 	p_integ += b_offset;
@@ -370,7 +365,6 @@ namespace scribo
 	  p_integ += b_next;
 	}
 
-	trace::exiting("subsampling::impl::integral_2");
 	return sub;
       }
 
@@ -412,7 +406,7 @@ namespace scribo
 	     Image<J>& integral_sum_sum_2,
 	     const mln_domain(I)& output_domain, unsigned border_thickness)
     {
-      trace::entering("subsampling::integral");
+      mln_trace("subsampling::integral");
 
       const I& input = exact(input_);
 
@@ -424,7 +418,6 @@ namespace scribo
 	output = impl::integral(input, scale, integral_sum_sum_2,
 				output_domain, border_thickness);
 
-      trace::exiting("subsampling::integral");
       return output;
     }
 
@@ -434,7 +427,7 @@ namespace scribo
     integral(const Image<I>& input_, unsigned scale,
 	     Image<J>& integral_sum_sum_2)
     {
-      trace::entering("subsampling::integral");
+      mln_trace("subsampling::integral");
 
       const I& input = exact(input_);
 
@@ -449,7 +442,6 @@ namespace scribo
       output = integral(input_, scale, integral_sum_sum_2,
 			b, mln::border::thickness);
 
-      trace::exiting("subsampling::integral");
       return output;
     }
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -32,7 +32,7 @@
 /// Compute a skeleton under constraints.
 ///
 /// \todo Add an extension handling policy for the user to set it.
-/// \fixme The fast version does not give the exact result!
+/// \todo The fast version does not give the exact result!
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -50,6 +50,10 @@ namespace mln
   namespace morpho
   {
 
+    /*! \brief Compute a skeleton under constraints.
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I,
 	      typename N, typename F,
 	      typename K, typename R>
@@ -78,7 +82,7 @@ namespace mln
 			       const Neighborhood<N>& nbh_, const F& is_simple,
 			       const Image<K>& constraint_, const Image<R>& priority_)
 	{
-	  trace::entering("morpho::skeleton_constrained");
+	  mln_trace("morpho::skeleton_constrained");
 
 	  const I& input      = exact(input_);
 	  const N& nbh        = exact(nbh_);
@@ -140,7 +144,6 @@ namespace mln
 	    }
 	  }
 
-	  trace::exiting("morpho::skeleton_constrained");
 	  return output;
 	}
 
@@ -158,7 +161,7 @@ namespace mln
 				  const Image<K>& constraint_,
 				  const Image<R>& priority_)
 	{
-	  trace::entering("morpho::skeleton_constrained_fast");
+	  mln_trace("morpho::skeleton_constrained_fast");
 
 	  const I& input      = exact(input_);
 	  const N& nbh        = exact(nbh_);
@@ -226,7 +229,6 @@ namespace mln
 	    }
 	  }
 
-	  trace::exiting("morpho::skeleton_constrained_fast");
 	  return output;
 	}
 
@@ -290,7 +292,7 @@ namespace mln
 			 const Neighborhood<N>& nbh, const F& is_simple,
 			 const Image<K>& constraint, const Image<R>& priority)
     {
-      trace::entering("morpho::skeleton_constrained");
+      mln_trace("morpho::skeleton_constrained");
 
       mln_ch_value(I, bool)
 	output = internal::skeleton_constrained_dispatch(
@@ -298,7 +300,6 @@ namespace mln
 	  mln_trait_image_value_storage(I)(),
 	  input, nbh, is_simple, constraint, priority);
 
-      trace::exiting("morpho::skeleton_constrained");
       return output;
     }
 

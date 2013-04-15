@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,16 +29,17 @@
 
 /// \file
 ///
-/// \brief Implements the optimized kmean algorithm in the 3d-RGB space.
+/// \brief Implements the optimized kmean algorithm in the 3d-RGB
+/// space.
 ///
 /// This algorithm is optimized in the way it proceeds directly with
-/// the rgb value inspite of the pixel attribute. The
-/// algorithm is independant from the image dimension. But, we have to
-/// compute one time the histogram. In fact, we move a recurrent cost
-/// by a fix cost in the complexity. This version is very adapted to
-/// images with small quantification. But, in 3d, the execution
-/// becomes very slow. It's just normal because the quantification is
-/// n bits per axis. So the actual histogram may be bigger than the image.
+/// the rgb value inspite of the pixel attribute. The algorithm is
+/// independant from the image dimension. But, we have to compute one
+/// time the histogram. In fact, we move a recurrent cost by a fix
+/// cost in the complexity. This version is very adapted to images
+/// with small quantification. But, in 3d, the execution becomes very
+/// slow. It's just normal because the quantification is n bits per
+/// axis. So the actual histogram may be bigger than the image.
 ///
 /// Take care to the following point: The within variance is still a
 /// scalar value because we take the distance between two points and
@@ -82,13 +84,14 @@
 ///   return 0;
 /// }
 ///
-/// \fixme The execution shows a bug in printing outputs and it seems severe.
+/// \todo The execution shows a bug in printing outputs and it seems
+/// severe.
 ///
 /// The last execution with the following set of parameters
 /// {house.ppm,3,10,10} shows that if the binary starts correctly, it
 /// ends before returning the label image and with disturbing outputs.
 /// Dumping the outputs in a file reveals that the number of
-/// trace::entering differs from the number of trace::exiting. May the
+/// mln_trace differs from the number of trace::exiting. May the
 /// program exit from a loop without ending a trace ???
 
 # include <limits.h>
@@ -125,8 +128,7 @@
 
 # include <mln/opt/at.hh>
 
-# include <mln/trace/entering.hh>
-# include <mln/trace/exiting.hh>
+# include <mln/debug/trace.hh>
 
 # include <mln/trait/value_.hh>
 
@@ -197,7 +199,7 @@ namespace mln
     inline
     void kmean3d_a<T,n>::build_label_dbg()
     {
-      trace::entering("mln::clustering::kmean3d_a::build_label_dbg");
+      mln_trace("mln::clustering::kmean3d_a::build_label_dbg");
 
       mln_piter(t_point_img) pi(_point.domain());
       mln_piter(t_label_dbg) po(_label_dbg.domain());
@@ -211,14 +213,13 @@ namespace mln
 	  _label_dbg(po) = ++grp;
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::build_label_dbg");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::build_mean_dbg()
     {
-      trace::entering("mln::clustering::kmean3d_a::build_mean_dbg");
+      mln_trace("mln::clustering::kmean3d_a::build_mean_dbg");
 
       mln_piter(t_mean_dbg)  p(_mean_dbg.domain());
 
@@ -229,7 +230,6 @@ namespace mln
 	_mean_dbg(p).blue()  = static_cast<unsigned>(_mean[_label_dbg(p)][2]);
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::build_mean_dbg");
     }
 
 
@@ -237,20 +237,19 @@ namespace mln
     inline
     void kmean3d_a<T,n>::build_all_dbg()
     {
-      trace::entering("mln::clustering::kmean3d_a::build_all_dbg");
+      mln_trace("mln::clustering::kmean3d_a::build_all_dbg");
       build_label_dbg();
       //build_mean_dbg();
       _mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
       _color_dbg = labeling::colorize(value::rgb8(), _label_dbg);
 
-      trace::exiting("mln::clustering::kmean3d_a::build_all_dbg");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::update_cnv()
     {
-      trace::entering("mln::clustering::kmean3d_a::update_cnv");
+      mln_trace("mln::clustering::kmean3d_a::update_cnv");
 
       _variance_cnv[_current_launching](point1d(_current_step))
 	= _within_variance;
@@ -263,14 +262,13 @@ namespace mln
 	  = _mean[l.index_()];
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::update_cnv");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::finalize_cnv()
     {
-      trace::entering("mln::clustering::kmean3d_a::finalize_cnv");
+      mln_trace("mln::clustering::kmean3d_a::finalize_cnv");
 
       // saturate the curv with the within variance
       for (unsigned i = _current_step; i < _watch_dog; ++i)
@@ -287,7 +285,6 @@ namespace mln
 	}
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::finalize_cnv");
     }
 
 
@@ -301,7 +298,7 @@ namespace mln
     inline
     void kmean3d_a<T,n>::print_mean()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_mean");
+      mln_trace("mln::clustering::kmean3d_a::print_mean");
 
       mln_eiter(t_mean_img)  l(_mean);
 
@@ -314,14 +311,13 @@ namespace mln
 	std::cout << "]"          << std::endl;
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_mean");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_number()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_number");
+      mln_trace("mln::clustering::kmean3d_a::print_number");
 
       mln_eiter(t_number_img)  l(_number);
 
@@ -332,14 +328,13 @@ namespace mln
 	std::cout << std::endl;
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_number");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_variance()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_variance");
+      mln_trace("mln::clustering::kmean3d_a::print_variance");
 
       mln_eiter(t_variance_img)  l(_number);
 
@@ -350,14 +345,13 @@ namespace mln
 	std::cout << std::endl;
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_variance");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_histo()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_histo");
+      mln_trace("mln::clustering::kmean3d_a::print_histo");
 
       mln_piter(t_histo_img)  rgb(_histo.domain());
 
@@ -373,14 +367,13 @@ namespace mln
 	}
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_histo");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_group()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_group");
+      mln_trace("mln::clustering::kmean3d_a::print_group");
 
       mln_piter(t_group_img)  rgb(_group.domain());
 
@@ -396,14 +389,13 @@ namespace mln
 	}
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_group");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_distance()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_distance");
+      mln_trace("mln::clustering::kmean3d_a::print_distance");
 
       mln_eiter(t_distance_img)  l(_distance);
 
@@ -425,14 +417,13 @@ namespace mln
 	}
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_distance");
     }
 
     template <typename T, unsigned n>
     inline
     void kmean3d_a<T,n>::print_point()
     {
-      trace::entering("mln::clustering::kmean3d_a::print_point");
+      mln_trace("mln::clustering::kmean3d_a::print_point");
 
       mln_piter(t_point_img)  p(_point.domain());
 
@@ -444,7 +435,6 @@ namespace mln
 	std::cout << std::endl;
       }
 
-      trace::exiting("mln::clustering::kmean3d_a::print_point");
     }
 
 
@@ -552,7 +542,7 @@ namespace mln
 			const unsigned  watch_dog = 10,
 			const unsigned  n_times   = 10)
       {
-	trace::entering("mln::clustering::impl::kmean_image2d_rgb");
+	mln_trace("mln::clustering::impl::kmean_image2d_rgb");
 
 	const I& point = exact(point__);
 	typedef mln_value(I) V;
@@ -708,14 +698,12 @@ namespace mln
 	  while (_current_launching < _n_times)
 	  {
 	    // BEGIN LAUNCH ONE TIME
-	    trace::entering("Launch one time");
 	    {
 	      t_result1d old_variance = mln_max(t_result1d);
 	      _within_variance        = mln_max(t_result1d);
 	      _current_step           = 0;
 
 	      // BEGIN INIT_MEAN
-	      trace::entering("init mean");
 	      {
 		t_value_comp0           min_comp0 = mln_min(t_value_comp0);
 		t_value_comp0           max_comp0 = mln_max(t_value_comp0);
@@ -732,12 +720,10 @@ namespace mln
 		  _mean[l.index_()][2]=(rand()%(max_comp2-min_comp2))+min_comp2;
 		}
 	      }
-	      trace::exiting("init mean");
 	      // END INIT MEAN
 
 
 	      // UPDATE DISTANCE
-	      trace::entering("update distance");
 
 	      for (unsigned i = 0; i < _k_center; ++i)
 	      {
@@ -758,7 +744,6 @@ namespace mln
 		}
 	      }
 
-	      trace::exiting("update distance");
 	      // END UPDATE DISTANCE
 
 	      do
@@ -766,7 +751,6 @@ namespace mln
 		old_variance = _within_variance;
 
 		// BEGIN UPDATE GROUP
-		trace::entering("update group");
 		{
 		    mln_piter(t_group_img) rgb(_group.domain());
 
@@ -789,11 +773,9 @@ namespace mln
 		    }
 
 		}
-		trace::exiting("update group");
 		// END UPDATE GROUP
 
 		// BEGIN UPDATE MEAN
-		trace::entering("update mean");
 		{
 		  mln_eiter(t_number_img) en(_number);
 		  mln_eiter(t_mean_img)   em(_mean);
@@ -826,7 +808,6 @@ namespace mln
 		      _mean[l.index_()] /= _number[l.index_()];
 		  }
 		}
-		trace::exiting("update mean");
 		// END UPDATE MEAN
 
 
@@ -835,7 +816,6 @@ namespace mln
 		  break;
 
 		// UPDATE DISTANCE
-		trace::entering("update distance");
 
 		for (unsigned i = 0; i < _k_center; ++i)
 		{
@@ -851,11 +831,9 @@ namespace mln
 		      (diff2_row + diff2_col + diff2_sli);
 		  }
 		}
-		trace::exiting("update distance");
 		// END UPDATE DISTANCE
 
 		// BEGIN UPDATE VARIANCE
-		trace::entering("update variance");
 		{
 		  _within_variance          = literal::zero;
 		  mln_eiter(t_variance_img) l(_variance);
@@ -876,7 +854,6 @@ namespace mln
 		  }
 
 		}
-		trace::exiting("update variance");
 		// END UPDATE VARIANCE
 
 		//update_cnv();
@@ -889,7 +866,6 @@ namespace mln
 	      //finalize_cnv();
 	      //build_all_dbg();
 	    }
-	    trace::exiting("Launch one time");
 	    // END LAUNCH ONE TIME
 
 	    if ((_is_number_valid && (_current_step < _watch_dog))||
@@ -940,7 +916,6 @@ namespace mln
 // 	}
 
 	// END BUILD LABEL IMAGE
-	trace::exiting("mln::clustering::impl::kmean_image2d_rgb");
 
 	return _label_dbg;
 
@@ -1020,12 +995,11 @@ namespace mln
 	      const unsigned  watch_dog,
 	      const unsigned  n_times)
     {
-      trace::entering("mln::clustering::kmean_rgb");
+      mln_trace("mln::clustering::kmean_rgb");
 
       mln_ch_value(I, value::label_8)
 	output = internal::kmean_rgb_dispatch<T,n>(point, k_center,
 						   watch_dog, n_times);
-      trace::exiting("mln::clustering::kmean_rgb");
 
       return output;
     }

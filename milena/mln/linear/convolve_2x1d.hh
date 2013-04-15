@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,13 +43,15 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by two weighted line-shapes
-     *  windows.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre input.is_valid
+    /*! \brief Convolution of an image \p input by two weighted line-shapes
+        windows.
+
+       \warning The weighted window is used as-is, considering that
+       its symmetrization is handled by the client.
+
+       \pre input.is_valid
+
+       \ingroup mlnlinear
      */
     template <typename I,
 	      typename W, unsigned Sh, unsigned Sv>
@@ -67,7 +70,7 @@ namespace mln
 		  W (&horizontal_weights)[Sh],
 		  W (&  vertical_weights)[Sv])
     {
-      trace::entering("linear::convolve_2x1d");
+      mln_trace("linear::convolve_2x1d");
 
       mlc_bool(Sh % 2 == 1)::check();
       mlc_bool(Sv % 2 == 1)::check();
@@ -81,7 +84,6 @@ namespace mln
       tmp    = linear::convolve_directional(input, 1, horizontal_weights);
       output = linear::convolve_directional(  tmp, 0,   vertical_weights);
 
-      trace::exiting("linear::convolve_2x1d");
       return output;
     }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -144,16 +144,6 @@ namespace mln
   template <typename E> struct Literal;
 
 
-  namespace convert
-  {
-
-    template <typename F, typename T>
-    void from_to(const F& from, T& to);
-
-  }
-
-
-
   namespace trait
   {
 
@@ -196,7 +186,7 @@ namespace mln
 
 
     // Disambiguate between (Proxy Op Object) and (Object Op Literal).
- 
+
     template < template <class, class> class Op,
 	       typename P, typename L >
     struct set_binary_< Op, mln::Proxy, P, mln::Literal, L >
@@ -217,17 +207,21 @@ namespace mln
 
 
 
-
+  /// \cond INTERNAL_API
   /// Proxy category flag type.
   template <>
   struct Proxy<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "proxy".
+  /*!
+    \brief Base class for implementation classes of the notion of
+    "proxy".
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Proxy : Object<E>
@@ -239,27 +233,19 @@ namespace mln
       typedef q_subject;
       q_subject subj_();
     */
-    
+
   protected:
     Proxy();
   };
 
 
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename P, typename T>
-      void
-      from_to_(const Proxy<P>& from, T& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  /*!
+    \brief Conversion: proxy -> T
+    \ingroup fromto
+  */
+  template <typename P, typename T>
+  void
+  from_to_(const Proxy<P>& from, T& to);
 
 
 
@@ -282,7 +268,7 @@ namespace mln
   template <typename T>
   typename mln::internal::unproxy_rec_<const T>::ret
   unproxy_rec(const T& t);
- 
+
 
   // operator <<
 
@@ -337,24 +323,14 @@ namespace mln
 
 
 
-  // convert::from_to_
+  // Conversion
 
-  namespace convert
+  template <typename P, typename T>
+  void
+  from_to_(const Proxy<P>& from, T& to)
   {
-
-    namespace over_load
-    {
-
-      template <typename P, typename T>
-      void
-      from_to_(const Proxy<P>& from, T& to)
-      {
-	convert::from_to(exact(from).unproxy_(), to);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+    convert::from_to(exact(from).unproxy_(), to);
+  }
 
 
   // unproxy_rec

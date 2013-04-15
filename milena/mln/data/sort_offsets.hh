@@ -92,7 +92,7 @@ namespace mln
 	util::array<unsigned>
 	sort_offsets_increasing(const Image<I>& input_)
 	{
-	  trace::entering("data::impl::generic::sort_offsets_increasing");
+	  mln_trace("data::impl::generic::sort_offsets_increasing");
 
 	  const I& input = exact(input_);
 
@@ -104,7 +104,6 @@ namespace mln
 	  std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		    value_offset_less_<I>(input));
 
-	  trace::exiting("data::impl::generic::sort_offsets_increasing");
 	  return v;
 	}
 
@@ -130,7 +129,7 @@ namespace mln
 	util::array<unsigned>
 	sort_offsets_decreasing(const Image<I>& input_)
 	{
-	  trace::entering("data::impl::generic::sort_offsets_decreasing");
+	  mln_trace("data::impl::generic::sort_offsets_decreasing");
 
 	  const I& input = exact(input_);
 
@@ -142,7 +141,6 @@ namespace mln
 	  std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		    value_offset_greater_<I>(input));
 
-	  trace::exiting("data::impl::generic::sort_offsets_decreasing");
 	  return v;
 	}
 
@@ -158,7 +156,7 @@ namespace mln
       util::array<unsigned>
       sort_offsets_increasing_radix(const Image<I>& input_)
       {
-	trace::entering("data::impl::sort_offsets_increasing_radix");
+	mln_trace("data::impl::sort_offsets_increasing_radix");
 
 	const I& input = exact(input_);
 
@@ -181,7 +179,6 @@ namespace mln
 	for_all(pxl)
 	  vec[loc[vset.index_of(pxl.val())]++] = pxl.offset();
 
-	trace::exiting("data::impl::sort_offsets_increasing_radix");
 	return vec;
       }
 
@@ -193,7 +190,7 @@ namespace mln
       util::array<unsigned>
       sort_offsets_decreasing_radix(const Image<I>& input_)
       {
-	trace::entering("data::impl::sort_offsets_decreasing_radix");
+	mln_trace("data::impl::sort_offsets_decreasing_radix");
 
 	const I& input = exact(input_);
 
@@ -216,7 +213,6 @@ namespace mln
 	for_all(pxl)
 	  vec[loc[vset.index_of(pxl.val())]++] = pxl.offset();
 
-	trace::exiting("data::impl::sort_offsets_decreasing_radix");
 	return vec;
       }
 
@@ -297,14 +293,13 @@ namespace mln
     util::array<unsigned>
     sort_offsets_increasing(const Image<I>& input)
     {
-      trace::entering("data::sort_offsets_increasing");
+      mln_trace("data::sort_offsets_increasing");
       mlc_is(mln_trait_image_speed(I),
 	     trait::image::speed::fastest)::check();
 
       mln_precondition(exact(input).is_valid());
       util::array<unsigned> output = internal::sort_offsets_increasing_dispatch(input);
 
-      trace::exiting("data::sort_offsets_increasing");
       return output;
     }
 
@@ -313,14 +308,13 @@ namespace mln
     util::array<unsigned>
     sort_offsets_decreasing(const Image<I>& input)
     {
-      trace::entering("data::sort_offsets_decreasing");
+      mln_trace("data::sort_offsets_decreasing");
       mlc_is(mln_trait_image_speed(I),
 	     trait::image::speed::fastest)::check();
 
       mln_precondition(exact(input).is_valid());
       util::array<unsigned> output = internal::sort_offsets_decreasing_dispatch(input);
 
-      trace::exiting("data::sort_offsets_decreasing");
       return output;
     }
 

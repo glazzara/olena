@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -41,18 +41,21 @@ namespace mln
   // Forward declaration.
   template <typename E> struct Graph;
 
-  // Graph category flag type.
+  /// \cond INTERNAL_API
+  /// Graph category flag type.
   template <>
   struct Graph<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
-  /// Base class for implementation of graph classes.
-  ///
-  /// \see mln::doc::Graph for a complete documentation of this class
-  /// contents.
-  ///
+
+  /*!
+    \brief Base class for implementation of graph classes.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Graph : public Object<E>
   {

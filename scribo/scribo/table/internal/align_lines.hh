@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,7 +61,8 @@ namespace scribo
       /// \param[in] nsites Number of sites in the given dimension \p dim.
       /// \param[in] min_coord The minimal coordinate in the dimension \p dim.
       /// \param[in] max_coord The maximal coordinate in the dimension \p dim.
-      /// \param[in] line_bboxes Line bounding boxes.
+      /// \param[in] lines The line components.
+      /// \param[out] aligned_lines The components of the aligned lines.
       /// \param[in] dim The dimension according which the lines are aligned.
       /// \param[in] max_alignment_diff Maximum alignment difference.
       ///
@@ -120,7 +121,7 @@ namespace scribo
 		  unsigned dim,
 		  unsigned max_alignment_diff)
       {
-	trace::entering("scribo::internal::align_lines");
+	mln_trace("scribo::internal::align_lines");
 
 	mln_precondition(nsites > 0);
 
@@ -156,7 +157,6 @@ namespace scribo
 	// be done for nothing...
 	aligned_lines = duplicate(lines);
 	mln::util::array<int> newlines;
-	math::round<int> round;
 	while (max_nelts > 0)
 	{
 	  for_all_elements(i, rlines)
@@ -172,17 +172,16 @@ namespace scribo
 		for_all_elements(j, lines[i])
 		  if (box2line[rlines[i][j]] == -1)
 		  {
-		    lines(rlines[i][j]).bbox().pmin()[dim] = round(mean.to_result());
-		    lines(rlines[i][j]).bbox().pmax()[dim] = round(mean.to_result());
-		    box2line[rlines[i][j]] = round(mean.to_result());
+		    lines(rlines[i][j]).bbox().pmin()[dim] = math::round<int>(mean.to_result());
+		    lines(rlines[i][j]).bbox().pmax()[dim] = math::round<int>(mean.to_result());
+		    box2line[rlines[i][j]] = math::round<int>(mean.to_result());
 		  }
-		newlines.append(round(mean.to_result()));
+		newlines.append(math::round<int>(mean.to_result()));
 	      }
 	    }
 	  --max_nelts;
 	}
 
-	trace::exiting("scribo::internal::align_lines");
 	return newlines;
       }
 

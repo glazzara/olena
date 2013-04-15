@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,9 +41,19 @@ namespace mln
   namespace value
   {
 
-    /// Color class for red-green-blue where every component is
-    /// 8-bit encoded.
+    /*!
+      \struct rgb8
+      \headerfile <>
+
+      \brief Color class for red-green-blue where every component is
+      8-bit encoded.
+
+      \ingroup valuergb
+      \relates value::rgb
+    */
+    /// \cond ALIASES
     typedef rgb<8> rgb8;
+    /// \endcond
 
   } // end of namespace mln::value
 

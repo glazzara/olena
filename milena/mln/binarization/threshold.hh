@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,7 @@
 /// \brief Threshold an image.
 
 # include <mln/binarization/binarization.hh>
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
 
 
 namespace mln
@@ -40,14 +41,18 @@ namespace mln
   namespace binarization
   {
 
-    /// Thresholds the values of \p input so that they can be stored in
-    ///  the \p output binary image.
-    ///
-    /// \param[in] input The input image.
-    /// \param[in] threshold The threshold.
-    ///
-    /// If input(p) is greater or equal than the threshold, the
-    /// value in the output image in the same point will be TRUE, else FALSE.
+    /*! \brief Gaussian subsampling
+      Thresholds the values of \p input so that they can be stored in
+      the \p output binary image.
+
+      \param[in] input The input image.
+      \param[in] threshold The threshold.
+
+      If input(p) is greater or equal than the threshold, the
+      value in the output image in the same point will be TRUE, else FALSE.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_ch_value(I, bool)
     threshold(const Image<I>& input, const mln_value(I) threshold);
@@ -60,7 +65,7 @@ namespace mln
     mln_ch_value(I, bool)
     threshold(const Image<I>& input, const mln_value(I) threshold_value)
     {
-      trace::entering("binarization::threshold");
+      mln_trace("binarization::threshold");
 
       mln_precondition(exact(input).is_valid());
       mlc_is(mln_trait_value_nature(mln_value(I)),
@@ -69,11 +74,10 @@ namespace mln
       mln_ch_value(I, bool) output(exact(input).domain());
 
       // FIXME : threshold value should be a percentage.
-      fun::v2b::threshold< mln_value(I) > f(threshold_value);
+      fun::v2b::threshold_ge< mln_value(I) > f(threshold_value);
 
       output = mln::binarization::binarization(exact(input), f);
 
-      trace::exiting("binarization::threshold");
       return output;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::p2p_image<I,F>.
+    /*!
+      \brief Data structure for \c mln::p2p_image<I,F>.
+    */
     template <typename I, typename F>
     struct data< p2p_image<I,F> >
     {
@@ -100,7 +103,9 @@ namespace mln
     /// Constructor from an image \p ima and a predicate \p f.
     p2p_image(I& ima, const F& f);
 
+    /// \cond INTERNAL_API
     void init_(I& ima, const F& f);
+    /// \endcond
 
     /// Give the definition domain.
     const mln_domain(I)& domain() const;

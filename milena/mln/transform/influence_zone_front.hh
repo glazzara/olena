@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,13 +41,17 @@ namespace mln
   namespace transform
   {
 
-    /// Influence zone transform.
+    /*! \brief Influence zone transform.
+      \ingroup mlntransform
+     */
     template <typename I, typename N, typename W, typename D>
     mln_concrete(I)
     influence_zone_front(const Image<I>& input,
 			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max);
 
-    /// Influence zone transform.
+    /*! \brief Influence zone transform.
+      \ingroup mlntransform
+    */
     template <typename I, typename N, typename W>
     mln_concrete(I)
     influence_zone_front(const Image<I>& input,
@@ -60,7 +65,7 @@ namespace mln
     influence_zone_front(const Image<I>& input,
 			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max)
     {
-      trace::entering("transform::influence_zone_front");
+      mln_trace("transform::influence_zone_front");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -69,7 +74,6 @@ namespace mln
       internal::influence_zone_functor<I> f;
       (void) mln::canvas::distance_front(input, nbh, w_win, max, f);
 
-      trace::exiting("transform::influence_zone_front");
       return f.output;
     }
 

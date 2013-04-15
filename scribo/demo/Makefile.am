@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,16 +19,16 @@ SUBDIRS =
 
 if HAVE_QT
 
-SUBDIRS += review
-
-
 
 if HAVE_MAGICKXX
 
+if HAVE_TESSERACT
+
 SUBDIRS += viewer
 
-endif HAVE_MAGICKXX
+endif HAVE_TESSERACT
 
+endif HAVE_MAGICKXX
 
 
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Extract vertical lines matching a specific pattern.
+/// \brief Extract vertical lines matching a specific pattern.
 
 # include <cmath>
 
@@ -56,13 +56,17 @@ namespace scribo
       using namespace mln;
 
 
-      /// Extract vertical lines matching a specific pattern.
-      ///
-      /// \param[in] input  A binary image.
-      /// \param[in] length The minimum line length.
-      ///
-      /// \result An image of vertical lines.
-      //
+      /*! \brief Extract vertical lines matching a specific pattern.
+
+	\param[in] input  A binary image.
+	\param[in] length The minimum line length.
+	\param[in] delta space between the first background pixels
+	                 and the line pixels (usually 2 or 3).
+
+	\result An image of vertical lines.
+
+	\ingroup extractprimitiveseps
+      */
       template <typename I>
       mln_concrete(I)
       lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta);
@@ -75,7 +79,7 @@ namespace scribo
       mln_concrete(I)
       lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
-	trace::entering("scribo::primitive::extract::lines_v_pattern");
+	mln_trace("scribo::primitive::extract::lines_v_pattern");
 
 	mln_precondition(length % 2 == 1);
 
@@ -88,14 +92,16 @@ namespace scribo
 
 	mln_concrete(I) output = lines_pattern(input, length, 0, win);
 
+	unsigned vl = length;
+	if (! (vl % 2))
+	  ++vl;
+	win::rectangle2d w(vl, delta);
+
 	mln_concrete(I)
-	  output_dil = morpho::dilation(output,
-					win::rectangle2d(2 * delta + 1,
-							 length + 2));
+	  output_dil = morpho::dilation(output, w);
 
 	output = scribo::primitive::internal::rd(output, input * output_dil);
 
-	trace::exiting("scribo::primitive::extract::lines_v_pattern");
 	return output;
       }
 

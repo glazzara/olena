@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -32,7 +32,7 @@
     iterators on mln::complex.
 
     The hierarchy of classes in this file is as follows
-    
+
     \verbatim
 
                     complex_relative_iterator_base<C, F, E>
@@ -76,11 +76,14 @@ namespace mln
       | topo::internal::complex_relative_iterator_base<C, F, E>.  |
       `----------------------------------------------------------*/
 
-      /// Factoring class for relative iterators on mln::complex.
-      ///
-      /// \tparam C The type of the center face handle.
-      /// \tparam F The type of the face handle.
-      /// \tparam E The type exact type of the iterator.
+      /*!
+	\internal
+	\brief Factoring class for relative iterators on mln::complex.
+
+	\tparam C The type of the center face handle.
+	\tparam F The type of the face handle.
+	\tparam E The type exact type of the iterator.
+      */
       template <typename C, typename F, typename E>
       class complex_relative_iterator_base :
 	public complex_iterator_base<F, E>
@@ -128,12 +131,15 @@ namespace mln
       | topo::internal::forward_complex_relative_iterator_base<C, F, E>.  |
       `------------------------------------------------------------------*/
 
-      /// Factoring class for forward relative iterators on
-      /// mln::complex.
-      ///
-      /// \tparam C The type of the center face handle.
-      /// \tparam F The type of the face handle.
-      /// \tparam E The type exact type of the iterator.
+      /*!
+	\internal
+	\brief Factoring class for forward relative iterators on
+	mln::complex.
+
+        \tparam C The type of the center face handle.
+        \tparam F The type of the face handle.
+        \tparam E The type exact type of the iterator.
+      */
       template <typename C, typename F, typename E>
       class forward_complex_relative_iterator_base
 	: public complex_relative_iterator_base<C, F, E>
@@ -179,12 +185,15 @@ namespace mln
       | topo::internal::backward_complex_relative_iterator_base<C, F, E>.  |
       `-------------------------------------------------------------------*/
 
-      /// Factoring class for backward relative iterators on
-      /// mln::complex.
-      ///
-      /// \tparam C The type of the center face handle.
-      /// \tparam F The type of the face handle.
-      /// \tparam E The type exact type of the iterator.
+      /*!
+	\internal
+	\brief Factoring class for backward relative iterators on
+	mln::complex.
+
+        \tparam C The type of the center face handle.
+        \tparam F The type of the face handle.
+        \tparam E The type exact type of the iterator.
+      */
       template <typename C, typename F, typename E>
       class backward_complex_relative_iterator_base
 	: public complex_relative_iterator_base<C, F, E>

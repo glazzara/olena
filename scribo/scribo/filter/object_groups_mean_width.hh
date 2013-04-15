@@ -55,6 +55,7 @@ namespace scribo
 
       \return Filtered object group information.
 
+      \ingroup grpalgofiltercompgroup
      */
     template <typename L>
     object_groups<L>
@@ -68,7 +69,7 @@ namespace scribo
     object_groups<L>
     object_groups_mean_width(const object_groups<L>& groups, float width)
     {
-      trace::entering("scribo::filter::object_groups_mean_width");
+      mln_trace("scribo::filter::object_groups_mean_width");
 
       mln_precondition(groups.is_valid());
       mln_precondition(width >= 0);
@@ -83,7 +84,6 @@ namespace scribo
 	    && group_width[g] < width)
 	  output(g).invalidate();
 
-      trace::exiting("scribo::filter::object_groups_mean_width");
       return output;
     }
 

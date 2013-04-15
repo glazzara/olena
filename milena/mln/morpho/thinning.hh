@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,10 +44,12 @@ namespace mln
   {
 
 
-    /// Morphological thinning.
-    ///
-    /// This operator is THIN_B = Id - HMT_B, where B = (Bfg, Bbg).
-    //
+    /*! \brief Morphological thinning.
+     *
+     *  This operator is THIN_B = Id - HMT_B, where B = (Bfg, Bbg).
+     *
+     *  \ingroup mlnmorpho
+     */
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)
       thinning(const Image<I>& input,
@@ -90,7 +93,7 @@ namespace mln
       thinning(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thinning");
+      mln_trace("morpho::thinning");
 
 
       internal::thinning_tests(input, win_fg, win_bg);
@@ -100,7 +103,6 @@ namespace mln
 
       mln_postcondition( complementation( thickening( complementation(input),
 						      win_bg, win_fg ) ) == output);
-      trace::exiting("morpho::thinning");
       return output;
     }
 

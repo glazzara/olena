@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,9 +35,8 @@
 
 # include <mln/core/routine/exact.hh>
 # include <mln/metal/equal.hh>
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 # include <mln/convert/from_to.hh>
-# include <mln/convert/from_to.hxx>
 
 
 namespace mln
@@ -65,7 +65,7 @@ namespace mln
       // Technical note:
       // No trace should be produced by this routine since it can be
       // applied on large sets of data.
-      
+
       mlc_equal(T, mln_exact(T))::check();
       mlc_equal(O, mln_exact(O))::check();
 

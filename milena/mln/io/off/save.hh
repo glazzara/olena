@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -55,44 +55,56 @@ namespace mln
     namespace off
     {
 
-      /** \brief Save a (binary) OFF image into a complex image.
+      /*! \brief Save a (binary) OFF image into a complex image.
 
 	  \param[in] ima      The image to save.
 	  \param[in] filename The name of the file where to save the image.
 
 	  The image is said binary since data represent only the
-	  existence of faces.  */
+	  existence of faces.
+
+	  \ingroup iooff
+      */
       void save(const bin_2complex_image3df& ima,
 		const std::string& filename);
 
-      /** \brief Save an 8-bit grey-level OFF image into a complex image.
+      /*! \brief Save an 8-bit grey-level OFF image into a complex image.
 
 	  \param[in] ima      The image to save.
 	  \param[in] filename The name of the file where to save the image.
 
 	  Only data is attached to 2-faces is saved; the OFF file
-	  cannot store data attached to faces of other dimensions.  */
+	  cannot store data attached to faces of other dimensions.
+
+	  \ingroup iooff
+      */
       void save(const int_u8_2complex_image3df& ima,
 		const std::string& filename);
 
-      /** \brief Save a floating-point value grey-level OFF image into
+      /*! \brief Save a floating-point value grey-level OFF image into
 	  a complex image.
 
 	  \param[in] ima      The image to save.
 	  \param[in] filename The name of the file where to save the image.
 
 	  Only data is attached to 2-faces is saved; the OFF file
-	  cannot store data attached to faces of other dimensions.  */
+	  cannot store data attached to faces of other dimensions.
+
+	  \ingroup iooff
+      */
       void save(const float_2complex_image3df& ima,
 		const std::string& filename);
 
-      /** \brief Save a 3x8-bit RGB (color) OFF image into a complex image.
+      /*! \brief Save a 3x8-bit RGB (color) OFF image into a complex image.
 
 	  \param[in] ima      The image to save.
 	  \param[in] filename The name of the file where to save the image.
 
 	  Only data is attached to 2-faces is saved; the OFF file
-	  cannot store data attached to faces of other dimensions.  */
+	  cannot store data attached to faces of other dimensions.
+
+	  \ingroup iooff
+      */
       void save(const rgb8_2complex_image3df& ima,
 		const std::string& filename);
 
@@ -166,36 +178,32 @@ namespace mln
       void
       save(const bin_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::bin_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const int_u8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::int_u8_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const float_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::float_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
       inline
       void
       save(const rgb8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::off::save");
+	mln_trace("mln::io::off::save");
 	internal::rgb8_off_saver()(ima, filename);
-	trace::exiting("mln::io::off::save");
       }
 
 

@@ -1,0 +1,6 @@
+/*! \defgroup grpalgofilterelt Element Filtering
+ *
+ * \brief Elements filtering routines.
+ *
+ * \ingroup grpalgofilter
+ */

@@ -68,7 +68,7 @@ namespace scribo
       boldness_from_lbl(const Image<I>& ima_lbl_,
 			 const Image<J>& skel_)
       {
-	trace::entering("scribo::estim::internal::boldness_from_lbl");
+	mln_trace("scribo::estim::internal::boldness_from_lbl");
 
 	const I& ima_lbl = exact(ima_lbl_);
 	const J& skel = exact(skel_);
@@ -89,7 +89,6 @@ namespace scribo
 
 	float res = ima_p / (float) skel_p;
 
-	trace::exiting("scribo::estim::internal::boldness_from_lbl");
 	return res;
       }
 
@@ -103,7 +102,7 @@ namespace scribo
 			 const mln_value(I)& nlabels,
 			 const Image<J>& skel_lbl_)
       {
-	trace::entering("scribo::estim::internal::boldness_from_lbl");
+	mln_trace("scribo::estim::internal::boldness_from_lbl");
 
 	const I& ima_lbl = exact(ima_lbl_);
 	const J& skel_lbl = exact(skel_lbl_);
@@ -137,7 +136,6 @@ namespace scribo
 
 	// variance /= nlabels;
 
-	trace::exiting("scribo::estim::internal::boldness_from_lbl");
 	return mean.to_result();
       }
 
@@ -156,7 +154,7 @@ namespace scribo
 	float
 	font_boldness(const Image<I>& ima_)
 	{
-	  trace::entering("scribo::estim::impl::generic::font_boldness");
+	  mln_trace("scribo::estim::impl::generic::font_boldness");
 
 	  const I& ima = exact(ima_);
 	  mln_precondition(ima.is_valid());
@@ -176,7 +174,6 @@ namespace scribo
 	  float
 	    output = internal::boldness_from_lbl(lbl, nlabels, slbl);
 
-	  trace::exiting("scribo::estim::impl::generic::font_boldness");
 	  return output;
 	}
 
@@ -192,14 +189,13 @@ namespace scribo
     float
     font_boldness(const Image<I>& ima)
     {
-      trace::entering("scribo::estim::font_boldness");
+      mln_trace("scribo::estim::font_boldness");
 
       mln_precondition(exact(ima).is_valid());
       mlc_is(mln_value(I), bool)::check();
 
       float output = impl::generic::font_boldness(ima);
 
-      trace::exiting("scribo::estim::font_boldness");
       return output;
     }
 

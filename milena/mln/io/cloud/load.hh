@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,10 +54,13 @@ namespace mln
     namespace cloud
     {
 
-      /// Load a cloud of points.
-      ///
-      /// \param[in,out] arr the site set where to load the data.
-      /// \param[in] filename file to load.
+      /*! \brief Load a cloud of points.
+       *
+       * \param[in,out] arr the site set where to load the data.
+       * \param[in] filename file to load.
+       *
+       * \ingroup iocloud
+      */
       template <typename P>
       void load(p_array<P>& arr, const std::string& filename);
 
@@ -87,7 +91,7 @@ namespace mln
       template <typename P>
       void load(p_array<P>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::cloud::load");
+	mln_trace("mln::io::cloud::load");
 
 	/// FIXME: do we really want this?
 	mln_precondition(P::dim == 3u);
@@ -101,7 +105,6 @@ namespace mln
 
 	internal::load_data(arr, file);
 
-	trace::exiting("mln::io::cloud::load");
       }
 
 

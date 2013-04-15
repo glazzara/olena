@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,12 @@ int main(int argc, char *argv[])
   using value::label_16;
   using value::label_8;
   using value::rgb8;
+
+  if (argc != 2)
+  {
+    std::cout << "Usage: " << argv[0] << " <input.pbm>" << std::endl;
+    return 1;
+  }
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

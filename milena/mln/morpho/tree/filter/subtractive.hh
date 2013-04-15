@@ -79,7 +79,7 @@ namespace mln
 	  F& f = exact(f_);
 	  const P& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::subtractive");
+	  mln_trace("mln::morpho::tree::filter::subtractive");
 
 	  morpho::tree::propagate_if(tree, f, morpho::tree::desc_propagation (), !pred);
 
@@ -88,7 +88,6 @@ namespace mln
 	    if (!pred(n))
 	      f(n) = f(tree.parent(n));
 
-	  trace::exiting("mln::morpho::tree::filter::subtractive");
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

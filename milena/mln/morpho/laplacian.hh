@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,15 +43,20 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological laplacian.
+    /*! \brief Morphological laplacian.
      *
-     * This operator is (d_B - Id) - (Id - e_B). 
+     * This operator is (d_B - Id) - (Id - e_B).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename W, typename O>
     void laplacian(const Image<I>& input, const Window<W>& win,
 		   Image<O>& output);
 
 
+    /*! \overload
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_trait_op_minus_twice(mln_concrete(I))
       laplacian(const Image<I>& input, const Window<W>& win);
@@ -62,7 +68,7 @@ namespace mln
     inline
     void laplacian(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
-      trace::entering("morpho::laplacian");
+      mln_trace("morpho::laplacian");
       mln_precondition(exact(output).domain() == exact(input).domain());
       mln_precondition(! exact(win).is_empty());
 
@@ -71,7 +77,6 @@ namespace mln
 	e_I = morpho::minus(input, erosion(input, win));
       data::fill(output, d_I - e_I);
 
-      trace::exiting("morpho::laplacian");
     }
 
     template <typename I, typename W>
@@ -79,7 +84,7 @@ namespace mln
     mln_trait_op_minus_twice(mln_concrete(I))
       laplacian(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::laplacian");
+      mln_trace("morpho::laplacian");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -87,7 +92,6 @@ namespace mln
       initialize(output, input);
       laplacian(input, win, output); // Calls previous version.
 
-      trace::exiting("morpho::laplacian");
       return output;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,11 +45,69 @@
 namespace mln
 {
 
-  /// Type alias for a neighborhood defined on the 2D square
-  /// grid with integer coordinates.
-  ///
-  /// \ingroup modneighb2d
+  /*!
+    \class neighb2d
+    \headerfile <>
+
+    \brief Type alias for a neighborhood defined on the 2D square
+    grid with integer coordinates.
+
+    A neigh2d can be constructed from a window2d. Compared to a
+    window, a neighborhood does not include the central point.
+
+    \verbatim
+    window2d  neighb2d
+     - o -     - o -
+     o o o --> o x o
+     - o -     - o -
+    \endverbatim
+
+    Common 2D neighborhoods are predefined and can be used directly:
+    mln::c2_row(), mln::c2_col(), mln::c4(), mln::c6_2d(), mln::c8().
+    An exhaustive list can be found in section \ref modneighb2d.
+
+    The list of dpoint2d included in a neighb2d is accessible from
+    window2d::std_vector() method or simply by iterating over this
+    list:
+
+    \code
+    neighb2d nbh = c4();
+    for (int i = 0; i < nbh.win().size(); ++i)
+      std::cout << nbh.win().dp(i) << std::endl;
+    \endcode
+
+    Iterating over the neighbors of a specific point is performed
+    thanks to n-iterators, as follows:
+
+    \code
+    point2d p(2,2);
+    neighb2d nbh = c4();
+    mln_niter(neighb2d) n(nbh, p);
+    for_all(n)
+      // n is a point2d, neighbor of p.
+      std::cout << n << std::endl;
+    \endcode
+
+    It also works while iterating the sites of an image domain:
+
+    \code
+    image2d<bool> ima(4,4);
+    neighb2d nbh = c4();
+    mln_piter(image2d<bool>) p(ima.domain());
+    mln_niter(neighb2d) n(nbh, p);
+    for_all(p)
+      for_all(n)
+        // n is a point2d, neighbor of the current p.
+        std::cout << n << std::endl;
+    \endcode
+
+    \sa make::neighb2d, dpoint2d, window2d
+
+    \ingroup modneighb2d
+  */
+  /// \cond ALIAS
   typedef neighb<window2d> neighb2d;
+  /// \endcond
 
 }
 
@@ -67,6 +126,8 @@ namespace mln
 
     \return A neighb2d.
 
+    \sa neighb2d
+
     \ingroup modneighb2d
   */
   const neighb2d& c4();
@@ -83,6 +144,8 @@ namespace mln
 
    \return A neighb2d.
 
+   \sa neighb2d
+
    \ingroup modneighb2d
   */
   const neighb2d& c8();
@@ -97,6 +160,8 @@ namespace mln
     \endverbatim
 
     \return A neighb2d.
+
+    \sa neighb2d
 
     \ingroup modneighb2d
   */
@@ -114,31 +179,41 @@ namespace mln
 
     \return A neighb2d.
 
+    \sa neighb2d
+
     \ingroup modneighb2d
   */
   const neighb2d& c2_col();
 
 
-  // FIXME: Documentation
+  /*! \brief Double neighborhood using a 6-connectivity.
+
+    According to the current central point coordinates, this
+    neighborhood will use one of the following neighboords:
+
+    \verbatim
+    even coordinates  odd coordinates
+       o o -               - o o
+       o x o               o x o
+       - o o               o o -
+    \endverbatim
+
+    \return A neighb2d.
+
+    \sa neighb2d
+
+    \ingroup modneighb2d
+  */
   neighb< win::multiple<window2d, mln::fun::p2b::chess> > c6_2d();
 
 
+  /// \internal Conversion: bool[] -> neighb2d
+  template <unsigned S>
+  void from_to_(const bool (&values)[S], neighb2d& nbh);
 
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <unsigned S>
-      void from_to_(const bool (&values)[S], neighb2d& nbh);
-
-      template <unsigned R, unsigned C>
-      void from_to_(bool const (&values)[R][C], neighb2d& nbh);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  /// \internal Conversion: bool[][] -> neighb2d
+  template <unsigned R, unsigned C>
+  void from_to_(bool const (&values)[R][C], neighb2d& nbh);
 
 
 
@@ -208,48 +283,39 @@ namespace mln
     bool vert[] = { 1, 1, 0,
 		    1, 0, 1,
 		    0, 1, 1 };
-    
+
     bool hori[] = { 0, 1, 1,
 		    1, 0, 1,
 		    1, 1, 0 };
-    
+
     return make::double_neighb2d(fun::p2b::chess(),
 				 vert,
 				 hori);
   }
 
 
-  namespace convert
+  template <unsigned S>
+  void
+  from_to_(const bool (&values)[S], neighb2d& nbh)
   {
+    enum { h = mlc_sqrt_int(S) / 2 };
+    mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
+    window2d& win = nbh.hook_win_();
+    convert::from_to(values, win);
+    mln_postcondition(win.is_neighbable_());
+  }
 
-    namespace over_load
-    {
+  template <unsigned R, unsigned C>
+  void
+  from_to_(bool const (&values)[R][C], neighb2d& nbh)
+  {
+    mlc_bool(R % 2 == 1)::check();
+    mlc_bool(C % 2 == 1)::check();
+    window2d& win = nbh.hook_win_();
+    convert::from_to(values, win);
+    mln_postcondition(win.is_neighbable_());
+  }
 
-      template <unsigned S>
-      void
-      from_to_(const bool (&values)[S], neighb2d& nbh)
-      {
-	enum { h = mlc_sqrt_int(S) / 2 };
-	mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
-	window2d& win = nbh.hook_win_();
-	convert::from_to(values, win);
-	mln_postcondition(win.is_neighbable_());
-      }
-
-      template <unsigned R, unsigned C>
-      void
-      from_to_(bool const (&values)[R][C], neighb2d& nbh)
-      {
-	mlc_bool(R % 2 == 1)::check();
-	mlc_bool(C % 2 == 1)::check();
-	window2d& win = nbh.hook_win_();
-	convert::from_to(values, win);
-	mln_postcondition(win.is_neighbable_());
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

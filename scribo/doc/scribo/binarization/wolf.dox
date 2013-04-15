@@ -1,0 +1,6 @@
+/*! \defgroup grpalgobinwolf Wolf
+ *
+ * \brief Wolf's Binarization implementations.
+ *
+ * \ingroup grpalgobin
+ */

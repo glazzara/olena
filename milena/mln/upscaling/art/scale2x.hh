@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,6 +59,7 @@ namespace mln
 	Source:
 	http://en.wikipedia.org/wiki/Pixel_art_scaling_algorithms
 
+	\ingroup mlngeom
       */
       template <typename I>
       mln_concrete(I)
@@ -71,7 +73,7 @@ namespace mln
       mln_concrete(I)
       scale2x(const Image<I>& input_)
       {
-	trace::entering("mln::upscaling::art::scale2x");
+	mln_trace("mln::upscaling::art::scale2x");
 
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
@@ -133,7 +135,6 @@ namespace mln
 
 	  }
 
-	trace::exiting("mln::upscaling::art::scale2x");
 	return output;
       }
 

@@ -55,13 +55,12 @@ namespace scribo
     bool
     box_is_included(const box<P>& lhs, const box<P>& rhs)
     {
-      trace::entering("scribo::util::box_is_included");
+      mln_trace("scribo::util::box_is_included");
 
       for (unsigned i = 0; i < P::dim; ++i)
 	if (!(lhs.pmin()[i] >= rhs.pmin()[i] && lhs.pmax()[i] <= rhs.pmax()[i]))
 	  return false;
 
-      trace::exiting("scribo::util::box_is_included");
       return true;
     }
 

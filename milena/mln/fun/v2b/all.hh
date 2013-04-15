@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,8 @@ namespace mln
 
 
 # include <mln/fun/v2b/lnot.hh>
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_le.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
 
 
 #endif // ! MLN_FUN_V2B_ALL_HH

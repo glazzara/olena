@@ -45,7 +45,10 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological height closing.
+      /*! \brief Morphological height closing.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename I, typename N>
       mln_concrete(I)
       height(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -60,14 +63,13 @@ namespace mln
       height(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::closing::height");
+	mln_trace("morpho::closing::height");
 
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = closing::leveling(input, nbh, attribute::height<I>(), lambda);
 
-	trace::exiting("morpho::closing::height");
 	return output;
       }
 

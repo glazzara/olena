@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,23 +52,30 @@ namespace mln
     namespace ppm
     {
 
-      /// Load a ppm image in a Milena image.
-      ///
-      /// \param[out] ima A reference to the image which will receive
-      /// data.
-      /// \param[in] filename The source.
+      /*! \brief Load a ppm image in a Milena image.
+       *
+       * \param[out] ima A reference to the image which will receive
+       * data.
+       * \param[in] filename The source.
+       *
+       * \ingroup ioppm
+       */
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);
 
-      /// Load a ppm image in a Milena image. To use this routine, you
-      /// should specialize the template whith the value type of the
-      /// image loaded. (ex : load<value::int_u8>("..."))
-      ///
-      /// \param[in] filename The image source.
-      ///
-      /// \return An image2d which contains loaded data.
-      ///
+      /*! \brief Load a ppm image in a Milena image.
+       *
+       * To use this routine, you
+       * should specialize the template whith the value type of the
+       * image loaded. (ex : load<value::int_u8>("..."))
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d which contains loaded data.
+       *
+       * \ingroup ioppm
+       */
       template <typename V>
       image2d<V> load(const std::string& filename);
 
@@ -78,9 +86,8 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::ppm::load");
+	mln_trace("mln::io::ppm::load");
 	image2d<V> ima = io::pnm::load<V>(PPM, filename);
-	trace::exiting("mln::io::ppm::load");
 	return ima;
       }
 
@@ -89,9 +96,8 @@ namespace mln
       void load(Image<I>& ima,
 		const std::string& filename)
       {
-	trace::entering("mln::io::ppm::load");
+	mln_trace("mln::io::ppm::load");
 	io::pnm::load<I>(PPM, ima, filename);
-	trace::exiting("mln::io::ppm::load");
       }
 
 

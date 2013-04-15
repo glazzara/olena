@@ -73,7 +73,7 @@ namespace mln
 		  trait::image::speed::fastest, const R& rhs,
 		  trait::image::speed::fastest, O& output)
       {
-	trace::entering("arith::impl::div_");
+	mln_trace("arith::impl::div_");
 
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -81,7 +81,6 @@ namespace mln
 	for_all_3(lp, rp, op)
 	  op.val() = lp.val() / rp.val();
 
-	trace::exiting("arith::impl::div_");
       }
 
       template <typename L, typename R>
@@ -97,14 +96,13 @@ namespace mln
       void div_inplace_(trait::image::speed::fastest, L& lhs,
 			  trait::image::speed::fastest, const R& rhs)
       {
-	trace::entering("arith::impl::div_inplace_");
+	mln_trace("arith::impl::div_inplace_");
 
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
 	for_all_2(rp, lp)
 	  lp.val() /= rp.val();
 
-	trace::exiting("arith::impl::div_inplace_");
       }
 
     } // end of namespace mln::arith::impl

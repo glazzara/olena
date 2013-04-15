@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,16 +43,20 @@ namespace mln
   namespace math
   {
 
-    /// Generic version.
+    /*! \brief Generic version.
+      \ingroup mlnmath
+    */
     template <typename T>
     T abs(const T& v);
 
-    /// Specializations for existing overloads of std::abs.
-    /// 
-    /// Reference:
-    ///   ISO/IEC 14882:2003 C++ standard, section 26.5
-    ///   (C Library, [lib.c.math]).
-    ///
+    /*! Specializations for existing overloads of std::abs.
+
+        Reference:
+          ISO/IEC 14882:2003 C++ standard, section 26.5
+          (C Library, [lib.c.math]).
+
+	\ingroup mlnmath
+    */
     /// \{
     int         abs(int v);
     long        abs(long v);
@@ -61,7 +66,9 @@ namespace mln
     long double abs(long double v);
     /// \}
 
-    /// Specialization for mln::value::int_u.
+    /*! Specialization for mln::value::int_u.
+      \ingroup mlnmath
+    */
     template <unsigned n>
     value::int_u<n> abs(const value::int_u<n>& v);
 

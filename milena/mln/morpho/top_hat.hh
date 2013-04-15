@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,31 +44,38 @@ namespace mln
   {
 
 
-    /// Morphological white top-hat (for object / light objects).
-    ///
-    /// This operator is Id - ope_B.
-    //
+    /*! \brief Morphological white top-hat (for object / light
+     *  objects).
+     *
+     *  This operator is Id - ope_B.
+     *
+     *  \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I)
     top_hat_white(const Image<I>& input, const Window<W>& win);
 
 
-    /// Morphological black top-hat (for background / dark objects).
-    ///
-    /// This operator is clo_B - Id.
-    //
+    /*! \brief Morphological black top-hat (for background / dark objects).
+     *
+     *  This operator is clo_B - Id.
+     *
+     *  \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I)
     top_hat_black(const Image<I>& input, const Window<W>& win);
 
 
-    /// Morphological self-complementary top-hat.
-    ///
-    /// This operator is \n
-    ///   = top_hat_white + top_hat_black \n
-    ///   = (input - opening) + (closing - input) \n
-    ///   = closing - opening. \n
-    //
+    /*! \brief Morphological self-complementary top-hat.
+     *
+     *  This operator is \n
+     *    = top_hat_white + top_hat_black \n
+     *    = (input - opening) + (closing - input) \n
+     *    = closing - opening. \n
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I)
     top_hat_self_complementary(const Image<I>& input, const Window<W>& win);
@@ -82,7 +90,7 @@ namespace mln
     mln_concrete(I)
     top_hat_white(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::top_hat_white");
+      mln_trace("morpho::top_hat_white");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
@@ -92,7 +100,6 @@ namespace mln
 
       mln_postcondition(test::positive(output));
 
-      trace::exiting("morpho::top_hat_white");
       return output;
     }
 
@@ -101,7 +108,7 @@ namespace mln
     inline
     mln_concrete(I) top_hat_black(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::top_hat_black");
+      mln_trace("morpho::top_hat_black");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
@@ -111,7 +118,6 @@ namespace mln
 
       mln_postcondition(test::positive(output));
 
-      trace::exiting("morpho::top_hat_black");
       return output;
     }
 
@@ -120,7 +126,7 @@ namespace mln
     inline
     mln_concrete(I) top_hat_self_complementary(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::top_hat_self_complementary");
+      mln_trace("morpho::top_hat_self_complementary");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
@@ -130,7 +136,6 @@ namespace mln
 
       mln_postcondition(test::positive(output));
 
-      trace::exiting("morpho::top_hat_self_complementary");
       return output;
     }
 

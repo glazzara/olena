@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,6 +51,13 @@ namespace scribo
     using namespace mln;
 
 
+    /*! \brief Link text lines to prepare paragraph construction.
+
+      Lines MUST be tagged as line::Text to be considered in this
+      processing.
+
+      \ingroup grptext
+    */
     template <typename L>
     line_links<L>
     link_lines(const line_set<L>& lines);

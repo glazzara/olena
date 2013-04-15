@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,15 +42,19 @@ namespace mln
   template <typename E> struct Site;
 
 
-  /// Site category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Site category flag type.
   template <>
   struct Site<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for classes that are explicitly sites.
+  /*!
+    \brief Base class for classes that are explicitly sites.
+    \ingroup modconcepts
    */
   template <typename E>
   struct Site : public Object<E>

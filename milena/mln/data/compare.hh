@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,38 +41,44 @@
 namespace mln
 {
 
-  /// Point-wise test if the pixel values of \p lhs are equal to the
-  /// pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are equal
+   * to the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
 
 
-  /// Point-wise test if the pixel values of \p lhs are point-wise
-  /// less than the pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are point-wise
+   * less than the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
 
 
-  /// Point-wise test if the pixel values of \p lhs are point-wise
-  /// less than or equal to the pixel values of \p rhs.
-  ///
-  /// \param[in] lhs A first image.
-  /// \param[in] rhs A second image.
-  ///
-  /// \pre lhs.domain == rhs.domain
-  //
+  /*! \brief Point-wise test if the pixel values of \p lhs are point-wise
+   * less than or equal to the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \pre lhs.domain == rhs.domain
+   *
+   * \ingroup mlnimageops
+   */
   template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
 
@@ -85,7 +91,7 @@ namespace mln
   inline
   bool operator == (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (==)");
+    mln_trace("data::compare (==)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -97,7 +103,6 @@ namespace mln
     typedef fun::vv2b::eq<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs, rhs, F());
 
-    trace::exiting("data::compare (==)");
     return res;
   }
 
@@ -106,7 +111,7 @@ namespace mln
   inline
   bool operator < (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (<)");
+    mln_trace("data::compare (<)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -116,7 +121,6 @@ namespace mln
     typedef fun::vv2b::lt<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs_, rhs_, F());
 
-    trace::exiting("data::compare (<)");
     return res;
   }
 
@@ -125,7 +129,7 @@ namespace mln
   inline
   bool operator <= (const Image<L>& lhs_, const Image<R>& rhs_)
   {
-    trace::entering("data::compare (<=)");
+    mln_trace("data::compare (<=)");
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
@@ -135,7 +139,6 @@ namespace mln
     typedef fun::vv2b::le<mln_value(L), mln_value(R)> F;
     bool res = test::predicate(lhs_, rhs_, F());
 
-    trace::exiting("data::compare (<=)");
     return res;
   }
 

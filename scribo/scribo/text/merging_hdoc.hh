@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,16 +70,19 @@ namespace scribo
     using namespace mln;
 
 
-    /// \brief Merge text component in order to reconstruct text lines.
-    ///
-    /// \param[in] lines A line set.
-    ///
-    /// \return A new line set.  Line ids are preserved and merged
-    /// lines (not valid anymore) are tagged with line::Merged.  The
-    /// lines produced with this algorithm (valid lines) are tagged
-    /// with line::None. Line type is also set either with line::Text
-    /// or line::Punctuation.
-    //
+    /*! \brief Merge text component in order to reconstruct text lines
+        in old documents.
+
+	\param[in] lines A line set.
+
+	\return A new line set.  Line ids are preserved and merged
+	lines (not valid anymore) are tagged with line::Merged.  The
+	lines produced with this algorithm (valid lines) are tagged
+	with line::None. Line type is also set either with line::Text
+	or line::Punctuation.
+
+	\ingroup grptext
+    */
     template <typename L>
     line_set<L>
     merging_hdoc(const scribo::line_set<L>& lines);
@@ -99,7 +102,7 @@ namespace scribo
       void draw_box(image2d<T>& input, const box2d& b, T2 l)
       {
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = b.nrows(),
 	  ncols = b.ncols();
 	T* p_start = & input(b.pmin());
@@ -134,7 +137,7 @@ namespace scribo
 	if (pmax_col > input_ncols_1) pmax_col = input_ncols_1;
 
 	const unsigned
-	  delta = input.delta_index(dpoint2d(1,0)),
+	  delta = input.delta_offset(dpoint2d(1,0)),
 	  nrows = pmax_row - pmin_row + 1,
 	  ncols = pmax_col - pmin_col + 1;
 	T* p_start = & input.at_(pmin_row, pmin_col);
@@ -502,24 +505,6 @@ namespace scribo
 
 	const box2d& l_ted_ebbox = l_ted.ebbox();
 
-// 	std::cout << "top_row = " << top_row << " - bot_row = " << bot_row << std::endl;
-// 	std::cout << std::abs(bot_row - l_ted.baseline())
-// 		  << " - d "
-// 		  << std::abs(bot_row - l_ted.descent())
-// 		  << " - dd "
-// 		  << std::abs(bot_row - l_ted.ebbox().pmax().row())
-// 		  << " - "
-// 		  << std::abs(top_row - l_ted.meanline())
-// 		  << " - a "
-// 		  << std::abs(top_row - l_ted.ascent())
-// 		  << " - aa "
-// 		  << std::abs(top_row - l_ted.ebbox().pmin().row())
-// 		  << " - "
-// 		  << l_ted.ascent()
-// 		  << " - "
-// 		  << l_ted.descent()
-// 		  << std::endl;
-
 	if ((std::abs(bot_row - l_ted.baseline()) < 5
 	     || std::abs(bot_row - l_ted_ebbox.pmax().row()) < 5)
 	    &&
@@ -551,13 +536,13 @@ namespace scribo
 	  if already merged
 	    continue
 
-	    ///
-	    /// x-----------x
-	    /// |           |
-	    /// x     x     x
-	    /// |           |
-	    /// x-----------x
-	    ///
+
+	     x-----------x
+	     |           |
+	     x     x     x
+	     |           |
+	     x-----------x
+
 
 	    Set labels <- Every labels corresponding to the colliding bounding
 	                  boxes (uses only the 7 sites detailled above).
@@ -761,30 +746,17 @@ namespace scribo
 		    l = do_union(lines, l, mc,  parent);
 		  // }
 
-//		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
-
-		  /// Merge is perform if the current line is a
-		  /// petouille considered as a line.
-// 		  if ((std::abs(lines(l).ascent() - lines(mc).ascent()) >= 5)
-// 		      || (std::abs(lines(l).descent() - lines(mc).descent()) >= 5))
-// 		      continue;
-
-// 		  // FIXME: Is it valid?
-// 		  // A text line is included in another text line.
-// 		  // They are merged.
-// 		  //
-// 		  l_ = do_union(lines, mc, l, parent);
-// 		  draw_box(billboard, lines(l_).ebbox(), l_);
-
 # ifndef SCRIBO_NDEBUG
  		  // Log:
  		  draw_box(log, b, 126);
 # endif // ! SCRIBO_NDEBUG
 		}
 
-		else  // FIXME: Remove!  since included in a non-text-line, so not drawn, so inclusion impossible!!!!!!!!!!
+		else  // FIXME: Remove!  since included in a
+		      // non-text-line, so not drawn, so inclusion
+		      // impossible!!!!!!!!!!
 		{
-		  std::cout << "error: should NOT happen (a text line included in a NON-text-line (so not drawn!!!)" << std::endl;
+		  std::cerr << "error: should NOT happen (a text line included in a NON-text-line (so not drawn!!!)" << std::endl;
 		  ++count_txtline_IN_junk;
 
 		  // a non-text-line (probably a drawing or a frame) includes a text line
@@ -973,32 +945,7 @@ namespace scribo
 	}
 
 
-// 	std::cout
-// 	  << "   new txtline        = " << count_new_txtline        << std::endl
-// 	  << "   comp IN txtline    = " << count_comp_IN_txtline    << std::endl
-// 	  << "   2 lines merge      = " << count_two_lines_merge    << std::endl
-// 	  << "   comp HITS txtline  = " << count_comp_HITS_txtline  << std::endl
-// 	  << "   txtline IN junk    = " << count_txtline_IN_junk    << std::endl
-// 	  << "   txtline IN txtline = " << count_txtline_IN_txtline << std::endl
-// 	  << "   WTF!               = " << count_WTF << std::endl;
-
-
 	(void) ith_pass;
-// 	if (ith_pass == 1)
-// 	{
-// 	  mln::io::pgm::save(log, "log_1.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
-// 	}
-// 	else if (ith_pass == 2)
-// 	{
-// 	  mln::io::pgm::save(log, "log_2.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
-// 	}
-// 	else if (ith_pass == 3)
-// 	{
-// 	  mln::io::pgm::save(log, "log_3.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
-// 	}
       }
 
 
@@ -1052,9 +999,6 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-// 	mln::util::timer t;
-
-
 	// Setting lines as text lines according to specific criterions.
 	for_all_lines(l, lines)
 	  if (looks_like_a_text_line(lines(l)))
@@ -1062,13 +1006,9 @@ namespace scribo
 
 
 	// First pass
-// 	t.start();
 	one_merge_pass(1, input_domain, v, lines, parent);
-// 	float ts = t.stop();
-// 	std::cout << "time " << ts << std::endl;
 
-
-//	lines.force_stats_update();
+	//lines.force_stats_update();
 
 	// Sort lines by bbox.nelements() and ids again!
 	// line may have grown differently since the first pass.
@@ -1076,10 +1016,7 @@ namespace scribo
 
 
 	// Second pass
-// 	t.start();
 	one_merge_pass(2, input_domain, v, lines, parent); // <- last pass
-// 	ts = t.stop();
-// 	std::cout << "time " << ts << std::endl;
 
 	lines.force_stats_update();
 
@@ -1098,15 +1035,9 @@ namespace scribo
     {
       using namespace mln;
 
-//       mln::util::timer t;
-//       t.start();
-
       scribo::line_set<L> output
 	= internal::draw_boxes(lines.components().labeled_image().domain(),
 			       lines);
-//       float ts = t.stop();
-//       std::cout << ts << std::endl;
-
       return output;
     }
 

@@ -50,18 +50,16 @@ namespace scribo
 
     using namespace mln;
 
-    /// Draw a list of bounding box links. Draw links from the bounding
-    /// box centers.
+    /// \brief Draw a list of bounding box links.
     ///
-    /// \param[in,out] input_ An image where to draw.
-    /// \param[in] bboxes Bounding boxes.
-    /// \param[in] links Bounding box links.
+    /// \param[in,out] input An image where to draw.
+    /// \param[in] link component links.
     /// \param[in] value Value used to draw links.
     /// \param[in] anchor Anchor from where the links are drawn.
     //
     template <typename I, typename L>
     void
-    bounding_box_links(Image<I>& input_,
+    bounding_box_links(Image<I>& input,
 		       const object_links<L>& link,
 		       const mln_value(I)& value,
 		       anchor::Type anchor);
@@ -72,24 +70,26 @@ namespace scribo
     //
     template <typename I, typename L>
     void
-    bounding_box_links(Image<I>& input_,
+    bounding_box_links(Image<I>& input,
 		       const object_links<L>& link,
 		       const mln_value(I)& value);
 
 
-    /// Draw left, right and validated lists of bounding box links.
-    /// Draw from anchors.
+    /// \brief Draw left, right and validated lists of bounding box
+    /// links.
     ///
-    /// \param[in,out] input_ An image where to draw.
-    /// \param[in] left_link Bounding box left links.
-    /// \param[in] right_link Bounding box right links.
+    /// \param[in,out] input An image where to draw.
+    /// \param[in] left_link Component's left links.
+    /// \param[in] right_link Component's right links.
     /// \param[in] left_link_value Value used to draw left links.
     /// \param[in] right_link_value Value used to draw right links.
     /// \param[in] validated_link_value Value used to draw validated links.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    //
     template <typename I, typename L>
     inline
     void
-    bounding_box_links(Image<I>& input_,
+    bounding_box_links(Image<I>& input,
 		       const object_links<L>& left_link,
 		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
@@ -98,18 +98,18 @@ namespace scribo
 		       anchor::Type anchor);
 
 
-    /// Draw a graph of bounding box links.
+    /// \brief Draw a graph of bounding box links.
     /// Draw from bounding box centers.
     ///
-    /// \param[in,out] input_ An image where to draw.
-    /// \param[in] bboxes Bounding boxes.
-    /// \param[in] g_ The link graph.
+    /// \param[in,out] input An image where to draw.
+    /// \param[in] g The link graph.
     /// \param[in] link_value The value used to draw the links.
+    //
     template <typename I, typename G>
     inline
     void
-    bounding_box_links(Image<I>& input_,
-		       const Graph<G>& g_,
+    bounding_box_links(Image<I>& input,
+		       const Graph<G>& g,
 		       const mln_value(I)& link_value);
 
 
@@ -215,7 +215,7 @@ namespace scribo
 		       const mln_value(I)& value,
 		       anchor::Type anchor)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
 
       I& input = exact(input_);
 
@@ -232,7 +232,6 @@ namespace scribo
 	  mln::draw::line(input, p1, p2, value);
 	}
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 
@@ -258,7 +257,7 @@ namespace scribo
 		       const mln_value(I)& validated_link_value,
 		       anchor::Type anchor)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
 
       I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -303,7 +302,6 @@ namespace scribo
 
       }
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 
@@ -315,14 +313,13 @@ namespace scribo
 		       const Graph<G>& g,
 		       const mln_value(I)& link_value)
     {
-      trace::entering("scribo::draw::bounding_box_links");
+      mln_trace("scribo::draw::bounding_box_links");
       mln_precondition(exact(input).is_valid());
 
 
       internal::draw_graph_edges_functor<I,G> f(exact(input), link_value);
       mln::canvas::browsing::depth_first_search(g, f);
 
-      trace::exiting("scribo::draw::bounding_box_links");
     }
 
 

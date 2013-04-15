@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +51,7 @@ namespace mln
     namespace dicom
     {
 
-      /*! Load a DICOM file in a Milena image.
+      /*! \brief Load a DICOM file in a Milena image.
 
           \param[out] ima A reference to the image which will receive
           data.
@@ -60,8 +60,9 @@ namespace mln
 
 	  Common compilation flags to link to gdcm if this file is used:
 
-	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib
+	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8
 
+	  \ingroup iodicom
        */
       template <typename I>
       void load(Image<I>& ima,
@@ -74,9 +75,8 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::gdcm::load");
+	mln_trace("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
@@ -84,9 +84,8 @@ namespace mln
       inline
       image3d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::gdcm::load");
+	mln_trace("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
@@ -96,7 +95,7 @@ namespace mln
       void load(Image<I>& ima_,
 		const std::string& filename)
       {
-	trace::entering("mln::io::dicom::load");
+	mln_trace("mln::io::dicom::load");
 
 	I& ima = exact(ima_);
 
@@ -182,9 +181,8 @@ namespace mln
 	  ima(p) = v;
 	}
 
-	delete(dataBuffer);
+	delete[] dataBuffer;
 
-	trace::exiting("mln::io::dicom::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

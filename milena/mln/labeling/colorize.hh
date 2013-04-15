@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -144,7 +144,7 @@ namespace mln
 
 	if (ntries == nelements)
 	{
-	  trace::warning("labeling::colorize - Can't find a new unique color. Returning black.");
+	  mln_trace_warning("labeling::colorize - Can't find a new unique color. Returning black.");
 	  return literal::black;
 	}
 
@@ -191,7 +191,7 @@ namespace mln
 	     const Image<L>& input,
 	     const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::colorize");
+      mln_trace("labeling::colorize");
       mln_precondition(exact(input).is_valid());
       // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
@@ -204,8 +204,8 @@ namespace mln
       if (diff_size < 0)
       {
 	srand(1);
+	unsigned i = f.size();
 	f.resize(label_count);
-	unsigned i = f.size() + diff_size;
 	// We want to treat comp 0 differently since it is the background.
 	if (i == 0)
 	{
@@ -218,7 +218,6 @@ namespace mln
       mln_assertion(f.size() >= (label_count));
       mln_ch_value(L, V) output = data::transform(input, f);
 
-      trace::exiting("labeling::colorize");
       return output;
     }
 
@@ -228,7 +227,7 @@ namespace mln
     colorize(const V& value,
 	     const Image<L>& input)
     {
-      trace::entering("labeling::colorize");
+      mln_trace("labeling::colorize");
       mln_precondition(exact(input).is_valid());
 
       accu::stat::max<mln_value(L)> accu;
@@ -236,7 +235,6 @@ namespace mln
 
       mln_ch_value(L,V) output = colorize(value, input, nlabels);
 
-      trace::exiting("labeling::colorize");
       return output;
     }
 

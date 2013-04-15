@@ -74,7 +74,7 @@ namespace mln
 	mln_concrete(I)
 	gradient_on_function(const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
-	  trace::entering("morpho::elementary::impl::gradient_on_function");
+	  mln_trace("morpho::elementary::impl::gradient_on_function");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -97,7 +97,6 @@ namespace mln
 	      output(p) = a.second() - a.first();
 	    }
 
-	  trace::exiting("morpho::elementary::impl::gradient_on_function");
 	  return output;
 	}
 
@@ -105,7 +104,7 @@ namespace mln
 	mln_concrete(I)
 	gradient_on_set(const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
-	  trace::entering("morpho::elementary::impl::gradient_on_set");
+	  mln_trace("morpho::elementary::impl::gradient_on_set");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -139,7 +138,6 @@ namespace mln
 		    }
 	      }
 
-	  trace::exiting("morpho::elementary::impl::gradient_on_set");
 	  return output;
 	}
 
@@ -148,7 +146,7 @@ namespace mln
 	mln_concrete(I)
 	gradient_on_function_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
-	  trace::entering("morpho::elementary::impl::gradient_on_function_fastest");
+	  mln_trace("morpho::elementary::impl::gradient_on_function_fastest");
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
@@ -172,7 +170,6 @@ namespace mln
 	      p_out.val() = a.second() - a.first();
 	    }
 
-	  trace::exiting("morpho::elementary::impl::gradient_on_function_fastest");
 	  return output;
 	}
 
@@ -240,12 +237,11 @@ namespace mln
       mln_concrete(I)
 	gradient(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::gradient");
+	mln_trace("morpho::elementary::gradient");
 
 	internal::gradient_tests(input, nbh);
 	mln_concrete(I) output = internal::gradient_dispatch(input, nbh);
 	
-	trace::exiting("morpho::elementary::gradient");
 	return output;
       }
 

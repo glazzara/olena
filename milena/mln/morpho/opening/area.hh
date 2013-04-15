@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace opening
     {
 
-      /// Morphological area opening.
+      /*! \brief Morphological area opening.
+       *
+       * \ingroup mlnmorphoopening
+       */
       template <typename I, typename N>
       mln_concrete(I)
       area(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -58,14 +62,13 @@ namespace mln
       area(const Image<I>& input, const Neighborhood<N>& nbh,
 	   unsigned lambda)
       {
-	trace::entering("morpho::opening::area");
+	mln_trace("morpho::opening::area");
 
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = opening::algebraic(input, nbh, attribute::card<I>(), lambda);
 
-	trace::exiting("morpho::opening::area");
 	return output;
       }
 

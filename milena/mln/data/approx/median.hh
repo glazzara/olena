@@ -111,7 +111,7 @@ namespace mln
       mln_concrete(I)
       median(const Image<I>& input, const win::rectangle2d& win)
       {
-	trace::entering("data::approx::median");
+	mln_trace("data::approx::median");
 
 	mln_concrete(I) output;
 
@@ -121,7 +121,6 @@ namespace mln
 	win::vline2d win2(win.height());
 	output = data::median(output, win2);
 
-	trace::exiting("data::approx::median");
 	return output;
       }
 
@@ -131,7 +130,7 @@ namespace mln
       mln_concrete(I)
       median(const Image<I>& input, const win::disk2d& win)
       {
-	trace::entering("data::approx::median");
+	mln_trace("data::approx::median");
 
 	const unsigned len = win.diameter() / 3 + 1;
 	mln_concrete(I) output;
@@ -148,7 +147,6 @@ namespace mln
 	win::vline2d win4(len);
 	output = data::median(output, win4);
 
-	trace::exiting("data::approx::median");
 	return output;
       }
 

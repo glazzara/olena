@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +38,7 @@
 # include <iostream>
 # include <algorithm>
 
+# include <mln/core/alias/box1d.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/iterator.hh>
@@ -48,34 +49,14 @@
 namespace mln
 {
 
-  namespace util
-  {
-
-    /// Forward declaration.
-    template <typename T>
-    class array;
-
-  } // end of namespace mln::util
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename T1, typename T2>
-      void
-      from_to_(const util::array<T1>& from, util::array<T2>& to);
-
-      template <typename T1, typename T2>
-      void
-      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+  // Forward declarations.
+  namespace fun {
+    namespace i2v {
+      template <typename T> class array;
+    }
+  }
+  template <typename V> struct image1d;
+  // End of forward declarations
 
 
   namespace util
@@ -97,7 +78,7 @@ namespace mln
     //
     template <typename T>
     class array
-      : public fun::internal::selector_from_result_<T, array<T> >::ret
+      : public mln::fun::internal::selector_from_result_<T, array<T> >::ret
 
     // public Function_v2v< mln::util::array<T> >
     {
@@ -215,15 +196,40 @@ namespace mln
 
 
     /// Operator<<.
+    /// \relates util::array
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
 			     const array<T>& a);
 
     /// Operator==
+    /// \relates util::array
     template <typename T>
     bool operator==(const array<T>& lhs,
 		    const array<T>& rhs);
 
+
+    /// \cond INTERNAL_API
+    /// Conversion: array -> array
+    template <typename T1, typename T2>
+    void
+    from_to_(const array<T1>& from, array<T2>& to);
+
+    /// Conversion: array<T> -> fun::i2v::array<T>
+    template <typename T>
+    inline
+    void
+    from_to_(const array<T>& from, fun::i2v::array<T>& to);
+
+    /// Conversion: array<T> -> fun::i2v::array<U>
+    template <typename T, typename U>
+    inline
+    void
+    from_to_(const array<T>& from, fun::i2v::array<U>& to);
+
+    ///Conversion: util::array -> image1d.
+    template <typename V, typename T>
+    void from_to_(const util::array<V>& from, image1d<T>& to);
+    /// \endcond
 
     // array_fwd_iter<T>
 
@@ -380,40 +386,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename T1, typename T2>
-      void
-      from_to_(const util::array<T1>& from, util::array<T2>& to)
-      {
-        to.resize(from.nelements());
-
-        for (unsigned i = 0; i < from.nelements(); ++i)
-	  to[i] = convert::to<T2>(from[i]);
-      }
-
-      template <typename T1, typename T2>
-      void
-      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to)
-      {
-        to.resize(from.size());
-
-        for (unsigned i = 0; i < from.size(); ++i)
-	  to[i] = convert::to<T2>(from(i));
-      }
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
   namespace util
@@ -602,6 +574,44 @@ namespace mln
     array<T>::memory_size() const
     {
       return sizeof(*this) + nelements() * sizeof(T);
+    }
+
+
+    // Conversions
+
+    template <typename T1, typename T2>
+    void
+    from_to_(const array<T1>& from, array<T2>& to)
+    {
+      to.resize(from.nelements());
+
+      for (unsigned i = 0; i < from.nelements(); ++i)
+	to[i] = convert::to<T2>(from[i]);
+    }
+
+    template <typename T>
+    void
+    from_to_(const array<T>& from, fun::i2v::array<T>& to)
+    {
+      to = fun::i2v::array<T>(from);
+    }
+
+    template <typename T, typename U>
+    void
+    from_to_(const array<T>& from, fun::i2v::array<U>& to)
+    {
+      to.resize(from.nelements());
+      for (unsigned i = 0; i < from.nelements(); ++i)
+	to(i) = convert::to<U>(from[i]);
+    }
+
+    template <typename V, typename T>
+    void
+    from_to_(const array<V>& from, image1d<T>& to)
+    {
+      to.init_(make::box1d(from.nelements()));
+      for (unsigned i = 0; i < from.nelements(); ++i)
+	from_to(from[i], to(point1d(i)));
     }
 
 

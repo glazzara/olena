@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,9 @@ namespace mln
   | fwd_pixter3d<I>.  |
   `------------------*/
 
-  /// Forward pixel iterator on a 3-D image with border.
+  /*!
+    \brief Forward pixel iterator on a 3-D image with border.
+  */
   template <typename I>
   class fwd_pixter3d
     : public internal::forward_pixel_iterator_base_< I, fwd_pixter3d<I> >
@@ -58,11 +61,13 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     fwd_pixter3d(I& image);
 
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
     /// Extra code for start().
     void start_();
+    /// \endcond
 
   private:
 
@@ -95,7 +100,9 @@ namespace mln
   | bkd_pixter3d<I>.  |
   `------------------*/
 
-  /// Backward pixel iterator on a 3-D image with border.
+  /*!
+    \brief Backward pixel iterator on a 3-D image with border.
+  */
   template <typename I>
   class bkd_pixter3d
     : public internal::backward_pixel_iterator_base_< I, bkd_pixter3d<I> >
@@ -110,11 +117,13 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     bkd_pixter3d(I& image);
 
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
     /// Extra code for start().
     void start_();
+    /// \endcond
 
   private:
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +36,7 @@
 
 # include <mln/util/tree.hh>
 # include <mln/util/tree_fast.hh>
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 
 
 namespace mln
@@ -89,14 +90,13 @@ namespace mln
     tree_fast<T>
     tree_to_fast(tree<T>& input)
     {
-      trace::entering("util::tree_to_fast");
+      mln_trace("util::tree_to_fast");
 
       unsigned i = 0;
       tree_fast<T> tree (input.root ()->elt ());
 
       impl::tree_to_fast_(input.root (), tree, 0, i);
 
-      trace::exiting("util::tree_to_fast");
       return tree;
     }
 

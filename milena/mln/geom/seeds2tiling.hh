@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,16 +47,18 @@ namespace mln
   namespace geom
   {
 
-    /// Take a labeled image \p ima_ with seeds and extend them
-    /// until creating tiles.
-    ///
-    /// \param[in,out] ima_ The labeled image with seed.
-    /// \param[in] nbh The neighborhood to use on this algorithm.
-    ///
-    /// \return A tiled image.
-    ///
-    /// \pre \p ima_ has to be initialized.
-    //
+    /*! \brief Take a labeled image \p ima_ with seeds and extend them
+      until creating tiles.
+
+      \param[in,out] ima_ The labeled image with seed.
+      \param[in] nbh The neighborhood to use on this algorithm.
+
+      \return A tiled image.
+
+      \pre \p ima_ has to be initialized.
+
+      \ingroup mlngeom
+    */
     template <typename I, typename N>
     mln_concrete(I) seeds2tiling (const Image<I>& ima_,
 				  const Neighborhood<N>& nbh);
@@ -77,7 +80,7 @@ namespace mln
       seeds2tiling (const Image<I>& ima_,
 		    const Neighborhood<N>& nbh_)
       {
-	trace::entering("geom::impl::seed2tiling");
+	mln_trace("geom::impl::seed2tiling");
 
 	mln_precondition(exact(ima_).is_valid());
 	mln_precondition(exact(nbh_).is_valid());
@@ -121,7 +124,6 @@ namespace mln
 	    }
 	}
 
-	trace::exiting("geom::impl::seed2tiling");
 	return out;
       }
 
@@ -135,14 +137,13 @@ namespace mln
     inline
     mln_concrete(I) seeds2tiling(const Image<I>& ima_, const Neighborhood<N>& nbh)
     {
-      trace::entering("geom::seed2tiling");
+      mln_trace("geom::seed2tiling");
 
       mln_precondition(exact(ima_).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
       mln_concrete(I) output = impl::seeds2tiling(ima_, nbh);
 
-      trace::exiting("geom::seed2tiling");
       return output;
     }
 

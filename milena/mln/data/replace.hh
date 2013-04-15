@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,11 +45,14 @@ namespace mln
   namespace data
   {
 
-    /*! Replace \p old_value by \p new_value in the image \p input
+    /*! \brief Replace \p old_value by \p new_value in the image \p
+     *  input
      *
      * \param[in] input The input image.
      * \param[in] old_value The value to be replaced...
      * \param[in] new_value ...by this one.
+     *
+     * \ingroup mlndata
      */
     template <typename I>
     void replace(Image<I>& input,
@@ -68,13 +72,12 @@ namespace mln
 	void replace_(Image<I>& input_, const mln_value(I)& old_value,
 		      const mln_value(I)& new_value)
 	{
-	  trace::entering("data::impl::generic::replace");
+	  mln_trace("data::impl::generic::replace");
 	  I& input = exact(input_);
 
 	  data::fill((input | (pw::value(input) == pw::cst(old_value))).rw(),
 		      new_value);
 
-	  trace::exiting("data::impl::generic::replace");
 	}
 
       } // end of namespace mln::data::impl::generic
@@ -88,13 +91,12 @@ namespace mln
     void replace(Image<I>& input,
 		 const mln_value(I)& old_value, const mln_value(I)& new_value)
     {
-      trace::entering("data::replace");
+      mln_trace("data::replace");
 
       mln_precondition(exact(input).is_valid());
 
       impl::generic::replace_<I>(exact(input), old_value, new_value);
 
-      trace::exiting("data::replace");
     }
 
 

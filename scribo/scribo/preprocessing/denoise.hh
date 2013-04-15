@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,10 +49,12 @@ namespace scribo
     /// \param[in] input    A binary image. True for objects, False for
     ///                     background.
     /// \param[in] nbh      Neighborhood to use for denoising.
-    /// \param[in] min_card Minimum component cardinality to not be
-    ///                     considered as noise.
+    /// \param[in] fg_min_card Minimum component cardinality to not be
+    ///                        considered as noise in the foreground.
+    /// \param[in] bg_min_card Minimum component cardinality to not be
+    ///                        considered as noise in the foreground.
     ///
-    /// \output A binary image with the same domain as \p input. All
+    /// \return A binary image with the same domain as \p input. All
     /// small components have been removed.
     //
     template <typename I, typename N>
@@ -79,7 +82,7 @@ namespace scribo
     denoise(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	    unsigned fg_min_card, unsigned bg_min_card)
     {
-      trace::entering("scribo::preprocessing::denoise");
+      mln_trace("scribo::preprocessing::denoise");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -91,7 +94,6 @@ namespace scribo
       output = denoise_fg(input, nbh, fg_min_card);
       output = denoise_bg(output, nbh, bg_min_card);
 
-      trace::exiting("scribo::preprocessing::denoise");
       return output;
     }
 

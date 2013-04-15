@@ -61,7 +61,7 @@ namespace mln
     p_set<mln_site(Sl)>
     inter(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
-      trace::entering("set::inter");
+      mln_trace("set::inter");
 
       typedef mln_site(Sl) P;
       mlc_converts_to(mln_psite(Sr), P)::check(); 
@@ -75,7 +75,6 @@ namespace mln
       p_set<P> s;
       convert::from_to(si, s);
 
-      trace::exiting("set::inter");
       return s;
     }
 

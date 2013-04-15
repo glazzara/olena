@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,7 @@ namespace mln
 
 	/// \brief Convert a rgb8 value to a rgn, n < 8.
 	///
-	/// \param[in] v the rgb8 value to convert.
+	/// \param[in] c the rgb8 value to convert.
 	///
 	/// Conversion is done by computing the size by which we
 	/// divide each rgb component.
@@ -74,7 +75,7 @@ namespace mln
 
       /// \brief Convert a rgb8 value to a rgn, n < 8.
       ///
-      /// \param n defines the output quantification used for the transformation.
+      /// \param c defines the output quantification used for the transformation.
       ///
       /// \ingroup modfunv2v
       //

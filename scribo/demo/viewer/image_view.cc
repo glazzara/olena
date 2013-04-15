@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,13 +35,13 @@ ImageView::wheelEvent(QWheelEvent* event)
     else
       sc = 1 / (1 - degrees / 100);
 
-    QPointF center = mapToScene(width() / 2, height() / 2);
-    QPointF mouse = mapToScene(event->pos());
+    // QPointF center = mapToScene(width() / 2, height() / 2);
+    // QPointF mouse = mapToScene(event->pos());
 
-    qreal dx = (mouse.x() - center.x());
-    qreal dy = (mouse.y() - center.y());
-    QPointF newCenter = QPointF (mouse.x() - dx / sc,
-				 mouse.y() - dy / sc);
+    // qreal dx = (mouse.x() - center.x());
+    // qreal dy = (mouse.y() - center.y());
+    // QPointF newCenter = QPointF (mouse.x() - dx / sc,
+    // 				 mouse.y() - dy / sc);
     scale(sc, sc);
     scaleUpdate();
   }

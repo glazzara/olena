@@ -70,12 +70,13 @@ endif HAVE_TESSERACT
 			       $(MAGICKXX_LDFLAGS)
 
 
-    utilexec_PROGRAMS	    	+= text_in_picture_neg
-    text_in_picture_neg_CPPFLAGS = $(AM_CPPFLAGS) \
-			       	   $(MAGICKXX_CPPFLAGS)
-    text_in_picture_neg_LDFLAGS  = $(AM_LDFLAGS) \
-		      		   -lpthread \
-			       	   $(MAGICKXX_LDFLAGS)
+    utilexec_PROGRAMS	    	 += text_in_picture_dual
+    text_in_picture_dual_SOURCES  = text_in_picture_dual.cc
+    text_in_picture_dual_CPPFLAGS = $(AM_CPPFLAGS) \
+				    $(MAGICKXX_CPPFLAGS)
+    text_in_picture_dual_LDFLAGS  = $(AM_LDFLAGS) \
+				    -lpthread \
+				    $(MAGICKXX_LDFLAGS)
 
 
 if HAVE_TESSERACT
@@ -87,7 +88,6 @@ if HAVE_TESSERACT
 			       		   $(MAGICKXX_CPPFLAGS) \
 					   -I$(top_builddir)
     text_recognition_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
-		      	       		   -lpthread \
 	  			           $(TESSERACT_LDFLAGS) \
 			       		   $(TIFF_LDFLAGS) \
 					   $(MAGICKXX_LDFLAGS)

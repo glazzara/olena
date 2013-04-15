@@ -65,6 +65,7 @@ namespace scribo
 
     Paragraph ids start from 1.
 
+    \ingroup grpstruct
    */
   template <typename L>
   class paragraph_set : public Serializable<paragraph_set<L> >
@@ -114,6 +115,13 @@ namespace scribo
     template <typename L>
     scribo::paragraph_set<L>
     paragraph(const scribo::line_set<L>& lines);
+
+
+    /// \brief Construct a paragraph set from line links information.
+    template <typename L>
+    scribo::paragraph_set<L>
+    paragraph(const line_links<L>& llinks);
+
 
   } // end of namespace scribo::make
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,7 @@
 
 /// \file
 ///
-/// Split the background and the foreground.
+/// \brief Split the background and the foreground.
 
 # include <mln/core/macros.hh>
 # include <mln/core/image/image2d.hh>
@@ -89,7 +89,7 @@ namespace scribo
      */
     template <typename I>
     mln::util::couple<mln_concrete(I), mln_concrete(I)>
-    split_bg_fg(const Image<I>& input_, unsigned lambda, unsigned delta);
+    split_bg_fg(const Image<I>& input, unsigned lambda, unsigned delta);
 
 
 
@@ -113,7 +113,7 @@ namespace scribo
 	    image2d< value::int_u<n> >& g,
 	    image2d< value::int_u<n> >& b)
       {
-	trace::entering("scribo::preprocessing::internal::split");
+	mln_trace("scribo::preprocessing::internal::split");
 	initialize(r, input);
 	initialize(g, input);
 	initialize(b, input);
@@ -145,7 +145,6 @@ namespace scribo
 	  p_b.val() = c.blue();
 	}
 
-	trace::exiting("scribo::preprocessing::internal::split");
       }
 
 
@@ -155,7 +154,7 @@ namespace scribo
 	    const image2d< value::int_u<n> >& g,
 	    const image2d< value::int_u<n> >& b)
       {
-	trace::entering("scribo::preprocessing::internal::merge");
+	mln_trace("scribo::preprocessing::internal::merge");
 	image2d< value::rgb<n> > output(r.domain());
 
 	//       mln_piter(box2d) p(output.domain());
@@ -184,7 +183,6 @@ namespace scribo
 	  c.blue()  = p_b.val();
 	}
 
-	trace::exiting("scribo::preprocessing::internal::merge");
 	return output;
       }
 
@@ -245,7 +243,7 @@ namespace scribo
       background_analyze(const image2d<rgb8>& input,
 			 unsigned lambda, unsigned delta)
       {
-	trace::entering("scribo::preprocessing::internal::background_analyze");
+	mln_trace("scribo::preprocessing::internal::background_analyze");
 
 	image2d<value::int_u8> r, g, b;
 	split(input, r, g, b);
@@ -298,7 +296,6 @@ namespace scribo
 	data::fill((output | pw::value(mask)).rw(),
 		   data::transform(lab, m));
 
-	trace::exiting("scribo::preprocessing::internal::toggle");
 	return output;
       }
 
@@ -314,7 +311,7 @@ namespace scribo
     mln::util::couple<mln_concrete(I), mln_concrete(I)>
     split_bg_fg(const Image<I>& input_, unsigned lambda, unsigned delta)
     {
-      trace::entering("scribo::preprocessing::split_bg_fg");
+      mln_trace("scribo::preprocessing::split_bg_fg");
 
       using namespace mln;
 
@@ -328,7 +325,6 @@ namespace scribo
 	bg = internal::background_analyze(input, lambda, delta);
       image2d<value::rgb8> fg = internal::inverted_diff_abs(input, bg);
 
-      trace::exiting("scribo::preprocessing::split_bg_fg");
       return mln::make::couple(bg, fg);
     }
 

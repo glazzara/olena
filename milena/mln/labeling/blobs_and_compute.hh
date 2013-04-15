@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +38,7 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/util/couple.hh>
 
 namespace mln
 {
@@ -71,8 +72,11 @@ namespace mln
     namespace internal
     {
 
-      /// Functor not computing anything. To be passed to the labeling
-      /// blobs canvas.
+      /*!
+	\internal
+	\brief Functor not computing anything.
+	To be passed to the labeling  blobs canvas.
+      */
       template <typename L, typename A>
       struct compute_functor
       {
@@ -160,7 +164,7 @@ namespace mln
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu)
     {
-      trace::entering("labeling::blobs_and_compute");
+      mln_trace("labeling::blobs_and_compute");
 
       (void) accu;
       mlc_equal(mln_trait_image_kind(I),
@@ -177,7 +181,6 @@ namespace mln
 	result = make::couple(output,
 			      make::couple(functor.result_, functor.accus_));
 
-      trace::exiting("labeling::blobs_and_compute");
       return result;
     }
 

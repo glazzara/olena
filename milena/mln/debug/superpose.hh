@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,27 +47,31 @@ namespace mln
   namespace debug
   {
 
-    /// Superpose two images.
-    ///
-    /// \param[in] input_	An image. Its value type must be convertible
-    ///				toward value::rgb8 thanks to a conversion
-    ///				operator or convert::from_to.
-    /// \param[in] object_      A scalar or labeled image. Objects used for
-    ///                         superposition.
-    ///				have their pixel values different from 0.
-    /// \param[in] object_color The color used to draw the objects in
-    ///				\p object_.
-    ///
-    /// @pre \p input_ and \p object_ must have the same domain.
-    ///
-    /// \result A color image.
-    //
+    /*! \brief Superpose two images.
+
+        \param[in] input_	An image. Its value type must be convertible
+       				toward value::rgb8 thanks to a conversion
+       				operator or convert::from_to.
+        \param[in] object_      A scalar or labeled image. Objects used for
+                                superposition.
+       				have their pixel values different from 0.
+        \param[in] object_color The color used to draw the objects in
+       				\p object_.
+
+        @pre \p input_ and \p object_ must have the same domain.
+
+        \result A color image.
+
+	\ingroup mlndebug
+    */
     template <typename I, typename J>
     mln_ch_value(I,value::rgb8)
     superpose(const Image<I>& input_, const Image<J>& object_,
 	      const value::rgb8& object_color);
 
-    /// \overload
+    /*! \overload
+      \ingroup mlndebug
+     */
     template <typename I, typename J>
     mln_ch_value(I,value::rgb8)
     superpose(const Image<I>& input, const Image<J>& object);
@@ -79,7 +84,7 @@ namespace mln
     superpose(const Image<I>& input_, const Image<J>& object_,
 	      const value::rgb8& object_color)
     {
-      trace::entering("debug::superpose");
+      mln_trace("debug::superpose");
 
       const I& input = exact(input_);
       const J& object = exact(object_);
@@ -97,7 +102,6 @@ namespace mln
       data::fill((output | (pw::value(object) != pw::cst(literal::zero))).rw(),
 		  object_color);
 
-      trace::exiting("debug::superpose");
       return output;
     }
 

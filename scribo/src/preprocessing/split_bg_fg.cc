@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -46,10 +46,8 @@ const char *args_desc[][2] =
 
 int main(int argc, char *argv[])
 {
-  mln::trace::entering("main");
+  mln_trace("main");
   using namespace mln;
-
-  Magick::InitializeMagick(0);
 
   if (argc != 6)
     return scribo::debug::usage(argv,
@@ -68,5 +66,4 @@ int main(int argc, char *argv[])
   io::ppm::save(bg_fg.first(), argv[5]);
   io::ppm::save(bg_fg.second(), argv[4]);
 
-  mln::trace::exiting("main");
 }

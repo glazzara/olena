@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::extension_fun<I, F>.
+    /*!
+      \brief Data structure for \c mln::extension_fun<I, F>.
+    */
     template <typename I, typename F>
     struct data< extension_fun<I, F> >
     {
@@ -119,9 +121,11 @@ namespace mln
     /// Constructor from an image \p ima and a function \p fun.
     extension_fun(I& ima, const F& fun);
 
+    /// \cond INTERNAL_API
     /// Deferred initialization from an image \p ima and a function \p
     /// fun.
     void init_(I& ima, const F& fun);
+    /// \endcond
 
 
     /// Test if \p p is valid.  It returns always true, assuming that
@@ -143,6 +147,8 @@ namespace mln
   };
 
 
+  /// \cond INTERNAL_API
+
   // init_
 
   template <typename I, typename F, typename J>
@@ -151,7 +157,7 @@ namespace mln
   template <typename F, typename I>
   void init_(tag::extension_t, F& target, const extension_fun<I,F>& model);
 
-
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

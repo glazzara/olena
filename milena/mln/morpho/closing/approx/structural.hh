@@ -64,7 +64,7 @@ namespace mln
 	mln_concrete(I)
 	structural(const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("morpho::closing::approx::structural");
+	  mln_trace("morpho::closing::approx::structural");
 
 	  mln_precondition(exact(input).is_valid());
 	  mln_precondition(! exact(win).is_empty());
@@ -78,7 +78,6 @@ namespace mln
 
 	  mln_postcondition(output >= input);
 
-	  trace::exiting("morpho::closing::approx::structural");
 	  return output;
 	}
 

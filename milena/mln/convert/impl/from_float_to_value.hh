@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,122 +45,119 @@
 namespace mln
 {
 
-  namespace convert
-  {
+  /// \internal Conversion: float-> Value
+  template <typename V>
+  void from_to_(const float& from, Value<V>& to);
 
-      /// Conversion of a float \p from towards a value \p to.
-      template <typename V>
-      void
-      from_to(const float& from, Value<V>& to);
+  /// \internal Conversion: float-> unsigned
+  void from_to_(const float& from, unsigned& to);
+
+  /// \internal Conversion: float-> int
+  void from_to_(const float& from, int& to);
+
+  /// \internal Conversion: float-> short
+  void from_to_(const float& from, short& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
+  namespace convert
+  {
+
+    namespace impl
+    {
+
+      // Case 1:
+
+      template <typename V>
+      inline
+      void
+      from_float_to_value(const float&	          from,
+			  mln::value::Integer<V>& to)
       {
+	exact(to) = math::round<V>(from);
+      }
 
-	// Case 1:
+      // Case 2:
 
-	template <typename V>
-	inline
-	void
-	from_float_to_value(const float&	    from,
-			    mln::value::Integer<V>& to)
-	{
-	  exact(to) = math::round<V>()(from);
-	}
-
-	// Case 2:
-
-	template <typename V>
-	inline
-	void
-	from_float_to_value(const float&	      from,
-			    mln::value::Floating<V>&  to)
-	{
-	  exact(to) = from;
-	}
-
-
-	// Default: no conversion defined.
-
-	template <typename V>
-	inline
-	void
-	from_float_to_value(const float&	      from,
-			    Value<V>&		      to)
-	{
-	  (void) from;
-	  (void) to;
-	  mlc_abort(V)::check();
-	}
-
-      } // end of namespace mln::convert::impl
-
-
-      namespace internal
+      template <typename V>
+      inline
+      void
+      from_float_to_value(const float&              from,
+			  mln::value::Floating<V>&  to)
       {
-
-	template <typename V>
-	inline
-	void
-	from_float_to_value_dispatch(const float& from, Value<V>& to)
-	{
-	  impl::from_float_to_value(from, exact(to));
-	}
-
-      } // end of namespace mln::convert::internal
+	exact(to) = from;
+      }
 
 
-      namespace over_load
+      // Default: no conversion defined.
+
+      template <typename V>
+      inline
+      void
+      from_float_to_value(const float&	      from,
+			  Value<V>&	      to)
       {
+	(void) from;
+	(void) to;
+	mlc_abort(V)::check();
+      }
 
-	// Facades.
-
-
-	// float-> Value
-	template <typename V>
-	inline
-	void
-	from_to_(const float& from, Value<V>& to)
-	{
-	  internal::from_float_to_value_dispatch(from, to);
-	}
-
-	// float-> unsigned
-	inline
-	void
-	from_to_(const float&	    from,
-		 unsigned&	    to)
-	{
-	  mln_precondition(from >= 0);
-	  to = math::round<unsigned>()(from);
-	}
-
-	// float-> int
-	inline
-	void
-	from_to_(const float&	    from,
-		 int&		    to)
-	{
-	  to = math::round<int>()(from);
-	}
-
-	// float-> short
-	inline
-	void
-	from_to_(const float&	    from,
-		 short&		    to)
-	{
-	  to = math::round<short>()(from);
-	}
+    } // end of namespace mln::convert::impl
 
 
-      } // end of namespace mln::convert::over_load
+    namespace internal
+    {
 
-# endif // ! MLN_INCLUDE_ONLY
+      template <typename V>
+      inline
+      void
+      from_float_to_value_dispatch(const float& from, Value<V>& to)
+      {
+	impl::from_float_to_value(from, exact(to));
+      }
+
+    } // end of namespace mln::convert::internal
 
   } // end of namespace mln::convert
+
+
+  // float-> Value
+  template <typename V>
+  inline
+  void
+  from_to_(const float& from, Value<V>& to)
+  {
+    convert::internal::from_float_to_value_dispatch(from, to);
+  }
+
+  // float-> unsigned
+  inline
+  void
+  from_to_(const float& from, unsigned& to)
+  {
+    mln_precondition(from >= 0);
+    to = math::round<unsigned>(from);
+  }
+
+  // float-> int
+  inline
+  void
+  from_to_(const float&	from, int& to)
+  {
+    to = math::round<int>(from);
+  }
+
+  // float-> short
+  inline
+  void
+  from_to_(const float& from, short& to)
+  {
+    to = math::round<short>(from);
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

@@ -1,0 +1,17 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace win
+  {
+    struct sline3d
+    	   : line<grid::cube, 0, def::coord>
+    {
+      /// Constructor.
+      /// \param[in] length Length of the line.
+      /// \pre \p length is odd.
+      sline3d(unsigned length);
+    };
+  }
+}

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,10 @@ namespace mln
   | fwd_pixter2d<I>.  |
   `------------------*/
 
-  /// Forward pixel iterator on a 2-D image with border.
+  /*!
+    \internal
+    \brief Forward pixel iterator on a 2-D image with border.
+  */
   template <typename I>
   class fwd_pixter2d
     : public internal::forward_pixel_iterator_base_< I, fwd_pixter2d<I> >
@@ -57,6 +61,8 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     fwd_pixter2d(I& image);
 
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
@@ -75,6 +81,8 @@ namespace mln
     mln_qlf_value(I)* eor_;
 
     using super_::image_;
+
+    /// \endcond
   };
 
 
@@ -82,7 +90,10 @@ namespace mln
   | bkd_pixter2d<I>.  |
   `------------------*/
 
-  /// Backward pixel iterator on a 2-D image with border.
+  /*!
+    \internal
+    \brief Backward pixel iterator on a 2-D image with border.
+  */
   template <typename I>
   class bkd_pixter2d
     : public internal::backward_pixel_iterator_base_< I, bkd_pixter2d<I> >
@@ -97,6 +108,8 @@ namespace mln
     /// \param[in] image The image this pixel iterator is bound to.
     bkd_pixter2d(I& image);
 
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
 
@@ -115,6 +128,8 @@ namespace mln
     mln_qlf_value(I)* bor_;
 
     using super_::image_;
+
+    /// \endcond
   };
 
 

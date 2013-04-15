@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -107,9 +108,13 @@ namespace mln
     namespace internal
     {
 
-      /// A base class for point-wise images.
-      /// Parameter \p F is the image value type.
-      /// Parameter \p S is the image site set type.
+      /*!
+	\internal
+	\brief A base class for point-wise images.
+
+	Parameter \p F is the image value type.
+	Parameter \p S is the image site set type.
+      */
       template <typename F, typename S, typename E>
       class image_base
 	: public mln::internal::image_primary<mln_result(F), S, E >

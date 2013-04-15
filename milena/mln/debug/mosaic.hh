@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,8 @@ namespace mln
 
       \return a single image where all the input images are displayed
       as a mosaic.
+
+      \ingroup mlndebug
      */
     template <typename I>
     mln_concrete(I)
@@ -78,7 +81,7 @@ namespace mln
 	   unsigned n_horizontal,
 	   const mln_value(I)& bg)
     {
-      trace::entering("debug::mosaic");
+      mln_trace("debug::mosaic");
 
       mlc_is_a(I, Image)::check();
       mlc_equal(mln_domain(I), box2d)::check();
@@ -126,7 +129,6 @@ namespace mln
 	}
       }
 
-      trace::exiting("debug::mosaic");
       return output;
     }
 

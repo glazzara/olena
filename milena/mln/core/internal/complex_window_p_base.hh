@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,15 +66,18 @@ namespace mln
 
   namespace internal
   {
-    /** \brief Generic window centered on the face of a complex, based
-	on an pair of (forward and backward) complex iterators.  The
-	center (site) is part of the window.
+    /*!
+      \internal
+      \brief Generic window centered on the face of a complex, based
+      on an pair of (forward and backward) complex iterators.  The
+      center (site) is part of the window.
 
-	\tparam D The dimension of the complex.
-	\tparam G The type of the geometry functor of the complex.
-	\tparam F The underlying forward iterator type.
-	\tparam B The underlying backward iterator type.
-	\tparam E The exact type.  */
+      \tparam D The dimension of the complex.
+      \tparam G The type of the geometry functor of the complex.
+      \tparam F The underlying forward iterator type.
+      \tparam B The underlying backward iterator type.
+      \tparam E The exact type.
+    */
     template <unsigned D, typename G, typename F, typename B, typename E>
     class complex_window_p_base
       : public complex_window_base

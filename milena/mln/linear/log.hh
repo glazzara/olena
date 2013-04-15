@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /// \file
 ///
 /// Laplacian of Gaussian.
+/// \todo use doxygen to make reference to articles.
+
 
 # include <mln/linear/convolve.hh>
 # include <mln/make/w_window2d.hh>
@@ -41,22 +44,46 @@ namespace mln
   namespace linear
   {
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG_5x5  (Cf. Sonka et al., pages 85-86).
+      This is also a "mexican hat".
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_5x5(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 7x7  (Cf. Russ, p. 250).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_7x7(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 13x13  (Cf. Russ, p. 250).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_13x13(const Image<I>& input);
 
+    /*! \brief Laplacian of Gaussian.
+
+      LoG 17x17  (Cf. Sonka et al., pages 85-86).
+
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_ch_convolve(I, int)
     LoG_17x17(const Image<I>& input);
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -68,7 +95,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_5x5(const Image<I>& input)
     {
-      trace::entering("linear::LoG_5x5");
+      mln_trace("linear::LoG_5x5");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0, -1,  0,  0,
 		   +0, -1, -2, -1,  0,
@@ -76,7 +103,6 @@ namespace mln
 		   +0, -1, -2, -1,  0,
 		   +0,  0, -1,  0,  0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_5x5");
       return output;
     }
 
@@ -87,9 +113,9 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_7x7(const Image<I>& input)
     {
-      trace::entering("linear::LoG_7x7");
+      mln_trace("linear::LoG_7x7");
       mln_precondition(exact(input).is_valid());
-      int ws[] = { +0,  0, -1, -1, -1,  0,  0, 
+      int ws[] = { +0,  0, -1, -1, -1,  0,  0,
 		   +0, -1, -3, -3, -3, -1,  0,
 		   -1, -3,  0,  7,  0, -3, -1,
 		   -1, -3,  7, 24,  7, -3, -1,
@@ -97,7 +123,6 @@ namespace mln
 		   +0, -1, -3, -3, -3, -1,  0,
 		   +0,  0, -1, -1, -1,  0,  0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_7x7");
       return output;
     }
 
@@ -108,7 +133,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_13x13(const Image<I>& input)
     {
-      trace::entering("linear::LoG_13x13");
+      mln_trace("linear::LoG_13x13");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
 		   +0,  0,  0, -1, -1, -2, -2, -2, -1, -1,  0,  0,  0,
@@ -135,7 +160,7 @@ namespace mln
     mln_ch_convolve(I, int)
     LoG_17x17(const Image<I>& input)
     {
-      trace::entering("linear::LoG_17x17");
+      mln_trace("linear::LoG_17x17");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0,
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
@@ -155,7 +180,6 @@ namespace mln
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
 		   +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::LoG_17x17");
       return output;
     }
 

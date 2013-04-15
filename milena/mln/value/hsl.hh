@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,43 +33,23 @@
 #include <mln/value/int_u.hh>
 #include <mln/algebra/vec.hh>
 
-// Used in from_to
-#include <mln/fun/v2v/rgb_to_hsl.hh>
-
 
 namespace mln
 {
 
   // Forward declarations.
-  namespace value
-  {
-
-    template <typename H, typename S, typename L>
-    class hsl_;
-
+  namespace value {
+    namespace qt {
+      struct rgb32;
+    }
+    template <typename H, typename S, typename L> class hsl_;
   }
 
+} // end of namespace mln
 
 
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // rgb to hsl_
-      void
-      from_to_(const value::rgb<16>& from, value::hsl_<float,float,float>& to);
-
-      // rgb to hsl_
-      void
-      from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
+namespace mln
+{
 
   namespace trait
   {
@@ -201,9 +182,29 @@ namespace mln
 
 
     // FIXME: Use float01_8/float01_16 ?
-    typedef hsl_<float, float, float> hsl_f;
+    /*!
+      \class hsl_f
+      \headerfile <>
 
+      \brief HSL color based on float encoding.
+
+      \ingroup valuehsl
+    */
+    /// \cond ALIASES
+    typedef hsl_<float, float, float> hsl_f;
+    /// \endcond
+
+    /*!
+      \class hsl_d
+      \headerfile <>
+
+      \brief HSL color based on double encoding.
+
+      \ingroup valuehsl
+    */
+    /// \cond ALIASES
     typedef hsl_<double, double, double> hsl_d;
+    /// \endcond
 
 
     /// Print an hsl \p c into the output stream \p ostr.
@@ -251,6 +252,19 @@ namespace mln
     operator==(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
     /// \}
 
+
+    /// \cond INTERNAL_API
+    // Conversions
+
+    /// \internal Conversion: hsl -> qt::rgb32.
+    template <typename H, typename S, typename L>
+    void from_to_(const hsl_<H,S,L>& from, qt::rgb32& to);
+
+    /// \internal Conversion: hsl -> rgb8.
+    template <typename H, typename S, typename L>
+    void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
+    /// \endcond
+
   } // end of namespace mln::value
 
 
@@ -261,19 +275,31 @@ namespace mln
     namespace v2v
     {
 
-      template <typename T_hsl>
-      struct f_rgb_to_hsl_;
+       template <typename T_rgb>
+       struct f_hsl_to_rgb_;
 
-      typedef f_rgb_to_hsl_<value::hsl_f> f_rgb_to_hsl_f_t;
+       typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
+//       typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
 
-      extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
+       extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
+//       extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
 
     }
 
   }
 
+} // end of namespace mln
+
+
+// Used in from_to
+# include <mln/value/rgb.hh>
+# include <mln/fun/v2v/hsl_to_rgb.hh>
+
+
 # ifndef MLN_INCLUDE_ONLY
 
+namespace mln
+{
 
   namespace value
   {
@@ -380,32 +406,24 @@ namespace mln
 	  && lhs.lum() == rhs.lum();
     }
 
-  } // end of namespace mln::value
 
+    // Conversions
 
-  namespace convert
-  {
-
-    namespace over_load
+    template <typename H, typename S, typename L>
+    void from_to_(const hsl_<H,S,L>& from, qt::rgb32& to)
     {
+      rgb<8> v = fun::v2v::f_hsl_to_rgb_3x8(from);
+      to = v.to_equiv();
+    }
 
-      inline
-      void
-      from_to_(const value::rgb<16>& from, value::hsl_<float,float,float>& to)
-      {
-	to = fun::v2v::f_rgb_to_hsl_f(from);
-      }
+    template <typename H, typename S, typename L>
+    void
+    from_to_(const hsl_<H,S,L>& from, rgb<8>& to)
+    {
+      to = fun::v2v::f_hsl_to_rgb_3x8(from);
+    }
 
-      inline
-      void
-      from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to)
-      {
-	to = fun::v2v::f_rgb_to_hsl_f(from);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  } // end of namespace mln::value
 
 
 # endif // ! MLN_INCLUDE_ONLY

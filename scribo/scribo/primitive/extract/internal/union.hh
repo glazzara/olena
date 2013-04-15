@@ -27,7 +27,7 @@
 ///
 /// \brief Various utilities for image extraction
 ///
-/// \fixme To be cleanup
+/// FIXME: To be cleanup
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_INTERNAL_UNION_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_INTERNAL_UNION_HH
@@ -80,7 +80,7 @@ namespace scribo
 	{
 	  const unsigned nrows = input.nrows(), ncols = input.ncols();
 
-	  unsigned op, on, delta = input.delta_index(dpoint2d(1, 0));
+	  unsigned op, on, delta = input.delta_offset(dpoint2d(1, 0));
 
 	  data::fill(parent, 0);
 	  max_area = 0;
@@ -89,7 +89,7 @@ namespace scribo
 
 	    // row == 0 and col == 0
 
-	    op = input.index_of_point(point2d(0,0));
+	    op = input.offset_of_point(point2d(0,0));
 	    if (input.element(op) == lab)
 	    {
 	      area.element(op) = 1;
@@ -131,7 +131,7 @@ namespace scribo
 	    {
 	      // col == 0
 
-	      op = input.index_of_point(point2d(row, 0));
+	      op = input.offset_of_point(point2d(row, 0));
 	      on = op - delta;
 
 	      if (input.element(op) == lab)

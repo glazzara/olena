@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Concept for serializer visitors.
+/// Concept for objects that can be serialized.
 
 # include <mln/core/concept/object.hh>
 # include <scribo/core/concept/serialize_visitor.hh>
@@ -36,11 +37,13 @@
 namespace scribo
 {
 
-  /// \brief Link functor concept.
+  /// \brief Concept for objects that can be serialized.
   template <typename E>
   class Serializable : public mln::Object<E>
   {
   public:
+
+    /// Allow this object to be serialized by \p visitor.
     template <typename E2>
     void accept(const SerializeVisitor<E2>& visitor) const;
   };

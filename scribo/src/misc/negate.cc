@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +40,7 @@ const char *args_desc[][2] =
 
 int main(int argc, char *argv[])
 {
-  mln::trace::entering("main");
+  mln_trace("main");
   using namespace mln;
 
   if (argc != 3)
@@ -54,6 +54,5 @@ int main(int argc, char *argv[])
 
   io::pbm::save(logical::not_(input), argv[2]);
 
-  mln::trace::exiting("main");
 
 }

@@ -33,6 +33,7 @@ mln/accu/math/all.hh \
 mln/accu/math/count.hh \
 mln/accu/math/essential.hh \
 mln/accu/math/sum.hh \
+mln/accu/math/sumpow.hh \
 mln/accu/max_site.hh \
 mln/accu/nil.hh \
 mln/accu/p.hh \
@@ -431,6 +432,7 @@ mln/data/approx/essential.hh \
 mln/data/approx/median.hh \
 mln/data/compare.hh \
 mln/data/compute.hh \
+mln/data/compute_in_window.hh \
 mln/data/convert.hh \
 mln/data/essential.hh \
 mln/data/fast_median.hh \
@@ -477,6 +479,7 @@ mln/debug/put_word.hh \
 mln/debug/quiet.hh \
 mln/debug/slices_2d.hh \
 mln/debug/superpose.hh \
+mln/debug/trace.hh \
 mln/debug/z_order.hh \
 mln/display/all.hh \
 mln/display/essential.hh \
@@ -548,9 +551,12 @@ mln/fun/stat/all.hh \
 mln/fun/stat/mahalanobis.hh \
 mln/fun/unary.hh \
 mln/fun/v2b/all.hh \
+mln/fun/v2b/always_false.hh \
+mln/fun/v2b/always_true.hh \
 mln/fun/v2b/essential.hh \
 mln/fun/v2b/lnot.hh \
-mln/fun/v2b/threshold.hh \
+mln/fun/v2b/threshold_ge.hh \
+mln/fun/v2b/threshold_le.hh \
 mln/fun/v2i/all.hh \
 mln/fun/v2i/index_of_value.hh \
 mln/fun/v2v/abs.hh \
@@ -573,6 +579,8 @@ mln/fun/v2v/rgb8_to_rgbn.hh \
 mln/fun/v2v/rgb_to_hsl.hh \
 mln/fun/v2v/rgb_to_int_u.hh \
 mln/fun/v2v/rgb_to_luma.hh \
+mln/fun/v2v/round.hh \
+mln/fun/v2v/round_sat.hh \
 mln/fun/v2v/saturate.hh \
 mln/fun/v2v/wrap.hh \
 mln/fun/v2w2v/all.hh \
@@ -614,8 +622,11 @@ mln/fun/x2x/rotation.hh \
 mln/fun/x2x/translation.hh \
 mln/geom/all.hh \
 mln/geom/bbox.hh \
+mln/geom/bottom_left.hh \
 mln/geom/chamfer.hh \
 mln/geom/complex_geometry.hh \
+mln/geom/crop.hh \
+mln/geom/crop_without_localization.hh \
 mln/geom/delta.hh \
 mln/geom/essential.hh \
 mln/geom/horizontal_symmetry.hh \
@@ -639,6 +650,7 @@ mln/geom/seeds2tiling_roundness.hh \
 mln/geom/size1d.hh \
 mln/geom/size2d.hh \
 mln/geom/size3d.hh \
+mln/geom/top_right.hh \
 mln/geom/translate.hh \
 mln/geom/vertical_symmetry.hh \
 mln/graph/all.hh \
@@ -679,6 +691,7 @@ mln/io/fld/max_components.hh \
 mln/io/fld/save.hh \
 mln/io/fld/write_header.hh \
 mln/io/magick/all.hh \
+mln/io/magick/internal/init_magick.hh \
 mln/io/magick/load.hh \
 mln/io/magick/save.hh \
 mln/io/off/all.hh \
@@ -689,6 +702,8 @@ mln/io/pbm/load.hh \
 mln/io/pbm/save.hh \
 mln/io/pbms/all.hh \
 mln/io/pbms/load.hh \
+mln/io/pdf/get_header.hh \
+mln/io/pdf/load.hh \
 mln/io/pfm/all.hh \
 mln/io/pfm/load.hh \
 mln/io/pfm/save.hh \
@@ -999,6 +1014,8 @@ mln/pw/image.hh \
 mln/pw/internal/image_base.hh \
 mln/pw/value.hh \
 mln/pw/var.hh \
+mln/registration/all.hh \
+mln/registration/icp.hh \
 mln/set/all.hh \
 mln/set/card.hh \
 mln/set/compute.hh \
@@ -1054,14 +1071,6 @@ mln/topo/skeleton/breadth_first_thinning.hh \
 mln/topo/skeleton/crest.hh \
 mln/topo/skeleton/is_simple_point.hh \
 mln/topo/static_n_face_iter.hh \
-mln/trace/all.hh \
-mln/trace/entering.hh \
-mln/trace/essential.hh \
-mln/trace/exiting.hh \
-mln/trace/quiet.hh \
-mln/trace/resume.hh \
-mln/trace/stop.hh \
-mln/trace/warning.hh \
 mln/trait/accumulator/print.hh \
 mln/trait/accumulator/props.hh \
 mln/trait/accumulators.hh \

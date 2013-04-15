@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,7 @@
 /// Define function that returns the real border thickness of image.
 
 # include <mln/trait/images.hh>
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 
 namespace mln
 {
@@ -45,6 +46,8 @@ namespace mln
      * \result    The border thickness (0 if there is no border).
      *
      * \pre \a ima has to be initialized.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     unsigned get(const Image<I>& ima);
@@ -89,14 +92,13 @@ namespace mln
     inline
     unsigned get(const Image<I>& ima)
     {
-      trace::entering("border::get");
+      mln_trace("border::get");
 
       mln_precondition(exact(ima).is_valid());
       unsigned res = border::impl::get_(mln_trait_image_ext_domain(I)(),
 					mln_trait_image_category(I)(),
 					exact(ima));
 
-      trace::exiting("border::get");
       return res;
     }
 

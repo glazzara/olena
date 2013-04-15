@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -32,8 +32,8 @@
 /// Define the function is_simple_2d which tests if a point is simple
 /// or not (Cf bertrand.07.chap).
 
-/// \fixme Merge with mln/topo/skeleton/is_simple_point.hh
-/// \fixme The fastest version give an approximation of the result. Do
+/// \todo Merge with mln/topo/skeleton/is_simple_point.hh
+/// \todo The fastest version give an approximation of the result. Do
 /// we want it to be exact?
 
 

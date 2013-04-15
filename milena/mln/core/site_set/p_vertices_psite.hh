@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,14 +68,17 @@ namespace mln
   };
 
 
+  /// \relates p_vertices_psite
   template <typename G, typename F>
   bool
   operator==(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
 
+  /// \relates p_vertices_psite
   template <typename G, typename F>
   bool
   operator!=(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
 
+  /// \relates p_vertices_psite
   template <typename G, typename F>
   bool
   operator<(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
@@ -84,8 +87,9 @@ namespace mln
   namespace internal
   {
 
-    /// Subject_impl (Proxy)
-
+    /*!
+      \brief Subject_impl (Proxy)
+    */
     template <typename G, typename F, typename E>
     struct subject_impl< const p_vertices_psite<G,F>&, E >
 	 : subject_impl< const graph_psite_base< p_vertices<G,F>,

@@ -107,9 +107,12 @@ namespace mln
   {
 
 
-    /*! \brief Signed integer value class.
-     *
-     * The parameter is \c n the number of encoding bits.
+    /*!
+      \brief Signed integer value class.
+
+      The parameter is \c n the number of encoding bits.
+
+      \ingroup valueint
      */
     template <unsigned n>
     struct int_s

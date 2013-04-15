@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different width.
+/// \brief Invalidate links between two objects with too different
+/// width.
 ///
 /// \todo rename to object_links_bbox_h_ratio (h for horizontal) to be
 /// consistent with other routine names.
@@ -57,6 +58,8 @@ namespace scribo
                                bounding boxes.
 
 	\result A filtered object link information.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -72,14 +75,13 @@ namespace scribo
     object_links_bbox_w_ratio(const object_links<L>& links,
 			      float max_w_ratio)
     {
-      trace::entering("scribo::filter::object_links_bbox_w_ratio");
+      mln_trace("scribo::filter::object_links_bbox_w_ratio");
 
       mln_precondition(links.is_valid());
 
       object_links<L>
 	output = object_links_bbox_ratio(links, 1, max_w_ratio);
 
-      trace::exiting("scribo::filter::object_links_bbox_w_ratio");
       return output;
     }
 

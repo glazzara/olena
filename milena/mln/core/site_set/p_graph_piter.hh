@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +51,10 @@ namespace mln
   | p_graph_piter<S,I>.  |
   `------------------------*/
 
-  /// Generic iterator on point sites of a mln::S.
+  /*!
+    \internal
+    \brief Generic iterator on point sites of a mln::S.
+  */
   template <typename S, typename I>
   class p_graph_piter
     : public internal::site_set_iterator_base< S,
@@ -68,6 +72,7 @@ namespace mln
     p_graph_piter(const S& pv);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
@@ -80,6 +85,7 @@ namespace mln
     /// Go to the next point.
     void next_();
     /// \}
+    /// \endcond
 
     /// Return the underlying graph element.
     mln_q_subject(iter) element();
@@ -87,8 +93,10 @@ namespace mln
     /// Return the graph associated to the target S.
     const typename S::graph_t& graph() const;
 
+    /// \cond INTERNAL_API
     /// Return the underlying graph element iterator.
     const iter& hook_elt_() const;
+    /// \endcond
 
     /// Return the graph element id.
     unsigned id() const;
@@ -112,7 +120,9 @@ namespace mln
   {
 
     /// \{
-    /// subject_impl specialization (Proxy)
+    /*!
+      \brief subject_impl specialization (Proxy)
+    */
     template <typename S, typename I, typename E>
     struct subject_impl< const p_graph_piter<S,I>&, E >
     {

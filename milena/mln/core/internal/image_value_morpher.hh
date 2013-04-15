@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,10 +46,13 @@ namespace mln
 
     //FIXME: Fix doxygen.
 
-    /*! A base class for image morphers w.r.t. value.
-     * Parameter \p S is a point set type.
-     * Parameter \p P is a value type.
-     */
+    /*!
+      \internal
+      \brief A base class for image morphers w.r.t. value.
+
+      Parameter \p S is a point set type.
+      Parameter \p P is a value type.
+    */
     template <typename I, typename T, typename E>
     class image_value_morpher : public image_morpher<I, T, mln_domain(I), E>
     {

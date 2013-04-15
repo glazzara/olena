@@ -269,19 +269,26 @@
       </xsl:choose>
     </xsl:variable>
 
+    <!-- Display lines with high enough OCR confidence -->
+    <xsl:choose>
+      <xsl:when test="@textConfidence &gt; 60">
 
-    <span class="line">
-      <xsl:attribute name="style">
-	height:auto;
-	font-size:<xsl:value-of select="$fsize" />px;
-	width:<xsl:value-of select="$x2 - $x1" />px;
-	left:<xsl:value-of select="$x1 " />px;
-	top:<xsl:value-of select="$y1 " />px;
-	color:<xsl:value-of select="$color" />;
-      </xsl:attribute>
-      <xsl:value-of select="@text"/>
-    </span>
-    <!-- ENF OF TEXT LINE -->
+	<span class="line">
+	  <xsl:attribute name="style">
+	    height:auto;
+	    font-size:<xsl:value-of select="$fsize" />px;
+	    width:<xsl:value-of select="$x2 - $x1" />px;
+	    left:<xsl:value-of select="$x1 " />px;
+	    top:<xsl:value-of select="$y1 " />px;
+	    color:<xsl:value-of select="$color" />;
+	  </xsl:attribute>
+	  <xsl:value-of select="@text"/>
+	</span>
+	<!-- ENF OF TEXT LINE -->
+
+      </xsl:when>
+    </xsl:choose>
+
   </xsl:template>
 
 

@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Analyse a document.
+/// \brief Analyse a historical/degraded document.
 
 # include <scribo/toolchain/internal/content_in_hdoc_functor.hh>
 
@@ -40,7 +40,26 @@ namespace scribo
 
     using namespace mln;
 
+    /*! \brief Analyse and extract content in a historical/degraded
+        document.
 
+      \param[in] input A RGB image.
+      \param[in] input_preproc A Binary image.
+      \param[in] denoise Remove too small components (<= 2 pixels).
+      \param[in] find_line_seps Enable/Disable lookup for
+                                vertical/horizontal separators.
+      \param[in] find_whitespace_seps Enable/Disable lookup for
+                                      vertical alignments and
+                                      whitespaces. Helps finding text
+                                      layout.
+      \param[in] enable_ocr Enable/Disable text recognition.
+      \param[in] language Main language used in the input
+                          document. (OCR settings)
+
+      \return A document structure.
+
+      \ingroup grptoolchaindocproc
+     */
     template <typename I, typename J>
     document<mln_ch_value(I, def::lbl_type)>
     content_in_hdoc(const Image<I>& input, const Image<J>& input_preproc,

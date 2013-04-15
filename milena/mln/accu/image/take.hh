@@ -98,7 +98,7 @@ namespace mln
 	  void
 	  take(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
 	  {
-	    trace::entering("accu::impl::image::generic::take");
+	    mln_trace("accu::impl::image::generic::take");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -109,7 +109,6 @@ namespace mln
 	    for_all(p)
 	      input(p).take(arg);
 
-	    trace::exiting("accu::impl::image::generic::take");
 	  }
 
 	  template <typename I, typename J>
@@ -117,7 +116,7 @@ namespace mln
 	  void
 	  take(Image<I>& input_, const Image<J>& arg_)
 	  {
-	    trace::entering("accu::impl::image::generic::take");
+	    mln_trace("accu::impl::image::generic::take");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 	    mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
@@ -131,7 +130,6 @@ namespace mln
 	    for_all(p)
 	      input(p).take(arg(p));
 
-	    trace::exiting("accu::impl::image::generic::take");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -144,7 +142,7 @@ namespace mln
 	void
 	take_fastest(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
 	{
-	  trace::entering("accu::impl::image::take_fastest");
+	  mln_trace("accu::impl::image::take_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
@@ -155,7 +153,6 @@ namespace mln
 	  for_all(px)
 	    px.val().take(arg);
 
-	  trace::exiting("accu::impl::image::take_fastest");
 	}
 
 	template <typename I, typename J>
@@ -163,7 +160,7 @@ namespace mln
 	void
 	take_fastest(Image<I>& input_, const Image<J>& arg_)
 	{
-	  trace::entering("accu::impl::image::take_fastest");
+	  mln_trace("accu::impl::image::take_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
@@ -182,7 +179,6 @@ namespace mln
 	  for_all_2(p_in, p_arg)
 	    p_in.val().take( p_arg.val() );
 
-	  trace::exiting("accu::impl::image::take_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -268,14 +264,13 @@ namespace mln
       void
       take(Image<I>& input, const mln_deduce(I, value, argument)& arg)
       {
-	trace::entering("accu::image::take");
+	mln_trace("accu::image::take");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 
 	mln_precondition(exact(input).is_valid());
 	internal::take_dispatch(input, arg);
 
-	trace::exiting("accu::image::take");
       }
 
       template <typename I, typename J>
@@ -283,7 +278,7 @@ namespace mln
       void
       take(Image<I>& input, const Image<J>& arg)
       {
-	trace::entering("accu::image::take");
+	mln_trace("accu::image::take");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 	mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
@@ -291,7 +286,6 @@ namespace mln
 	internal::take_tests(input, arg);
 	internal::take_dispatch(input, arg);
 
-	trace::exiting("accu::image::take");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -41,7 +41,7 @@
 
 # include <mln/value/int_u8.hh>
 # include <mln/fun/p2v/ternary.hh>
-# include <mln/fun/v2b/threshold.hh>
+# include <mln/fun/v2b/threshold_ge.hh>
 
 # include <mln/data/transform.hh>
 
@@ -55,6 +55,7 @@
 
 # include <mln/core/routine/duplicate.hh>
 
+#include <mln/debug/println.hh>
 
 namespace mln
 {
@@ -292,8 +293,9 @@ namespace mln
 	do_enlarge_bool(const I& input, unsigned n)
 	{
 	  mln_ch_value(I,value::int_u8) tmp = do_enlarge_gl(input, n);
+	  debug::println(tmp);
 	  I output
-	    = data::transform(tmp, fun::v2b::threshold<value::int_u8>(150));
+	    = data::transform(tmp, fun::v2b::threshold_ge<value::int_u8>(160));
 	  return output;
 	}
 
@@ -355,7 +357,7 @@ namespace mln
       mln_concrete(I)
       enlarge(const Image<I>& input, unsigned n)
       {
-	trace::entering("mln::world::binary_2d::enlarge");
+	mln_trace("mln::world::binary_2d::enlarge");
 
 	mln_precondition(exact(input).is_valid());
 	typedef mln_site(I) S;
@@ -367,7 +369,6 @@ namespace mln
 	else
 	    output = internal::enlarge_dispatch(input, n);
 
-	trace::exiting("mln::world::binary_2d::enlarge");
 	return output;
       }
 

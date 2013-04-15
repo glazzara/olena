@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,10 @@ namespace mln
   | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Forward iterator on complex neighborhood.
+  /*!
+    \internal
+    \brief Forward iterator on complex neighborhood.
+  */
   template <typename I, typename G, typename N>
   class complex_neighborhood_fwd_piter
     : public internal::site_relative_iterator_base< N,
@@ -72,6 +76,7 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
@@ -95,6 +100,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{
@@ -119,7 +125,10 @@ namespace mln
   | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Backward iterator on complex neighborhood.
+  /*!
+    \internal
+    \brief Backward iterator on complex neighborhood.
+  */
   template <typename I, typename G, typename N>
   class complex_neighborhood_bkd_piter
     : public internal::site_relative_iterator_base< N,
@@ -143,6 +152,7 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
@@ -166,6 +176,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{

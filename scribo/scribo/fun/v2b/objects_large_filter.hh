@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -91,7 +92,7 @@ namespace scribo
 	mutable mln_value(L) nlabels_;
 
 	/// Has already been taken into account.
-	mutable util::array<bool> marked_;
+	mutable mln::util::array<bool> marked_;
       };
 
 

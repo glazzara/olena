@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Link text components with their left neighbor.
+/// \brief Link text components with their left neighbor.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -65,7 +65,8 @@ namespace scribo
       /// \brief Link components with their left neighbor if exists.
       ///
       /// \param[in] components A component set.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
+      /// \param[in] neighb_max_distance The maximum distance allowed
+      ///                                to seach a neighbor object.
       ///
       /// \return Object links data.
       //
@@ -78,6 +79,7 @@ namespace scribo
 
       /// \overload
       /// Max distance is set to mln_max(unsigned).
+      //
       template <typename L>
       inline
       object_links<L>
@@ -126,7 +128,7 @@ namespace scribo
       with_single_left_link(const component_set<L>& components,
 			    unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_left_link");
+	mln_trace("scribo::primitive::link::with_single_left_link");
 
 	mln_precondition(components.is_valid());
 
@@ -135,7 +137,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor);
 
-	trace::exiting("scribo::primitive::link::with_single_left_link");
 	return output;
       }
 

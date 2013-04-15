@@ -78,7 +78,7 @@ namespace scribo
 	    mln::fun::i2v::array<mln_value(L)>& relabel_fun)
 
       {
-	trace::entering("scribo::primitive::group::apply");
+	mln_trace("scribo::primitive::group::apply");
 
 	mln_precondition(groups.is_valid());
 
@@ -104,7 +104,6 @@ namespace scribo
 
 	component_set<L> output(labeled_image, new_nlabels);
 
-	trace::exiting("scribo::primitive::group::apply");
 	return output;
       }
 
@@ -123,14 +122,13 @@ namespace scribo
       apply(const object_links<L>& links)
 
       {
-	trace::entering("scribo::primitive::group::apply");
+	mln_trace("scribo::primitive::group::apply");
 
 	mln_precondition(links.is_valid());
 
 	object_groups<L> group = group::from_single_link(links);
 	component_set<L> output = apply(group);
 
-	trace::exiting("scribo::primitive::group::apply");
 	return output;
       }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -70,9 +70,7 @@ int main(int argc, char* argv[])
 				"input.* output_dir",
 				args_desc);
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
@@ -80,7 +78,8 @@ int main(int argc, char* argv[])
 
   // Preprocess document
   image2d<bool> input_preproc;
-  input_preproc = toolchain::text_in_doc_preprocess(input, false, 0.34);
+  input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, 0.34,
+						    false, false);
 
   bool denoise = true;
   std::string language = "";
@@ -118,5 +117,4 @@ int main(int argc, char* argv[])
     mln::io::pbm::save(output, ss.str());
   }
 
-  trace::exiting("main");
 }

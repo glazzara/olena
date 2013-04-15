@@ -53,6 +53,10 @@ namespace mln
     namespace fld
     {
 
+      /*! \brief Save an image to AVS field file format.
+       *
+       * \ingroup iofld
+       */
       template <typename I>
       void save(const Image<I>& ima_, const char* filename);
 
@@ -147,7 +151,7 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima_, const char* filename)
       {
-	trace::entering("mln::io::fld::save");
+	mln_trace("mln::io::fld::save");
 	// For the moment, just the fast version.
 	mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
@@ -161,7 +165,6 @@ namespace mln
 	internal::save_data_contiguous(file, ima);
 
 	file.close();
-	trace::exiting("mln::io::fld::save");
       }
 
 

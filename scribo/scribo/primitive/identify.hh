@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,11 +29,11 @@
 
 /*! \brief try to determine the type of a component.
 
-\fixme Write it and add support for component type (graphic, images,
+\todo Write it and add support for component type (graphic, images,
 ...)
  */
 
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 # include <scribo/core/component_set.hh>
 
 namespace scribo
@@ -45,7 +46,7 @@ namespace scribo
     component_set<L>
     identify(const component_set<L> comps)
     {
-      mln::trace::entering("scribo::primitive::identify");
+      mln_trace("scribo::primitive::identify");
 
       mln_assertion(comps.is_valid());
 
@@ -65,7 +66,6 @@ namespace scribo
       // 	    output(c).update_type(component::LineSeparator);
       // 	}
 
-      mln::trace::exiting("scribo::primitive::identify");
       //return output;
       return comps;
     }

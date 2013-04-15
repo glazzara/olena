@@ -1,0 +1,43 @@
+/*! \defgroup valuegroup Values
+ *
+ * \brief All supported value types.
+ *
+ * \ingroup modtypes
+ */
+
+
+/*! \defgroup valuergb RGB
+ *
+ * \brief All supported RGB value types.
+ *
+ * \ingroup valuegroup
+ */
+
+
+/*! \defgroup valueuint Unsigned Integer
+ *
+ * \brief All supported unsigned integer value types.
+ *
+ * \ingroup valuegroup
+ */
+
+/*! \defgroup valueint Integer
+ *
+ * \brief All supported integer value types.
+ *
+ * \ingroup valuegroup
+ */
+
+/*! \defgroup valuelabel Labels
+ *
+ * \brief All supported Label value types.
+ *
+ * \ingroup valuegroup
+ */
+
+/*! \defgroup valuehsl HSL
+ *
+ * \brief All supported HSL value types.
+ *
+ * \ingroup valuegroup
+ */

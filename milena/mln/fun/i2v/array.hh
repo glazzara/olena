@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,38 +50,9 @@ namespace mln
     } // end of namespace mln::fun::i2v
   } // end of namespace mln::fun
 
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename T>
-      inline
-      void
-      from_to_(const util::array<T>& from, fun::i2v::array<T>& to);
-
-      template <typename T, typename U>
-      inline
-      void
-      from_to_(const util::array<T>& from, fun::i2v::array<U>& to);
-
-      template <typename T>
-      inline
-      void
-      from_to_(const std::vector<T>& from, fun::i2v::array<T>& to);
-
-      template <typename T, typename U>
-      inline
-      void
-      from_to_(const std::vector<T>& from, fun::i2v::array<U>& to);
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  namespace util {
+    template <typename T> class array;
+  }
 
 
   namespace fun
@@ -158,13 +130,40 @@ namespace mln
 			       const array<T>& a);
 
 
+      /// \internal Conversion: fun::i2v::array -> util::array
+      template <typename T1, typename T2>
+      void
+      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
+
     } // end of namespace mln::fun::i2v
 
   } // end of namespace mln::fun
 
+} // end of namespace mln
+
+
+namespace std
+{
+
+  /// \internal Conversion: std::vectorfun::i2v::array<T> -> fun::i2v::array<T>
+  template <typename T>
+  inline
+  void
+  from_to_(const vector<T>& from, mln::fun::i2v::array<T>& to);
+
+  /// \internal Conversion: std::vector<T> -> mln::fun::i2v::array<U>
+  template <typename T, typename U>
+  inline
+  void
+  from_to_(const vector<T>& from, mln::fun::i2v::array<U>& to);
+
+} // end of namespace std
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+namespace mln
+{
 
   // Init.
 
@@ -175,57 +174,6 @@ namespace mln
   {
     f.init_(model.size());
   }
-
-
-  // convert::from_to
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename T>
-      inline
-      void
-      from_to_(const util::array<T>& from, fun::i2v::array<T>& to)
-      {
-	to = fun::i2v::array<T>(from);
-      }
-
-      template <typename T, typename U>
-      inline
-      void
-      from_to_(const util::array<T>& from, fun::i2v::array<U>& to)
-      {
-	to.resize(from.nelements());
-	for (unsigned i = 0; i < from.nelements(); ++i)
-	  to(i) = convert::to<U>(from[i]);
-      }
-
-      template <typename T>
-      inline
-      void
-      from_to_(const std::vector<T>& from, fun::i2v::array<T>& to)
-      {
-	to = fun::i2v::array<T>(from);
-      }
-
-      template <typename T, typename U>
-      inline
-      void
-      from_to_(const std::vector<T>& from, fun::i2v::array<U>& to)
-      {
-	to.resize(from.nelements());
-	for (unsigned i = 0; i < from.size(); ++i)
-	  to(i) = convert::to<U>(from[i]);
-      }
-
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   /// fun::i2v::array
@@ -366,6 +314,18 @@ namespace mln
       }
 
 
+      // Conversion
+
+      template <typename T1, typename T2>
+      void
+      from_to_(const array<T1>& from, util::array<T2>& to)
+      {
+        to.resize(from.size());
+
+        for (unsigned i = 0; i < from.size(); ++i)
+	  to[i] = convert::to<T2>(from(i));
+      }
+
     } // end of namespace mln::fun::i2v
 
   } // end of namespace mln::fun
@@ -379,9 +339,31 @@ namespace mln
     return tmp;
   }
 
-# endif // ! MLN_INCLUDE_ONLY
-
 } // end of namespace mln
 
+namespace std
+{
+
+  template <typename T>
+  inline
+  void
+  from_to_(const vector<T>& from, mln::fun::i2v::array<T>& to)
+  {
+    to = mln::fun::i2v::array<T>(from);
+  }
+
+  template <typename T, typename U>
+  inline
+  void
+  from_to_(const vector<T>& from, mln::fun::i2v::array<U>& to)
+  {
+    to.resize(from.nelements());
+    for (unsigned i = 0; i < from.size(); ++i)
+      to(i) = mln::convert::to<U>(from[i]);
+  }
+
+} // end of namespace std
+
+# endif // ! MLN_INCLUDE_ONLY
 
 #endif // ! MLN_FUN_I2V_ARRAY_HH

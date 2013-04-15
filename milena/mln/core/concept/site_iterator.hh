@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,15 +41,15 @@
 namespace mln
 {
 
-  /// Base class for implementation of classes of iterator on
-  ///  points.
-  ///
-  /// An iterator on points is an iterator that browse over a set of
-  /// points.
-  ///
-  /// \see mln::doc::Site_Iterator for a complete documentation of this class
-  /// contents.
-  ///
+  /*!
+    \brief Base class for implementation of classes of iterator on
+    points.
+
+    An iterator on points is an iterator that browse over a set of
+    points.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Site_Iterator : public Site_Proxy<E>
   {

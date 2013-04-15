@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +50,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::extended<I>.
+    /*!
+      \brief Data structure for \c mln::extended<I>.
+    */
     template <typename I>
     struct data< extended<I> >
     {
@@ -108,17 +110,20 @@ namespace mln
     /// Constructor.
     extended(I& ima, const box<mln_site(I)>& b);
 
+    /// \cond INTERNAL_API
     /// Initialization.
     void init_(I& ima, const box<mln_site(I)>& b);
+    /// \endcond
 
     /// Give the definition domain.
     const box<mln_site(I)>& domain() const;
   };
 
 
-
+  /// \cond INTERNAL_API
   template <typename I, typename J>
   void init_(tag::image_t, extended<I>& target, const J& model);
+  /// \endcond
 
 
   template <typename I, typename B>

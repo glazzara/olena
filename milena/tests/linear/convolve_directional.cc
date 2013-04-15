@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/math/round.hh>
+#include <mln/fun/v2v/round.hh>
 #include <mln/data/transform.hh>
 
 #include <mln/core/alias/w_window2d_float.hh>
@@ -52,7 +52,7 @@ int main()
   float w = .11f;
   float ws[] = { w, w, w, w, w, w, w, w, w };
   image2d<float> tmp = linear::convolve_directional(lena, 1, ws);
-  
-  io::pgm::save(data::transform(tmp, math::round<int_u8>()),
+
+  io::pgm::save(data::transform(tmp, fun::v2v::round<int_u8>()),
 		"convolve_directional-out.pgm");
 }

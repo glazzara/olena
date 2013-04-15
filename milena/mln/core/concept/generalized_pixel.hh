@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,17 +39,16 @@
 namespace mln
 {
 
-  /// Base class for implementation classes that are pixels or that
-  ///  have the behavior of pixels.
-  ///
-  /// \warning This class does \em not derive from mln::Object; it is
-  /// for use as a parallel hierarchy.
-  ///
-  /// \see mln::doc::Generalized_Pixel for a complete documentation of this
-  /// class contents.
-  ///
-  /// \todo (later) Add an access to the targetted image.
-  ///
+  /*! \brief Base class for implementation classes that are pixels or that
+    have the behavior of pixels.
+
+     \warning This class does \em not derive from mln::Object; it is
+     for use as a parallel hierarchy.
+
+     \todo (later) Add an access to the targetted image.
+
+     \ingroup modconcepts
+  */
   template <typename E>
   struct Generalized_Pixel
   {

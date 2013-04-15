@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,70 +42,91 @@ namespace mln
   {
 
 
-    /// coord_impl
+    // coord_impl
 
 
-    /* Implementation class to equip generalized points with
-     * explicit access to their coordinates.
-     *
-     */
+    /// \brief Implementation class to equip generalized points with
+    /// explicit access to their coordinates.
     template <unsigned n, typename C, typename E>
     struct coord_impl_;
 
+    /// \brief Specialization for 1D points.
     template <typename C, typename E>
     struct coord_impl_<1, C, E>
     {
+      /// Index.
       const C& ind() const;
-    private:
-      typedef coord_impl_<1, C, E> self_;
-
     };
 
+    /// \brief Specialization for 2D points.
     template <typename C, typename E>
     struct coord_impl_<2, C, E>
     {
+      /// Row index.
       const C&row() const;
+      /// Column index.
       const C&col() const;
     };
 
+    /// \brief Specialization for 3D points.
     template <typename C, typename E>
     struct coord_impl_<3, C, E>
     {
+      /// Slice index.
       const C&sli() const;
+      /// Row index.
       const C&row() const;
+      /// Col index.
       const C&col() const;
     };
 
 
     // mutable_coord_impl
 
+    /// \brief Implementation class to equip generalized points with
+    /// explicit access to their coordinates.
     template <unsigned n, typename C, typename E>
     struct mutable_coord_impl_;
 
+    /// \brief Specialization for 1D points.
     template <typename C, typename E>
     struct mutable_coord_impl_<1, C, E>
     {
+      /// Index.
       const C& ind() const;
+      /// Index.
       C& ind();
     };
 
+    /// \brief Specialization for 2D points.
     template <typename C, typename E>
     struct mutable_coord_impl_<2, C, E>
     {
+      /// Row index.
       const C& row() const;
+      /// Row index.
       C& row();
+      /// Column index.
       const C& col() const;
+      /// Column index.
       C& col();
     };
 
+    /// \brief Specialization for 3D points.
     template <typename C, typename E>
     struct mutable_coord_impl_<3, C, E>
     {
+      /// Slice index.
       const C& sli() const;
+      /// Slice index.
       C& sli();
+      /// Row index.
       const C& row() const;
+      /// Row index.
       C& row();
+      /// Column index.
       const C& col() const;
+      /// Column index.
       C& col();
     };
 

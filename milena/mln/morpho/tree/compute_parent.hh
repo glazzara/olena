@@ -194,7 +194,7 @@ namespace mln
 			 const Neighborhood<N>& nbh_,
 			 const Site_Set<S>& s_)
 	  {
-	    trace::entering("morpho::tree::impl::generic::compute_parent");
+	    mln_trace("morpho::tree::impl::generic::compute_parent");
 
 	    typedef mln_psite(I) P;
 
@@ -251,7 +251,6 @@ namespace mln
 	      }
 	    }
 
-	    trace::exiting("morpho::tree::impl::generic::compute_parent");
 	    return parent;
 	  }
 
@@ -286,14 +285,13 @@ namespace mln
       compute_parent(const Image<I>& f, const Neighborhood<N>& nbh,
 		     const Site_Set<S>& s)
       {
-	trace::entering("morpho::tree::compute_parent");
+	mln_trace("morpho::tree::compute_parent");
 
 	internal::compute_parent_tests(f, nbh, s);
 
 	mln_ch_value(I, mln_psite(I)) output;
 	output = internal::compute_parent_dispatch(f, nbh, s);
 
-	trace::exiting("morpho::tree::compute_parent");
 	return output;
       }
 

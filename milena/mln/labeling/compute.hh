@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -189,15 +189,6 @@ namespace mln
       namespace generic
       {
 
-
- 	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -205,7 +196,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, label_, nlabels);
 
 	  const A& a = exact(a_);
@@ -220,21 +211,9 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] accus_ An array of accumulators. If the size is
-	///                   set to nlabels + 1, the accumulators are
-	///                   considered as initialized. Otherwise,
-	///                   the size is adjusted.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -242,7 +221,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(A(), label_, nlabels);
 
 	  if (value::next(nlabels) != accus.size())
@@ -262,21 +241,9 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
-
-
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -285,7 +252,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, input_, label_, nlabels);
 
 	  const A& a = exact(a_);
@@ -301,20 +268,9 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
-
-	/// Generic implementation of labeling::compute.
-	///
-	/// \param[in] accus   An array of accumulators.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -323,7 +279,7 @@ namespace mln
 		const Image<L>& label_,
 		const mln_value(L)& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::compute");
+	  mln_trace("labeling::impl::generic::compute");
 	  //internal::compute_tests(a_, input_, label_, nlabels);
 
 	  //const A& a = exact(a_);
@@ -346,7 +302,6 @@ namespace mln
 	  util::array<mln_result(A)> res;
 	  convert::from_to(accus, res);
 
-	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
 
@@ -358,15 +313,6 @@ namespace mln
         // border::get(label)) ?
         //
 
-	/// Fastest implementation of labeling::compute.
-	///
-	/// \param[in] a_      An accumulator.
-	/// \param[in] input_  The input image.
-	/// \param[in] label_  The labeled image.
-	/// \param[in] nlabels The number of labels in \p label.
-	///
-	/// \return A util::array of accumulator result (one result per label).
-	//
       template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>
@@ -375,7 +321,7 @@ namespace mln
 		      const Image<L>& label_,
 		      const mln_value(L)& nlabels)
       {
-	trace::entering("labeling::impl::compute_fastest");
+	mln_trace("labeling::impl::compute_fastest");
 	internal::compute_tests(a_, input_, label_, nlabels);
 
 	const A& a = exact(a_);
@@ -404,7 +350,6 @@ namespace mln
 	util::array<mln_result(A)> res;
 	convert::from_to(accus, res);
 
-	trace::exiting("labeling::impl::generic::compute_fastest");
 	return res;
       }
 
@@ -412,15 +357,6 @@ namespace mln
       // border::get(label)) ?
       //
 
-      /// Fastest implementation of labeling::compute.
-      ///
-      /// \param[in] accus   An array of accumulators.
-      /// \param[in] input_  The input image.
-      /// \param[in] label_  The labeled image.
-      /// \param[in] nlabels The number of labels in \p label.
-      ///
-      /// \return A util::array of accumulator result (one result per label).
-      //
       template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>
@@ -429,7 +365,7 @@ namespace mln
 		      const Image<L>& label_,
 		      const mln_value(L)& nlabels)
       {
-	trace::entering("labeling::impl::generic::compute_fastest");
+	mln_trace("labeling::impl::generic::compute_fastest");
 	//internal::compute_tests(a_, input_, label_, nlabels);
 
 	// FIXME: check image properties + add doc.
@@ -465,7 +401,6 @@ namespace mln
 	util::array<mln_result(A)> res;
 	convert::from_to(accus, res);
 
-	trace::exiting("labeling::impl::generic::compute_fastest");
 	return res;
       }
 
@@ -698,14 +633,13 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       //internal::compute_tests(a, input, label, nlabels);
 
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, input, label, nlabels);
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -717,14 +651,13 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(a, input, label, nlabels);
 
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, input, label, nlabels);
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -750,7 +683,7 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(A(), label, nlabels);
 
@@ -759,7 +692,6 @@ namespace mln
 
       mln_postcondition(res.nelements() == value::next(nlabels));
 
-      trace::exiting("labeling::compute");
       return res;
     }
 
@@ -772,7 +704,7 @@ namespace mln
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)
     {
-      trace::entering("labeling::compute");
+      mln_trace("labeling::compute");
 
       internal::compute_tests(a, label, nlabels);
 
@@ -781,7 +713,6 @@ namespace mln
 
       mln_postcondition(res.nelements() == value::next(nlabels));
 
-      trace::exiting("labeling::compute");
       return res;
     }
 

@@ -72,7 +72,7 @@ namespace mln
     labeling(const Image<I>& graph_image_,
 	     const Neighborhood<N>& nbh_, L& nlabels)
     {
-      trace::entering("graph::labeling");
+      mln_trace("graph::labeling");
 
       const I& graph_image = exact(graph_image_);
       const N& nbh = exact(nbh_);
@@ -88,7 +88,6 @@ namespace mln
 
       mln_ch_value(I,L) output = mln::labeling::blobs(tmp, nbh, nlabels);
 
-      trace::exiting("graph::labeling");
       return output;
     }
 

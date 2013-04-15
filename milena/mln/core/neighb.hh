@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,31 +47,13 @@ namespace mln
   // Forward declarations.
   template <typename W> class neighb_fwd_niter;
   template <typename W> class neighb_bkd_niter;
-  template <typename W> class neighb;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to);
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
 
-  /// Adapter class from window to neighborhood.
-
+  /*! \brief Adapter class from window to neighborhood.
+   *
+   * \ingroup modneighbnd
+   */
   template <typename W>
   class neighb
     : public internal::neighb_base<W,neighb<W> >
@@ -97,6 +79,19 @@ namespace mln
     neighb(const W& win);
 
   };
+
+
+  /// \cond INTERNAL_API
+  /// Conversions: neighb<W> -> W
+  template <typename W>
+  void
+  from_to_(const mln::neighb<W>& from, W& to);
+
+  /// Conversions: W -> neighb<W>
+  template <typename W>
+  void
+  from_to_(const W& from, mln::neighb<W>& to);
+  /// \endcond
 
 
   // neighb_fwd_niter<W>
@@ -159,35 +154,6 @@ namespace mln
   }
 
 
-  // mln::convert::from_to
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to)
-      {
-        to = from.win();
-      }
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to)
-      {
-        to.change_window(from);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
-
-
   // neighb_fwd_niter<W>
 
   template <typename W>
@@ -222,6 +188,20 @@ namespace mln
     : super_(nbh, c)
   {
     this->i_.init_(nbh.win(), c);
+  }
+
+  template <typename W>
+  void
+  from_to_(const neighb<W>& from, W& to)
+  {
+    to = from.win();
+  }
+
+  template <typename W>
+  void
+  from_to_(const W& from, neighb<W>& to)
+  {
+    to.change_window(from);
   }
 
 

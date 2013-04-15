@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 				args_desc);
 
 
-  trace::entering("main");
+  mln_trace("main");
 
 
   image2d<bool> input;
@@ -80,5 +80,4 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> output = scribo::debug::char_space_image(input, line);
   mln::io::ppm::save(output, argv[2]);
 
-  trace::exiting("main");
 }

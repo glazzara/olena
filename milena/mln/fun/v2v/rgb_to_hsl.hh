@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -34,8 +34,6 @@
 # include <mln/math/min.hh>
 
 # include <mln/trait/value_.hh>
-
-# include <mln/value/rgb.hh>
 
 namespace mln
 {

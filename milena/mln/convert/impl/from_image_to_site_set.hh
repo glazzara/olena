@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -94,8 +94,8 @@ namespace mln
 	      p.next();
 	    }
 	    while (p.is_valid() && input(p) == true &&
-		// p follows q in a run, i.e., "p == q + right":
-		cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
+		   // p follows q in a run, i.e., "p == q + right":
+		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(p_run<P>(start, q));
 	  }
 	}
@@ -123,7 +123,7 @@ namespace mln
 	      p.next();
 	    }
 	    while (p.is_valid() && input(p) == v &&
-		cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
+		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(v, p_run<P>(start, q));
 	  }
 	}

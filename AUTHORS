@@ -5,7 +5,8 @@ This package was written by and with the assistance of
 Active LRDE Staff.
 ==================
 
-* Thierry Géraud	theo@lrde.epita.fr
+* **Thierry Géraud**	<theo@lrde.epita.fr>
+
   - Management of the project in the first place.
   - Type system.
   - Revamp of Metalic (Olena pre-1.0).
@@ -14,11 +15,15 @@ Active LRDE Staff.
   - Olena 1.0 core.
   - Numerous hours spent thinking about Olena.
 
-* Guillaume Lazzara	z@lrde.epita.fr
+
+* **Guillaume Lazzara**	<z@lrde.epita.fr>
+
   - SCRIBO module main author and maintainer.
   - Library improvements.
 
-* Roland Levillain	roland@lrde.epita.fr
+
+* **Roland Levillain**	<roland@lrde.epita.fr>
+
   - Project manager.
   - Theoretical mentor.
   - Renovation of Swilena (Olena 0.10a).
@@ -32,30 +37,41 @@ Active LRDE Staff.
 Past contributors of LRDE Staff.
 ================================
 
-* Jérôme Darbon		jerome@lrde.epita.fr
+* **Jérôme Darbon**	<jerome@lrde.epita.fr>
+
   - Image morphology and Olena morpho.
 
-* Réda Dehak		reda@lrde.epita.fr
+
+* **Réda Dehak**	<reda@lrde.epita.fr>
+
   - Management of the project.
   - Color conversions.
   - Cleanup the sources.
 
-* Akim Demaille		akim@lrde.epita.fr
+
+* **Akim Demaille**	<akim@lrde.epita.fr>
+
   - Configuration system.
   - Maintenance of code's clearness.
 
-* Alexandre Duret-Lutz	adl@lrde.epita.fr
+
+* **Alexandre Duret-Lutz**	<adl@lrde.epita.fr>
+
   - Maintenance of the source tree for several years.
   - Type system.
   - Test system.
   - First documentation system.
   - Numerous hours spent on Olena to make it better.
 
-* Fabien Freling	fabien.freling@lrde.epita.fr
+
+* **Fabien Freling**	<fabien.freling@lrde.epita.fr>
+
   - Work on Melimage with IGR.
   - Library improvements.
 
-* Yann Jacquelet	jacquelet@lrde.epita.fr
+
+* **Yann Jacquelet**	<jacquelet@lrde.epita.fr>
+
   - SCRIBO-related work.
 
 
@@ -63,20 +79,25 @@ Past contributors of LRDE Staff.
 Interns.
 ========
 
-* Arthur Crépin-Leblond
+* **Arthur Crépin-Leblond**
+
   - SCRIBO structured outputs (XML, HTML, PDF).
 
-* Raphaël Boissel
+
+* **Raphaël Boissel**
   - Graph implementation of a DIA toolchain in SCRIBO.
 
 =========================
 Students from Class 2012.
 =========================
 
-* Frédéric Bour		frederic.bour@lrde.epita.fr
+* **Frédéric Bour**		<frederic.bour@lrde.epita.fr>
+
   - Prototype of the upcoming functions system.
 
-* Julien Marquegnies	julien.marquegnies@lrde.epita.fr
+
+* **Julien Marquegnies**	<julien.marquegnies@lrde.epita.fr>
+
   - Fast implementation of the Hough transform.
   - Many improvements in SCRIBO layout analysis.
 
@@ -84,7 +105,8 @@ Students from Class 2012.
 Students from Class 2011.
 =========================
 
-* Edwin Carlinet	edwin.carlinet@lrde.epita.fr
+* **Edwin Carlinet**	<edwin.carlinet@lrde.epita.fr>
+
   - Accumulators.
   - Morphological connected filters.
 
@@ -92,32 +114,44 @@ Students from Class 2011.
 Students from Class 2010.
 =========================
 
-* Florent D'Halluin
+* **Florent D'Halluin**
+
   - Document layout viewer.
 
-* Etienne Folio
+
+* **Etienne Folio**
+
   - Color type traits.
 
 =========================
 Students from Class 2009.
 =========================
 
-* Alexandre Abraham
+* **Alexandre Abraham**
+
   - R/W functions.
   - Topological watershed transform.
 
-* Nicolas Ballas
+
+* **Nicolas Ballas**
+
   - Image properties.
   - Data routines.
 
-* Vivien Delmon
+
+* **Vivien Delmon**
+
   - Misc. corrections.
 
-* Matthieu Garrigues
+
+* **Matthieu Garrigues**
+
   - Value types and I/Os.
   - Draft of the FLLT.
 
-* Ugo Jardonnet
+
+* **Ugo Jardonnet**
+
   - Geometrical transforms.
   - ICP registration algorithm.
 
@@ -125,24 +159,32 @@ Students from Class 2009.
 Students from Class 2008.
 =========================
 
-* Tristan Croiset
+* **Tristan Croiset**
+
   - Dynamic (Dyn) (Olena proto-1.0)
 
-* Quentin Hocquet
+
+* **Quentin Hocquet**
+
   - SCOOL
 
-* Thomas Moulard
+
+* **Thomas Moulard**
+
   - SCOOL
 
 =========================
 Students from Class 2007.
 =========================
 
-* Christophe Berger
+* **Christophe Berger**
+
   - Connected filters (Olena proto-1.0, Olena pre-1.0).
   - SCOOP 2 (Olena proto-1.0).
 
-* Nicolas Widynski
+
+* **Nicolas Widynski**
+
   - Connected filters (Olena proto-1.0).
   - Inpainting (Olena proto-1.0).
   - Segmentation (watershed transform, watersnake, snakes) (Olena proto-1.0)
@@ -151,16 +193,21 @@ Students from Class 2007.
 Students from Class 2006.
 =========================
 
-* Simon Odou
+* **Simon Odou**
+
   - Contributions to document the code.
   - Deconvolution.
   - Generic morphers.
   - SCOOP 2 (Olena proto-1.0).
 
-* Nicolas Pouillard
+
+* **Nicolas Pouillard**
+
   - Dynamic-static bridge prototype (Dyn) (Olena proto-1.0).
 
-* Damien Thivolle
+
+* **Damien Thivolle**
+
   - Contributions to document the code.
   - Generic morphers.
   - Configuration system.
@@ -174,14 +221,17 @@ Students from Class 2006.
 Students from Class 2005.
 =========================
 
-* Giovanni Palma
+* **Giovanni Palma**
+
   - Color conversion.
   - Attribute opening and closing algorithms.
   - New documentation system.
   - Document the code.
   - Cleanup the sources.
 
-* Niels Van Vliet
+
+* **Niels Van Vliet**
+
   - Color conversion.
   - Attribute opening and closing algorithms.
   - Contributions to document the code.
@@ -191,21 +241,28 @@ Students from Class 2005.
 Students from Class 2004.
 =========================
 
-* Sylvain Berlemont
+* **Sylvain Berlemont**
+
   - Combinatorial maps.
   - Cleanup the sources.
 
-* Nicolas Burrus
+
+* **Nicolas Burrus**
+
   - Integre.
   - Olena I/O.
   - Source tree.
 
-* David Lesage
+
+* **David Lesage**
+
   - Type system.
   - New paradigm.
   - Cleanup the sources.
 
-* Astrid Wang
+
+* **Astrid Wang**
+
   - New documentation system.
   - Static arrays implementation.
 
@@ -213,25 +270,36 @@ Students from Class 2004.
 Students from Class 2003.
 =========================
 
-* Ignacy Gawedzki
+* **Ignacy Gawedzki**
+
   - Color system.
 
-* Jean-Sébastien Mouret
+
+* **Jean-Sébastien Mouret**
+
   - Image I/O.
   - Source tree and configuration system.
   - Fast morphological operators.
 
-* Quôc Peyrot
+
+* **Quôc Peyrot**
+
   - Watershed algorithm.
 
-* Raphaël Poss
+
+* **Raphaël Poss**
+
   - Source tree and configuration system.
   - Documentation.
 
-* Yann Régis-Gianas
+
+* **Yann Régis-Gianas**
+
   - Type system.
 
-* Emmanuel Turquin
+
+* **Emmanuel Turquin**
+
   - Implementation of transforms.
   - Integre.
 
@@ -239,22 +307,29 @@ Students from Class 2003.
 Students from Class 2002.
 =========================
 
-* Jean Chalard
+* **Jean Chalard**
+
   - Colors.
   - Vectors and matrices implementation.
   - Olena iterators implementation.
   - Wavelets.
 
-* Rémi Coupet
+
+* **Rémi Coupet**
+
   - Olena morpho.
   - Data types (pre-0.6).
   - Olena core.
   - Bibliographical research.
 
-* Ludovic Perrine
+
+* **Ludovic Perrine**
+
   - Fuzzy types.
 
-* Pierre-Yves Strub
+
+* **Pierre-Yves Strub**
+
   - Olena morpho.
   - Source tree and configuration system.
   - Type system.
@@ -263,20 +338,28 @@ Students from Class 2002.
 Students from Class 2001.
 =========================
 
-* Alexis Angelidis
+* **Alexis Angelidis**
+
   - Olena logo.
 
-* Vincent Berruchon
 
-* Renaud François
+* **Vincent Berruchon**
+
+
+* **Renaud François**
+
   - Bibliographical research.
 
-* Anthony Pinagot
+
+* **Anthony Pinagot**
+
   - Olena I/O.
   - Statistical operators.
   - FFT algorithm.
 
-* Michaël Strauss
+
+* **Michaël Strauss**
+
   - Image morphology.
   - Watershed algorithms.
   - Olena I/O.
@@ -285,7 +368,8 @@ Students from Class 2001.
 Students from Class 2000.
 =========================
 
-* Yoann Fabre
+* **Yoann Fabre**
+
   - Type system.
 
 
@@ -293,17 +377,24 @@ Students from Class 2000.
 Other Contributors.
 ===================
 
-* Guillaume Duhamel
+* **Guillaume Duhamel**
+
   - Low-level routines.
 
-* Simon Nivault
+
+* **Simon Nivault**
+
   - Lemming object.
   - Many cleanups.
 
-* Dimitri Papadopoulos-Orfanos
+
+* **Dimitri Papadopoulos-Orfanos**
+
   - Type system.
 
-* Heru Xue
+
+* **Heru Xue**
+
   - Color system.
 
 

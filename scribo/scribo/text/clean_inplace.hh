@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,9 +59,6 @@
 #include <mln/linear/gaussian.hh>
 #include <mln/value/int_u8.hh>
 
-
-#include <mln/fun/v2b/threshold.hh>
-#include <mln/binarization/threshold.hh>
 #include <mln/data/convert.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/pgm/all.hh>
@@ -98,7 +96,7 @@ namespace scribo
     void
     clean_inplace(const line_info<L>& line, Image<I>& input_)
     {
-      trace::entering("scribo::text::clean_inplace");
+      mln_trace("scribo::text::clean_inplace");
 
       I& input = exact(input_);
       mlc_bool(mln_site_(I)::dim == 2)::check();
@@ -135,7 +133,6 @@ namespace scribo
 //       else
 // 	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
 
-      trace::exiting("scribo::text::clean_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

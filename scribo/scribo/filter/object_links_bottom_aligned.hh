@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two components if their bottom are not
-/// aligned.
+/// \brief Invalidate links between two components if their bottom are
+/// not aligned.
 
 
 # include <mln/util/array.hh>
@@ -77,6 +77,7 @@ namespace scribo
 
 	The angle between the two bottoms must be lower than \p max_alpha.
 
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -92,14 +93,13 @@ namespace scribo
     object_links_bottom_aligned(const object_links<L>& links,
 				float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_bottom_aligned");
+      mln_trace("scribo::filter::object_links_bottom_aligned");
 
       mln_precondition(links.is_valid());
 
       object_links<L>
 	output = object_links_aligned(links, max_alpha, anchor::Bottom);
 
-      trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -165,6 +166,7 @@ namespace mln
   };
 
 
+  /// \relates mln::p_run<P>
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const p_run<P>& r);
 
@@ -198,7 +200,10 @@ namespace mln
     void inc_index();
     void dec_index();
 
+    /// \cond INTERNAL_API
     const p_run<P>* target_() const;
+    /// \endcond
+
     void change_target(const p_run<P>& new_target);
 
     bool is_valid() const;

@@ -1,0 +1,6 @@
+/*! \defgroup grptext Text Extraction
+ *
+ * \brief All routines/algorithms to extract text.
+ *
+ * \ingroup grproutine
+ */

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,10 @@ namespace mln
   namespace geom
   {
 
-    /// Give the maximum ind of an image.
+    /*! \brief Give the maximum ind of an image.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     mln_deduce(I, site, coord) max_ind(const Image<I>& ima);
 
@@ -50,12 +54,11 @@ namespace mln
     inline
     mln_deduce(I, site, coord) max_ind(const Image<I>& ima)
     {
-      trace::entering("mln::geom::max_ind");
+      mln_trace("mln::geom::max_ind");
 
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) maxind = exact(ima).bbox().pmax().ind();
 
-      trace::exiting("mln::geom::max_ind");
       return maxind;
     }
 

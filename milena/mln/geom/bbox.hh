@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -54,21 +54,36 @@ namespace mln
   namespace geom
   {
 
-    /// Compute the precise bounding box of a point set \p pset.
+    /*! \brief Compute the precise bounding box of a point set \p
+        pset.
+
+      \ingroup mlngeom
+     */
     template <typename S>
     box<mln_site(S)> bbox(const Site_Set<S>& pset);
 
 
-    /// Compute the precise bounding box of a point set \p pset.
+    /*! \brief Compute the precise bounding box of a point set \p
+        pset.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     box<mln_site(I)> bbox(const Image<I>& ima);
 
 
-    /// Compute the precise bounding box of a window \p win.
+    /*! \brief Compute the precise bounding box of a window \p win.
+
+      \ingroup mlngeom
+     */
     template <typename W>
     box<mln_psite(W)> bbox(const Window<W>& win);
 
-    /// Compute the precise bounding box of a weighted window \p win.
+    /*! \brief Compute the precise bounding box of a weighted window
+        \p win.
+
+      \ingroup mlngeom
+     */
     template <typename W>
     box<mln_psite(W)> bbox(const Weighted_Window<W>& win);
 

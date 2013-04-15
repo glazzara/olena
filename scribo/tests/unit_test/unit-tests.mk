@@ -186,14 +186,36 @@ scribo_all \
 scribo_binarization_all \
 scribo_binarization_global_threshold \
 scribo_binarization_global_threshold_auto \
-scribo_binarization_internal_compute_sauvola_threshold \
-scribo_binarization_internal_first_pass_functor \
-scribo_binarization_internal_sauvola_debug \
+scribo_binarization_internal_global_max_stddev_functor \
+scribo_binarization_internal_local_threshold_core \
+scribo_binarization_internal_local_threshold_debug \
+scribo_binarization_internal_niblack_formula \
+scribo_binarization_internal_niblack_functor \
+scribo_binarization_internal_niblack_functor_fast \
+scribo_binarization_internal_niblack_threshold_functor \
+scribo_binarization_internal_sauvola_formula \
+scribo_binarization_internal_sauvola_functor \
+scribo_binarization_internal_sauvola_ms_functor \
+scribo_binarization_internal_sauvola_threshold_functor \
+scribo_binarization_internal_singh_formula \
+scribo_binarization_internal_singh_functor \
+scribo_binarization_internal_wolf_formula \
+scribo_binarization_internal_wolf_functor \
+scribo_binarization_internal_wolf_functor_fast \
+scribo_binarization_kim \
 scribo_binarization_local_threshold \
+scribo_binarization_niblack \
+scribo_binarization_niblack_fast \
+scribo_binarization_niblack_threshold \
+scribo_binarization_otsu \
+scribo_binarization_otsu_threshold \
 scribo_binarization_sauvola \
 scribo_binarization_sauvola_ms \
 scribo_binarization_sauvola_ms_split \
-scribo_binarization_sauvola_threshold_image \
+scribo_binarization_sauvola_threshold \
+scribo_binarization_singh \
+scribo_binarization_wolf \
+scribo_binarization_wolf_fast \
 scribo_canvas_integral_browsing \
 scribo_convert_to_base64 \
 scribo_core_all \
@@ -278,6 +300,7 @@ scribo_filter_object_links_right_aligned \
 scribo_filter_object_links_top_aligned \
 scribo_filter_objects_h_thick \
 scribo_filter_objects_h_thin \
+scribo_filter_objects_in_borders \
 scribo_filter_objects_large \
 scribo_filter_objects_on_border \
 scribo_filter_objects_size_ratio \
@@ -299,6 +322,9 @@ scribo_io_xml_internal_compute_text_colour \
 scribo_io_xml_internal_print_box_coords \
 scribo_io_xml_internal_print_image_coords \
 scribo_io_xml_internal_time_info \
+scribo_layout_internal_hist_info \
+scribo_layout_internal_node \
+scribo_layout_xy_cut \
 scribo_make_all \
 scribo_make_debug_filename \
 scribo_make_influence_zone_graph \
@@ -429,6 +455,11 @@ scribo_util_box_intersection \
 scribo_util_box_is_included \
 scribo_util_color_to_hex \
 scribo_util_component_precise_outline \
-scribo_util_hex_to_color
+scribo_util_compute_sub_domains \
+scribo_util_hex_to_color \
+scribo_util_init_integral_image \
+scribo_util_integral_sub_sum_sum2_functor \
+scribo_util_integral_sum_sum2_functor \
+scribo_util_integral_sum_sum2_global_min_functor
 
 

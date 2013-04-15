@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,6 +78,9 @@ namespace scribo
     {
       using namespace mln;
 
+      /*! \brief Extract both thick and thin horizontal lines.
+       * \ingroup extractprimitiveseps
+       */
       template <typename I>
       mln_concrete(I)
       lines_h_thick_and_thin(const Image<I>& binary_image,
@@ -166,8 +170,8 @@ namespace scribo
 
 	  dpoint2d up(-delta, 0), down(+delta, 0);
 	  const int
-	    offset_up = count.delta_index(up),
-	    offset_down = count.delta_index(down);
+	    offset_up = count.delta_offset(up),
+	    offset_down = count.delta_offset(down);
 
 	  typedef const unsigned* ptr_t;
 	  value::int_u8* p_out;
@@ -238,7 +242,7 @@ namespace scribo
 		       // out:
 		       int& row, value::int_u8& next_tag)
 	{
-	  int row_offset = input.delta_index(dpoint2d(+1, 0));
+	  int row_offset = input.delta_offset(dpoint2d(+1, 0));
 	  const value::int_u8* p = & input.at_(row, col);
 	  while (*p == tag)
 	  {
@@ -251,7 +255,7 @@ namespace scribo
 
 	void draw_vertical(image2d<bool>& output, unsigned col, int row_start, int row_end)
 	{
-	  const unsigned offset = output.delta_index(dpoint2d(+1, 0)); // next row
+	  const unsigned offset = output.delta_offset(dpoint2d(+1, 0)); // next row
 	  bool* p_out = & output.at_(row_start, col);
 	  for (int row = row_start; row < row_end; ++row, p_out += offset)
 	    *p_out = true;
@@ -472,7 +476,7 @@ namespace scribo
 			     float p_few, float p_enough,
 			     float ratio)
       {
-	trace::entering("scribo::primitive::extract::lines_h_thick_and_thin");
+	mln_trace("scribo::primitive::extract::lines_h_thick_and_thin");
 
 	mlc_is(mln_value(I), bool)::check();
 
@@ -521,7 +525,6 @@ namespace scribo
 				  output, "lines_h_thick_and_thin_output");
 
 
-	trace::exiting("scribo::primitive::extract::lines_h_thick_and_thin");
 	return output;
       }
 

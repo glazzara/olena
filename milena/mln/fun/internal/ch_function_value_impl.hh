@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,10 @@ namespace mln
     namespace internal
     {
 
-      /// Default implementation.
+      /*!
+	\internal
+	\brief Default implementation.
+      */
       template <typename F, typename V>
       struct ch_function_value_impl
       {

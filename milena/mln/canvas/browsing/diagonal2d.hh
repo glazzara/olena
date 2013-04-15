@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,8 +43,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction.
-      /*!
+      /*! \brief Browsing in a certain direction.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -57,27 +57,28 @@ namespace mln
        *   - final(): Will be called at the end.
        *
        * F shall features : \n
-       * { \n
-       * --- as types: \n
-       *   I; \n
-       * --- as attributes: \n
-       *   dim; \n
-       *   dir; // and test dir < dim \n
-       *   input; \n
-       *   p; \n
-       * --- as methods: \n
-       *   void init(); \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       - As types:
+         + I;
+       - As attributes:
+         + dim;
+         + dir; // and test dir < dim
+         + input;
+         + p;
+       - As methods:
+         + void init();
+         + void next();
+         + void final();
        *
        * Example : \n
        *
-       * |  1 3 6
-       * |  2 5 8
-       * |  4 7 9
-       * L------>
+       \verbatim
+       ------->
+       |  1 3 6
+       |  2 5 8
+       |  4 7 9
+       \endverbatim
        *
+       * \ingroup modcanvasbrowsing
        */
       struct diagonal2d_t : public Browsing< diagonal2d_t >
       {
@@ -110,7 +111,7 @@ namespace mln
       void
       diagonal2d_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::diagonal2d");
+	mln_trace("canvas::browsing::diagonal2d");
 
 	typedef typename F::I I;
 	typedef mln_deduce(I, psite, delta) dpsite;
@@ -164,7 +165,6 @@ namespace mln
 	}
 
 	f.final();
-	trace::exiting("canvas::browsing::diagonal2d");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

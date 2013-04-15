@@ -65,12 +65,11 @@ namespace mln
       mln_ch_value(I, bool)
       binarization_(const I& input, const Function_v2b<F>& fun)
       {
-	trace::entering("binarization::impl::binarization_");
+	mln_trace("binarization::impl::binarization_");
 	mln_ch_value(I, bool) output(input.domain());
 
 	output = data::transform(input, fun);
 
-	trace::exiting("binarization::impl::binarization_");
 	return output;
       }
 
@@ -85,13 +84,12 @@ namespace mln
     mln_ch_value(I, bool)
     binarization(const Image<I>& input, const Function_v2b<F>& fun)
     {
-      trace::entering("binarization::binarization");
+      mln_trace("binarization::binarization");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), fun);
 
-      trace::exiting("binarization::binarization");
       return output;
     }
 

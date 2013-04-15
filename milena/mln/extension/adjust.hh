@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,23 +46,35 @@ namespace mln
   namespace extension
   {
 
-    /// Adjust the domain extension of image \p ima with the
-    /// size of the window \p win.
+    /*! \brief Adjust the domain extension of image \p ima with the
+     * size of the window \p win.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Window<W>& win);
 
-    /// Adjust the domain extension of image \p ima with the
-    /// size of the weighted window \p wwin.
+    /*! \brief Adjust the domain extension of image \p ima with the
+     * size of the weighted window \p wwin.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Weighted_Window<W>& wwin);
 
-    /// Adjust the domain extension of image \p ima with the
-    /// size of the neighborhood \p nbh.
+    /*! \brief Adjust the domain extension of image \p ima with the
+     *  size of the neighborhood \p nbh.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I, typename N>
     void adjust(const Image<I>& ima, const Neighborhood<N>& nbh);
 
-    /// Adjust the domain extension of image \p ima with the
-    /// size \p delta.
+    /*! \brief Adjust the domain extension of image \p ima with the
+     *  size \p delta.
+     *
+     * \ingroup mlnborderext
+     */
     template <typename I>
     void adjust(const Image<I>& ima, unsigned delta);
 
@@ -88,33 +101,29 @@ namespace mln
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Window<W>& win)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(win));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I, typename W>
     void adjust(const Image<I>& ima, const Weighted_Window<W>& wwin)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(wwin));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I, typename N>
     void adjust(const Image<I>& ima, const Neighborhood<N>& nbh)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, geom::delta(nbh));
-      trace::exiting("extension::adjust");
     }
 
     template <typename I>
     void adjust(const Image<I>& ima, unsigned delta)
     {
-      trace::entering("extension::adjust");
+      mln_trace("extension::adjust");
       impl::adjust(ima, delta);
-      trace::exiting("extension::adjust");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

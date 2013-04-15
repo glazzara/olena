@@ -28,8 +28,8 @@
 
 /// \file
 ///
-/// Set type for specific images to Drop Capital component.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Set type for specific images to Drop Capital component.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -47,12 +47,10 @@ namespace scribo
     using namespace mln;
 
 
-    /// Set type for specific images to Drop Capital component.
+    /// \brief Set type for specific images to Drop Capital component.
     ///
-    /// \param[in] separators    A paragraph set.
+    /// \param[in] doc    A document structure.
     ///
-    /// \return A doc with images tagged as dropped capital is such
-    /// images have been found.
     //
     template <typename L>
     void
@@ -65,7 +63,7 @@ namespace scribo
     void
     images_to_drop_capital(document<L>& doc)
     {
-      trace::entering("scribo::postprocessing::images_to_drop_capital");
+      mln_trace("scribo::postprocessing::images_to_drop_capital");
 
       mln_precondition(doc.is_valid());
 
@@ -130,7 +128,6 @@ namespace scribo
       // Ignored components are still in the separator image...
       doc.set_elements(elts);
 
-      trace::exiting("scribo::postprocessing::images_to_drop_capital");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

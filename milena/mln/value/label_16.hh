@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,18 @@ namespace mln
   {
 
 
-    /// Alias for 16-bit integers.
+    /*!
+      \struct label_16
+      \headerfile <>
+
+      \brief Alias for 16-bit integers.
+
+      \ingroup valuelabel
+      \relates value::label
+    */
+    /// \cond ALIASES
     typedef label<16> label_16;
+    /// \endcond
 
 
   } // end of namespace mln::value

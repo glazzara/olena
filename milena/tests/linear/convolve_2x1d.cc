@@ -29,7 +29,7 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/math/round.hh>
+#include <mln/fun/v2v/round.hh>
 #include <mln/data/transform.hh>
 
 #include <mln/core/alias/w_window2d_float.hh>
@@ -55,7 +55,7 @@ int main()
   float hws[] = { w, w, w, w, w,   w,   w, w, w, w, w };
   float vws[] = { v, v, v };
   image2d<float> tmp = linear::convolve_2x1d(lena, hws, vws);
-  
-  io::pgm::save(data::transform(tmp, math::round<int_u8>()),
+
+  io::pgm::save(data::transform(tmp, fun::v2v::round<int_u8>()),
 		"convolve_2x1d-out.pgm");
 }

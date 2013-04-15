@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -27,48 +27,70 @@
 #ifndef SCRIBO_CORE_TAG_COMPONENT_HH
 # define SCRIBO_CORE_TAG_COMPONENT_HH
 
-# include <iostream>
-
 /// \file
 ///
 /// \brief Component tags.
 
+# include <iostream>
+
 namespace scribo
 {
 
-  // Component id tag.
+  /// Component id tag.
   struct ComponentId;
-
 
 
   namespace component
   {
 
+    /*! \brief All possible tags that can be used for components.
+
+      component::Tag values can be converted to String using
+      operator<<(std::ostream &ostr, const Tag &tag).  String values
+      can be converted to component::Tag using str2tag().
+
+      \sa scribo::component_set scribo::component_info
+     */
     enum Tag
     {
-      None = 0,
-      Ignored
+      None = 0, ///< No tag set.
+      Ignored   ///< To be ignored in further processing.
     };
 
 
+    /*! \brief All possible types of components.
+
+      component::Type values can be converted to String using
+      operator<<(std::ostream &ostr, const Type &type).  String values
+      can be converted to component::Type using str2type().
+
+      \sa scribo::component_set scribo::component_info str2type()
+     */
     enum Type
     {
-      Undefined = 0,
-      Character,
-      VerticalLineSeparator,
-      HorizontalLineSeparator,
-      WhitespaceSeparator,
-      Noise,
-      Punctuation,
-      Image,
-      DropCapital
+      Undefined = 0,           ///< No type defined.
+      Character,               ///< Character.
+      VerticalLineSeparator,   ///< Vertical line separator.
+      HorizontalLineSeparator, ///< Horizontal line separator.
+      WhitespaceSeparator,     ///< whitespace separator.
+      Noise,                   ///< Noise.
+      Punctuation,             ///< Punctuation.
+      Image,                   ///< Image.
+      DropCapital              ///< Drop capital.
     };
 
 
+    /// \brief Operator allowing scribo::component::Tag to be printed
+    /// out.
     std::ostream& operator<<(std::ostream& ostr, const Tag& tag);
+
+    /// \brief Convert a std::string to a scribo::component::Tag.
     Tag str2tag(const std::string& str);
 
+    /// \brief Operator allowing scribo::component::Type to be printed
+    /// out.
     std::ostream& operator<<(std::ostream& ostr, const Type& type);
+    /// \brief Convert a std::string to a scribo::component::Type.
     Type str2type(const std::string& str);
 
 
@@ -176,4 +198,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_CORE_TAG_COMP_HH
+#endif // ! SCRIBO_CORE_TAG_COMPONENT_HH

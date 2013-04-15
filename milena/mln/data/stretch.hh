@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,8 +50,8 @@ namespace mln
   namespace data
   {
 
-    /*! Stretch the values of \p input so that they can be stored in
-     *  \p output.
+    /*! \brief Stretch the values of \p input so that they can be
+     *  stored in \p output.
      *
      * \param[in] v       A value to set the output value type.
      * \param[in] input   The input image.
@@ -59,6 +59,8 @@ namespace mln
      * \return A stretch image with values of the same type as \p v.
      *
      * \pre input.is_valid
+     *
+     * \ingroup mlndata
      */
     template <typename V, typename I>
     mln_ch_value(I, V)
@@ -82,7 +84,7 @@ namespace mln
       mln_ch_value(I, V)
 	stretch(const V& v, const Image<I>& input)
       {
-	trace::entering("data::impl::stretch");
+	mln_trace("data::impl::stretch");
 
 	(void) v;
 	mlc_converts_to(float, V)::check();
@@ -109,10 +111,9 @@ namespace mln
 	else
 	{
 	  initialize(output, input);
-	  trace::warning("output has no significative data!");
+	  mln_trace_warning("output has no significative data!");
 	}
 
-	trace::exiting("data::impl::stretch");
 	return output;
       }
 
@@ -127,14 +128,13 @@ namespace mln
     mln_ch_value(I, V)
     stretch(const V& v, const Image<I>& input)
     {
-      trace::entering("data::stretch");
+      mln_trace("data::stretch");
 
       (void) v;
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, V) output = impl::stretch(V(), input);
 
-      trace::exiting("data::stretch");
       return output;
     }
 

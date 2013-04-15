@@ -21,6 +21,7 @@ COND_TESTS = cond_tests_boost-tuple		\
 	     cond_tests_cfitsio			\
 	     cond_tests_gdcm			\
 	     cond_tests_magickxx		\
+	     cond_tests_poppler			\
 	     cond_tests_qt			\
 	     cond_tests_tiff
 

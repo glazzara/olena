@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,50 +76,92 @@ namespace mln
     {
 
 
-      /// Window property about the 'size' method presence.
+      /*!
+	\internal
+	\brief Window property about the 'size' method presence.
+      */
       struct size
       {
-	/// Base class for the window 'size' property.
+	/*!
+	  \internal
+	  \brief Base class for the window 'size' property.
+	*/
 	struct any { protected: any() {} };
 
-	/// Property that states that the size is fixed.
+	/*!
+	  \internal
+	  \brief Property that states that the size is fixed.
+	*/
 	struct fixed   : any { std::string name() const { return "size::fixed"; } };
 
-	/// Property that states that the size is not fixed so unknown.
+	/*!
+	  \internal
+	  \brief Property that states that the size is not fixed so unknown.
+	*/
 	struct unknown : any { std::string name() const { return "size::unknown"; } };
       };
 
 
-      /// Window property about the 'support' it is designed for.
+      /*!
+	\internal
+	\brief Window property about the 'support' it is designed for.
+      */
       struct support
       {
-	/// Base class for the window 'support' property.
+	/*!
+	  \internal
+	  \brief Base class for the window 'support' property.
+	*/
 	struct any { protected: any() {} };
 
-	/// Property that states that the window is designed for a regular support.
+	/*!
+	  \internal
+	  \brief Property that states that the window is designed for a regular support.
+	*/
 	struct regular   : any { std::string name() const { return "support::regular"; } };
 
-	/// Property that states that the window is not designed for a regular support.
+	/*!
+	  \internal
+	  \brief Property that states that the window is not designed for a regular support.
+	*/
 	struct irregular : any { std::string name() const { return "support::irregular"; } };
       };
 
 
-      /// Window property about how the window is defined.
+      /*!
+	\internal
+	\brief Window property about how the window is defined.
+      */
       struct definition
       {
-	/// Base class for the window 'definition' property.
+	/*!
+	  \internal
+	  \brief Base class for the window 'definition' property.
+	*/
 	struct any { protected: any() {} };
 
-	/// Property that states that the definition is unique.
+	/*!
+	  \internal
+	  \brief Property that states that the definition is unique.
+	*/
 	struct unique : any { std::string name() const { return "definition::unique"; } };
 
-	/// Abstract property that states that the definition is multiple.
+	/*!
+	  \internal
+	  \brief Abstract property that states that the definition is multiple.
+	*/
 	struct multiple : any { protected: multiple() {} };
 
-	/// Property that states that this window has n definitions.
+	/*!
+	  \internal
+	  \brief Property that states that this window has n definitions.
+	*/
 	struct n_ary : multiple { std::string name() const { return "definition::n_ary"; } };
 
-	/// Property that states that this window has a varying definition.
+	/*!
+	  \internal
+	  \brief Property that states that this window has a varying definition.
+	*/
 	struct varying : multiple { std::string name() const { return "definition::varying"; } };
       };
 

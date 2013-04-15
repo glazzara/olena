@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -48,12 +48,14 @@ namespace mln
     namespace fld
     {
 
-      /// Read the header form an AVS field file.
-      ///
-      /// \param ins The file to read.
-      ///
-      /// \return The header.
-      ///
+      /*! \brief Read the header form an AVS field file.
+       *
+       * \param ins The file to read.
+       *
+       * \return The header.
+       *
+       * \ingroup iofld
+       */
       fld_header read_header(std::istream& ins);
 
 # ifndef MLN_INCLUDE_ONLY

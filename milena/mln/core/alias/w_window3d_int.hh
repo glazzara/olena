@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,11 +39,19 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a w_window with arbitrary shape, defined
-   * on the 3D grid (with integer coordinates) and whose
-   * weights are integers.
-   */
+  /*!
+    \class w_window3d_int
+    \headerfile <>
+
+    \brief Type alias for a w_window with arbitrary shape, defined
+    on the 3D grid (with integer coordinates) and whose
+    weights are integers.
+
+    \ingroup modwin3d
+  */
+  /// \cond ALIAS
   typedef w_window<dpoint3d, int> w_window3d_int;
+  /// \endcond
 
 
 } // end of namespace mln

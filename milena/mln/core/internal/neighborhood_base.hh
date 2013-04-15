@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,6 +43,7 @@ namespace mln
 
 
   // Forward declaration.
+  template <typename W> class neighb;
   namespace win
   {
     template <unsigned n, typename W, typename F>
@@ -66,25 +68,25 @@ namespace mln
       /// Give the foreground neighborhood in the case of a dual
       /// neighborhood.  For instance, with (object:c4, background:c8),
       /// the result is c4.
-      
+
       neighb<W> foreground() const
       {
 	W win = internal::force_exact<E>(*this).win().window_(1); // True, so object.
 	neighb<W> nbh(win);
 	return nbh;
       }
-      
+
       /// Give the background neighborhood in the case of a dual
       /// neighborhood.  For instance, with (object:c4, background:c8),
       /// the result is c8.
-      
+
       neighb<W> background() const
       {
 	W win = internal::force_exact<E>(*this).win().window_(0); // False, so background.
 	neighb<W> nbh(win);
 	return nbh;
       }
-      
+
     };
 
 
@@ -111,10 +113,12 @@ namespace mln
     };
 
 
-    /// Base class for neighborhood implementation classes.
-    ///
-    /// \p W is the underlying window type.
+    /*!
+      \internal
+      \base Base class for neighborhood implementation classes.
 
+      \p W is the underlying window type.
+    */
     template <typename W, typename E>
     struct neighborhood_base : public neighborhood_impl<W,E>
     {

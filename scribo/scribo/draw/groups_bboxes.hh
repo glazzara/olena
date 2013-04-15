@@ -67,7 +67,7 @@ namespace scribo
 		  const object_groups<L>& groups,
 		  const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::groups_bboxes");
+      mln_trace("scribo::draw::groups_bboxes");
 
       I& input = exact(input_);
 
@@ -77,7 +77,6 @@ namespace scribo
 	if (groups(g).is_valid())
 	  mln::draw::box(input, groups(g).bbox(), value);
 
-      trace::exiting("scribo::draw::groups_bboxes");
     }
 
 

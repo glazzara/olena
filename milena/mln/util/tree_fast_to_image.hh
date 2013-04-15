@@ -65,7 +65,7 @@ namespace mln
       void
       tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
       {
-	trace::entering("util::impl::tree_fast_to_image");
+	mln_trace("util::impl::tree_fast_to_image");
 
 	I& output = exact(output_);
 	std::list<unsigned> l;
@@ -86,7 +86,6 @@ namespace mln
 	    l.pop_front();
 	  }
 
-	trace::exiting("util::impl::tree_fast_to_image");
       }
 
     } // end of namespace mln::util::impl
@@ -98,11 +97,10 @@ namespace mln
     void
     tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
     {
-      trace::entering("util::tree_fast_to_image");
+      mln_trace("util::tree_fast_to_image");
 
       impl::tree_fast_to_image(tree, output_);
 
-      trace::exiting("util::tree_fast_to_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

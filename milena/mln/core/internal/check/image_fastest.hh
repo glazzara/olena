@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +32,7 @@
 /// \brief Class that statically checks the interface of fastest
 /// images.
 ///
-/// \todo Check and convert p in index_of_point towards E::psite.
+/// \todo Check and convert p in offset_of_point towards E::psite.
 
 # include <mln/metal/bool.hh>
 # include <mln/core/macros.hh>
@@ -50,23 +50,24 @@ namespace mln
     namespace check
     {
 
-      /// FIXME
+      /// \brief Statically checks the interface of fastest images.
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {
 
-	/// \brief Give the offset of the site \p p.
-	///
-	/// \param[in] p A site.
-	///
-	/// \warning This method is final.
-	///
-	/// \pre The image has to be initialized and to own the point \p p.
-	/// \post p == point_at_index(result)
-	///
+	/*!
+	  \brief Give the offset of the site \p p.
+
+	  \param[in] p A site.
+
+	  \warning This method is final.
+
+	  \pre The image has to be initialized and to own the point \p p.
+	  \post p == point_at_offset(result)
+	*/
 	template <typename P>
 	unsigned
-	index_of_point(const P& p) const;
+	offset_of_point(const P& p) const;
 
       protected:
 	image_fastest_();
@@ -94,9 +95,9 @@ namespace mln
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
-	int (E::*m1)(const dpsite&) const = & E::delta_index;
+	int (E::*m1)(const dpsite&) const = & E::delta_offset;
 	(void) m1;
-	site (E::*m2)(unsigned) const = & E::point_at_index;
+	site (E::*m2)(unsigned) const = & E::point_at_offset;
 	(void) m2;
 	unsigned (E::*m3)() const = & E::border;
 	(void) m3;
@@ -120,7 +121,7 @@ namespace mln
 	(void) m8;
 
 #  if (defined(__GNUC__) && __GNUC__ >= 3) && !defined(__INTEL_COMPILER)
-	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
+	unsigned (E::*m9)(const psite& p) const = & E::offset_of_point;
 	(void) m9;
 #  endif
 
@@ -131,14 +132,14 @@ namespace mln
       template <typename P>
       inline
       unsigned
-      image_fastest_<E,B>::index_of_point(const P& p) const
+      image_fastest_<E,B>::offset_of_point(const P& p) const
       {
 	const E* this_ = & internal::force_exact<E>(*this);
 	mln_precondition(this_->is_valid());
 	mln_precondition(this_->has(p));
 
 	unsigned i = & this_->operator()(p) - this_->buffer();
-	mln_postcondition(p == this_->point_at_index(i));
+	mln_postcondition(p == this_->point_at_offset(i));
 	return i;
       }
 

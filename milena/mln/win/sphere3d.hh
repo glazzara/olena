@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,11 +41,18 @@ namespace mln
   namespace win
   {
 
-    /// \brief 3D sphere window; precisely, ball-shaped window defined on the
-    /// 3D cubic grid.
-    ///
-    /// \ingroup modwin3d
+    /*!
+      \class sphere3d
+      \headerfile <>
+
+      \brief 3D sphere window; precisely, ball-shaped window defined on the
+      3D cubic grid.
+
+      \ingroup modwin3d
+    */
+    /// \cond ALIAS
     typedef ball<grid::cube, def::coord> sphere3d;
+    /// \endcond
 
 
   } // end of namespace mln::win

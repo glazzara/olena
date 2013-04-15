@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,8 @@
  * \brief Laplacian.
  */
 
+/// \todo Improve doc!
+
 # include <mln/linear/convolve.hh>
 # include <mln/make/w_window2d.hh>
 
@@ -42,8 +45,10 @@ namespace mln
   namespace linear
   {
 
-    // FIXME: Doc!
-
+    /*! \brief Laplacian
+      \ingroup mlnlinear
+    */
+    /// \{
     template <typename I>
     mln_ch_convolve(I, int)
     lap_4(const Image<I>& input);
@@ -59,7 +64,7 @@ namespace mln
     template <typename I>
     mln_ch_convolve(I, int)
     lap_o(const Image<I>& input);
-
+    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -70,13 +75,12 @@ namespace mln
     mln_ch_convolve(I, int)
     lap_4(const Image<I>& input)
     {
-      trace::entering("linear::lap_4");
+      mln_trace("linear::lap_4");
       mln_precondition(exact(input).is_valid());
       int ws[] = { 0,  1,  0,
 		   1, -4,  1,
 		   0,  1,  0 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::lap_4");
       return output;
     }
 
@@ -85,13 +89,12 @@ namespace mln
     mln_ch_convolve(I, int)
     lap_8(const Image<I>& input)
     {
-      trace::entering("linear::lap_8");
+      mln_trace("linear::lap_8");
       mln_precondition(exact(input).is_valid());
       int ws[] = { 1,  1,  1,
 		   1, -8,  1,
 		   1,  1,  1 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::lap_8");
       return output;
     }
 
@@ -100,13 +103,12 @@ namespace mln
     mln_ch_convolve(I, int)
     lap_x(const Image<I>& input)
     {
-      trace::entering("linear::lap_x");
+      mln_trace("linear::lap_x");
       mln_precondition(exact(input).is_valid());
       int ws[] = { +2, -1, +2,
 		   -1, -4, -1,
 		   +2, -1, +2 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::lap_x");
       return output;
     }
 
@@ -115,13 +117,12 @@ namespace mln
     mln_ch_convolve(I, int)
     lap_o(const Image<I>& input)
     {
-      trace::entering("linear::lap_o");
+      mln_trace("linear::lap_o");
       mln_precondition(exact(input).is_valid());
       int ws[] = { -1, +2, -1,
 		   +2, -4, +2,
 		   -1, +2, -1 };
       mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
-      trace::exiting("linear::lap_o");
       return output;
     }
 

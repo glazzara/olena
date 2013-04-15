@@ -1,0 +1,16 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class neighb3d
+    : public neighb<window3d>
+  {
+    /// Constructor without argument.
+    neighb3d();
+
+    /// Constructor from a window \p win.
+    neighb3d(const window3d& win);
+  };
+
+}

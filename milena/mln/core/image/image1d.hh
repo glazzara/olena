@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,7 +58,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::image1d<T>.
+    /*!
+      \internal
+      \brief Data structure for \c mln::image1d<T>.
+    */
     template <typename T>
     struct data< image1d<T> >
     {
@@ -122,27 +125,6 @@ namespace mln
   template <typename T> struct image1d;
 
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // histo::array -> image1d.
-      template <typename V, typename T>
-      void from_to_(const histo::array<V>& from, image1d<T>& to);
-
-      // util::array -> image1d.
-      template <typename V, typename T>
-      void from_to_(const util::array<V>& from, image1d<T>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
-
   /// Basic 1D image class.
   ///
   /// The parameter \c T is the type of pixel values.  This image class
@@ -181,8 +163,10 @@ namespace mln
     image1d(const box1d& b, unsigned bdr = border::thickness);
 
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const box1d& b, unsigned bdr = border::thickness);
+    /// \endcond
 
 
     /// Test if \p p is valid.
@@ -210,27 +194,30 @@ namespace mln
     // Specific methods:
     // -----------------
 
-    /// Read-only access to the image value located at (\p index).
-    const T& at_(def::coord index) const;
+    /// \cond INTERNAL_API
 
-    /// Read-write access to the image value located at (\p index).
-    T& at_(def::coord index);
+    /// Read-only access to the image value located at (\p offset).
+    const T& at_(def::coord offset) const;
 
-     /// Give the number of indexes.
+    /// Read-write access to the image value located at (\p offset).
+    T& at_(def::coord offset);
+
+     /// Give the number of offsets.
     unsigned ninds() const;
 
+    /// \endcond
 
 
     /// Fast Image method
 
-    // Give the index of a point.
-    using super_::index_of_point;
+    // Give the offset of a point.
+    using super_::offset_of_point;
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int delta_index(const dpoint1d& dp) const;
+    int delta_offset(const dpoint1d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point1d point_at_index(unsigned i) const;
+    point1d point_at_offset(unsigned i) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -250,9 +237,10 @@ namespace mln
     unsigned nelements() const;
 
 
-
+    /// \cond INTERNAL_API
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
+    /// \endcond
 
   };
 
@@ -471,10 +459,10 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image1d<T>::at_(def::coord index) const
+  image1d<T>::at_(def::coord offset) const
   {
-    mln_precondition(this->has(point1d(index)));
-    return this->data_->array_[index];
+    mln_precondition(this->has(point1d(offset)));
+    return this->data_->array_[offset];
   }
 
   template <typename T>
@@ -489,10 +477,10 @@ namespace mln
   template <typename T>
   inline
   T&
-  image1d<T>::at_(def::coord index)
+  image1d<T>::at_(def::coord offset)
   {
-    mln_precondition(this->has(point1d(index)));
-    return this->data_->array_[index];
+    mln_precondition(this->has(point1d(offset)));
+    return this->data_->array_[offset];
   }
 
 
@@ -535,7 +523,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image1d<T>::delta_index(const dpoint1d& dp) const
+  image1d<T>::delta_offset(const dpoint1d& dp) const
   {
     mln_precondition(this->is_valid());
     int o = dp[0];
@@ -545,7 +533,7 @@ namespace mln
   template <typename T>
   inline
   point1d
-  image1d<T>::point_at_index(unsigned i) const
+  image1d<T>::point_at_offset(unsigned i) const
   {
     mln_precondition(i < nelements());
     def::coord ind = static_cast<def::coord>(i + this->data_->vb_.min_ind());
@@ -577,46 +565,6 @@ namespace mln
 
 namespace mln
 {
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // histo::array -> image1d.
-      template <typename V, typename T>
-      inline
-      void
-      from_to_(const histo::array<V>& from, image1d<T>& to)
-      {
-	// FIXME: The code should looks like:
-
-// 	box1d b(point1d(mln_min(V)), point1d(mln_max(V)));
-// 	ima.init_(b, 0);
-// 	for_all(v)
-// 	  from_to(h(v), ima.at_( index_of(v) ));
-	to.init_(make::box1d(from.nvalues()));
-	for (unsigned i = 0; i < from.nvalues(); ++i)
-	  from_to(from[i], to(point1d(i)));
-      }
-
-      // util::array -> image1d.
-      template <typename V, typename T>
-      inline
-      void
-      from_to_(const util::array<V>& from, image1d<T>& to)
-      {
-	to.init_(make::box1d(from.nelements()));
-	for (unsigned i = 0; i < from.nelements(); ++i)
-	  from_to(from[i], to(point1d(i)));
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace trait
   {

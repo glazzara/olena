@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,15 +44,18 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by the weighted window \p w_win.
-     *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre input.is_valid
+    /*! \brief Convolution of an image \p input by the weighted window
+        \p w_win.
+
+       \warning Computation of \p output(p) is performed with the
+       value type of \p output.
+
+       \warning The weighted window is used as-is, considering that
+       its symmetrization is handled by the client.
+
+       \pre input.is_valid
+
+       \ingroup mlnlinear
      */
     template <typename I, typename W>
     mln_ch_convolve(I, W)
@@ -93,14 +97,14 @@ namespace mln
 	convolve(const Image<I>& input_,
 		 const Weighted_Window<W>& w_win_)
 	{
-	  trace::entering("linear::impl::generic::convolve");
+	  mln_trace("linear::impl::generic::convolve");
 
 	  const I& input = exact(input_);
 	  const W& w_win = exact(w_win_);
 	  internal::convolve_tests(input, w_win);
 
 	  extension::adjust_duplicate(input, w_win);
-	  
+
 	  typedef mln_ch_convolve(I, W) O;
 	  O output;
 	  initialize(output, input);
@@ -117,8 +121,7 @@ namespace mln
 	      a.take(input(q), q.w());
 	    output(p) = a.to_result();
 	  }
-	  
-	  trace::exiting("linear::impl::generic::convolve");
+
 	  return output;
 	}
 
@@ -130,7 +133,7 @@ namespace mln
       convolve_fastest(const Image<I>& input_,
 		       const Weighted_Window<W>& w_win_)
       {
-	trace::entering("linear::impl::convolve_fastest");
+	mln_trace("linear::impl::convolve_fastest");
 
 	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);
@@ -157,7 +160,6 @@ namespace mln
  	    p_out.val() = a.to_result();
 	  }
 
-	trace::exiting("linear::impl::convolve_fastest");
 	return output;
       }
 
@@ -205,7 +207,7 @@ namespace mln
     mln_ch_convolve(I, W)
     convolve(const Image<I>& input, const Weighted_Window<W>& w_win)
     {
-      trace::entering("linear::convolve");
+      mln_trace("linear::convolve");
 
       internal::convolve_tests(input, w_win);
 
@@ -213,7 +215,6 @@ namespace mln
       output = internal::convolve_dispatch(mln_trait_image_speed(I)(),
 					   input, w_win);
 
-      trace::exiting("linear::convolve");
       return output;
     }
 

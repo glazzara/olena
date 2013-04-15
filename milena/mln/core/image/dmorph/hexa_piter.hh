@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,13 +40,14 @@
 namespace mln
 {
 
-  /// A generic forward iterator on points of subsets.
-  ///
-  /// Parameter \c S is a point set type; parameter F is a function
-  /// from point to Boolean.
-  ///
-  /// \see mln::hexa
-  ///
+  /*!
+    \brief A generic forward iterator on points of subsets.
+
+    Parameter \c S is a point set type; parameter F is a function
+    from point to Boolean.
+
+    \see mln::hexa
+  */
   template <typename S>
   class hexa_fwd_piter_
     : public internal::piter_adaptor_< mln_fwd_piter(S),
@@ -64,8 +66,10 @@ namespace mln
     /// Start an iteration.
     void start();
 
+    /// \cond INTERNAL_API
     /// Go to the next point.
     void next_();
+    /// \endcond
 
     operator point2d_h() const;
   private:

@@ -95,7 +95,7 @@ namespace mln
 	  void
 	  set_value(Image<I>& input_, const mln_deduce(I, value, result)& res)
 	  {
-	    trace::entering("accu::impl::image::generic::set_value");
+	    mln_trace("accu::impl::image::generic::set_value");
 
 	    typedef mln_value(I) A;
 	    mlc_is_a(A, Accumulator)::check();
@@ -109,7 +109,6 @@ namespace mln
 	    for_all(p)
 	      input(p).set_value(res);
 
-	    trace::exiting("accu::impl::image::generic::set_value");
 	  }
 
 	  template <typename I, typename J>
@@ -117,7 +116,7 @@ namespace mln
 	  void
 	  set_value(Image<I>& input_, const Image<J>& res_)
 	  {
-	    trace::entering("accu::impl::image::generic::set_value");
+	    mln_trace("accu::impl::image::generic::set_value");
 
 	    typedef mln_value(I) A;
 	    mlc_is_a(A, Accumulator)::check();
@@ -134,7 +133,6 @@ namespace mln
 	    for_all(p)
 	      input(p).set_value(res(p));
 
-	    trace::exiting("accu::impl::image::generic::set_value");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -147,7 +145,7 @@ namespace mln
 	void
 	set_value_fastest(Image<I>& input_, const mln_deduce(I, value, result)& res)
 	{
-	  trace::entering("accu::impl::image::set_value_fastest");
+	  mln_trace("accu::impl::image::set_value_fastest");
 
 	  typedef mln_value(I) A;
 	  mlc_is_a(A, Accumulator)::check();
@@ -161,7 +159,6 @@ namespace mln
 	  for_all(px)
 	    px.val().set_value(res);
 
-	  trace::exiting("accu::impl::image::set_value_fastest");
 	}
 
 	template <typename I, typename J>
@@ -169,7 +166,7 @@ namespace mln
 	void
 	set_value_fastest(Image<I>& input_, const Image<J>& res_)
 	{
-	  trace::entering("accu::impl::image::set_value_fastest");
+	  mln_trace("accu::impl::image::set_value_fastest");
 
 	  typedef mln_value(I) A;
 	  mlc_is_a(A, Accumulator)::check();
@@ -190,7 +187,6 @@ namespace mln
 	  for_all_2(p_in, p_res)
 	    p_in.val().set_value(p_res.val());
 
-	  trace::exiting("accu::impl::image::set_value_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -275,7 +271,7 @@ namespace mln
       void
       set_value(Image<I>& input, const mln_deduce(I, value, result)& res)
       {
-	trace::entering("accu::image::set_value");
+	mln_trace("accu::image::set_value");
 
 	typedef mln_value(I) A;
 	mlc_is_a(A, Accumulator)::check();
@@ -285,7 +281,6 @@ namespace mln
 	mln_precondition(exact(input).is_valid());
 	internal::set_value_dispatch(input, res);
 
-	trace::exiting("accu::image::set_value");
       }
 
       template <typename I, typename J>
@@ -293,7 +288,7 @@ namespace mln
       void
       set_value(Image<I>& input, const Image<J>& res)
       {
-	trace::entering("accu::image::set_value");
+	mln_trace("accu::image::set_value");
 
 	typedef mln_value(I) A;
 	mlc_is_a(A, Accumulator)::check();
@@ -304,7 +299,6 @@ namespace mln
 	internal::set_value_tests(input, res);
 	internal::set_value_dispatch(input, res);
 
-	trace::exiting("accu::image::set_value");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

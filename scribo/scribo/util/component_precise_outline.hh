@@ -363,7 +363,7 @@ namespace scribo
     component_precise_outline(const Image<I>& input_, const mln_value(I)& id,
 			      bool compress_points)
     {
-      trace::entering("scribo::util::component_precise_outline");
+      mln_trace("scribo::util::component_precise_outline");
 
       const I& input = exact(input_);
       typedef mln_site(I) P;
@@ -410,11 +410,9 @@ namespace scribo
 	mln::p_array<P> waypoints;
 	internal::filter_points(points, waypoints);
 
-	trace::exiting("scribo::util::component_precise_outline");
 	return waypoints;
       }
 
-      trace::exiting("scribo::util::component_precise_outline");
       return points;
     }
 

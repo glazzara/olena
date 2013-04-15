@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,10 +42,12 @@
 namespace mln
 {
 
-  /*! \brief A generic backward iterator on points by lines.
-   *
-   * The parameter \c P is the type of points.
-   */
+  /*!
+    \internal
+    \brief A generic backward iterator on points by lines.
+
+    The parameter \c P is the type of points.
+  */
   template <typename P>
   class box_runend_piter :
     public internal::site_set_iterator_base< box<P>,
@@ -63,10 +66,14 @@ namespace mln
      */
     box_runend_piter(const box<P>& b);
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     void init_(const box<P>& b);
+    /// \endcond
 
     box_runend_piter();
+
+    /// \cond INTERNAL_API
 
     /// Test the iterator validity.
     bool is_valid_() const;
@@ -79,6 +86,9 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+
+    /// \endcond
+
 
     /// Give the lenght of the run
     unsigned run_length() const;

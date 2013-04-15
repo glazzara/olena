@@ -190,7 +190,7 @@ namespace mln
 			  const Site_Set<S>& s_m_,
 			  const Neighborhood<N>& nbh_)
 	  {
-	    trace::entering("morpho::tree::impl::generic::dual_union_find");
+	    mln_trace("morpho::tree::impl::generic::dual_union_find");
 
 	    util::timer tm;
 	    tm.start();
@@ -341,7 +341,6 @@ namespace mln
 	    //mln_postcondition(internal::compute_parent_postconditions(fext, s, parent));
 
 	    tree::data<I, p_array<mln_psite(I)> > tree(fext, parent, s);
-	    trace::exiting("morpho::tree::impl::generic::dual_union_find");
 
 	    return tree;
 	  }

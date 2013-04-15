@@ -218,13 +218,12 @@ namespace mln
 			      const T& t,
 			      mln_ch_value(typename T::function, A)* accu_image)
       {
-	trace::entering("morpho::tree::compute_attribute_image");
+	mln_trace("morpho::tree::compute_attribute_image");
 
 	mln_ch_value(typename T::function, mln_result(A)) output;
 	output = internal::compute_attribute_image(exact(a_), t, t.f(),
 						   accu_image);
 
-	trace::exiting("morpho::tree::compute_attribute_image");
 	return (output);
       }
 
@@ -236,14 +235,13 @@ namespace mln
 				   const Image<V>& values,
 				   mln_ch_value(typename T::function, A)* accu_image)
       {
-	trace::entering("morpho::tree::compute_attribute_image_from");
+	mln_trace("morpho::tree::compute_attribute_image_from");
 
 
 	mln_ch_value(typename T::function, mln_result(A)) output;
 	output = internal::compute_attribute_image(exact(a_), t, exact(values),
 						   accu_image);
 
-	trace::exiting("morpho::tree::compute_attribute_image_from");
 	return output;
       }
 

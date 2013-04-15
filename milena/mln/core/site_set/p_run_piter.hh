@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,9 +39,9 @@
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a p_run<P>.
-   *
-   */
+  /*!
+    \brief Forward iterator on points of a p_run<P>.
+  */
   template <typename P>
   class p_run_fwd_piter_
     :
@@ -57,6 +58,7 @@ namespace mln
     /// Coordinate associated type.
     p_run_fwd_piter_(const p_run<P>& r);
 
+    /// \cond INTERNAL_API
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -68,6 +70,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
   protected:
     using super_::p_;
@@ -76,9 +79,9 @@ namespace mln
 
 
 
-  /*! \brief Backward iterator on points of a p_run<P>.
-   *
-   */
+  /*!
+    \brief Backward iterator on points of a p_run<P>.
+  */
   template <typename P>
   class p_run_bkd_piter_
     :
@@ -95,6 +98,7 @@ namespace mln
     /// Coordinate associated type.
     p_run_bkd_piter_(const p_run<P>& r);
 
+    /// \cond INTERNAL_API
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -106,6 +110,7 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+    /// \endcond
 
   protected:
     using super_::p_;

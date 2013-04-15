@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,9 +30,9 @@
 ///
 /// \brief Fill-in object small holes.
 
-/// \FIXME share code with filter/object_groups_with_holes.hh
-/// \FIXME Merge the two following routines.
-/// \FIXME Use a size ratio in both overloads.
+/// FIXME: share code with filter/object_groups_with_holes.hh
+/// FIXME: Merge the two following routines.
+/// FIXME: Use a size ratio in both overloads.
 
 # include <sstream>
 
@@ -130,7 +130,7 @@ namespace scribo
 	    unsigned
 	      nrows = b.pmax().row() - b.pmin().row() + 1,
 	      ncols = b.pmax().col() - b.pmin().col() + 1,
-	      row_offset = lbl.delta_index(D(+1, -ncols));
+	      row_offset = lbl.delta_offset(D(+1, -ncols));
 
 	    mln_value(L) *ptr = &output(b.pmin());
 	    for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)
@@ -162,7 +162,7 @@ namespace scribo
 	fill_object_holes(const object_groups<L>& groups,
 			  unsigned min_size)
 	{
-	  trace::entering("scribo::postprocessing::impl::generic::fill_object_holes");
+	  mln_trace("scribo::postprocessing::impl::generic::fill_object_holes");
 
 	  // Grouping groups and relabel the underlying labeled image.
 	  // Groups are now considered as components.
@@ -173,9 +173,9 @@ namespace scribo
 	  image2d<unsigned> parent, card;
 	  L bboxes_ima;
 
-	  util::array<unsigned> bg_comps(
+	  mln::util::array<unsigned> bg_comps(
 	    value::next(components.nelements()), 0);
-	  util::array<bool> bg_comps_done(
+	  mln::util::array<bool> bg_comps_done(
 	    value::next(components.nelements()), false);
 
 	  mln::fun::i2v::array<bool>
@@ -204,7 +204,7 @@ namespace scribo
 
 	  // 1st pass
 	  {
-	    util::array<int> dp = positive_offsets_wrt(lbl, nbh);
+	    mln::util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	    const unsigned n_nbhs = dp.nelements();
 
 	    mln_bkd_pixter(const L) pxl(lbl); // Backward.
@@ -278,7 +278,6 @@ namespace scribo
 
 	    if (kept == components.nelements())
 	    {
-	      trace::exiting("scribo::postprocessing::impl::generic::fill_object_holes");
 	      return groups.duplicate();
 	    }
 
@@ -288,7 +287,6 @@ namespace scribo
 		output(c) = 0;
 
 
-	    trace::exiting("scribo::postprocessing::impl::generic::fill_object_holes");
 	    return output;
 	  }
 
@@ -308,14 +306,13 @@ namespace scribo
     fill_object_holes(const object_groups<L>& groups,
 		      unsigned min_size)
     {
-      trace::entering("scribo::postprocessing::fill_object_holes");
+      mln_trace("scribo::postprocessing::fill_object_holes");
 
       mln_precondition(groups.is_valid());
 
       object_groups<L>
 	output = impl::generic::fill_object_holes(groups, min_size);
 
-      trace::exiting("scribo::postprocessing::fill_object_holes");
       return output;
     }
 
@@ -325,7 +322,7 @@ namespace scribo
     mln_concrete(I)
     fill_object_holes(const Image<I>& input_, float ratio)
     {
-      trace::entering("scribo::postprocessing::fill_object_holes");
+      mln_trace("scribo::postprocessing::fill_object_holes");
 
       const I& input = exact(input_);
 
@@ -338,8 +335,11 @@ namespace scribo
       typedef mln_ch_value(I, L) Li;
       typedef accu::math::count<mln_site(Li)> A;
 
-      typedef util::couple<Li, util::couple<util::array<unsigned>,
-	util::array<A> > > res_t;
+      typedef
+	mln::util::couple<Li,
+			  mln::util::couple<
+			    mln::util::array<unsigned>,
+			    mln::util::array<A> > > res_t;
 
       // Holes card Image
 
@@ -349,7 +349,7 @@ namespace scribo
 
       res_t res = labeling::blobs_and_compute(input, c8(), nlabels, A());
 
-      util::array<unsigned>& holes_card = res.second().first();
+      mln::util::array<unsigned>& holes_card = res.second().first();
       mln_ch_value(I, unsigned)
 	holes = data::transform(res.first(), holes_card);
 
@@ -363,7 +363,7 @@ namespace scribo
       I input_i = logical::not_(input);
       res = labeling::blobs_and_compute(input_i, c8(), nlabels, A());
 
-      util::array<unsigned>& card = res.second().first();
+      mln::util::array<unsigned>& card = res.second().first();
       for (unsigned i = 1; i < card.size(); ++i)
 	card(i) = unsigned(round(card(i) * ratio));
 
@@ -393,7 +393,6 @@ namespace scribo
       data::fill((output | pw::value(hole_mask)).rw(), false);
 
 
-      trace::exiting("scribo::postprocessing::fill_object_holes");
       return output;
     }
 

@@ -76,14 +76,13 @@ namespace mln
     p_edges<G,pw::cst_<P> >
     dummy_p_edges(const Graph<G>& g_, const P& dummy_site)
     {
-      trace::entering("dummy_p_edges");
+      mln_trace("dummy_p_edges");
 
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
       p_edges< G, pw::cst_<P> > pe(g, pw::cst(dummy_site));
 
-      trace::exiting("dummy_p_edges");
       return pe;
     }
 

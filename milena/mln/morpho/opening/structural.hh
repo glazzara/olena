@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,9 +43,12 @@ namespace mln
     namespace opening
     {
 
-      /// Morphological structural opening.
-      ///
-      /// This operator is d_{-B} o e_B.
+      /*! \brief Morphological structural opening.
+       *
+       * This operator is d_{-B} o e_B.
+       *
+       * \ingroup mlnmorphoopening
+       */
       template <typename I, typename W>
       mln_concrete(I)
       structural(const Image<I>& input, const Window<W>& win);
@@ -59,7 +63,7 @@ namespace mln
       mln_concrete(I)
       structural(const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::opening::structural");
+	mln_trace("morpho::opening::structural");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(! exact(win).is_empty());
@@ -68,7 +72,6 @@ namespace mln
 
 	mln_postcondition(output <= input);
 
-	trace::exiting("morpho::opening::structural");
 	return output;
       }
 

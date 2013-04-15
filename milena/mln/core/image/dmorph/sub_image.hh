@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +50,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::sub_image<I,S>.
+    /*!
+      \brief Data structure for \c mln::sub_image<I,S>.
+    */
     template <typename I, typename S>
     struct data< sub_image<I,S> >
     {
@@ -113,8 +115,10 @@ namespace mln
     /// Constructor.
     sub_image(const I& ima, const S& pset);
 
+    /// \cond INTERNAL_API
     /// Initialization.
     void init_(const I& ima, const S& pset);
+    /// \endcond
 
     /// Give the definition domain.
     const S& domain() const;
@@ -137,10 +141,10 @@ namespace mln
   operator|(Image<I>& ima, const Site_Set<S>& pset);
 
 
-
+  /// \cond INTERNAL_API
   template <typename I, typename S, typename J>
   void init_(tag::image_t, sub_image<I,S>& target, const J& model);
-
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY

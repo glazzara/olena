@@ -61,7 +61,7 @@ namespace scribo
     mln_ch_value(L,bool)
       text_blocks_image(const document<L>& doc, unsigned min_nlines)
     {
-      trace::entering("scribo::make::text_blocks_image");
+      mln_trace("scribo::make::text_blocks_image");
 
       mln_precondition(doc.is_open());
 
@@ -121,7 +121,6 @@ namespace scribo
       }
 
 
-      trace::exiting("scribo::make::text_blocks_image");
       return output;
     }
 

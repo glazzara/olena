@@ -27,6 +27,10 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_TOOLCHAIN_FUNCTOR_HH
 
+/// \file
+///
+/// \brief Base class for toolchain functors.
+
 # include <unistd.h>
 # include <iostream>
 
@@ -39,6 +43,7 @@ namespace scribo
     namespace internal
     {
 
+      /// \brief Base class for toolchain functors.
       class Toolchain_Functor
       {
       public:

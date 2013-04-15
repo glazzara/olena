@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,21 +52,25 @@ namespace mln
     {
 
 
-      /// Load a pbm image in a Milena image.
-      ///
-      /// \param[out] ima A reference to the image2d<bool> which will receive
-      /// data.
-      /// \param[in] filename The source.
-      ///
+      /*! \brief Load a pbm image in a Milena image.
+       *
+       * \param[out] ima A reference to the image2d<bool> which will receive
+       * data.
+       * \param[in] filename The source.
+       *
+       * \ingroup iopbm
+       */
       void load(image2d<bool>& ima,
 		const std::string& filename);
 
-      /// Load a pbm image in a image2d<float>.
-      ///
-      /// \param[in] filename The image source.
-      ///
-      /// \return An image2d<float> which contains loaded data.
-      ///
+      /*! \brief Load a pbm image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       *
+       * \ingroup iopbm
+       */
       image2d<bool> load(const std::string& filename);
 
 
@@ -127,7 +132,7 @@ namespace mln
       inline
       image2d<bool> load(const std::string& filename)
       {
-	trace::entering("mln::io::pbm::load");
+	mln_trace("mln::io::pbm::load");
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -146,7 +151,6 @@ namespace mln
 	  if (type == '1')
 	    internal::load_ascii(file, ima);
 
-	trace::exiting("mln::io::pbm::load");
 
 	return ima;
       }

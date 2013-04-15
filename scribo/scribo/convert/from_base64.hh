@@ -124,7 +124,7 @@ namespace scribo
       void
       from_base64_(const V& data64, const unsigned length, Image<I>& output_)
       {
-	trace::entering("scribo::convert::from_base64_");
+	mln_trace("scribo::convert::from_base64_");
 
 	mln_precondition(exact(output_).is_valid());
 	using namespace internal;
@@ -176,7 +176,6 @@ namespace scribo
 	  }
 	}
 
-	trace::exiting("scribo::convert::to_base64_");
       }
 
 
@@ -187,11 +186,10 @@ namespace scribo
     void
     from_base64(const util::array<unsigned char>& data64, Image<I>& output_)
     {
-      trace::entering("scribo::convert::from_base64");
+      mln_trace("scribo::convert::from_base64");
 
       internal::from_base64_(data64, data64.nelements(), output_);
 
-      trace::exiting("scribo::convert::to_base64");
     }
 
 
@@ -201,12 +199,11 @@ namespace scribo
     void
     from_base64(const QString& data64, Image<I>& output_)
     {
-      trace::entering("scribo::convert::from_base64");
+      mln_trace("scribo::convert::from_base64");
 
       QByteArray data64_ = data64.toAscii();
       internal::from_base64_(data64_.constData(), data64_.size(), output_);
 
-      trace::exiting("scribo::convert::to_base64");
     }
 
 #  endif // ! HAVE_QT

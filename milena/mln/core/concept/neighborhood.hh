@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,21 +48,21 @@ namespace mln
   // Forward declaration.
   template <typename E> struct Neighborhood;
 
-
-  /// Neighborhood category flag type.
-
+  /// \cond INTERNAL_API
+  /// \brief Neighborhood category flag type.
   template <>
   struct Neighborhood<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// \brief Base class for implementation classes that are neighborhoods.
-  ///
-  /// \see mln::doc::Neighborhood for a complete documentation of this
-  /// class contents.
+  /*!
+    \brief Base class for implementation classes that are neighborhoods.
 
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Neighborhood : public Object<E>
   {
@@ -85,25 +85,30 @@ namespace mln
   };
 
 
-
+  /// \relates mln::Neighborhood
   template <typename L, typename R>
   bool operator==(const Neighborhood<L>& lhs, const Neighborhood<R>& rhs);
 
-
+  /// \relates mln::Neighborhood
   template <typename N>
   std::ostream&
   operator<<(std::ostream&ostr, const Neighborhood<N>& nbh);
 
 
   // FIXME: Move as a method of Image?
+  /// \relates mln::Neighborhood
   template <typename I, typename N>
   util::array<int>
   offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);
 
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Neighborhood
   template <typename I, typename N>
   util::array<int>
   positive_offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);
 
+  // FIXME: Move as a method of Image?
+  /// \relates mln::Neighborhood
   template <typename I, typename N>
   util::array<int>
   negative_offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);

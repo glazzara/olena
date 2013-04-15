@@ -130,7 +130,7 @@ namespace mln
       regional_maxima(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		      L& nlabels)
     {
-      trace::entering("labeling::regional_maxima");
+      mln_trace("labeling::regional_maxima");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -141,7 +141,6 @@ namespace mln
       mln_ch_value(I, L)
 	output = canvas::labeling::sorted(input, nbh, nlabels, f, true);
 
-      trace::exiting("labeling::regional_maxima");
       return output;
     }
 

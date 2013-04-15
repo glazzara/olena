@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,9 +53,11 @@ namespace mln
 	namespace generic
 	{
 
-          /// Generic Connected component labeling of the object part in a
-          /// binary image.
-	  //
+          /*! \brief Generic Connected component labeling of the
+	   * object part in a binary image.
+	   *
+	   * \ingroup modcanvaslabeling
+	   */
 	  template <typename I, typename N, typename L,
 		    typename S, typename F>
 	  mln_ch_value(I, L)
@@ -83,7 +86,7 @@ namespace mln
 	  labeling(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		   L& nlabels, const Site_Set<S>& s_, F& f)
 	  {
-	    trace::entering("canvas::labeling::impl::generic::labeling");
+	    mln_trace("canvas::labeling::impl::generic::labeling");
 
 	    // FIXME: Test?!
 
@@ -156,7 +159,7 @@ namespace mln
 		  {
 		    if (nlabels == mln_max(L))
 		    {
-		      trace::warning("labeling aborted! Too many labels \
+		      mln_trace_warning("labeling aborted! Too many labels \
 					    for this label type: nlabels > \
 					    max(label_type).");
 
@@ -170,7 +173,6 @@ namespace mln
 	      }
 	    }
 
-	    trace::exiting("canvas::labeling::impl::generic::labeling");
 	    return output;
 	  }
 

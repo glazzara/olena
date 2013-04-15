@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace opening
     {
 
-      /// Morphological height opening.
+      /*! \brief Morphological height opening.
+       *
+       * \ingroup mlnmorphoopening
+       */
       template <typename I, typename N>
       mln_concrete(I)
       height(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -58,13 +62,12 @@ namespace mln
       height(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::opening::height");
+	mln_trace("morpho::opening::height");
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = opening::leveling(input, nbh, attribute::height<I>(), lambda);
 
-	trace::exiting("morpho::opening::height");
 	return output;
       }
 

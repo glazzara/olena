@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,6 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/gpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
-# include <mln/fun/i2v/all_to.hh>
 
 # include <mln/metal/bool.hh>
 # include <mln/metal/is_not.hh>
@@ -63,29 +62,6 @@ namespace mln
     struct origin_t;
   }
   /// \}
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename G, typename C1, typename C2>
-      void from_to_(const point<G,C1>& from, point<G,C2>& to);
-
-      template <unsigned n, typename C1, typename G, typename C2>
-      void
-      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to);
-
-      template <unsigned n, typename C1, typename G>
-      void
-      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
 
   namespace internal
@@ -224,6 +200,15 @@ namespace mln
     mln::algebra::vec<G::dim, C> coord_;
   };
 
+
+  /*!
+    \brief Conversion: point -> point
+    \ingroup fromto
+  */
+  template <typename G, typename C1, typename C2>
+  void from_to_(const point<G,C1>& from, point<G,C2>& to);
+
+
   namespace internal
   {
 
@@ -248,136 +233,17 @@ namespace mln
   } // end of namespace mln::internal
 
 
+  /// \cond INTERNAL_API
   /// FIXME...
   template <typename G, typename C>
   const mln::algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
-
+  /// \endcond
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
-  namespace internal
-  {
-
-    template <typename C, typename C2>
-    inline
-    C
-    convert_data_(metal::bool_<false>, const C2& v)
-    {
-      return static_cast<C>(v);
-    }
-
-    template <typename C, typename C2>
-    inline
-    C
-    convert_data_(metal::bool_<true>, const C2& v)
-    {
-      return static_cast<C>(round(v));
-    }
-
-    template <typename C, typename C2>
-    inline
-    C
-    convert_data(const C2& v)
-    {
-      // If (C != float && C != double) && (C2 == float || C2 == double)
-      // => We want to round the value.
-      // Otherwise we can just statically cast.
-      //
-      return convert_data_<C>(
-	typename mlc_and(
-	  mlc_and(mlc_is_not(C,float),
-		  mlc_is_not(C,double)),
-	  mlc_or(mlc_is(C2,float),
-		 mlc_is(C2, double)))::eval(), v);
-    }
-
-
-
-  } // end of namespace mln::internal
-
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename G, typename C1, typename C2>
-      inline
-      void
-      from_to_(const point<G,C1>& from, point<G,C2>& to)
-      {
-	mlc_converts_to(C1,C2)::check();
-	enum { dim = G::dim };
-
-	for (unsigned i = 0; i < dim; ++i)
-	  to[i] = mln::internal::convert_data<C2>(from[i]);
-      }
-
-
-      template <unsigned n, typename C1, typename G, typename C2>
-      inline
-      void
-      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to)
-      {
-	mlc_converts_to(C1, C2)::check();
-	enum { dim = G::dim };
-	mlc_bool(G::dim == n)::check();
-
-	unsigned j = 0;
-	for (unsigned i = dim - 2; i < dim; ++i)
-	  to[i]   = mln::internal::convert_data<C2>(from[j++]);
-	for (unsigned i = 2; i < dim; ++i, ++j)
-	  to[i-j] = mln::internal::convert_data<C2>(from[j]);
-      }
-
-      template <typename C1, typename G, typename C2>
-      inline
-      void
-      from_to_(const mln::algebra::vec<1,C1>& from, point<G,C2>& to)
-      {
-	mlc_converts_to(C1, C2)::check();
-	enum { dim = G::dim };
-	mlc_bool(G::dim == 1)::check();
-
-	to[0] = mln::internal::convert_data<C2>(from[0]);
-      }
-
-      template <unsigned n, typename C1, typename G>
-      inline
-      void
-      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to)
-      {
-	enum { dim = G::dim };
-	mlc_bool(G::dim == n)::check();
-
-	unsigned j = 0;
-	for (unsigned i = dim - 2; i < dim; ++i)
-	  to[i]   = from[j++];
-	for (unsigned i = 2; i < dim; ++i, ++j)
-	  to[i-j] = from[j];
-      }
-
-      template <typename C1, typename G>
-      inline
-      void
-      from_to_(const mln::algebra::vec<1,C1>& from, point<G,C1>& to)
-      {
-	enum { dim = G::dim };
-	mlc_bool(G::dim == 1)::check();
-
-	to[0] = from[0];
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
 
 
   template <typename G, typename C>
@@ -426,7 +292,7 @@ namespace mln
   inline
   point<G,C>::point(const mln::algebra::vec<dim,C2>& v)
   {
-    convert::over_load::from_to_(v, *this);
+    from_to_(v, *this);
   }
 
 
@@ -434,7 +300,7 @@ namespace mln
   inline
   point<G,C>::point(const mln::algebra::vec<dim,C>& v)
   {
-    convert::over_load::from_to_(v, *this);
+    from_to_(v, *this);
   }
 
 
@@ -637,6 +503,22 @@ namespace mln
   {
     return coord_;
   }
+
+
+  // Conversions
+
+  template <typename G, typename C1, typename C2>
+  inline
+  void
+  from_to_(const point<G,C1>& from, point<G,C2>& to)
+  {
+    mlc_converts_to(C1,C2)::check();
+    enum { dim = G::dim };
+
+    for (unsigned i = 0; i < dim; ++i)
+      to[i] = mln::internal::convert_data<C2>(from[i]);
+  }
+
 
   namespace internal
   {

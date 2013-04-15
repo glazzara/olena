@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,7 +49,10 @@ namespace mln
   | complex_window_fwd_piter<I, G, W>.  |
   `------------------------------------*/
 
-  /// \brief Forward iterator on complex window.
+  /*!
+    \internal
+    \brief Forward iterator on complex window.
+  */
   template <typename I, typename G, typename W>
   class complex_window_fwd_piter
     : public internal::site_relative_iterator_base< W,
@@ -72,6 +75,7 @@ namespace mln
     complex_window_fwd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Window<W>& win, const Pref& p_ref);
@@ -95,6 +99,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{
@@ -119,7 +124,10 @@ namespace mln
   | complex_window_bkd_piter<I, G, W>.  |
   `------------------------------------*/
 
-  /// \brief Backward iterator on complex window.
+  /*!
+    \internal
+    \brief Backward iterator on complex window.
+  */
   template <typename I, typename G, typename W>
   class complex_window_bkd_piter
     : public internal::site_relative_iterator_base< W,
@@ -142,6 +150,7 @@ namespace mln
     complex_window_bkd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Delayed initialization.
     template <typename Pref>
     void init_(const Window<W>& win, const Pref& p_ref);
@@ -165,6 +174,7 @@ namespace mln
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
+    /// \endcond
 
     /// \brief Accessors.
     /// \{

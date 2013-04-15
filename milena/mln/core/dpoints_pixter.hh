@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,10 +50,13 @@ namespace mln
   | dpoints_fwd_pixter<I>.  |
   `------------------------*/
 
-  /// \brief A generic forward iterator on the pixels of a
-  /// dpoint-based window or neighborhood.
-  ///
-  /// Parameter \c I is the image type.
+  /*!
+    \internal
+    \brief A generic forward iterator on the pixels of a
+    dpoint-based window or neighborhood.
+
+    Parameter \c I is the image type.
+  */
   template <typename I>
   class dpoints_fwd_pixter
     : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
@@ -87,8 +90,11 @@ namespace mln
     /// \{
     /// Start an iteration.
     void start();
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
+    /// \endcond
 
     /// Invalidate the iterator.
     void invalidate();
@@ -103,6 +109,7 @@ namespace mln
     /// The value around which this iterator moves.
     const mln_value(I)& center_val() const;
 
+    /// \cond INTERNAL_API
   private:
     template <typename Dps>
     void init_(const Dps& dps);
@@ -126,6 +133,9 @@ namespace mln
     /// Reference pixel / point in the image
     const mln_psite(I)* p_ref_;
     /// \}
+
+    /// \endcond
+
   };
 
 
@@ -133,10 +143,13 @@ namespace mln
   | dpoints_bkd_pixter<I>.  |
   `------------------------*/
 
-  /// \brief A generic backward iterator on the pixels of a
-  /// dpoint-based window or neighborhood.
-  ///
-  /// Parameter \c I is the image type.
+  /*!
+    \internal
+    \brief A generic backward iterator on the pixels of a
+    dpoint-based window or neighborhood.
+
+    Parameter \c I is the image type.
+  */
   template <typename I>
   class dpoints_bkd_pixter
     : public Pixel_Iterator< dpoints_bkd_pixter<I> >,
@@ -170,8 +183,11 @@ namespace mln
     /// \{
     /// Start an iteration.
     void start();
+
+    /// \cond INTERNAL_API
     /// Go to the next pixel.
     void next_();
+    /// \endcond
 
     /// Invalidate the iterator.
     void invalidate();
@@ -185,6 +201,8 @@ namespace mln
 
     /// The value around which this iterator moves.
     const mln_value(I)& center_val() const;
+
+    /// \cond INTERNAL_API
 
   private:
     template <typename Dps>
@@ -209,6 +227,8 @@ namespace mln
     /// Reference pixel / point in the image
     const mln_psite(I)* p_ref_;
     /// \}
+
+    /// \endcond
   };
 
 
@@ -270,7 +290,7 @@ namespace mln
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
-      offset_.push_back(this->image_.delta_index(dps.dp(i)));
+      offset_.push_back(this->image_.delta_offset(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative:
     if (dps.size() > 1)
@@ -381,7 +401,7 @@ namespace mln
   dpoints_bkd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.size(); ++i)
-      offset_.push_back(this->image_.delta_index(dps.dp(i)));
+      offset_.push_back(this->image_.delta_offset(dps.dp(i)));
     // offset_[size() - 1] is absolute
     // other offsets are relative:
     if (dps.size() > 1)

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +51,10 @@ namespace mln
     template <bool b> struct bool_;
 
 
-    /// "true" type.
+    /*!
+      \internal
+      \brief "true" type.
+    */
     template <>
     struct bool_< true >
     {
@@ -64,7 +68,10 @@ namespace mln
     typedef bool_<true> true_;
 
 
-    /// "false" type.
+    /*!
+      \internal
+      \brief "false" type.
+    */
     template <>
     struct bool_< false >
     {

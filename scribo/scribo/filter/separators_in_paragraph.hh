@@ -28,8 +28,8 @@
 
 /// \file
 ///
-/// Invalidate false positive separators.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate false positive separators.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -47,28 +47,34 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate false positive separators.
+    /// \brief Invalidate false positive separators.
     ///
-    /// \param[in] separators    A paragraph set.
-    ///
-    /// \return A doc with invalidated separators.
+    /// \param[in,out] doc    A document structure.
+    /// \param[in] hmin_size Minimum width of a line to be considered
+    ///                      as separators.
+    /// \param[in] vmin_size Minimum height of a line to be considered
+    ///                      as separators.
     ///
     /// Warning: it does not remove separators from separator
     /// image. It only invalidate separator components in their
     /// respective component_set.
     ///
+    /// \ingroup grpalgofilterelt
+    //
     template <typename L>
     void
-    separators_in_paragraph(document<L>& doc, unsigned hmax_size, unsigned vmax_size);
+    separators_in_paragraph(document<L>& doc,
+			    unsigned hmin_size, unsigned vmin_size);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename L>
     void
-    separators_in_paragraph(document<L>& doc, unsigned hmax_size, unsigned vmax_size)
+    separators_in_paragraph(document<L>& doc,
+			    unsigned hmin_size, unsigned vmin_size)
     {
-      trace::entering("scribo::filter::separators_in_paragraph");
+      mln_trace("scribo::filter::separators_in_paragraph");
 
       mln_precondition(doc.is_valid());
       mln_precondition(doc.has_elements());
@@ -106,7 +112,7 @@ namespace scribo
 	    // This separator is included in an element (picture, drawing...)
 	    // => Ignore it.
 	    if (tl && tr && ml && mc && mr && bl && br
-		&& hline(c).bbox().width() < hmax_size)
+		&& hline(c).bbox().width() < hmin_size)
 	      hline(c).update_tag(component::Ignored);
 	  }
 
@@ -135,7 +141,7 @@ namespace scribo
 	    // This separator is included in an element (picture, drawing...)
 	    // => Ignore it.
 	    if (tl && tr && ml && mc && mr && bl && br
-		&& vline(c).bbox().height() < vmax_size)
+		&& vline(c).bbox().height() < vmin_size)
 	      vline(c).update_tag(component::Ignored);
 	  }
 
@@ -144,7 +150,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_in_paragraph");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,7 @@
 # define SCRIBO_PRIMITIVE_LINK_MERGE_DOUBLE_LINK_CLOSEST_ALIGNED_HH
 
 
+# include <mln/util/couple.hh>
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/tag/anchor.hh>
@@ -68,7 +70,7 @@ namespace scribo
 					const object_links<L>& right,
 					anchor::Type anchor_angle)
       {
-	trace::entering("scribo::primitive::link::merge_double_link_closest_aligned");
+	mln_trace("scribo::primitive::link::merge_double_link_closest_aligned");
 	mln_precondition(left.is_valid());
 	mln_precondition(right.is_valid());
 
@@ -89,7 +91,7 @@ namespace scribo
 	for_all_links(l, output)
 	  if (right(l) != l)
 	  {
-	    //FIXME Handle the case when a component is included in another one ?
+	    //FIXME: Handle the case when a component is included in another one ?
 
 	    // Update distance
 	    align_data(l).first()
@@ -140,7 +142,6 @@ namespace scribo
 	    }
 	  }
 
-	trace::exiting("scribo::primitive::link::merge_double_link_closest_aligned");
 	return output;
       }
 

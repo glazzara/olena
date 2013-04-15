@@ -65,7 +65,10 @@ namespace scribo
 
 	This is a convenient routine to be used in Nepomuk.
 
-	\param[in] ima A document image. The
+	\param[in] input A document image.
+	\param[in] language The main language used in the input
+	                    document image. Improve text recognition
+	                    quality if accurate.
 
 	\return A set of recognized words.
 
@@ -76,6 +79,7 @@ namespace scribo
 	Depending on your version of Tesseract (OCR) you may define
 	HAVE_TESSERACT_2 or HAVE_TESSERACT_3 .
 
+	\ingroup grptoolchain
        */
       QSet<QString>
       text_extraction(const QImage& input, const QString& language);
@@ -86,7 +90,7 @@ namespace scribo
       QSet<QString>
       text_extraction(const QImage& input, const QString& language = QString("eng"))
       {
-	trace::entering("scribo::toolchain::nepomuk::text_extraction");
+	mln_trace("scribo::toolchain::nepomuk::text_extraction");
 
 	mln_precondition(!input.isNull());
 
@@ -158,7 +162,6 @@ namespace scribo
 	  output = QSet<QString>::fromList(list);
 	}
 
-	trace::exiting("scribo::toolchain::nepomuk::text_extraction");
 	return output;
       }
 

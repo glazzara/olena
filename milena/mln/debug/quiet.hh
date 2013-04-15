@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +38,10 @@ namespace mln
   namespace debug
   {
 
+    /*! \brief Global variable telling whether the debug should be
+      printed or not.
+      \ingroup mlndebug
+     */
     extern bool quiet;
 
 

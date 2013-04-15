@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -65,6 +66,8 @@ namespace scribo
     /// \param[in] baseline_value Value used to draw base lines.
     ///
     /// \return A color image.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
@@ -77,6 +80,9 @@ namespace scribo
     /// \overload
     /// text_value is set to literal::green.
     /// non_text_value is set to literal::red.
+    ///
+    /// \ingroup grpalgodebug
+    //
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     mean_and_base_lines_image(const Image<I>& input,
@@ -94,7 +100,7 @@ namespace scribo
 			      const value::rgb8& meanline_value,
 			      const value::rgb8& baseline_value)
     {
-      trace::entering("scribo::debug::mean_and_base_lines_image");
+      mln_trace("scribo::debug::mean_and_base_lines_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, value::rgb8)
@@ -124,7 +130,6 @@ namespace scribo
 	}
       }
 
-      trace::exiting("scribo::debug::mean_and_base_lines_image");
       return output;
     }
 

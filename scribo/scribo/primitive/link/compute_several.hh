@@ -91,7 +91,7 @@ namespace scribo
       object_links<scribo_support(F)>
       compute_several(Link_Functor<F>& functor_)
       {
-	trace::entering("scribo::primitive::link::compute_several");
+	mln_trace("scribo::primitive::link::compute_several");
 
 	F& functor = exact(functor_);
 
@@ -101,7 +101,6 @@ namespace scribo
 	  internal::find_several_links(functor, current_object);
 	}
 
-	trace::exiting("scribo::primitive::link::compute_several");
 	return functor.links();
       }
 

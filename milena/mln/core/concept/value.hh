@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,19 +41,21 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Value;
 
-  // Value category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Value category flag type.
   template <>
   struct Value<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
+  /*!
+    \brief Base class for implementation classes of values.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Value : public Object<E>
   {

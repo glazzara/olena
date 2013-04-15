@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,24 +38,6 @@
 
 namespace mln
 {
-
-    // Forward declaration
-  namespace util { template <typename Tag, typename V> class object_id; }
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      // object_id<Tag,V> -> V.
-      template <typename Tag, typename V>
-      void from_to_(const util::object_id<Tag,V>& from, V& to_);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
 
   namespace util
   {
@@ -108,6 +90,10 @@ namespace mln
     template <typename Tag, typename V, typename V2>
     bool
     operator<(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs);
+
+    /// \internal Conversion: object_id<Tag,V> -> V.
+    template <typename Tag, typename V>
+    void from_to_(const util::object_id<Tag,V>& from, V& to_);
 
   } // end of namespace mln::util
 
@@ -228,24 +214,16 @@ namespace mln
       return lhs.value() < rhs.value();
     }
 
-  } // end of namespace mln::util
 
-  namespace convert
-  {
+    // Conversions
 
-    namespace over_load
+    template <typename Tag, typename V>
+    void from_to_(const util::object_id<Tag,V>& from, V& to_)
     {
+      to_ = from.value();
+    }
 
-      // object_id<Tag,V> -> V.
-      template <typename Tag, typename V>
-      void from_to_(const util::object_id<Tag,V>& from, V& to_)
-      {
-	to_ = from.value();
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+  } // end of namespace mln::util
 
 # endif // ! MLN_INCLUDE_ONLY
 

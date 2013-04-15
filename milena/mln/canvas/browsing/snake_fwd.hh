@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,14 +44,16 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a snake-way, forward.
-      /*!
+      /*! \brief Browsing in a snake-way, forward.
+       *
        * This canvas browse all the point of an image 'input' like
        * this :
        *
-       *     ------->
-       *     <------'
-       *     '------>
+       \verbatim
+       ------->
+       <------'
+       '------>
+       \endverbatim
        *
        * The fonctor should provide (In addition to 'input') four
        * methods :
@@ -68,17 +70,17 @@ namespace mln
        * Warning: This canvas works only on 2D.
        *
        * F shall feature: \n
-       * { \n
-       *   --- as attributes: \n
-       *   input; \n
-       *   p; \n
-       *   --- as methods: \n
-       *   void init(); \n
-       *   void down(); \n
-       *   void fwd(); \n
-       *   void bkd(); \n
-       * } \n
+       - As attributes:
+         + input
+         + p
+       - As methods:
+         + void init()
+         + void down()
+         + void fwd()
+         + void bkd()
        *
+       *
+       * \ingroup modcanvasbrowsing
        */
 
       struct snake_fwd_t : public Browsing< snake_fwd_t >
@@ -114,7 +116,7 @@ namespace mln
 	// FIXME: Check the dimension of the input
 // 	mlc_equal(mln_trait_image_dimension(I)(),
 // 		  trait::image::dimension::two_d)::check();
-	trace::entering("canvas::browsing::snake_fwd");
+	mln_trace("canvas::browsing::snake_fwd");
 	mln_precondition(f.input.is_valid());
 	def::coord
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
@@ -153,7 +155,6 @@ namespace mln
 	    // change browsing
 	    fwd = ! fwd;
 	  }
-	trace::exiting("canvas::browsing::snake_fwd");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

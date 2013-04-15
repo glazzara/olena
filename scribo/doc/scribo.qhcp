@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QHelpCollectionProject version="1.0">
+  <assistant>
+    <startPage>qthelp://fr.epita.lrde.olena/scribo-2.0/index.html</startPage>
+  </assistant>
+  <docFiles>
+    <register>
+      <file>user-refman/html/scribo.qch</file>
+    </register>
+  </docFiles>
+</QHelpCollectionProject>

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,10 @@ namespace mln
     namespace approx
     {
 
-
+      /*! \brief Approximate mathematical morphology erosion.
+       *
+       * \ingroup mlnmorpho
+       */
       template <typename I, typename W>
       mln_concrete(I)
       erosion(const Image<I>& input, const Window<W>& win);
@@ -58,16 +62,16 @@ namespace mln
 
       namespace impl
       {
-	
-	
+
+
 	// By distance thresholding.
-	
+
 	template <typename I>
 	mln_concrete(I)
 	erosion_by_distance_thresholding_2d(const Image<I>& input_,
 					     const Window< win::disk2d >& win_)
 	{
-	  trace::entering("morpho::approx::impl::erosion_by_distance_thresholding_2d");
+	  mln_trace("morpho::approx::impl::erosion_by_distance_thresholding_2d");
 
 	  const I& input         = exact(input_);
 	  const win::disk2d& win = exact(win_);
@@ -85,7 +89,7 @@ namespace mln
 	  unsigned
 	    radius = coef * win.diameter() / 2,
 	    dmax   = radius + 1;
-	  
+
 
 	  mln_concrete(I) background = logical::not_(input);
 	  mln_ch_value(I, unsigned) dmap = transform::distance_front(background,
@@ -94,18 +98,17 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = duplicate((pw::value(dmap) > pw::cst(radius)) | input.domain());
 
-	  trace::exiting("morpho::approx::impl::erosion_by_distance_thresholding_2d");
 	  return output;
 	}
 
 
-	
+
 	template <typename I>
 	mln_concrete(I)
 	erosion_by_distance_thresholding_3d(const Image<I>& input_,
 					     const Window< win::sphere3d >& win_)
 	{
-	  trace::entering("morpho::approx::impl::erosion_by_distance_thresholding_3d");
+	  mln_trace("morpho::approx::impl::erosion_by_distance_thresholding_3d");
 
 	  const I& input           = exact(input_);
 	  const win::sphere3d& win = exact(win_);
@@ -137,7 +140,6 @@ namespace mln
 	  mln_concrete(I) output;
 	  output = duplicate((pw::value(dmap) > pw::cst(radius)) | input.domain());
 
-	  trace::exiting("morpho::approx::impl::erosion_by_distance_thresholding_3d");
 	  return output;
 	}
 
@@ -189,7 +191,7 @@ namespace mln
       mln_concrete(I)
       erosion(const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::approx::erosion");
+	mln_trace("morpho::approx::erosion");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(win).is_valid());
@@ -199,8 +201,7 @@ namespace mln
 
 	if (exact(win).is_centered())
 	  mln_postcondition(output <= input);
-	
-	trace::exiting("morpho::approx::erosion");
+
 	return output;
       }
 

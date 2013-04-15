@@ -24,11 +24,14 @@
 % #2 - sub page title.
 \newcommand{\doxychapter}[2]{%
 \label{#1}
-\backslash endhtmlonly%
+\backslash endhtmlonly
+%
 */
 /*!
-\backslash page #1 #2%
-\backslash htmlonly %
+\backslash page #1 #2
+%
+\backslash htmlonly
+%
 }
 
 % #1 - section ref name (one word in lower case).
@@ -36,58 +39,79 @@
 \newcommand{\doxysection}[2]{%
 \vspace{1cm}
 \label{#1}
-\backslash endhtmlonly%
-\backslash section #1 #2%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash section #1 #2
+%
+\backslash htmlonly
+%
 }
 
 % #1 - subsection name (one word in lower case).
 % #2 - subsection title.
 \newcommand{\doxysubsection}[2]{%
 \label{#1}
-\backslash endhtmlonly%
-\backslash subsection #1 #2%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash subsection #1 #2
+%
+\backslash htmlonly
+%
 }
 
 % #1 - subsubsection name (one word in lower case).
 % #2 - subsubsection title.
 \newcommand{\doxysubsubsection}[2]{%
 \label{#1}
-\backslash endhtmlonly%
-\backslash subsubsection #1 #2%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash subsubsection #1 #2
+%
+\backslash htmlonly
+%
 }
 
 % #1 - part number (Optional).
 % #2 - sample file name.
 \newcommand{\doxycode}[2][1]{
-\backslash endhtmlonly%
-\backslash include #2-#1.cc.raw%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash include #2-#1.cc.raw
+%
+\backslash htmlonly
+%
 }
 
 % #1 - sample file name.
 \newcommand{\doxyrawcode}[1]{
-\backslash endhtmlonly%
-\backslash include #1.cc.raw%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash include #1.cc.raw
+%
+\backslash htmlonly
+%
 }
 
 % #1 - output file name.
 \newcommand{\doxyoutput}[1]{
-\backslash endhtmlonly%
-\backslash include #1.txt%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash include #1.txt
+%
+\backslash htmlonly
+%
 }
 
 % Include file '#1' from a split output.
 % #1 - part number (Optional).
 % #2 - sample file name.
 \newcommand{\doxymoutput}[2][1]{
-\backslash endhtmlonly%
-\backslash include #2-#1.txt%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash include #2-#1.txt
+%
+\backslash htmlonly
+%
 }
 
 % Include an output image.
@@ -95,34 +119,46 @@
 % #2 - related sample file name.
 % #3 - Size of the picture (Latex ONLY)
 \newcommand{\doxyfigure}[3][1]{
-\backslash endhtmlonly%
-\backslash image html #2-#1.png%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash image html #2-#1.png
+%
+\backslash htmlonly
+%
 }
 
 % Include an image from located in one of the path specified in IMAGE_PATH.
 % #1 - image name.
 % #2 - Size of the picture (Latex ONLY)
 \newcommand{\doxyimg}[2]{
-\backslash endhtmlonly%
-\backslash image html #1.png%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash image html #1.png
+%
+\backslash htmlonly
+%
 }
 
 % Refer to a chapter, section...
 % #1 - the reference name.
 \newcommand{\doxyref}[1]{
-\backslash endhtmlonly%
-\backslash ref #1%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash ref #1
+%
+\backslash htmlonly
+%
 }
 
 % Refers to classes, functions, methods, variables files or URL.
 % #1 - the reference name.
 \newcommand{\doxysee}[1]{
-\backslash endhtmlonly%
-\backslash see #1%
-\backslash htmlonly %
+\backslash endhtmlonly
+%
+\backslash see #1
+%
+\backslash htmlonly
+%
 }
 
 \newcommand{\tutotoc}[2]{%

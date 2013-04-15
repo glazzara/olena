@@ -28,8 +28,8 @@
 
 /// \file
 ///
-/// Invalidate false positive separators.
-/// \fixme Share same test canvas as text::merging.
+/// \brief Invalidate false positive separators.
+/// \todo Share same test canvas as text::merging.
 
 
 # include <mln/core/concept/image.hh>
@@ -47,16 +47,16 @@ namespace scribo
     using namespace mln;
 
 
-    /// Invalidate false positive separators.
+    /// \brief Invalidate false positive separators.
     ///
-    /// \param[in] separators    A paragraph set.
-    ///
-    /// \return A doc with invalidated separators.
+    /// \param[in,out] doc    A document structure.
     ///
     /// Warning: it does not remove separators from separator
     /// image. It only invalidate separator components in their
     /// respective component_set.
     ///
+    /// \ingroup grpalgofilterelt
+    //
     template <typename L>
     void
     separators_in_element(document<L>& doc);
@@ -68,7 +68,7 @@ namespace scribo
     void
     separators_in_element(document<L>& doc)
     {
-      trace::entering("scribo::filter::separators_in_element");
+      mln_trace("scribo::filter::separators_in_element");
 
       mln_precondition(doc.is_valid());
       mln_precondition(doc.has_elements());
@@ -140,7 +140,6 @@ namespace scribo
 	doc.set_vline_separators(doc.vline_seps(), vline);
       }
 
-      trace::exiting("scribo::filter::separators_in_element");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

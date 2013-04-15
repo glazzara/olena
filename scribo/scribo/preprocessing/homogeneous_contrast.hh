@@ -52,14 +52,14 @@ namespace scribo
     /// \param[in] input    A gray-level image.
     /// \param[in] h        Height attribute value for leveling closing.
     ///
-    /// \output A gray-level image with better contrast homogeneity.
+    /// \return A gray-level image with better contrast homogeneity.
     //
     template <typename I>
     mln_concrete(I)
     homogeneous_contrast(const Image<I>& input, unsigned h);
 
 
-    /// \overload.
+    /// \overload
     /// Default height attribute value is set to 75.
     //
     template <typename I>
@@ -86,7 +86,7 @@ namespace scribo
     mln_concrete(I)
     homogeneous_contrast(const Image<I>& input_, unsigned h)
     {
-      trace::entering("scribo::preprocessing::homogeneous_contrast");
+      mln_trace("scribo::preprocessing::homogeneous_contrast");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -96,7 +96,6 @@ namespace scribo
 	output = morpho::closing::leveling(input, c4(), acc, h);
       arith::minus_inplace(output, input);
 
-      trace::exiting("scribo::preprocessing::homogeneous_contrast");
       return output;
     }
 

@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Denoise image background.
+/// \brief Denoise image background.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -57,7 +57,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Denoise image background.
+    /// \brief Denoise image background.
     ///
     /// \param[in] input    A binary image. True for objects, False for
     ///                     background.
@@ -65,7 +65,7 @@ namespace scribo
     /// \param[in] min_card Minimum component cardinality to not be
     ///                     considered as noise.
     ///
-    /// \output A binary image with the same domain as \p input. All
+    /// \return A binary image with the same domain as \p input. All
     /// small components have been removed and merged with the
     /// background.
     //
@@ -122,7 +122,7 @@ namespace scribo
     denoise_bg(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	       unsigned min_card)
     {
-      trace::entering("scribo::preprocessing::denoise_bg");
+      mln_trace("scribo::preprocessing::denoise_bg");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -145,7 +145,6 @@ namespace scribo
       mln_concrete(I)
 	output = data::transform(lbl, relabel_f);
 
-      trace::exiting("scribo::preprocessing::denoise_bg");
       return output;
     }
 

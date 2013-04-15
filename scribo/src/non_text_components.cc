@@ -1,5 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -80,9 +80,7 @@ int main(int argc, char* argv[])
   else
     scribo::debug::logger().set_level(scribo::debug::None);
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
@@ -93,7 +91,8 @@ int main(int argc, char* argv[])
 
   // Preprocess document
   image2d<bool>
-    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0.34);
+    input_preproc = toolchain::text_in_doc_preprocess(input, false, 0, 0.34,
+						      false, false);
 
 
   bool denoise = true;
@@ -124,5 +123,4 @@ int main(int argc, char* argv[])
   scribo::io::img::save(doc, out_img + "_debug_wo_image.png", scribo::io::img::DebugWoImage);
   scribo::io::img::save(doc, out_img + "_debug_with_image.png", scribo::io::img::DebugWithImage);
 
-  trace::exiting("main");
 }

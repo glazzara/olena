@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,11 @@ namespace mln
   namespace win
   {
 
-    /*! \brief Horizontal line window defined on the 2D square grid.
+    /*!
+      \class hline2d
+      \headerfile <>
+
+      \brief Horizontal line window defined on the 2D square grid.
 
        An hline2d is centered and symmetric; so its height is 1 and
        its width (length) is odd.
@@ -54,7 +59,9 @@ namespace mln
 
        \ingroup modwin2d
      */
+    /// \cond ALIAS
     typedef line<grid::square, 1, def::coord> hline2d;
+    /// \endcond
 
   } // end of namespace mln::win
 

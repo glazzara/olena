@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,8 +39,6 @@ int main(int argc, char *argv[])
     std::cerr << "Usage : " << argv[0] << " input.* input.pbm out.ppm" << std::endl;
     return 1;
   }
-
-  Magick::InitializeMagick(0);
 
   typedef mln::value::int_u<30> V;
   typedef image2d<V> L;

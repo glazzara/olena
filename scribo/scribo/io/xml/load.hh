@@ -284,6 +284,7 @@ namespace scribo
 		line_data = new scribo::internal::line_info_data<L>(lines, mln::util::array<component_id_t>());
 
 		line_data->text_ = atts.value("text").toUtf8().constData();
+		line_data->text_confidence_ = atof(atts.value("textConfidence").toUtf8().constData());
 
 		line_data->hidden_ = false;
 		line_data->tag_ = static_cast<line::Tag>(atts.value("tag").toInt());

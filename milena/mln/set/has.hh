@@ -55,7 +55,7 @@ namespace mln
     bool
     has(const Site_Set<S>& s_, const mln_site(S)& e)
     {
-      trace::entering("set::has");
+      mln_trace("set::has");
       const S& s = exact(s_);
 
       mln_precondition(s.is_valid());
@@ -69,7 +69,6 @@ namespace mln
 	    break;
 	  }
       
-      trace::exiting("set::has");
       return found;
     }
 

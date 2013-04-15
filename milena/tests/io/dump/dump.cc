@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -85,12 +86,25 @@ int main()
 
   /// Value: float
   {
-    float data[4] = { 5, 1,
-			 1, 9 };
+    float data[4] = { 5.2, 1.4,
+		      mln_min(float), mln_max(float) };
     image2d<float> pic = make::image2d(data);
     io::dump::save(pic, "dump-float.dump");
     image2d<float> pic2;
     io::dump::load(pic2, "dump-float.dump");
+
+    mln_assertion(pic.domain() == pic2.domain());
+    mln_assertion(pic == pic2);
+  }
+
+  /// Value: double
+  {
+    double data[4] = { 5.2, 1.4,
+		       mln_min(double), mln_max(double) };
+    image2d<double> pic = make::image2d(data);
+    io::dump::save(pic, "dump-double.dump");
+    image2d<double> pic2;
+    io::dump::load(pic2, "dump-double.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);

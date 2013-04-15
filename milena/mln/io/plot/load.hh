@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,23 +50,12 @@ namespace mln
     namespace plot
     {
 
-      /*! Load a Milena 1D image from a plot file.
-       *
-       * \param[in] ima A reference to the image to load.
-       * \param[out] filename The output file.
-       * \param[in] start_value The start index value of the plot
-       *	    (optional).
-       */
-      /*template <typename I>
-      void load(image1d<I>& ima,
-		const std::string& filename);*/
-
-
-
-      /*! Load a Milena array from a plot file.
+      /*! \brief Load a Milena array from a plot file.
        *
        * \param[in] arr A reference to the array to load.
        * \param[out] filename The output file.
+       *
+       * \ingroup ioplot
        */
       template <typename I>
       void load(util::array<I>& arr,
@@ -74,25 +64,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-      /*template <typename I>
-      inline
-      void load(image1d<I>& ima, const std::string& filename)
-      {
-	trace::entering("mln::io::plot::load");
-
-	std::ifstream file_out(filename.c_str());
-	for (unsigned i = 0; i < ima.ninds(); ++i)
-	  file_out << start_value + i << ", " << ima.at_(i) << std::endl;
-
-	trace::exiting("mln::io::plot::load");
-      }*/
-
       template <typename I>
       inline
       void load(util::array<I>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::plot::load");
+	mln_trace("mln::io::plot::load");
 
 	arr.clear();
 	std::ifstream file_in(filename.c_str());
@@ -120,7 +96,6 @@ namespace mln
 	  }
 	}
 
-	trace::exiting("mln::io::plot::load");
       }
 
 

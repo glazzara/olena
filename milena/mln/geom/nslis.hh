@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// Give the number of slices of an image.
+    /*! \brief Give the number of slices of an image.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     unsigned nslis(const Image<I>& ima);
 

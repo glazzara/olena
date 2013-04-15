@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
 
   typedef image2d<value::rgb8> I;
   I ima;
-  Magick::InitializeMagick(0);
+
   io::magick::load(ima, argv[1]);
 
   image2d<value::rgb8>

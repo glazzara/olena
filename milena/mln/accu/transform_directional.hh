@@ -303,7 +303,7 @@ namespace mln
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir)
     {
-      trace::entering("accu::transform_directional");
+      mln_trace("accu::transform_directional");
 
       internal::transform_directional_tests(input, win);
 
@@ -311,7 +311,6 @@ namespace mln
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_directional_dispatch(a, input, win, dir);
 
-      trace::exiting("accu::transform_directional");
       return output;
     }
 
@@ -323,7 +322,7 @@ namespace mln
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir)
     {
-      trace::entering("accu::transform_directional");
+      mln_trace("accu::transform_directional");
 
       internal::transform_directional_tests(input, win);
 
@@ -334,7 +333,6 @@ namespace mln
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_directional_dispatch(a_, input, win, dir);
 
-      trace::exiting("accu::transform_directional");
       return output;
     }
 

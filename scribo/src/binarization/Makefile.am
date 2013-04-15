@@ -1,5 +1,5 @@
-# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
-# (LRDE).
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,43 +18,73 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 noinst_PROGRAMS = 			\
-  pgm_global_threshold_auto 		\
-  pgm_sauvola 				\
-  pgm_sauvola_ms			\
-  pgm_sauvola_threshold_image 		\
-  ppm_sauvola 				\
-  ppm_sauvola_ms_fg 			\
-  ppm_sauvola_ms 			\
-  ppm_sauvola_ms_split
-
-
+  pgm_global_threshold_auto
 
 
 if HAVE_MAGICKXX
 
-  noinst_PROGRAMS +=  			\
-   sauvola_debug 			\
-   sauvola_ms_debug
+  noinst_PROGRAMS += global_threshold sauvola_debug sauvola_ms_debug
 
   utilexec_PROGRAMS =                   \
+   kim					\
+   niblack				\
+   otsu					\
    sauvola 				\
    sauvola_ms                           \
    sauvola_ms_fg 			\
-   sauvola_ms_split
+   sauvola_ms_split			\
+   singh				\
+   wolf
 
+
+  global_threshold_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  	      $(MAGICKXX_CPPFLAGS)
+  global_threshold_LDFLAGS  = $(AM_LDFLAGS) 		\
+		              $(MAGICKXX_LDFLAGS)
+
+
+  niblack_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		     $(MAGICKXX_CPPFLAGS)
+  niblack_LDFLAGS  = $(AM_LDFLAGS) 		\
+		     $(MAGICKXX_LDFLAGS)
+
+  otsu_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  $(MAGICKXX_CPPFLAGS)
+  otsu_LDFLAGS  = $(AM_LDFLAGS) 		\
+		  $(MAGICKXX_LDFLAGS)
 
   sauvola_ms_fg_CPPFLAGS = $(AM_CPPFLAGS) 	\
 			   $(MAGICKXX_CPPFLAGS)
   sauvola_ms_fg_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
 
+  kim_SOURCES  = kim.cc
+  kim_CPPFLAGS = $(AM_CPPFLAGS) 	\
+		 $(MAGICKXX_CPPFLAGS)
+  kim_LDFLAGS  = $(AM_LDFLAGS) 	\
+		 $(MAGICKXX_LDFLAGS)
+
+  sauvola_SOURCES  = sauvola.cc
   sauvola_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		     $(MAGICKXX_CPPFLAGS)
   sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
 		     $(MAGICKXX_LDFLAGS)
 
+  singh_SOURCES  = singh.cc
+  singh_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		   $(MAGICKXX_CPPFLAGS)
+  singh_LDFLAGS  = $(AM_LDFLAGS) 		\
+		   $(MAGICKXX_LDFLAGS)
+
+  wolf_SOURCES  = wolf.cc
+  wolf_CPPFLAGS = $(AM_CPPFLAGS) 		\
+		  $(MAGICKXX_CPPFLAGS)
+  wolf_LDFLAGS  = $(AM_LDFLAGS) 		\
+		  $(MAGICKXX_LDFLAGS)
+
+  sauvola_debug_SOURCES  = sauvola_debug.cc
   sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	  \
-			   -DSCRIBO_SAUVOLA_DEBUG \
+			   -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			   $(MAGICKXX_CPPFLAGS)
   sauvola_debug_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
@@ -66,7 +96,7 @@ if HAVE_MAGICKXX
 		        $(MAGICKXX_LDFLAGS)
 
   sauvola_ms_debug_CPPFLAGS = $(AM_CPPFLAGS) 		\
-			      -DSCRIBO_SAUVOLA_DEBUG 	\
+			      -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			      $(MAGICKXX_CPPFLAGS)
   sauvola_ms_debug_LDFLAGS  = $(AM_LDFLAGS) 		\
 		              $(MAGICKXX_LDFLAGS)

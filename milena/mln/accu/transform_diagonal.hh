@@ -429,7 +429,7 @@ namespace mln
     transform_diagonal(const Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::transform_diagonal");
+      mln_trace("accu::transform_diagonal");
 
       internal::transform_diagonal_tests(input, win);
 
@@ -437,7 +437,6 @@ namespace mln
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_diagonal_dispatch(a, input, win);
 
-      trace::exiting("accu::transform_diagonal");
       return output;
     }
 
@@ -448,7 +447,7 @@ namespace mln
     transform_diagonal(const Meta_Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::transform_diagonal");
+      mln_trace("accu::transform_diagonal");
 
       internal::transform_diagonal_tests(input, win);
 
@@ -459,7 +458,6 @@ namespace mln
       mln_ch_value(I, mln_result(A_)) output;
       output = internal::transform_diagonal_dispatch(a_, input, win);
 
-      trace::exiting("accu::transform_diagonal");
       return output;
     }
 

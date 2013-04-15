@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +44,8 @@
 # include <mln/data/paste.hh>
 
 # include <mln/geom/bbox.hh>
+# include <mln/geom/top_right.hh>
+# include <mln/geom/bottom_left.hh>
 
 # include <mln/extension/duplicate.hh>
 
@@ -62,53 +64,65 @@ namespace mln
   namespace geom
   {
 
-    /// Perform a rotation from the center of an image.
-    ///
-    /// \param[in] input          An image.
-    /// \param[in] angle          An angle in degrees.
-    /// \param[in] extension      Function, image or value which will be used
-    ///                           as extension. This extension allows to map
-    ///                           values to sites which where not part
-    ///                           of the domain before the rotation.
-    /// \param[in] output_domain  The domain of the output image. An
-    ///                           invalid domain, causes the routine
-    ///                           to use a domain large enough to
-    ///                           display the whole original image.
-    ///
-    /// \return An image with the same domain as \p input.
-    //
+    /*! \brief Perform a rotation from the center of an image.
+
+      \param[in] input          An image.
+      \param[in] angle          An angle in degrees.
+      \param[in] extension      Function, image or value which will be used
+                                as extension. This extension allows to map
+				values to sites which where not part
+				of the domain before the rotation.
+      \param[in] output_domain  The domain of the output image. An
+                                invalid domain, causes the routine
+				to use a domain large enough to
+				display the whole original image.
+
+      \return An image with the same domain as \p input.
+
+      \ingroup mlngeom
+    */
     template <typename I, typename Ext, typename S>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle,
 	   const Ext& extension, const Site_Set<S>& output_domain);
 
 
-    /// \overload
+    /*! \overload
+
+      \ingroup mlngeom
+     */
     template <typename I, typename Ext>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle, const Ext& extension);
 
 
-    /// \overload
-    /// Use literal::zero as default value for the extension.
+    /*! \overload
+      Use literal::zero as default value for the extension.
+
+      \ingroup mlngeom
+    */
     template <typename I>
     mln_concrete(I)
     rotate(const Image<I>& input, double angle);
 
 
-    /// Rotate a box.
-    ///
-    /// FIXME: the return type may be too generic and may lead to
-    /// invalid covariance.
-    //
+    /*! \brief Rotate a box.
+
+      FIXME: the return type may be too generic and may lead to
+      invalid covariance.
+
+      \ingroup mlngeom
+    */
     template <typename B>
     B
     rotate(const Box<B>& box_, double angle, const mln_site(B)& ref);
 
-    /// \overload
-    ///
-    /// The rotation center \p ref is set to box.pcenter().
-    //
+    /*! \overload
+
+      The rotation center \p ref is set to box.pcenter().
+
+      \ingroup mlngeom
+    */
     template <typename B>
     B
     rotate(const Box<B>& box, double angle);
@@ -123,7 +137,7 @@ namespace mln
     rotate(const Image<I>& input_, double angle,
 	   const Ext& extension_, const Site_Set<S>& output_domain_)
     {
-      trace::entering("geom::rotate");
+      mln_trace("geom::rotate");
 
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
@@ -132,7 +146,6 @@ namespace mln
       // Do not check that output_domain_ is valid. If it is not,
       // further in this routine, we define a default domain.
       typedef mln_site(I) P;
-      mln_precondition(P::dim == 2);
       mln_precondition(input.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
 //      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
@@ -142,12 +155,12 @@ namespace mln
       extension::duplicate(input);
 
       mln_site(I) c = geom::bbox(input).pcenter();
-      typedef fun::x2x::translation<2,double> trans_t;
+      typedef fun::x2x::translation<P::dim,double> trans_t;
       trans_t
 	t(-1 * c.to_vec()),
 	t_1(c.to_vec());
 
-      typedef fun::x2x::rotation<2,double> rot_t;
+      typedef fun::x2x::rotation<P::dim,double> rot_t;
       rot_t rot(math::pi * angle / 180.f, literal::origin);
 
       typedef
@@ -175,7 +188,6 @@ namespace mln
 
       data::paste(tr, output);
 
-      trace::exiting("geom::rotate");
       return output;
     }
 
@@ -204,21 +216,20 @@ namespace mln
     B
     rotate(const Box<B>& box_, double angle, const mln_site(B)& ref)
     {
-      trace::entering("geom::rotate");
+      mln_trace("geom::rotate");
 
       const B& box = exact(box_);
 
       typedef mln_site(B) P;
-      mln_precondition(P::dim == 2);
       mln_precondition(box.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
 
-      typedef fun::x2x::translation<2,double> trans_t;
+      typedef fun::x2x::translation<P::dim,double> trans_t;
       trans_t
 	t(-1 * ref.to_vec()),
 	t_1(ref.to_vec());
 
-      typedef fun::x2x::rotation<2,double> rot_t;
+      typedef fun::x2x::rotation<P::dim,double> rot_t;
       rot_t rot(math::pi * angle / 180.f, literal::origin);
 
       typedef
@@ -230,10 +241,8 @@ namespace mln
       accu::shape::bbox<P> accu;
 
       P
-	top_right(box.pmin().row(),
-		  box.pmax().col()),
-	bot_left(box.pmax().row(),
-		 box.pmin().col());
+	top_right = geom::top_right(box),
+	bot_left = geom::bottom_left(box);
 
       accu.take(P(comp_transf(box.pmin().to_vec())));
       accu.take(P(comp_transf(top_right.to_vec())));
@@ -242,7 +251,6 @@ namespace mln
 
       B output = accu.to_result();
 
-      trace::exiting("geom::rotate");
       return output;
     }
 

@@ -1,0 +1,27 @@
+table.itable th
+{
+    font-size: 17px;
+
+}
+
+table.itable li
+{
+    font-size: 16px;
+}
+
+table.itable td
+{
+    font-size: 17px;
+    vertical-align: top;
+}
+
+address.div
+{
+    font-size: 10px;
+}
+
+table.itable
+{
+    width:850px;
+    table-layout:fixed;
+}

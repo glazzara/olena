@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,7 +77,7 @@ int main(int argc, char *argv[])
 
   // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input, 101, 3, 0.4);
+    output = scribo::binarization::sauvola_ms(input, 101, 3, 0.4, 0.4, 0.4);
 
   output = scribo::preprocessing::denoise_bg(output, c8(), 4);
   output = scribo::postprocessing::fill_object_holes(output, 0.01f);

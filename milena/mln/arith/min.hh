@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,27 +78,24 @@ namespace mln
 	inline
 	void min_(const L& lhs, const R& rhs, O& output)
 	{
-	  trace::entering("data::arith::generic::min_");
+	  mln_trace("data::arith::generic::min_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	    output(p) = lhs(p) < rhs(p) ? lhs(p) : rhs(p);
-
-	  trace::entering("data::arith::generic::min_");
 	}
 
 	template <typename L, typename R>
 	inline
 	void min_inplace_(L& lhs, const R& rhs)
 	{
-	  trace::entering("data::arith::generic::min_inplace_");
+	  mln_trace("data::arith::generic::min_inplace_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	  if (rhs(p) < lhs(p))
 	    lhs(p) = rhs(p);
 
-	  trace::exiting("data::arith::generic::min_inplace_");
 	}
 
       } // end of namespace mln::arith::impl::generic
@@ -111,7 +109,7 @@ namespace mln
     inline
     mln_concrete(L) min(const Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("arith::min");
+      mln_trace("arith::min");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(L) output;
@@ -119,7 +117,6 @@ namespace mln
       impl::min_(mln_trait_image_speed(L)(), exact(lhs),
 		 mln_trait_image_speed(R)(), exact(rhs), output);
 
-      trace::exiting("arith::min");
       return output;
     }
 
@@ -127,13 +124,12 @@ namespace mln
     inline
     void min_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("arith::min_inplace");
+      mln_trace("arith::min_inplace");
 
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       impl::min_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			 mln_trait_image_speed(R)(), exact(rhs));
 
-      trace::exiting("arith::min_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

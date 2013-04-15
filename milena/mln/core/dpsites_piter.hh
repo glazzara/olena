@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,11 +39,14 @@
 namespace mln
 {
 
-  /// A generic forward iterator on points of windows and of
-  ///  neighborhoods.
-  ///
-  /// The parameter \c V is the type of std::vector enclosing
-  /// structure.
+  /*!
+    \internal
+    \brief A generic forward iterator on points of windows and of
+    neighborhoods.
+
+    The parameter \c V is the type of std::vector enclosing
+    structure.
+  */
   template <typename V>
   class dpsites_fwd_piter
     : public internal::site_relative_iterator_base< V, dpsites_fwd_piter<V> >
@@ -57,13 +60,17 @@ namespace mln
     template <typename P>
     dpsites_fwd_piter(const V& v, const P& c);
 
+    /// \cond INTERNAL_API
+
     /// Delayed initialization.
     template <typename P>
     void init_(const V& v, const P& c);
+    /// \endcond
 
     /// Constructor without argument.
     dpsites_fwd_piter();
 
+    /// \cond INTERNAL_API
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -82,14 +89,19 @@ namespace mln
   protected:
 
     unsigned i_;
+
+    /// \endcond
   };
 
 
-  /// A generic backward iterator on points of windows and of
-  ///  neighborhoods.
-  ///
-  /// The parameter \c V is the type of std::vector enclosing
-  /// structure.
+  /*!
+    \internal
+    \brief A generic backward iterator on points of windows and of
+    neighborhoods.
+
+    The parameter \c V is the type of std::vector enclosing
+    structure.
+  */
   template <typename V>
   class dpsites_bkd_piter :
     public internal::site_relative_iterator_base< V, dpsites_bkd_piter<V> >
@@ -105,6 +117,8 @@ namespace mln
 
     /// Constructor without argument.
     dpsites_bkd_piter();
+
+    /// \cond INTERNAL_API
 
     /// Delayed initialization.
     template <typename P>
@@ -128,6 +142,8 @@ namespace mln
   protected:
 
     int i_;
+
+    /// \endcond
   };
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -43,8 +43,8 @@ namespace mln
     namespace browsing
     {
 
-      /// Browsing in a certain direction.
-      /*!
+      /*! \brief Browsing in a certain direction.
+       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -57,35 +57,36 @@ namespace mln
        *   - final(): Will be called at the end.
        *
        * F shall features : \n
-       * { \n
-       * --- as types: \n
-       *   I; \n
-       * --- as attributes: \n
-       *   dim; \n
-       *   dir; // and test dir < dim \n
-       *   input; \n
-       *   p; \n
-       * --- as methods: \n
-       *   void init(); \n
-       *   void next(); \n
-       *   void final(); \n
-       * } \n
+       - As types:
+         + I
+       - As attributes:
+         + dim
+         + dir // and test dir < dim
+         + input
+         + p
+       - As methods:
+         + void init()
+         + void next()
+         + void final()
        *
        * Example : \n
        *
-       *   1 0 0
-       *  2 0 0
-       * 3 0 0
+       \verbatim
+          1 0 0
+         2 0 0
+        3 0 0
+
+          4 0 0
+         5 0 0
+        6 0 0
+
+          7 0 0
+         8 0 0
+        9 0 0
+       \endverbatim
        *
-       *   4 0 0
-       *  5 0 0
-       * 6 0 0
        *
-       *   7 0 0
-       *  8 0 0
-       * 9 0 0
-       *
-       *
+       * \ingroup modcanvasbrowsing
        */
       struct directional_t : public Browsing< directional_t >
       {
@@ -117,7 +118,7 @@ namespace mln
       void
       directional_t::operator()(F& f) const
       {
-	trace::entering("canvas::browsing::directional");
+	mln_trace("canvas::browsing::directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -158,7 +159,6 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
-	trace::exiting("canvas::browsing::directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

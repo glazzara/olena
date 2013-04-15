@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -132,7 +133,7 @@ namespace mln
     image2d<info>     data;
     image2d<V> label;
     V current_label = 0;
-    int N, dp_border;
+    int dp_border;
 
 //     util::timer time;
 //     time.start();
@@ -140,7 +141,6 @@ namespace mln
     // init
     {
       extension::adjust(input, nbh);
-      N = input.nelements();
       dp_border = 2 * input.border();
       extension::fill(input, false);
       initialize(data, input);
@@ -156,7 +156,7 @@ namespace mln
       const unsigned n_nbhs = dp.nelements();
 
       // Backward.
-      unsigned p = input.index_of_point(point2d(nrows - 1, ncols - 1));
+      unsigned p = input.offset_of_point(point2d(nrows - 1, ncols - 1));
       for (int row = nrows - 1; row >= 0; --row, p -= dp_border)
 	for (int col = ncols - 1; col >= 0; --col, --p)
 	{
@@ -189,7 +189,7 @@ namespace mln
       data::fill(label, 0);
 
       // Forward.
-      unsigned p = input.index_of_point(point2d(0, 0));
+      unsigned p = input.offset_of_point(point2d(0, 0));
       for (int row = 0; row < nrows; ++row, p += dp_border)
 	for (int col = 0; col < ncols; ++col, ++p)
 	{

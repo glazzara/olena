@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Save a labeled image in a color image.
+/// \brief Save a labeled image in a color image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/labeling/colorize.hh>
@@ -43,11 +44,13 @@ namespace scribo
 
     using namespace mln;
 
-    /// Save a labeled image in a color image.
+    /// \brief Save a labeled image in a color image.
     ///
     /// \param[in] lbl A label image.
     /// \param[in] nlabels The number of labels.
     /// \param[in] filename The output file name.
+    ///
+    /// \ingroup grpalgodebug
     //
     template <typename I>
     void
@@ -63,13 +66,12 @@ namespace scribo
     save_label_image(const Image<I>& lbl, const mln_value(I)& nlabels,
 		     const char *filename)
     {
-      trace::entering("scribo::debug::save_label_image");
+      mln_trace("scribo::debug::save_label_image");
       mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
       mln_precondition(exact(lbl).is_valid());
 
       io::ppm::save(labeling::colorize(value::rgb8(), lbl, nlabels), filename);
 
-      trace::exiting("scribo::debug::save_label_image");
     }
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -49,6 +49,9 @@ namespace mln
   namespace morpho
   {
 
+    /*!
+     * \ingroup mlndatafilter
+     */
     template <typename I, typename N, typename A>
     mln_concrete(I)
     algebraic_filter(const Image<I>& input,
@@ -68,7 +71,7 @@ namespace mln
 		    const typename A::result& lambda,
 		    bool increasing)
     {
-      trace::entering("morpho::opening::algebraic_filter");
+      mln_trace("morpho::opening::algebraic_filter");
 
       mln_precondition(exact(input).is_valid());
 
@@ -84,7 +87,6 @@ namespace mln
 								   lambda,
 								   increasing);
 
-      trace::exiting("morpho::opening::algebraic_filter");
 
       return output;
     }

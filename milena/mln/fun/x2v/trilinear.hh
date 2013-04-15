@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -87,13 +88,12 @@ namespace mln
         double y = v[1]; // col
         double z = v[2]; // sli
 
-	math::round<double> f;
-        unsigned x1 = f(std::floor(x));
-        unsigned x2 = f(std::floor(x) + 1);
-        unsigned y1 = f(std::floor(y));
-        unsigned y2 = f(std::floor(y) + 1);
-        unsigned z1 = f(std::floor(z));
-        unsigned z2 = f(std::floor(z) + 1);
+        unsigned x1 = math::round<double>(std::floor(x));
+        unsigned x2 = math::round<double>(std::floor(x) + 1);
+        unsigned y1 = math::round<double>(std::floor(y));
+        unsigned y2 = math::round<double>(std::floor(y) + 1);
+        unsigned z1 = math::round<double>(std::floor(z));
+        unsigned z2 = math::round<double>(std::floor(z) + 1);
 
 	double xd = x - x1;
         double yd = y - y1;

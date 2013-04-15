@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,26 +52,26 @@ namespace mln
   namespace linear
   {
 
-    /// Sobel_2d gradient components.
+    /*! \brief Sobel_2d gradient components.
+      \ingroup mlnlinear
+    */
     /// \{
-    /// Compute the horizontal component of the 2D Sobel gradient.
+    /// \brief Compute the horizontal component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_h(const Image<I>& input);
 
-    /// Compute the vertical component of the 2D Sobel gradient.
+    /// \brief Compute the vertical component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_v(const Image<I>& input);
-    /// \}
 
-    /// Compute the vertical component of the 2D Sobel gradient.
+    /// \brief Compute the vertical component of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve_grad(I, int)
     sobel_2d(const Image<I>& input);
-    /// \}
 
-    /// Compute the L1 norm of the 2D Sobel gradient.
+    /// \brief Compute the L1 norm of the 2D Sobel gradient.
     template <typename I>
     mln_ch_convolve(I, int)
     sobel_2d_l1_norm(const Image<I>& input);
@@ -87,7 +88,7 @@ namespace mln
     mln_ch_convolve(I, int)
     sobel_2d_h(const Image<I>& input)
     {
-      trace::entering("linear::sobel_2d_h");
+      mln_trace("linear::sobel_2d_h");
       mln_precondition(exact(input).is_valid());
 
       int wh[] = { -1, 0, 1 };
@@ -96,7 +97,6 @@ namespace mln
 		   1 };
       mln_ch_convolve(I, int) output = convolve_2x1d(input, wh, wv);
 
-      trace::exiting("linear::sobel_2d_h");
       return output;
     }
 
@@ -106,7 +106,7 @@ namespace mln
     mln_ch_convolve(I, int)
     sobel_2d_v(const Image<I>& input)
     {
-      trace::entering("linear::sobel_2d_v");
+      mln_trace("linear::sobel_2d_v");
       mln_precondition(exact(input).is_valid());
 
       int wh[] = { 1, 2, 1 };
@@ -115,7 +115,6 @@ namespace mln
 		   +1 };
       mln_ch_convolve(I, int) output = convolve_2x1d(input, wh, wv);
 
-      trace::exiting("linear::sobel_2d_v");
       return output;
     }
 
@@ -124,7 +123,7 @@ namespace mln
     mln_ch_convolve_grad(I, int)
     sobel_2d(const Image<I>& input)
     {
-      trace::entering("linear::sobel_2d");
+      mln_trace("linear::sobel_2d");
       mln_precondition(exact(input).is_valid());
 
       typedef mln_ch_convolve(I, int) J;
@@ -133,7 +132,6 @@ namespace mln
       fun::vv2v::vec<mln_value(J)> f;
       mln_ch_convolve_grad(I, int) output = data::transform(h, v, f);
 
-      trace::exiting("linear::sobel_2d");
       return output;
     }
 
@@ -142,7 +140,7 @@ namespace mln
     mln_ch_convolve(I, int)
     sobel_2d_l1_norm(const Image<I>& input)
     {
-      trace::entering("linear::sobel_2d_norm_l1");
+      mln_trace("linear::sobel_2d_norm_l1");
       mln_precondition(exact(input).is_valid());
 
       typedef mln_ch_convolve_grad(I, int) G;
@@ -150,7 +148,6 @@ namespace mln
       fun::x2v::l1_norm<mln_value(G)> f;
       mln_ch_convolve(I, int) output = data::transform(grad, f);
 
-      trace::exiting("linear::sobel_2d");
       return output;
     }
 

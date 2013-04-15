@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +28,7 @@
 # define MLN_MORPHO_TREE_FILTER_ALL_HH
 
 /**
-** \file   mln/morpho/tree/filter.hh
+** \file
 **
 ** Methods to handle component tree filtering strategies with
 ** non-increasing attribute. Nevertheless, it works on increasing

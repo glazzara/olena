@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +45,9 @@ namespace mln
 
   namespace internal
   {
-    /// Data structure for \c mln::violent_cast_image<T,I>.
+    /*!
+      \brief Data structure for \c mln::violent_cast_image<T,I>.
+    */
     template <typename T, typename I>
     struct data< violent_cast_image<T,I> >
     {
@@ -128,8 +130,10 @@ namespace mln
     /// Constructor.
     violent_cast_image(const Image<I>& ima);
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const Image<I>& ima);
+    /// \endcond
 
     /// Read-only access of pixel value at point site \p p.
     T operator()(const mln_psite(I)& p) const;

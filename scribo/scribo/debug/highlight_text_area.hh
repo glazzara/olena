@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,10 +63,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const mln::util::array<box<mln_site(I)> >& bbox);
 
 
@@ -76,10 +78,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const line_set<L>& lines);
 
     /*! \brief Darken an image and highlight valid lines.
@@ -92,10 +95,11 @@ namespace scribo
 
       \return a color image with highlighted text areas.
 
+      \ingroup grpalgodebug
      */
     template <typename I, typename L>
     mln_ch_value(I, value::rgb8)
-    highlight_text_area(const Image<I>& input_,
+    highlight_text_area(const Image<I>& input,
 			const scribo::component_set<L>& components);
 
 
@@ -141,7 +145,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const mln::util::array<box<mln_site(I)> >& bbox)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -162,7 +166,6 @@ namespace scribo
       for_all_elements(i, bbox)
 	mln::draw::box(output, bbox(i), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -172,7 +175,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const line_set<L>& lines)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -207,7 +210,6 @@ namespace scribo
 	mln::draw::box(output, lines(i).bbox(), literal::red);
       }
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -217,7 +219,7 @@ namespace scribo
     highlight_text_area(const Image<I>& input_,
 			const scribo::component_set<L>& components)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -240,7 +242,6 @@ namespace scribo
 	if (components(i).is_valid())
 	  mln::draw::box(output, components(i).bbox(), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 
@@ -251,7 +252,7 @@ namespace scribo
 				const scribo::component_set<L>& components,
 				double angle, box2d rb)
     {
-      trace::entering("scribo::debug::highlight_text_area");
+      mln_trace("scribo::debug::highlight_text_area");
 
       const I& input = exact(input_);
 
@@ -289,7 +290,6 @@ namespace scribo
 	if (components(i).is_valid())
 	  mln::draw::box(output, bbox(i), literal::red);
 
-      trace::exiting("scribo::debug::highlight_text_area");
       return output;
     }
 

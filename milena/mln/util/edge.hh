@@ -175,7 +175,10 @@ namespace mln
   namespace internal
   {
 
-    /// subject_impl specialization (Proxy).
+    /*!
+      \internal
+      \brief subject_impl specialization (Proxy).
+    */
     /// \{
 
     template <typename G, typename E>

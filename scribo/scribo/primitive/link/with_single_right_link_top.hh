@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Link components with their right neighbor.
+/// \brief Link components with their right neighbor.
 
 
 # include <mln/core/concept/image.hh>
@@ -64,7 +64,8 @@ namespace scribo
       /// Lookup startup point is the object top center.
       ///
       /// \param[in] components A component set.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
+      /// \param[in] neighb_max_distance The maximum distance allowed
+      ///                                to seach a neighbor object.
       ///
       /// \return Object links data.
       //
@@ -77,6 +78,7 @@ namespace scribo
 
       /// \overload
       /// Max distance is set to mln_max(unsigned).
+      //
       template <typename L>
       inline
       object_links<L>
@@ -129,7 +131,7 @@ namespace scribo
       with_single_right_link_top(const component_set<L>& components,
 				 unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link_top");
+	mln_trace("scribo::primitive::link::with_single_right_link_top");
 
 	mln_precondition(components.is_valid());
 
@@ -138,7 +140,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor::Top);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link_top");
 	return output;
       }
 

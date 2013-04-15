@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Remove too thick components.
+/// \brief Remove too thick components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -49,7 +49,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove components thicker or equal to \p max_thickness.
+    /// \brief Remove components thicker or equal to \p max_thickness.
     ///
     /// \param[in] input_ A binary image.
     /// \param[in] nbh_ A neighborhood used in labeling algorithms.
@@ -57,6 +57,8 @@ namespace scribo
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result A binary image without thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename I, typename N, typename V>
     inline
@@ -67,12 +69,14 @@ namespace scribo
 		  unsigned max_thickness);
 
 
-    /// Remove components thicker or equal to \p max_thickness.
+    /// \brief Remove components thicker or equal to \p max_thickness.
     ///
     /// \param[in] components An object image.
     /// \param[in] max_thickness The maximum thickness value.
     ///
     /// \result An object image without too thick components.
+    ///
+    /// \ingroup grpalgofiltercomp
     //
     template <typename L>
     inline
@@ -136,7 +140,7 @@ namespace scribo
 		  const V& label_type,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_thick");
+      mln_trace("scribo::filter::objects_thick");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -156,7 +160,6 @@ namespace scribo
       mln_concrete(I) output = duplicate(input);
       data::fill((output | pw::value(components) == literal::zero).rw(), false);
 
-      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 
@@ -167,7 +170,7 @@ namespace scribo
     objects_thick(const component_set<L>& components,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::objects_thick");
+      mln_trace("scribo::filter::objects_thick");
 
       mln_precondition(components.is_valid());
 
@@ -177,7 +180,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(is_not_too_thick, component::Ignored);
 
-      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 

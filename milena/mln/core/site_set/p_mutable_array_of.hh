@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -138,13 +139,15 @@ namespace mln
     /// Clear this set.
     void clear();
 
+    /// \cond INTERNAL_API
     /// Test if the site set is empty.
     bool is_empty_() const; // Override the default impl since we have not .nsites().
-
+    /// \endcond
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
+      /// \cond INTERNAL_API
     /// Hook to the set of runs.
     const util::array<S>& array_hook_() const;
 
@@ -153,6 +156,7 @@ namespace mln
     const util::array<S>& set_1_() const;
     template <typename I>
     const S& set_2_(const I& it) const;
+    /// \endcond
 
   protected:
 
@@ -161,7 +165,7 @@ namespace mln
   };
 
 
-
+  /// \relates p_mutable_array_of
   template <typename S>
   std::ostream& operator<<(std::ostream& ostr, const p_mutable_array_of<S>& r);
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,9 @@ namespace mln
   namespace linear
   {
 
-
+    /*! \brief Directional Gaussian filter for 2D images.
+      \ingroup mlnlinear
+    */
     template <typename I>
     mln_concrete(I)
     gaussian_directional_2d(const Image<I>& input,
@@ -350,9 +353,9 @@ namespace mln
       std::vector<double> tmp1(len);
       std::vector<double> tmp2(len);
 
-      unsigned delta_offset = ima.delta_index(d);
+      unsigned delta_offset = ima.delta_offset(d);
       unsigned
-	o_start = ima.index_of_point(start),
+	o_start = ima.offset_of_point(start),
 	o_start_d   = o_start +     delta_offset,
 	o_start_dd  = o_start + 2 * delta_offset,
 	o_start_ddd = o_start + 3 * delta_offset;
@@ -407,7 +410,7 @@ namespace mln
       // extension::fill(ima, bdr);
 
       unsigned
-	o_finish   = ima.index_of_point(finish),
+	o_finish   = ima.offset_of_point(finish),
 	o_finish_d  = o_finish -     delta_offset,
 	o_finish_dd = o_finish - 2 * delta_offset;
 
@@ -466,7 +469,7 @@ namespace mln
 			    unsigned dir, double sigma,
 			    const mln_value(I)& bdr)
     {
-      trace::entering("linear::gaussian_directional_2d");
+      mln_trace("linear::gaussian_directional_2d");
 
       typedef mln_site(I) P;
       mlc_bool(P::dim == 2)::check();
@@ -516,7 +519,6 @@ namespace mln
 						bdr);
 	}
 
-      trace::exiting("linear::gaussian_directional_2d");
       return output;
     }
 

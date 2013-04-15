@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -54,8 +54,11 @@ namespace mln
     namespace morpho
     {
 
-      // FIXME: Doc!
-
+      /*! \brief Connected filters dispatch (algebraic & leveling
+       * filters).
+       *
+       * \ingroup modcanvasmorpho
+       */
       template <typename I, typename N, typename A>
       mln_concrete(I)
       attribute_filter(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -158,7 +161,7 @@ namespace mln
 			   const Accumulator<A>& a_,
 			   const mln_result(A)& lambda)
 	  {
-	    trace::entering("canvas::morpho::impl::generic::attribute_filter");
+	    mln_trace("canvas::morpho::impl::generic::attribute_filter");
 	    // FIXME: Test?!
 
 	    const I& input = exact(input_);
@@ -253,7 +256,6 @@ namespace mln
 		  output(p) = output(parent(p));
 	    }
 
-	    trace::exiting("canvas::morpho::impl::generic::attribute_filter");
 	    return output;
 	  }
 
@@ -283,7 +285,7 @@ namespace mln
 				 const Accumulator<A>& a_,
 				 const mln_result(A)& lambda)
 	{
-	  trace::entering("canvas::morpho::impl::attribute_filter_fastest");
+	  mln_trace("canvas::morpho::impl::attribute_filter_fastest");
 	  // FIXME: Tests?
 
 	  const I& input = exact(input_);
@@ -375,7 +377,6 @@ namespace mln
 	      }
 	  }
 
-	  trace::exiting("canvas::morpho::impl::attribute_filter_fastest");
 	  return output;
 	}
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,8 +39,11 @@ namespace mln
 
   namespace metal
   {
-    
-    /// Ands type.
+
+    /*!
+      \internal
+      \brief Ands type.
+    */
     template < typename E1,
 	       typename E2,
 	       typename E3,

@@ -55,7 +55,7 @@ namespace mln
     mln_site(S)
     get(const Site_Set<S>& s_, size_t index)
     {
-      trace::entering("set::get");
+      mln_trace("set::get");
       const S& s = exact(s_);
 
       mln_precondition(s.is_valid());
@@ -68,7 +68,6 @@ namespace mln
 	else
 	  --index;
 
-      trace::exiting("set::get");
       return p;
     }
 

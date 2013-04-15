@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,8 +42,18 @@ namespace mln
   {
 
 
-    /// Alias for signed 32-bit integers.
+    /*!
+      \struct int_s32
+      \headerfile <>
+
+      \brief Alias for signed 32-bit integers.
+
+      \ingroup valueint
+      \relates int_s
+    */
+    /// \cond ALIASES
     typedef int_s<32> int_s32;
+    /// \endcond
 
 
   } // end of namespace mln::value

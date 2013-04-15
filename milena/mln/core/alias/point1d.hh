@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,6 +32,8 @@
 /// Definition of the mln::point1d and mln::point1df aliases and of
 /// their construction routines.
 
+# include <mln/core/def/coord.hh>
+# include <mln/core/def/coordf.hh>
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl.
 # include <mln/core/concept/site_proxy.hh>
@@ -40,13 +43,27 @@
 namespace mln
 {
 
-  /// Type alias for a point defined on the 1D ruler with integer
-  /// coordinates.
-  typedef point<grid::tick, def::coord> point1d;
+  /*!
+    \class point1d
+    \headerfile <>
 
-  /// Type alias for a point defined on the 1D ruler with
-  /// floating-point coordinates.
+    \brief Point defined on the 1D ruler grid with integer
+    coordinates.
+  */
+  /// \cond ALIAS
+  typedef point<grid::tick, def::coord> point1d;
+  /// \endcond
+
+  /*!
+    \class point1df
+    \headerfile <>
+
+    \brief Point defined on the 1D ruler grid with floating-point
+    coordinates.
+  */
+  /// \cond ALIAS
   typedef point<grid::tick, def::coordf> point1df;
+  /// \endcond
 
 
   namespace internal
@@ -54,6 +71,7 @@ namespace mln
 
     // Specialization.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl< const point<grid::tick, C>, E >
     {
@@ -72,6 +90,7 @@ namespace mln
 
     // Specialization for point<M,C>.
 
+    /// \internal
     template <typename C, typename E>
     struct subject_impl<       point<grid::tick, C>, E > :
            subject_impl< const point<grid::tick, C>, E >

@@ -31,7 +31,7 @@
 ///
 /// Binarize a graylevel image using an automatic global threshold.
 ///
-/// \fixme: Adapt the filtering if no threshold is found.
+/// FIXME: Adapt the filtering if no threshold is found.
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/alias/neighb1d.hh>
@@ -89,7 +89,7 @@ namespace scribo
     mln_ch_value(I, bool)
     global_threshold_auto(const Image<I>& input_)
     {
-      trace::entering("scribo::binarization::global_threshold_auto");
+      mln_trace("scribo::binarization::global_threshold_auto");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -154,7 +154,6 @@ namespace scribo
       mln_ch_value(I, bool) output;
       output = duplicate((pw::value(input) < pw::cst(threshold)) | input.domain());
 
-      trace::exiting("scribo::binarization::global_threshold_auto");
       return output;
     }
 

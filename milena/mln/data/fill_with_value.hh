@@ -102,7 +102,7 @@ namespace mln
 	template <typename I, typename V>
 	void fill_with_value(Image<I>& ima_, const V& val)
 	{
-	  trace::entering("data::impl::generic::fill_with_value");
+	  mln_trace("data::impl::generic::fill_with_value");
 
 	  I& ima = exact(ima_);
 
@@ -115,7 +115,6 @@ namespace mln
 	  for_all(p)
 	    ima(p) = v;
 
-	  trace::exiting("data::impl::generic::fill_with_value");
 	}
 
       } // end if namespace mln::data::impl::generic
@@ -129,12 +128,11 @@ namespace mln
     inline
     void fill_with_value(Image<I>& ima, const V& val)
     {
-      trace::entering("data::fill_with_value");
+      mln_trace("data::fill_with_value");
 
       internal::fill_with_value_tests(ima, val);
       internal::fill_with_value_dispatch(ima, val);
 
-      trace::exiting("data::fill_with_value");
     }
 
 

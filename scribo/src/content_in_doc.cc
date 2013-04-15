@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,6 +46,7 @@
 #include <scribo/preprocessing/crop.hh>
 
 #include <scribo/io/xml/save.hh>
+#include <scribo/io/img/save.hh>
 
 #include <scribo/debug/option_parser.hh>
 
@@ -67,6 +68,7 @@ static const scribo::debug::toggle_data toggle_desc[] =
     "to improve layout detection. (default: enabled)", true },
   { "find-seps", "Find separators in document (default: enabled)", true },
   { "ocr", "Performs character recognition (default: enabled)", true },
+  { "deskew", "Deskew image (default: disabled)", false},
   {0, 0, false}
 };
 
@@ -84,8 +86,15 @@ static const scribo::debug::opt_data opt_desc[] =
     "fra, deu, ita, nld, por, spa, vie",
     "<lang>", scribo::debug::check_ocr_lang, 1, "eng" },
   { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
-  { "xml-format", "Choose betwen page, page-ext (default: page-ext).", "<format>",
+  { "xml-format", "Choose betwen page, page-ext and full (default: page-ext).", "<format>",
     scribo::debug::check_xml_format, 1, "page-ext" },
+  { "more-xml-format", "Provide an additional xml output. Format can"
+    " be chosen between page, page-ext and full (default: page-ext).", "<format>",
+    scribo::debug::check_xml_format, 1, "none" },
+  { "more-xml-file", "Filename of the additional xml output.", "<filename>",
+    0, 1, "/dev/null" },
+  { "debug-regions", "Save a debug image with all the regions.", "<filename>",
+    0, 1, "/dev/null" },
   {0, 0, 0, 0, 0, 0}
 };
 
@@ -109,18 +118,17 @@ int main(int argc, char* argv[])
 
   bool verbose = options.is_set("verbose");
 
-  trace::entering("main");
-
-  Magick::InitializeMagick(*argv);
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
   image2d<value::rgb8> input;
   mln::io::magick::load(input, options.arg("input.*"));
 
+  bool enable_deskew = options.is_enabled("deskew");
   // Preprocess document
   image2d<bool>
     input_preproc = toolchain::text_in_doc_preprocess(input, false, 0,
-						      0.34, verbose);
+						      0.34, enable_deskew, verbose);
 
   // Optional Cropping
   point2d crop_shift = literal::origin;
@@ -172,12 +180,26 @@ int main(int argc, char* argv[])
   // Saving results
   if (verbose)
     std::cout << "Saving results..." << std::endl;
+
+  // Default XML output
   if (options.opt_value("xml-format") == "page-ext")
     scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::PageExtended);
-  else if (options.opt_value("xml-format") == "page")
+  if (options.opt_value("xml-format") == "page")
     scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Page);
-  else if (options.opt_value("xml-format") == "full")
+  if (options.opt_value("xml-format") == "full")
     scribo::io::xml::save(doc, options.arg("out.xml"), scribo::io::xml::Full);
 
-  trace::exiting("main");
+  // Additional XML output
+  if (options.opt_value("more-xml-format") == "page-ext")
+    scribo::io::xml::save(doc, options.opt_value("more-xml-file"), scribo::io::xml::PageExtended);
+  if (options.opt_value("more-xml-format") == "page")
+    scribo::io::xml::save(doc, options.opt_value("more-xml-file"), scribo::io::xml::Page);
+  if (options.opt_value("more-xml-format") == "full")
+    scribo::io::xml::save(doc, options.opt_value("more-xml-file"), scribo::io::xml::Full);
+
+  if (scribo::debug::logger().is_enabled())
+    scribo::io::img::save(doc, mln::debug::filename("regions.png"), scribo::io::img::DebugWoImage);
+  if (options.opt_value("debug-regions") != "/dev/null")
+    scribo::io::img::save(doc, options.opt_value("debug-regions"), scribo::io::img::DebugWithImage);
+
 }

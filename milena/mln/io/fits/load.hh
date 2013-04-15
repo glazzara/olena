@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,21 +52,25 @@ namespace mln
     namespace fits
     {
 
-      /// Load a fits image in a Milena image.
-      ///
-      /// \param[out] ima A reference to the image2d<float> which will receive
-      /// data.
-      /// \param[in] filename The source.
-      ///
+      /*! \brief Load a fits image in a Milena image.
+       *
+       * \param[out] ima A reference to the image2d<float> which will receive
+       * data.
+       * \param[in] filename The source.
+       *
+       * \ingroup iofits
+       */
       void load(image2d<float>& ima,
 		const std::string& filename);
 
-      /// Load a fits image in a image2d<float>.
-      ///
-      /// \param[in] filename The image source.
-      ///
-      /// \return An image2d<float> which contains loaded data.
-      ///
+      /*! \brief Load a fits image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       *
+       * \ingroup iofits
+       */
       image2d<float> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -84,7 +89,7 @@ namespace mln
       inline
       image2d<float> load(const std::string& filename)
       {
-	trace::entering("mln::io::fits::load");
+	mln_trace("mln::io::fits::load");
 
 	fitsfile *fptr;
 	int status,  nfound, anynull;
@@ -123,7 +128,6 @@ namespace mln
 	if (fits_close_file(fptr, &status))
 	  fits_exit(status);
 
-	trace::exiting("mln::io::fits::load");
 
 	return output;
       }

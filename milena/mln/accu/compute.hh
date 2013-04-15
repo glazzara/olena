@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,33 +45,39 @@ namespace mln
   namespace accu
   {
 
-    /// Make an accumulator compute the pixels of the image \p input.
-    ///
-    /// \param[in] input The input image.
-    /// \param[in] a An accumulator.
-    ///
-    /// This routine runs: \n
-    ///   a.take(make::pix(input, p));
-    ///   on all pixels on the images.
-    ///
-    /// \warning This routine does not perform a.init().
-    ///
+    /*! \brief Make an accumulator compute the pixels of the image \p
+        input.
+
+        \param[in] a An accumulator.
+        \param[in] input The input image.
+
+        This routine runs: \n
+          a.take(make::pix(input, p));
+          on all pixels on the images.
+
+        \warning This routine does not perform a.init().
+
+	\ingroup mlnaccucompute
+    */
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /// Make an accumulator compute the pixels of the image \p input.
-    ///
-    /// \param[in] input The input image.
-    /// \param[in] a A meta accumulator.
-    ///
-    /// This routine runs: \n
-    ///   a.take(make::pix(input, p));
-    ///   on all pixels on the images.
-    ///
-    /// \warning This routine does not perform a.init().
-    ///
+    /*! \brief Make an accumulator compute the pixels of the image \p
+        input.
+
+        \param[in] a A meta accumulator.
+        \param[in] input The input image.
+
+        This routine runs: \n
+          a.take(make::pix(input, p));
+          on all pixels on the images.
+
+        \warning This routine does not perform a.init().
+
+	\ingroup mlnaccucompute
+    */
     template <typename A, typename I>
     mln_meta_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);
@@ -90,7 +97,7 @@ namespace mln
 	mln_result(A)
 	compute(const Accumulator<A>&, const Image<I>& input_)
 	{
-	  trace::entering("accu::impl::generic::compute");
+	  mln_trace("accu::impl::generic::compute");
 
 	  const I& input = exact(input_);
 	  mln_precondition(input.is_valid());
@@ -100,7 +107,6 @@ namespace mln
 	  for_all(p)
 	    a.take(make::pix(input, p));
 
-	  trace::exiting("accu::impl::generic::compute");
 	  return a.to_result();
 	}
 
@@ -129,12 +135,11 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input)
     {
-      trace::entering("accu::compute");
+      mln_trace("accu::compute");
 
       mln_precondition(exact(input).is_valid());
       mln_result(A) output = internal::compute_dispatch(a, input);
 
-      trace::exiting("accu::compute");
       return output;
     }
 
@@ -143,7 +148,7 @@ namespace mln
     mln_meta_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
-      trace::entering("accu::compute");
+      mln_trace("accu::compute");
 
       mln_precondition(exact(input).is_valid());
 
@@ -153,7 +158,6 @@ namespace mln
 
       mln_result(A_) output = internal::compute_dispatch(a_, input);
 
-      trace::exiting("accu::compute");
       return output;
     }
 

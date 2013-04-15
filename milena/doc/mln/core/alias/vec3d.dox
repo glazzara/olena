@@ -1,0 +1,48 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  class vec3d_f
+  	: public algebra::vec<3u,float>
+  {
+  public:
+      vec3d_f();
+
+      /// Construct a vector set to (0,0).
+      vec3d_f(const literal::zero_t&);
+
+      /// Construct a vector set to (0,0).
+      vec3d_f(const literal::origin_t&);
+
+      /// Construct copy of another vector.
+      vec3d_f(const vec<3u, float>& rhs);
+
+      /// Construct copy of another vector encoded with a different
+      type.
+      template <typename U>
+      vec3d_f(const vec<3u, U>& rhs);
+  };
+
+
+  class vec3d_d
+  	: public algebra::vec<3u,double> vec3d_d
+  {
+  public:
+      vec3d_d();
+
+      /// Construct a vector set to (0,0).
+      vec3d_d(const literal::zero_t&);
+
+      /// Construct a vector set to (0,0).
+      vec3d_d(const literal::origin_t&);
+
+      /// Construct copy of another vector.
+      vec3d_d(const vec<3u, double>& rhs);
+
+      /// Construct copy of another vector encoded with a different
+      type.
+      template <typename U>
+      vec3d_d(const vec<3u, U>& rhs);
+  };
+}

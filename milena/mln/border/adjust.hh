@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,8 @@ namespace mln
   namespace border
   {
 
-    /*! Adjust the virtual (outer) border of image \p ima so that its
-     *  size is at least \p min_thickness.
+    /*! \brief Adjust the virtual (outer) border of image \p ima so
+     *  that its size is at least \p min_thickness.
      *
      * \param[in,out] ima The image whose border is to be adjusted.
      * \param[in] min_thickness The expected border minimum thickness.
@@ -50,6 +51,8 @@ namespace mln
      *
      * \warning If the image border is already larger than \p
      * min_thickness, this routine is a no-op.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void adjust(const Image<I>& ima, unsigned min_thickness);
@@ -61,7 +64,7 @@ namespace mln
     inline
     void adjust(const Image<I>& ima, unsigned min_thickness)
     {
-      trace::entering("border::adjust");
+      mln_trace("border::adjust");
 
       mln_precondition(exact(ima).is_valid());
 
@@ -71,7 +74,6 @@ namespace mln
       // We cannot run here a postcondition since we do not know if
       // ima (or an underlying image) has a border or not.
 
-      trace::exiting("border::adjust");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

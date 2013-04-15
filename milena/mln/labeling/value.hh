@@ -149,7 +149,7 @@ namespace mln
     value(const Image<I>& input, const mln_value(I)& val,
 	  const Neighborhood<N>& nbh, L& nlabels)
     {
-      trace::entering("labeling::value");
+      mln_trace("labeling::value");
 
       internal::value_tests(input, val, nbh, nlabels);
 
@@ -157,7 +157,6 @@ namespace mln
       impl::value_functor<I,L> f(input, val);
       output = canvas::labeling::video(input, nbh, nlabels, f);
 
-      trace::exiting("labeling::value");
       return output;
     }
 

@@ -56,7 +56,6 @@ public:
   /// Build a functor.
   ///
   /// \param  nbh_fg  The foreground neighborhood.
-  /// \param  nbh_bg  The background neighborhood.
   is_simple_2d(const mln::Neighborhood<N>& nbh_fg)
     : super(mln::exact(nbh_fg)),
       ima_(0)
@@ -66,8 +65,7 @@ public:
   /// Build a functor, and assign an image to it.
   ///
   /// \param  nbh_fg  The foreground neighborhood.
-  /// \param  nbh_bg  The background neighborhood.
-  /// \apram  ima     The image.
+  /// \param  ima     The image.
   is_simple_2d(const mln::Neighborhood<N>& nbh_fg,
 	       const mln::Image<I>& ima)
     : super(mln::exact(nbh_fg)),
@@ -106,8 +104,8 @@ struct is_not_end_point : public mln::Function_v2b< is_not_end_point<I, N> >
 {
   /// Build a functor, and assign an image to it.
   ///
-  /// \param  nbh_fg  The foreground neighborhood.
-  /// \apram  ima     The image.
+  /// \param  nbh  The foreground neighborhood.
+  /// \param  ima     The image.
   is_not_end_point(const mln::Neighborhood<N>& nbh,
 		   const mln::Image<I>& ima)
     : nbh_(mln::exact(nbh)),

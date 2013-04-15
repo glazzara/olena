@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,14 +42,16 @@ namespace mln
   {
 
 
-    /*! Morphological thickening.
+    /*! \brief Morphological thickening.
      *
      * This operator is THICK_B = Id + HMT_B, where B = (Bfg, Bbg).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)
-      thickening(const Image<I>& input,
-		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
+    thickening(const Image<I>& input,
+	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -88,14 +91,13 @@ namespace mln
       thickening(const Image<I>& input,
 		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      trace::entering("morpho::thickening");
+      mln_trace("morpho::thickening");
 
       internal::thickening_tests(input, win_fg, win_bg);
 
       mln_concrete(I) output = morpho::plus( input,
 					     hit_or_miss(input, win_fg, win_bg) );
 
-      trace::exiting("morpho::thickening");
       return output;
     }
 

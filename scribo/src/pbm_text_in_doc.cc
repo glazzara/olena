@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 
   bool verbose = options.is_set("verbose");
 
-  trace::entering("main");
+  mln_trace("main");
 
   typedef image2d<scribo::def::lbl_type> L;
 
@@ -163,5 +163,4 @@ int main(int argc, char* argv[])
   // Specify shift due to potential previous crop.
   scribo::io::text_boxes::save(lines, options.arg("output.txt"), crop_shift);
 
-  trace::exiting("main");
 }

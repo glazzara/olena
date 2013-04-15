@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,10 @@ namespace mln
     namespace closing
     {
 
-      /// Morphological leveling closing.
+      /*! \brief Morphological leveling closing.
+       *
+       * \ingroup mlnmorphoclosing
+       */
       template <typename I, typename N, typename A>
       mln_concrete(I)
       leveling(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -61,7 +65,7 @@ namespace mln
       leveling(const Image<I>& input, const Neighborhood<N>& nbh,
 	  const Accumulator<A>& accu, const mln_result(A)& lambda)
       {
-	trace::entering("morpho::closing::leveling");
+	mln_trace("morpho::closing::leveling");
 
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(mlc_not_equal(mln_trait_accumulator_when_pix(A),
@@ -73,7 +77,6 @@ namespace mln
 
 	mln_postcondition(output >= input);
 
-	trace::exiting("morpho::closing::leveling");
 	return output;
       }
 

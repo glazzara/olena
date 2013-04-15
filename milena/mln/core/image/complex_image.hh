@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,7 +53,10 @@ namespace mln
   namespace internal
   {
 
-    /// A boolean proxy, used to fool std::vector.
+    /*!
+      \internal
+      \brief A boolean proxy, used to fool std::vector.
+    */
     struct bool_proxy
     {
     public:
@@ -94,7 +98,9 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::complex_image.
+    /*!
+      \brief Data structure for \c mln::complex_image.
+    */
     template <unsigned D, typename G, typename V>
     struct data< complex_image<D, G, V> >
     {
@@ -191,9 +197,11 @@ namespace mln
 		  const metal::vec< D + 1, std::vector<V> >& values);
     /// \}
 
+    /// \cond INTERNAL_API
     /// Initialize an empty image.
     void init_(const p_complex<D, G>& pc,
 	       const metal::vec< D + 1, std::vector<V> >& values);
+    /// \endcond
 
     /// Read-only access of face value at point site \p p.
     rvalue operator()(const complex_psite<D, G>& p) const;
@@ -210,12 +218,13 @@ namespace mln
     /// \}
   };
 
+  /// \cond INTERNAL_API
   // Fwd decl.
   template <unsigned D, typename G, typename V, typename W>
   void init_(tag::image_t,
 	     complex_image<D, G, V>& target,
 	     const complex_image<D, G, W>& model);
-
+  /// \endcond
 
 # ifndef MLN_INCLUDE_ONLY
 

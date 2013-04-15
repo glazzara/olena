@@ -1,17 +1,364 @@
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Remove duplicate '/' in path.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix path to documentation.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Disable QCH file generation.
+
+2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use relative paths in documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Reference value types documentation in Values group.
+
+	* doc/mln/value/hsl.dox,
+	* doc/mln/value/int_s16.dox,
+	* doc/mln/value/int_s24.dox,
+	* doc/mln/value/int_s32.dox,
+	* doc/mln/value/int_s8.dox,
+	* doc/mln/value/int_u12.dox,
+	* doc/mln/value/int_u16.dox,
+	* doc/mln/value/int_u24.dox,
+	* doc/mln/value/int_u32.dox,
+	* doc/mln/value/int_u8.dox,
+	* doc/mln/value/label_16.dox,
+	* doc/mln/value/label_32.dox,
+	* doc/mln/value/label_8.dox,
+	* doc/mln/value/rgb16.dox,
+	* doc/mln/value/rgb8.dox,
+	* doc/mln/value/value.dox: New.
+
+	* mln/value/hsl.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_s16.hh,
+	* mln/value/int_s24.hh,
+	* mln/value/int_s32.hh,
+	* mln/value/int_s8.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u12.hh,
+	* mln/value/int_u16.hh,
+	* mln/value/int_u24.hh,
+	* mln/value/int_u32.hh,
+	* mln/value/int_u8.hh,
+	* mln/value/label.hh,
+	* mln/value/label_16.hh,
+	* mln/value/label_32.hh,
+	* mln/value/label_8.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb16.hh,
+	* mln/value/rgb8.hh: Hide aliases.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a PDF I/O group in documentation.
+
+	* doc/mln/io/io.dox: Add PDF group.
+
+	* mln/io/pdf/get_header.hh,
+	* mln/io/pdf/load.hh: Add to PDF group.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add references to code examples
+
+	* doc/DoxygenLayout.xml: Change example section name.
+
+	* doc/examples.dox: Add more links to example files.
+
+2013-04-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Hide internal API and classes in documentation.
+
+	* doc/Doxyfile.in: Exclude internal symbols and classes.
+
+	* mln/core/alias/vec2d.hh,
+	* mln/core/alias/vec3d.hh,
+	* mln/core/box_runend_piter.hh,
+	* mln/core/box_runstart_piter.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/dpsites_piter.hh,
+	* mln/core/faces_psite.hh,
+	* mln/core/image/ch_piter.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/core/image/complex_window_piter.hh,
+	* mln/core/image/dmorph/extended.hh,
+	* mln/core/image/dmorph/extension_fun.hh,
+	* mln/core/image/dmorph/extension_ima.hh,
+	* mln/core/image/dmorph/extension_val.hh,
+	* mln/core/image/dmorph/hexa.hh,
+	* mln/core/image/dmorph/hexa_piter.hh,
+	* mln/core/image/dmorph/image_if.hh,
+	* mln/core/image/dmorph/p2p_image.hh,
+	* mln/core/image/dmorph/slice_image.hh,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/image/dmorph/sub_image_if.hh,
+	* mln/core/image/dmorph/transformed_image.hh,
+	* mln/core/image/dmorph/unproject_image.hh,
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/graph_window_if_piter.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/image/imorph/interpolated.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/image/imorph/lazy_image.hh,
+	* mln/core/image/imorph/plain.hh,
+	* mln/core/image/imorph/safe.hh,
+	* mln/core/image/imorph/tr_image.hh,
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/vmorph/cast_image.hh,
+	* mln/core/image/vmorph/fun_image.hh,
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/core/image/vmorph/violent_cast_image.hh,
+	* mln/core/internal/classical_window_base.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_morpher.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/core/internal/neighb_base.hh,
+	* mln/core/internal/neighb_niter_base.hh,
+	* mln/core/internal/p_complex_piter_base.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/pseudo_site_base.hh,
+	* mln/core/internal/run_image.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/internal/site_iterator_base.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/core/internal/site_set_base.hh,
+	* mln/core/internal/site_set_impl.hh,
+	* mln/core/internal/site_set_iterator_base.hh,
+	* mln/core/internal/window_base.hh,
+	* mln/core/mixed_neighb.hh,
+	* mln/core/neighb.hh,
+	* mln/core/pixter1d.hh,
+	* mln/core/pixter2d.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/point.hh,
+	* mln/core/routine/init.hh,
+	* mln/core/site_set/box.hh,
+	* mln/core/site_set/box_piter.hh,
+	* mln/core/site_set/complex_psite.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_centered.hh,
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_double.hh,
+	* mln/core/site_set/p_edges_psite.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_graph_piter.hh,
+	* mln/core/site_set/p_if.hh,
+	* mln/core/site_set/p_if_piter.hh,
+	* mln/core/site_set/p_image.hh,
+	* mln/core/site_set/p_key.hh,
+	* mln/core/site_set/p_line2d.hh,
+	* mln/core/site_set/p_mutable_array_of.hh,
+	* mln/core/site_set/p_priority.hh,
+	* mln/core/site_set/p_run.hh,
+	* mln/core/site_set/p_run_piter.hh,
+	* mln/core/site_set/p_set_of.hh,
+	* mln/core/site_set/p_transformed.hh,
+	* mln/core/site_set/p_transformed_piter.hh,
+	* mln/core/site_set/p_vaccess.hh,
+	* mln/core/site_set/p_vertices_psite.hh,
+	* mln/core/w_window.hh,
+	* mln/core/window.hh,
+	* mln/util/array.hh: Prevent internal API from appearing in user
+	documentation.
+
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix permissions on documentation files.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Disable user refman PDF compilation.
+
+2013-04-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix path to other documentations.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Kill Doxygen warnings.
+
+	* apps/morphers/image2d-skel.hh
+
+	* doc/DoxygenLayout.xml: Fix a page reference.
+
+	* doc/examples.dox: New.
+
+	* mln/canvas/browsing/backdiagonal2d.hh: Switch to \code.
+
+	* mln/convert/to_image.hh: Remove useless inline keyword.
+
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/data/compute_in_window.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/io/pdf/load.hh: Fix documentation.
+
+	* mln/linear/log.hh: New documentation.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup concept documentation.
+
+	* doc/mln/convert.dox,
+	* doc/mln/core/concept/concept.dox,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/browsing.hh,
+	* mln/core/concept/delta_point_site.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/literal.hh,
+	* mln/core/concept/mesh.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/meta_function.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/pixel_iterator.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/regular_grid.hh,
+	* mln/core/concept/site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh: Here.
+
+2013-04-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Document type aliases in Doxygen.
+
+	* doc/mln/core/alias/box1d.dox,
+	* doc/mln/core/alias/box2d.dox,
+	* doc/mln/core/alias/box2d_h.dox,
+	* doc/mln/core/alias/box3d.dox,
+	* doc/mln/core/alias/complex_geometry.dox,
+	* doc/mln/core/alias/complex_image.dox,
+	* doc/mln/core/alias/dpoint1d.dox,
+	* doc/mln/core/alias/dpoint2d.dox,
+	* doc/mln/core/alias/dpoint3d.dox,
+	* doc/mln/core/alias/neighb1d.dox,
+	* doc/mln/core/alias/neighb2d.dox,
+	* doc/mln/core/alias/neighb3d.dox,
+	* doc/mln/core/alias/p_run2d.dox,
+	* doc/mln/core/alias/p_runs2d.dox,
+	* doc/mln/core/alias/point1d.dox,
+	* doc/mln/core/alias/point2d.dox,
+	* doc/mln/core/alias/point2d_h.dox,
+	* doc/mln/core/alias/point3d.dox,
+	* doc/mln/core/alias/vec2d.dox,
+	* doc/mln/core/alias/vec3d.dox,
+	* doc/mln/core/alias/w_window1d_float.dox,
+	* doc/mln/core/alias/w_window1d_int.dox,
+	* doc/mln/core/alias/w_window2d_float.dox,
+	* doc/mln/core/alias/w_window2d_int.dox,
+	* doc/mln/core/alias/w_window3d_float.dox,
+	* doc/mln/core/alias/w_window3d_int.dox,
+	* doc/mln/core/alias/window1d.dox,
+	* doc/mln/core/alias/window2d.dox,
+	* doc/mln/core/alias/window3d.dox,
+	* doc/mln/win/disk2d.dox,
+	* doc/mln/win/hline2d.dox,
+	* doc/mln/win/segment1d.dox,
+	* doc/mln/win/sline3d.dox,
+	* doc/mln/win/sphere3d.dox,
+	* doc/mln/win/vline2d.dox: New.
+
+	* mln/core/alias/box1d.hh,
+	* mln/core/alias/box2d.hh,
+	* mln/core/alias/box3d.hh,
+	* mln/core/alias/complex_geometry.hh,
+	* mln/core/alias/complex_image.hh,
+	* mln/core/alias/dpoint1d.hh,
+	* mln/core/alias/dpoint2d.hh,
+	* mln/core/alias/dpoint3d.hh,
+	* mln/core/alias/neighb1d.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/alias/p_run2d.hh,
+	* mln/core/alias/p_runs2d.hh,
+	* mln/core/alias/point1d.hh,
+	* mln/core/alias/point2d.hh,
+	* mln/core/alias/point3d.hh,
+	* mln/core/alias/vec2d.hh,
+	* mln/core/alias/vec3d.hh,
+	* mln/core/alias/w_window1d_float.hh,
+	* mln/core/alias/w_window1d_int.hh,
+	* mln/core/alias/w_window2d_float.hh,
+	* mln/core/alias/w_window2d_int.hh,
+	* mln/core/alias/w_window3d_float.hh,
+	* mln/core/alias/w_window3d_int.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/win/disk2d.hh,
+	* mln/win/hline2d.hh,
+	* mln/win/segment1d.hh,
+	* mln/win/sline3d.hh,
+	* mln/win/sphere3d.hh,
+	* mln/win/vline2d.hh: Add more documentation.
+
+2013-04-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/value/builtin/symbolics.hh: Add min() and max() for Boolean.
+
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/svg/simple_svg_1.0.0.hh: Remove.
+
+2013-04-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/world/binary_2d/subsample.hh: Cleanup code. Fix a memory
+	leak.
+
+2013-03-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add constant Boolean functions.
+
+	* mln/fun/v2b/always_false.hh,
+	* mln/fun/v2b/always_true.hh: New.
+
 2013-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the set of files to clean in apps/mesh-segm-skel.
 
 	* apps/mesh-segm-skel/Makefile.am (MOSTLYCLEANFILES): Here.
-
-2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Make fld tests write in different files.
-
-	* tests/io/fld/fld1d.cc,
-	* tests/io/fld/fld2d.cc,
-	* tests/io/fld/fld3d.cc: Write in different files to allow those
-	tests to be run simultaneously.
 
 2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -146,6 +493,1523 @@
 	* tests/metal/unconst.cc,
 	* tests/morpho/complex_image_wst.cc,
 	* tests/trait/super.cc: Fix unused variable warnings.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix EXTRA_DIST.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Generate namespace page.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix documentation in registration namespace.
+
+	* mln/registration/all.hh: New.
+
+	* mln/registration/icp.hh: Fix reference.
+
+2013-03-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid example output in the documentation.
+
+	* doc/examples/split/tuto3_first_routine-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-3.cc.raw,
+	* doc/mainpage.dox,
+	* doc/outputs/accu-right-instantiation.txt,
+	* doc/outputs/borderthickness.txt,
+	* doc/outputs/estim-sites.txt,
+	* doc/outputs/extend.txt,
+	* doc/outputs/fill-call-1.txt,
+	* doc/outputs/fill-imageif-cfun.txt,
+	* doc/outputs/fill-part-image.txt,
+	* doc/outputs/fill-subdomain-shorter.txt,
+	* doc/outputs/fill-subdomain.txt,
+	* doc/outputs/fill.txt,
+	* doc/outputs/ima-load.txt,
+	* doc/outputs/ima-save.txt,
+	* doc/outputs/ima2d-6-clone.txt,
+	* doc/outputs/ima2d-7.txt,
+	* doc/outputs/ima2d-rot.txt,
+	* doc/outputs/labeling-compute.txt,
+	* doc/outputs/logical-not.txt,
+	* doc/outputs/paste-call-1.txt,
+	* doc/outputs/split/tuto3_println-1.txt,
+	* doc/outputs/split/tuto3_println-2.txt,
+	* doc/outputs/tuto2_first_image.txt,
+	* doc/outputs/tuto3_colorize.txt,
+	* doc/outputs/tuto3_first_routine.txt,
+	* doc/outputs/tuto3_println.txt,
+	* doc/outputs/tuto3_rw_image.txt,
+	* doc/outputs/tuto4_genericity_and_algorithms.txt: Remove trace
+	logs.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce mln_trace_warning macro.
+
+	* mln/border/mirror.hh,
+	* mln/canvas/labeling/blobs.hh,
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* mln/data/stretch.hh,
+	* mln/debug/put_word.hh,
+	* mln/debug/trace.hh,
+	* mln/draw/dashed_line.hh,
+	* mln/draw/line.hh,
+	* mln/labeling/colorize.hh,
+	* mln/subsampling/antialiased.hh: Make use of this macro here.
+
+2013-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove last references to mln::trace::*.
+
+	* mln/arith/min.hh,
+	* mln/clustering/kmean_rgb.hh,
+	* mln/world/rgb/invert.spe.hh: Remove duplicate references to
+	mln_trace.
+
+	* tests/data/fill_with_image.cc,
+	* tests/data/paste.cc,
+	* tests/linear/gaussian.cc,
+	* tests/opt/at.cc,
+	* tests/opt/element.cc,
+	* tests/opt/value.cc: Remove useless include.
+
+	* tests/unit_test/unit-tests.mk: Remove mln_trace_* tests.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated trace system.
+
+	* mln/trace/all.hh,
+	* mln/trace/entering.hh,
+	* mln/trace/essential.hh,
+	* mln/trace/exiting.hh,
+	* mln/trace/quiet.hh,
+	* mln/trace/resume.hh,
+	* mln/trace/stop.hh,
+	* mln/trace/warning.hh: Remove.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/trait/op/plus.cc: Kill warnings.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/magick/internal/init_magick.hh: Add a missing inline.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make fld tests write in different files.
+
+	* tests/io/fld/fld1d.cc,
+	* tests/io/fld/fld2d.cc,
+	* tests/io/fld/fld3d.cc: Write in different files to allow those
+	tests to be run simultaneously.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Write a valid test for labeling::foreground.
+
+	* tests/labeling/Makefile.am: Add more extra-dist files.
+
+	* tests/labeling/foreground.cc: Rewrite.
+
+	* tests/labeling/foreground.ref.pgm: New.
+
+2013-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* mln/fun/v2v/round_sat.hh,
+	* mln/io/pdf/get_header.hh: Add missing includes.
+
+	* mln/value/internal/gray_f.hxx: Update use of math::round.
+
+	* tests/data.hh.in: Add a new path.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/cond_tests_magickxx: Consider more conditional
+	tests.
+
+	* tests/unit_test/cond_tests_poppler: New.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/algebra/mat.cc: Fix test.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce mln_trace.
+
+	* mln/debug/trace.hh: New.
+
+	* doc/benchmark/canvas.cc,
+	* doc/examples/split/tuto3_first_routine-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-3.cc.raw,
+	* doc/examples/split/tuto3_first_routine-8.cc.raw,
+	* doc/examples/split/tuto3_trace-1.cc.raw,
+	* doc/examples/split/tuto3_trace-2.cc.raw,
+	* doc/examples/trash/tuto_bis.cc,
+	* doc/examples/tuto3/first_routine.cc,
+	* doc/examples/tuto3/trace.cc,
+	* doc/outputs/accu-right-instantiation.txt,
+	* doc/outputs/borderthickness.txt,
+	* doc/outputs/estim-sites.txt,
+	* doc/outputs/extend.txt,
+	* doc/outputs/fill-call-1.txt,
+	* doc/outputs/fill-imageif-cfun.txt,
+	* doc/outputs/fill-part-image.txt,
+	* doc/outputs/fill-subdomain-shorter.txt,
+	* doc/outputs/fill-subdomain.txt,
+	* doc/outputs/fill.txt,
+	* doc/outputs/ima-load.txt,
+	* doc/outputs/ima-save.txt,
+	* doc/outputs/ima2d-6-clone.txt,
+	* doc/outputs/ima2d-7.txt,
+	* doc/outputs/ima2d-rot.txt,
+	* doc/outputs/labeling-compute.txt,
+	* doc/outputs/logical-not.txt,
+	* doc/outputs/paste-call-1.txt,
+	* doc/outputs/split/tuto3_println-1.txt,
+	* doc/outputs/split/tuto3_println-2.txt,
+	* doc/outputs/tuto2_first_image.txt,
+	* doc/outputs/tuto3_colorize.txt,
+	* doc/outputs/tuto3_first_routine.txt,
+	* doc/outputs/tuto3_println.txt,
+	* doc/outputs/tuto3_rw_image.txt,
+	* doc/outputs/tuto4_genericity_and_algorithms.txt,
+	* mln/accu/compute.hh,
+	* mln/accu/image/init.hh,
+	* mln/accu/image/set_value.hh,
+	* mln/accu/image/take.hh,
+	* mln/accu/image/take_as_init.hh,
+	* mln/accu/image/take_n_times.hh,
+	* mln/accu/image/to_result.hh,
+	* mln/accu/image/untake.hh,
+	* mln/accu/stat/histo3d_rgb.hh,
+	* mln/accu/transform.hh,
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_line.hh,
+	* mln/accu/transform_snake.hh,
+	* mln/accu/transform_stop.hh,
+	* mln/all.hh,
+	* mln/arith/diff_abs.hh,
+	* mln/arith/div.hh,
+	* mln/arith/div.spe.hh,
+	* mln/arith/min.hh,
+	* mln/arith/min.spe.hh,
+	* mln/arith/minus.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/arith/times.hh,
+	* mln/arith/times.spe.hh,
+	* mln/binarization/binarization.hh,
+	* mln/binarization/threshold.hh,
+	* mln/border/adjust.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/equalize.hh,
+	* mln/border/fill.hh,
+	* mln/border/find.hh,
+	* mln/border/get.hh,
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh,
+	* mln/border/resize_equal.hh,
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/internal/graph_first_search.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/canvas/distance_front.hh,
+	* mln/canvas/distance_geodesic.hh,
+	* mln/canvas/labeling/blobs.hh,
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* mln/canvas/morpho/attribute_filter.hh,
+	* mln/clustering/kmean_rgb.hh,
+	* mln/convert/to.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/convert/to_qimage_nocopy.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/routine/duplicate.hh,
+	* mln/core/routine/initialize.hh,
+	* mln/data/abs.hh,
+	* mln/data/apply.hh,
+	* mln/data/apply.spe.hh,
+	* mln/data/approx/median.hh,
+	* mln/data/compare.hh,
+	* mln/data/compute.hh,
+	* mln/data/compute_in_window.hh,
+	* mln/data/convert.hh,
+	* mln/data/fill.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/fill_with_image.spe.hh,
+	* mln/data/fill_with_value.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/median.hh,
+	* mln/data/memcpy_.hh,
+	* mln/data/memset_.hh,
+	* mln/data/paste.hh,
+	* mln/data/paste.spe.hh,
+	* mln/data/paste_without_localization.hh,
+	* mln/data/replace.hh,
+	* mln/data/saturate.hh,
+	* mln/data/sort_offsets.hh,
+	* mln/data/split.hh,
+	* mln/data/stretch.hh,
+	* mln/data/to_enc.hh,
+	* mln/data/transform.hh,
+	* mln/data/transform.spe.hh,
+	* mln/data/transform_inplace.hh,
+	* mln/data/update.hh,
+	* mln/data/wrap.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/mosaic.hh,
+	* mln/debug/println.hh,
+	* mln/debug/put_word.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/debug/superpose.hh,
+	* mln/debug/z_order.hh,
+	* mln/draw/dashed_line.hh,
+	* mln/draw/line.hh,
+	* mln/essential/routine.hh,
+	* mln/extension/adjust.hh,
+	* mln/extension/adjust_duplicate.hh,
+	* mln/extension/adjust_fill.hh,
+	* mln/extension/duplicate.hh,
+	* mln/extension/fill.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/geom/chamfer.hh,
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/max_ind.hh,
+	* mln/geom/min_ind.hh,
+	* mln/geom/ninds.hh,
+	* mln/geom/nsites.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/graph/compute.hh,
+	* mln/graph/labeling.hh,
+	* mln/graph/to_neighb.hh,
+	* mln/graph/to_win.hh,
+	* mln/histo/compute.hh,
+	* mln/histo/equalize.hh,
+	* mln/io/cloud/load.hh,
+	* mln/io/cloud/save.hh,
+	* mln/io/dicom/get_header.hh,
+	* mln/io/dicom/load.hh,
+	* mln/io/dump/get_header.hh,
+	* mln/io/dump/load.hh,
+	* mln/io/dump/save.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/fld/load.hh,
+	* mln/io/fld/save.hh,
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pbms/load.hh,
+	* mln/io/pdf/get_header.hh,
+	* mln/io/pdf/load.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pgms/load.hh,
+	* mln/io/plot/load.hh,
+	* mln/io/plot/save.hh,
+	* mln/io/pnm/load.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnms/load.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppms/load.hh,
+	* mln/io/raw/get_header.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh,
+	* mln/io/svg/simple_svg_1.0.0.hh,
+	* mln/io/tiff/load.hh,
+	* mln/io/txt/save.hh,
+	* mln/labeling/background.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/blobs_and_compute.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/compute_image.hh,
+	* mln/labeling/fill_holes.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/mean_values.hh,
+	* mln/labeling/n_max.hh,
+	* mln/labeling/pack.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/relabel.hh,
+	* mln/labeling/superpose.hh,
+	* mln/labeling/value.hh,
+	* mln/labeling/value.spe.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/labeling/wrap.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/convolve_2x1d.hh,
+	* mln/linear/convolve_directional.hh,
+	* mln/linear/gaussian_1d.hh,
+	* mln/linear/gaussian_directional_2d.hh,
+	* mln/linear/lap.hh,
+	* mln/linear/log.hh,
+	* mln/linear/sobel_2d.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/not.hh,
+	* mln/logical/not.spe.hh,
+	* mln/logical/or.hh,
+	* mln/logical/xor.hh,
+	* mln/make/dual_neighb.hh,
+	* mln/make/dummy_p_edges.hh,
+	* mln/make/dummy_p_vertices.hh,
+	* mln/make/edge_image.hh,
+	* mln/make/influence_zone_adjacency_graph.hh,
+	* mln/make/p_edges_with_mass_centers.hh,
+	* mln/make/p_vertices_with_mass_centers.hh,
+	* mln/make/rag_and_labeled_wsl.hh,
+	* mln/make/region_adjacency_graph.hh,
+	* mln/make/relabelfun.hh,
+	* mln/make/vertex_image.hh,
+	* mln/make/w_window.hh,
+	* mln/morpho/algebraic_filter.hh,
+	* mln/morpho/approx/dilation.hh,
+	* mln/morpho/approx/erosion.hh,
+	* mln/morpho/closing/algebraic.hh,
+	* mln/morpho/closing/approx/structural.hh,
+	* mln/morpho/closing/area.hh,
+	* mln/morpho/closing/area_on_vertices.hh,
+	* mln/morpho/closing/height.hh,
+	* mln/morpho/closing/leveling.hh,
+	* mln/morpho/closing/structural.hh,
+	* mln/morpho/closing/sum.hh,
+	* mln/morpho/closing/volume.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/contrast.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/elementary/closing.hh,
+	* mln/morpho/elementary/dilation.hh,
+	* mln/morpho/elementary/erosion.hh,
+	* mln/morpho/elementary/gradient.hh,
+	* mln/morpho/elementary/gradient_external.hh,
+	* mln/morpho/elementary/gradient_internal.hh,
+	* mln/morpho/elementary/laplacian.hh,
+	* mln/morpho/elementary/like_ero_fun.hh,
+	* mln/morpho/elementary/like_ero_set.hh,
+	* mln/morpho/elementary/opening.hh,
+	* mln/morpho/elementary/top_hat.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/general.hh,
+	* mln/morpho/general.spe.hh,
+	* mln/morpho/gradient.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/laplacian.hh,
+	* mln/morpho/leveling_filter.hh,
+	* mln/morpho/line_gradient.hh,
+	* mln/morpho/meyer_wst.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/opening/algebraic.hh,
+	* mln/morpho/opening/approx/structural.hh,
+	* mln/morpho/opening/area.hh,
+	* mln/morpho/opening/area_on_vertices.hh,
+	* mln/morpho/opening/height.hh,
+	* mln/morpho/opening/leveling.hh,
+	* mln/morpho/opening/structural.hh,
+	* mln/morpho/opening/volume.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/rank_filter.hh,
+	* mln/morpho/reconstruction/by_dilation/union_find.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/morpho/skeleton_constrained.hh,
+	* mln/morpho/thick_miss.hh,
+	* mln/morpho/thickening.hh,
+	* mln/morpho/thin_fit.hh,
+	* mln/morpho/thinning.hh,
+	* mln/morpho/top_hat.hh,
+	* mln/morpho/tree/component_tree.hh,
+	* mln/morpho/tree/compute_attribute_image.hh,
+	* mln/morpho/tree/compute_parent.hh,
+	* mln/morpho/tree/dual_input_tree.hh,
+	* mln/morpho/tree/filter/direct.hh,
+	* mln/morpho/tree/filter/filter.hh,
+	* mln/morpho/tree/filter/max.hh,
+	* mln/morpho/tree/filter/min.hh,
+	* mln/morpho/tree/filter/subtractive.hh,
+	* mln/morpho/tree/impl/dual_hqueue.hh,
+	* mln/morpho/tree/impl/dual_union_find.hh,
+	* mln/morpho/tree/max.hh,
+	* mln/morpho/watershed/flooding.hh,
+	* mln/morpho/watershed/superpose.hh,
+	* mln/opt/at.hh,
+	* mln/registration/icp.hh,
+	* mln/set/card.hh,
+	* mln/set/compute.hh,
+	* mln/set/compute_with_weights.hh,
+	* mln/set/diff.hh,
+	* mln/set/get.hh,
+	* mln/set/has.hh,
+	* mln/set/inter.hh,
+	* mln/set/sym_diff.hh,
+	* mln/set/uni.hh,
+	* mln/set/unique.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/test/positive.hh,
+	* mln/test/predicate.hh,
+	* mln/topo/skeleton/crest.hh,
+	* mln/transform/distance_and_closest_point_geodesic.hh,
+	* mln/transform/distance_and_influence_zone_geodesic.hh,
+	* mln/transform/distance_front.hh,
+	* mln/transform/distance_geodesic.hh,
+	* mln/transform/hough.hh,
+	* mln/transform/influence_zone_front.hh,
+	* mln/transform/influence_zone_geodesic.hh,
+	* mln/transform/influence_zone_geodesic_saturated.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh,
+	* mln/util/tree_fast_to_image.hh,
+	* mln/util/tree_to_fast.hh,
+	* mln/util/tree_to_image.hh,
+	* mln/win/diff.hh,
+	* mln/win/inter.hh,
+	* mln/win/shift.hh,
+	* mln/win/sym.hh,
+	* mln/world/binary_2d/enlarge.hh,
+	* mln/world/binary_2d/subsample.hh,
+	* mln/world/inter_pixel/compute.hh,
+	* mln/world/inter_pixel/dim2/make_edge_image.hh,
+	* mln/world/inter_pixel/full2image.hh,
+	* mln/world/inter_pixel/immerse.hh,
+	* mln/world/rgb/invert.hh,
+	* mln/world/rgb/invert.spe.hh,
+	* tests/arith/diff_abs.cc,
+	* tests/arith/minus.cc,
+	* tests/arith/plus.cc,
+	* tests/arith/revert.cc,
+	* tests/arith/times.cc,
+	* tests/geom/nsites.cc,
+	* tests/morpho/closing/algebraic.cc,
+	* tests/morpho/elementary/closing.cc,
+	* tests/morpho/elementary/dilation.cc,
+	* tests/morpho/elementary/erosion.cc,
+	* tests/morpho/elementary/opening.cc,
+	* tests/morpho/elementary/top_hat.cc,
+	* tests/morpho/general.cc,
+	* tests/morpho/opening/algebraic.cc,
+	* tests/morpho/top_hat.cc: Make use of mln_trace.
+
+2013-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Automatically initialize GraphicsMagick.
+
+	* mln/io/magick/internal/init_magick.hh: New.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Use init_magick struct and update doc.
+
+	* tests/io/magick/load.cc,
+	* tests/io/magick/save.cc: Remove references to InitializeMagick.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/img/2dgrid.png: New. Add missing file.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update use of math::round.
+
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/.gitignore: exclude .dox files.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation in mln/canvas.
+
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve look'n feel of general documentation.
+
+	* doc/Doxyfile.in: Improve documentation output.
+
+	* doc/DoxygenLayout.xml: Update menu.
+
+	* doc/Makefile.am: Rename .hh outputs to .dox.
+
+	* doc/white-paper.tex: Fix URL.
+
+2012-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/tutorial.tex: Add section about multifile compilation.
+
+2012-05-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a bug in a tutorial example.
+
+	* doc/examples/split/tuto4_genericity_and_algorithms-4.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-5.cc.raw: Update.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Include last
+	column and last row in computation.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a typo.
+
+	* doc/examples/box2d-bbox.cc,
+	* doc/examples/split/box2d-bbox-1.cc.raw: Here.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add an illustration in Milena documentation.
+
+	* doc/Makefile.am: Add new png figures.
+
+	* doc/img/src/2dgrid.tikz,
+	* doc/img/src/standalone.cfg,
+	* doc/img/src/standalone.cls,
+	* doc/img/src/ydoc.cfg,
+	* doc/img/src/ydoc.cls: New.
+
+	* doc/ref-guide.tex: Include tikz output.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	More improvements in documentation layout.
+
+	* doc/Doxyfile.in: Do not show namespaces in names.
+
+	* doc/DoxygenLayout.xml: Improve menu.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Tag internal documentation.
+
+	* apps/graph-morpho/morpho.hh,
+	* mln/accu/internal/couple.hh,
+	* mln/core/box_runend_piter.hh,
+	* mln/core/box_runstart_piter.hh,
+	* mln/core/concept/delta_point_site.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/site.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/dpsites_piter.hh,
+	* mln/core/image/ch_piter.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/core/image/complex_window_piter.hh,
+	* mln/core/image/dmorph/extended.hh,
+	* mln/core/image/dmorph/extension_fun.hh,
+	* mln/core/image/dmorph/extension_ima.hh,
+	* mln/core/image/dmorph/extension_val.hh,
+	* mln/core/image/dmorph/hexa.hh,
+	* mln/core/image/dmorph/hexa_piter.hh,
+	* mln/core/image/dmorph/image2d_h.hh,
+	* mln/core/image/dmorph/image_if.hh,
+	* mln/core/image/dmorph/p2p_image.hh,
+	* mln/core/image/dmorph/slice_image.hh,
+	* mln/core/image/dmorph/sub_image.hh,
+	* mln/core/image/dmorph/sub_image_if.hh,
+	* mln/core/image/dmorph/transformed_image.hh,
+	* mln/core/image/dmorph/unproject_image.hh,
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/graph_window_if_piter.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/image/imorph/interpolated.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/image/imorph/lazy_image.hh,
+	* mln/core/image/imorph/plain.hh,
+	* mln/core/image/imorph/safe.hh,
+	* mln/core/image/imorph/tr_image.hh,
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/vmorph/cast_image.hh,
+	* mln/core/image/vmorph/fun_image.hh,
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/core/image/vmorph/violent_cast_image.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/classical_window_base.hh,
+	* mln/core/internal/complex_neighborhood_base.hh,
+	* mln/core/internal/complex_window_base.hh,
+	* mln/core/internal/complex_window_p_base.hh,
+	* mln/core/internal/fixme.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/image_domain_morpher.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_morpher.hh,
+	* mln/core/internal/image_primary.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/internal/is_masked_impl_selector.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/core/internal/morpher_lvalue.hh,
+	* mln/core/internal/neighb_base.hh,
+	* mln/core/internal/neighb_niter_base.hh,
+	* mln/core/internal/neighb_niter_impl.hh,
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/piter_identity.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/internal/pixel_iterator_base.hh,
+	* mln/core/internal/pseudo_site_base.hh,
+	* mln/core/internal/run_image.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/core/internal/site_set_base.hh,
+	* mln/core/internal/site_set_iterator_base.hh,
+	* mln/core/internal/weighted_window_base.hh,
+	* mln/core/internal/window_base.hh,
+	* mln/core/pixter1d.hh,
+	* mln/core/pixter2d.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/routine/ops.hh,
+	* mln/core/site_set/attic/p_complex_faces_piter.hh,
+	* mln/core/site_set/attic/p_faces_piter.hh,
+	* mln/core/site_set/box_piter.hh,
+	* mln/core/site_set/complex_psite.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_edges_psite.hh,
+	* mln/core/site_set/p_graph_piter.hh,
+	* mln/core/site_set/p_if_piter.hh,
+	* mln/core/site_set/p_n_faces_piter.hh,
+	* mln/core/site_set/p_run_piter.hh,
+	* mln/core/site_set/p_transformed_piter.hh,
+	* mln/core/site_set/p_vertices_psite.hh,
+	* mln/fun/c.hh,
+	* mln/fun/internal/ch_function_value_impl.hh,
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/geom/complex_geometry.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/blobs_and_compute.hh,
+	* mln/metal/ands.hh,
+	* mln/metal/bexpr.hh,
+	* mln/metal/bool.hh,
+	* mln/metal/converts_to.hh,
+	* mln/metal/equal.hh,
+	* mln/metal/goes_to.hh,
+	* mln/metal/if.hh,
+	* mln/metal/int.hh,
+	* mln/metal/is.hh,
+	* mln/metal/is_a.hh,
+	* mln/metal/is_not.hh,
+	* mln/metal/is_not_a.hh,
+	* mln/pw/image.hh,
+	* mln/pw/internal/image_base.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh,
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_lower_higher_face_iter.hh,
+	* mln/topo/adj_m_face_iter.hh,
+	* mln/topo/attic/faces_iter.hh,
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/centered_iter_adapter.hh,
+	* mln/topo/complex.hh,
+	* mln/topo/face_data.hh,
+	* mln/topo/face_iter.hh,
+	* mln/topo/internal/complex_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_sequence.hh,
+	* mln/topo/internal/complex_set_iterator_base.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/static_n_face_iter.hh,
+	* mln/trait/ch_function_value.hh,
+	* mln/trait/image/props.hh,
+	* mln/trait/images.hh,
+	* mln/trait/neighborhood.hh,
+	* mln/trait/promote.hh,
+	* mln/trait/site_set/props.hh,
+	* mln/trait/site_sets.hh,
+	* mln/trait/solve.hh,
+	* mln/trait/window/props.hh,
+	* mln/trait/windows.hh,
+	* mln/util/branch_iter.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/util/edge.hh,
+	* mln/util/graph.hh,
+	* mln/util/internal/edge_impl.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/util/internal/graph_iter.hh,
+	* mln/util/internal/vertex_impl.hh,
+	* mln/util/lemmings.hh,
+	* mln/util/line_graph.hh,
+	* mln/util/site_pair.hh,
+	* mln/util/vertex.hh,
+	* mln/value/internal/value_like.hh,
+	* mln/value/viter.hh: Add \internal tag.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/image_base.hh: Set documentation as internal.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Doxygen configuration file.
+
+	* doc/Doxyfile.in: Update configuration file to latest version.
+
+	* doc/DoxygenLayout.xml: Do not display 'dir' tab.
+
+2013-03-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve documentation layout.
+
+	* doc/Doxyfile.in: Enable some options.
+
+	* doc/DoxygenLayout.xml: Change menu.
+
+	* doc/Makefile.am: Do not use relative paths.
+
+	* doc/doxyfuns.sty: Improve latex rendering.
+
+2012-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Makefile.am: Disable the use of installdox and fix doc
+	location.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation.
+
+	* tests/linear/convolve.cc,
+	* tests/linear/convolve_2x1d.cc,
+	* tests/linear/convolve_directional.cc: Change math::round
+	function to fun::v2v::round.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Set up documentation groups in Milena documentation.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Handle correctly macros in symbol names.
+
+	* doc/mln/accu/accu.dox,
+	* doc/mln/canvas/canvas.dox,
+	* doc/mln/core/image/concrete.dox,
+	* doc/mln/core/image/domain_morpher.dox,
+	* doc/mln/core/image/identity_morpher.dox,
+	* doc/mln/core/image/images.dox,
+	* doc/mln/core/image/morphers.dox,
+	* doc/mln/core/image/value_morpher.dox,
+	* doc/mln/core/neighb.dox,
+	* doc/mln/data/data.dox,
+	* doc/mln/io/io.dox,
+	* doc/mln/main.dox,
+	* doc/mln/morpho/morpho.dox: Set up documentation groups.
+
+	* mln/accu/compute.hh,
+	* mln/algebra/h_mat.hh,
+	* mln/algebra/h_vec.hh,
+	* mln/algebra/mat.hh,
+	* mln/algebra/quat.hh,
+	* mln/algebra/vec.hh,
+	* mln/border/adjust.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/equalize.hh,
+	* mln/border/fill.hh,
+	* mln/border/find.hh,
+	* mln/border/get.hh,
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh,
+	* mln/border/resize_equal.hh,
+	* mln/border/thickness.hh,
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/breadth_first_search.hh,
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/canvas/chamfer.hh,
+	* mln/canvas/distance_front.hh,
+	* mln/canvas/distance_geodesic.hh,
+	* mln/canvas/labeling/blobs.hh,
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh,
+	* mln/canvas/morpho/attribute_filter.hh,
+	* mln/clustering/kmean_rgb.hh,
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/core/concept/doc/point_iterator.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/neighb.hh,
+	* mln/core/window.hh,
+	* mln/data/abs.hh,
+	* mln/data/apply.hh,
+	* mln/data/compare.hh,
+	* mln/data/compute.hh,
+	* mln/data/compute_in_window.hh,
+	* mln/data/convert.hh,
+	* mln/data/fast_median.hh,
+	* mln/data/fill.hh,
+	* mln/data/median.hh,
+	* mln/data/paste.hh,
+	* mln/data/paste_without_localization.hh,
+	* mln/data/replace.hh,
+	* mln/data/saturate.hh,
+	* mln/data/split.hh,
+	* mln/data/stretch.hh,
+	* mln/data/to_enc.hh,
+	* mln/data/transform.hh,
+	* mln/data/update.hh,
+	* mln/data/wrap.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/debug/filename.hh,
+	* mln/debug/format.hh,
+	* mln/debug/histo.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/mosaic.hh,
+	* mln/debug/println.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/debug/put_word.hh,
+	* mln/debug/quiet.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/debug/superpose.hh,
+	* mln/debug/z_order.hh,
+	* mln/draw/box.hh,
+	* mln/draw/box_plain.hh,
+	* mln/draw/dashed_line.hh,
+	* mln/draw/line.hh,
+	* mln/draw/plot.hh,
+	* mln/draw/polygon.hh,
+	* mln/draw/site_set.hh,
+	* mln/extension/adjust.hh,
+	* mln/extension/adjust_duplicate.hh,
+	* mln/extension/adjust_fill.hh,
+	* mln/extension/duplicate.hh,
+	* mln/extension/fill.hh,
+	* mln/fun/v2v/hsi_to_rgb.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/rgb8_to_rgbn.hh,
+	* mln/fun/v2v/round.hh,
+	* mln/fun/v2v/round_sat.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/trilinear.hh,
+	* mln/geom/bbox.hh,
+	* mln/geom/chamfer.hh,
+	* mln/geom/complex_geometry.hh,
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh,
+	* mln/geom/delta.hh,
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/max_col.hh,
+	* mln/geom/max_ind.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/max_sli.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_ind.hh,
+	* mln/geom/min_row.hh,
+	* mln/geom/min_sli.hh,
+	* mln/geom/ncols.hh,
+	* mln/geom/ninds.hh,
+	* mln/geom/nrows.hh,
+	* mln/geom/nsites.hh,
+	* mln/geom/nslis.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/rotate.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/geom/translate.hh,
+	* mln/geom/vertical_symmetry.hh,
+	* mln/io/cloud/load.hh,
+	* mln/io/cloud/save.hh,
+	* mln/io/dicom/get_header.hh,
+	* mln/io/dicom/load.hh,
+	* mln/io/dump/get_header.hh,
+	* mln/io/dump/load.hh,
+	* mln/io/dump/save.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/fld/header.hh,
+	* mln/io/fld/load.hh,
+	* mln/io/fld/load_header.hh,
+	* mln/io/fld/max_components.hh,
+	* mln/io/fld/save.hh,
+	* mln/io/fld/write_header.hh,
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pbms/load.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pgms/load.hh,
+	* mln/io/plot/load.hh,
+	* mln/io/plot/save.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* mln/io/ppms/load.hh,
+	* mln/io/raw/get_header.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh,
+	* mln/io/tiff/load.hh,
+	* mln/io/txt/save.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/linear/#ch_convolve.hh#,
+	* mln/linear/.#ch_convolve.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/convolve_2x1d.hh,
+	* mln/linear/convolve_directional.hh,
+	* mln/linear/gaussian.hh,
+	* mln/linear/gaussian_1d.hh,
+	* mln/linear/gaussian_directional_2d.hh,
+	* mln/linear/lap.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/linear/log.hh,
+	* mln/linear/sobel_2d.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/not.hh,
+	* mln/logical/or.hh,
+	* mln/logical/xor.hh,
+	* mln/make/influence_zone_adjacency_graph.hh,
+	* mln/math/abs.hh,
+	* mln/math/acos.hh,
+	* mln/math/cos.hh,
+	* mln/math/diff_abs.hh,
+	* mln/math/jacobi.hh,
+	* mln/math/max.hh,
+	* mln/math/min.hh,
+	* mln/math/pi.hh,
+	* mln/math/round.hh,
+	* mln/math/round_sat.hh,
+	* mln/math/sign.hh,
+	* mln/math/sin.hh,
+	* mln/math/sqr.hh,
+	* mln/math/sqrt.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/algebraic_filter.hh,
+	* mln/morpho/approx/dilation.hh,
+	* mln/morpho/approx/erosion.hh,
+	* mln/morpho/closing/algebraic.hh,
+	* mln/morpho/closing/area.hh,
+	* mln/morpho/closing/area_on_vertices.hh,
+	* mln/morpho/closing/height.hh,
+	* mln/morpho/closing/leveling.hh,
+	* mln/morpho/closing/structural.hh,
+	* mln/morpho/closing/sum.hh,
+	* mln/morpho/closing/volume.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/contrast.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/gradient.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/laplacian.hh,
+	* mln/morpho/leveling_filter.hh,
+	* mln/morpho/line_gradient.hh,
+	* mln/morpho/meyer_wst.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/opening/algebraic.hh,
+	* mln/morpho/opening/approx/structural.hh,
+	* mln/morpho/opening/area.hh,
+	* mln/morpho/opening/area_on_vertices.hh,
+	* mln/morpho/opening/height.hh,
+	* mln/morpho/opening/leveling.hh,
+	* mln/morpho/opening/structural.hh,
+	* mln/morpho/opening/volume.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/rank_filter.hh,
+	* mln/morpho/skeleton_constrained.hh,
+	* mln/morpho/thick_miss.hh,
+	* mln/morpho/thickening.hh,
+	* mln/morpho/thin_fit.hh,
+	* mln/morpho/thinning.hh,
+	* mln/morpho/top_hat.hh,
+	* mln/morpho/watershed/flooding.hh,
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh,
+	* mln/norm/linfty.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/subsampling/gaussian_subsampling.hh,
+	* mln/subsampling/subsampling.hh,
+	* mln/topo/is_simple_2d.hh,
+	* mln/topo/skeleton/is_simple_point.hh,
+	* mln/transform/distance_and_closest_point_geodesic.hh,
+	* mln/transform/distance_and_influence_zone_geodesic.hh,
+	* mln/transform/distance_front.hh,
+	* mln/transform/distance_geodesic.hh,
+	* mln/transform/hough.hh,
+	* mln/transform/influence_zone_front.hh,
+	* mln/transform/influence_zone_geodesic.hh,
+	* mln/transform/influence_zone_geodesic_saturated.hh,
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh,
+	* mln/world/rgb/invert.hh: Add into documentation groups.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp documentation directory structure.
+
+	* doc/groups/accu.dox,
+	* doc/groups/graph.dox,
+	* doc/groups/images.dox,
+	* doc/groups/main.dox,
+	* doc/groups/neighb.dox,
+	* doc/groups/site_set.dox,
+	* doc/groups/util.dox,
+	* doc/groups/win.dox: Move...
+
+	* doc/mln/accu/accu.dox,
+	* doc/mln/core/image/images.dox,
+	* doc/mln/core/neighb.dox,
+	* doc/mln/core/site_set/site_set.dox,
+	* doc/mln/main.dox,
+	* doc/mln/util/graph.dox,
+	* doc/mln/util/util.dox,
+	* doc/mln/win/win.dox: ... Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix path to data.
+
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Here.
+
+2011-12-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix doxygen warnings.
+
+	* mln/accu/compute.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/data/compute.hh,
+	* mln/debug/filename.hh,
+	* mln/labeling/blobs.hh,
+	* mln/morpho/tree/filter/all.hh: Here.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update generated .mk files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new figure on the main page.
+
+	* doc/img/genericity.png,
+	* doc/img/src/genericity.svg: New.
+
+	* doc/mainpage.dox: Include this figure.
+
+2012-02-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new documentation groups.
+
+	* doc/Doxyfile.in: Use .dox file.
+
+	* doc/Makefile.am: New dependencies.
+
+	* mln/core/concept/object.hh: Move doc content...
+	* doc/mainpage.dox: ... here.
+
+	* doc/groups/accu.hh,
+	* doc/groups/graph.hh,
+	* doc/groups/images.hh,
+	* doc/groups/main.hh,
+	* doc/groups/neighb.hh,
+	* doc/groups/site_set.hh,
+	* doc/groups/util.hh,
+	* doc/groups/win.hh: Rename ...
+
+	* doc/groups/accu.dox,
+	* doc/groups/graph.dox,
+	* doc/groups/images.dox,
+	* doc/groups/main.dox,
+	* doc/groups/neighb.dox,
+	* doc/groups/site_set.dox,
+	* doc/groups/util.dox,
+	* doc/groups/win.dox: ... as this.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/registration/icp.hh: Cite article.
+
+2012-02-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Milena doc (un)installation.
+
+	* doc/Doxyfile.in: Fix paths.
+
+	* doc/Makefile.am: Fix install/uninstall rules.
+
+2013-03-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* test/unit_test/unit-tests.mk: Update.
+
+2013-01-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/colorize.hh: Do not recompute previously computed
+	colors.
+
+2012-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/histo/equalize.hh: Fix.
+
+2012-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/histo/equalize.hh: Revamp.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/fun/x2x/rotation.hh: Remove alpha and axis attributes.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/registration/icp.hh: Cleanup some debug.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/geom/rotate.hh: Add support for n-D images.
+
+2012-05-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/algebra/mat.hh: Add implementations for 4x4 matrices.
+
+2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	New routines to get bottom left and top right sites.
+
+	* mln/geom/bottom_left.hh,
+	* mln/geom/top_right.hh: New.
+
+	* mln/geom/all.hh: Add includes.
+
+2012-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve conversion between algebra::h_mat and algebra::quat.
+
+	* mln/algebra/h_mat.hh,
+	* mln/algebra/quat.hh: New from_to_ overloads.
+
+	* mln/fun/x2x/rotation.hh: Make use of new make::h_mat overload.
+
+	* mln/make/h_mat.hh: New overload using quaternion as argument.
+
+	* mln/value/builtin/integers.hh: Add epsilon.
+
+	* tests/algebra/h_mat.cc,
+	* tests/make/h_mat.cc: Improve tests.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.
+
+	* mln/accu/count_labels.hh,
+	* mln/convert/from_to.hxx,
+	* mln/convert/to.hh,
+	* mln/core/alias/point1d.hh,
+	* mln/core/alias/point2d.hh,
+	* mln/core/alias/point3d.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/point.hh,
+	* mln/core/site_set/p_centered.hh,
+	* mln/core/site_set/p_vaccess.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/io/magick/save.hh,
+	* mln/io/plot/save.hh,
+	* mln/labeling/blobs_and_compute.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/make/w_window2d.hh,
+	* mln/win/multiple.hh,
+	* mln/win/multiple_size.hh,
+	* tests/accu/site_set/rectangularity.cc,
+	* tests/core/other/graph_elt_neighborhood.cc,
+	* tests/core/other/graph_elt_window.cc,
+	* tests/core/other/point_set_compatibility.cc,
+	* tests/draw/graph.cc: Update forward declarations and includes.
+
+	* mln/algebra/vec.hh,
+	* mln/convert/from_to.hh,
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_image_to_site_set.hh,
+	* mln/convert/impl/from_int_to_value.hh,
+	* mln/convert/impl/from_unsigned_to_value.hh,
+	* mln/convert/impl/from_value_to_value.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/graph_window_if_piter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/mixed_neighb.hh,
+	* mln/core/neighb.hh,
+	* mln/core/site_set/operators.hh,
+	* mln/core/w_window.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/util/object_id.hh,
+	* mln/value/hsl.hh,
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh,
+	* mln/histo/array.hh,
+	* mln/util/array.hh: Move from_to_ overloads in the same namespace
+	as their first argument.
+
+2012-05-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demos/graph/region_adjacency_graph.cc: Add program arguments.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/internal/image_base.hh: Improve documentation.
+
+2012-08-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/data/compute_in_window.hh: Fix warnings.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/pdf/load.hh: Check if the PDF can be rendered.
+
+2013-03-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add test images.
+
+	* tests/img/example-0.ppm,
+	* tests/img/example-1.ppm,
+	* tests/img/example-2.ppm,
+	* tests/img/example-3.ppm,
+	* tests/img/example.pdf: New.
+
+2013-02-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for loading multiple pages PDF files using libpoppler.
+
+	* mln/io/pdf/get_header.hh,
+	* mln/io/pdf/load.hh,
+	* mln/tests/io/pdf/Makefile.am,
+	* mln/tests/io/pdf/load.cc: New.
+
+	* mln/tests/io/Makefile.am: Add pdf/ subdir.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Update.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/data.hh.in: Rename guards.
+
+2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a warning.
+
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh: Remove unused attribute.
+
+2012-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/debug/draw_graph.hh: Add a new overload and fix comments.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/alias/neighb3d.hh: Fix invalid c8_3d neighborhood.
+
+2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename point_at_index, delta_index and index_of_point.
+
+	* mln/accu/line.hh,
+	* mln/accu/transform_line.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/fill.hh,
+	* mln/convert/to_qimage.hh,
+	* mln/core/concept/doc/image_fastest.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/pixel.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/memset_.hh,
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/linear/gaussian_directional_2d.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/trait/image/props.hh,
+	* mln/transform/internal/closest_point_functor.hh,
+	* mln/world/binary_2d/subsample.hh: Rename point_at_index,
+	delta_index and index_of_point to point_at_offset, delta_offset
+	and offset_of_point.
+
+2012-05-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.
+
+	* mln/accu/count_labels.hh,
+	* mln/convert/from_to.hxx	,
+	* mln/convert/to.hh,
+	* mln/core/alias/point1d.hh,
+	* mln/core/alias/point2d.hh,
+	* mln/core/alias/point3d.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/point.hh,
+	* mln/core/site_set/p_centered.hh,
+	* mln/core/site_set/p_vaccess.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/io/magick/save.hh,
+	* mln/io/plot/save.hh,
+	* mln/labeling/blobs_and_compute.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/make/w_window2d.hh,
+	* mln/win/multiple.hh,
+	* mln/win/multiple_size.hh,
+	* tests/accu/site_set/rectangularity.cc,
+	* tests/core/other/graph_elt_neighborhood.cc,
+	* tests/core/other/graph_elt_window.cc,
+	* tests/core/other/point_set_compatibility.cc,
+	* tests/draw/graph.cc: Update forward declarations and includes.
+
+	* mln/algebra/vec.hh,
+	* mln/convert/from_to.hh,
+	* mln/convert/impl/from_double_to_value.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_image_to_site_set.hh,
+	* mln/convert/impl/from_int_to_value.hh,
+	* mln/convert/impl/from_unsigned_to_value.hh,
+	* mln/convert/impl/from_value_to_value.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/graph_window_if_piter.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/mixed_neighb.hh,
+	* mln/core/neighb.hh,
+	* mln/core/site_set/operators.hh,
+	* mln/core/w_window.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/util/object_id.hh,
+	* mln/value/hsl.hh,
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/qt/rgb32.hh,
+	* mln/value/rgb.hh,
+	* mln/histo/array.hh,
+	* mln/util/array.hh: Move from_to_ overloads in the same namespace
+	as their first argument.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/registration/icp.hh: Add a missing initialization.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/magick/save.hh: Add generic and fast implementations.
+
+2012-05-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/box_plain.hh: Fix unused variable warning.
+
+2011-11-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/accu/math/sumpow.hh: New accumulator.
 
 2013-02-13  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -768,6 +2632,27 @@
 
 	* mln/fun/v2v/rgb_to_hsl.hh: Fix constructor declaration.
 
+2011-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/dicom/load.hh: Update comments.
+
+2011-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve io::dump tests with floating values.
+
+	* tests/io/dump/Makefile.am,
+	* tests/io/dump/dump.cc: Here.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	New routine in Milena.
+
+	* mln/data/compute_in_window.hh: New.
+
+	* tests/data/Makefile.am: New target.
+
+	* tests/data/compute_in_window.cc: New test.
+
 2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation with multiple files.
@@ -809,6 +2694,193 @@
 	* mln/literal/one.hh,
 	* mln/literal/origin.hh,
 	* mln/literal/zero.hh: Add default constructors.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* apps/papers/levillain.09.ismm/graph.cc: Fix wrong changes.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc: Add a missing
+	include.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve tests for literal classes.
+
+	* tests/literal/Makefile.am: Update targets.
+
+	* tests/literal/colors.cc,
+	* tests/literal/identity.cc,
+	* tests/literal/max.cc,
+	* tests/literal/min.cc,
+	* tests/literal/origin.cc: New.
+
+	* tests/literal/medium_gray.cc: Make a real test.
+
+2011-11-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation with multiple files.
+
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/breadth_first_search.hh,
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh,
+	* mln/fun/v2v/hsi_to_rgb.hh,
+	* mln/fun/v2v/rgb_to_hsi.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/grays.hh,
+	* mln/literal/max.hh,
+	* mln/literal/min.hh,
+	* mln/literal/white.hh: Add missing inline keyword and
+	MLN_WO_GLOBAL_VARS guards.
+
+2011-11-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add two variants of the threshold function.
+
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* mln/binarization/threshold.hh,
+	* mln/fun/v2b/all.hh,
+	* mln/fun/v2b/essential.hh,
+	* mln/world/binary_2d/enlarge.hh,
+	* tests/labeling/n_max.cc: Update includes and use of threshold
+	function.
+
+	* mln/fun/v2b/threshold.hh: Replaced...
+
+	* mln/fun/v2b/threshold_ge.hh,
+	* mln/fun/v2b/threshold_le.hh: ... by these files.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/geom/crop_without_localization.hh: Fix preconditions.
+
+2011-11-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation Warnings with latest g++ versions.
+
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/morpho/watershed/topological.hh: Remove unused variable.
+
+	* mln/canvas/labeling/sorted.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* tests/algebra/h_vec.cc,
+	* tests/core/alias/point1d.cc,
+	* tests/metal/unconst.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/graph.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/concept/site_iterator.hh,
+	* mln/core/concept/site_proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/image/imorph/decorated_image.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/morpho/watershed/topological.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* tests/algebra/h_vec.cc,
+	* tests/core/alias/point1d.cc,
+	* tests/metal/unconst.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* tests/trait/super.cc: Fix unused variable warnings.
+
+2011-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/image/dmorph/slice_image.hh: Add operator=() for
+	image2d.
+
+2011-10-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/dicom/load.hh: Fix memory leak.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Invert threshold function test.
+
+	* mln/fun/v2b/threshold.hh: Here.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new crop routines.
+
+	* mln/geom/crop.hh,
+	* mln/geom/crop_without_localization.hh: New.
+
+2011-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/value/builtin/floatings.hh: Fix string name for builtin
+	double type.
+
+2011-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Handle the case of filling an empty border.
+
+	* mln/border/fill.hh (mln::border::impl::fill_size_1): Here.
+	Aesthetic changes.
+	* tests/border/fill_0.cc: New test.
+	* tests/border/Makefile.am (check_PROGRAMS): Add fill_0.
+	(fill_0_SOURCES): New.
 
 2011-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,9 +40,32 @@
 namespace mln
 {
 
-  /// Type alias for a delta-point defined on the 1D square
-  /// grid with integer coordinates.
+  /*!
+    \class dpoint1d
+    \headerfile <>
+
+    \brief Type alias for a delta-point defined on the 1D square grid
+    with integer coordinates.
+
+    This class stored relative positions of a site.  It is meant to be
+    used with point1d to compute a new point1d.
+
+    \code
+    point1d p(2);
+    dpoint1d up(-1);
+
+    dpoint1d p_before = p + before;
+    // p_before = point1d(1);
+    \endcode
+
+    dpoint1d are also used in window1d to store the relative
+    neighboors.
+
+    \sa point1d, window1d
+  */
+  /// \cond ALIAS
   typedef dpoint<mln::grid::tick, def::coord> dpoint1d;
+  /// \endcond
 
 
 } // end of namespace mln
@@ -53,16 +77,15 @@ namespace mln
 namespace mln
 {
 
-  /// Definition of a shortcut for delta point in 1d.
-  /// \{
-
+  /// \brief Shortcut for delta point in 1d. dpoint1d(-1)
   extern const dpoint1d before;
+  /// \brief Shortcut for delta point in 1d. dpoint1d(+1)
   extern const dpoint1d after;
 
+  /// \brief Shortcut for delta point in 1d. dpoint1d(-1)
   extern const dpoint1d ind_dec;
+  /// \brief Shortcut for delta point in 1d. dpoint1d(+1)
   extern const dpoint1d ind_inc;
-
-  /// \}
 
 
 

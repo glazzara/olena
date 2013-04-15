@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Extract text from a document.
+/// \brief Extract text from a document.
 
 # include <scribo/toolchain/internal/text_in_doc_functor.hh>
 
@@ -42,6 +42,26 @@ namespace scribo
     using namespace mln;
 
 
+    /*! \brief Extract text lines from a document image.
+
+      \param[in] input A RGB image.
+      \param[in] denoise Remove too small components (<= 2 pixels).
+      \param[in] language Main language used in the input
+                          document. (OCR settings)
+      \param[in] find_line_seps Enable/Disable lookup for
+                                vertical/horizontal separators.
+      \param[in] find_whitespace_seps Enable/Disable lookup for
+                                      vertical alignments and
+                                      whitespaces. Helps finding text
+                                      layout.
+      \param[in] verbose Enable/Disable debug information printed on
+                         std::cout.
+
+      \return A line set including text information and recognized
+      text.
+
+      \ingroup grptoolchaindocproc
+     */
     template <typename I>
     line_set<mln_ch_value(I, def::lbl_type)>
     text_in_doc(const Image<I>& input, bool denoise,

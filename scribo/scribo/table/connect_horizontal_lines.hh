@@ -78,13 +78,12 @@ namespace scribo
 			     const Image<I>& input,
 			     unsigned max_distance)
     {
-      trace::entering("scribo::table::connect_horizontal_lines");
+      mln_trace("scribo::table::connect_horizontal_lines");
       mln_precondition(exact(input).is_valid());
 
       internal::connect_lines(aligned_cols, tablebboxes.second(),
 			      1, exact(input).ncols(), max_distance);
 
-      trace::exiting("scribo::table::connect_horizontal_lines");
     }
 
 

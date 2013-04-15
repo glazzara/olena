@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,10 @@ namespace mln
   namespace geom
   {
 
-    /// Give the number of inds of an image.
+    /*! \brief Give the number of inds of an image.
+
+      \ingroup mlngeom
+     */
     template <typename I>
     unsigned ninds(const Image<I>& ima);
 
@@ -51,12 +55,11 @@ namespace mln
     inline
     unsigned ninds(const Image<I>& ima)
     {
-      trace::entering("mln::geom::ninds");
+      mln_trace("mln::geom::ninds");
 
       mln_precondition(exact(ima).is_valid());
       unsigned ninds = geom::max_ind(ima) - geom::min_ind(ima) + 1;
 
-      trace::exiting("mln::geom::ninds");
       return ninds;
     }
 

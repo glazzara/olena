@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -68,6 +68,8 @@ namespace mln
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
+# include <mln/geom/top_right.hh>
+# include <mln/geom/bottom_left.hh>
 # include <mln/geom/translate.hh>
 
 

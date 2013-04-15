@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,18 +50,24 @@ namespace mln
   template <typename E> struct Site_Set;
 
 
-  /// Site_Set category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Site_Set category flag type.
   template <>
   struct Site_Set<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
-  /// Base class for implementation classes of site sets.
-  ///
-  /// \see mln::doc::Site_Set for a complete documentation of this
-  /// class contents.
+  /*!
+    \brief Base class for implementation classes of site sets.
+
+    \see mln::doc::Site_Set for a complete documentation of this
+    class contents.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Site_Set : public Object<E>
   {
@@ -87,26 +93,32 @@ namespace mln
   };
 
 
+  /*!
+    \brief Conversion: site_set -> std::set
+    \ingroup fromto
+  */
+  template <typename S, typename P, typename C_>
+  void
+  from_to_(const Site_Set<S>& from, std::set<P,C_>& to);
 
-  namespace convert
-  {
+} // end of namespace mln
 
-    namespace over_load
-    {
+namespace std
+{
 
-      template <typename S, typename P, typename C_>
-      void
-      from_to_(const Site_Set<S>& from, std::set<P,C_>& to);
+  /*!
+    \brief Conversion: std::set -> site_set
+    \ingroup fromto
+  */
+  template <typename P, typename C_, typename S>
+  void
+  from_to_(const set<P,C_>& from, mln::Site_Set<S>& to);
 
-      template <typename P, typename C_, typename S>
-      void
-      from_to_(const std::set<P,C_>& from, Site_Set<S>& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
+} // end of namespace std
 
 
+namespace mln
+{
 
   namespace trait
   {
@@ -125,49 +137,12 @@ namespace mln
 
   } // end of namespace mln::trait
 
-
+} // end of namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename S, typename P, typename C_>
-      inline
-      void
-      from_to_(const Site_Set<S>& from_, std::set<P,C_>& to)
-      {
-	mlc_converts_to(mln_psite(S), P)::check();
-	const S& from = exact(from_);
-	to.clear();
-	mln_piter(S) p(from);
-	for_all(p)
-	  to.insert(p);
-      }
-
-
-      template <typename P, typename C_, typename S>
-      inline
-      void
-      from_to_(const std::set<P,C_>& from, Site_Set<S>& to_)
-      {
-	mlc_converts_to(P, mln_i_element(S))::check();
-	S& to = exact(to_);
-	to.clear();
-	for (typename std::set<P>::const_iterator i = from.begin();
-	    i != from.end();
-	    ++i)
-	  to.insert(*i);
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
+namespace mln
+{
 
   namespace internal
   {
@@ -293,9 +268,45 @@ namespace mln
     internal::site_set_contents_check< mln_trait_site_set_contents(E), E >::run();
   }
 
-# endif // ! MLN_INCLUDE_ONLY
+
+  // Conversion
+
+  template <typename S, typename P, typename C_>
+  inline
+  void
+  from_to_(const Site_Set<S>& from_, std::set<P,C_>& to)
+  {
+    mlc_converts_to(mln_psite(S), P)::check();
+    const S& from = exact(from_);
+    to.clear();
+    mln_piter(S) p(from);
+    for_all(p)
+      to.insert(p);
+  }
 
 } // end of namespace mln
+
+namespace std
+{
+
+  template <typename P, typename C_, typename S>
+  inline
+  void
+  from_to_(const set<P,C_>& from, mln::Site_Set<S>& to_)
+  {
+    mlc_converts_to(P, mln_i_element(S))::check();
+    S& to = exact(to_);
+    to.clear();
+    for (typename set<P>::const_iterator i = from.begin();
+	 i != from.end();
+	 ++i)
+      to.insert(*i);
+  }
+
+} // end of namespace std
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
 # include <mln/core/site_set/operators.hh>

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +44,7 @@ namespace mln
   namespace border
   {
 
-    /*! Assign the virtual (outer) border of image \p ima with the
+    /*! \brief Assign the virtual (outer) border of image \p ima with the
      *  duplicate of the inner border of this image.
      *
      * \param[in,out] ima The image whose border is to be duplicated.
@@ -52,6 +52,8 @@ namespace mln
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memcpy if possible.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void duplicate(const Image<I>& ima);
@@ -66,7 +68,7 @@ namespace mln
       inline
       void duplicate_1D(I& ima)
       {
-	trace::entering("border::impl::duplicate_1D");
+	mln_trace("border::impl::duplicate_1D");
 
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
@@ -80,14 +82,13 @@ namespace mln
 	for (unsigned i = st + 1; i < opt::nelements(ima); ++i)
           opt::element(ima, i) = opt::element(ima, st);
 
-	trace::exiting("border::impl::duplicate_1D");
       }
 
       template <typename I>
       inline
       void duplicate_2D(I& ima)
       {
-	trace::entering("border::impl::duplicate_2D");
+	mln_trace("border::impl::duplicate_2D");
 
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
@@ -101,7 +102,7 @@ namespace mln
 	// Duplicate
 	for_all (pl)
 	  {
- 	    st = ima.index_of_point (pl);
+ 	    st = ima.offset_of_point (pl);
 	    for (unsigned i = 1; i <= border; ++i)
               opt::element(ima, st - i) = opt::element(ima, st);
 	    st = st + len_c - 1;
@@ -121,14 +122,13 @@ namespace mln
 	  for (unsigned i = st; i < st + real_len_c; ++i)
             opt::element(ima, k * real_len_c + i) = opt::element(ima, i);
 
-	trace::exiting("border::impl::duplicate_2D");
       }
 
       template <typename I>
       inline
       void duplicate_3D(I& ima)
       {
-	trace::entering("border::impl::duplicate_3D");
+	mln_trace("border::impl::duplicate_3D");
 
 	mln_precondition(ima.is_valid());
 
@@ -152,7 +152,7 @@ namespace mln
  	    // Duplicate
 	    for (unsigned j = 0; j < len_r; ++j)
 	      {
-		st = ima.index_of_point (pl);
+		st = ima.offset_of_point (pl);
 		for (unsigned i = 1; i <= border; ++i)
                   opt::element(ima, st - i) = opt::element(ima, st);
 		st = st + len_c - 1;
@@ -188,7 +188,6 @@ namespace mln
 	  for (unsigned i = 0; i < face; ++i)
             opt::element(ima, st + k * face + i) = opt::element(ima, st + i);
 
-	trace::exiting("border::impl::duplicate_3D");
       }
 
     } // end of namespace mln::border::impl
@@ -253,13 +252,12 @@ namespace mln
     template <typename I>
     void duplicate(const Image<I>& ima)
     {
-      trace::entering("border::duplicate");
+      mln_trace("border::duplicate");
       mln_precondition(exact(ima).is_valid());
 
       if (border::get(ima) != 0)
 	internal::duplicate_dispatch(ima);
 
-      trace::exiting("border::duplicate");
     }
 
 

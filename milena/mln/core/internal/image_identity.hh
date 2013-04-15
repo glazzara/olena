@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,14 +69,14 @@ namespace mln
 
     public:
 
-      int delta_index(const mln_deduce(I, psite, delta)& dp) const
+      int delta_offset(const mln_deduce(I, psite, delta)& dp) const
       {
-	return del_().delta_index(dp);
+	return del_().delta_offset(dp);
       }
 
-      mln_site(I) point_at_index(unsigned i) const
+      mln_site(I) point_at_offset(unsigned i) const
       {
-	return del_().point_at_index(i);
+	return del_().point_at_offset(i);
       }
 
       unsigned border() const
@@ -119,10 +120,12 @@ namespace mln
 
 
 
-    /*! A base class for image morphers w.r.t. identity.
-     * Parameter \p S is a point set type.
-     *
-     */
+    /*!
+      \brief A base class for image morphers w.r.t. identity.
+
+      Parameter \p S is a point set type.
+
+    */
     template <typename I, typename S, typename E>
     class image_identity
       : public image_identity_impl<I, E>,

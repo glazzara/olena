@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Remove large objects in a binary image.
+/// \brief Remove components located on image borders.
 
 
 # include <mln/core/concept/image.hh>
@@ -55,13 +55,15 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove too large components.
+    /// \brief Remove components located on image borders.
     ///
     /// \param[in] components    An object image.
-    /// \param[in] max_size   The maximum cardinality of an object.
     ///
     /// \return A component set with large components set to
     /// component::Ignored.
+    ///
+    /// \ingroup grpalgofiltercomp
+    //
     template <typename L>
     inline
     component_set<L>
@@ -76,7 +78,7 @@ namespace scribo
     component_set<L>
     components_on_border(const component_set<L>& components)
     {
-      trace::entering("scribo::filter::components_on_border");
+      mln_trace("scribo::filter::components_on_border");
 
       mln_precondition(components.is_valid());
 
@@ -85,7 +87,6 @@ namespace scribo
       component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::components_on_border");
       return output;
     }
 

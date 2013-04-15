@@ -43,7 +43,8 @@ if HAVE_MAGICKXX
 check_PROGRAMS +=  \
 mln_io_magick_all \
 mln_io_magick_load \
-mln_io_magick_save
+mln_io_magick_save \
+mln_io_magick_internal_init_magick
 
 mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_all_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
@@ -51,7 +52,21 @@ mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_load_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
 mln_io_magick_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_magick_internal_init_magick_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
+mln_io_magick_internal_init_magick_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
 endif HAVE_MAGICKXX
+
+# Starting a conditional unit test list.
+if HAVE_POPPLER
+check_PROGRAMS +=  \
+mln_io_pdf_get_header \
+mln_io_pdf_load
+
+mln_io_pdf_get_header_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
+mln_io_pdf_get_header_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_pdf_load_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
+mln_io_pdf_load_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
+endif HAVE_POPPLER
 
 # Starting a conditional unit test list.
 if HAVE_QT
@@ -111,6 +126,7 @@ mln_accu_math_all \
 mln_accu_math_count \
 mln_accu_math_essential \
 mln_accu_math_sum \
+mln_accu_math_sumpow \
 mln_accu_max_site \
 mln_accu_nil \
 mln_accu_p \
@@ -481,6 +497,7 @@ mln_data_approx_essential \
 mln_data_approx_median \
 mln_data_compare \
 mln_data_compute \
+mln_data_compute_in_window \
 mln_data_convert \
 mln_data_essential \
 mln_data_fast_median \
@@ -520,6 +537,7 @@ mln_debug_put_word \
 mln_debug_quiet \
 mln_debug_slices_2d \
 mln_debug_superpose \
+mln_debug_trace \
 mln_debug_z_order \
 mln_display_all \
 mln_display_essential \
@@ -593,7 +611,8 @@ mln_fun_unary \
 mln_fun_v2b_all \
 mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
-mln_fun_v2b_threshold \
+mln_fun_v2b_threshold_ge \
+mln_fun_v2b_threshold_le \
 mln_fun_v2i_all \
 mln_fun_v2i_index_of_value \
 mln_fun_v2v_abs \
@@ -616,6 +635,8 @@ mln_fun_v2v_rgb8_to_rgbn \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_rgb_to_int_u \
 mln_fun_v2v_rgb_to_luma \
+mln_fun_v2v_round \
+mln_fun_v2v_round_sat \
 mln_fun_v2v_saturate \
 mln_fun_v2v_wrap \
 mln_fun_v2w2v_all \
@@ -657,8 +678,11 @@ mln_fun_x2x_rotation \
 mln_fun_x2x_translation \
 mln_geom_all \
 mln_geom_bbox \
+mln_geom_bottom_left \
 mln_geom_chamfer \
 mln_geom_complex_geometry \
+mln_geom_crop \
+mln_geom_crop_without_localization \
 mln_geom_delta \
 mln_geom_essential \
 mln_geom_horizontal_symmetry \
@@ -682,6 +706,7 @@ mln_geom_seeds2tiling_roundness \
 mln_geom_size1d \
 mln_geom_size2d \
 mln_geom_size3d \
+mln_geom_top_right \
 mln_geom_translate \
 mln_geom_vertical_symmetry \
 mln_graph_all \
@@ -1028,6 +1053,8 @@ mln_pw_image \
 mln_pw_internal_image_base \
 mln_pw_value \
 mln_pw_var \
+mln_registration_all \
+mln_registration_icp \
 mln_set_all \
 mln_set_card \
 mln_set_compute \
@@ -1083,14 +1110,6 @@ mln_topo_skeleton_breadth_first_thinning \
 mln_topo_skeleton_crest \
 mln_topo_skeleton_is_simple_point \
 mln_topo_static_n_face_iter \
-mln_trace_all \
-mln_trace_entering \
-mln_trace_essential \
-mln_trace_exiting \
-mln_trace_quiet \
-mln_trace_resume \
-mln_trace_stop \
-mln_trace_warning \
 mln_trait_accumulator_print \
 mln_trait_accumulator_props \
 mln_trait_accumulators \

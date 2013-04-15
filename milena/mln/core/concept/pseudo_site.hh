@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,19 +47,21 @@ namespace mln
   template <typename E> struct Pseudo_Site;
 
 
-
-  /// Pseudo_Site category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Pseudo_Site category flag type.
   template <>
   struct Pseudo_Site<void>
   {
     typedef Site_Proxy<void> super;
   };
+  /// \endcond
 
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "pseudo site".
-   *
-   * FIXME: Explain...
+  /*!
+    \brief Base class for implementation classes of the notion of
+    "pseudo site".
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Pseudo_Site : public Site_Proxy<E>
@@ -125,7 +127,7 @@ namespace mln
       template <>
       struct helper< /* is an Object */ true >
       {
- 
+
 	template <typename P>
 	void change_target(Pseudo_Site<P>& p,
 			   const mln_target(P)& new_target) const
@@ -138,7 +140,7 @@ namespace mln
 	{
 	  // No-op.
 	}
-	
+
       };
 
       template <>
@@ -150,7 +152,7 @@ namespace mln
 	  // No-op.
 	}
       };
-      
+
     } // namespace mln::if_possible::internal
 
 

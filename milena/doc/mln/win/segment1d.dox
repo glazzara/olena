@@ -1,0 +1,17 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+  namespace win
+  {
+    struct segment1d
+    	   : line<grid::tick, 0, def::coord>
+    {
+      /// Constructor.
+      /// \param[in] length Length of the segment.
+      /// \pre \p length is odd.
+      segment1d(unsigned length);
+    };
+  }
+}

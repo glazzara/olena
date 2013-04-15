@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,12 +27,15 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/var.hh>
 #include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/labeling/foreground.hh>
+#include <mln/value/int_u8.hh>
 
 #include "tests/data.hh"
 
+#include <mln/io/pgm/save.hh>
 
 int main()
 {
@@ -41,27 +44,18 @@ int main()
   typedef image2d<bool> I;
   neighb2d nbh = c4();
 
-  I pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  image2d<unsigned> out, ref;
+  // Load ref
+  image2d<value::int_u8> ref;
+  io::pgm::load(ref, MLN_TESTS_DIR "/labeling/foreground.ref.pgm");
 
-  unsigned n;
-  out = labeling::foreground(pic, nbh, n); // Calls the fastest 'video'
-					   // version.
+
+  I input = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+  image2d<value::int_u8> out;
+
+  value::int_u8 n;
+  out = labeling::foreground(input, nbh, n);
+
+
   mln_assertion(n == 33);
-
-  {
-    // Note that  labeling::foreground  actually is  labeling::value
-    // which calls  canvas::labeling_video  and its generic dispatch
-    // leads to  canvas::impl::generic::labeling.
-
-    labeling::impl::value_functor<I,unsigned> f(pic, true);
-
-    unsigned n_;
-    ref = canvas::labeling::impl::generic::labeling(pic, nbh, n_,
-						    pic.domain(),
-						    f);
-    mln_invariant(n_ == n);
-    mln_invariant(ref == out);
-  }
-
+  mln_assertion(ref == out);
 }

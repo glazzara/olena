@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,20 +60,21 @@ namespace mln
   template <typename E> struct Meta_Function_v2v;
   template <typename E> struct Meta_Function_vv2v;
 
-  // Meta_Function category flag type.
+  /// \cond INTERNAL_API
+  /// Meta_Function category flag type.
   template <>
   struct Meta_Function<void>
   {
     typedef Object<void> super;
   };
+  /// \endcond
 
 
   /*! \brief Base class for implementation of meta functions.
-   *
-   * The parameter \a E is the exact type.
-   *
-   * \see mln::doc::Meta_Function for a complete documentation of
-   * this class contents.
+
+    The parameter \a E is the exact type.
+
+    \ingroup modconcepts
    */
   template <typename E>
   struct Meta_Function : public Object<E>
@@ -86,8 +88,10 @@ namespace mln
   | Unary meta function.  |
   `----------------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Meta_Function_v2v<void> { typedef Meta_Function<void> super; };
+  /// \endcond
 
   /// Base class for implementation of function-objects from
   /// value to value.
@@ -108,8 +112,10 @@ namespace mln
   | Binary meta function.  |
   `-----------------------*/
 
+  /// \cond INTERNAL_API
   template <>
   struct Meta_Function_vv2v<void> { typedef Meta_Function<void> super; };
+  /// \endcond
 
   /// Base class for implementation of function-objects from
   /// value to value.

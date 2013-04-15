@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+// 2012 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,10 +50,12 @@ namespace mln
     namespace ppm
     {
 
-      /*! Save a Milena image as a ppm image.
+      /*! \brief Save a Milena image as a ppm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.
+       *
+       * \ingroup ioppm
        */
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);

@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 				"<output.pbm>",
 				args_desc);
 
-  trace::entering("main");
+  mln_trace("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -91,5 +91,4 @@ int main(int argc, char *argv[])
   out = mln::debug::superpose(out, vlines.labeled_image(), literal::green);
   io::ppm::save(out, argv[6]);
 
-  trace::exiting("main");
 }

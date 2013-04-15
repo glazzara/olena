@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,8 @@
 
 /// \file
 ///
-/// Invalidate links between two objects if their center are not
-/// aligned.
+/// \brief Invalidate links between two objects if their center are
+/// not aligned.
 
 
 # include <mln/util/array.hh>
@@ -50,9 +51,10 @@ namespace scribo
     /*! \brief Invalidate links between two objects if their center are not
                aligned.
 
-	\param[in] objects   An object image.
 	\param[in] links     Object links information.
         \param[in] max_alpha Maximum angle value (degrees).
+
+	\return New link data.
 
 	\verbatim
 
@@ -70,6 +72,7 @@ namespace scribo
 
 	The angle between the two bottoms must be lower than \p max_alpha.
 
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -85,7 +88,7 @@ namespace scribo
     object_links_center_aligned(const object_links<L>& links,
 				float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_center_aligned");
+      mln_trace("scribo::filter::object_links_center_aligned");
 
       mln_precondition(links.is_valid());
 
@@ -93,7 +96,6 @@ namespace scribo
 	output = object_links_non_aligned_simple(links,
 						 anchor::Center, max_alpha);
 
-      trace::exiting("scribo::filter::object_links_center_aligned");
       return output;
     }
 

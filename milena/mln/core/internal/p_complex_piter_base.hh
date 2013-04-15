@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,6 +76,7 @@ namespace mln
       /// Manipulation.
       /// \{
     public:
+      /// \cond INTERNAL_API
       /// Test if the iterator is valid.
       bool is_valid_() const;
       /// Invalidate the iterator.
@@ -87,6 +89,7 @@ namespace mln
 
       /// Change the target of the underlying complex iterator.
       void change_target_(const S& pc);
+      /// \endcond
 
     private:
       /// Update the psite.

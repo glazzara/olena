@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -268,13 +269,25 @@ namespace scribo
 		     << "\">"
 		     << std::endl;
 
-	      // Add support for text recognition
-	      // <TextEquiv>
-	      //    <PlainText></PlainText>
-	      //    <Unicode></Unicode>
-	      //    </TextEquiv>
-
+	      // Save coordinates.
 	      internal::print_image_coords(output, par, "      ");
+
+	      // Save text recognition results.
+	      output << "<TextEquiv>" << std::endl
+			<< "<PlainText></PlainText>" << std::endl;
+
+	      output << "<Unicode>";
+
+	      // Retrieve and merge text from paragraph lines.
+	      for_all_paragraph_lines(lid, line_ids)
+	      {
+		line_id_t l = line_ids(lid);
+		if (lines(l).has_text())
+		  output << lines(l).html_text() << std::endl;
+	      }
+
+	      output << "</Unicode>" << std::endl
+		     << "</TextEquiv>" << std::endl;
 
 	      output << "    </TextRegion>" << std::endl;
 	    }

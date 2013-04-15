@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,10 @@ namespace mln
 
     namespace opening {
 
-      /// Morphological volume opening.
+      /*! \brief Morphological volume opening.
+       *
+       * \ingroup mlnmorphoopening
+       */
       template <typename I, typename N>
       mln_concrete(I)
       volume(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -56,13 +60,12 @@ namespace mln
       volume(const Image<I>& input, const Neighborhood<N>& nbh,
 	     unsigned lambda)
       {
-	trace::entering("morpho::opening::volume");
+	mln_trace("morpho::opening::volume");
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
 	output = opening::leveling(input, nbh, attribute::volume<I>(), lambda);
 
-	trace::exiting("morpho::opening::volume");
 	return output;
       }
 

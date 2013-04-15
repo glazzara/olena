@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,41 +40,24 @@
 namespace mln
 {
 
-  // Forward declaration.
-  template <typename E> struct Accumulator;
-
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename A>
-      void
-      from_to_(const Accumulator<A>& from, mln_result(A)& to);
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
-  // Accumulator category flag type.
+  /// \cond INTERNAL_API
+  /// \brief Accumulator category flag type.
   template <>
   struct Accumulator<void>
   {
     typedef Proxy<void> super;
   };
+  /// \endcond
 
 
 
-  /// \brief Base class for implementation of accumulators.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  /// \see mln::doc::Accumulator for a complete documentation of this
-  /// class contents.
-  ///
+  /*!
+    \brief Base class for implementation of accumulators.
+
+    The parameter \a E is the exact type.
+
+    \ingroup modconcepts
+  */
   template <typename E>
   struct Accumulator : public Proxy<E>
   {
@@ -95,62 +78,55 @@ namespace mln
       bool is_valid() const;
      */
 
-    /// Take as initialization the value \p t.
-    ///
-    /// Dev note: this is a final method; override if needed
-    /// by take_as_init_ (ending with '_').
+    /*! \brief Take as initialization the value \p t.
+
+      \internal
+      Dev note: this is a final method; override if needed
+      by take_as_init_ (ending with '_').
+      \endinternal
+    */
     template <typename T>
     void take_as_init(const T& t); // 't' is either argument or E.
 
-    /// Default implementation of "take as initialization".
+    /// \cond INTERNAL_API
+    /// \brief Default implementation of "take as initialization".
     template <typename T>
     void take_as_init_(const T& t);
+    /// \endcond
 
 
-    /// Take \p n times the value \p t.
-    ///
-    /// Dev note: this is a final method; override if needed
-    /// by take_as_init_ (ending with '_').
+    /*! \brief Take \p n times the value \p t.
+
+      \internal
+      Dev note: this is a final method; override if needed
+      by take_as_init_ (ending with '_').
+      \endinternal
+    */
     template <typename T>
     void take_n_times(unsigned n, const T& t);
 
-    /// Default implementation of "take n times".
+    /// \cond INTERNAL_API
+    /// \brief Default implementation of "take n times".
     template <typename T>
     void take_n_times_(unsigned n, const T& t);
+    /// \endcond
 
-    
+
   protected:
     Accumulator();
   };
 
 
+  /*!
+    \brief Conversion: Accumulator -> mln_result(A)
+    \ingroup fromto
+  */
+  template <typename A>
+  void
+  from_to_(const Accumulator<A>& from, mln_result(A)& to);
+
+
 # ifndef MLN_INCLUDE_ONLY
-
-
-  // convert::from_to_
-
-  namespace convert
-  {
-
-    namespace over_load
-    {
-
-      template <typename A>
-      void
-      from_to_(const Accumulator<A>& from_, mln_result(A)& to)
-      {
-	const A& from = exact(from_);
-	if (from.is_valid())
-	  to = from.to_result();
-	else
-	  to = mln_result(A)();
-      }
-
-    } // end of namespace mln::convert::over_load
-
-  } // end of namespace mln::convert
-
-
 
   // Accumulator<E>
 
@@ -234,6 +210,21 @@ namespace mln
     for (unsigned i = 0; i < n; ++i)
       exact(this)->take(t);
   }
+
+
+  // Conversions
+
+  template <typename A>
+  void
+  from_to_(const Accumulator<A>& from_, mln_result(A)& to)
+  {
+    const A& from = exact(from_);
+    if (from.is_valid())
+      to = from.to_result();
+    else
+      to = mln_result(A)();
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

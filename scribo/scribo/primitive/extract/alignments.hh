@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,6 +26,10 @@
 
 #ifndef SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
 # define SCRIBO_PRIMITIVE_EXTRACT_ALIGNMENTS_HH
+
+/// \file
+///
+///
 
 # include <iostream>
 
@@ -112,21 +117,24 @@ namespace scribo
 	This method handles skewed alignments and draw skew lines if
 	possible. Examples :
 
+	\verbatim
 	 |x              |x
 	 | x              \x
 	 |  x       ->     \x
 	 |   x              \x
+	\endverbatim
 
-
-	 \fixme Because the first link step at step 2.a check aligment
+	 \todo Because the first link step at step 2.a check aligment
 	between only 2 components and not the whole group, we may
 	retrieve alignment patterns such this one :
 
+	\verbatim
 	|x
 	| x
 	|  x
 	| x
 	|x
+	\endverbatim
 
 	Here, the 'x' are aligned pair by pair but globally they are
 	not. Here we cannot draw skewed lines without processing every
@@ -137,12 +145,13 @@ namespace scribo
 	with that line.  Here, we would like to split links/alignement
 	in two groups in order to get something like that :
 
+	\verbatim
 	 \x
 	  \x
 	   \x
 	  /x
 	 /x
-
+	 \endverbatim
 
 
 	\param[in] doc A document information with text lines.
@@ -311,7 +320,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;
@@ -414,7 +423,7 @@ namespace scribo
 	      }
 
 	      default:
-		trace::warning("anchor not handled!");
+		mln_trace_warning("anchor not handled!");
 	    }
 
 	    return false;
@@ -562,10 +571,11 @@ namespace scribo
       alignments(const document<L>& doc,
 		 float dmax_ratio, unsigned delta_pixel)
       {
-	trace::entering("scribo::primitive::extract::alignments");
+	mln_trace("scribo::primitive::extract::alignments");
 	mln_precondition(doc.is_valid());
 	mln_precondition(doc.has_text());
 	const mln_ch_value(L,bool)& input = doc.binary_image();
+	mln_assertion(input.is_valid());
 
 	unsigned min_card = 3;
 	unsigned delta = 5;
@@ -1110,7 +1120,6 @@ namespace scribo
 				  debug, "alignments_debug");
 # endif // ! SCRIBO_NDEBUG
 
-	trace::exiting("scribo::primitive::extract::alignments");
 	return output;
       }
 

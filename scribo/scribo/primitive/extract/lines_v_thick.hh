@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,8 +48,8 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract thick lines in a binary image.
-      /*!
+      /*! \brief Extract thick lines in a binary image.
+       *
        * Only non discontinued lines are correctly extracted with this routine.
        *
        * \param[in]     input_	    A binary image.
@@ -59,6 +59,8 @@ namespace scribo
        * \param[in]     line_length The minimum line length.
        *
        * \return An image in which lines are labeled.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V, typename W>
       component_set<mln_ch_value(I,V)>
@@ -104,7 +106,7 @@ namespace scribo
 		    const Neighborhood<N>& nbh, V& nlines,
 		    unsigned line_length)
       {
-	trace::entering("scribo::primitive::extract::lines_v_thick");
+	mln_trace("scribo::primitive::extract::lines_v_thick");
 
 	internal::lines_v_thick_tests(input, nbh, nlines,
 	    line_length);
@@ -114,7 +116,6 @@ namespace scribo
 	component_set<mln_ch_value(I,V)>
 	  output = lines_thick(input, nbh, nlines, win);
 
-	trace::exiting("scribo::primitive::extract::lines_v_thick");
 	return output;
       }
 

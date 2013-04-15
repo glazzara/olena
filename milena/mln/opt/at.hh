@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/images.hh>
-# include <mln/trace/all.hh>
+# include <mln/debug/trace.hh>
 
 # include <mln/core/alias/point1d.hh>
 # include <mln/core/alias/point2d.hh>

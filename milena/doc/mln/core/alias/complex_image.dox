@@ -1,0 +1,88 @@
+// This file is necessary to help doxygen finding all the methods
+// related to the corresponding typedef.
+
+namespace mln
+{
+
+  class bin_1complex_image2d
+  	: public mln::complex_image<1, mln::discrete_plane_1complex_geometry, bool>
+  {
+    complex_image();
+    complex_image(const p_complex<1, mln::discrete_plane_1complex_geometry>& pc);
+    complex_image(const p_complex<1, mln::discrete_plane_1complex_geometry>& pc,
+		  const metal::vec<2, std::vector<bool> >& values);
+  };
+
+
+  class int_u8_1complex_image2d
+  	: public mln::complex_image<1, mln::discrete_plane_1complex_geometry,
+		    		    mln::value::int_u8>
+  {
+    complex_image();
+    complex_image(const p_complex<1, mln::discrete_plane_1complex_geometry>& pc);
+    complex_image(const p_complex<1, mln::discrete_plane_1complex_geometry>& pc,
+		  const metal::vec<2, std::vector<mln::value::int_u8> >& values);
+  };
+
+
+  class int_u8_2complex_image2d
+  	: public mln::complex_image<2, mln::discrete_plane_2complex_geometry,
+		     		    mln::value::int_u8>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::discrete_plane_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::discrete_plane_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<mln::value::int_u8> >& values);
+  };
+
+
+  class bin_2complex_image3df
+  	: public mln::complex_image<2, mln::space_2complex_geometry, bool>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<bool> >& values);
+  };
+
+
+  class int_u8_2complex_image3df
+  	: public mln::complex_image<2, mln::space_2complex_geometry, mln::value::int_u8>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<mln::value::int_u8> >& values);
+  };
+
+
+  class unsigned_2complex_image3df
+  	: public mln::complex_image<2, mln::space_2complex_geometry, unsigned>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<unsigned> >& values);
+  };
+
+
+  class float_2complex_image3df
+  	: public mln::complex_image<2, mln::space_2complex_geometry, float>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<float> >& values);
+  };
+
+
+  class rgb8_2complex_image3df
+  	: public mln::complex_image<2, mln::space_2complex_geometry, mln::value::rgb8>
+  {
+    complex_image();
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc);
+    complex_image(const p_complex<2, mln::space_2complex_geometry>& pc,
+		  const metal::vec<3, std::vector<mln::value::rgb8> >& values);
+  };
+
+} // end of namespace mln

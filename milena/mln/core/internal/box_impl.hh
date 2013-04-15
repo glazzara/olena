@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -46,10 +46,12 @@ namespace mln
 
     // box_impl
 
-    /*! Implementation class to equip objects having a bounding
-     * box.
-     *
-     */
+    /*!
+      \internal
+      \brief Implementation class to equip objects having a bounding
+      box.
+
+    */
     template <unsigned n, typename C, typename E>
     struct box_impl_;
 

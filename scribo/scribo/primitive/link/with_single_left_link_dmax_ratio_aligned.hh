@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Link text objects with their left neighbor according to a maximum
-/// distance.
+/// \brief Link text objects with their left neighbor according to a
+/// maximum distance.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -65,8 +65,12 @@ namespace scribo
       /*! \brief Link objects with their left neighbor if exists.
 
 	  \param[in] components A component set.
-	  \param[in] dmax_ratio Size ratio defining the maximum lookup
-	                        distance.
+	  \param[in] dmax_f A function defining the maximum lookup
+	                    distance.
+	  \param[in] min_angle Minimum difference allowed for
+	                       alignement angle.
+	  \param[in] max_angle Maximum difference allowed for
+	                       alignement angle.
 	  \param[in] anchor Starting point for the neighbor lookup.
 
 	  \return Object links data.
@@ -79,17 +83,19 @@ namespace scribo
 	  where w is the bounding box width and h the bounding box height.
 
       */
-      template <typename L>
+      template <typename L, typename F>
       inline
       object_links<L>
       with_single_left_link_dmax_ratio_aligned(
 	const component_set<L>& components,
-	float dmax_ratio,
+	const DMax_Functor<F>& dmax_f,
 	float min_angle, float max_angle,
 	anchor::Type anchor);
 
       /// \overload
       /// anchor is set to MassCenter.
+      /// dmax_f functor is set to internal::dmax_default.
+      //
       template <typename L>
       inline
       object_links<L>
@@ -102,6 +108,7 @@ namespace scribo
       /// \overload
       /// dmax_ratio is set to 3.
       /// anchor is set to MassCenter.
+      //
       template <typename L>
       inline
       object_links<L>
@@ -163,7 +170,7 @@ namespace scribo
 	float min_angle, float max_angle,
 	anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
+	mln_trace("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 
 	mln_precondition(components.is_valid());
 
@@ -172,7 +179,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio_aligned");
 	return output;
       }
 

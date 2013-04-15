@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +60,10 @@ namespace mln
   namespace trait
   {
 
-    /// Pack of 'undefined' type values for properties of site sets.
+    /*!
+      \internal
+      \brief Pack of 'undefined' type values for properties of site sets.
+    */
     template <typename I>
     struct undefined_site_set_
     {
@@ -70,14 +74,16 @@ namespace mln
     };
 
 
-    /*! \brief The trait pack structure for properties of site sets.
-     *
-     * This structure is specialized for every concrete class of site
-     * set so that properties are properly defined.
-     *
-     * \see mln::doc::Site_Set for the documentation of the "site set"
-     * concept.
-     */
+    /*!
+      \internal
+      \brief The trait pack structure for properties of site sets.
+
+      This structure is specialized for every concrete class of site
+      set so that properties are properly defined.
+
+      \see mln::doc::Site_Set for the documentation of the "site set"
+      concept.
+    */
     template <typename I>
     struct site_set_ : undefined_site_set_<I>
     {

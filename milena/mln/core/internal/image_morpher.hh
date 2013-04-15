@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +45,12 @@ namespace mln
   namespace internal
   {
 
-    /// A base class for images that are morphers. Parameter
-    ///
-    /// \c I is the underlying-morphed image type.
-    //
+    /*!
+      \internal
+      \brief A base class for images that are morphers.
+
+      Parameter \c I is the underlying-morphed image type.
+    */
     template <typename I, typename T, typename S, typename E>
     class image_morpher : public image_base<T, S, E>
     {
@@ -56,23 +59,25 @@ namespace mln
       /// Delegatee associated type.
       typedef I delegatee;
 
+      /// \cond INTERNAL_API
       /// Return the delegatee_ pointer; default code.
       mlc_const(I)* delegatee_() const;
 
       /// Return the delegatee_ pointer (non-const version); default code.
       I* delegatee_();
-
+      /// \endcond
 
 
       /// Unmorph image associated type.
       typedef I unmorph;
 
+      /// \cond INTERNAL_API
       /// Give the morphed image (mutable version).
       I& unmorph_();
 
       /// Give the morphed image (const version).
       mlc_const(I)& unmorph_() const;
-
+      /// \endcond
 
       /* \brief Test if this image has been initialized; default impl.
        *
@@ -108,10 +113,11 @@ namespace mln
 
 // FIXME: Lines above have been inactivated because they are either
 // prioritary or ambiguous.
-
+    /// \cond INTERNAL_API
     template <typename Subject, typename T,
 	      typename J>
     void init_(Subject s, T& target, const Image<J>& model);
+    /// \endcond
 
   } // end of namespace mln::impl
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,34 +27,55 @@
 #include <mln/fun/i2v/all_to.hh>
 #include <mln/algebra/mat.hh>
 #include <mln/algebra/h_mat.hh>
+#include <mln/make/h_mat.hh>
 
+
+template <typename T>
+bool about_equal(const T& f, const T& q)
+{
+  return mln::math::abs(q - f) <= 0.000001;
+}
 
 
 int main()
 {
   using namespace mln;
 
-  algebra::mat<1,3,float> m1;
-  m1.set_all(4);
+  // Reading in h_mat.
+  algebra::h_mat<3,float> hm2(all_to(2.5));
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
+      mln_assertion(hm2(i, j) == 2.5f);
+
+  // Conversion from mat to h_mat
   algebra::mat<2,2,float> m2 = literal::identity;
-
   algebra::h_mat<1,float> hm1(m2);
-  algebra::h_mat<2,float> hm2;
+  mln_assertion(m2.size() == hm1.size());
+  for (int i = 0; i < 2; ++i)
+    for (int j = 0; j < 2; ++j)
+      mln_assertion(m2(i, j) == hm1(i, j));
+
+  // Conversion from h_mat to mat.
   algebra::h_mat<3,float> hm3(all_to(1.5));
-
   algebra::mat<4,4,float> m4 = hm3;
+  mln_assertion(m4.size() == hm3.size());
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
+      mln_assertion(m4(i, j) == hm3(i, j));
 
-  std::cout << "m1 = " << m1 << ";" << std::endl;
-  std::cout << "m2 = " << m2 << ";" << std::endl;
-  std::cout << "m4 = " << m4 << ";" << std::endl;
-  std::cout << "hm1 = " << hm1 << ";" << std::endl;
-  std::cout << "hm2 = " << hm2 << ";" << std::endl;
-  std::cout << "hm3 = " << hm3 << ";" << std::endl;
 
+  // Check from_to_ overloads.
   {
-    algebra::h_mat<2,float> m, m2;
-    m = m2;
-    // FIXME: Test *many* => runs ok...
+    algebra::quat q_ref(0.92388, 0.186238, 0.310397, 0.124159);
+    double vals[9] = { 0.776477, -0.113801, 0.619785,
+		       0.345031, 0.8998, -0.267046,
+		       -0.527293, 0.4212, 0.737938 };
+    algebra::h_mat<3,double> m = make::h_mat(vals);
+    algebra::quat q2;
+    algebra::from_to_(m, q2);
+
+    for (int i = 0; i < 4; ++i)
+      mln_assertion(about_equal(q_ref.to_vec()[i], q2.to_vec()[i]));
   }
 
 }

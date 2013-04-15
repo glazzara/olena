@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two objects if their right are not
+/// \brief Invalidate links between two objects if their right are not
 /// aligned.
 
 
@@ -51,7 +51,6 @@ namespace scribo
     /*! \brief Invalidate links between two objects if their right are not
                aligned.
 
-	\param[in] objects   An object image.
 	\param[in] links     Object links information.
         \param[in] max_alpha Maximum angle value (degrees).
 
@@ -77,6 +76,8 @@ namespace scribo
 	\endverbatim
 
 	The angle between the two rights must be lower than \p max_alpha.
+
+	\ingroup grpalgofiltercomplink
     */
     template <typename L>
     object_links<L>
@@ -92,7 +93,7 @@ namespace scribo
     object_links_right_aligned(const object_links<L>& links,
 			       float max_alpha)
     {
-      trace::entering("scribo::filter::object_links_right_aligned");
+      mln_trace("scribo::filter::object_links_right_aligned");
 
       mln_precondition(links.is_valid());
 
@@ -101,7 +102,6 @@ namespace scribo
 						 anchor::Right,
 						 max_alpha);
 
-      trace::exiting("scribo::filter::object_links_right_aligned");
       return output;
     }
 

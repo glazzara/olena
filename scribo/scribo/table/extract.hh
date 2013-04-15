@@ -78,7 +78,7 @@ namespace scribo
 				   mln::util::array<box<mln_site(I)> > > >
     extract(const Image<I>& input_, V& ncells)
     {
-      trace::entering("scribo::table::extract");
+      mln_trace("scribo::table::extract");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -103,7 +103,6 @@ namespace scribo
 	= scribo::table::rebuild(input,
 				 vlines, hlines, 30, ncells);
 
-      trace::exiting("scribo::table::extract");
       return tables;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,9 +32,9 @@
 
 /// \file
 ///
-/// Split a color image into 3 images.
+/// Split a color RGB image into 3 images.
 ///
-/// \fixme interface not enough generic!
+/// \todo interface not enough generic!
 
 namespace mln
 {
@@ -41,9 +42,13 @@ namespace mln
   namespace data
   {
 
-      template <typename I, typename J>
-      void
-      split(const Image<I>& input_, Image<J>& r_, Image<J>& g_, Image<J>& b_);
+    /*! \brief Split a color RGB image into 3 images.
+     *
+     * \ingroup mlndata
+     */
+    template <typename I, typename J>
+    void
+    split(const Image<I>& input, Image<J>& r, Image<J>& g, Image<J>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -53,7 +58,7 @@ namespace mln
       void
       split(const Image<I>& input_, Image<J>& r_, Image<J>& g_, Image<J>& b_)
       {
-	trace::entering("mln::data::split");
+	mln_trace("mln::data::split");
 
 	const I& input = exact(input_);
 	J& r = exact(r_);
@@ -86,7 +91,6 @@ namespace mln
 	  *b_ptr++ = in_ptr->blue();
 	}
 
-	trace::exiting("mln::data::split");
       }
 
 

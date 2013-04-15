@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -60,7 +60,10 @@ namespace mln
 
     namespace internal
     {
-      /// \brief Base class for undirected graphs.
+      /*!
+	\internal
+	\brief Base class for undirected graphs.
+      */
       template<typename E>
       class graph_base : public Graph<E>
       {

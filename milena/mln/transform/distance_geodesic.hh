@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,9 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform.
+    /*! \brief Discrete geodesic distance transform.
+      \ingroup mlntransform
+    */
     template <typename I, typename N, typename D>
     mln_ch_value(I, D)
     distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max);
@@ -54,7 +57,7 @@ namespace mln
     mln_ch_value(I, D)
     distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
     {
-      trace::entering("transform::distance_geodesic");
+      mln_trace("transform::distance_geodesic");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
@@ -63,7 +66,6 @@ namespace mln
       internal::distance_functor<I> f;
       output = mln::canvas::distance_geodesic(input, nbh, max, f);
 
-      trace::exiting("transform::distance_geodesic");
       return output;
     }
 

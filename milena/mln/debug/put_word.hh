@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,10 @@ namespace mln
   namespace debug
   {
 
-    /// Put the \p word starting at location \p word_start in the
-    /// image \p inout.
+    /*! \brief Put the \p word starting at location \p word_start in
+      the image \p inout.
+      \ingroup mlndebug
+    */
     inline
     void
     put_word(image2d<char>& inout, const point2d& word_start,
@@ -63,7 +66,7 @@ namespace mln
       word_end.last_coord() = static_cast<def::coord>(word_end.last_coord() + word.length() - 1);
 
       if (! inout.has(word_end))
-	trace::warning("Cannot write text outside the image domain");
+	mln_trace_warning("Cannot write text outside the image domain");
 
       const unsigned n = word.length();
       point2d p = word_start;

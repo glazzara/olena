@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Fast Extraction of single vertical thick lines.
+/// \brief Fast Extraction of single vertical thick lines.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -49,22 +49,24 @@ namespace scribo
 
       using namespace mln;
 
-      /// Fast Extraction of single vertical thick lines.
-      /*!
+      /*! \brief Fast Extraction of single vertical thick lines.
+       *
        * Only single non discontinued lines are correctly extracted
        * with this routine.
        *
-       * \param[in]     input_	    A binary image.
-       * \param[in]     nbh_	    The neighborhood used for labeling image
+       * \param[in]     input	    A binary image.
+       * \param[in]     nbh	    The neighborhood used for labeling image
        *			    components.
-       * \param[in,out] nlines	    Type used for labeling.
-       * \param[in]     line_length The minimum line length.
+       * \param[in]     nlines	    Type used for labeling.
+       * \param[in]     min_line_length The minimum line length.
        * \param[in]     h_w_ratio   The minimum ratio height/width object
        *                            bounding boxes to consider an
        *                            object as a single line.
        *
        * \return An image in which only vertical single lines are
        * labeled.
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I, typename N, typename V>
       component_set<mln_ch_value(I,V)>
@@ -74,19 +76,21 @@ namespace scribo
 		     float h_w_ratio);
 
 
-      /// Fast Extraction of single vertical thick lines.
-      /*!
+      /*! \brief Fast Extraction of single vertical thick lines.
+       *
        * Only single non discontinued lines are correctly extracted
        * with this routine.
        *
        * \param[in]     components     A labeled image.
-       * \param[in]     line_length The minimum line length.
+       * \param[in]     min_line_length The minimum line length.
        * \param[in]     h_w_ratio   The minimum ratio height/width object
        *                            bounding boxes to consider an
        *                            object as a single line.
        *
        * \return An image in which only vertical single lines are
        * labeled.
+       *
+       *\ingroup extractprimitiveseps
        */
       template <typename L>
       component_set<L>
@@ -143,7 +147,7 @@ namespace scribo
 		     unsigned min_line_length,
 		     float h_w_ratio)
       {
-	trace::entering("scribo::primitive::lines_v_single");
+	mln_trace("scribo::primitive::lines_v_single");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -151,15 +155,16 @@ namespace scribo
 	mln_precondition(nbh.is_valid());
 
 	typedef mln_ch_value(I,V) L;
+  V ncomps;
 	component_set<L>
-	  output = primitive::extract::components(input, nbh, nlines);
+	  output = primitive::extract::components(input, nbh, ncomps);
+  (void) ncomps;
 
 	internal::is_line_v_single<L>
 	  is_line(output, h_w_ratio, min_line_length);
 
 	output.update_tags(is_line, component::Ignored);
 
-	trace::exiting("scribo::primitive::lines_v_single");
 	return output;
       }
 
@@ -171,7 +176,7 @@ namespace scribo
 		     unsigned min_line_length,
 		     float h_w_ratio)
       {
-	trace::entering("scribo::primitive::lines_v_single");
+	mln_trace("scribo::primitive::lines_v_single");
 
 	mln_precondition(components.is_valid());
 
@@ -181,7 +186,6 @@ namespace scribo
 	component_set<L> output = components.duplicate();
 	output.update_tags(is_line, component::Ignored);
 
-	trace::exiting("scribo::primitive::lines_v_single");
 	return output;
       }
 

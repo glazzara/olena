@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,12 +41,14 @@ namespace mln
   namespace debug
   {
 
-    /*! Fill the image \p input with Z-order (curve) values.
+    /*! \brief Fill the image \p input with Z-order (curve) values.
 
        \param[in,out] input The image in which values are
        assigned.
 
        Reference: http://en.wikipedia.org/wiki/Z-order_(curve)
+
+       \ingroup mlndebug
      */
     template <typename I>
     void z_order(Image<I>& input);
@@ -141,12 +143,11 @@ namespace mln
     void
     z_order(Image<I>& input)
     {
-      trace::entering("debug::z_order");
+      mln_trace("debug::z_order");
       mln_precondition(exact(input).is_valid());
 
       internal::z_order_dispatch(input);
 
-      trace::exiting("debug::z_order");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

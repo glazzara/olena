@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -31,7 +31,7 @@
  *
  * \brief Draw a box in an image.
  *
- * \fixme Rename as box_frame.hh
+ * \todo Rename as box_frame.hh
  */
 
 # include <mln/core/concept/image.hh>
@@ -48,16 +48,17 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a box at value \p v in image \p ima
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] b the boxto draw.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre \p ima has \p beg.
-     * \pre \p ima has \p end.
-     *
+    /*! \brief Draw a box at value \p v in image \p ima
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] b the boxto draw.
+       \param[in] v The value to assign to all drawn pixels.
+
+       \pre \p ima has to be initialized.
+       \pre \p ima has \p beg.
+       \pre \p ima has \p end.
+
+       \ingroup mlndraw
      */
     template <typename I, typename B>
     void box(Image<I>& ima,

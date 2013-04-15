@@ -1,0 +1,34 @@
+/*! \page onlineres Online Resources
+
+\section Trac
+
+In order to keep traces of bugs and feature requests, we provide a
+Trac at <a
+href="https://trac.lrde.org/olena">https://trac.lrde.org/olena</a>.
+
+\section Gitweb
+
+Source code is freely browseable through a web interface at this
+address : <a
+href="http://git.lrde.epita.fr/?p=olena.git">http://git.lrde.epita.fr/?p=olena.git</a>
+
+It is also a way to keep an eye on current develop.
+
+\section BuildBot
+
+During the development process, we need to be sure that changes don't
+break the whole code. To do so, we have a buildfarm running several
+architectures and compilers.  A monitoring interface is available here
+: <a href="https://buildfarm.lrde.org/buildfarm/oln/">https://buildfarm.lrde.org/buildfarm/oln/</a>
+
+\section Mailing-list
+
+A general mailing-list is available and open for any questions related
+to Olena. You can :
+
+\li <a href="https://www.lrde.epita.fr/mailman/listinfo/olena">subscribe to our mailing-list</a>
+\li <a href="https://www.lrde.epita.fr/pipermail/olena/">fetch the archives of the list</a>
+\li send any questions to: <a href="mailto::olena@lrde.epita.fr">olena@lrde.epita.fr</a>
+
+
+*/

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +45,11 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological minus: either a logical "and not" (if morpho on
-     *  sets) or an arithmetical minus (if morpho on functions).
+    /*! \brief Morphological minus: either a logical "and not" (if
+     *  morpho on sets) or an arithmetical minus (if morpho on
+     *  functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename J>
     mln_concrete(I) minus(const Image<I>& lhs, const Image<J>& rhs);
@@ -86,13 +90,12 @@ namespace mln
     mln_concrete(I)
       minus(const Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::minus");
+      mln_trace("morpho::minus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = impl::minus_(mln_trait_image_kind(I)(),
 					    exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::minus");
       return output;
     }
 

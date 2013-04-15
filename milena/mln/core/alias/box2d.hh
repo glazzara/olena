@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,12 +39,49 @@
 namespace mln
 {
 
-  /// Type alias for a box defined on the 2D square grid with
-  /// integer coordinates.
-  ///
-  /// \see mln::win::rectangle2d.
-  typedef box<mln::point2d> box2d;
+  /*!
+    \class mln::box2d
+    \headerfile <>
 
+    \brief A box defined on the 2D square grid with integer
+    coordinates.
+
+    This class is a site set of mln::point2d. It represents a rectangle of
+    mln::point2d which is usually used as domain for a mln::image2d.
+
+    mln::box2d is a typedef of box<mln::point2d>.
+
+    Iteration over the mln::point2d of a mln::box2d relies on p-iterators
+    and it can be performed using the following code:
+
+    \code
+    box2d b(3,3);
+    mln_piter(box2d) p(b);
+    for_all(p)
+      std::cout << p << std::endl;
+    \endcode
+
+    Common sites can be retrieved through pmin(), pmax() and pcenter().
+    \verbatim
+    pmin
+      X------------.---------->
+      |   pcenter  |
+      |      X     |
+      |            |
+      .------------X
+      |           pmax
+      |
+      |
+      v
+    \endverbatim
+
+    \sa mln::make::box2d.
+
+    \ingroup modsitesetbasic
+  */
+  /// \cond ALIAS
+  typedef box<mln::point2d> box2d;
+  /// \endcond
 
 } // end of namespace mln
 

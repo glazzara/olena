@@ -1,4 +1,5 @@
-// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Save a color image showing components links.
+/// \brief Save a color image showing components links.
 
 # include <mln/core/concept/image.hh>
 # include <mln/accu/center.hh>
@@ -50,7 +51,10 @@ namespace scribo
 
     using namespace mln;
 
-    /// FIXME: DOC!
+    /*! \brief Save a color image showing components links.
+
+      \ingroup grpalgodebug
+     */
     template <typename I, typename L>
     mln_ch_value(I,value::rgb8)
     links_image(const Image<I>& input_,
@@ -69,7 +73,7 @@ namespace scribo
 		anchor::Type anchor,
 		bool draw_bboxes)
     {
-      trace::entering("scribo::debug::links_image");
+      mln_trace("scribo::debug::links_image");
       const I& input = exact(input_);
 
       mln_precondition(input.is_valid());
@@ -84,7 +88,7 @@ namespace scribo
 	scribo::draw::bounding_boxes(links_image, comps, literal::blue);
 
       for_all_links(l, links)
-	if (links(l) != l)
+	if (links.is_linked(l))
 	  mln::draw::line(links_image,
 			  primitive::link::internal::compute_anchor(comps,
 								    l,
@@ -94,7 +98,6 @@ namespace scribo
 								    anchor),
 			  literal::green);
 
-      trace::exiting("scribo::debug::links_image");
       return links_image;
     }
 

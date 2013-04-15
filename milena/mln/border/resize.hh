@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,8 +49,8 @@ namespace mln
   namespace border
   {
 
-    /*! Resize the virtual (outer) border of image \p ima to exactly
-     *  \p thickness.
+    /*! \brief Resize the virtual (outer) border of image \p ima to
+     *  exactly \p thickness.
      *
      * \param[in,out] ima The image whose border is to be resized.
      * \param[in] thickness The expected border thickness.
@@ -58,6 +59,8 @@ namespace mln
      *
      * \warning If the image border already has the expected
      * thickness, this routine is a no-op.
+     *
+     * \ingroup mlnborderext
      */
     template <typename I>
     void resize(const Image<I>& ima, unsigned thickness);
@@ -125,14 +128,13 @@ namespace mln
     inline
     void resize(const Image<I>& ima, unsigned thickness)
     {
-      trace::entering("border::resize");
+      mln_trace("border::resize");
 
       mln_precondition(exact(ima).is_valid());
 
       // Try to resize the primary image behind ima.
       internal::resize_dispatch(primary(ima), thickness);
 
-      trace::exiting("border::resize");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

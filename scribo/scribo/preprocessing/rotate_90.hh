@@ -76,7 +76,7 @@ namespace scribo
     mln_concrete(I)
     rotate_90(const Image<I>& input_, bool positive)
     {
-      trace::entering("scribo::preprocessing::rotate_90");
+      mln_trace("scribo::preprocessing::rotate_90");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -122,18 +122,18 @@ namespace scribo
       if (positive) // +90 deg
       {
 	dpoint2d dp(out_nrows, + 1);
-	out_next_offset = output.delta_index(dp);
+	out_next_offset = output.delta_offset(dp);
 
-	out_next_p_offset = output.delta_index(dpoint2d(-1, 0));
+	out_next_p_offset = output.delta_offset(dpoint2d(-1, 0));
 
-	out_ptr += output.delta_index(dpoint2d(out_nrows - 1, 0));
+	out_ptr += output.delta_offset(dpoint2d(out_nrows - 1, 0));
       }
       else // -90 deg
       {
 	dpoint2d dp(- out_nrows, - 1);
-	out_next_offset = output.delta_index(dp);
+	out_next_offset = output.delta_offset(dp);
 
-	out_next_p_offset = output.delta_index(dpoint2d(+1, 0));
+	out_next_p_offset = output.delta_offset(dpoint2d(+1, 0));
 
 	out_ptr += out_ncols - 1;
       }
@@ -147,7 +147,6 @@ namespace scribo
 	out_ptr += out_next_offset;
       }
 
-      trace::exiting("scribo::preprocessing::rotate_90");
       return output;
     }
 

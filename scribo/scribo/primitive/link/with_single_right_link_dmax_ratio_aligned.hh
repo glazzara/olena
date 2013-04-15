@@ -29,8 +29,8 @@
 
 /// \file
 ///
-/// Link text objects with their right neighbor according to a maximum
-/// distance.
+/// \brief Link text objects with their right neighbor according to a
+/// maximum distance.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -67,6 +67,10 @@ namespace scribo
 	  \param[in] components A component set.
 	  \param[in] dmax_ratio Size ratio defining the maximum lookup
 	                        distance.
+	  \param[in] min_angle Minimum difference allowed for
+	                       alignement angle.
+	  \param[in] max_angle Maximum difference allowed for
+	                       alignement angle.
 	  \param[in] anchor Starting point for the neighbor lookup.
 
 	  \return Object links data.
@@ -163,7 +167,7 @@ namespace scribo
 	float min_angle, float max_angle,
 	anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio_aligned");
+	mln_trace("scribo::primitive::link::with_single_right_link_dmax_ratio_aligned");
 
 	mln_precondition(components.is_valid());
 
@@ -172,7 +176,6 @@ namespace scribo
 
 	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio_aligned");
 	return output;
       }
 

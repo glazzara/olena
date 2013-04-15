@@ -1,0 +1,6 @@
+/*! \defgroup grpalgofiltercomplink Component Link Filtering
+ *
+ * \brief Component links filtering routines.
+ *
+ * \ingroup grpalgofilter
+ */

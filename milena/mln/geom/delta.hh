@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,15 +43,24 @@ namespace mln
   namespace geom
   {
 
-    /// Compute the delta of a window \p win.
+    /*! \brief Compute the delta of a window \p win.
+
+      \ingroup mlngeom
+     */
     template <typename W>
     unsigned delta(const Window<W>& win);
 
-    /// Compute the delta of a weighted window \p wwin.
+    /*! \brief Compute the delta of a weighted window \p wwin.
+
+      \ingroup mlngeom
+     */
     template <typename W>
     unsigned delta(const Weighted_Window<W>& wwin);
 
-    /// Compute the delta of a neighborhood \p nbh.
+    /*! \brief Compute the delta of a neighborhood \p nbh.
+
+      \ingroup mlngeom
+     */
     template <typename N>
     unsigned delta(const Neighborhood<N>& nbh);
 

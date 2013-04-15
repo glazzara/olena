@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -57,6 +57,8 @@ namespace scribo
        * \return A binary image were separators are set to 'True'.
        *
        * \sa primitive::remove::separators
+       *
+       * \ingroup extractprimitiveseps
        */
       template <typename I>
       mln_concrete(I)
@@ -71,7 +73,7 @@ namespace scribo
       mln_concrete(I)
       horizontal_separators(const Image<I>& input_, unsigned line_length)
       {
-	trace::entering("scribo::primitive::extract::horizontal_separators");
+	mln_trace("scribo::primitive::extract::horizontal_separators");
 
 	const I& input = exact(input_);
 	mlc_is(mln_value(I), bool)::check();
@@ -80,7 +82,6 @@ namespace scribo
 	mln_concrete(I)
 	  hlines = extract::lines_h_pattern(input, line_length, 3);
 
-	trace::exiting("scribo::primitive::extract::horizontal_separators");
 	return hlines;
       }
 

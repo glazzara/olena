@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,7 +45,10 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological rank_filter.
+    /*! \brief Morphological rank_filter.
+     *
+     * \ingroup mlndatafilter
+     */
     template <typename I, typename W>
     mln_concrete(I)
     rank_filter(const Image<I>& input, const Window<W>& win, unsigned k);
@@ -92,7 +96,7 @@ namespace mln
 	mln_concrete(I)
 	rank_filter(const Image<I>& input_, const Window<W>& win_, unsigned k)
 	{
-	  trace::entering("morpho::impl::generic::rank_filter");
+	  mln_trace("morpho::impl::generic::rank_filter");
 
 	  internal::rank_filter_tests(input_, win_, k);
 
@@ -117,7 +121,6 @@ namespace mln
 	    output(p) = accu;
 	  }
 
-	  trace::exiting("morpho::impl::generic::rank_filter");
 	  return output;
 	}
 
@@ -129,7 +132,7 @@ namespace mln
       mln_concrete(I)
       rank_filter_line(const Image<I>& input, const Window<W>& win, unsigned k, unsigned dir)
       {
-	trace::entering("morpho::impl::rank_filter_line");
+	mln_trace("morpho::impl::rank_filter_line");
 
 	internal::rank_filter_tests(input, win, k);
 
@@ -137,7 +140,6 @@ namespace mln
 	extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	mln_concrete(I) output = accu::transform_line(accu, input, exact(win).length(), dir);
 
-	trace::exiting("morpho::impl::rank_filter_line");
 	return output;
       }
 
@@ -147,7 +149,7 @@ namespace mln
       mln_concrete(I)
       rank_filter_directional(const Image<I>& input, const Window<W>& win, unsigned k, unsigned dir)
       {
-	trace::entering("morpho::impl::rank_filter_directional");
+	mln_trace("morpho::impl::rank_filter_directional");
 
 	internal::rank_filter_tests(input, win, k);
 
@@ -155,7 +157,6 @@ namespace mln
 	extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	mln_concrete(I) output = accu::transform_directional(accu, input, win, dir);
 
-	trace::exiting("morpho::impl::rank_filter_directional");
 	return output;
       }
 
@@ -212,14 +213,13 @@ namespace mln
     mln_concrete(I)
     rank_filter(const Image<I>& input, const Window<W>& win, unsigned k)
     {
-      trace::entering("morpho::rank_filter");
+      mln_trace("morpho::rank_filter");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = internal::rank_filter_dispatch(exact(input), exact(win), k);
 
-      trace::exiting("morpho::rank_filter");
       return output;
     }
 

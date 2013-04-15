@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,13 +45,15 @@ namespace mln
   namespace data
   {
 
-    /*! \brief Routine to wrap values such as 0 -> 0 and [1, lmax] maps to [1,
-               Lmax] (using modulus).
+    /*! \brief Routine to wrap values such as 0 -> 0 and [1, lmax]
+               maps to [1, Lmax] (using modulus).
 
         \param[in] v     The target value type.
 	\param[in] input Input image.
 
 	\return An image with wrapped values.
+
+	\ingroup mlndata
     */
     template <typename V, typename I>
     mln_ch_value(I, V)
@@ -64,7 +67,7 @@ namespace mln
     mln_ch_value(I, V)
     wrap(const V& v, const Image<I>& input_)
     {
-      trace::entering("mln::data::wrap");
+      mln_trace("mln::data::wrap");
 
       (void) v;
       const I& input = exact(input_);
@@ -74,7 +77,6 @@ namespace mln
       mln_ch_value(I, V)
 	output = data::transform(input, fun::v2v::wrap<V>());
 
-      trace::exiting("mln::data::wrap");
       return output;
     }
 

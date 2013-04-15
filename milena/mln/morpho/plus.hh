@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,8 +45,10 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological plus: either a "logical or" (if morpho on sets)
-     *  or an "arithmetical plus" (if morpho on functions).
+    /*! \brief Morphological plus: either a "logical or" (if morpho on
+     *  sets) or an "arithmetical plus" (if morpho on functions).
+     *
+     * \ingroup mlnmorpho
      */
     template <typename I, typename J>
     mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs);
@@ -85,13 +88,12 @@ namespace mln
     inline
     mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs)
     {
-      trace::entering("morpho::plus");
+      mln_trace("morpho::plus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(I) output = impl::plus_(mln_trait_image_kind(I)(),
 					   exact(lhs), exact(rhs));
 
-      trace::exiting("morpho::plus");
       return output;
     }
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,78 +44,71 @@
 namespace mln
 {
 
-  namespace convert
-  {
-
-      /// Conversion of a int \p from towards a value \p to.
-      template <typename V>
-      void
-      from_to(const int& from, Value<V>& to);
+  /// \internal Conversion: int-> Value
+  template <typename V>
+  void from_to_(const int& from, Value<V>& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
+  namespace convert
+  {
+
+    namespace impl
+    {
+
+      // Case 1:
+
+      template <typename V>
+      inline
+      void
+      from_int_to_value(const int&		  from,
+			mln::value::Integer<V>& to)
       {
+	exact(to) = from;
+      }
 
-	// Case 1:
+      // Default: no conversion defined.
 
-	template <typename V>
-	inline
-	void
-	from_int_to_value(const int&		  from,
-			  mln::value::Integer<V>& to)
-	{
-	  exact(to) = from;
-	}
-
-	// Default: no conversion defined.
-
-	template <typename V>
-	inline
-	void
-	from_int_to_value(const int&		    from,
-			  Value<V>&		    to)
-	{
-	  (void) from;
-	  (void) to;
-	  mlc_abort(V)::check();
-	}
-
-      } // end of namespace mln::convert::impl
-
-
-      namespace internal
+      template <typename V>
+      inline
+      void
+      from_int_to_value(const int&		    from,
+			Value<V>&		    to)
       {
+	(void) from;
+	(void) to;
+	mlc_abort(V)::check();
+      }
 
-	template <typename V>
-	inline
-	void
-	from_int_to_value_dispatch(const int& from, Value<V>& to)
-	{
-	  impl::from_int_to_value(from, exact(to));
-	}
+    } // end of namespace mln::convert::impl
 
-      } // end of namespace mln::convert::internal
+    namespace internal
+    {
 
-
-      namespace over_load
+      template <typename V>
+      inline
+      void
+      from_int_to_value_dispatch(const int& from, Value<V>& to)
       {
+	impl::from_int_to_value(from, exact(to));
+      }
 
-	// Facades.
-	// int-> Value
-	template <typename V>
-	void
-	from_to_(const int& from, Value<V>& to)
-	{
-	  internal::from_int_to_value_dispatch(from, to);
-	}
-
-      } // end of namespace mln::convert::over_load
-
-# endif // ! MLN_INCLUDE_ONLY
+    } // end of namespace mln::convert::internal
 
   } // end of namespace mln::convert
+
+
+  // Facades.
+
+  template <typename V>
+  void
+  from_to_(const int& from, Value<V>& to)
+  {
+    convert::internal::from_int_to_value_dispatch(from, to);
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

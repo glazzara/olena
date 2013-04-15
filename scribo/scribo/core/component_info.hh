@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,9 +47,19 @@ namespace scribo
   // Forward declarations.
   template <typename L> class component_set;
 
+  /*! \brief The type of the component ids.
+
+    This id is mainly used in structures like scribo::component_set
+    and scribo::component_info structures.  It refers to the actual
+    label used in the underlying labeled component image stored in
+    scribo::component_set.
+   */
   typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
 
 
+  /*! \brief Component information data structure.
+
+   */
   template <typename L>
   class component_info : public Serializable<component_info<L> >
   {
@@ -258,7 +268,10 @@ namespace scribo
       && lhs.bbox() == rhs.bbox()
       && lhs.mass_center() == rhs.mass_center()
       && lhs.card() == rhs.card()
-      && lhs.features() == rhs.features()
+      && (lhs.has_features() == rhs.has_features()
+	  || (lhs.has_features()
+	      && rhs.has_features()
+	      && lhs.features() == rhs.features()))
       && lhs.tag() == rhs.tag()
       && lhs.type() == rhs.type();
   }

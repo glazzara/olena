@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +48,10 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for mln::util::graph.
+    /*!
+      \internal
+      \brief Data structure for mln::util::graph.
+    */
     template <>
     struct data<util::graph>
     {

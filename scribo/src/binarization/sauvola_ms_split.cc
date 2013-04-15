@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,13 +55,20 @@ static const scribo::debug::opt_data opt_desc[] =
   // name, description, arguments, check args function, number of args, default arg
   { "debug-prefix", "Enable debug image outputs. Prefix image name with that "
     "given prefix.", "<prefix>", 0, 1, 0 },
-  { "k", "Sauvola's formulae parameter", "<value>", 0, 1, "0.34" },
+  { "all-k", "Sauvola's formulae parameter. Set it globally for all scales.",
+    "<value>", 0, 1, "0.34" },
+
+  { "k2", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k3", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+  { "k4", "Sauvola's formulae parameter", "<value>", 0, 1, 0 },
+
   { "min-ntrue", "The number of components in which a site must be set to 'True' in"
     " order to be set to 'True' in the output (Possible values: 1, 2, 3).",
     "<num>", scribo::debug::check_sauvola_split_ntrue, 1, "2" },
   { "s", "First subsampling ratio. Possible values: 2 or 3.", "ratio",
     scribo::debug::check_sauvola_first_subsampling, 1, "3" },
-  { "verbose", "Enable verbose mode", 0, 0, 0, 0 },
+  { "verbose", "Enable verbose mode (mute, time, low, medium, full)",
+    "<mode>", scribo::debug::check_verbose_mode, 1, "mute" },
   { "win-size", "Window size at scale 1", "<size>", 0, 1, "101" },
   {0, 0, 0, 0, 0, 0}
 };
@@ -84,28 +91,41 @@ int main(int argc, char *argv[])
     scribo::debug::logger().set_level(scribo::debug::All);
   }
 
-  trace::entering("main");
+  mln_trace("main");
 
-  bool verbose = options.is_set("verbose");
   // Window size
   unsigned w_1 = atoi(options.opt_value("win-size").c_str());  // Scale 1
 
   // First subsampling scale.
   unsigned s = atoi(options.opt_value("s").c_str());
-  double k = atof(options.opt_value("k").c_str());
   unsigned min_ntrue = atoi(options.opt_value("min-ntrue").c_str());
 
-  if (verbose)
-    std::cout << "Using w_1=" << w_1 << " - s=" << s << " - k="
-	      << k << " - min_ntrue=" << min_ntrue << std::endl;
 
-  Magick::InitializeMagick(0);
+  // Setting k parameter.
+  double k = atof(options.opt_value("all-k").c_str());
+  binarization::internal::k2 = k;
+  binarization::internal::k3 = k;
+  binarization::internal::k4 = k;
+
+  // Override k parameter for specific scales.
+  if (options.is_set("k2"))
+    binarization::internal::k2 = atof(options.opt_value("k2").c_str());
+  if (options.is_set("k3"))
+    binarization::internal::k3 = atof(options.opt_value("k3").c_str());
+  if (options.is_set("k4"))
+    binarization::internal::k4 = atof(options.opt_value("k4").c_str());
+
+  scribo::debug::logger() << "Using w_1=" << w_1 << " - s=" << s
+			  << " - k2=" << binarization::internal::k2
+			  << " - k3=" << binarization::internal::k3
+			  << " - k4=" << binarization::internal::k4
+			  << std::endl;
 
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, options.arg("input.*"));
 
   image2d<bool>
-    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue);
 
   io::pbm::save(output, options.arg("output.pbm"));
 }

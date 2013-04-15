@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +44,13 @@ namespace mln
   namespace debug
   {
 
-    /*! Fill the image \p input with successive values.
-     *
-     * \param[in,out] input The image in which values are
-     * assigned.
+    /*! \brief Fill the image \p input with successive values.
+
+       \param[in,out] input The image in which values are
+                             assigned.
+       \param[in] base_index Start numbering from this value.
+
+      \ingroup mlndebug
      */
     template <typename I>
     void iota(Image<I>& input, unsigned base_index);
@@ -87,10 +90,9 @@ namespace mln
     void
     iota(Image<I>& input, unsigned base_index)
     {
-      trace::entering("debug::iota");
+      mln_trace("debug::iota");
       mln_precondition(exact(input).is_valid());
       impl::iota(mln_trait_image_speed(I)(), exact(input), base_index);
-      trace::exiting("debug::iota");
     }
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -86,7 +86,7 @@ namespace mln
       inline
       void memset__(P& pix, const mln_value(P)& v, std::size_t n)
       {
-	trace::entering("data::impl::memset_");
+	mln_trace("data::impl::memset_");
 
 	typedef mln_image(P) I;
 	if (n == 0)
@@ -120,7 +120,6 @@ namespace mln
 	      *ptr++ = v;
 	  }
 
-	trace::exiting("data::impl::memset_");
       }
 
     } // end of namespace mln::data::impl
@@ -131,7 +130,7 @@ namespace mln
     void memset_(Generalized_Pixel<P>& pix_,
 		 const mln_value(P)& v, std::size_t n)
     {
-      trace::entering("data::memset_");
+      mln_trace("data::memset_");
 
       typedef mln_image(P) I;
       metal::is_not_const<I>::check();
@@ -146,7 +145,6 @@ namespace mln
 
       impl::memset__(pix, v, n);
 
-      trace::exiting("data::memset_");
     }
 
     template <typename I>
@@ -154,18 +152,17 @@ namespace mln
     void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
-      trace::entering("data::memset_");
+      mln_trace("data::memset_");
 
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       mln_precondition(input.is_valid());
       mln_precondition(input.has(p));
-      mln_precondition(input.index_of_point(p) + n <= opt::nelements(input));
+      mln_precondition(input.offset_of_point(p) + n <= opt::nelements(input));
 
       pixel<I> pix(input, p);
       impl::memset__(pix, v, n);
 
-      trace::exiting("data::memset_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

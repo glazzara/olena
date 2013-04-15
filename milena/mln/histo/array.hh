@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,9 +36,16 @@
 
 # include <mln/value/set.hh>
 
+// For conversion
+# include <mln/convert/from_to.hh>
+# include <mln/make/box1d.hh>
+
 
 namespace mln
 {
+
+  // Forward declaration
+  template <typename T> struct image1d;
 
   namespace histo
   {
@@ -76,8 +84,9 @@ namespace mln
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr, const array<T>& h);
 
-
-
+    /// \internal Conversion: histo::array -> image1d.
+    template <typename V, typename T>
+    void from_to_(const array<V>& from, image1d<T>& to);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -183,6 +192,25 @@ namespace mln
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';
       return ostr;
+    }
+
+
+    // Conversions
+
+    template <typename V, typename T>
+    inline
+    void
+    from_to_(const array<V>& from, image1d<T>& to)
+    {
+      // FIXME: The code should looks like:
+
+// 	box1d b(point1d(mln_min(V)), point1d(mln_max(V)));
+// 	ima.init_(b, 0);
+// 	for_all(v)
+// 	  from_to(h(v), ima.at_( index_of(v) ));
+      to.init_(make::box1d(from.nvalues()));
+      for (unsigned i = 0; i < from.nvalues(); ++i)
+	convert::from_to(from[i], to(point1d(i)));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

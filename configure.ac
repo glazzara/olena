@@ -38,7 +38,7 @@ AC_CONFIG_FILES([build-aux/Makefile])
 # Disable the -Wextra-portability option until developers can all use
 # Automake 1.11.2 or newer (Debian GNU/Linux 6 ships Automake 1.11.1
 # only), at which point we'll use the new AM_PROG_AR macro instead.
-AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
+AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
                   parallel-tests nostdinc silent-rules
                   -Wall -Wno-extra-portability])
 # By default, let "make" hide the compilation command and display a
@@ -220,7 +220,7 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 OLN_WITH_LIB_PKG_CONFIG([ImageMagick++], [Magick++.h], [Magick++],
                         [imagemagickxx], [IMAGEMAGICKXX])
 
-OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [Magick++],
+OLN_WITH_LIB_PKG_CONFIG([GraphicsMagick++], [Magick++.h], [GraphicsMagick++],
                         [graphicsmagickxx], [GRAPHICSMAGICKXX])
 
 # If both ImageMagick and GraphicsMagic are available, choose the
@@ -263,6 +263,14 @@ OLN_WITH_TESSERACT
 # -------------- #
 
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
+
+# ----------------- #
+# Poppler library.  #
+# ----------------- #
+
+OLN_WITH_LIB_PKG_CONFIG([poppler-cpp], [poppler/cpp/poppler-version.h], [poppler-cpp],
+                        [poppler], [POPPLER])
+
 
 # --------------------------------- #
 # GDCM library (Grassroots DiCom).  #
@@ -323,15 +331,17 @@ AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 AC_CONFIG_FILES([
   scribo/Makefile
     scribo/demo/Makefile
-      scribo/demo/review/Makefile
       scribo/demo/viewer/Makefile
       scribo/demo/xml2doc/Makefile
+    scribo/doc/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
       scribo/src/contest/Makefile
       scribo/src/contest/hdibco-2010/Makefile
       scribo/src/contest/hdlac-2011/Makefile
       scribo/src/contest/DAE-2011/Makefile
+      scribo/src/contest/hnla-2013/Makefile
+      scribo/src/contest/hbr-2013/Makefile
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile
@@ -358,6 +368,7 @@ AC_CONFIG_FILES([
     scribo/tests/core/Makefile
     scribo/tests/estim/Makefile
     scribo/tests/filter/Makefile
+    scribo/tests/layout/Makefile
     scribo/tests/preprocessing/Makefile
     scribo/tests/primitive/Makefile
     scribo/tests/primitive/extract/Makefile
@@ -393,6 +404,7 @@ AC_CONFIG_FILES([milena/doc/tools/data.hh])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
+    doc/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/mesh/Makefile
@@ -464,6 +476,7 @@ AC_CONFIG_FILES([
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
       milena/tests/io/pbms/Makefile
+      milena/tests/io/pdf/Makefile
       milena/tests/io/pfm/Makefile
       milena/tests/io/pgm/Makefile
       milena/tests/io/pgms/Makefile

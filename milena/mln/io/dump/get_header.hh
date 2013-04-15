@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,7 +59,10 @@ namespace mln
       };
 
 
-      /// Retrieve header in a dump file.
+      /*! \brief Retrieve header from a dump file.
+       *
+       * \ingroup iodump
+       */
       dump_header get_header(const std::string& filename);
 
 
@@ -69,7 +72,7 @@ namespace mln
       inline
       dump_header get_header(const std::string& filename)
       {
-	trace::entering("mln::io::dump::get_header");
+	mln_trace("mln::io::dump::get_header");
 
 	dump_header header;
 
@@ -113,7 +116,6 @@ namespace mln
 	file.getline(value_type, 255);
 	header.value_type = value_type;
 
-	trace::exiting("mln::io::dump::get_header");
 	return header;
       }
 

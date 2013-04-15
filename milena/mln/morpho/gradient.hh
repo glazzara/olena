@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,23 +47,32 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological gradient.
-    ///
-    /// This operator is d_B - e_B.
+    /*! \brief Morphological gradient.
+     *
+     *  This operator is d_B - e_B.
+     *
+     *  \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win);
 
 
-    /// Morphological internal gradient.
-    ///
-    /// This operator is Id - e_B.
+    /*! \brief Morphological internal gradient.
+     *
+     *  This operator is Id - e_B.
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win);
 
 
-    /// Morphological external gradient.
-    ///
-    /// This operator is d_B - Id.
+    /*! \brief Morphological external gradient.
+     *
+     *  This operator is d_B - Id.
+     *
+     * \ingroup mlnmorpho
+     */
     template <typename I, typename W>
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win);
 
@@ -75,7 +85,7 @@ namespace mln
     inline
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient");
+      mln_trace("morpho::gradient");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -83,7 +93,6 @@ namespace mln
 					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient");
       return output;
     }
 
@@ -92,7 +101,7 @@ namespace mln
     inline
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient_internal");
+      mln_trace("morpho::gradient_internal");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -100,7 +109,6 @@ namespace mln
 					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient_internal");
       return output;
     }
 
@@ -109,7 +117,7 @@ namespace mln
     inline
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("morpho::gradient_external");
+      mln_trace("morpho::gradient_external");
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
@@ -117,7 +125,6 @@ namespace mln
 					     input);
 
       mln_postcondition(test::positive(output));
-      trace::exiting("morpho::gradient_external");
       return output;
     }
 

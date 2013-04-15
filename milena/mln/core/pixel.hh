@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -103,7 +104,7 @@ namespace mln
     if (this->value_ptr_ == 0 || ! this->image_.is_valid())
       return false;
     int o = this->value_ptr_ - this->image_.buffer();
-    mln_psite(I) p = this->image_.point_at_index(o);
+    mln_psite(I) p = this->image_.point_at_offset(o);
     return this->image_.has(p);
   }
 

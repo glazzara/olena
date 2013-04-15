@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,6 +52,11 @@ namespace mln
     namespace labeling
     {
 
+      /*! \brief Fast connected component labeling of the object part
+       *  in a binary image.
+       *
+       * \ingroup modcanvaslabeling
+       */
       template <typename I, typename N, typename L, typename F>
       mln_ch_value(I, L)
       video(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -72,7 +77,7 @@ namespace mln
 		      const Neighborhood<N>& nbh_,
 		      L& nlabels, F& f)
 	{
-	  trace::entering("canvas::impl::video_fastest");
+	  mln_trace("canvas::impl::video_fastest");
 
 	  // FIXME: Test?!
 
@@ -154,8 +159,8 @@ namespace mln
 		{
 		  if (nlabels == mln_max(L))
 		  {
-		    trace::warning("labeling aborted! Too many labels for \
-					this label type: nlabels > \
+		    mln_trace_warning("labeling aborted! Too many labels for \
+					this label type: nlabels >	\
 					max(label_type).");
 		    return output;
 		  }
@@ -173,7 +178,6 @@ namespace mln
 	  }
 
 	  f.finalize();
-	  trace::exiting("canvas::impl::video_fastest");
 	  return output;
 	}
 
@@ -241,7 +245,7 @@ namespace mln
       video(const Image<I>& input, const Neighborhood<N>& nbh,
 	    L& nlabels, F& functor)
       {
-	trace::entering("canvas::video");
+	mln_trace("canvas::video");
 
 	internal::labeling_tests(input, nbh, nlabels, functor);
 
@@ -249,7 +253,6 @@ namespace mln
 	output = internal::video_dispatch(input, nbh, nlabels,
 						   functor);
 
-	trace::exiting("canvas::video");
 	return output;
       }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,9 @@
 
 /// \file
 ///
-/// Draw a polygon in an image.
-/// \fixme Add specializations for horizontal polygons (use pointers/memset).
+/// \brief Draw a polygon in an image.
+/// \todo Add specializations for horizontal polygons (use
+/// pointers/memset).
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_array.hh>
@@ -42,14 +44,16 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a polygon at level \p v in image \p ima.
-     *
-     * \param[in,out] ima The image to be drawn.
-     * \param[in] par The polygon site set.
-     * \param[in] v The value to assign to all drawn pixels.
-     *
-     * \pre \p ima has to be initialized.
-     *
+    /*! \brief Draw a polygon at level \p v in image \p ima.
+
+       \param[in,out] ima The image to be drawn.
+       \param[in] par The polygon site set.
+       \param[in] v The value to assign to all drawn pixels.
+       \param[in] output_ratio Subsampling ratio.
+
+       \pre \p ima has to be initialized.
+
+       \ingroup mlndraw
      */
     template <typename I>
     void polygon(Image<I>& ima,
@@ -57,7 +61,10 @@ namespace mln
 		 const mln_value(I)& v,
 		 unsigned output_ratio);
 
-    // \overload
+    /*! \overload
+      output_ratio is set to 1 (no subsampling).
+      \ingroup mlndraw
+    */
     template <typename I>
     void polygon(Image<I>& ima,
 		 const p_array<mln_site(I)>& par,

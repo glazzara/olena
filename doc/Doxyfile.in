@@ -1,0 +1,363 @@
+# Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+# (LRDE)
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Doxyfile 1.5.1
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "Olena"
+PROJECT_NUMBER         = "User documentation @PACKAGE_VERSION@"
+PROJECT_BRIEF	       = "An Image Processing Platform"
+PROJECT_LOGO 	       = @top_srcdir@/doc/images/logo.jpg
+OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       =
+ALWAYS_DETAILED_SEC    = YES
+INLINE_INHERITED_MEMB  = YES
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = @top_srcdir@
+STRIP_FROM_INC_PATH    = @top_srcdir@
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = YES
+MULTILINE_CPP_IS_BRIEF = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 8
+ALIASES 	       = " "
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+BUILTIN_STL_SUPPORT    = YES
+IDL_PROPERTY_SUPPORT   = NO
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = NO
+EXTRACT_LOCAL_METHODS  = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = YES
+HIDE_IN_BODY_DOCS      = YES
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
+SHOW_INCLUDE_FILES     = NO
+INLINE_INFO            = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_BY_SCOPE_NAME     = YES
+GENERATE_TODOLIST      = NO
+GENERATE_TESTLIST      = NO
+GENERATE_BUGLIST       = NO
+GENERATE_DEPRECATEDLIST= NO
+ENABLED_SECTIONS       =
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = NO # Disabled for light doc
+SHOW_FILES	       = NO # Disabled for light doc
+SHOW_NAMESPACES	       = YES
+FILE_VERSION_FILTER    =
+#---------------------------------------------------------------------------
+# configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = YES
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           =
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = @top_srcdir@/doc
+FILE_PATTERNS          = *.dox
+RECURSIVE              = YES
+EXCLUDE                = @top_srcdir@/milena/ 			    \
+		         @top_srcdir@/scribo/
+EXCLUDE_SYMLINKS       = YES
+EXCLUDE_PATTERNS       = *spe.hh
+EXCLUDE_SYMBOLS	       = *::internal* *_ mln::trait::*
+EXAMPLE_PATH           = @top_srcdir@/doc/ 	\
+			 @builddir@		\
+			 @top_builddir@/doc	\
+			 @top_srcdir@
+EXAMPLE_PATTERNS       = *.cc \
+		       	 *.cc.raw \
+			 *.txt
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = @top_srcdir@/doc/images
+INPUT_FILTER           =
+FILTER_PATTERNS        =
+FILTER_SOURCE_FILES    = NO
+INPUT_ENCODING         = ISO-8859-1
+CITE_BIB_FILES 	       = @abs_top_srcdir@/doc/doc.bib \
+		       	 @abs_top_srcdir@/doc/olena.bib
+#---------------------------------------------------------------------------
+# configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = NO
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = YES
+#---------------------------------------------------------------------------
+# configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = NO
+COLS_IN_ALPHA_INDEX    = 5
+IGNORE_PREFIX          = mln::
+#---------------------------------------------------------------------------
+# configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = @top_srcdir@/doc/header.html
+HTML_FOOTER            = @top_srcdir@/doc/footer.html
+HTML_STYLESHEET        = @top_srcdir@/doc/doxygen.css
+HTML_EXTRA_STYLESHEET  = @top_srcdir@/doc/doc.css
+LAYOUT_FILE            = @top_srcdir@/doc/DoxygenLayout.xml
+GENERATE_HTMLHELP      = NO
+CHM_FILE               =
+HHC_LOCATION           =
+GENERATE_CHI           = NO
+BINARY_TOC             = NO
+TOC_EXPAND             = NO
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 4
+GENERATE_TREEVIEW      = NO
+TREEVIEW_WIDTH         = 250
+#---------------------------------------------------------------------------
+# configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = NO
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4wide
+EXTRA_PACKAGES         =
+LATEX_HEADER           =
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = YES
+LATEX_HIDE_INDICES     = NO
+#---------------------------------------------------------------------------
+# configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    =
+RTF_EXTENSIONS_FILE    =
+#---------------------------------------------------------------------------
+# configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = NO
+#---------------------------------------------------------------------------
+# configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             =
+XML_DTD                =
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = NO
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX =
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           =
+INCLUDE_FILE_PATTERNS  =
+PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
+			 "for_all_2(x1, x2)=for(x1.start(), x2.start();	x1.is_valid(); x1.next(), x2.next())" \
+			 "for_all_3(x1, x2, x3)=for(x1.start(), x2.start(), x3.start();	x1.is_valid(); x1.next(), x2.next(), x3.next())" \
+			 "for_all_remaining(x)=if (! x.is_valid()) {} else while (x.next(), x.is_valid())" \
+			 "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret" \
+			 "mlc_equal(T1,T2)=mln::metal::equal<T1,T2>" \
+                         "mln_piter(T)=typename T::piter" \
+                         "mln_fwd_piter(T)=typename T::fwd_piter" \
+                         "mln_bkd_piter(T)=typename T::bkd_piter" \
+                         "mln_qiter(T)=typename T::qiter" \
+                         "mln_fwd_qiter(T)=typename T::fwd_qiter" \
+                         "mln_bkd_qiter(T)=typename T::bkd_qiter" \
+                         "mln_niter(T)=typename T::niter" \
+                         "mln_fwd_niter(T)=typename T::fwd_niter" \
+                         "mln_bkd_niter(T)=typename T::bkd_niter" \
+                         "mln_viter(T)=typename T::viter" \
+                         "mln_fwd_viter(T)=typename T::fwd_viter" \
+                         "mln_bkd_viter(T)=typename T::bkd_viter" \
+                         "mln_result(T)=typename T::result" \
+                         "mln_enc(T)=typename T::enc" \
+                         "mln_value(T)=typename T::value" \
+                         "mln_qlf_value(T)=typename T::qlf_value" \
+                         "mln_domain(T)=typename T::domain_t" \
+                         "mln_sum(T)=typename mln::value::props<T>::sum" \
+                         "mln_vset(T)=typename T::vset" \
+                         "mln_rvalue(T)=typename T::rvalue" \
+                         "mln_lvalue(T)=typename T::lvalue" \
+                         "mln_mesh(T)=typename T::mesh" \
+                         "mln_coord(T)=typename T::coord" \
+                         "mln_site(T)=typename T::site" \
+                         "mln_psite(T)=typename T::psite" \
+                         "mln_dpsite(T)=typename T::dpsite" \
+                         "mln_accu_with(A, T)=typename A::template with< T >::ret" \
+                         "mln_trait_op_div(L, R)=typename mln::trait::op::div< L , R >::ret" \
+                         "mln_trait_op_less(L, R)=typename mln::trait::op::less< L , R >::ret" \
+                         "mln_trait_op_minus(L, R)=typename mln::trait::op::minus< L , R >::ret" \
+                         "mln_trait_op_mod(L, R)=typename mln::trait::op::mod< L , R >::ret" \
+                         "mln_trait_op_plus(L, R)=typename mln::trait::op::plus< L , R >::ret" \
+                         "mln_trait_op_times(L, R)=typename mln::trait::op::times< L , R >::ret" \
+                         "mln_trait_op_uminus(T)=typename mln::trait::op::uminus< T >::ret" \
+			 "mln_ch_value(I, V)=typename mln::trait::ch_value< I, V >::ret" \
+			 "mlc_unqualif_(T)=mln::metal::unqualif<T>::ret" \
+                         "mln_piter_(T)=T::piter" \
+                         "mln_fwd_piter_(T)=T::fwd_piter" \
+                         "mln_bkd_piter_(T)=T::bkd_piter" \
+                         "mln_qiter_(T)=T::qiter" \
+                         "mln_fwd_qiter_(T)=T::fwd_qiter" \
+                         "mln_bkd_qiter_(T)=T::bkd_qiter" \
+                         "mln_niter_(T)=T::niter" \
+                         "mln_fwd_niter_(T)=T::fwd_niter" \
+                         "mln_bkd_niter_(T)=T::bkd_niter" \
+                         "mln_viter_(T)=T::viter" \
+                         "mln_fwd_viter_(T)=T::fwd_viter" \
+                         "mln_bkd_viter_(T)=T::bkd_viter" \
+                         "mln_result_(T)=T::result" \
+                         "mln_enc_(T)=T::enc" \
+                         "mln_value_(T)=T::value" \
+                         "mln_qlf_value_(T)=T::qlf_value" \
+                         "mln_domain_(T)=T::domain_t" \
+                         "mln_sum_(T)=mln::value::props<T>::sum" \
+                         "mln_vset_(T)=T::vset" \
+                         "mln_rvalue_(T)=T::rvalue" \
+                         "mln_lvalue_(T)=T::lvalue" \
+                         "mln_mesh_(T)=T::mesh" \
+                         "mln_coord_(T)=T::coord" \
+                         "mln_site_(T)=T::site" \
+                         "mln_psite_(T)=T::psite" \
+                         "mln_dpsite_(T)=T::dpsite" \
+                         "mln_accu_with_(A, T)=A::template with< T >::ret" \
+                         "mln_trait_op_plus_(L, R)=mln::trait::op::plus< L , R >::ret" \
+                         "mln_trait_op_minus_(L, R)=mln::trait::op::minus< L , R >::ret" \
+                         "mln_trait_op_times_(L, R)=mln::trait::op::times< L , R >::ret" \
+                         "mln_trait_op_div_(L, R)=mln::trait::op::div< L , R >::ret" \
+                         "mln_trait_op_mod_(L, R)=mln::trait::op::mod< L , R >::ret" \
+                         "mln_trait_op_uminus_(T)=mln::trait::op::uminus< T >::ret" \
+			 "mln_ch_value_(I, V)=typename mln::trait::ch_value< I, V >::ret" \
+			 "mln_ch_value(I, V)_=mln::trait::ch_value< I, V >::ret" \
+			 "mln_morpher_lvalue(I)=typename internal::morpher_lvalue_<I>::ret" \
+			 "mln_concrete(I)=typename mln::trait::concrete< I >::ret" \
+			 "mln_concrete_ch_value(I, V)=typename mln::trait::ch_value< typename mln::trait::concrete< I >::ret, V >::ret" \
+			 "mlc_const(T)=typename mln::metal::const_< T >::ret" \
+			 "mlc_const_return(T)=typename mln::metal::const_return_< T >::ret" \
+			 "mln_element(T)=typename T::element" \
+			 "mln_element_(T)=T::element" \
+			 "mln_delta(T)=typename T::delta" \
+			 "mln_delta_(T)=T::delta" \
+			 "mln_dpoint(T)=typename T::dpoint" \
+			 "mln_dpoint_(T)=T::dpoint" \
+			 "mln_point(T)=typename T::point" \
+			 "mln_point_(T)=T::point" \
+			 "mln_gradient_component(I)=typename mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret" \
+			 "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >" \
+			 "mln_trait_value_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
+			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
+			 "mln_deduce(T, A1, A2)=typename T::A1::A2" \
+			 "mln_graph_element(T)=typename T::graph_element" \
+			 "mln_graph_element_(T)=T::graph_element" \
+			 "mln_fun_vv2v(F, L, R)=mln::fun::vv2v::F< mln_value(L), mln_value(R) >" \
+			 "mln_fun_vv2v_result(F, L, R)=typename mln_fun_vv2v(F, L, R)::result" \
+			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret"
+
+
+
+
+EXPAND_AS_DEFINED      =
+SKIP_FUNCTION_MACROS   = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to external references
+#---------------------------------------------------------------------------
+TAGFILES               = @builddir@/../scribo/doc/scribo.tag=../../../scribo/doc/user-refman/html \
+			 @builddir@/../milena/doc/milena.tag=../../../milena/doc/user-refman/html
+GENERATE_TAGFILE       =
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = YES
+PERL_PATH              = /usr/bin/perl
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = NO
+HIDE_UNDOC_RELATIONS   = YES
+HAVE_DOT               = YES
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = NO # Disabled for light doc
+GROUP_GRAPHS           = NO # Disabled for light doc
+UML_LOOK               = NO
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = NO # Disabled for light doc
+INCLUDED_BY_GRAPH      = NO # Disabled for light doc
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = NO
+DIRECTORY_GRAPH        = NO # Disabled for light doc
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               =
+DOTFILE_DIRS           =
+MAX_DOT_GRAPH_DEPTH    = 1000
+DOT_TRANSPARENT        = NO
+DOT_MULTI_TARGETS      = NO
+GENERATE_LEGEND        = NO # Disabled for light doc
+DOT_CLEANUP            = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to the search engine
+#---------------------------------------------------------------------------
+SEARCHENGINE           = YES
+SERVER_BASED_SEARCH    = NO
+
+
+# Local Variables:
+# mode: Makefile
+# End:

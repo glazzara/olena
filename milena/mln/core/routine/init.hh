@@ -41,6 +41,7 @@
 namespace mln
 {
 
+  /// \cond INTERNAL_API
 
   // Forward declaration.
 
@@ -58,7 +59,7 @@ namespace mln
   template <typename I>
   void init_(tag::domain_t, mln_domain(I)& pset, const Image<I>& ima);
 
-
+  /// \endcond
 
 # ifndef MLN_INCLUDE_ONLY
 

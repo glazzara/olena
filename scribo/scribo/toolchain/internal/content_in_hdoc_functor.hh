@@ -27,6 +27,12 @@
 #ifndef SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_HDOC_FUNCTOR_HH
 # define SCRIBO_TOOLCHAIN_INTERNAL_CONTENT_IN_HDOC_FUNCTOR_HH
 
+/// \file
+///
+/// \brief Functor analysing and extracting content in
+/// degraded/historical documents.
+
+
 #  ifndef SCRIBO_NDEBUG
 #  include <mln/util/timer.hh>
 #  endif // ! SCRIBO_NDEBUG
@@ -103,6 +109,9 @@ namespace scribo
     {
 
 
+      /*! \brief Functor analysing and extracting content in
+	         degraded/historical documents.
+      */
       template <typename I>
       struct content_in_hdoc_functor
 	: public Toolchain_Functor

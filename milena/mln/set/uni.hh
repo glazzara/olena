@@ -60,7 +60,7 @@ namespace mln
     p_set<mln_site(Sl)>
     uni(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
-      trace::entering("set::uni");
+      mln_trace("set::uni");
 
       typedef mln_site(Sl) P;
       mlc_converts_to(mln_psite(Sr), P)::check(); 
@@ -74,7 +74,6 @@ namespace mln
       p_set<P> s;
       convert::from_to(su, s);
 
-      trace::exiting("set::uni");
       return s;
     }
 

@@ -63,7 +63,7 @@ namespace mln
 	  void
 	  init(Image<I>& input_)
 	  {
-	    trace::entering("accu::impl::image::generic::init");
+	    mln_trace("accu::impl::image::generic::init");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -74,7 +74,6 @@ namespace mln
 	    for_all(p)
 	      input(p).init();
 
-	    trace::exiting("accu::impl::image::generic::init");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -86,7 +85,7 @@ namespace mln
 	void
 	init_fastest(Image<I>& input_)
 	{
-	  trace::entering("accu::impl::image::init_fastest");
+	  mln_trace("accu::impl::image::init_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
@@ -97,7 +96,6 @@ namespace mln
 	  for_all(px)
 	    px.val().init();
 
-	  trace::exiting("accu::impl::image::init_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -142,14 +140,13 @@ namespace mln
       void
       init(Image<I>& input)
       {
-	trace::entering("accu::image::init");
+	mln_trace("accu::image::init");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
 
 	mln_precondition(exact(input).is_valid());
 	internal::init_dispatch(input);
 
-	trace::exiting("accu::image::init");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

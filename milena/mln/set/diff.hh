@@ -65,7 +65,7 @@ namespace mln
     p_set<mln_site(Sl)>
     diff(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
-      trace::entering("set::diff");
+      mln_trace("set::diff");
 
       typedef mln_site(Sl) P;
       mlc_converts_to(mln_psite(Sr), P)::check(); 
@@ -79,7 +79,6 @@ namespace mln
       p_set<P> s;
       convert::from_to(sd, s);
 
-      trace::exiting("set::diff");
       return s;
     }
 

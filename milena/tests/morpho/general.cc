@@ -130,7 +130,7 @@ int main()
   /*
 
   {
-    trace::quiet = false;
+    debug::trace::quiet = false;
 
     image2d<bool> pic;
     io::pbm::load(pic, MLN_IMG_DIR "/small.pbm");
@@ -139,7 +139,7 @@ int main()
     morpho::general(ero, pic, win::rectangle2d(3,3));
     morpho::general(dil, pic, win::rectangle2d(3,3));
 
-    trace::quiet = true;
+    debug::trace::quiet = true;
   }
 
   */
