@@ -762,7 +762,7 @@ DATA_html_dirs_inst = $(WHITE_PAPER)
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/milena/
+	$(MKDIR_P) $(DESTDIR)$(htmldir)/milena/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)/html

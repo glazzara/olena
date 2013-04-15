@@ -201,7 +201,7 @@ maintainer-clean-local:
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)
+	$(MKDIR_P) $(DESTDIR)$(htmldir)
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 

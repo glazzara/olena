@@ -230,7 +230,7 @@ maintainer-clean-local:
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
 install-data-local:
-	$(mkdir_p) $(DESTDIR)$(htmldir)/scribo/
+	$(MKDIR_P) $(DESTDIR)$(htmldir)/scribo/
 # The user reference manual is located in a subdirectory, hence this
 # special case.
 	rm -rf $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)/html

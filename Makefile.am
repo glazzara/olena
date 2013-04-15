@@ -61,7 +61,7 @@ $(PORTFILE): $(top_srcdir)/distrib/macports/Portfile.in Makefile dist
 	rm -Rf distrib
 	srcdir=''; \
 	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(mkdir_p) distrib/macports
+	$(MKDIR_P) distrib/macports
 	md5=`md5sum $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
 	sha1=`openssl sha1 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`
 	rmd160=`openssl rmd160 $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz`;
