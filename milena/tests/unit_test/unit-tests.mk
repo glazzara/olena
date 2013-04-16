@@ -609,6 +609,8 @@ mln_fun_stat_all \
 mln_fun_stat_mahalanobis \
 mln_fun_unary \
 mln_fun_v2b_all \
+mln_fun_v2b_always_false \
+mln_fun_v2b_always_true \
 mln_fun_v2b_essential \
 mln_fun_v2b_lnot \
 mln_fun_v2b_threshold_ge \

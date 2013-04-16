@@ -1,5 +1,9 @@
 2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix build issues in Milena's documentation.
 
 	* doc/Makefile.am ($(srcdir)/img/small.png): New rule.
