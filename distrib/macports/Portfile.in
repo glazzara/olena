@@ -10,9 +10,9 @@ platforms           darwin
 license             GPL-2
 maintainers         lrde.epita.fr:olena
 description         Software platform for efficient and generic image processing
-long_description    It is composed of a Generic and efficient C++ image \
+long_description    It is composed of a generic and efficient C++ image \
 		            processing library, a framework for Document Image \
-		            Analysis and Python bindings.
+		            Analysis, and some Python bindings.
 homepage            http://olena.lrde.epita.fr
 master_sites        http://www.lrde.epita.fr/dload/olena/
 

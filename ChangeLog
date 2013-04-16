@@ -1,3 +1,7 @@
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* distrib/macports/Portfile.in: Cosmetic changes.
+
 2013-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac (AC_INIT): Add URL to Olena's Web site.
