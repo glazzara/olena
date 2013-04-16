@@ -1,3 +1,9 @@
+2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix build issues in Milena's documentation.
+
+	* doc/Makefile.am ($(srcdir)/img/small.png): New rule.
+
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Remove duplicate '/' in path.

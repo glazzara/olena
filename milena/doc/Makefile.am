@@ -89,6 +89,13 @@ PNG_FIGURES =					\
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
 
+# Prevent make from trying to regenerate img/small.png from
+# img/small.pbm through suffix rule `.pbm.png', as they are not
+# related, by providing the following dummy rule.  A better way would
+# be to rename one these files to break this spurious dependency.
+$(srcdir)/img/small.png:
+	@:
+
 # --------------- #
 # Other figures.  #
 # --------------- #
