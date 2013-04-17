@@ -227,7 +227,8 @@ EXPAND_ONLY_PREDEF     = YES
 SEARCH_INCLUDES        = YES
 INCLUDE_PATH           =
 INCLUDE_FILE_PATTERNS  =
-PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
+PREDEFINED             = MLN_INCLUDE_ONLY \
+			 "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
 			 "for_all_2(x1, x2)=for(x1.start(), x2.start();	x1.is_valid(); x1.next(), x2.next())" \
 			 "for_all_3(x1, x2, x3)=for(x1.start(), x2.start(), x3.start();	x1.is_valid(); x1.next(), x2.next(), x3.next())" \
 			 "for_all_remaining(x)=if (! x.is_valid()) {} else while (x.next(), x.is_valid())" \
@@ -325,9 +326,11 @@ PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
 			 "mln_graph_element_(T)=T::graph_element" \
 			 "mln_fun_vv2v(F, L, R)=mln::fun::vv2v::F< mln_value(L), mln_value(R) >" \
 			 "mln_fun_vv2v_result(F, L, R)=typename mln_fun_vv2v(F, L, R)::result" \
-			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret"
-
-
+			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret" \
+			 "mln_ch_convolve(I, W)=typename mln::linear::ch_convolve<I, W>::ret" \
+			 "mln_ch_convolve_(I, W)=mln::linear::ch_convolve<I, W>::ret" \
+			 "mln_ch_convolve_grad(I, W)=typename mln::trait::ch_value< I, algebra::vec< I::site::dim, typename mln::linear::ch_convolve<I,W>::ret::value > >::ret" \
+			 "mln_ch_convolve_grad_(I, W)=mln::trait::ch_value< I, algebra::vec< I::site::dim, mln::linear::ch_convolve<I,W>::ret::value > >::ret"
 
 
 EXPAND_AS_DEFINED      =
