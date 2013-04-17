@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in: Expand more macros.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Exclude internal symbols.
 
 2013-04-16  Roland Levillain  <roland@lrde.epita.fr>

@@ -1706,7 +1706,12 @@ PREDEFINED             = MLN_INCLUDE_ONLY \
 			 "mln_is_fastest_IW(I, W)=mlc_and(mlc_is(mln_trait_image_speed(I),  		\
 			  	       		         trait::image::speed::fastest),			\
 							 mln_is_simple_window(W))"		\
-                         "BOOST_PP_LOCAL_ITERATE()=<boost/preprocessor/iteration/detail/local.hpp>"
+                         "BOOST_PP_LOCAL_ITERATE()=<boost/preprocessor/iteration/detail/local.hpp>" \
+			 "mln_ch_convolve(I, W)=typename mln::linear::ch_convolve<I, W>::ret" \
+			 "mln_ch_convolve_(I, W)=mln::linear::ch_convolve<I, W>::ret" \
+			 "mln_ch_convolve_grad(I, W)=typename mln::trait::ch_value< I, algebra::vec< I::site::dim, typename mln::linear::ch_convolve<I,W>::ret::value > >::ret" \
+			 "mln_ch_convolve_grad_(I, W)=mln::trait::ch_value< I, algebra::vec< I::site::dim, mln::linear::ch_convolve<I,W>::ret::value > >::ret"
+
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then
 # this tag can be used to specify a list of macro names that should be expanded.
