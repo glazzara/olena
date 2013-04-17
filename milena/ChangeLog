@@ -1,5 +1,12 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add documentation for mln_concrete and mln_ch_value.
+
+	* mln/trait/ch_value.hh,
+	* mln/trait/concrete.hh: Here.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add explanations on compilation with multiple files.
 
 	* doc/examples/multi_files_f1.cc.raw,

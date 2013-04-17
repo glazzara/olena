@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -36,7 +36,16 @@
 # include <mln/trait/ch_function_value.hh>
 
 
+/*!  Macros provided for convenience. Should be used in a templated
+  function only.
+  \relates mln::trait::ch_value
+*/
 # define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
+
+/*!  Macros provided for convenience. Should be used in a
+  non-templated function only.
+  \relates mln::trait::ch_value
+*/
 # define mln_ch_value_(I, V)          mln::trait::ch_value< I, V >::ret
 
 
@@ -217,6 +226,61 @@ namespace mln
     } // end of namespace mln::trait::impl
 
 
+
+    /*!  \brief Compute the concrete type of an image type and change
+      the value type.
+
+      \tparam I An image type.
+
+      This macro is used to compute the most appropriate concrete image
+      type to be used to store a copy of an image of type I.
+
+      A concrete image type is an image type storing all its site
+      values in a single memory buffer. For instance, mln::image1d,
+      mln::image2d, mln::image3d are considered as concrete types.
+      Image morphers are not concrete types since they can alter, on
+      the fly, the domain and the values.
+
+      This macro is usually used while writing generic algorithms to
+      handle all possible cases while image morphers and concrete images
+      are interacting.
+
+      Compared to mln::trait::concrete, this trait can change the
+      value type of the computed image type.
+
+      Few examples:
+      \code
+      mln_ch_value(mln::image2d<int>,int) => mln::image2d<int>
+      mln_ch_value(mln::image2d<int>,bool) => mln::image2d<bool>
+      \endcode
+
+      Therefore, you can safely write the following code:
+      \code
+      template<typename I>
+      mln_ch_value(I,bool) my_function(const Image<I>& ima)
+      {
+        mln_ch_value(I,bool) output;
+        ...
+	return output;
+      }
+
+      int main()
+      {
+        image2d<int> ima;
+	image2d<bool> result = my_function(ima);
+      }
+      \endcode
+
+      Computing a type with trait::concrete can be done using macros
+      mln_ch_value() and mln_ch_value_().
+
+      Note that, due to C++ syntax ambiguities, mln_ch_value() should
+      be used in a templated function whereas mln_ch_value_() shoud be
+      used in a non-templated function.
+
+      If you are not sure of the concrete type that should be returned
+      by the macro, take a look at mln_var() which can guess it for you.
+    */
     template <typename I, typename V>
     struct ch_value
     {
