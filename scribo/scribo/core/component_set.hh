@@ -256,7 +256,7 @@ namespace scribo
 
     // Misc Members
 
-    /// Return the component count.
+    /// Return the number of components, background excluded.
     mln_value(L) nelements() const;
 
     /// Return component information for a given component id \p id.
@@ -357,11 +357,12 @@ namespace scribo
   };
 
 
+  /// \relates component_set
   template <typename L>
   bool
   operator==(const component_set<L>& lhs, const component_set<L>& rhs);
 
-
+  /// \relates component_set
   template <typename L>
   std::ostream&
   operator<<(std::ostream& ostr, const component_set<L>& info);

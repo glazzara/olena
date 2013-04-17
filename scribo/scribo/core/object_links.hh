@@ -58,7 +58,7 @@ namespace scribo
       object_links_data();
       object_links_data(const component_set<L>& components, unsigned size);
       object_links_data(const component_set<L>& components,
-			unsigned size, unsigned value);
+			unsigned size, unsigned default_link_id);
 
       mln::util::array<unsigned> comp_to_link_;
       component_set<L> components_;
@@ -69,20 +69,41 @@ namespace scribo
 
 
 
-  /// \brief Object links representation.
-  ///
-  /// \ingroup grpstruct
-  //
+  /*! \brief Object links representation.
+
+    This structure is meant to store link information between
+    components. Linking components can be considered as a first step
+    towards component grouping.
+
+    It requires a component_set to be constructed. Each component
+    existing in the component_set may have link in an object_link
+    structure. If no component_set is used for construction, this
+    object is invalid (\sa is_valid()).
+
+
+
+    \ingroup grpstruct
+  */
   template <typename L>
   class object_links : public Serializable<object_links<L> >
   {
     typedef internal::object_links_data<L> data_t;
 
   public:
+    /// Default constructor. It produces an invalid structure.
     object_links();
-    object_links(const component_set<L>& components);
-    object_links(const component_set<L>& components, unsigned value);
 
+    /// Construct a valid object_links. Links is enabled for each
+    /// valid component but no link is set. Invalid components links
+    /// are disabled.
+    object_links(const component_set<L>& components);
+
+    /// Construct a valid object_links. Links is enabled for each
+    /// valid component and set by default towards component with id
+    /// \p default_link_id. Invalid components links are disabled.
+    object_links(const component_set<L>& components, unsigned default_link_id);
+
+    /// Return the underlying component_set.
     const component_set<L>& components() const;
 
     /// Return True if this object_links structure is correctly
@@ -97,6 +118,8 @@ namespace scribo
     /// itself to another component.
     bool is_linked(unsigned comp_id) const;
 
+    /// Return the number of links. This is equivalent to the number
+    /// of components + the background.
     unsigned nelements() const;
 
     /// Link related methods.
@@ -116,10 +139,16 @@ namespace scribo
     const unsigned& operator()(unsigned comp_id) const;
     /// \}
 
+    /// Returns the underlying array encoding the component
+    /// links. Indexes in array correspond to component ids and the
+    /// corresponding value is the component id involved in the link.
     const mln::util::array<unsigned>& comp_to_link() const;
 
+    /// Initialize links. Each component is linked to itself (i.e. has
+    /// no link). Invalid components have linking disabled.
     void init();
 
+    /// Make a deep copy of this structure.
     object_links<L> duplicate() const;
 
   private:
@@ -127,6 +156,7 @@ namespace scribo
   };
 
 
+  /// \relates object_links
   template <typename L>
   std::ostream&
   operator<<(std::ostream& ostr, const object_links<L>& links);
@@ -156,8 +186,8 @@ namespace scribo
 
     template <typename L>
     object_links_data<L>::object_links_data(const component_set<L>& components,
-					    unsigned size, unsigned value)
-      : comp_to_link_(size, value), components_(components)
+					    unsigned size, unsigned default_link_id)
+      : comp_to_link_(size, default_link_id), components_(components)
     {
     };
 
@@ -182,10 +212,10 @@ namespace scribo
 
   template <typename L>
   object_links<L>::object_links(const component_set<L>& components,
-				unsigned value)
+				unsigned default_link_id)
   {
     data_ = new data_t(components, value::next(components.nelements()),
-		       value);
+		       default_link_id);
   }
 
 

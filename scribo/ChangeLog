@@ -1,5 +1,14 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Enhance documentation in scribo.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/object_links.hh: Add missing member documentation.
+
+	* scribo/debug/logger.hh: Fix an invalid object reference.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/component_set.hh: Hide internal API.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>

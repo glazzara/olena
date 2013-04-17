@@ -144,7 +144,7 @@ namespace scribo
 	  inside a program.
 
 	  Stopping time logging will output the computed time if
-	  Verbose mode is higher or equal to #Time.
+	  Verbose mode is higher or equal to scribo::debug::Time.
 	 */
 	/// @{
 	void start_time_logging();
