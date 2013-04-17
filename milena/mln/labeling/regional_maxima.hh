@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -44,14 +44,15 @@ namespace mln
   namespace labeling
   {
 
-    /*! Connected component labeling of the regional maxima of an
-     * image.
-     *
-     * \param[in]  input    The input image.
-     * \param[in]  nbh      The connexity of the regional maxima.
-     * \param[out] nlabels  The number of labeled regions.
-     * \return              The label image.
-     *
+    /*! \brief Connected component labeling of the regional maxima of an
+      image.
+
+      \param[in]  input    The input image.
+      \param[in]  nbh      The connexity of the regional maxima.
+      \param[out] nlabels  The number of labeled regions.
+      \return              The label image.
+
+      \ingroup labeling
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)

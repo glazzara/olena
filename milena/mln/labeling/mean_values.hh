@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,6 +61,14 @@ namespace mln
   namespace labeling
   {
 
+    /*! \brief Construct an image of mean values from a labeled image.
+
+      \param[in] input An image.
+      \param[in] lbl   A labeled image.
+      \param[in] nlabels The number of computed labels.
+
+      \ingroup labeling
+     */
     template <typename I, typename L>
     mln_concrete(I)
     mean_colors(const Image<I>& input,

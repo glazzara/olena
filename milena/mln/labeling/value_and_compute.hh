@@ -46,16 +46,18 @@ namespace mln
   namespace labeling
   {
 
-    /// \brief Connected component labeling of the image sites at a given
-    /// value.
-    ///
-    /// \param[in]  input    The input image.
-    /// \param[in]  val      The value to consider.
-    /// \param[in]  nbh      The connectivity of components.
-    /// \param[out] nlabels  The number of labels.
-    /// \param[in]  accu     The accumulator to be computed.
-    /// \return              The label image.
-    //
+    /*! \brief Connected component labeling of the image sites at a given
+      value.
+
+      \param[in]  input    The input image.
+      \param[in]  val      The value to consider.
+      \param[in]  nbh      The connectivity of components.
+      \param[out] nlabels  The number of labels.
+      \param[in]  accu     The accumulator to be computed.
+      \return              The label image.
+
+      \ingroup labeling
+    */
     template <typename I, typename N, typename L, typename A>
     util::couple<mln_ch_value(I,L),
 		 util::couple<util::array<mln_result(A)>,

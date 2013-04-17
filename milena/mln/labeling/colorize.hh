@@ -57,17 +57,19 @@ namespace mln
     }
 
 
-    /// Create a new color image from a labeled image and fill each component
-    /// with a random color.
-    /*!
-     * litera::black is used for component 0, e.g. the background.
-     * Min and max values for RGB values can be set through the global
-     * variables mln::labeling::colorize_::min_value and
-     * mln::labeling::colorize_::max_value.
-     *
-     * \param[in] value value type used in the returned image.
-     * \param[in] labeled_image A labeled image (\sa labeling::blobs).
-     * \param[in] nlabels Number of labels.
+    /*! \brief Create a new color image from a labeled image and fill each component
+      with a random color.
+
+      litera::black is used for component 0, e.g. the background.
+      Min and max values for RGB values can be set through the global
+      variables mln::labeling::colorize_::min_value and
+      mln::labeling::colorize_::max_value.
+
+      \param[in] value value type used in the returned image.
+      \param[in] labeled_image A labeled image (\sa labeling::blobs).
+      \param[in] nlabels Number of labels.
+
+      \ingroup labeling
      */
     template <typename V, typename L>
     mln_ch_value(L, V)
@@ -76,16 +78,26 @@ namespace mln
 	     const mln_value(L)& nlabels);
 
 
-    /// \overload
-    //
+    /*! \overload
+      The number of labels is re-computed.
+
+      \warning Computing the number of labels shall add extra
+      computation time.
+
+      \ingroup labeling
+     */
     template <typename V, typename L>
     mln_ch_value(L, V)
     colorize(const V& value,
 	     const Image<L>& labeled_image);
 
 
-    /// \overload
-    //
+    /*! \overload
+
+      Colorize labeled image with value::rgb8.
+
+      \ingroup labeling
+     */
     template <typename L>
     mln_ch_value(L, mln::value::rgb8)
     colorize(const Image<L>& input,

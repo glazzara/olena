@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -42,13 +42,15 @@ namespace mln
   namespace labeling
   {
 
-    /// Connected component labeling of the flat zones of an image.
-    ///
-    /// \param[in]  input    The input image.
-    /// \param[in]  nbh      The connexity of the flat zones.
-    /// \param[out] nlabels  The number of labels.
-    /// \return              The label image.
-    ///
+    /*! \brief Connected component labeling of the flat zones of an image.
+
+      \param[in]  input    The input image.
+      \param[in]  nbh      The connexity of the flat zones.
+      \param[out] nlabels  The number of labels.
+      \return              The label image.
+
+      \ingroup labeling
+    */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,

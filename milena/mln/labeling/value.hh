@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,15 +44,17 @@ namespace mln
   namespace labeling
   {
 
-    /// \brief Connected component labeling of the image sites at a given
-    /// value.
-    ///
-    /// \param[in]  input    The input image.
-    /// \param[in]  val      The value to consider.
-    /// \param[in]  nbh      The connectivity of components.
-    /// \param[out] nlabels  The number of labels.
-    /// \return              The label image.
-    //
+    /*! \brief Connected component labeling of the image sites at a
+     given value.
+
+     \param[in]  input    The input image.
+     \param[in]  val      The value to consider.
+     \param[in]  nbh      The connectivity of components.
+     \param[out] nlabels  The number of labels.
+     \return              The label image.
+
+     \ingroup labeling
+    */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     value(const Image<I>& input, const mln_value(I)& val,

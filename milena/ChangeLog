@@ -1,5 +1,28 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add labeling module in documentation.
+
+	* doc/mln/labeling/labeling.dox: New. Introduce labeling module.
+
+	* mln/labeling/background.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/compute_image.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/mean_values.hh,
+	* mln/labeling/pack.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/relabel.hh,
+	* mln/labeling/superpose.hh,
+	* mln/labeling/value.hh,
+	* mln/labeling/value_and_compute.hh,
+	* mln/labeling/wrap.hh: Set documentation as part of the labeling
+	group.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add documentation for mln_concrete and mln_ch_value.
 
 	* mln/trait/ch_value.hh,

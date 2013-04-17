@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,8 @@ namespace mln
   namespace labeling
   {
 
-    /*! Connected component labeling of the object part in a binary
-     * image.
+    /*! \brief Connected component labeling of the object part in a
+     * binary image.
      *
      * \param[in]  input    The input image.
      * \param[in]  nbh      The connexity of the foreground.
@@ -54,6 +55,7 @@ namespace mln
      * value set to \c true.
      *
      * \see mln::labeling::value
+     * \ingroup labeling
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)

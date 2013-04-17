@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,23 +46,29 @@ namespace mln
   namespace labeling
   {
 
-    /// Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
-    /// Lmax] (using modulus).
-    ///
-    /// \param[in] value_type The type used to wrap the label type.
-    /// \param[in] input The label image.
-    ///
-    /// \return A new image with values wrapped with type V.
+    /*! \brief Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
+      Lmax] (using modulus).
+
+      \param[in] value_type The type used to wrap the label type.
+      \param[in] input The label image.
+
+      \return A new image with values wrapped with type V.
+
+      \ingroup labeling
+    */
     template <typename V, typename I>
     mln_ch_value(I,V)
     wrap(const V& value_type, const Image<I>& input);
 
-    /// Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
-    /// Lmax] (using modulus). Use label_8 as label type.
-    ///
-    /// \param[in] input The label image.
-    ///
-    /// \return A new image with values wrapped with type label_8.
+    /*! \brief Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
+      Lmax] (using modulus). Use label_8 as label type.
+
+      \param[in] input The label image.
+
+      \return A new image with values wrapped with type label_8.
+
+      \ingroup labeling
+    */
     template <typename I>
     mln_ch_value(I, mln::value::label_8)
     wrap(const Image<I>& input);

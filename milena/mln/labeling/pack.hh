@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,21 +49,34 @@ namespace mln
   namespace labeling
   {
 
-    /// Relabel a labeled image in order to have a contiguous labeling.
-    ///
-    /// \param[in]  label	The labeled image.
-    /// \param[out] new_nlabels The number of labels after relabeling.
-    /// \param[out] repack_fun  The function used to repack the labels.
-    ///
-    /// \return The relabeled image.
-    //
+    /*! \brief Relabel a labeled image in order to have a contiguous
+      labeling.
+
+      \param[in]  label	The labeled image.
+      \param[out] new_nlabels The number of labels after relabeling.
+      \param[out] repack_fun  The function used to repack the labels.
+
+      \return The relabeled image.
+
+      \ingroup labeling
+    */
     template <typename I>
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels,
 	 fun::i2v::array<mln_value(I)>& repack_fun);
 
 
-    /// \overload
+    /*! \overload
+
+      Rely on a default relabeling function that guaranty contiguous
+      labeling.
+
+      \warning Don't expect any label from \p label to be preserved.
+
+      \sa make::relabelfun
+
+      \ingroup labeling
+    */
     template <typename I>
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels);

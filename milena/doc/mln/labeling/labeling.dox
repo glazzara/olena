@@ -1,0 +1,6 @@
+/*! \defgroup labeling Image Labeling
+ *
+ * \brief All labeling routines provided in Milena.
+ *
+ * \ingroup modroutines
+ */

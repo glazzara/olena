@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,15 +60,17 @@ namespace mln
   namespace labeling
   {
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
-    /// \param[in] a An accumulator.
-    /// \param[in] input The input image.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A util::array of accumulator result (one result per label).
-    //
+    /*! \brief Compute an accumulator onto the pixel values of the image \p input.
+      for each component of the image \p label.
+
+      \param[in] a An accumulator.
+      \param[in] input The input image.
+      \param[in] label The labeled image.
+      \param[in] nlabels The number of labels in \p label.
+      \return A util::array of accumulator result (one result per label).
+
+      \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
@@ -77,15 +79,17 @@ namespace mln
 	    const mln_value(L)& nlabels);
 
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    ///  for each component of the image \p label.
-    ///
-    /// \param[in] a A meta-accumulator.
-    /// \param[in] input The input image.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A util::array of accumulator result (one result per label).
-    //
+    /*! \brief Compute an accumulator onto the pixel values of the image \p input.
+      for each component of the image \p label.
+
+      \param[in] a A meta-accumulator.
+      \param[in] input The input image.
+      \param[in] label The labeled image.
+      \param[in] nlabels The number of labels in \p label.
+      \return A util::array of accumulator result (one result per label).
+
+      \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     util::array<mln_meta_accu_result(A, mln_value(I))>
     compute(const Meta_Accumulator<A>& a,
@@ -94,14 +98,16 @@ namespace mln
 	    const mln_value(L)& nlabels);
 
 
-    /// Compute an accumulator onto the pixel sites of each component domain of
-    /// \p label.
-    ///
-    /// \param[in] a An accumulator.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A util::array of accumulator result (one result per label).
-    //
+    /*! Compute an accumulator onto the pixel sites of each component domain of
+      \p label.
+
+      \param[in] a An accumulator.
+      \param[in] label The labeled image.
+      \param[in] nlabels The number of labels in \p label.
+      \return A util::array of accumulator result (one result per label).
+
+      \ingroup labeling
+    */
     template <typename A, typename L>
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
@@ -109,14 +115,16 @@ namespace mln
 	    const mln_value(L)& nlabels);
 
 
-    /// Compute an accumulator onto the pixel sites of each component domain of
-    /// \p label.
-    ///
-    /// \param[in] a A meta-accumulator.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A util::array of accumulator result (one result per label).
-    //
+    /*! \brief Compute an accumulator onto the pixel sites of each component domain of
+      \p label.
+
+      \param[in] a A meta-accumulator.
+      \param[in] label The labeled image.
+      \param[in] nlabels The number of labels in \p label.
+      \return A util::array of accumulator result (one result per label).
+
+      \ingroup labeling
+    */
     template <typename A, typename L>
     util::array<mln_meta_accu_result(A, mln_psite(L))>
     compute(const Meta_Accumulator<A>& a,
@@ -124,15 +132,17 @@ namespace mln
 	    const mln_value(L)& nlabels);
 
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
-    /// \param[in] a An array of accumulator.
-    /// \param[in] input The input image.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A util::array of accumulator result (one result per label).
-    //
+    /*! \brief Compute an accumulator onto the pixel values of the image \p input.
+      for each component of the image \p label.
+
+      \param[in] a An array of accumulator.
+      \param[in] input The input image.
+      \param[in] label The labeled image.
+      \param[in] nlabels The number of labels in \p label.
+      \return A util::array of accumulator result (one result per label).
+
+      \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     util::array<mln_result(A)>
     compute(util::array<A>& a,

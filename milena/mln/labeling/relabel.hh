@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,15 +47,18 @@ namespace mln
   namespace labeling
   {
 
-    /// Remove components and relabel a labeled image.
-    /// \param[in]  label the labeled image.
-    /// \param[in]  nlabels the number of labels in \p label.
-    /// \param[out] new_nlabels the number of labels after relabeling.
-    /// \param[in]  fv2b function returning whether a label must be replaced
-    ///		      by the background.
-    ///
-    /// \return the relabeled image.
-    //
+    /*! \brief Remove components and relabel a labeled image.
+
+      \param[in]  label the labeled image.
+      \param[in]  nlabels the number of labels in \p label.
+      \param[out] new_nlabels the number of labels after relabeling.
+      \param[in]  fv2b function returning whether a label must be replaced
+       		  by the background.
+
+      \return the relabeled image.
+
+      \ingroup labeling
+    */
     template <typename I, typename F>
     mln_concrete(I)
     relabel(const Image<I>&	    label,
@@ -64,14 +67,16 @@ namespace mln
 	    const Function_v2b<F>&  fv2b);
 
 
-    /// Remove components and relabel a labeled image.
-    /// \param[in]  label the labeled image.
-    /// \param[in]  nlabels the number of labels in \p label.
-    /// \param[in]  fv2v function returning the new component id for each pixel
-    /// value.
-    ///
-    /// \return the relabeled image.
-    //
+    /*! \brief Remove components and relabel a labeled image.
+
+      \param[in]  label the labeled image.
+      \param[in]  nlabels the number of labels in \p label.
+      \param[in]  fv2v function returning the new component id for each pixel
+      value.
+
+      \return the relabeled image.
+      \ingroup labeling
+    */
     template <typename I, typename F>
     mln_concrete(I)
     relabel(const Image<I>&	    label,
@@ -79,12 +84,15 @@ namespace mln
 	    const Function_v2v<F>&  fv2v);
 
 
-    /// Remove components and relabel a labeled image inplace.
-    /// \param[in, out] label the labeled image.
-    /// \param[in]      nlabels the number of labels in \p label.
-    /// \param[in]      fv2b function returning whether a label must be replaced
-    ///		        by the background.
-    //
+    /*! \brief Remove components and relabel a labeled image inplace.
+
+      \param[in, out] label the labeled image.
+      \param[in]      nlabels the number of labels in \p label.
+      \param[in]      fv2b function returning whether a label must be replaced
+                           by the background.
+
+      \ingroup labeling
+    */
     template <typename I, typename F>
     void
     relabel_inplace(Image<I>&		    label,
@@ -92,12 +100,15 @@ namespace mln
 		    const Function_v2b<F>&  fv2b);
 
 
-    /// Remove components and relabel a labeled image inplace.
-    /// \param[in, out] label the labeled image.
-    /// \param[in]      nlabels the number of labels in \p label.
-    /// \param[in]	fv2v function returning the new component id for each
-    /// pixel value.
-    //
+    /*! \brief Remove components and relabel a labeled image inplace.
+
+      \param[in, out] label the labeled image.
+      \param[in]      nlabels the number of labels in \p label.
+      \param[in]      fv2v function returning the new component id for each
+                      pixel value.
+
+      \ingroup labeling
+    */
     template <typename I, typename F>
     void
     relabel_inplace(Image<I>&		    label,

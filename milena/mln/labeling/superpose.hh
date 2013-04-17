@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,6 +66,7 @@ namespace mln
       @pre \p rhs and lhs must have the same domain.
       @pre \p The value type of rhs must be convertible towards lhs's.
 
+      \ingroup labeling
      */
     template <typename I, typename J>
     mln_concrete(I)

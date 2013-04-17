@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,16 +50,19 @@ namespace mln
   namespace labeling
   {
 
-   /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
-    /// \param[in] a The mln::p_array of accumulator result.
-    /// \param[in] input The input image (values).
-    /// \param[in] labels The label image.
-    /// \param[in] nlabels The count of labels.
-    ///
-    /// \return The image where labels are replaced by the result of
-    /// the accumulator.
+    /*! Compute an accumulator onto the pixel values of the image \p input.
+      for each component of the image \p label.
+
+      \param[in] a The mln::p_array of accumulator result.
+      \param[in] input The input image (values).
+      \param[in] labels The label image.
+      \param[in] nlabels The count of labels.
+
+      \return The image where labels are replaced by the result of
+      the accumulator.
+
+      \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     mln_ch_value(L, mln_result(A))
       compute_image(const util::array<mln_result(A)>& a,
@@ -66,17 +70,19 @@ namespace mln
 		    const Image<L>& labels,
 		    const mln_value(L)& nlabels);
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
-    /// \param[in] accu The accumulator.
-    /// \param[in] input The input image (values).
-    /// \param[in] labels The label image.
-    /// \param[in] nlabels The count of labels.
-    ///
-    /// \return The image where labels are replaced by the result of
-    /// the accumulator.
-    ///
+    /*! \brief Compute an accumulator onto the pixel values of the
+      image \p input.  for each component of the image \p label.
+
+      \param[in] accu The accumulator.
+      \param[in] input The input image (values).
+      \param[in] labels The label image.
+      \param[in] nlabels The count of labels.
+
+      \return The image where labels are replaced by the result of
+      the accumulator.
+
+      \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     inline
     mln_ch_value(L, mln_result(A))
@@ -86,17 +92,19 @@ namespace mln
 		    const mln_value(L)& nlabels);
 
 
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
-    /// \param[in] accu The meta-accumulator.
-    /// \param[in] input The input image (values).
-    /// \param[in] labels The label image.
-    /// \param[in] nlabels The count of labels.
-    ///
-    /// \return The image where labels are replaced by the result of
-    /// the accumulator.
-    ///
+    /*! \brief Compute an accumulator onto the pixel values of the
+     image \p input.  for each component of the image \p label.
+
+     \param[in] accu The meta-accumulator.
+     \param[in] input The input image (values).
+     \param[in] labels The label image.
+     \param[in] nlabels The count of labels.
+
+     \return The image where labels are replaced by the result of
+     the accumulator.
+
+     \ingroup labeling
+    */
     template <typename A, typename I, typename L>
     inline
     mln_ch_value(L, mln_meta_accu_result(A, mln_value(I)))
