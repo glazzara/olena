@@ -124,7 +124,7 @@ namespace scribo
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if ((input(p2) != id) && (input(p3) == id))
+	if ((input.has(p2) && input(p2) != id) && (input.has(p3) && input(p3) == id))
 	{
 	  direction = 3;
 	  return;
@@ -190,7 +190,7 @@ namespace scribo
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if ((input(p2) != id) && (input(p3) == id))
+	if ((input.has(p2) && input(p2) != id) && (input.has(p3) && input(p3) == id))
 	{
 	  direction = 1;
 	  return;
@@ -224,7 +224,8 @@ namespace scribo
 	const point2d p3(cur_pt.row() + offset[direction][7][1],
 			 cur_pt.col() + offset[direction][7][0]);
 
-	if ((input(p2) != id) && ((input(p1) == id) || (input(p3) == id)))
+	if ((input.has(p2) && input(p2) != id)
+	    && ((input.has(p1) && input(p1) == id) || (input.has(p3) && input(p3) == id)))
 	{
 	  direction = 2;
 	  return;
@@ -268,7 +269,7 @@ namespace scribo
 	  tmp = point2d(cur_pt.row() + offset[direction][i][1],
 			cur_pt.col() + offset[direction][i][0]);
 
-	  if (input(tmp) == id)
+	  if (input.has(tmp) && input(tmp) == id)
 	    break;
 	}
 

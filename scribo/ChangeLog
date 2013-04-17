@@ -1,3 +1,8 @@
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/util/component_precise_outline.hh: Check if sites are
+	part of the image.
+
 2013-04-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/Makefile.am: Remove duplicate '/' in path.
