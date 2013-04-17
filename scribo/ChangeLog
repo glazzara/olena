@@ -1,5 +1,10 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/object_links.hh: Always initialize links in
+	non-default constructors.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/component_set.hh: Adjust memory pre-allocation size.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>

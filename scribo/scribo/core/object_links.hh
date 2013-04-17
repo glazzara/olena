@@ -207,6 +207,9 @@ namespace scribo
   object_links<L>::object_links(const component_set<L>& components)
   {
     data_ = new data_t(components, value::next(components.nelements()));
+
+    // Initialize with no link.
+    init();
   }
 
 
