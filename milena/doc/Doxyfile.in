@@ -739,29 +739,25 @@ EXCLUDE_SYMBOLS        = mln::*_check*				\
 			 mln::internal::subject_impl		\
 			 mln::internal::subject_point_impl<*	\
 			 mln::internal::subject_point_impl	\
+			 mln::trait::bkd_*			\
+			 mln::trait::accumulator::*		\
 			 mln::trait::accumulator_<*		\
+		         mln::trait::image::*	    		\
 		         mln::trait::image_<*	    		\
+			 mln::trait::neighborhood::*		\
 			 mln::trait::op_*<			\
+			 mln::trait::op::*			\
 			 mln::trait::impl::ch_value_<*		\
+			 mln::trait::site_set::*		\
 			 mln::trait::site_set_<*		\
 			 mln::trait::set_*	    		\
+			 mln::trait::value::*	    		\
 			 mln::trait::value_*	    		\
+			 mln::trait::window::*			\
 			 mln::trait::window_<*			\
-			 mln::trait::internal::merge_triplet_<* \
-			 mln::trait::next::set_binary_<*	\
-			 mln::trait::next::set_unary_<*		\
-			 mln::trait::next::helper_get_unary_<*	\
-			 mln::trait::next::helper_get_binary_<*	\
-			 mln::trait::next::helper_solve_binary_<*		\
-			 mln::trait::next::helper_solver_unary_<*		\
-			 mln::trait::next::internal::helper_get_unary_<*	\
-			 mln::trait::next::internal::helper_get_binary_<*	\
-			 mln::trait::next::internal::set_unary_<*		\
-			 mln::trait::next::internal::set_binary_<*		\
-			 mln::trait::next::internal::helper_solve_binary_<* 	\
-			 mln::trait::next::internal::helper_solver_unary_<* 	\
+			 mln::trait::internal::* 		\
+			 mln::trait::next::*			\
 			 mln::metal::*					    	\
-			 mln::trait::*						\
 			 mln::doc::*						\
 			 mln::io::*::internal::*				\
 			 mln::internal::exact_*					\

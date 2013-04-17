@@ -1,3 +1,7 @@
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* doc/Doxyfile.in: Exclude internal symbols.
+
 2013-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Regen.
