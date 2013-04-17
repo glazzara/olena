@@ -307,6 +307,8 @@ namespace scribo
 
     // Internal methods
 
+    /// \cond INTERNAL_API
+
     /// \internal
     /// Return all the component infos.
     //
@@ -343,10 +345,13 @@ namespace scribo
     //
     mln_concrete(L) valid_comps_image_() const;
 
+    /// \endcond
 
   protected:
+    /// \cond INTERNAL_API
     /// Duplicate the underlying image and create a new component_set.
     void init_(const component_set<L>& model);
+    /// \endcond
 
     mln::util::tracked_ptr<data_t> data_;
   };

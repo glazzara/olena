@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/component_set.hh: Hide internal API.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move documentation of component_set in its corresponding header.
 
 	* doc/scribo/core/component_set.dox: Remove and move documentation...
