@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/win/rectangle2d.hh: Hide internal API.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add labeling module in documentation.
 
 	* doc/mln/labeling/labeling.dox: New. Introduce labeling module.

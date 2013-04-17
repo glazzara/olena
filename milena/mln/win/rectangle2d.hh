@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -82,16 +83,18 @@ namespace mln
       /// Give the rectangle area.
       unsigned area() const;
 
+      /// Give the std vector of delta-points.
+      const std::vector<dpoint2d>& std_vector() const;
+
+
+      /// \cond INTERNAL_API
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
       unsigned delta_() const;
 
-
-      /// Give the std vector of delta-points.
-      const std::vector<dpoint2d>& std_vector() const;
-
       void print_(std::ostream& ostr) const;
+      /// \endcond
 
     protected:
 
