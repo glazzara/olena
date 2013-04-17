@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/mln/convert.dox: Fix from_to_ module name.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Move internal code to namespace internal.
 
 	* mln/labeling/n_max.hh: Move internal function to namespace

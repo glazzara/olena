@@ -5,9 +5,9 @@
  * \ingroup modroutines
  */
 
-/*! \defgroup fromto Routines
+/*! \defgroup fromto from_to_ Routines
  *
- * \brief All fromto overloads.
+ * \brief All from_to_ overloads.
  *
  * \ingroup convert
  */
