@@ -110,7 +110,8 @@ EXCLUDE                = @top_srcdir@/scribo/demo			\
                          @top_srcdir@/scribo/+*
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *.spe.hh *.moc.cc
-EXCLUDE_SYMBOLS	       = *_ mln::trait::*
+EXCLUDE_SYMBOLS	       = mln::trait::* \
+			 scribo::*::internal::*_data
 EXAMPLE_PATH           = @top_srcdir@/scribo/doc/examples	    \
 			 @top_srcdir@/scribo/doc/outputs	    \
 			 @top_srcdir@/scribo/doc/examples/split	    \
