@@ -405,7 +405,7 @@ namespace scribo
       mln_precondition(infos_.nelements() == 0);
 
       ncomps_ = ncomps;
-      infos_.reserve(ncomps_);
+      infos_.reserve(mln::value::next(ncomps_));
       infos_.append(component_info<L>()); // Component 0, i.e. the background.
     }
 

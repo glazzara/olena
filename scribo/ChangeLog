@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/component_set.hh: Adjust memory pre-allocation size.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Enhance documentation in scribo.
 
 	* scribo/core/component_set.hh,
