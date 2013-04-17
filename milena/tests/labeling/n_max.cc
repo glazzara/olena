@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,7 +56,7 @@ int main()
   accu::math::count<int_u8> a_;
 
   util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
-  util::array<label_8> arr_big = labeling::n_max<label_8>(a, 3);
+  util::array<label_8> arr_big = labeling::internal::n_max<label_8>(a, 3);
 
   mln_assertion(arr_big[1] == 1u);
   mln_assertion(arr_big[2] == 4u);

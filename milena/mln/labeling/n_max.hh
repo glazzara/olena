@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,13 +36,6 @@
 ///
 /// Construct from a count accumulator of a labeled image an array with
 /// the ordered n biggest labels.
-///
-/// \return an array starting at index 1
-///
-/// \warning The biggest value is stocked at index 0. It generally represents
-/// the background and should be ignored. However, it is still accessible
-/// if necessary.
-
 
 namespace mln
 {
@@ -49,11 +43,17 @@ namespace mln
   namespace labeling
   {
 
-    template <typename L, typename V>
-    util::array<L>
-    n_max(const util::array<V>& in_arr, unsigned n);
+    /*! \brief Construct from a count accumulator of a labeled image an array with
+      the ordered n biggest labels.
 
+      \return an array starting at index 1
 
+      \warning The biggest value is stored at index 0. It usually
+      represents the background and should be ignored. However, it
+      is still accessible if necessary.
+
+      \ingroup labeling
+    */
     template <typename L>
     util::array<mln_value(L)>
     n_max(const Image<L>& lbl, const mln_value(L)& nlabels, unsigned n);
@@ -61,44 +61,49 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename L, typename V>
-    util::array<L>
-    n_max(const util::array<V>& in_arr, unsigned n)
+    namespace internal
     {
-      mln_trace("mln::labeling::n_max");
 
-      mln_precondition(n < in_arr.nelements());
-
-      util::array<L> output(n + 1, 0);
-      for (unsigned i = 0; i < n + 1; ++i)
-	output[i] = i;
-      int swap = 0;
-      for (int j = n - 1; j > 0; --j)
+      template <typename L, typename V>
+      util::array<L>
+      n_max(const util::array<V>& in_arr, unsigned n)
       {
-	if (in_arr[output[j]] < in_arr[output[j + 1]])
-	{
-	  swap = output[j];
-	  output[j] = output[j + 1];
-	  output[j + 1] = swap;
-	}
-      }
+	mln_trace("mln::labeling::n_max");
 
-      for (unsigned i = n; i < in_arr.nelements(); ++i)
-      {
-	if (in_arr[i] > in_arr[output[n]])
+	mln_precondition(n < in_arr.nelements());
+
+	util::array<L> output(n + 1, 0);
+	for (unsigned i = 0; i < n + 1; ++i)
+	  output[i] = i;
+	int swap = 0;
+	for (int j = n - 1; j > 0; --j)
 	{
-	  output[n] = i;
-	  for (unsigned j = n - 1; j > 0 && in_arr[output[j]] < in_arr[output[j + 1]]; --j)
+	  if (in_arr[output[j]] < in_arr[output[j + 1]])
 	  {
 	    swap = output[j];
 	    output[j] = output[j + 1];
 	    output[j + 1] = swap;
 	  }
 	}
+
+	for (unsigned i = n; i < in_arr.nelements(); ++i)
+	{
+	  if (in_arr[i] > in_arr[output[n]])
+	  {
+	    output[n] = i;
+	    for (unsigned j = n - 1; j > 0 && in_arr[output[j]] < in_arr[output[j + 1]]; --j)
+	    {
+	      swap = output[j];
+	      output[j] = output[j + 1];
+	      output[j + 1] = swap;
+	    }
+	  }
+	}
+
+	return output;
       }
 
-      return output;
-    }
+    } // end of namespace mln::labeling::internal
 
 
     template <typename L>

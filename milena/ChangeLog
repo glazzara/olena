@@ -1,5 +1,14 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Move internal code to namespace internal.
+
+	* mln/labeling/n_max.hh: Move internal function to namespace
+	internal.
+
+	* tests/labeling/n_max.cc: Update function namespaces.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/win/rectangle2d.hh: Hide internal API.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
