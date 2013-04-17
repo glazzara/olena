@@ -123,6 +123,94 @@ namespace scribo
 
   /*! \brief Represents all the components in a document image.
 
+    This structure is used to store rich information related to
+    components in an image.
+
+    It can be constructed directly from a labeled image and the number
+    of components, or using primitive::extract::components (easier and
+    recommanded) with a binary image.
+
+    \code
+    mln::image2d<bool> ima;
+    mln::io::pbm::load(ima, "document.pbm");
+
+    typedef scribo::def::lbl_type V;
+    typedef mln::image2d<V> L;
+    V ncomps;
+    component_set<L> comps = primitive::extract::components(ima, c4(), ncomps);
+    \endcode
+
+    Each component is associated to an id, \ref component_id_t. This
+    id is equivalent to the component label in the label image (\ref
+    labeled_image()). They are labeled from 1 to nelements()
+    included. Id 0 is reserved for the background which is not
+    considered as an actual component.
+
+    A component_set is considered as valid if it has been initialized
+    (i.e. not instantiated with the default constructor).
+
+    On construction, information is automatically computed for each
+    components.  To iterate over all the components and get that
+    information, use operator()() or info():
+
+    \code
+    for_all_comps(c,comps)
+    {
+      const scribo::component_info<L>& comp_info = comps.info(c);
+
+      // Some code here...
+    }
+    \endcode
+
+    Among component information, a component::Tag tag is stored and
+    used to mark specific components.  This tag can be massively
+    updated for all components using update_tags().  The function
+    passed to this method must implement the following interface:
+
+    \code
+    template <typename L>
+    struct my_function
+    : mln::Function_v2b< my_function<L> >
+      {
+	// Constructor
+	my_function(const scribo::component_set<L>& components)
+	  : components_(components)
+	{
+	}
+
+	// Core function
+	bool operator()(const mln_value(L)& l) const
+	{
+	  if (l == mln::literal::zero)
+	    return false;
+	  return true;// your test here
+	}
+
+	/// Component set.
+	scribo::component_set<L> components_;
+      };
+    \endcode
+
+    Tags can be used to filter/make a selection of
+    components. Routines performing this selection/filtering
+    automatically are listed in \ref grpalgofiltercomp section.
+
+    Components considered as separators in the input image (lines,
+    blocks, ...) may be processed separately and are useful of the
+    rest of the layout analysis. This structure allows you to store a
+    binary image of separators which will be used in some routines to
+    prevent wrong regrouping. Note that no component information will
+    be computed for separators. The separator image can be managed
+    with has_separators(), add_separators(), separators(), and
+    clear_separators().
+
+    scribo::component_set is the first data structure in the
+    hierarchical representation of a document as explained in \ref
+    grpstruct.
+
+    \sa component_info, component::Tag, component::Type, grpstruct,
+    grpalgofiltercomp.
+
     \ingroup grpstruct
   */
   template <typename L>
