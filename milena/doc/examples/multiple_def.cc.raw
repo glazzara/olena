@@ -1,0 +1,9 @@
+fidji\% g++ main.cc f1.cc f2.cc -I$OLN/milena
+/tmp/ccZLOEyG.o:(.data+0x0): multiple definition of `mln::debug::trace::quiet'
+/tmp/ccqHhSP3.o:(.data+0x0): first defined here
+/tmp/ccZLOEyG.o:(.bss+0x0): multiple definition of `mln::debug::trace::tab'
+/tmp/ccqHhSP3.o:(.bss+0x0): first defined here
+/tmp/ccZLOEyG.o:(.bss+0x4): multiple definition of `mln::debug::trace::full_trace'
+/tmp/ccqHhSP3.o:(.bss+0x4): first defined here
+/tmp/ccZLOEyG.o:(.bss+0x20): multiple definition of `mln::debug::trace::start_times_'
+/tmp/ccqHhSP3.o:(.bss+0x20): first defined here

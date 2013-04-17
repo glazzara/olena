@@ -1,0 +1,6 @@
+#include <mln/core/image/image2d.hh>
+
+void f1()
+{
+
+}

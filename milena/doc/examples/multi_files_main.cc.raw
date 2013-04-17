@@ -1,0 +1,16 @@
+#undef MLN_WO_GLOBAL_VARS
+
+// This include is needed here to compile the global variables with
+// this file. We include that file because it is used in other parts
+// of the project.
+#include <mln/core/image/image2d.hh>
+
+// Forward declarations
+void f1();
+void f2();
+
+int main()
+{
+  f1();
+  f2();
+}

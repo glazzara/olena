@@ -1,0 +1,2 @@
+error: 'check' is not a member of 'mln::metal::not_equal<bool, bool>}
+error: 'check' is not a member of 'mln::metal::converts_to<mln::value::rgb<8u>, unsigned int>'

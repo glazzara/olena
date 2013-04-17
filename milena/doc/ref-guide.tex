@@ -245,20 +245,59 @@ Olena's tarball is structured as follow:
 Before writing your first program, please be aware of these hints:
 
 \begin{itemize}
-  \item By default, Olena enables a lot of internal pre and post conditions.
-  Usually, this is a useful feature and it \should be enabled. However, it can heavily
-  slow down a program though so these tests can be disabled by compiling
-  using \code{-DNDEBUG}.
+  \item By default, Olena enables a lot of internal pre and post
+    conditions.  Usually, this is a useful feature and it \should be
+    enabled. However, it can heavily slow down a program though so
+    these tests can be disabled by compiling using \code{-DNDEBUG}.
   \begin{verbatim}
-$ g++ -DNDEBUG -Ipath/to/mln my_program.cc
+$ g++ -O2 -DNDEBUG -Ipath/to/mln my_program.cc
   \end{verbatim}
 %$
 
-  \item If you decide to use optimization flags to compile for debugging,
-  prefer using \code{-O1}. It is much faster to compile and it gives good
-  performance results.
-
+  \item If you decide to use optimization flags to compile for
+    debugging, prefer using \code{-O1}. It is much faster to compile
+    and it gives good performance results.
 \end{itemize}
+
+
+\doxysection{multicompile}{Compiling a multiple files program with Olena}
+
+In case of a large project, Olena may be used in several source
+files. Even if compilation is fine, you may encounter the following
+linking error:
+
+\doxyrawcode{multiple_def}
+
+These multiple symbol definitions are due to some global variables
+used in Olena. They are built in each source file which includes Olena
+headers and are therefore duplicated, causing linking errors.
+
+An easy way to override this issue is to compile all the source files
+of your project passing -DMLN\_WO\_GLOBAL\_VARS.
+Then, at the top of one of the files which includes Olena headers, add:
+
+\doxyrawcode{undef_global_vars}
+
+Here is a small example.
+
+\begin{itemize}
+  \item main.cc
+    \doxyrawcode{multi_files_main}
+  \item f1.cc
+    \doxyrawcode{multi_files_f1}
+  \item f2.cc
+    \doxyrawcode{multi_files_f2}
+\end{itemize}
+
+This example can be compiled with the following command:
+  \begin{verbatim}
+$ g++ -DNDEBUG -O2 -DMLN_WO_GLOBAL_VARS -Ipath/to/mln main.cc f1.cc f2.cc
+  \end{verbatim}
+%$
+
+Note that the file where MLN\_WO\_GLOBAL\_VARS is undefined must
+include olena headers to declare and compile the global variables.
+
 
 
 %====================================
@@ -721,7 +760,7 @@ Note that:
 
 
 %================================================
-%\doxysection{imamorphed}{Morphed images}
+\doxysection{imamorphed}{Morphed images}
 %//FIXME: Write it!
 %// Pas concrete, light, how to concrete
 %
@@ -1990,8 +2029,7 @@ In this section, the most common compilation errors are gathered and explained.
 
 \begin{itemize}
   \item
-    \textbf{error: 'check' is not a member of 'mln::metal::not\_equal$<$bool, bool$>$} \\
-    \textbf{error: 'check' is not a member of 'mln::metal::converts\_to$<$mln::value::rgb$<$8u$>$, unsigned int$>$'} \\
+    \doxyrawcode{wrongvaluetype}
 
     The routine does not support a given image with such a value type
     or an automatic conversion from the image value type to the
@@ -1999,12 +2037,19 @@ In this section, the most common compilation errors are gathered and explained.
 
 
   \item
-    \textbf{error: using 'typename' outside of template} \\
+    \doxyrawcode{typenametemplate}
 
     Macros like \code{mln\_site} or \code{mln\_domain} can only be
     used in templated functions. In order to use them in a
     non-templated function, a `\_' must be appended to the macro
     name. For instance : \code{mln\_site\_} and \code{mln\_domain\_}.
+
+  \item
+    \doxyrawcode{multiple_def}
+
+    This is because, by default, Milena does not support compilation
+    with multiple .cc files. Section \doxyref{multicompile} describes
+    how to do that.
 
 \end{itemize}
 

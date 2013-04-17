@@ -1,5 +1,19 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add explanations on compilation with multiple files.
+
+	* doc/examples/multi_files_f1.cc.raw,
+	* doc/examples/multi_files_f2.cc.raw,
+	* doc/examples/multi_files_main.cc.raw,
+	* doc/examples/multiple_def.cc.raw,
+	* doc/examples/typenametemplate.cc.raw,
+	* doc/examples/undef_global_vars.cc.raw,
+	* doc/examples/wrongvaluetype.cc.raw: New.
+
+	* doc/ref-guide.tex: Add a new section.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/Doxyfile.in: Expand more macros.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
