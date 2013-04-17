@@ -1,5 +1,9 @@
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyflile.in: Fix include paths in documentation.
+
+2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/util/component_precise_outline.hh: Check if sites are
 	part of the image.
 
