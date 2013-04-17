@@ -1731,6 +1731,14 @@
 
 	* scribo/io/img/save.hh: Add an optional reduction factor.
 
+2013-02-27 Anthony Seure  <anthony.seure@lrde.epita.fr>
+
+	Fix compilation issue for nonexistant explicit conversion.
+
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_v_single.hh:
+	Here.
+
 2013-02-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/unit-tests.mk: Update.
