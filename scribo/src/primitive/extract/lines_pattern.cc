@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Extract horizontal lines patterns",
+				"Extract horizontal and vertical lines patterns",
 				"input.pbm length delta output.pbm",
 				args_desc);
 
