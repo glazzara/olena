@@ -28,6 +28,8 @@
 
 #include "datarootdir.hh"
 
+static QString template_path;
+
 
 void check_xsltproc()
 {
@@ -42,7 +44,11 @@ void check_xsltproc()
 
 QString get_datarootdir(const QString& file)
 {
-  QFile f(SCRIBO_LOCAL_DATAROOTDIR "/templates/" + file);
+  QFile f(template_path + "/templates/" + file);
+  if (f.exists())
+    return template_path + "/templates/";
+
+  f.setFileName(SCRIBO_LOCAL_DATAROOTDIR "/templates/" + file);
   if (f.exists())
     return SCRIBO_LOCAL_DATAROOTDIR "/templates/";
 
@@ -90,7 +96,7 @@ int svg_base64(const QString& xml, const QString& svg)
 int main(int argc, char **argv)
 {
   QString man = \
-    "xml_transform\n"
+    "Usage: scribo-xml2doc [--template-path <dir>] [OPTIONS]\n"
     "OPTIONS:\n\n"
 
     "HTML output:\n"
@@ -138,8 +144,23 @@ int main(int argc, char **argv)
   QString option(argv[1]);
 
 
-  if (argc > 4)
+  if (argc == 5 || argc == 7)
   {
+    if (argc == 7)
+    {
+      if ("--template-path" == option)
+      {
+	template_path = argv[2];
+	argv += 2;
+	option = QString(argv[1]);
+      }
+      else
+      {
+	qDebug() << man;
+	return 1;
+      }
+    }
+
     if ("--html-full" == option)
     {
       check_xsltproc();

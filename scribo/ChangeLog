@@ -1,3 +1,7 @@
+2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* demo/xml2doc/main.cc: Add --template-path option.
+
 2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove useless parts from the Scribo documentation machinery.
