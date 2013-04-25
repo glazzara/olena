@@ -1,5 +1,10 @@
 2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/src/text_in_picture.cc: Add more debug options fix return
+	value in main().
+
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/toolchain/internal/text_in_picture_functor.hh: Rename
 	debug outputs.
 

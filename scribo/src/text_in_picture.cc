@@ -27,7 +27,7 @@
 #include <libgen.h>
 #include <iostream>
 
-#include <mln/io/magick/load.hh>
+#include <mln/io/magick/all.hh>
 
 #include <scribo/toolchain/text_in_picture.hh>
 #include <scribo/debug/option_parser.hh>
@@ -47,6 +47,8 @@ static const scribo::debug::toggle_data toggle_desc[] =
   // name, description, default value
   { "fg-extraction", "Detect and slit foreground/background components. (default: disabled)", false },
   { "ms-bin", "Use a multi-scale binarization. (default: enabled)", true },
+  { "alternate-results", "Save debug images with all the text bboxes. (default: disabled)", false },
+  { "debug", "Enable debug outputs (default: disabled).", false },
   {0, 0, false}
 };
 
@@ -77,10 +79,10 @@ int main(int argc, char* argv[])
     return 1;
 
   if (options.is_set("debug-prefix"))
-  {
     scribo::debug::logger().set_filename_prefix(options.opt_value("debug-prefix").c_str());
+
+  if (options.is_enabled("debug"))
     scribo::debug::logger().set_level(scribo::debug::All);
-  }
 
   mln_trace("main");
 
@@ -92,6 +94,9 @@ int main(int argc, char* argv[])
   bool fg_extraction = options.is_enabled("fg-extraction");
   bool multi_scale_bin = options.is_enabled("ms-bin");
   unsigned lambda = atoi(options.opt_value("lambda").c_str());
+
+  if (options.is_enabled("alternate-results"))
+    scribo::debug::logger().set_level(scribo::debug::Results);
 
   if (verbose)
     std::cout << "Using max_dim_size = " << max_dim_size
@@ -105,11 +110,10 @@ int main(int argc, char* argv[])
 				       max_dim_size, lambda, verbose);
 
 
-  io::ppm::save(mln::labeling::colorize(value::rgb8(),
-					comps.labeled_image(),
-					comps.nelements()),
-		options.arg("output.ppm"));
+  io::magick::save(mln::labeling::colorize(value::rgb8(),
+					   comps.labeled_image(),
+					   comps.nelements()),
+		   options.arg("output.ppm"));
 
-
-  return comps.nelements() != 0;
+  return 0;
 }
