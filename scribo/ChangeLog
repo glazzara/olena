@@ -1,3 +1,8 @@
+2013-04-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/toolchain/internal/text_in_picture_functor.hh: Rename
+	debug outputs.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/primitive/extract/lines_pattern.cc: Fix description.
