@@ -119,6 +119,10 @@ namespace scribo
 
       mln_ch_value(I, value::int_u8) r_i, g_i, b_i;
 
+      binarization::internal::k2 = k2;
+      binarization::internal::k3 = k3;
+      binarization::internal::k4 = k4;
+
       // Split the rgb8 image into 3 intensity images.
       mln::data::split(input_1, r_i, g_i, b_i);
 
