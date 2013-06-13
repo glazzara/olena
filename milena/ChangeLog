@@ -1,3 +1,10 @@
+2013-06-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the documentation of mln_trace.
+
+	* mln/debug/trace.hh: Here.
+	Aesthetic changes.
+
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/mln/convert.dox: Fix from_to_ module name.

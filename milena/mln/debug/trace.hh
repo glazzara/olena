@@ -28,12 +28,14 @@
 
 /// \file
 ///
-/// Definition of the trace entering procedure.
+/// Definition of the function entering/exiting tracing mechanism.
 
-# include <string>
-# include <iostream>
-# include <stack>
 # include <ctime>
+
+# include <iostream>
+# include <string>
+# include <stack>
+
 # include <mln/core/contract.hh>
 
 # define mln_trace(S)				\
@@ -49,13 +51,14 @@ namespace mln
   namespace debug
   {
 
-    /*! \brief Display function calls backtrace.
+    /*! \brief Trace function calls.
 
       This class is meant to be instantiated at the beginning of each
       routine in olena. It keep trace of the function call backtrace
       and remember the time in each function.
 
-      This class must used at follow:
+      This class is intended to be used through the mln_trace macro as
+      follows:
 
       \code
       namespace mln
@@ -70,9 +73,9 @@ namespace mln
       }
       \endcode
 
-      \warning mln_trace() declares a named local variable, so do not
-      use mln_trace twice in the same scope in order to avoid
-      duplicate declarations.
+      \warning mln_trace() declares a local variable (named
+      mln_trace_), so do not use mln_trace twice in the same scope to
+      avoid duplicate declarations.
      */
     class trace
     {
@@ -94,10 +97,9 @@ namespace mln
 
     private:
       static std::stack<std::clock_t> start_times_;
-      static std::stack<std::string>  scopes_;
+      static std::stack<std::string> scopes_;
       static unsigned max_tab_;
       static bool is_quiet_;
-
     };
 
 
@@ -167,17 +169,17 @@ namespace mln
       std::clock_t now = std::clock();
 
       if (start_times_.top() > now)
-      {
-	std::cerr << "warning: bad timer in trace handling" << std::endl;
-	// FIXME: So what?
-      }
+	std::cerr
+	  << "Warning: Clock skew detected (start time in the future)."
+	  << std::endl;
 
       if (start_times_.top() < now)
-      {
-	std::cout << "- "
-		  << ((float(now) - float(start_times_.top())) / CLOCKS_PER_SEC)
-		  << "s ";
-      }
+	{
+	  std::cout
+	    << "- "
+	    << ((float(now) - float(start_times_.top())) / CLOCKS_PER_SEC)
+	    << "s ";
+	}
 
       start_times_.pop();
 
