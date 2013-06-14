@@ -1,3 +1,11 @@
+2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Shell-related portability fixes in Olena's Makefiles.
+
+	* doc/Makefile.am: Rewrite patterns ``perl X `find Y''' as
+	``find Y -exec perl X {} \;'' to avoid long `perl' command lines and
+	please the shell.
+
 2013-06-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use `perl -pi' instead of `sed -i' in Olena.

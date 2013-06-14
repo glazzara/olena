@@ -121,9 +121,10 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	$(DOXYGEN) $(DOXYFILE_USER)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	perl -pi -e "s,\@relcommondocpath\@,../../,g;"		\
-	         -e "s,\@userrefman\@,$(USER_REFMAN),g"		\
-	  `find  $(USER_REFMAN).tmp/html -name '*.html'`
+	find $(USER_REFMAN).tmp/html -name '*.html' -exec	\
+	  perl -pi -e "s,\@relcommondocpath\@,../../,g;"	\
+	           -e "s,\@userrefman\@,$(USER_REFMAN),g"	\
+	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -212,10 +213,11 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Fix documentation paths
 	chmod -R u+w $(DESTDIR)$(htmldir)/$(USER_REFMAN)
-	perl -pi -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena/$(USER_REFMAN),g;" \
-	         -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo/$(USER_REFMAN),g;" \
-	         -e "s,../../$(USER_REFMAN)/html,../$(USER_REFMAN),g" \
-	  `find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html'`
+	find  $(DESTDIR)$(htmldir)/$(USER_REFMAN) -name '*.html' -exec \
+	  perl -pi -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena/$(USER_REFMAN),g;" \
+	           -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo/$(USER_REFMAN),g;" \
+	           -e "s,../../$(USER_REFMAN)/html,../$(USER_REFMAN),g" \
+	    {} \;
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
 	chmod -R a+rX $(DESTDIR)$(htmldir) || \
@@ -230,8 +232,9 @@ uninstall-local:
 
 
 doc-teamcity:
-	perl -pi							     \
-	     -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g;" \
-	     -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc,g;" \
-	     -e "s,../../$(USER_REFMAN)/html,../olena.doc,g"		     \
-	  `find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
+	find  $(srcdir)/$(USER_REFMAN) -name '*.html' -exec		       \
+	  perl -pi							       \
+	       -e "s,../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g;" \
+	       -e "s,../../../scribo/doc/$(USER_REFMAN)/html,../scribo.doc,g;" \
+	       -e "s,../../$(USER_REFMAN)/html,../olena.doc,g"		       \
+	    {} \;
