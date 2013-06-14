@@ -1,3 +1,12 @@
+2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Shell-related portability fixes in Scribo's Makefiles.
+
+	* doc/Makefile.am: Rewrite patterns ``perl X `find Y''' as
+	``find Y -exec perl X {} \;'' to avoid long `perl' command lines and
+	please the shell.
+	Wrap some long lines.
+
 2013-06-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use `perl -pi' instead of `sed -i' in Scribo.

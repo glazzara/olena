@@ -99,9 +99,10 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	perl -pi -e "s,\@relcommondocpath\@,../../../../doc/,g;"	\
-	         -e "s,\@userrefman\@,$(USER_REFMAN),g"			\
-	  `find $(USER_REFMAN).tmp -name '*.html'`
+	find $(USER_REFMAN).tmp -name '*.html' -exec			\
+	  perl -pi -e "s,\@relcommondocpath\@,../../../../doc/,g;"	\
+	           -e "s,\@userrefman\@,$(USER_REFMAN),g"		\
+	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -238,9 +239,10 @@ install-data-local:
 		$(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	chmod -R u+w $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN)
-	perl -pi -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g;" \
-	         -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../../milena/$(USER_REFMAN)/,g" \
-	  `find $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN) -name '*.html'`
+	find $(DESTDIR)$(htmldir)/scribo/$(USER_REFMAN) -name '*.html' -exec  \
+	  perl -pi -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g;" \
+	           -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../../milena/$(USER_REFMAN)/,g" \
+	    {} \;
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			\
 	  rm -rf $(DESTDIR)$(htmldir)/scribo/$$d;	\
@@ -248,9 +250,10 @@ install-data-local:
 	done
 ## Try GNU chmod's X mode before resorting to something slower but
 ## more standard.
-	chmod -R a+rX $(DESTDIR)$(htmldir)/scribo || \
-	find $(DESTDIR)$(htmldir)/scribo \( -type d -a -exec chmod a+rx {} \; \) \
-             -o -exec chmod a+r {} \;
+	chmod -R a+rX $(DESTDIR)$(htmldir)/scribo ||	\
+	  find $(DESTDIR)$(htmldir)/scribo		\
+	       \( -type d -a -exec chmod a+rx {} \; \)	\
+	       -o -exec chmod a+r {} \;
 
 uninstall-local:
 	for d in $(DATA_html_dirs_inst); do			\
@@ -265,7 +268,8 @@ uninstall-local:
 
 
 doc-teamcity:
-	perl -pi							     \
-	  -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g;" \
-	  -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g"	     \
-	  `find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
+	find  $(srcdir)/$(USER_REFMAN) -name '*.html' -exec		       \
+	  perl -pi							       \
+	    -e "s,../../../../milena/doc/$(USER_REFMAN)/html,../milena.doc,g;" \
+	    -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g"	       \
+	    {} \;
