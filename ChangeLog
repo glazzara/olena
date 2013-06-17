@@ -1,3 +1,14 @@
+2013-06-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use `perl -pi' instead of `sed -i' in Olena.
+
+	* build-aux/mln_add_file,
+	* doc/Makefile.am,
+	* lrde-scmstats.sh:
+	Here, as `sed -i' (with no backup file) behaves differently on
+	GNU/Linux and Mac OS X.  For more information, see:
+	http://stackoverflow.com/questions/5694228/.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove unstable viewer.

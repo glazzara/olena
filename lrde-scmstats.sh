@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -40,7 +40,7 @@ DEST=/lrde/dload/olena/stats/$subdir
 gitstats . $DEST
 
 # Anonymize some names.
-find "$DEST" -name "*.html" -exec sed -i 's/J.r.me Darbon/JD/g' {} \;
+find "$DEST" -name "*.html" -exec perl -pi -e 's/J.r.me Darbon/JD/g' {} \;
 
 # Expose uploaded files.
 chmod -R a+rX $DEST

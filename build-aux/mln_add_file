@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -173,7 +173,7 @@ create it." 1>&2
 
   line=`grep -nE '^#endif // ! ' $output_dir/all.hh | tail -n 1 | cut -d ':' -f 1`
   line=$(($line - 1))
-  sed -i "${line}i\# include <$1>
+  perl -pi -e "${line}i\# include <$1>
 " $output_dir/all.hh
 }
 
@@ -196,12 +196,12 @@ create it." 1>&2
 
   line=`grep -nE "_SOURCES = " $test_dir/Makefile.am | tail -n 1 | cut -d ':' -f 1`
   line=$(($line + 1))
-  sed -i "${line}i${test_bname}_SOURCES = $test_name
+  perl -pi -e "${line}i${test_bname}_SOURCES = $test_name
 " $test_dir/Makefile.am
 
   line=`grep -nE '\\\' $test_dir/Makefile.am | grep -B 1 'CLEANFILES = ' | head -n 1 | cut -d ':' -f 1`
   line=$(($line + 1))
-  sed -i "${line}i\\\t${test_bname} \\\\" $test_dir/Makefile.am
+  perl -pi -e "${line}i\\\t${test_bname} \\\\" $test_dir/Makefile.am
 
 }
 
