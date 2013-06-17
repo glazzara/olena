@@ -17,4 +17,5 @@
 /py-compile
 /*.rej
 /*TAGS
+/test-driver
 /texinfo.tex
