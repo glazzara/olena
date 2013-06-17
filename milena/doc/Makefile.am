@@ -261,9 +261,9 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,../../../../doc/,g" \
-	       -e "s,\@userrefman\@,$(USER_REFMAN),g" \
-		`find $(USER_REFMAN).tmp -name '*.html'`
+	perl -pi -e "s,\@relcommondocpath\@,../../../../doc/,g;"	\
+	         -e "s,\@userrefman\@,$(USER_REFMAN),g"			\
+	  `find $(USER_REFMAN).tmp -name '*.html'`
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
@@ -348,8 +348,8 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	sed -i -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
-		$(DEVEL_REFMAN).tmp/html/index.html
+	perl -pi -e "s,\@relcommondocpath\@,$(top_srcdir)/doc/$(DEVEL_REFMAN)/html/,g" \
+	  $(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
@@ -776,8 +776,9 @@ install-data-local:
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	chmod -R u+w $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN)
-	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
-		`find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
+	perl -pi							       \
+	     -e "s,../../../../doc/$(USER_REFMAN)/html,../../$(USER_REFMAN),g" \
+	  `find  $(DESTDIR)$(htmldir)/milena/$(USER_REFMAN) -name '*.html'`
 # Other HTML directories can be processed uniformly.
 	for d in $(DATA_html_dirs_inst); do			 \
 	  rm -rf $(DESTDIR)$(htmldir)/milena/$$d;	 \
@@ -802,5 +803,5 @@ uninstall-local:
 
 
 doc-teamcity:
-	sed -i -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
-		`find  $(srcdir)/$(USER_REFMAN) -name '*.html'`
+	perl -pi -e "s,../../../../doc/$(USER_REFMAN)/html,../olena.doc,g" \
+	  `find  $(srcdir)/$(USER_REFMAN) -name '*.html'`

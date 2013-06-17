@@ -2,7 +2,8 @@
 
 # todoxygen.sh: Turn HTML files into suitable inputs for doxygen.
 
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -33,18 +34,18 @@ echo '\htmlonly' >> $out
 tail -n $tail_line $html >> $out
 echo '\endhtmlonly */' >> $out
 
-sed -i -e 's/&#XA0/\&nbsp/g' $out
-sed -i -e 's/&#X21A6/\&map/g' $out
-sed -i -e 's/&#X2019/\&rsquo/g' $out
-sed -i -e 's/&#X2192/\&rarr/g' $out
-sed -i -e 's/&#X201C/\&ldquo/g' $out
-sed -i -e 's/&#X201D/\&rdquo/g' $out
-sed -i -e 's/&#X2261/\&equiv/g' $out
+perl -pi -e 's/&#XA0/\&nbsp/g' $out
+perl -pi -e 's/&#X21A6/\&map/g' $out
+perl -pi -e 's/&#X2019/\&rsquo/g' $out
+perl -pi -e 's/&#X2192/\&rarr/g' $out
+perl -pi -e 's/&#X201C/\&ldquo/g' $out
+perl -pi -e 's/&#X201D/\&rdquo/g' $out
+perl -pi -e 's/&#X2261/\&equiv/g' $out
 
 # Doxygen wants us to preserve '\n' after commands. 
 # \ref and \see do not need that extra new line.
 for keyword in include section page subpage subsection subsubsection image; do
-  sed -i -e "s/\\\\endhtmlonly\\\\$keyword/\\\\endhtmlonly\n\n\\\\$keyword/g" $out
-  sed -i -e "s/\\\\endhtmlonly\*\//\\\\endhtmlonly\n\n\*\/\n\n/g" $out
-  sed -i -e "s/\\\\$keyword \(.*\)\\\\htmlonly/\\\\$keyword \1\n\n\\\\htmlonly\n/g" $out
+  perl -pi -e "s/\\\\endhtmlonly\\\\$keyword/\\\\endhtmlonly\n\n\\\\$keyword/g" $out
+  perl -pi -e "s/\\\\endhtmlonly\*\//\\\\endhtmlonly\n\n\*\/\n\n/g" $out
+  perl -pi -e "s/\\\\$keyword \(.*\)\\\\htmlonly/\\\\$keyword \1\n\n\\\\htmlonly\n/g" $out
 done
