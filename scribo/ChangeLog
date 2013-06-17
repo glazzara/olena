@@ -1,3 +1,13 @@
+2013-06-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use `perl -pi' instead of `sed -i' in Scribo.
+
+	* doc/Makefile.am,
+	* doc/tools/todoxygen.sh:
+	Here, as `sed -i' (with no backup file) behaves differently on
+	GNU/Linux and Mac OS X.  For more information, see:
+	http://stackoverflow.com/questions/5694228/.
+
 2013-04-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/binarization/sauvola_ms_split.hh: Make use of all arguments.
