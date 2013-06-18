@@ -1,3 +1,9 @@
+2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around constraints of TeXLive's bibtex2html on Mac OS X.
+
+	* doc/Makefile.am (lrde_olena.html): Here.
+
 2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Shell-related portability fixes in Olena's Makefiles.

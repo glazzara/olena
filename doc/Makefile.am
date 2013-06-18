@@ -166,8 +166,12 @@ lrde_olena.bib:
 
 # Warning: also generates lrde_olena_bib.html
 lrde_olena.html: lrde_olena.bib
-	bibtex2html -s plain -nokeywords -citefile lrde_olena.cite \
-		-noabstract -nofooter -labelname -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
+# Use the current directory for temporary files, as TeXlive (2012)
+# prevents bibtex2html from running bibtex in a temporary directory on
+# Mac OS X (see https://www.lri.fr/~filliatr/bibtex2html/).
+	env TMPDIR=. bibtex2html -s plain -nokeywords			\
+	  -citefile lrde_olena.cite -noabstract -nofooter -labelname	\
+	  -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
 
 
 EXTRA_DIST += 				\
