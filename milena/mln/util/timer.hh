@@ -49,13 +49,6 @@ namespace mln
 
       timer();
 
-      // Explicit copy constructor (in most cases should not be
-      // used...).
-      explicit timer(const timer&);
-
-      // Without impl.
-      void operator=(const timer&);
-
       ~timer();
 
       void start();
@@ -102,14 +95,6 @@ namespace mln
     timer::timer()
     {
       reset();
-    }
-
-    inline
-    timer::timer(const timer& t)
-    {
-      running_ = t.running_;
-      start_ = t.start_;
-      time_ = t.time_;
     }
 
     inline

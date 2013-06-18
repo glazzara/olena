@@ -1,3 +1,10 @@
+2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make mln::util::timer copy-constructible and (copy-)assignable.
+
+	* mln/util/timer.hh: Rely on the default copy constructor and
+	the default (copy-)assignment operator.
+
 2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Shell-related portability fixes in Milena's Makefiles.
