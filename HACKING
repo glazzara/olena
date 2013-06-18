@@ -1,4 +1,4 @@
-Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 
 This file is part of Olena.
 
@@ -83,7 +83,10 @@ the following extra programs if you want to work on the Olena project.
 
         - HeVeA 1.10
 
-        - LaTeX2HTML (or at minimum, its `html.sty' style file).
+        - LaTeX2HTML (or at minimum, its `html.sty' style file),
+
+        - bibtex2html 1.95 or higher (at least the bibtex2html and
+          bib2bib tools).
 
 
 Note that `bootstrap' checks for the presence of most of these tools.

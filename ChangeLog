@@ -1,5 +1,11 @@
 2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Mention bibtex2html and bib2bib as documentation build dependencies.
+
+	* HACKING (Required Software): Here.
+
+2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Require bibtex2html 1.95 and bib2bib 1.95.
 
 	* bootstrap: Here.
