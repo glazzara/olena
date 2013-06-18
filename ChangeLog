@@ -1,5 +1,13 @@
 2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Require bibtex2html 1.95 and bib2bib 1.95.
+
+	* bootstrap: Here.
+	(require): Accept complex command line patterns as third argument
+	to handle bibtex2html's and bib2bib's ``--version'' option.
+
+2013-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Work around constraints of TeXLive's bibtex2html on Mac OS X.
 
 	* doc/Makefile.am (lrde_olena.html): Here.
