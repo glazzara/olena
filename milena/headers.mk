@@ -1241,6 +1241,7 @@ mln/value/int_s24.hh \
 mln/value/int_s32.hh \
 mln/value/int_s8.hh \
 mln/value/int_u.hh \
+mln/value/int_u.hxx \
 mln/value/int_u12.hh \
 mln/value/int_u16.hh \
 mln/value/int_u24.hh \

@@ -27,19 +27,35 @@
 #ifndef MLN_VALUE_QT_RGB32_HH
 # define MLN_VALUE_QT_RGB32_HH
 
-# include <cstring>
+/// \file
+///
+/// Definition of mln::value::qt::rgb32, a Qt-friendly 32-bit RGB
+/// color value class.
 
 # include <mln/value/ops.hh>
 
 # include <mln/value/concept/vectorial.hh>
-# include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
-
-# include <mln/value/rgb8.hh>
 
 # include <mln/literal/zero.hh>
 # include <mln/literal/black.hh>
 # include <mln/literal/white.hh>
+# include <mln/literal/grays.hh>
+# include <mln/literal/colors.hh>
+
+/* Because of mutual dependencies between the implementations of
+   mln::value::int_u and mln::value::qt::rgb32, we have to ensure that
+   only the interfaces of the required classes are included here.
+   Implementations are included later, at the bottom of this file.  */
+
+# ifdef MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hh>
+# else
+#  define MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hh>
+#  undef MLN_INCLUDE_ONLY
+# endif
+
 
 namespace mln
 {
@@ -760,6 +776,12 @@ namespace mln
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
+
+
+// Delayed inclusion of mln::value::int_u_'s implementation.
+# ifndef MLN_INCLUDE_ONLY
+#  include <mln/value/int_u.hxx>
 # endif // ! MLN_INCLUDE_ONLY
 
 
