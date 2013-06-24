@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -512,7 +512,7 @@ namespace scribo
 	inline
 	void
 	link_functor_base<L,E>::start_processing_object_(
-	  unsigned current_object)
+	  unsigned /* current_object */)
 	{
 	  // No-Op
 	}

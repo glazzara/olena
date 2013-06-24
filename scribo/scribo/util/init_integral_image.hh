@@ -62,8 +62,9 @@ namespace scribo
 
 	template <typename I, typename F>
 	mln_ch_value(I, mln_result(F))
-	init_integral_image(const Image<I>& input, unsigned scale, F& f,
-			    const mln_box(I)& output_domain, unsigned border)
+	init_integral_image(const Image<I>& /* input */, unsigned /* scale */,
+			    F& /* f */, const mln_box(I)& /* output_domain */,
+			    unsigned /* border */)
 	{
 	  mln_trace("scribo::util::impl::generic::init_integral_image");
 	  typedef mln_ch_value(I, mln_result(F)) J;

@@ -108,7 +108,8 @@ namespace scribo
 
 	  template <typename I, typename F>
 	  void
-	  local_threshold_core(const Image<I>& input, unsigned window_size)
+	  local_threshold_core(const Image<I>& /* input */,
+			       unsigned /* window_size */)
 	  {
 	    mln_trace("scribo::binarization::internal::impl::generic::local_threshold_core");
 

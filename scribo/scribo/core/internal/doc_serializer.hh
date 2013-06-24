@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -81,56 +81,56 @@ namespace scribo
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const document<L>& doc) const
+  doc_serializer<E>::visit(const document<L>& /* doc */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const line_links<L>& llinks) const
+  doc_serializer<E>::visit(const line_links<L>& /* llinks */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const object_groups<L>& groups) const
+  doc_serializer<E>::visit(const object_groups<L>& /* groups */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const object_links<L>& links) const
+  doc_serializer<E>::visit(const object_links<L>& /* links */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const component_set<L>& comp_set) const
+  doc_serializer<E>::visit(const component_set<L>& /* comp_set */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const component_info<L>& info) const
+  doc_serializer<E>::visit(const component_info<L>& /* info */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const paragraph_set<L>& parset) const
+  doc_serializer<E>::visit(const paragraph_set<L>& /* parset */) const
   {
   }
 
   template <typename E>
   template <typename L>
   void
-  doc_serializer<E>::visit(const line_info<L>& line) const
+  doc_serializer<E>::visit(const line_info<L>& /* line */) const
   {
   }
 

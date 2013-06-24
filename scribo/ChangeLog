@@ -1,3 +1,21 @@
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable unused arguments.
+
+	* scribo/binarization/internal/local_threshold_core.hh
+	(scribo::binarization::internal::impl::generic::local_threshold_core)
+	* scribo/core/internal/doc_serializer.hh
+	(scribo::doc_serializer<E>::visit)
+	* scribo/filter/internal/component_aligned.hh
+	(scribo::filter::internal::component_aligned)
+	* scribo/filter/internal/compute.hh
+	(scribo::filter::internal::compute)
+	* scribo/primitive/link/internal/link_functor_base.hh
+	(internal::link_functor_base<L,E>::start_processing_object_)
+	* scribo/util/init_integral_image.hh
+	(scribo::util::impl::generic::init_integral_image):
+	Here.
+
 2013-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Shell-related portability fixes in Scribo's Makefiles.

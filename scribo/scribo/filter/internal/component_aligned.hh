@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -73,7 +73,7 @@ namespace scribo
       template <typename L>
       bool
       component_aligned(const component_set<L>& comps,
-			unsigned current_object, unsigned nbh_object,
+			unsigned current_object, unsigned /* nbh_object */,
 			anchor::Type anchor, float max_alpha)
       {
 	float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
