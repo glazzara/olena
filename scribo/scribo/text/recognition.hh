@@ -371,7 +371,7 @@ namespace scribo
     void
     recognition(const Image<I>& line_,
 		const char *language,
-		const std::string& output_file = std::string())
+		const std::string& output_file)
     {
       mln_trace("scribo::text::recognition");
 

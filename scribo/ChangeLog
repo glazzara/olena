@@ -1,5 +1,13 @@
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Provide default arguments in function declarations only.
+
+	* scribo/core/line_info.hh (scribo::line_info<L>::update_text)
+	* scribo/text/recognition.hh (scribo::text::recognition):
+	Here.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable unused arguments.
 
 	* scribo/binarization/internal/local_threshold_core.hh
