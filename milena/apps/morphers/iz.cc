@@ -1,3 +1,32 @@
+// Copyright (C) 2012, 2013 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+/// \file
+/// \brief Application of the lazy recorder morpher to the computation
+/// of influence zones.
+
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
@@ -120,7 +149,7 @@ int main(int argc, char* argv[])
 
   {
     image2d<value::rgb8> ws_ = data::convert(value::rgb8(), input);
-    data::fill((ws_ | (pw::value(ws) == pw::cst(0))).rw(), literal::red);
+    data::fill((ws_ | (pw::value(ws) == pw::cst(0u))).rw(), literal::red);
     io::ppm::save(ws_, "tmp_ws_superpose.ppm");
 
     // test% g++ -I. main.cc -DNDEBUG -O2
@@ -156,8 +185,8 @@ int main(int argc, char* argv[])
   image_if< decorated_image< image2d<unsigned int>,
 			     lazy_recorder< image2d<unsigned int> > >,
 	    fun::eq_v2b_expr_< pw::value_< image2d<unsigned int> >,
-			       pw::cst_<int> > > rec_iz =
-    transform::influence_zone_front(rec_lab | (pw::value(ws) == pw::cst(0)),
+			       pw::cst_<unsigned int> > > rec_iz =
+    transform::influence_zone_front(rec_lab | (pw::value(ws) == pw::cst(0u)),
 				    c8(),
 				    make::w_window2d(ww));
   data::paste(rec_iz, lab);

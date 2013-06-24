@@ -1,5 +1,12 @@
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Avoid comparisons between signed and unsigned values.
+
+	* apps/morphers/iz.cc: Here.
+	Add a copyright notice and a Doxygen header.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes.
 
 	* mln/value/int_u.hh: Here.
