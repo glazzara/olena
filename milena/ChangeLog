@@ -1,5 +1,11 @@
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Resolve ambiguous calls to operator* in value::qt::rgb32.
+
+	* mln/value/qt/rgb32.hh: Here.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::value::hsl_'s dependencies.
 
 	* mln/value/hsl.hh: Here.
