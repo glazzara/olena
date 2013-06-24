@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Declarations of the mln::value::internal::gray_f class.
+/// Declaration of the mln::value::internal::gray_f class.
 
 # include <iostream>
 

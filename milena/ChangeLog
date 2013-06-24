@@ -1,5 +1,12 @@
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes.
+
+	* mln/value/int_u.hh: Here.
+	* mln/value/internal/gray_f.hh: Typo in comment.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Resolve ambiguous calls to operator* in value::qt::rgb32.
 
 	* mln/value/qt/rgb32.hh: Here.

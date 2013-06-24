@@ -46,13 +46,17 @@
 namespace mln
 {
 
-  // Forward declarations.
-  namespace value {
-    namespace qt {
-      struct rgb32;
-    }
+  /// Forward declarations.
+  /// \{
+  namespace value
+  {
     template <unsigned n> struct int_u;
     template <unsigned n> struct rgb;
+
+    namespace qt
+    {
+      struct rgb32;
+    }
   }
 
   namespace literal
@@ -60,7 +64,8 @@ namespace mln
     struct zero_t;
     struct one_t;
   }
-  // End of forward declarations
+  /// \}
+
 
   namespace trait
   {
@@ -192,21 +197,17 @@ namespace mln
     template <unsigned n>
     void from_to_(const int_u<n>& from, unsigned& to_);
 
-
     /// \internal Conversion: int_u -> bool.
     template <unsigned n>
     void from_to_(const int_u<n>& from, bool& to_);
-
 
     /// \internal Conversion: int_u -> float.
     template <unsigned n>
     void from_to_(const int_u<n>& from, float& to_);
 
-
     /// \internal Conversion: int_u -> double.
     template <unsigned n>
-    void
-    from_to_(const int_u<n>& from, double& to_);
+    void from_to_(const int_u<n>& from, double& to_);
 
     /// \internal Conversion: Conversion: int_u -> rgb.
     template <unsigned m>
@@ -232,4 +233,3 @@ namespace mln
 
 
 #endif // ! MLN_VALUE_INT_U_HH
-
