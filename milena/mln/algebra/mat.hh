@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2008, 2009, 2012 EPITA Research and Development
+// Copyright (C) 2006, 2008, 2009, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -907,7 +907,7 @@ namespace mln
 
       template<unsigned n, typename T>
       mln_sum_product(T,T)
-      det(const mat<n,n,T>& m)
+      det(const mat<n,n,T>& /* m */)
       {
 	// Not implemented.
 	mlc_abort(T)::check();

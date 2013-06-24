@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011,
-// 2012 EPITA Research and Development Laboratory (LRDE)
+// 2012, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -378,6 +378,7 @@ namespace mln
                       Image<I>& img_, const F& coef, int dir)
       {
 	I& img = exact(img_);
+	(void) dir;
         mln_precondition(dir < I::site::dim);
 
 

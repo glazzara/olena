@@ -343,7 +343,10 @@ namespace mln
       for_all(p)
       {
 	vec3d_f Pk_i = pair.first.rotate(p) + pair.second;
+	// FIXME: Unused variable; remove?
+#if 0
 	vec3d_f Yk_i = closest_point(Pk_i);
+#endif
 
 	int d_i = closest_point.dmap_X_(Pk_i);
 	if (d_i >= d_min && d_i <= d_max)
@@ -370,12 +373,13 @@ namespace mln
     }
 
 
+    /* FIXME: Unused argument `r'; remove?  */
     template <typename P, typename F>
     void
     compute_distance_criteria(const p_array<P>& P_,
-			 const F& closest_point,
-			 const std::pair<algebra::quat,mln_vec(P)>& pair,
-			 unsigned r, int& d_min, int& d_max)
+			      const F& closest_point,
+			      const std::pair<algebra::quat,mln_vec(P)>& pair,
+			      unsigned /* r */, int& d_min, int& d_max)
     {
       mln_piter(p_array<P>) p(P_);
       accu::histo<value::int_u8> h;

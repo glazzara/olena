@@ -66,7 +66,7 @@ test(const image2d<T>& lena_mln, const std::string& temp_filename)
 }
 
 
-int main(int /* argc */, char* argv[])
+int main()
 {
   using namespace mln;
 
