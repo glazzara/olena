@@ -30,7 +30,6 @@
 #include <mln/value/ops.hh>
 
 #include <mln/value/concept/vectorial.hh>
-#include <mln/value/int_u.hh>
 #include <mln/algebra/vec.hh>
 
 
@@ -42,6 +41,7 @@ namespace mln
     namespace qt {
       struct rgb32;
     }
+    template <unsigned n> struct int_u;
     template <typename H, typename S, typename L> class hsl_;
   }
 
@@ -291,8 +291,9 @@ namespace mln
 } // end of namespace mln
 
 
-// Used in from_to
+// Required by mln::values::hsl_'s from_to_ routines.
 # include <mln/value/rgb.hh>
+# include <mln/value/qt/rgb32.hh>
 # include <mln/fun/v2v/hsl_to_rgb.hh>
 
 
@@ -425,10 +426,8 @@ namespace mln
 
   } // end of namespace mln::value
 
+} // end of namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
-
-
-} // end of namespace mln
 
 #endif // ! MLN_VALUE_HSL_HH

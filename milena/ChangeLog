@@ -1,5 +1,12 @@
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::value::hsl_'s dependencies.
+
+	* mln/value/hsl.hh: Here.
+	[MLN_INCLUDE_ONLY]: Fix closing #endif statement.
+
+2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mutual dependencies between value::int_u and value::qt::rgb32.
 
 	* mln/value/int_u.hh: Move definitions...
