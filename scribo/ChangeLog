@@ -1,5 +1,9 @@
 2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	* scribo/text/recognition.hh: Aesthetic changes.
+
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Restrict workaround-related locale changes to LC_NUMERIC.
 
 	* scribo/text/recognition.hh: Here.
