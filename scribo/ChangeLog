@@ -1,3 +1,9 @@
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	More locale-related Tesseract workarounds.
+
+	* scribo/text/recognition.hh: Here.
+
 2013-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Provide default arguments in function declarations only.

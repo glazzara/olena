@@ -296,6 +296,12 @@ namespace scribo
     {
       mln_trace("scribo::text::recognition");
 
+      // Tesseract is known to have issues while reading training data
+      // depending on the current locales in use. Training data files use
+      // float data and the decimal separator can be either '.' or ','
+      // causing errors.
+      // Setting locale to "C" fix that issue.
+      setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
       tesseract::TessBaseAPI tess;
@@ -363,6 +369,8 @@ namespace scribo
 	delete[] s;
       }
 
+      // Restore default locale.
+      setlocale(LC_ALL, "");
     }
 
 
@@ -377,6 +385,13 @@ namespace scribo
 
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
+
+      // Tesseract is known to have issues while reading training data
+      // depending on the current locales in use. Training data files use
+      // float data and the decimal separator can be either '.' or ','
+      // causing errors.
+      // Setting locale to "C" fix that issue.
+      setlocale(LC_ALL, "C");
 
       // Initialize Tesseract.
       tesseract::TessBaseAPI tess;
