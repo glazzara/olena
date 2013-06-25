@@ -1,5 +1,11 @@
 2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Restrict workaround-related locale changes to LC_NUMERIC.
+
+	* scribo/text/recognition.hh: Here.
+
+2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	More locale-related Tesseract workarounds.
 
 	* scribo/text/recognition.hh: Here.

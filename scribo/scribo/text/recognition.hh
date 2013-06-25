@@ -122,12 +122,20 @@ namespace scribo
     {
       mln_trace("scribo::text::recognition");
 
-      // Tesseract is known to have issues while reading training data
-      // depending on the current locales in use. Training data files use
-      // float data and the decimal separator can be either '.' or ','
-      // causing errors.
-      // Setting locale to "C" fix that issue.
-      setlocale(LC_ALL, "C");
+      /* Tesseract is known to have issues while reading training
+	 data, depending on the locale in use.  Training data files
+	 contain floating-point values and the decimal separator may
+	 either be '.' or ',' which may trigger a fatal error with the
+	 following message:
+
+           Error: Illegal min or max specification!
+
+	 The recommended solution is to set the locale of LC_NUMERIC
+	 to "C".  For more information, see:
+
+           http://code.google.com/p/tesseract-ocr/wiki/FAQ#Error:_Illegal_min_or_max_specification
+      */
+      setlocale(LC_NUMERIC, "C");
 
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
@@ -202,8 +210,8 @@ namespace scribo
 	delete [] s;
       }
 
-      // Restore default locale.
-      setlocale(LC_ALL, "");
+      // Restore the default locale from the environment.
+      setlocale(LC_NUMERIC, "");
 
     }
 
@@ -219,12 +227,8 @@ namespace scribo
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
 
-      // Tesseract is known to have issues while reading training data
-      // depending on the current locales in use. Training data files use
-      // float data and the decimal separator can be either '.' or ','
-      // causing errors.
-      // Setting locale to "C" fix that issue.
-      setlocale(LC_ALL, "C");
+      // See the above explanations about setlocale.
+      setlocale(LC_NUMERIC, "C");
 
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
@@ -279,8 +283,8 @@ namespace scribo
 	if (!output_file.empty())
 	  file.close();
 
-	// Restore default locale.
-	setlocale(LC_ALL, "");
+	// See the above explanations about setlocale.
+	setlocale(LC_NUMERIC, "");
 
     }
 
@@ -296,12 +300,8 @@ namespace scribo
     {
       mln_trace("scribo::text::recognition");
 
-      // Tesseract is known to have issues while reading training data
-      // depending on the current locales in use. Training data files use
-      // float data and the decimal separator can be either '.' or ','
-      // causing errors.
-      // Setting locale to "C" fix that issue.
-      setlocale(LC_ALL, "C");
+      // See the above explanations about setlocale.
+      setlocale(LC_NUMERIC, "C");
 
       // Initialize Tesseract.
       tesseract::TessBaseAPI tess;
@@ -369,8 +369,8 @@ namespace scribo
 	delete[] s;
       }
 
-      // Restore default locale.
-      setlocale(LC_ALL, "");
+      // Restore the default locale from the environment.
+      setlocale(LC_NUMERIC, "");
     }
 
 
@@ -386,12 +386,8 @@ namespace scribo
       const I& line = exact(line_);
       mln_precondition(line.is_valid());
 
-      // Tesseract is known to have issues while reading training data
-      // depending on the current locales in use. Training data files use
-      // float data and the decimal separator can be either '.' or ','
-      // causing errors.
-      // Setting locale to "C" fix that issue.
-      setlocale(LC_ALL, "C");
+      // Restore the default locale from the environment.
+      setlocale(LC_NUMERIC, "C");
 
       // Initialize Tesseract.
       tesseract::TessBaseAPI tess;
@@ -439,8 +435,8 @@ namespace scribo
 	if (!output_file.empty())
 	  file.close();
 
-	// Restore default locale.
-	setlocale(LC_ALL, "");
+	// Restore the default locale from the environment.
+	setlocale(LC_NUMERIC, "");
 
     }
 
