@@ -1,5 +1,14 @@
 2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have configure find bib2bib and bibtex2html.
+
+	* configure.ac: Check for bib2bib and bibtex2html.
+	Define BIB2BIB and BIBTEX2HTML and use them...
+	* doc/Makefile.am (lrde_olena.bib, lrde_olena.html): ...here.
+	* bootstrap: No longer check for bib2bib and bibtex2html.
+
+2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have configure find rst2html.
 
 	* configure.ac: Check for rst2html.

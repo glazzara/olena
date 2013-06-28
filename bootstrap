@@ -161,12 +161,6 @@ require doxygen 1.5.6
 # with both implementations.
 require convert 1.3.12 -version
 require hevea 1.10 -version
-# Admittedly a bit hacky, but these tools
-# 1. display their version numbers on stderr, not stdout; and
-# 2. contain a digit ("2") in their name, which disturbs `require'.
-require bibtex2html 1.95 "--version 2>&1 | sed 's/bibtex2html//'"
-require bib2bib 1.95 "--version 2>&1 | sed 's/bib2bib//'"
-
 
 # Regen files stored in the repository if asked so.
 if $regen_p; then

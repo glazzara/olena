@@ -178,6 +178,19 @@ if test -z "$RST2HTML"; then
   AC_MSG_WARN([rst2html not found, documentation rebuild will not be possible])
 fi
 
+AC_ARG_VAR([BIB2BIB], [BibTeX extracting tool])
+AC_CHECK_PROGS([BIB2BIB], [bib2bib])
+if test -z "$BIB2BIB"; then
+  AC_MSG_WARN([bib2bib not found, documentation rebuild will not be possible])
+fi
+
+AC_ARG_VAR([BIBTEX2HTML], [BibTeX-to-HTML translator])
+AC_CHECK_PROGS([BIBTEX2HTML], [bibtex2html])
+if test -z "$BIBTEX2HTML"; then
+  AC_MSG_WARN(m4_do([bibtex2html not found,],
+                    [ documentation rebuild will not be possible]))
+fi
+
 
 ## ------------------------------ ##
 ## ``Enable Everything'' Switch.  ##

@@ -162,19 +162,25 @@ contributors.html: $(top_srcdir)/AUTHORS
 ## -------------- ##
 
 # Warning: also generates lrde_olena.cite
-lrde_olena.bib:
-	bib2bib -s plain -oc lrde_olena.cite -ob lrde_olena.bib -c \
-		'project = "Image" or project = "Olena"' \
-		-s year -r $(srcdir)/lrde.bib
+lrde_olena.bib: $(srcdir)/lrde.bib
+	@test -n "$(BIB2BIB)"						\
+	  || { echo "error: bib2bib not found during configure" >&2;	\
+	       exit 1; }
+	$(BIB2BIB) -s plain -oc lrde_olena.cite -ob $@	\
+	  -c 'project = "Image" or project = "Olena"'	\
+	  -s year -r $<
 
 # Warning: also generates lrde_olena_bib.html
 lrde_olena.html: lrde_olena.bib
+	@test -n "$(BIBTEX2HTML)"					 \
+	  || { echo "error: bibtex2html not found during configure" >&2; \
+	       exit 1; }
 # Use the current directory for temporary files, as TeXlive (2012)
 # prevents bibtex2html from running bibtex in a temporary directory on
 # Mac OS X (see https://www.lri.fr/~filliatr/bibtex2html/).
-	env TMPDIR=. bibtex2html -s plain -nokeywords			\
+	env TMPDIR=. $(BIBTEX2HTML) -s plain -nokeywords		\
 	  -citefile lrde_olena.cite -noabstract -nofooter -labelname	\
-	  -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
+	  -nodoc -linebreak -nf urllrde PDF $<
 
 
 EXTRA_DIST += 				\
