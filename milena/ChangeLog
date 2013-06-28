@@ -1,5 +1,11 @@
 2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes in mln/world/binary_2d/subsample.hh.
+
+	* mln/world/binary_2d/subsample.hh: Here.
+
+2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix two bugs in mln/world/binary_2d/subsample.hh.
 
 	* mln/world/binary_2d/subsample.hh

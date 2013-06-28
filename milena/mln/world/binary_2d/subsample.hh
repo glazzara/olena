@@ -40,6 +40,7 @@
 # include <mln/data/convert.hh>
 # include <mln/value/int_u8.hh>
 
+
 namespace mln
 {
 
@@ -55,7 +56,6 @@ namespace mln
       /// \param[in] n	   Linear subsampling coefficient.
       ///
       /// \return A gray level image.
-      //
       image2d<value::int_u8>
       subsample(const image2d<bool>& input, unsigned n);
 
@@ -73,12 +73,7 @@ namespace mln
 	using value::int_u8;
 
 	if (n == 0)
-	{
-	  image2d<value::int_u8>
-	    output = data::convert(int_u8(), input);
-
-	  return output;
-	}
+	  return data::convert(int_u8(), input);
 
 	const bool** ptr = new const bool*[n];
 	const unsigned nrows = input.nrows() / n;
@@ -86,7 +81,6 @@ namespace mln
 	image2d<int_u8> output(nrows, ncols);
 
 	const unsigned delta_row = input.delta_offset(down);
-	unsigned count = 0;
 
 	for (unsigned row = 0; row < nrows; ++row)
 	{
@@ -95,16 +89,12 @@ namespace mln
 	    ptr[i] = ptr[i - 1] + delta_row;
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
-	    count = 0;
+	    unsigned count = 0;
 	    for (unsigned i = 0; i < n; ++i)
-	    {
 	      for (unsigned j = 0; j < n; ++j, ++(ptr[i]))
-	      {
 		if (*(ptr[i]))
 		  ++count;
-	      }
-	    }
-	    output(point2d(row, col)) = count * 255 / n / n;
+	    output(point2d(row, col)) = count * mln_max(int_u8) / n / n;
 	  }
 	}
 
