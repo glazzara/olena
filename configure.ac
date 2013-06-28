@@ -160,6 +160,25 @@ if test -z "$TESTS_CXXFLAGS_DEBUG"; then
 fi
 
 
+## --------------- ##
+## Documentation.  ##
+## --------------- ##
+
+# Tools used to build the documentation.
+
+# rst2html can have many names, especially in the MacPorts, where
+# py-docutils binaries include their version numbers in their names.
+AC_ARG_VAR([RST2HTML], [reStructuredText-to-HTML translator])
+AC_CHECK_PROGS([RST2HTML],
+  m4_do([rst2html],
+        [ rst2html.py],
+        [ rst2html-3.3.py rst2html-3.2.py rst2html-3.1.py],
+        [ rst2html-2.7.py rst2html-2.6.py rst2html-2.5.py rst2html-2.4.py]))
+if test -z "$RST2HTML"; then
+  AC_MSG_WARN([rst2html not found, documentation rebuild will not be possible])
+fi
+
+
 ## ------------------------------ ##
 ## ``Enable Everything'' Switch.  ##
 ## ------------------------------ ##

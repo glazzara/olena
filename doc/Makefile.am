@@ -149,9 +149,12 @@ EXTRA_DIST += $(USER_REFMAN)
 ## -------------- ##
 
 contributors.html: $(top_srcdir)/AUTHORS
-	rst2html --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet \
-		 --input-encoding=latin1 --output-encoding=latin1 \
-		 $(top_srcdir)/AUTHORS > contributors.html
+	@test -n "$(RST2HTML)"						\
+	  || { echo "error: rst2html not found during configure" >&2;	\
+	       exit 1; }
+	$(RST2HTML) --input-encoding=latin1 --output-encoding=latin1	\
+	  --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet	\
+	  $< >$@
 
 
 ## -------------- ##
