@@ -1,3 +1,18 @@
+2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix two bugs in mln/world/binary_2d/subsample.hh.
+
+	* mln/world/binary_2d/subsample.hh
+	(world::binary_2d::subsample(const image2d<bool>&, unsigned)):
+	Properly initialize (and deallocate) the sliding window (array of
+	pointers).
+	Fix the size of	the output image.
+	Have the declaration of this function match its definition.
+	* tests/world/binary_2d/subsample.cc: New test.
+	* tests/world/binary_2d/Makefile.am
+	(check_PROGRAMS): Add subsample.
+	(MOSTLYCLEANFILES): Add subsample-small.pgm.
+
 2013-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address compiler warnings about unused variables and arguments.

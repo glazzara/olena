@@ -57,7 +57,7 @@ namespace mln
       /// \return A gray level image.
       //
       image2d<value::int_u8>
-      subsample(image2d<bool>& input, unsigned n);
+      subsample(const image2d<bool>& input, unsigned n);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -80,11 +80,10 @@ namespace mln
 	  return output;
 	}
 
-	const bool** ptr;
+	const bool** ptr = new const bool*[n];
 	const unsigned nrows = input.nrows() / n;
 	const unsigned ncols = input.ncols() / n;
-	image2d<int_u8> output;
-	initialize(output, input);
+	image2d<int_u8> output(nrows, ncols);
 
 	const unsigned delta_row = input.delta_offset(down);
 	unsigned count = 0;
@@ -108,6 +107,8 @@ namespace mln
 	    output(point2d(row, col)) = count * 255 / n / n;
 	  }
 	}
+
+	delete[] ptr;
 
 	return output;
       }
