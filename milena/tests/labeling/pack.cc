@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,6 +28,17 @@
 #include <mln/data/compare.hh>
 #include <mln/value/label_16.hh>
 #include <mln/debug/println.hh>
+
+
+/* Clang 3.0 wrongly complains about `label_16'
+  (i.e. `mln::value::label<16>') being an incomplete type when it
+  first encounters it (when the array `vals2' is defined in `main'
+  below.).  Clang 3.1 and above do not exhibit this behavior.
+
+  Instantiate mln::value::label<16> explicitly to work around this
+  bug.  */
+template struct mln::value::label<16>;
+
 
 int main()
 {

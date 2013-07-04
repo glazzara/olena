@@ -1,3 +1,11 @@
+2013-07-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around a Clang 3.0 bug.
+
+	* tests/labeling/compute.cc,
+	* tests/labeling/pack.cc:
+	Here.
+
 2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes in mln/world/binary_2d/subsample.hh.

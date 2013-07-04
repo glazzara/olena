@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,6 +33,17 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_8.hh>
 #include <mln/util/array.hh>
+
+
+/* Clang 3.0 wrongly complains about `label_8'
+  (i.e. `mln::value::label<8>') being an incomplete type when it first
+  encounters it (when the array `lblvals' is defined in `main'
+  below.).  Clang 3.1 and above do not exhibit this behavior.
+
+  Instantiate mln::value::label<8> explicitly to work around this
+  bug.  */
+template struct mln::value::label<8>;
+
 
 int main()
 {
