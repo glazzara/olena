@@ -1,5 +1,11 @@
 2013-07-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove an inadvertently added file.
+
+	* mln/linear/#ch_convolve.hh#: Remove.
+
+2013-07-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix and improve mln::draw::dashed_line.
 
 	* mln/core/site_set/p_line2d.hh (mln::p_line2d::has(const psite&)):
