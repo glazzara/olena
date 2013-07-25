@@ -1,3 +1,15 @@
+2013-07-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and improve mln::draw::dashed_line.
+
+	* mln/core/site_set/p_line2d.hh (mln::p_line2d::has(const psite&)):
+	Remove a too strict precondition.
+	* mln/draw/dashed_line.hh (mln::draw::dashed_line):
+	Rework implementation to make it more like mln::draw::line's.
+	Clean up a bit.
+	* tests/draw/dashed_line.cc: New test.
+	* tests/draw/Makefile.am (check_PROGRAMS): Add dashed_line.
+
 2013-07-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Work around a Clang 3.0 bug.

@@ -17,7 +17,7 @@
 //
 // As a special exception, you may use this file as part of a free
 // software project without restriction.  Specifically, if other files
-// instantiate templates or use macros or indashed_line functions from this
+// instantiate templates or use macros or inline functions from this
 // file, or you compile this file and link it with other files to produce
 // an executable, this file does not by itself cause the resulting
 // executable to be covered by the GNU General Public License.  This
@@ -29,15 +29,16 @@
 
 /// \file
 ///
-/// \brief Draw a dashed_line in an image.
-/// \todo Add specializations for horizontal dashed_lines (use
+/// \brief Draw a dashed line in an image.
+/// \todo Add specializations for horizontal dashed lines (use
 /// pointers/memset).
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/image/imorph/safe.hh>
-# include <mln/data/fill.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/data/paste.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 
@@ -52,8 +53,8 @@ namespace mln
         between the points \p beg and \p end.
 
        \param[in,out] ima The image to be drawn.
-       \param[in] beg The start point to drawn dashed_line.
-       \param[in] end The end point to drawn dashed_line.
+       \param[in] beg The start point to drawn dashed line.
+       \param[in] end The end point to drawn dashed line.
        \param[in] v The value to assign to all drawn pixels.
 
        \pre \p ima has to be initialized.
@@ -103,7 +104,10 @@ namespace mln
       if (! ima.has(end))
 	mln_trace_warning("End site is not part of the given image.");
 
-      data::fill(((ima | p_line2d(beg, end)).rw() | internal::dashed_line_f<I, 1>()).rw(), v);
+      data::paste(pw::cst(v)
+		  | p_line2d(beg, end)
+		  | internal::dashed_line_f<I, 1>(),
+		  safe(ima).rw());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

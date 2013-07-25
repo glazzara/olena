@@ -240,7 +240,6 @@ namespace mln
   bool
   p_line2d::has(const psite& p) const
   {
-    mln_precondition(p.target_() == this); // FIXME: Refine.
     if (! has(p.index()))
       return false;
     mln_invariant(p.to_site() == (*this)[p.index()]);
