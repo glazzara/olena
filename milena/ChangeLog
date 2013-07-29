@@ -1,3 +1,11 @@
+2013-07-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Milena's tests/draw/line.cc.
+
+	* tests/draw/line.cc: Remove a useless header inclusion.
+	Add a description.
+	Stylistic changes.
+
 2013-07-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove an inadvertently added file.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,39 +24,37 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <iterator>
+/// \file
+/// \brief Exercise mln::draw::line.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/dmorph/sub_image.hh>
-
 
 #include <mln/data/fill.hh>
 #include <mln/data/compare.hh>
 #include <mln/draw/line.hh>
 #include <mln/debug/println.hh>
 
-
 int main()
 {
   using namespace mln;
 
-  point2d b = point2d(0,0), e = point2d(6,9);
-  p_line2d l(b, e);
+  point2d p1 = point2d(0,0);
+  point2d p2 = point2d(6,9);
+  p_line2d l(p1, p2);
   mln_assertion(l.nsites() == 10);
 
   image2d<bool> ima(10,10);
   data::fill(ima, false);
-  draw::line(ima, b, e, true);
+  draw::line(ima, p1, p2, true);
 
   image2d<bool> ima2(10,10);
   data::fill(ima2, false);
   data::paste(pw::cst(true) | l, ima2);
-
   mln_assertion(ima2 == ima);
 
   image2d<bool> ima3(10,10);
   data::fill(ima3, false);
   data::fill((ima3 | l).rw(), true);
-
   mln_assertion(ima3 == ima);
 }
