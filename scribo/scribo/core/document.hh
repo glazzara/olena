@@ -34,7 +34,10 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/io/magick/load.hh>
+
+# ifndef SCRIBO_NMAGICK
+#  include <mln/io/magick/load.hh>
+# endif // ! SCRIBO_NMAGICK
 
 # include <scribo/core/component_set.hh>
 # include <scribo/core/line_set.hh>
@@ -95,7 +98,13 @@ namespace scribo
     document(const char *filename,
 	     const mln::image2d<mln::value::rgb8>& input);
 
+    /* FIXME: This is bad, as it changes the interface of the class.
+       But this is probably the smallest change to lift the dependency
+       of this class on Magick++.  We shall probably get rid of this
+       open() method anyway.  */
+# ifndef SCRIBO_NMAGICK
     void open();
+# endif // ! SCRIBO_NMAGICK
     bool is_open() const;
 
     const char * filename() const;
@@ -235,6 +244,7 @@ namespace scribo
   }
 
 
+# ifndef SCRIBO_NMAGICK
   template <typename L>
   void
   document<L>::open()
@@ -242,6 +252,7 @@ namespace scribo
     mln_precondition(data_ != 0);
     mln::io::magick::load(data_->image_, data_->filename_);
   }
+# endif // ! SCRIBO_NMAGICK
 
 
   template <typename L>

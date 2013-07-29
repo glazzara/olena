@@ -1,3 +1,10 @@
+2013-07-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Lift scribo::document's dependency on Magick++.
+
+	* scribo/core/document.hh [SCRIBO_NMAGICK]: Disable everything
+	related to mln::io::magick.
+
 2013-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	* scribo/text/recognition.hh: Aesthetic changes.
