@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -106,7 +106,7 @@ namespace scribo
 
 	object_groups<L> output = groups.duplicate();
 
-	fun::i2v::array<mln_value(L)> relabel_fun;
+	mln::fun::i2v::array<mln_value(L)> relabel_fun;
 	component_set<L>
 	  components = primitive::group::apply(groups, relabel_fun);
 

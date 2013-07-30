@@ -1,5 +1,15 @@
 2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing `mln' namespace qualifiers.
+
+	* scribo/filter/object_groups_with_holes.hh
+	(scribo::filter::impl::generic::object_groups_with_holes)
+	* scribo/primitive/regroup/from_single_left_link.hh
+	(regroup::from_single_left_link(const object_groups<L>&, unsigned)):
+	Here.
+
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move to-be-installed header files from src/ to scribo/.
 
 	* src/afp/components.hh,

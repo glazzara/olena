@@ -185,7 +185,7 @@ namespace scribo
 
 	  // Will 'True' if a group has at least two background
 	  // components.
-	  fun::i2v::array<bool>
+	  mln::fun::i2v::array<bool>
 	    to_keep(value::next(components.nelements()), false);
 
 	  const L& lbl = components.labeled_image();
