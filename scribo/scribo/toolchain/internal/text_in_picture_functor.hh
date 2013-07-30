@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -90,9 +90,9 @@
 
 # include <scribo/toolchain/internal/toolchain_functor.hh>
 
-# include <src/afp/components.hh>
-# include <src/afp/link.hh>
-# include <src/afp/regroup.hh>
+# include <scribo/afp/components.hh>
+# include <scribo/afp/link.hh>
+# include <scribo/afp/regroup.hh>
 
 
 namespace scribo

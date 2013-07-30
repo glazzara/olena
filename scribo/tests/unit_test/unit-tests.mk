@@ -182,6 +182,9 @@ endif HAVE_TESSERACT
 
 # Starting non-conditional unit test list.
 check_PROGRAMS +=  \
+scribo_afp_components \
+scribo_afp_link \
+scribo_afp_regroup \
 scribo_all \
 scribo_binarization_all \
 scribo_binarization_global_threshold \

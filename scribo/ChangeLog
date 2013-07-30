@@ -1,3 +1,23 @@
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move to-be-installed header files from src/ to scribo/.
+
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh:
+	Move files...
+	* scribo/afp/components.hh,
+	* scribo/afp/link.hh,
+	* scribo/afp/regroup.hh:
+	...here, as they are included by other files located under
+	scribo/, and therefore should be installed as well.
+	* scribo/toolchain/internal/text_in_picture_functor.hh,
+	* src/text_recognition_in_picture.cc:
+	Adjust.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
 2013-07-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Lift scribo::document's dependency on Magick++.

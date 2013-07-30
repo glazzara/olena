@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_SRC_AFP_COMPONENTS_HH
-# define SCRIBO_SRC_AFP_COMPONENTS_HH
+#ifndef SCRIBO_AFP_COMPONENTS_HH
+# define SCRIBO_AFP_COMPONENTS_HH
 
 /// \file
 ///
@@ -50,6 +50,8 @@
 # include <mln/extension/fill.hh>
 # include <mln/data/compare.hh>
 
+// FIXME: Move the contents of this file in the right namespace and/or
+// refactor.
 
 namespace mln
 {
@@ -225,4 +227,4 @@ namespace mln
 } // mln
 
 
-#endif // ! SCRIBO_SRC_AFP_COMPONENTS_HH
+#endif // ! SCRIBO_AFP_COMPONENTS_HH

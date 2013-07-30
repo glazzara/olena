@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_SRC_AFP_LINK_HH
-# define SCRIBO_SRC_AFP_LINK_HH
+#ifndef SCRIBO_AFP_LINK_HH
+# define SCRIBO_AFP_LINK_HH
 
 /// \file
 ///
@@ -38,6 +38,9 @@
 # include <scribo/core/object_links.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/macros.hh>
+
+// FIXME: Move the contents of this file in the right namespace and/or
+// refactor.
 
 namespace scribo
 {
@@ -175,4 +178,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_SRC_AFP_LINK_HH
+#endif // ! SCRIBO_AFP_LINK_HH

@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_SRC_AFP_REGROUP_HH
-# define SCRIBO_SRC_AFP_REGROUP_HH
+#ifndef SCRIBO_AFP_REGROUP_HH
+# define SCRIBO_AFP_REGROUP_HH
 
 /// \file
 ///
@@ -38,6 +38,9 @@
 #include <scribo/core/object_groups.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/core/macros.hh>
+
+// FIXME: Move the contents of this file in the right namespace and/or
+// refactor.
 
 namespace scribo
 {
@@ -117,4 +120,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_SRC_AFP_REGROUP_HH
+#endif // ! SCRIBO_AFP_REGROUP_HH
