@@ -1,5 +1,16 @@
 2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix resizing code in toolchain::internal::text_in_picture_functor.
+
+	* scribo/toolchain/internal/text_in_picture_functor.hh
+	(text_in_picture_functor<I>::get_factor): New precondition: ensure
+	argument `max_dim_size', used as denominator, is non null.
+	(text_in_picture_functor<I>::operator()): Do not resize the image
+	if `max_dim_size' is null.
+	Some cosmetic changes.
+
+2013-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing `mln' namespace qualifiers.
 
 	* scribo/filter/object_groups_with_holes.hh
