@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -173,9 +173,3 @@ CLEANFILES = $(dist_bin_SCRIPTS)
 
 
 EXTRA_DIST = scribo-cli.in
-
-
-EXTRA_DIST += 		\
-  afp/components.hh 	\
-  afp/link.hh 		\
-  afp/regroup.hh
