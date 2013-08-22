@@ -23,6 +23,7 @@ SUBDIRS =					\
   p2p						\
   p2v						\
   stat						\
+  v2i						\
   v2v						\
   vv2v						\
   x2x

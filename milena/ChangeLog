@@ -1,3 +1,9 @@
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enable tests/fun/v2i.
+
+	* tests/fun/Makefile.am (SUBDIRS): Add v2i.
+
 2012-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Various aesthetic changes in Milena.
