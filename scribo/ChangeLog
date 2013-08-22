@@ -1,3 +1,7 @@
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	* scribo/primitive/extract/alignments.hh: Fix Doxygen comments.
+
 2013-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution of Scribo.

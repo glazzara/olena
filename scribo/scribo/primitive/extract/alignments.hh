@@ -92,17 +92,17 @@ namespace scribo
 
 	\pre Separators should be removed from input document image .
 
-	\pre Text in \p doc must be constructed from Components
+	\pre Text in \p doc must be constructed from components
 	grouped by lines with a very strict criterion in order to keep
 	spaces between words and paragraphs. This first grouping is
 	necessary to avoid false positive (e.g. inside the text
 	blocks).
 
-	\pre \p doc must have text (has_text() returns true).
+	\pre \p doc must have text (doc.has_text() returns true).
 
 
-	Internal description :
-	----------------------
+	Internal description:
+	---------------------
 
 	1) Build an image of line bboxes
 	2) For TOP and BOTTOM
