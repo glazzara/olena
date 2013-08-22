@@ -1,5 +1,9 @@
 2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/image/dmorph/sub_image.hh: Fix indentation.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enable tests/fun/v2i.
 
 	* tests/fun/Makefile.am (SUBDIRS): Add v2i.

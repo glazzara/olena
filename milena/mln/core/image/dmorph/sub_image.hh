@@ -102,8 +102,8 @@ namespace mln
   //
   template <typename I, typename S>
   class sub_image : public internal::image_domain_morpher< I,
-							    S,
-							    sub_image<I,S> >
+							   S,
+							   sub_image<I,S> >
   {
   public:
     /// Skeleton.
