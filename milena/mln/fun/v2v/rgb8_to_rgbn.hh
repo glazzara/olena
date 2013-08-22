@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,8 +33,7 @@
 # include <mln/core/contract.hh>
 
 /// \file
-///
-/// \brief Convert rgb8 value to rgbn, n < 8.
+/// \brief Conversion from mln::value::rgb8 to mln::value::rgbn.
 
 
 namespace mln
@@ -47,53 +46,39 @@ namespace mln
     {
 
 
-      /// \brief Convert a rgb8 value to a rgn, n < 8.
+      /// \brief Convert an mln::value::rgb8 to an mln::value::rgbn.
       ///
-      /// \param n defines the output quantification used for the transformation.
+      /// \tparam n  The quantification of the output value (where n < 8).
       ///
       /// \ingroup modfunv2v
-      //
       template <unsigned n>
       struct rgb8_to_rgbn : Function_v2v< rgb8_to_rgbn<n> >
       {
-	typedef value::rgb8   argument;
+	typedef value::rgb8 argument;
 	typedef value::rgb<n> result;
 
-	/// \brief Convert a rgb8 value to a rgn, n < 8.
+	/// \brief Perform the conversion.
 	///
-	/// \param[in] c the rgb8 value to convert.
+	/// \pre The parameter (constant) n must be lower than 8.
+	///
+	/// \param[in] c  The input value.
 	///
 	/// Conversion is done by computing the size by which we
 	/// divide each rgb component.
-	//
 	result operator()(const argument& c) const;
-
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      /// \brief Convert a rgb8 value to a rgn, n < 8.
-      ///
-      /// \param c defines the output quantification used for the transformation.
-      ///
-      /// \ingroup modfunv2v
-      //
       template <unsigned n>
       typename rgb8_to_rgbn<n>::result
       rgb8_to_rgbn<n>::operator()(const argument& c) const
       {
-	mln_precondition(8 > n);
+	mlc_bool(n < 8)::check();
 
-	unsigned size = pow(2,(8-n));
-	/*
-	  std::cout << "c    : " << c << std::endl;
-	  std::cout << "red  : " << c.red() << std::endl;
-	  std::cout << "size : " << size << std::endl;
-	  std::cout << "res  : " << (c.red() / size) << std::endl;
-	  std::cout << "max  : " << (mln_max(mln::value::int_u<n>))<< std::endl;
-	*/
-	result   res(c.red() / size, c.green() / size, c.blue() / size);
+	unsigned size = pow(2, (8 - n));
+	result res(c.red() / size, c.green() / size, c.blue() / size);
 
 	return res;
       }

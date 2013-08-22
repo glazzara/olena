@@ -1,5 +1,15 @@
 2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve Milena's mln/fun/v2v/rgb8_to_rgbn.hh.
+
+	* mln/fun/v2v/rgb8_to_rgbn.hh: Turn precondition into a static
+	assertion.
+	Remove (dead) debugging code.
+	Rewrite Doxygen comments.
+	Cosmetic changes.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/image/dmorph/sub_image.hh: Fix indentation.
 
 2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
