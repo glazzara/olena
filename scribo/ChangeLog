@@ -1,5 +1,15 @@
 2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Slightly improve Scribo's tests/primitive/extract/alignments.cc.
+
+	* tests/primitive/extract/alignments.cc (main): Pass an actual
+	literal float as second argument to
+	scribo::primitive::extract::alignments.
+	Add a Doxygen header.
+	Cosmetic changes.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* scribo/primitive/extract/alignments.hh: Fix Doxygen comments.
 
 2013-07-31  Roland Levillain  <roland@lrde.epita.fr>

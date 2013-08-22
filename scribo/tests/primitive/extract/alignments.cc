@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,19 +23,20 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-// \file
+/// \file
+/// \brief Exercise scribo::primitive::extract::alignments.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/io/pbm/load.hh>
 
 #include <scribo/core/document.hh>
+
 #include <scribo/core/paragraph_set.hh>
 #include <scribo/text/extract_lines_wo_merge.hh>
 #include <scribo/primitive/extract/alignments.hh>
 
 #include "tests/data.hh"
-
 
 int main()
 {
@@ -44,7 +45,7 @@ int main()
 
   typedef image2d<scribo::def::lbl_type> L;
 
-  for (unsigned i = 1; i < 5; ++i)
+  for (unsigned i = 1; i <= 4; ++i)
   {
     std::ostringstream os;
     os << SCRIBO_IMG_DIR << "/alignment_" << i << ".pbm";
@@ -53,14 +54,13 @@ int main()
     doc.open();
     doc.set_binary_image(data::convert(bool(), doc.image()));
 
-    // Extract lines
-    line_set<L>
-      lines = scribo::text::extract_lines_wo_merge(doc, c8());
+    // Extract lines.
+    line_set<L> lines = scribo::text::extract_lines_wo_merge(doc, c8());
     doc.set_paragraphs(scribo::make::paragraph(lines));
 
-    // Find alignments
-    mln::util::couple<component_set<L>, mln_ch_value_(L,bool)>
-      res = primitive::extract::alignments(doc, 3, 3);
+    // Find alignments.
+    mln::util::couple<component_set<L>, mln_ch_value_(L,bool)> res =
+      primitive::extract::alignments(doc, 3.f, 3);
 
     std::ostringstream os_out;
     image2d<bool> ref;
@@ -71,5 +71,4 @@ int main()
 
     mln_assertion(ref == res.second());
   }
-
 }
