@@ -1,5 +1,9 @@
 2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* COPYING: Untabify.
+
+2013-08-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure milena/tests/fun/v2i/Makefile.
 
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
