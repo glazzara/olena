@@ -5,7 +5,7 @@ This package was written by and with the assistance of
 Active LRDE Staff.
 ==================
 
-* **Thierry Géraud**	<theo@lrde.epita.fr>
+* **Thierry Géraud**		<theo@lrde.epita.fr>
 
   - Management of the project in the first place.
   - Type system.
@@ -16,40 +16,50 @@ Active LRDE Staff.
   - Numerous hours spent thinking about Olena.
 
 
-* **Guillaume Lazzara**	<z@lrde.epita.fr>
-
-  - SCRIBO module main author and maintainer.
-  - Library improvements.
+* **Jonathan Fabrizio**		<jonathan@lrde.epita.fr>
 
 
-* **Roland Levillain**	<roland@lrde.epita.fr>
+* **Roland Levillain**		<roland@lrde.epita.fr>
 
-  - Project manager.
+  - Project and release manager.
   - Theoretical mentor.
-  - Renovation of Swilena (Olena 0.10a).
-  - G++ 4.0 and 4.1 compatibility (Olena 0.10a).
-  - Integration of GNU Libtool (Olena 0.10a).
-  - SCOOP 2 and Static (Olena pre-1.0).
-  - Revive the dynamic-static bridge prototype from Olena proto-1.0.
+  - Renovation of Swilena (Olena 0.10a and later).
+  - Overhaul of the dynamic-static bridge (Olena proto-1.0 and later).
+  - Integration of GNU Libtool (Olena 0.10a and later).
+  - SCOOP 2 and Static (Olena pre-1.0 and later).
+  - G++ and clang compatibility.
+
+
+* **Myriam Robert-Seidowsky**	<myriam.robert-seidowsky@lrde.epita.fr>
+
+
+===============
+Ph.D. students.
+===============
+
+* **Edwin Carlinet**		<edwin.carlinet@lrde.epita.fr>
+
+  - Accumulators.
+  - Morphological connected filters.
 
 
 ================================
 Past contributors of LRDE Staff.
 ================================
 
-* **Jérôme Darbon**	<jerome@lrde.epita.fr>
+* **Jérôme Darbon**		<jerome@lrde.epita.fr>
 
   - Image morphology and Olena morpho.
 
 
-* **Réda Dehak**	<reda@lrde.epita.fr>
+* **Réda Dehak**		<reda@lrde.epita.fr>
 
   - Management of the project.
   - Color conversions.
   - Cleanup the sources.
 
 
-* **Akim Demaille**	<akim@lrde.epita.fr>
+* **Akim Demaille**		<akim@lrde.epita.fr>
 
   - Configuration system.
   - Maintenance of code's clearness.
@@ -64,28 +74,63 @@ Past contributors of LRDE Staff.
   - Numerous hours spent on Olena to make it better.
 
 
-* **Fabien Freling**	<fabien.freling@lrde.epita.fr>
+* **Fabien Freling**		<fabien.freling@lrde.epita.fr>
 
   - Work on Melimage with IGR.
   - Library improvements.
 
 
-* **Yann Jacquelet**	<jacquelet@lrde.epita.fr>
+* **Yann Jacquelet**		<jacquelet@lrde.epita.fr>
 
   - SCRIBO-related work.
 
 
-========
-Interns.
-========
+* **Guillaume Lazzara**		<z@lrde.epita.fr>
 
-* **Arthur Crépin-Leblond**
-
-  - SCRIBO structured outputs (XML, HTML, PDF).
+  - SCRIBO module main author and former maintainer.
+  - Many contributions and improvements to Milena and Olena in general.
 
 
-* **Raphaël Boissel**
-  - Graph implementation of a DIA toolchain in SCRIBO.
+=========================
+Students from Class 2015.
+=========================
+
+* **Anthony Seure**		<anthony.seure@lrde.epita.fr>
+
+  - Work on SIFT.
+
+
+* **Christophe Escobar**	<christophe.escobar@lrde.epita.fr>
+
+  - Work on structural document analysis in the SCRIBO module.
+
+=========================
+Students from Class 2014.
+=========================
+
+* **Raphaël Boissel**		<raphael.boissel@lrde.epita.fr>
+
+  - Graph implementation of a DIA toolchain in the SCRIBO module.
+
+
+* **Sébastien Crozet**		<sebastien.crozet@lrde.epita.fr>
+
+  - Work on the tree of shapes.
+
+=========================
+Students from Class 2013.
+=========================
+
+* **Coddy Levi**		<coddy.levi@lrde.epita.fr>
+
+  - Work on text extraction in inverse video.
+  - Work on variational image inpainting.
+
+
+* **Sylvain Lobry**		<sylvain.lobry@lrde.epita.fr>
+
+  - Work on text extraction in inverse video.
+  - Work on optical flow and video inpainting.
 
 =========================
 Students from Class 2012.
@@ -100,15 +145,6 @@ Students from Class 2012.
 
   - Fast implementation of the Hough transform.
   - Many improvements in SCRIBO layout analysis.
-
-=========================
-Students from Class 2011.
-=========================
-
-* **Edwin Carlinet**	<edwin.carlinet@lrde.epita.fr>
-
-  - Accumulators.
-  - Morphological connected filters.
 
 =========================
 Students from Class 2010.
@@ -377,6 +413,11 @@ Students from Class 2000.
 Other Contributors.
 ===================
 
+* **Arthur Crépin-Leblond**
+
+  - SCRIBO module structured outputs (XML, HTML, PDF).
+
+
 * **Guillaume Duhamel**
 
   - Low-level routines.
@@ -396,6 +437,7 @@ Other Contributors.
 * **Heru Xue**
 
   - Color system.
+
 
 
 .. Local Variables:
