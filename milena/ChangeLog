@@ -1,5 +1,9 @@
 2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/data/transform: Remove (empty) file.
+
+2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute all Milena test images.
 
 	* tests/Makefile.am (EXTRA_DIST): Add img/example-0.ppm,
