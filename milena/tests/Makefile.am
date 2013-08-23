@@ -86,8 +86,13 @@ pretty-check:
 include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += unit_test
 
-EXTRA_DIST += 					\
-  img/lena_ascii.pbm 				\
+EXTRA_DIST +=					\
+  img/example-0.ppm				\
+  img/example-1.ppm				\
+  img/example-2.ppm				\
+  img/example-3.ppm				\
+  img/example.pdf				\
+  img/lena_ascii.pbm				\
   img/lena_ascii.pgm				\
   img/lena_raw.pbm				\
   img/lena_raw.pgm				\
@@ -95,4 +100,3 @@ EXTRA_DIST += 					\
   img/test_gl.tif				\
   img/test_rgb8.tif				\
   img/tiny.png
-
