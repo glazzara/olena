@@ -1,3 +1,19 @@
+2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the generation of Doxyfiles in Milena.
+
+	* doc/Makefile.am (edit)
+	($(srcdir)/user-refman.stamp)
+	($(srcdir)/devel-refman.stamp):
+	Use `[@]' instead of `\@' for portability reasons.
+	(ID): New (empty).
+	(edit_devel): Prevent configure from expanding @builddir@.
+	Christen the product as ``Developer documentation''.
+	($(DOXYFILE_USER), $(DOXYFILE_DEVEL)): Do not depend on $Id$ from
+	ChangeLog.
+	* doc/Doxyfile.in (PROJECT_NUMBER): Reintegrate @ID@ to the
+	project number, even if it is not yet set.
+
 2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Run FFT unit tests only when FFTW3 support is enabled.
