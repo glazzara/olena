@@ -1,5 +1,12 @@
 2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a couple of Milena tests.
+
+	* tests/accu/compute.cc: Correction the checked assertion.
+	* tests/value/scalar.cc: Remove this (non-relevant) test.
+
+2013-08-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/data/transform: Remove (empty) file.
 
 2013-08-23  Roland Levillain  <roland@lrde.epita.fr>

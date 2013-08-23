@@ -33,7 +33,6 @@ check_PROGRAMS =				\
   label						\
   proxy						\
   rgb8						\
-  scalar					\
   set						\
   sign
 #  float01				

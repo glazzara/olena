@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,5 +39,5 @@ int main()
   unsigned n = 3;
   image2d<int_u8> ima(n, n);
   unsigned c = accu::compute(accu::meta::math::count(), ima);
-  mln_assertion(c = n * n);
+  mln_assertion(c == n * n);
 }
