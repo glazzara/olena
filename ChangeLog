@@ -1,3 +1,16 @@
+2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the generation of Doxyfiles in Olena.
+
+	* doc/Makefile.am (edit)
+	($(srcdir)/user-refman.stamp):
+	Use `[@]' instead of `\@' for portability reasons.
+	(ID): New (empty).
+	($(DOXYFILE_USER)): Do not depend on $Id$ from ChangeLog.
+	* doc/Doxyfile.in (PROJECT_NUMBER): Reintegrate @ID@ to the
+	project number, even if it is not yet set.
+	Improve the generation of Doxyfiles in Olena.
+
 2012-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Ask configure to try to find FFTW (version 3).

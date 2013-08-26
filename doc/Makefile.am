@@ -86,25 +86,26 @@ REFMAN_deps = $(srcdir)/footer.html 	  	\
 
 EXTRA_DIST += $(REFMAN_deps)
 
-# Sed is used to generate Doxyfile from Doxyfile.in instead of
-# configure, because the former is way faster than the latter.
-#
-## FIXME: This is because, as in TC, we depend on $Id$ from the
-## ChangeLog.  Maybe we should depend from something less prone to
-## change.  See Bison's build system.
-edit = sed -e "s|@ID@|$$Id|"					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
-	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
-	   -e 's,@top_builddir\@,$(top_builddir),g'		\
-	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
+## FIXME: We used to depend on Subversion's $Id$ (extracted from
+## ChangeLog) before.  We should depend on something less prone to
+## change from now on.  The best is probably to use `git-version-gen'
+## from Gnulib (as Bison does).  For the moment, set ID to an empty
+## string.
+ID =
+# Use Make to generate Doxyfile instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed -e "s|@ID[@]|$(ID)|"					\
+	   -e 's,@PACKAGE_NAME[@],$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION[@],$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir[@],$(top_srcdir),g'		\
+	   -e 's,@abs_top_srcdir[@],$(abs_top_srcdir),g'	\
+	   -e 's,@top_builddir[@],$(top_builddir),g'		\
+	   -e 's,@srcdir[@],$(srcdir),g'			\
+	   -e 's,@builddir[@],$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@
+	$(edit) $< >$@
 MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -122,8 +123,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	find $(USER_REFMAN).tmp/html -name '*.html' -exec	\
-	  perl -pi -e "s,\@relcommondocpath\@,../../,g;"	\
-	           -e "s,\@userrefman\@,$(USER_REFMAN),g"	\
+	  perl -pi -e "s,@relcommondocpath[@],../../,g;"	\
+	           -e "s,@userrefman[@],$(USER_REFMAN),g"	\
 	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
