@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -19,6 +19,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 COND_TESTS = cond_tests_boost-tuple		\
 	     cond_tests_cfitsio			\
+	     cond_tests_fftw3			\
 	     cond_tests_gdcm			\
 	     cond_tests_magickxx		\
 	     cond_tests_poppler			\

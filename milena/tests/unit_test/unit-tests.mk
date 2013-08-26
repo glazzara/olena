@@ -24,6 +24,15 @@ mln_io_fits_load_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
 endif HAVE_CFITSIO
 
 # Starting a conditional unit test list.
+if HAVE_FFTW3
+check_PROGRAMS +=  \
+mln_transform_fft
+
+mln_transform_fft_CPPFLAGS= ${FFTW3_CPPFLAGS} -DHAVE_FFTW3 ${AM_CPPFLAGS}
+mln_transform_fft_LDFLAGS= ${FFTW3_LDFLAGS}  ${AM_LDFLAGS}
+endif HAVE_FFTW3
+
+# Starting a conditional unit test list.
 if HAVE_GDCM
 check_PROGRAMS +=  \
 mln_io_dicom_all \
@@ -1183,7 +1192,6 @@ mln_transform_distance_and_influence_zone_geodesic \
 mln_transform_distance_front \
 mln_transform_distance_geodesic \
 mln_transform_essential \
-mln_transform_fft \
 mln_transform_hough \
 mln_transform_influence_zone_front \
 mln_transform_influence_zone_geodesic \

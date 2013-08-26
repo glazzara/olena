@@ -1,3 +1,11 @@
+2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Run FFT unit tests only when FFTW3 support is enabled.
+
+	* tests/unit_test/cond_tests_fftw3: New.
+	* tests/unit_test/Makefile.am (COND_TESTS): Add cond_tests_fftw3.
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2012-10-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Split the interface of the FFT off from its implementation.
