@@ -9549,10 +9549,6 @@
 	* tests/unit_test/build_unit_test.sh: new.
 
 
-$Rev$
-$Id$
-$Date$
-
 Local Variables:
 ispell-local-dictionary: "american"
 coding: iso-latin-1
