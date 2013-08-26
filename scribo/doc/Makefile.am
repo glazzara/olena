@@ -54,25 +54,26 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
-# Sed is used to generate Doxyfile from Doxyfile.in instead of
-# configure, because the former is way faster than the latter.
-#
-## FIXME: This is because, as in TC, we depend on $Id$ from the
-## ChangeLog.  Maybe we should depend from something less prone to
-## change.  See Bison's build system.
-edit = sed -e "s|@ID@|$$Id|"					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
-	   -e 's,@abs_top_srcdir\@,$(abs_top_srcdir),g'		\
-	   -e 's,@top_builddir\@,$(top_builddir),g'		\
-	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
+## FIXME: We used to depend on Subversion's $Id$ (extracted from
+## ChangeLog) before.  We should depend on something less prone to
+## change from now on.  The best is probably to use `git-version-gen'
+## from Gnulib (as Bison does).  For the moment, set ID to an empty
+## string.
+ID =
+# Use Make to generate Doxyfile instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed -e "s|@ID[@]|$(ID)|"					\
+	   -e 's,@PACKAGE_NAME[@],$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION[@],$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir[@],$(top_srcdir),g'		\
+	   -e 's,@abs_top_srcdir[@],$(abs_top_srcdir),g'	\
+	   -e 's,@top_builddir[@],$(top_builddir),g'		\
+	   -e 's,@srcdir[@],$(srcdir),g'			\
+	   -e 's,@builddir[@],$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/scribo/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@
+	$(edit) $< >$@
 MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -100,8 +101,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	rm -rf $(srcdir)/$(USER_REFMAN)
 ## Fix path to the main page of the documentation.
 	find $(USER_REFMAN).tmp -name '*.html' -exec			\
-	  perl -pi -e "s,\@relcommondocpath\@,../../../../doc/,g;"	\
-	           -e "s,\@userrefman\@,$(USER_REFMAN),g"		\
+	  perl -pi -e "s,@relcommondocpath[@],../../../../doc/,g;"	\
+	           -e "s,@userrefman[@],$(USER_REFMAN),g"		\
 	    {} \;
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
@@ -136,7 +137,7 @@ regen-devel-doc:
 DOXYFILE_DEVEL = Doxyfile_devel
 
 edit_devel = sed							      \
-  -e 's,OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp,OUTPUT_DIRECTORY       = @builddir@/devel-refman.tmp,' \
+  -e 's,OUTPUT_DIRECTORY       = \(.*\)/user-refman.tmp,OUTPUT_DIRECTORY       = \1/devel-refman.tmp,' \
   -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
   -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
   -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
@@ -148,13 +149,12 @@ edit_devel = sed							      \
   -e 's,INTERNAL_DOCS          = NO,INTERNAL_DOCS          = YES,'	      \
   -e 's,GENERATE_TODOLIST      = NO,GENERATE_TODOLIST      = YES,'	      \
   -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \",'	 \
+  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \"Developer documentation ,' \
   -e 's,EXCLUDE_SYMBOLS	       = \*::internal\* \*_ mln::trait::\*,EXCLUDE_SYMBOLS	       =,'
 
 $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
-	Id=`grep '^\$$Id' $(top_srcdir)/scribo/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@.tmp
+	$(edit) $< >$@.tmp
 	$(edit_devel) $@.tmp >$@
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
@@ -183,8 +183,8 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## Fix path to the main page of the documentation.
-	perl -pi -e "s,\@relcommondocpath\@,../../../../doc/,g;"	\
-	         -e "s,\@userrefman\@,$(DEVEL_REFMAN),g"		\
+	perl -pi -e "s,@relcommondocpath[@],../../../../doc/,g;"	\
+	         -e "s,@userrefman[@],$(DEVEL_REFMAN),g"		\
 	  $(DEVEL_REFMAN).tmp/html/index.html
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)

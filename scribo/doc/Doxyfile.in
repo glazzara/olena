@@ -21,7 +21,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Scribo"
-PROJECT_NUMBER         = "User documentation @PACKAGE_VERSION@"
+PROJECT_NUMBER         = "User documentation @PACKAGE_VERSION@ @ID@"
 PROJECT_BRIEF	       = "An Image Processing Platform"
 PROJECT_LOGO 	       = @top_srcdir@/doc/images/logo.jpg
 OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp
