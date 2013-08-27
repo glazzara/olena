@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2012 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -33,17 +33,15 @@ namespace mln
   namespace math
   {
 
-    /*! \brief The number Pi.
-      19 decimals.
-      \ingroup mlnmath
-    */
+    /// \brief The Pi constant (20-decimal double constant).
+    /// \ingroup mlnmath
     extern const double pi;
 
 # ifndef MLN_INCLUDE_ONLY
 
 #  ifndef MLN_WO_GLOBAL_VARS
 
-    const double pi = 3.1415926535897932385;
+    const double pi = 3.14159265358979323846;
 
 #  endif // ! MLN_WO_GLOBAL_VARS
 

@@ -1,5 +1,12 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Set mln::math::pi to 20 decimals.
+
+	* mln/math/pi.hh (mln::math::pi): Here.
+	Use the value of the M_PI macro from glibc's math.h header.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Display Milena fatal errors on std::cerr, not std::cout.
 
 	* mln/io/pdf/load.hh,
