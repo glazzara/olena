@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -179,7 +179,6 @@ namespace scribo
 	      case ComponentSet:
 	      {
 		comp_set_data = new scribo::internal::component_set_data<L>();
-		// qDebug() << qName << " - atts.value(\"nelements\").toInt() = " << atts.value("nelements").toInt();;
 		comp_set_data->soft_init(atts.value("nelements").toInt());
 	      }
 	      break;
@@ -223,7 +222,6 @@ namespace scribo
 	      // Object links
 	      case ObjectLinks:
 	      {
-		// qDebug() << "object_links created";
 		links = object_links<L>(components);
 	      }
 	      break;
@@ -232,7 +230,6 @@ namespace scribo
 	      // Object groups
 	      case ObjectGroups:
 	      {
-		//qDebug() << "Processing object_groups";
 		group_info_.reserve(atts.value("ngroups").toInt());
 		group_info_.resize(1);
 	      }
@@ -242,15 +239,11 @@ namespace scribo
 	      // Text data
 	      case TextData:
 	      {
-		// qDebug() << "TextData";
-
 		// Reserve space for line data.
 		lines_data.resize(atts.value("nlines").toInt() + 1);
-		// qDebug() << "line_set created";
 		lines = line_set<L>(groups, lines_data);
 		llinks = line_links<L>(lines);
 		par_data = new scribo::internal::paragraph_set_data<L>(llinks, atts.value("nparagraphs").toInt());
-		// std::cout << par_data->pars_.nelements() << " - " << llinks.nelements() << " - " << lines.nelements() << std::endl;
 	      }
 	      break;
 
@@ -258,8 +251,6 @@ namespace scribo
 	      // Text Region
 	      case TextRegion:
 	      {
-		// qDebug() << "TextRegion";
-
 		current_paragraph = paragraph_info<L>(llinks);
 		current_paragraph.set_color_(
 		  scribo::util::hex_to_color(atts.value("color").toUtf8().constData()));
@@ -421,7 +412,6 @@ namespace scribo
 	      // Component set
 	      case ComponentSet:
 	      {
-		// qDebug() << "Component set done";
 		components = component_set<L>(comp_set_data);
 
 	      }
@@ -430,7 +420,6 @@ namespace scribo
 	      // Line
 	      case Line:
 	      {
-		// qDebug() << "Line done";
 		line_data->bbox_ = bbox;
 		lines_data(current_line_id) = line_info<L>(current_line_id, line_data);
 		lines_data(current_line_id).update_ebbox();
@@ -443,7 +432,6 @@ namespace scribo
 	      // TextRegion
 	      case TextRegion:
 	      {
-		// qDebug() << TextRegion;
 		par_data->pars_(current_paragraph_id++) = current_paragraph;
 	      }
 	      break;
@@ -451,7 +439,6 @@ namespace scribo
 	      // Page
 	      case Page:
 	      {
-		// qDebug() << "Page done";
 		lines.update_line_data_(lines_data);
 		parset = paragraph_set<L>(par_data);
 		doc.set_paragraphs(parset);

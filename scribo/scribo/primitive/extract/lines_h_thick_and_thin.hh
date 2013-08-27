@@ -1,4 +1,4 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -294,7 +294,6 @@ namespace scribo
 		if (next_tag != tag_bot)
 		  continue;
 		flush_tag(input, col, tag_bot, r, next_tag); // bot
-		// std::cout << "found at col " << col << "  from row " << row << " to " << r-1 << std::endl;
 		draw_vertical(output, col, row, r);
 		row = r - 1;
 	      }

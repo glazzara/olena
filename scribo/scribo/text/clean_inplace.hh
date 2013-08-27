@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -42,8 +42,6 @@
 # include <mln/topo/skeleton/crest.hh>
 
 # include <mln/logical/not.hh>
-
-//# include <mln/world/binary_2d/enlarge.hh>
 
 # include <mln/debug/filename.hh>
 # include <mln/io/pbm/save.hh>
@@ -109,29 +107,18 @@ namespace scribo
 	return;
 
       float fact = line.x_height() / 40.0f;
-//       std::cout << fact << " - " << input.domain() << std::endl;
       if (fact < 1)
       {
-// 	std::cout << "Upsampling..." << " - "
-// 		  << fact << std::endl;
 	while (fact < 0.90)
 	{
 	  input = scribo::upsampling::eagle(input); // 2x upsampling
 	  fact *= 2.0f;
-//  	  std::cout << "fact = " << fact
-//  		    << " - input.domain = " << input.domain()
-//  		    << std::endl;
 	}
       }
       else if (fact > 2.5f)
       {
-// 	std::cout << "subsampling::bilinear" << " - "
-// 		  << std::ceil(fact) << std::endl;
 	input = subsampling::bilinear(input, int(std::ceil(fact - 0.5))); // math::floor instead?
-
       }
-//       else
-// 	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
 
     }
 

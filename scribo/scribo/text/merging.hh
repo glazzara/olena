@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -185,7 +185,6 @@ namespace scribo
 	l2 = my_find_root(parent, l2);
 	if (l1 == l2)
 	  {
-	    //std::cerr << "what! in'do_union': already merged!!!" << std::endl;
 	    return l1;
 	  }
 
@@ -509,24 +508,6 @@ namespace scribo
 
 	const box2d& l_ted_ebbox = l_ted.ebbox();
 
-// 	std::cout << "top_row = " << top_row << " - bot_row = " << bot_row << std::endl;
-// 	std::cout << std::abs(bot_row - l_ted.baseline())
-// 		  << " - d "
-// 		  << std::abs(bot_row - l_ted.descent())
-// 		  << " - dd "
-// 		  << std::abs(bot_row - l_ted.ebbox().pmax().row())
-// 		  << " - "
-// 		  << std::abs(top_row - l_ted.meanline())
-// 		  << " - a "
-// 		  << std::abs(top_row - l_ted.ascent())
-// 		  << " - aa "
-// 		  << std::abs(top_row - l_ted.ebbox().pmin().row())
-// 		  << " - "
-// 		  << l_ted.ascent()
-// 		  << " - "
-// 		  << l_ted.descent()
-// 		  << std::endl;
-
 	if ((std::abs(bot_row - l_ted.baseline()) < 5
 	     || std::abs(bot_row - l_ted_ebbox.pmax().row()) < 5)
 	    &&
@@ -665,8 +646,6 @@ namespace scribo
 
 	  const box2d& b = lines(l).bbox();
 
-	  // unsigned tl, tr, ml, mc, mr, bl, br;
-
 	  const box2d& b_ = lines(l).ebbox();
 
 	  /*
@@ -764,8 +743,6 @@ namespace scribo
 			      && between_separators(lines, l, mc)))
 		    l = do_union(lines, l, mc,  parent);
 		  // }
-
-//		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
 
 		  /// Merge is perform if the current line is a
 		  /// petouille considered as a line.
@@ -867,10 +844,6 @@ namespace scribo
 	      if (lcand == 0) // Skip background.
 		continue;
 
-	      // if (lines(lcand).type() != line::Text)
-	      // 	std::cerr << "again!" << std::endl;
-
-
 	      if (lines(l_).type() == line::Text)
 	      {
 		// l_ and lcand look like text line chunks.
@@ -955,16 +928,6 @@ namespace scribo
 	}
 
 
-// 	std::cout
-// 	  << "   new txtline        = " << count_new_txtline        << std::endl
-// 	  << "   comp IN txtline    = " << count_comp_IN_txtline    << std::endl
-// 	  << "   2 lines merge      = " << count_two_lines_merge    << std::endl
-// 	  << "   comp HITS txtline  = " << count_comp_HITS_txtline  << std::endl
-// 	  << "   txtline IN junk    = " << count_txtline_IN_junk    << std::endl
-// 	  << "   txtline IN txtline = " << count_txtline_IN_txtline << std::endl
-// 	  << "   WTF!               = " << count_WTF << std::endl;
-
-
 	(void) ith_pass;
 // 	if (ith_pass == 1)
 // 	{
@@ -1034,8 +997,6 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-// 	mln::util::timer t;
-
 
 	// Setting lines as text lines according to specific criterions.
 	for_all_lines(l, lines)
@@ -1044,10 +1005,7 @@ namespace scribo
 
 
 	// First pass
-// 	t.start();
 	one_merge_pass(1, input_domain, v, lines, parent);
-// 	float ts = t.stop();
-// 	std::cout << "time " << ts << std::endl;
 
 
 //	lines.force_stats_update();
@@ -1058,10 +1016,7 @@ namespace scribo
 
 
 	// Second pass
-// 	t.start();
 	one_merge_pass(2, input_domain, v, lines, parent); // <- last pass
-// 	ts = t.stop();
-// 	std::cout << "time " << ts << std::endl;
 
 
 	lines.force_stats_update();
@@ -1081,15 +1036,9 @@ namespace scribo
     {
       using namespace mln;
 
-//       mln::util::timer t;
-//       t.start();
-
       scribo::line_set<L> output
 	= internal::draw_boxes(lines.components().labeled_image().domain(),
 			       lines);
-//       float ts = t.stop();
-//       std::cout << ts << std::endl;
-
       return output;
     }
 

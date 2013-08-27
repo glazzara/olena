@@ -137,9 +137,6 @@ namespace mln
     V current_label = 0;
     int dp_border;
 
-//     util::timer time;
-//     time.start();
-
     // init
     {
       extension::adjust(input, nbh);
@@ -147,10 +144,6 @@ namespace mln
       extension::fill(input, false);
       initialize(data, input);
     }
-
-//     float t = time;
-//     std::cout << "init = " << t << std::endl;
-//     time.restart();
 
     // 1st pass
     {
@@ -181,9 +174,6 @@ namespace mln
 	}
     }
 
-//     t = time;
-//     std::cout << "1st pass = " << t << std::endl;
-//     time.restart();
 
     // 2nd pass
     {
@@ -216,8 +206,6 @@ namespace mln
 	    label.element(p) = label.element(dta.parent);
 	}
     }
-//     t = time;
-//     std::cout << "2nd pass = " << t << std::endl;
 
     nlabels = current_label;
     return label;

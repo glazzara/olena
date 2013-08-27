@@ -192,13 +192,6 @@ namespace scribo
 
 	// const unsigned nlines = lines.nelements();
 
-	// image2d<value::rgb8> links = data::convert(value::rgb8(), input);
-	// for (unsigned l = 0; l < nlines; ++l)
-	// {
-	// 	  mln::draw::line(links, lines(l).bbox().pcenter(), lines(left(l)).bbox().pcenter(), literal::red);
-	// }
-	// mln::io::ppm::save(links, "out_links.ppm");
-
 	// For each line
 	for_all_lines(l, lines)
 	  if (lines(l).is_textline())
@@ -781,36 +774,6 @@ namespace scribo
 	      }
 	    }
 	  }
-
-	// Only debug
-	// {
-	// 	image2d<value::rgb8> debug = data::convert(value::rgb8(), input);
-
-	// 	mln::util::array<accu::shape::bbox<point2d> > nbbox(output.nelements());
-	// 	for_all_lines(l, lines)
-	// 	  if (lines(l).is_textline())
-	// 	  {
-	// 	    // if (lines(i).is_textline())
-	// 	    // {
-	// 	    // mln::draw::box(debug, lines(i).bbox(), literal::red);
-	// 	    nbbox(output(l)).take(lines(l).bbox());
-	// 	    // }
-	// 	  }
-
-	// 	for (unsigned i = 0; i < nbbox.nelements(); ++i)
-	// 	  if (nbbox(i).is_valid())
-	// 	  {
-	// 	    box2d b = nbbox(i).to_result();
-	// 	    mln::draw::box(debug, b, literal::orange);
-	// 	    b.enlarge(1);
-	// 	    mln::draw::box(debug, b, literal::orange);
-	// 	    b.enlarge(1);
-	// 	    mln::draw::box(debug, b, literal::orange);
-	// 	  }
-
-	// 	mln::io::ppm::save(debug, "out_paragraph.ppm");
-	// }
-
       }
 
 //-------------------------------------------------------------
@@ -1303,18 +1266,11 @@ namespace scribo
 
       rbbox.resize(lines.nelements() + 1);
 
-//    std::cout << "Preparing lines" << std::endl;
       internal::prepare_lines(input.domain(), lines , blocks, rbbox);
-//    io::pgm::save(blocks, "blocks.pgm");
-//    std::cout << "Linking left" << std::endl;
       internal::process_left_link(blocks, rbbox, lines , left);
-//    std::cout << "Linking right" << std::endl;
       internal::process_right_link(blocks, rbbox, lines , right);
-//    std::cout << "Finalizing links" << std::endl;
       internal::finalize_links(left, right, lines );
-      // std::cout << "Finalizing merging" << std::endl;
       // finalize_line_merging(left, right, lines);
-//    std::cout << "Extracting paragraphs" << std::endl;
       internal::paragraph_links(left, right, output, lines);
 
       paragraph_set<L> par_set = make::paragraph(output, right);

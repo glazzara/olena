@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -203,11 +203,6 @@ namespace scribo
 
       const L& lbl = components.labeled_image();
 
-//       std::cout << "components.nlabels = " << components.nelements() << std::endl;
-
-//       util::timer timer_;
-//       timer_.start();
-
       // init
       {
 	extension::adjust_fill(lbl, nbh, mln_max(mln_value(L)));
@@ -219,19 +214,12 @@ namespace scribo
 
 
 	// FIXME: Improve.
-// 	util::timer t2;
-// 	t2.start();
 	bboxes_ima = internal::compute_bboxes_image(components);
-// 	float t2_ = t2;
-// 	std::cout << "compute bboxes image " << t2_ << std::endl;
 
 	to_keep(0) = true;
       }
-//       float t_ = timer_;
-//       std::cout << "init = " << t_ << std::endl;
 
       // 1st pass
-//       timer_.restart();
       {
 	util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	const unsigned n_nbhs = dp.nelements();
@@ -261,14 +249,11 @@ namespace scribo
 	} // for_all(pxl)
 
       }
-//       t_ = timer_;
-//       std::cout << "1st pass = " << t_ << std::endl;
 
       // FIXME: Iterate over another label when a label is marked as
       // "to be kept".
 
       // 2nd pass
-//       timer_.restart();
       {
 	unsigned kept = 0;
 	mln_fwd_pixter(const L) pxl(bboxes_ima); // Forward.
@@ -313,16 +298,6 @@ namespace scribo
 // 	  }
 	}
 
-// 	float t_ = timer_;
-// 	std::cout << "2nd pass = " << t_ << std::endl;
-
-//  	std::cout << "kept = " << kept << std::endl;
-//  	debug::println(parent);
-//  	std::cout << bg_comps << std::endl;
-//  	std::cout << to_keep << std::endl;
-
-// 	timer_.restart();
-
 	if (kept == components.nelements())
 	{
 	  return components;
@@ -330,8 +305,6 @@ namespace scribo
 
 	component_set<L> output = components.duplicate();
 	output.update_tags(to_keep, component::Ignored);
-// 	t_ = timer_;
-// 	std::cout << "init output = " << t_ << std::endl;
 
 	return output;
       }
@@ -347,8 +320,6 @@ namespace scribo
 			      unsigned min_size)
     {
       mln_trace("scribo::filter::objects_with_holes");
-
-//       std::cout << components.nelements() << std::endl;
 
       typedef component_set<L> O;
       neighb2d nbh = c8();
@@ -383,7 +354,6 @@ namespace scribo
       }
 
       // 1st pass
-//       std::cout << "1st pass" << std::endl;
       {
 	util::array<int> dp = positive_offsets_wrt(lbl, nbh);
 	const unsigned n_nbhs = dp.nelements();
@@ -415,7 +385,6 @@ namespace scribo
       }
 
       // 2nd pass
-//       std::cout << "2nd pass" << std::endl;
       {
 	unsigned kept = 0;
 	mln_fwd_pixter(const L) pxl(bboxes_ima); // Forward.

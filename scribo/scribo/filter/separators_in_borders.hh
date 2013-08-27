@@ -182,22 +182,8 @@ namespace scribo
 		|| util::box_is_included(vline(c).bbox(), bb)
 		|| util::box_is_included(vline(c).bbox(), bl))
 	    {
-	      // std::cout << vline(c).bbox() << " is included in ";
-	      // if (util::box_is_included(vline(c).bbox(), bt))
-	      // 	std::cout << bt << std::endl;
-	      // if (util::box_is_included(vline(c).bbox(), br))
-	      // 	std::cout << br << std::endl;
-	      // if (util::box_is_included(vline(c).bbox(), bb))
-	      // 	std::cout << bb << std::endl;
-	      // if (util::box_is_included(vline(c).bbox(), bl))
-	      // 	std::cout << bl << std::endl;
-
 	      vline(c).update_tag(component::Ignored);
 	    }
-	    // else
-	    // {
-	    //   std::cout << vline(c).bbox() << " is not included in " << bt << " - " << br << " - " << bb << " - " << bl << std::endl;
-	    // }
 	  }
 	// FIXME: warning this call may produce inconsistent data
 	// Ignored components are still in the separator image...

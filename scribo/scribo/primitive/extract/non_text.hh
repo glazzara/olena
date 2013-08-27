@@ -223,10 +223,6 @@ namespace scribo
 	  }
 
 
-	  // echo
-	  // std::cout << "max_area = " << max_area << std::endl;
-
-
 	  // 2nd pass = bg biggest component selection
 
 	  {

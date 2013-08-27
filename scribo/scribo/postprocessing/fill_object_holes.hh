@@ -343,8 +343,6 @@ namespace scribo
 
       // Holes card Image
 
-//      std::cout << "> Holes card image" << std::endl;
-
       L nlabels;
 
       res_t res = labeling::blobs_and_compute(input, c8(), nlabels, A());
@@ -356,9 +354,6 @@ namespace scribo
 
 
       // Threshold Image
-
-//      std::cout << "> Threshold image" << std::endl;
-
 
       I input_i = logical::not_(input);
       res = labeling::blobs_and_compute(input_i, c8(), nlabels, A());
@@ -375,8 +370,6 @@ namespace scribo
 
       // Thresholding
 
-//      std::cout << "> Thresholding" << std::endl;
-
       I hole_mask;
       initialize(hole_mask, holes);
       data::fill(hole_mask, false);
@@ -387,8 +380,6 @@ namespace scribo
 
 
       // Cleanup
-
-//      std::cout << "> Cleanup" << std::endl;
 
       data::fill((output | pw::value(hole_mask)).rw(), false);
 

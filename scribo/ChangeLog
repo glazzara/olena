@@ -1,5 +1,24 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove dead code in Scribo.
+
+	* scribo/afp/components.hh,
+	* scribo/estim/components_features.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/filter/separators_in_borders.hh,
+	* scribo/io/xml/load.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/lines_h_thick_and_thin.hh,
+	* scribo/primitive/extract/non_text.hh,
+	* scribo/primitive/extract/separators_nonvisible.hh,
+	* scribo/text/clean_inplace.hh,
+	* scribo/text/extract_paragraphs_hdoc.hh,
+	* scribo/text/merging.hh:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Display Scribo errors on std::cerr, not std::cout.
 
 	* scribo/scribo/text/merging.hh,
