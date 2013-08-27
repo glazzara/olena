@@ -787,7 +787,7 @@ namespace scribo
 
 		else  // FIXME: Remove!  since included in a non-text-line, so not drawn, so inclusion impossible!!!!!!!!!!
 		{
-		  std::cout << "error: should NOT happen (a text line included in a NON-text-line (so not drawn!!!)" << std::endl;
+		  std::cerr << "error: should NOT happen (a text line included in a NON-text-line (so not drawn!!!)" << std::endl;
 		  ++count_txtline_IN_junk;
 
 		  // a non-text-line (probably a drawing or a frame) includes a text line

@@ -1,5 +1,13 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Display Scribo errors on std::cerr, not std::cout.
+
+	* scribo/scribo/text/merging.hh,
+	* scribo/scribo/text/recognition.hh:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove Scribo debug code making side effects on streams.
 
 	* scribo/core/line_set.hh,

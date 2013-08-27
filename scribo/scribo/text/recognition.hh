@@ -308,7 +308,7 @@ namespace scribo
       tesseract::TessBaseAPI tess;
       if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
       {
-	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	std::cerr << "Error: cannot initialize tesseract!" << std::endl;
 	abort();
       }
       tess.SetPageSegMode(tesseract::PSM_SINGLE_LINE);
@@ -396,7 +396,7 @@ namespace scribo
       tesseract::TessBaseAPI tess;
       if (tess.Init(NULL, language, tesseract::OEM_DEFAULT) == -1)
       {
-	std::cout << "Error: cannot initialize tesseract!" << std::endl;
+	std::cerr << "Error: cannot initialize tesseract!" << std::endl;
 	abort();
       }
 
