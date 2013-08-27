@@ -201,7 +201,7 @@ namespace mln
 	  {
 	    case poppler::image::format_invalid:
 	    case poppler::image::format_mono:
-	      std::cout << "Loading black and white pdf is not implemented!";
+	      std::cerr << "Loading black and white pdf is not implemented!";
 	      abort();
 	      break;
 	    case poppler::image::format_rgb24:
@@ -225,7 +225,7 @@ namespace mln
 	  poppler::page_renderer pr;
 	  if (! pr.can_render())
 	  {
-	    std::cout << "PDF cannot be rendered! Make sure libpoppler is "
+	    std::cerr << "PDF cannot be rendered! Make sure libpoppler is "
 		      << "compiled with a render backend." << std::endl;
 	    abort();
 	  }
@@ -282,7 +282,7 @@ namespace mln
 	if (first_page < 0 || first_page > (pdf->pages() - 1)
 	    || last_page < 0 || last_page > (pdf->pages() - 1))
 	{
-	  std::cout << "Error while loading PDF: page range is not correct!"
+	  std::cerr << "Error while loading PDF: page range is not correct!"
 		    << std::endl;
 	  abort();
 	}
@@ -313,7 +313,7 @@ namespace mln
 	{
 	  if (pages[i] < 0 || pages[i] > pdf->pages() - 1)
 	  {
-	    std::cout << "Error while loading PDF: selected page "
+	    std::cerr << "Error while loading PDF: selected page "
 		      << pages[i] << " does not exist!" << std::endl;
 	    abort();
 	  }

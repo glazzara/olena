@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2012 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2012, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -156,7 +156,7 @@ namespace mln
 	  uint16 data_size = bits_per_sample * samples_per_pixel;
 	  if (data_size != 24 && data_size != 32)
 	  {
-	    std::cout << "Trying to load a non color TIFF "
+	    std::cerr << "Trying to load a non color TIFF "
 		      << "image into a color Milena image." << std::endl;
 	    abort();
 	  }
@@ -166,7 +166,7 @@ namespace mln
 
 	  if (!TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0))
 	  {
-	    std::cout << "Error while reading the image file. Is it corrupted?"
+	    std::cerr << "Error while reading the image file. Is it corrupted?"
 		      << std::endl;
 	    abort();
 	  }
@@ -231,7 +231,7 @@ namespace mln
 	  TIFFGetField(file, TIFFTAG_SAMPLESPERPIXEL, &samples_per_pixel);
 	  if (samples_per_pixel != 1)
 	  {
-	    std::cout << "Trying to load a non grayscale TIFF "
+	    std::cerr << "Trying to load a non grayscale TIFF "
 		      << "image into a grayscale Milena image." << std::endl;
 	    abort();
 	  }
@@ -241,7 +241,7 @@ namespace mln
 
 	  if (!TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0))
 	  {
-	    std::cout << "Error while reading the image file. Is it corrupted?"
+	    std::cerr << "Error while reading the image file. Is it corrupted?"
 		      << std::endl;
 	    abort();
 	  }

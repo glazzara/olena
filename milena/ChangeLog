@@ -1,5 +1,13 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Display Milena fatal errors on std::cerr, not std::cout.
+
+	* mln/io/pdf/load.hh,
+	* mln/io/tiff/load.hh:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove Milena debug code making side effects on streams.
 
 	* mln/accu/stat/median_alt.hh,
