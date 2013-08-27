@@ -694,8 +694,6 @@ namespace mln
 	// p_queue < site > m;
 	std::queue<mln_site(I)> m;
 
-	std::cout << "Init" << std::endl;
-
 	// Flag C-maxima
 	data::fill(cmax, false);
 	data::fill(enqueued, false);
@@ -724,8 +722,6 @@ namespace mln
 	    m.pop();
 	  }
 
-
-	std::cout << "end" << std::endl;
 
 	// Main loop
 	while (!l.is_empty())

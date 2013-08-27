@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -165,7 +165,6 @@ namespace mln
     template <typename G>
     void change_target(mln::util::edge<G>& e, const G& new_target)
     {
-      std::cout << "YES: specialization change_target(edge, graph)" << std::endl;
       e.change_graph(new_target);
     }
 

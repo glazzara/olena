@@ -179,7 +179,6 @@ namespace mln
     {
       //       void *v = (void*)(& classical_window_base<D,E>::delta_);
       //       void *w = (void*)(& E::delta_);
-      //       std::cout << v << ' ' << w << std::endl;
       return exact(this)->delta_();
     }
 

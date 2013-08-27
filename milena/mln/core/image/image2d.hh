@@ -193,11 +193,6 @@ namespace mln
       typedef def::coord coord_t;
       mln_precondition(this->has(p));
 
-//       std::cout << (coord_t*)(&p.p_hook_()) << ' '
-// 		<< &(p.row()) << ' '
-// 		<< &(p.get_subject()) << ' '
-// 		<< &(p.to_site()) << std::endl;
-
       // return this->data_->array_[p.to_site().row()][p.to_site().col()];
       // return this->data_->array_[p.row()][p.col()];
       // return this->data_->array_[p.get_subject().row()][p.get_subject().col()];

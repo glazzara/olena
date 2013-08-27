@@ -67,15 +67,6 @@ namespace mln
       // As a proxy:
       float subj_();
 
-//       void print() const
-//       {
-// 	std::cout << running_ << ' '
-// 		  << start_ << ' '
-// 		  << std::clock() << ' '
-// 		  << float(std::clock()) / CLOCKS_PER_SEC << ' '
-// 		  << time_ << std::endl;
-//       }
-
       double ms() const
       {
 	return double(std::clock()) * 1000.f / CLOCKS_PER_SEC;

@@ -202,7 +202,6 @@ namespace mln
 //   void init_(Subject s, T& target,
 // 	     const internal::image_morpher<I,S,E>& model)
 //   {
-//     std::cout << "deleg... ";
 //     // FIXME: Precondition.
 //     init_(s, target, * model.delegatee_());
 //   }

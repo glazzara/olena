@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -689,18 +689,10 @@ namespace mln
 	  return;
 
 	// mln_invariant(p_.is_valid());
-	// std::cout << "children(p).size = " << s_->children(p_).nsites() << std::endl;
-	// if (s_->children(p_).nsites() != 0)
-	//   {
-	//     std::cout << "elt[0] = " << s_->children(p_)[0].to_site().graph().data_hook_() << std::endl;
-	//     std::cout << "elt[0] = " << s_->children(p_)[0] << std::endl;
-	//   }
-	// std::cout << s_->children(p_) << std::endl;
 
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
 	{
-	  // std::cout << child.to_site().graph().data_hook_() << std::endl;
 	  // mln_invariant(s_->parent(child) == p_);
 	  stack_.push_back(child);
 	}

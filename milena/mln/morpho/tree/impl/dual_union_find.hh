@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -250,12 +251,6 @@ namespace mln
 		  P p = it;
 		  P ext = p + dp;
 
-		   // std::cout << "-------------------" << std::endl;
-		   // std::cout << "Take " << p << " of value " << (&it == &p_m ? m(p) : f(p))
-		   // 	    << " from " << (&it == &p_m ? "mask" : "f") << std::endl;
-		   // debug::println("Parent: ", parent);
-		   // debug::println("Zpar: ", zpar);
-
 		  mln_assertion(!(deja_vu(p) && deja_vu(ext)));
 		  if (deja_vu(ext)) // Seen by mask before f.
 		    {
@@ -283,7 +278,6 @@ namespace mln
 			if (d_ext.has(n) && deja_vu(n))
 			  {
 			    P r = internal::find_root(zpar, n);
-			    //std::cout << "Root: " << r << std::endl;
 			    if (r != ext)
 			      {
 				parent(r) = ext;
@@ -315,8 +309,6 @@ namespace mln
 		  it.next();
 		}
 	    }
-	    std::cout << ">> MAJ zpar: " << internal::t_prop << " s" << std::endl;
-	    std::cout << "Parent construction: " << tm << " s" << std::endl;
 	    tm.restart();
 
 	    // Canonization
@@ -336,7 +328,6 @@ namespace mln
 		mln_assertion((q = parent(p)) == parent(q) || fext(q) != fext(parent(q)));
 	      }
 	    }
-	    std::cout << "Canonization: " << tm << " s" << std::endl;
 
 	    //mln_postcondition(internal::compute_parent_postconditions(fext, s, parent));
 

@@ -1,3 +1,21 @@
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove Milena debug code making side effects on streams.
+
+	* mln/accu/stat/median_alt.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/internal/classical_window_base.hh,
+	* mln/core/internal/image_morpher.hh,
+	* mln/io/raw/load.hh,
+	* mln/morpho/tree/data.hh,
+	* mln/morpho/tree/impl/dual_hqueue.hh,
+	* mln/morpho/tree/impl/dual_union_find.hh,
+	* mln/morpho/watershed/topological.hh,
+	* mln/util/edge.hh,
+	* mln/util/timer.hh:
+	Here.
+
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove old tools from doc/.

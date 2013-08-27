@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -70,15 +70,6 @@ namespace mln
 	/// Check whether this accu is able to return a result.
 	/// Always true here.
 	bool is_valid() const;
-
-	// FIXME: remove
-	void debug__() const
-	{
-	  std::cout << "  i = " << i_
-		    << "  t = " << t_
-		    << "  s = " << sum_minus_ << " ; " << h_[i_] << " ; " << sum_plus_ << " = " << h_.sum()
-		    << std::endl;
-	}
 
       protected:
 
@@ -171,7 +162,6 @@ namespace mln
 	// current state was initialization
 	if (h_[i_] == 0)
 	  {
-	    // std::cout << "init!" << std::endl;
 	    i_ = s_.index_of(t);
 	    t_ = t;
 	    return;
@@ -181,7 +171,6 @@ namespace mln
 	// the median does not change
 	if (t == t_)
 	  {
-	    // std::cout << "no change!" << std::endl;
 	    return;
 	  }
 
@@ -323,7 +312,6 @@ namespace mln
       inline
       std::ostream& operator<<(std::ostream& ostr, const median_alt<S>& m)
       {
-	m.debug__();
 	return ostr << m.to_result();
       }
 

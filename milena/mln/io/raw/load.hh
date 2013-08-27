@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2012 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2012, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -151,7 +151,6 @@ namespace mln
 	  info_file.read(dev_null, 14);
 	  P pmax;
 	  read_point<P>(info_file, pmax);
-	  std::cout << pmax << std::endl;
 
 	  // Initialize the image buffer.
 	  mln_concrete(I) result(box<P>(pmin, pmax));

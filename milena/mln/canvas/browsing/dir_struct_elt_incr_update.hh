@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -148,53 +148,34 @@ namespace mln
 	  f.init_line();
 
 	  // initialization (before first point of the line)
-	  std::cout << "init" << std::endl;
 	  for (ct = pmin_dir; ct < pmin_dir_plus_half_length; ++ ct)
 	    if (f.input.has(pt))
-	      {
-		std::cout << '+' << pt << ' ';
-		f.add_point(pt);
-	      }
+	      f.add_point(pt);
 
 	  // left columns (just take new points)
-	  std::cout << "left" << std::endl;
 	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus_half_length; ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
-	      {
-		std::cout << '+' << pt << ' ';
-		f.add_point(pt);
-	      }
+	      f.add_point(pt);
 	    f.next();
 	  }
 
 	  // middle columns (both take and untake)
-	  std::cout << "middle" << std::endl;
 	  cu = pmin_dir;
 	  for (; p_dir <= pmax_dir_minus_half_length; ++cu, ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
-	      {
-		std::cout << '+' << pt << ' ';
-		f.add_point(pt);
-	      }
+	      f.add_point(pt);
 	    if (f.input.has(pu))
-	      {
-		std::cout << '-' << pu << ' ';
-		f.remove_point(pu);
-	      }
+	      f.remove_point(pu);
 	    f.next();
 	  }
 
 	  // right columns (now just untake old points)
-	  std::cout << "right" << std::endl;
 	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
 	  {
 	    if (f.input.has(pu))
-	      {
-		std::cout << '-' << pu << ' ';
-		f.remove_point(pu);
-	      }
+	      f.remove_point(pu);
 	    f.next();
 	  }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -382,8 +383,6 @@ namespace mln
 	    }
 
 	  }
-
-	  std::cout << "Construction de l'arbre en " << tm << " s." << std::endl;
 
 	  data<I, S> tree(fext, parent, s);
 
