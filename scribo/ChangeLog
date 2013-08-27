@@ -1,5 +1,15 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not declare main()'s arguments if they are not used.
+
+	* tests/preprocessing/crop.cc,
+	* tests/preprocessing/crop_without_localization.cc,
+	* tests/preprocessing/deskew.cc,
+	* tests/preprocessing/rotate_90.cc:
+	Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove dead code in Scribo.
 
 	* scribo/afp/components.hh,

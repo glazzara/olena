@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -37,10 +37,8 @@
 
 #include "tests/data.hh"
 
-int main(int argc, char *argv[])
+int main()
 {
-  (void) argc;
-  (void) argv;
   using namespace mln;
 
   image2d<value::int_u8> ima;
