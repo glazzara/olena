@@ -1,5 +1,11 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use mln::math::pi instead of a local definition in Milena.
+
+	* mln/algebra/quat.hh (mln::algebra::quat::set_unit): Here.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Set mln::math::pi to 20 decimals.
 
 	* mln/math/pi.hh (mln::math::pi): Here.
