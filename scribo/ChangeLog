@@ -1,5 +1,13 @@
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use mln::math::pi instead of a macro-based definition in Scribo.
+
+	* scribo/preprocessing/deskew.hh
+	(scribo::preprocessing::internal::perform_deskew): Here.
+	(PI): Remove macro.
+
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not declare main()'s arguments if they are not used.
 
 	* tests/preprocessing/crop.cc,

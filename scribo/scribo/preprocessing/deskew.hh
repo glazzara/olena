@@ -40,8 +40,6 @@
 # include <mln/geom/rotate.hh>
 # include <mln/value/int_u8.hh>
 
-# define PI 3.1415926535897932384
-
 namespace scribo
 {
 
@@ -380,7 +378,7 @@ namespace scribo
 	      gx += -opt::at(gray, i - 1, j + 1) - 2 * opt::at(gray, i, j + 1) -
 		opt::at(gray, i + 1, j + 1);
 
-	      double tanv = (PI / 2.0 - atan(gy / gx)) * 180.0 / PI;
+	      double tanv = (math::pi / 2.0 - atan(gy / gx)) * 180.0 / math::pi;
 
 	      if (tanv <= 25.0 || tanv >= 155.0)
 	      {
