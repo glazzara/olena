@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -258,7 +258,6 @@ namespace scribo
     for_all_paragraphs(p, lhs)
       if (!(lhs(p) == rhs(p)))
       {
-	std::cout << "paragraph.info" << std::endl;
 	return false;
       }
 

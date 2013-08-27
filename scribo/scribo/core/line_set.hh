@@ -453,14 +453,12 @@ namespace scribo
   {
     if (! (lhs.groups() == rhs.groups() && lhs.nelements() == rhs.nelements()))
     {
-      std::cout << "line.group" << std::endl;
       return false;
     }
 
     for_all_lines(l, lhs)
       if ( ! (lhs(l) != rhs(l)))
       {
-	std::cout << "line.info" << std::endl;
 	return false;
       }
 

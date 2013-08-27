@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -161,7 +161,6 @@ namespace scribo
 
 	component_set<L> output;
 
-	std::cout << "Removing small elements" << std::endl;
 	{
 	  image2d<bool> elts;
 	  initialize(elts, img_lbl8);
@@ -174,8 +173,6 @@ namespace scribo
 	  output = primitive::extract::components(elts, c8(), nlabels);
 	}
 
-
-	std::cout << "Ignoring inner elements" << std::endl;
 
 	{
 	  // FIXME: We would like to use the convex hull instead of the bbox.

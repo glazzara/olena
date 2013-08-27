@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -397,13 +397,11 @@ namespace scribo
   {
     if (! (lhs.components() == rhs.components()))
     {
-      std::cout << "group.comp" << std::endl;
       return false;
     }
 
     if (!( lhs.comp_to_group() == rhs.comp_to_group() && lhs.nelements() == rhs.nelements()))
     {
-      std::cout << "group.comp_to_group" << std::endl;
       return false;
     }
 
@@ -411,7 +409,6 @@ namespace scribo
     for_all_groups(g, lhs)
       if (! (lhs(g) == rhs(g)))
       {
-	std::cout << "group.info" << std::endl;
 	return false;
       }
 

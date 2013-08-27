@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -158,7 +158,6 @@ namespace scribo
       mlc_is_not_a(mln_value(I), value::Vectorial)::check();
 
       double angle = internal::perform_deskew(crop_gl);
-      std::cout << angle << std::endl;
 
       mln_concrete(I) output = crop_gl;
 

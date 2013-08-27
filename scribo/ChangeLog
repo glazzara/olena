@@ -1,3 +1,14 @@
+2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove Scribo debug code making side effects on streams.
+
+	* scribo/core/line_set.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/paragraph_set.hh,
+	* scribo/preprocessing/deskew_crop.hh,
+	* scribo/primitive/extract/non_text_kmean.hh:
+	Here.
+
 2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the generation of Doxyfiles in Scribo.
