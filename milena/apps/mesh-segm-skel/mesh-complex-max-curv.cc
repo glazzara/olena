@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,10 +53,6 @@
 #include <mln/io/off/save.hh>
 
 #include "misc.hh"
-
-
-// Doesn't C++ have a better way to express Pi?
-static const float pi = 4 * atanf(1);
 
 
 int main(int argc, char* argv[])

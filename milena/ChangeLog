@@ -1,3 +1,11 @@
+2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Pi usage in Milena's apps.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv.cc:
+	Here.
+
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use mln::math::pi instead of a local definition in Milena.

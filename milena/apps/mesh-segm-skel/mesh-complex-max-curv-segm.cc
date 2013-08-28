@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -41,6 +41,7 @@
 #include <mln/morpho/closing/area.hh>
 #include <mln/morpho/watershed/flooding.hh>
 
+#include <mln/math/pi.hh>
 #include <mln/math/max.hh>
 #include <mln/math/sqr.hh>
 
@@ -50,10 +51,6 @@
 #include <mln/io/off/save.hh>
 
 #include "misc.hh"
-
-
-// Doesn't C++ have a better way to express Pi?
-static const float pi = 4 * atanf(1);
 
 
 int main(int argc, char* argv[])
@@ -91,7 +88,8 @@ int main(int argc, char* argv[])
     {
       float h = (curv.first(v) + curv.second(v)) / 2;
       // Pseudo-inverse curvature.
-      float h_inv = 1 / pi * (atan(-h) + pi / 2);
+      float h_inv =
+	1 / float(mln::math::pi) * (atanf(-h) + float(mln::math::pi) / 2);
       input(v) = h_inv;
       // FIXME: The program should allow the user to choose the kind
       // of measure.
