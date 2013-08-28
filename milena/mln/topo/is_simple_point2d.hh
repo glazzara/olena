@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +43,7 @@ namespace mln
   {
 
     /** \brief A predicate for the simplicity of an mln::point2d based
-	on based on the mask-based criterion mln::topo::is_simple_2d.
+	on the mask-based criterion mln::topo::is_simple_2d.
 
 	This functor acts as an adapter, since mln::topo::is_simple_2d
 	does not fit (yet) in the canvas of

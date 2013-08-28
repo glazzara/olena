@@ -1,5 +1,15 @@
 2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve mln::topo::is_simple_2d_t.
+
+	* mln/topo/is_simple_2d.hh
+	(mln::topo::is_simple_2d_t<N>::nb_connectivity2d):
+	(mln::topo::is_simple_2d_t<N>::nb_connectivity2d__):
+	Use a more reliable method to identify the neighborhood.
+	* mln/topo/is_simple_point2d.hh: Typo in comment.
+
+2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reintroduce is_simple_2d and connectivity_number_2d into mln::topo.
 
 	* mln/topo/is_simple_2d.hh (mln::topo::is_simple_2d)

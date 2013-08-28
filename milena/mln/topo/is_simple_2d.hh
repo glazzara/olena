@@ -241,18 +241,15 @@ namespace mln
 	  res = res | 1;
       }
 
-      switch (nbh.size())
-      {
-	case 4: // C4
-	  return internal::connectivity_number_c4[res];
-	case 8: // C8
-	  return internal::connectivity_number_c8[res];
-	default:
-	  mln_assertion(0);
+      unsigned number;
+      if (nbh == c4())
+        number = internal::connectivity_number_c4[res];
+      else if (nbh == c8())
+        number = internal::connectivity_number_c8[res];
+      else
+        abort();
 
-      }
-
-      return 0;
+      return number;
     }
 
 
@@ -277,18 +274,15 @@ namespace mln
 	  res = res | 1;
       }
 
-      switch (nbh.size())
-      {
-	case 4: // C4
-	  return internal::connectivity_number_c4[res];
-	case 8: // C8
-	  return internal::connectivity_number_c8[res];
-	default:
-	  mln_assertion(0);
+      unsigned number;
+      if (nbh == c4())
+        number = internal::connectivity_number_c4[res];
+      else if (nbh == c8())
+        number = internal::connectivity_number_c8[res];
+      else
+        abort();
 
-      }
-
-      return 0;
+      return number;
     }
 
 
