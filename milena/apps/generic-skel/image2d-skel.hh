@@ -1,4 +1,4 @@
-// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -88,8 +88,8 @@ public:
   bool operator()(const mln_psite(I)& p) const
   {
     return
-      mln::connectivity_number_2d(*ima_, nbh_fg_, p, true ) == 1 &&
-      mln::connectivity_number_2d(*ima_, nbh_bg_, p, false) == 1;
+      mln::topo::connectivity_number_2d(*ima_, nbh_fg_, p, true ) == 1 &&
+      mln::topo::connectivity_number_2d(*ima_, nbh_bg_, p, false) == 1;
   }
 
 private:

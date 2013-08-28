@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2011, 2012 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2011, 2012, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -50,6 +50,22 @@ namespace mln
   namespace topo
   {
 
+    /** Compute the 2D connectivity number of a point.
+
+        \param ima  The image the point belongs to.
+        \param nbh  The connectivity used (4- or 8-connectivity).
+        \param p    The location of the point.
+        \param b    If true, consider foreground (i.e. true) values of
+                    the neighborhood; otherwise, consider background
+                    (i.e. false) values.
+
+        \return     The 2D connectivity number.  */
+    template<typename I, typename N>
+    inline
+    unsigned
+    connectivity_number_2d(const Image<I>& ima, const Neighborhood<N>& nbh,
+                           const mln_psite(I)& p, bool b);
+
     /// Test if a point is simple or not. A point of an object is simple
     /// if in its c8 neiborhood, there is exactly one connected component of the
     /// object, and only one connected component of the background
@@ -62,6 +78,13 @@ namespace mln
     ///          - | -
     ///          | P | Here p is never simple.
     ///          | | |
+
+    template<typename I, typename N>
+    bool
+    is_simple_2d(const Image<I>& ima, const Neighborhood<N>& nbh,
+                 const mln_psite(I)& p);
+
+
     template <typename N>
     struct is_simple_2d_t
     {
@@ -91,6 +114,9 @@ namespace mln
 
     namespace internal
     {
+
+      // Connectivity numbers computed with
+      // tools/compute_local_configurations.cc.
 
       static const unsigned char connectivity_number_c8[256] =
       {
@@ -140,6 +166,51 @@ namespace mln
       };
 
     } // end of namespace mln::topo::internal
+
+
+
+    template<typename I, typename N>
+    inline
+    unsigned
+    connectivity_number_2d(const Image<I>& ima_, const Neighborhood<N>& nbh_,
+                           const mln_psite(I)& p, bool b)
+    {
+      const I& ima = exact(ima_);
+      const N& nbh = exact(nbh_);
+
+      unsigned res = 0;
+      mln_fwd_niter(neighb2d) n(c8(), p);
+      for_all(n)
+      {
+        res = (res << 1);
+        if (ima.has(n) && ima(n) == b)
+          res = res | 1;
+      }
+
+      unsigned number;
+      if (nbh == c4())
+        number = internal::connectivity_number_c4[res];
+      else if (nbh == c8())
+        number = internal::connectivity_number_c8[res];
+      else
+        abort();
+
+      return number;
+    }
+
+    template<typename I, typename N>
+    inline
+    bool
+    is_simple_2d(const Image<I>& ima, const Neighborhood<N>& nbh_,
+                 const mln_psite(I)& p)
+    {
+      const N& nbh = exact(nbh_);
+      return
+        connectivity_number_2d(ima, nbh.foreground(), p, true ) == 1 &&
+        connectivity_number_2d(ima, nbh.background(), p, false) == 1;
+    }
+
+
 
     template <typename N>
     is_simple_2d_t<N>::is_simple_2d_t(const Neighborhood<N>& nbh)

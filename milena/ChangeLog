@@ -1,3 +1,13 @@
+2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Reintroduce is_simple_2d and connectivity_number_2d into mln::topo.
+
+	* mln/topo/is_simple_2d.hh (mln::topo::is_simple_2d)
+	(mln::topo::connectivity_number_2d):
+	New.
+	* apps/generic-skel/image2d-skel.hh (is_simple_2d::operator()):
+	Adjust.
+
 2011-05-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor connectivity_numbers_3d and connectivity_numbers_3d_tbb.
