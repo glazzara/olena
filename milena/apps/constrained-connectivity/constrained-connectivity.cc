@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -164,11 +164,11 @@ int main(int argc, char* argv[])
      This requires some changes in the topological WST implementation,
      to make its component tree structure compatible with
      morpho::tree::data.  */
-  typedef p_array<tree_t::site> sites_t;
-  sites_t sites = data::sort_psites_decreasing(w);
-  morpho::tree::data<w_t, sites_t> t(w, sites, world::inter_pixel::e2e());
+  typedef p_array<tree_t::psite> psites_t;
+  psites_t psites = data::sort_psites_decreasing(w);
+  morpho::tree::data<w_t, psites_t> t(w, psites, world::inter_pixel::e2e());
 
-  // Create initial images for min and max values on sites (not components).
+  // Create initial images for min and max values on psites (not components).
   mln_ch_value_(w_t, accu::stat::min<int_u8>) init_min_val;
   initialize (init_min_val, w);
   mln_ch_value_(w_t, accu::stat::max<int_u8>) init_max_val;

@@ -1,3 +1,9 @@
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with the new interface of the topological watershed.
+
+	* apps/constrained-connectivity/constrained-connectivity.cc: Here.
+
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have the topological WST be more generic.
