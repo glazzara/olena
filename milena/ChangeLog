@@ -1,5 +1,43 @@
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen images of the Milena documentation.
+
+	* doc/figures/extend-1.ppm,
+	* doc/figures/extend-2.ppm,
+	* doc/figures/extend-3.ppm,
+	* doc/figures/extend-4.ppm,
+	* doc/figures/extend-5.ppm,
+	* doc/figures/fill-1.ppm,
+	* doc/figures/fill-2.ppm,
+	* doc/figures/fill-imageif-cfun-1.ppm,
+	* doc/figures/fill-subdomain-1.pbm,
+	* doc/figures/fill-subdomain-2.ppm,
+	* doc/figures/fill-subdomain-3.ppm,
+	* doc/figures/fill-subdomain-4.ppm,
+	* doc/figures/ima2d-rot-1.ppm,
+	* doc/figures/ima2d-rot-2.ppm,
+	* doc/figures/ima_save.pbm,
+	* doc/figures/labeling-compute-1.pbm,
+	* doc/figures/labeling-compute-2.ppm,
+	* doc/figures/logical-not-1.pbm,
+	* doc/figures/logical-not-2.pbm,
+	* doc/figures/logical-not-3.pbm,
+	* doc/figures/tuto2_first_image-1.pbm,
+	* doc/figures/tuto3_colorize-1.pgm,
+	* doc/figures/tuto3_colorize-2.ppm,
+	* doc/figures/tuto3_rw_image-1.ppm,
+	* doc/figures/tuto3_rw_image-2.ppm,
+	* doc/figures/tuto3_rw_image-3.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-1.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-2.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-3.pbm,
+	* doc/figures/tuto4_genericity_and_algorithms-4.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-5.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-6.ppm:
+	Regen.
+
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make remaining Milena copyright headers uniform.
 
 	* apps/generic-skel/image2d-skel-unconstrained.cc,
