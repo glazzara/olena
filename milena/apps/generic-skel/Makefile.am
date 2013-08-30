@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+include $(top_srcdir)/milena/common.mk
+
 # Find Milena and trimesh headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
 # Find apps/data.hh (generated file).

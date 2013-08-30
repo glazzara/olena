@@ -1,3 +1,10 @@
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a Makefile inclusion in Milena's apps/generic-skel.
+
+	* apps/generic-skel/Makefile.am: Include
+	$(top_srcdir)/milena/common.mk.
+
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify even more Milena Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
