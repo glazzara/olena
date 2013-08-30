@@ -1,3 +1,9 @@
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix inclusion paths in Scribo.
+
+	* demo/viewer/Makefile.am: Here.
+
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use mln::math::pi instead of a macro-based definition in Scribo.
