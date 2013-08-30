@@ -1,3 +1,9 @@
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable tests/value/int_u32 in Milena.
+
+	* tests/value/Makefile.am: Here.
+
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix 3D simple point generators in Milena tools.

@@ -29,19 +29,21 @@ check_PROGRAMS =				\
   int_s						\
   int_s16					\
   int_u8					\
-  int_u32					\
   interop					\
   label						\
   proxy						\
   rgb8						\
   set						\
   sign
+
+# FIXME: Disabled tests.
+#  int_u32					\
 #  float01				
 #  float01_bis			
 #  float01_f		
 #  graylevel_f					
-
-XFAIL_TESTS = int_u32
+#
+## XFAIL_TESTS = int_u32
 
 
 # FIXME: Enable when make check_full works.
