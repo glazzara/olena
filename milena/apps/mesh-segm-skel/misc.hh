@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -622,10 +622,13 @@ namespace mln
 
 	  // Least squares solution.
 	  vec3f diag;
-#ifndef NDEBUG
-	  bool ldlt_decomp_sucess_p = algebra::ldlt_decomp(w, diag);
-#endif // ! NDEBUG
-	  mln_assertion(ldlt_decomp_sucess_p);
+	  // Note that algebra::ldlt_decomp has side effects on its
+	  // arguments; this call is not ``just an assertion''.
+	  bool ldlt_decomp_success_p = algebra::ldlt_decomp(w, diag);
+	  mln_assertion(ldlt_decomp_success_p);
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void) ldlt_decomp_success_p;
 	  algebra::ldlt_solve(w, diag, m, m);
 
 	  // Push it back out to the vertices

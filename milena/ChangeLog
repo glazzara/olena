@@ -1,3 +1,13 @@
+2010-05-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a bug in the reimplementation of Trimesh algorithms.
+
+	* apps/mesh-segm-skel/misc.hh (mln::geom::mesh_curvature):
+	Always call algebra::ldlt_decomp, even when NDEBUG is defined.
+	Typo.
+	Avoid a warning about an undefined variable when NDEBUG is not
+	defined.
+
 2010-05-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve topo::skeleton::breadth_first_thinning.
