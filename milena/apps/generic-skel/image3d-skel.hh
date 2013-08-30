@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -286,9 +286,9 @@ subsampling_3d(const mln::image3d<bool>& input, unsigned factor)
   /* This subsampling procedure may not take into account pixels at the
      end of each sloce/row/column if the corresponding dimension is
      not a multiple of FACTOR.  */
-  I output(input.nslices() / factor,
-	   input.nrows()   / factor,
-	   input.ncols()   / factor);
+  I output(input.nslis() / factor,
+	   input.nrows() / factor,
+	   input.ncols() / factor);
   mln_piter_(I) po(output.domain());
   for_all(po)
   {

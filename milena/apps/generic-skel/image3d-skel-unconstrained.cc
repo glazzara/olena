@@ -1,4 +1,5 @@
-// Copyright (C) 2011-2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,8 +76,8 @@ int main()
   // criterion.
   I input = make_triple_torus(20);
   std::cout
-    << input.nslices() << " x " << input.nrows() << " x " << input.ncols()
-    << " = " << input.nslices() * input.nrows() * input.ncols() << " voxels"
+    << input.nslis() << " x " << input.nrows() << " x " << input.ncols()
+    << " = " << input.nslis() * input.nrows() * input.ncols() << " voxels"
     << std::endl;
 
   std::cerr << input.domain() << std::endl;

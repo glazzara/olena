@@ -1,5 +1,13 @@
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with the current interface of mln::image3d.
+
+	* apps/generic-skel/image3d-skel-unconstrained.cc,
+	* apps/generic-skel/image3d-skel.hh:
+	Here.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Replace meyer_wst with watershed::flooding.
 
 	* apps/mesh-segm-skel/mesh-complex-pinv-curv-segm.cc: Here.
