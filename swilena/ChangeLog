@@ -1,3 +1,9 @@
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix inclusion paths in Swilena.
+
+	* python/Makefile.am (AM_CPPFLAGS): Add -I$(top_builddir)/milena.
+
 2013-04-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust Swilena to Automake parallel tests.
