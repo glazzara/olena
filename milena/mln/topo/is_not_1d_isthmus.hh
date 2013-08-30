@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -198,7 +198,7 @@ namespace mln
     is_not_1d_isthmus<I, N>::operator()(const mln_psite(I)& p) const
     {
       mln_precondition(ima_);
-      return connectivity_number_fg_(*ima_, p, true) < 2;
+      return connectivity_number_fg_(*ima_, p, true) < 2u;
     }
 
 # endif // MLN_INCLUDE_ONLY

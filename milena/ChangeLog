@@ -1,5 +1,12 @@
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Kill warnings about signed vs unsigned values.
+
+	* mln/topo/is_not_1d_isthmus.hh
+	(mln::topo::is_not_1d_isthmus<I, N>::operator()): Here.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with the current interface of breadth_first_thinning.
 
 	* apps/morphers/recorder-bft.cc: Here.
