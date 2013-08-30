@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -70,7 +70,6 @@ MOSTLYCLEANFILES += teapot-complex-max-curv.off
 # surface of a triangle mesh and displaying its local minima
 # (in blue) and maxima (in red).
 bin_PROGRAMS += mesh-complex-max-curv-extrema
-mesh_complex_max_curv_extrema_SOURCES = mesh-complex-max-curv-extrema.cc
 TESTS += test-mesh-complex-max-curv-extrema
 MOSTLYCLEANFILES +=					\
   socket-complex-max-curv-extrema.off		\
@@ -104,7 +103,6 @@ MOSTLYCLEANFILES +=				\
 
 # Likewise, but using pseudo-inverse curvature.
 bin_PROGRAMS += mesh-complex-pinv-curv-segm
-mesh_complex_pinv_curv_segm_SOURCES = mesh-complex-pinv-curv-segm.cc
 TESTS += test-mesh-complex-pinv-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-segm.off		\
@@ -126,7 +124,6 @@ edit = sed							\
 
 # Performing a 2-collapse on a pseudo-manifold.
 bin_PROGRAMS += mesh-complex-2-collapse
-mesh_complex_2_collapse_SOURCES = mesh-complex-2-collapse.cc
 
 test-mesh-complex-2-collapse: test-mesh-complex-2-collapse.in Makefile
 	rm -f $@ $@.tmp
@@ -143,7 +140,6 @@ MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 # Program computing the max curvature from a mesh, then performing a
 # 2-collapse on it.
 bin_PROGRAMS += mesh-complex-max-curv-2-collapse
-mesh_complex_max_curv_2_collapse_SOURCES = mesh-complex-max-curv-2-collapse.cc
 
 # FIXME: Factor action with test-mesh-complex-2-collapse's.
 test-mesh-complex-max-curv-2-collapse: test-mesh-complex-max-curv-2-collapse.in Makefile
@@ -163,7 +159,6 @@ MOSTLYCLEANFILES +=				\
 # Program computing the max curvature from a mesh, then performing a
 # 1-collapse on it.
 bin_PROGRAMS += mesh-complex-max-curv-1-collapse
-mesh_complex_max_curv_1_collapse_SOURCES = mesh-complex-max-curv-1-collapse.cc
 
 # FIXME: Factor action with test-mesh-complex-1-collapse's.
 test-mesh-complex-max-curv-1-collapse: test-mesh-complex-max-curv-1-collapse.in Makefile
@@ -215,7 +210,6 @@ MOSTLYCLEANFILES +=				\
 # Convert a binary OFF file (e.g. no value attached to faces) into a
 # VTK file.
 bin_PROGRAMS += off-to-vtk-bin
-off_to_vtk_bin_SOURCES = off-to-vtk-bin.cc
 
 ## ------------- ##
 ## Mixed tests.  ##

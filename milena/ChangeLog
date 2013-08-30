@@ -1,5 +1,16 @@
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify even more Milena Makefiles thanks to AM_DEFAULT_SOURCE_EXT.
+
+	* apps/generic-skel/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am,
+	* tests/io/vtk/Makefile.am,
+	* tests/transform/Makefile.am,
+	* tools/Makefile.am:
+	Here.
+
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen images of the Milena documentation.
 
 	* doc/figures/extend-1.ppm,

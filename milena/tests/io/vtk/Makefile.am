@@ -1,4 +1,5 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,10 +18,6 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS = load_bin load_save_bin save
-
-load_bin_SOURCES = load_bin.cc
-load_save_bin_SOURCES = load_save_bin.cc
-save_SOURCES = save.cc
 
 TESTS = $(check_PROGRAMS)
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -27,7 +27,6 @@ noinst_PROGRAMS = compute_local_configurations
 
 noinst_HEADERS = connectivity_numbers_3d.hh
 noinst_PROGRAMS += connectivity_numbers_3d
-connectivity_numbers_3d_SOURCES = connectivity_numbers_3d.cc
 
 
 # FIXME: Hard-coded paths.
@@ -39,17 +38,14 @@ extra: $(EXTRA_PROGRAMS)
 
 noinst_HEADERS += connectivity_numbers_3d_tbb.hh
 EXTRA_PROGRAMS = connectivity_numbers_3d_tbb
-connectivity_numbers_3d_tbb_SOURCES = connectivity_numbers_3d_tbb.cc
 connectivity_numbers_3d_tbb_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_TBB)
 connectivity_numbers_3d_tbb_LDFLAGS =  $(LDFLAGS_TBB)
 
 noinst_HEADERS += simple_point3d_lut.hh
 EXTRA_PROGRAMS += simple_point3d_lut
-simple_point3d_lut_SOURCES = simple_point3d_lut.cc
 
 noinst_HEADERS += simple_point3d_lut_tbb.hh
 EXTRA_PROGRAMS += simple_point3d_lut_tbb
-simple_point3d_lut_tbb_SOURCES = simple_point3d_lut_tbb.cc
 simple_point3d_lut_tbb_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_TBB)
 simple_point3d_lut_tbb_LDFLAGS =  $(LDFLAGS_TBB)
 
@@ -83,7 +79,6 @@ nodist_libsimple_point3d_lut_26_6_la_SOURCES = simple_point3d_lut_26_6.hh
 simple_point3d_lut_26_6.lo: simple_point3d_lut_26_6.hh
 
 EXTRA_PROGRAMS += test_simple_point3d_lut_26_6
-test_simple_point3d_lut_26_6_SOURCES = test_simple_point3d_lut_26_6.cc
 test_simple_point3d_lut_26_6_LDADD = libsimple_point3d_lut_26_6.la
 # Generate this build dependency of test_simple_point3d_lut_26_6.
 test_simple_point3d_lut_26_6.o: simple_point3d_lut_26_6.hh
