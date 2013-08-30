@@ -1,5 +1,23 @@
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make remaining Milena copyright headers uniform.
+
+	* apps/generic-skel/image2d-skel-unconstrained.cc,
+	* apps/generic-skel/image2d-skel-with-end-points.cc,
+	* apps/mesh-segm-skel/mesh-complex-2-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-1-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-extrema.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc,
+	* apps/mesh-segm-skel/off-to-vtk-bin.cc,
+	* mln/topo/is_not_1d_isthmus.hh,
+	* mln/topo/is_not_end_point.hh:
+	Here.
+
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable tests/value/int_u32 in Milena.
 
 	* tests/value/Makefile.am: Here.
