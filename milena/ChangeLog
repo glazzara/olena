@@ -1,5 +1,11 @@
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Replace meyer_wst with watershed::flooding.
+
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-segm.cc: Here.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert remaining Milena code to mln_trace.
 
 	* doc/examples/devel/facade.cc.raw,

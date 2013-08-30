@@ -43,7 +43,7 @@
 #include <mln/core/image/complex_neighborhoods.hh>
 
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/math/pi.hh>
 #include <mln/math/max.hh>
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
   wst_val_t nbasins;
   typedef mln::unsigned_2complex_image3df wst_ima_t;
   wst_ima_t wshed =
-    mln::morpho::meyer_wst(closed_ima, adj_edges_nbh, nbasins);
+    mln::morpho::watershed::flooding(closed_ima, adj_edges_nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Label polygons (i.e., propagate labels from edges to polygons).
