@@ -65,10 +65,6 @@
 #include "misc.hh"
 
 
-// Doesn't C++ have a better way to express Pi?
-static const float pi = 4 * atanf(1);
-
-
 int main(int argc, char* argv[])
 {
   if (argc != 3)

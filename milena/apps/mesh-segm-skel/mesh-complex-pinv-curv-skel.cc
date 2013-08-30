@@ -54,6 +54,8 @@
 #include <mln/topo/detach_cell.hh>
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
+#include <mln/math/pi.hh>
+
 #include <mln/util/timer.hh>
 
 #include <mln/io/off/load.hh>
@@ -62,10 +64,6 @@
 #include "save_bin_alt.hh"
 
 #include "misc.hh"
-
-
-// Doesn't C++ have a better way to express Pi?
-static const float pi = 4 * atanf(1);
 
 
 int
@@ -110,7 +108,8 @@ main(int argc, char* argv[])
     {
       float h = (curv.first(v) + curv.second(v)) / 2;
       // Pseudo-inverse curvature.
-      float h_inv = 1 / pi * (atan(-h) + pi / 2);
+      float h_inv =
+	1 / float(mln::math::pi) * (atanf(-h) + float(mln::math::pi) / 2);
       float_ima(v) = h_inv;
     }
 

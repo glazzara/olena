@@ -43,7 +43,6 @@
 #include <mln/morpho/closing/area.hh>
 #include <mln/morpho/watershed/flooding.hh>
 
-#include <mln/math/pi.hh>
 #include <mln/math/max.hh>
 #include <mln/math/sqr.hh>
 
