@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -53,7 +53,7 @@
 #include <mln/io/off/load.hh>
 #include <mln/io/off/save.hh>
 
-#include "trimesh/misc.hh"
+#include "misc.hh"
 
 
 // Doesn't C++ have a better way to express Pi?

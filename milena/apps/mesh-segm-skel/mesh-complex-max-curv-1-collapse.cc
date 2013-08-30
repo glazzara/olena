@@ -1,4 +1,4 @@
-// Copyright (C) 2008-2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008-2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,7 +62,7 @@
 
 #include <mln/util/timer.hh>
 
-#include "trimesh/misc.hh"
+#include "misc.hh"
 
 
 int

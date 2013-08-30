@@ -1,4 +1,4 @@
-// Copyright (C) 2008-2010, 2012 EPITA Research and Development
+// Copyright (C) 2008-2010, 2012-2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -61,7 +61,7 @@
    morphed mln::complex_image (i.e., seen through image_if).  */
 #include "save_bin_alt.hh"
 
-#include "trimesh/misc.hh"
+#include "misc.hh"
 
 
 // Doesn't C++ have a better way to express Pi?
