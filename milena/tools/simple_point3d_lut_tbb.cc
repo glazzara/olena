@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +27,7 @@
 /// 3D point is simple or not, in parallel, using Intel Threading
 /// Building Blocks.
 
-#include "simple_point_3d_lut_tbb.hh"
+#include "simple_point3d_lut_tbb.hh"
 
 int
 main(int argc, char* argv[])
@@ -37,10 +37,10 @@ main(int argc, char* argv[])
 
   std::string nbhs = argv[1];
   simple_point_lut_t simple_point_lut;
-  if      (nbhs == "6_26")  simple_point_lut = simple_point_3d_lut_tbb__6_26();
-  else if (nbhs == "26_6")  simple_point_lut = simple_point_3d_lut_tbb__26_6();
-  else if (nbhs == "6p_18") simple_point_lut = simple_point_3d_lut_tbb__6p_18();
-  else if (nbhs == "18_6p") simple_point_lut = simple_point_3d_lut_tbb__18_6p();
+  if      (nbhs == "6_26")  simple_point_lut = simple_point3d_lut_tbb__6_26();
+  else if (nbhs == "26_6")  simple_point_lut = simple_point3d_lut_tbb__26_6();
+  else if (nbhs == "6p_18") simple_point_lut = simple_point3d_lut_tbb__6p_18();
+  else if (nbhs == "18_6p") simple_point_lut = simple_point3d_lut_tbb__18_6p();
   else
     usage(argv[0]);
 

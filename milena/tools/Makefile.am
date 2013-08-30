@@ -58,10 +58,8 @@ simple_point3d_lut_tbb_LDFLAGS =  $(LDFLAGS_TBB)
 simple_point_luts: simple_point3d_lut_26_6.hh
 
 CLEANFILES = simple_point3d_lut_26_6.txt
-# Careful, there is no dependency on the generator (on purpose,
-# because regenerating these files takes time).
-simple_point3d_lut_26_6.txt:
-	./simple_point3d_lut_tbb$(EXEEXT) 26_6 >$@
+simple_point3d_lut_26_6.txt: simple_point3d_lut_tbb$(EXEEXT)
+	./$< 26_6 >$@
 
 EXTRA_DIST = gen_cxx_lut
 CLEANFILES += simple_point3d_lut_26_6.hh
@@ -73,9 +71,21 @@ simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt $(srcdir)/gen_cxx_lut
 # Very long (both to compile and execute) optional test, checking the
 # consistency of the LUT in simple_point3d_lut_26_6.hh.  Moreover, it
 # should be turned into a parallel program.
-noinst_LTLIBRARIES = libsimple_point3d_lut_26_6.la
-libsimple_point3d_lut_26_6_la_SOURCES =			\
-  simple_point3d_lut_26_6.hh simple_point3d_lut_26_6.cc
+
+.PHONY: check-extra
+check-extra: test_simple_point3d_lut_26_6$(EXEEXT)
+	./$<
+
+EXTRA_LTLIBRARIES = libsimple_point3d_lut_26_6.la
+libsimple_point3d_lut_26_6_la_SOURCES = simple_point3d_lut_26_6.cc
+nodist_libsimple_point3d_lut_26_6_la_SOURCES = simple_point3d_lut_26_6.hh
+# Generate this build dependency of libsimple_point3d_lut_26_6.la.
+simple_point3d_lut_26_6.lo: simple_point3d_lut_26_6.hh
+
 EXTRA_PROGRAMS += test_simple_point3d_lut_26_6
 test_simple_point3d_lut_26_6_SOURCES = test_simple_point3d_lut_26_6.cc
 test_simple_point3d_lut_26_6_LDADD = libsimple_point3d_lut_26_6.la
+# Generate this build dependency of test_simple_point3d_lut_26_6.
+test_simple_point3d_lut_26_6.o: simple_point3d_lut_26_6.hh
+
+CLEANFILES += $(EXTRA_PROGRAMS) $(EXTRA_LTLIBRARIES)

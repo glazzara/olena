@@ -1,5 +1,14 @@
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix 3D simple point generators in Milena tools.
+
+	* tools/Makefile.am: Fix build rules of optional programs.
+	* tools/simple_point3d_lut_tbb.cc: Rename as...
+	* tools/simple_point_3d_lut_tbb.cc: ...this.
+	s/point_3d/point3d/.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Kill warnings about unused variables.
 
 	* mln/io/vtk/save.hh,
