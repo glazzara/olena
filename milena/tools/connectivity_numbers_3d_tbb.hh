@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,10 +62,6 @@ struct connectivity_numbers_3d_tbb_range
     B b = make::box3d(-1,-1,-1, 1,1,1);
     I ima(b, 0);
     P p(0, 0, 0);
-
-    const unsigned dim = 3;
-    const unsigned max_nneighbs = mlc_pow_int(3, dim) - 1;
-    const unsigned nconfigs = mlc_pow_int(2, max_nneighbs);
 
     for (config_3d_t i = r.begin(); i != r.end(); ++i)
       {

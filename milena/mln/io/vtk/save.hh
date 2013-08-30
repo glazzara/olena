@@ -231,7 +231,7 @@ namespace mln
 	  // Concept checking.
 	  void (E::*m1)(std::ostream&, const I&) const =
 	    &E::write_face_data;
-	  m1 = 0;
+	  (void) m1;
 	}
 
 

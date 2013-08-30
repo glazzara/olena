@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,10 +66,6 @@ struct simple_point3d_lut_tbb_range
     I fg_ima(b, 0);
     I bg_ima(b, 0);
     P p(0, 0, 0);
-
-    const unsigned dim = 3;
-    const unsigned max_nneighbs = mlc_pow_int(3, dim) - 1;
-    const unsigned nconfigs = mlc_pow_int(2, max_nneighbs);
 
     for (config_3d_t i = r.begin(); i != r.end(); ++i)
       {
