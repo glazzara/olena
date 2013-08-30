@@ -386,7 +386,7 @@ AC_CONFIG_FILES([
         scribo/src/primitive/extract/Makefile
         scribo/src/primitive/find/Makefile
         scribo/src/primitive/group/Makefile
-	scribo/src/primitive/remove/Makefile
+        scribo/src/primitive/remove/Makefile
       scribo/src/table/Makefile
       scribo/src/text/Makefile
       scribo/src/toolchain/Makefile

@@ -1,3 +1,7 @@
+2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Untabify.
+
 2011-07-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove buggy symbol definitions.
