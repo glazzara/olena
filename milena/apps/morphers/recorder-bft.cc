@@ -1,4 +1,5 @@
-// Copyright (C) 2011, 2012 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,6 +55,8 @@
 
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
+#include <mln/topo/detach_point.hh>
+
 #include <mln/test/predicate.hh>
 #include <mln/pw/value.hh>
 
@@ -85,11 +88,13 @@ int main()
   N nbh = make::dual_neighb(picasso, c4(), c8());
   // Simplicity criterion functor.
   ::is_simple_2d<J, N> is_simple(nbh);
+  // Simple point detach procedure.
+  topo::detach_point<J> detach;
   // Constraint.
   ::is_not_end_point<J, neighb2d> constraint(c4(), picasso_rec);
 
   J bft_rec = topo::skeleton::breadth_first_thinning(picasso_rec, nbh,
-						     is_simple, ::detach<J>,
+						     is_simple, detach,
 						     constraint);
 
   // Dump recorded frames.
