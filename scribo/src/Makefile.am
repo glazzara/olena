@@ -71,7 +71,6 @@ endif HAVE_TESSERACT
 
 
     utilexec_PROGRAMS	    	 += text_in_picture_dual
-    text_in_picture_dual_SOURCES  = text_in_picture_dual.cc
     text_in_picture_dual_CPPFLAGS = $(AM_CPPFLAGS) \
 				    $(MAGICKXX_CPPFLAGS)
     text_in_picture_dual_LDFLAGS  = $(AM_LDFLAGS) \

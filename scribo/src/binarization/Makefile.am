@@ -58,31 +58,26 @@ if HAVE_MAGICKXX
   sauvola_ms_fg_LDFLAGS  = $(AM_LDFLAGS) 	\
 			   $(MAGICKXX_LDFLAGS)
 
-  kim_SOURCES  = kim.cc
   kim_CPPFLAGS = $(AM_CPPFLAGS) 	\
 		 $(MAGICKXX_CPPFLAGS)
   kim_LDFLAGS  = $(AM_LDFLAGS) 	\
 		 $(MAGICKXX_LDFLAGS)
 
-  sauvola_SOURCES  = sauvola.cc
   sauvola_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		     $(MAGICKXX_CPPFLAGS)
   sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
 		     $(MAGICKXX_LDFLAGS)
 
-  singh_SOURCES  = singh.cc
   singh_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		   $(MAGICKXX_CPPFLAGS)
   singh_LDFLAGS  = $(AM_LDFLAGS) 		\
 		   $(MAGICKXX_LDFLAGS)
 
-  wolf_SOURCES  = wolf.cc
   wolf_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		  $(MAGICKXX_CPPFLAGS)
   wolf_LDFLAGS  = $(AM_LDFLAGS) 		\
 		  $(MAGICKXX_LDFLAGS)
 
-  sauvola_debug_SOURCES  = sauvola_debug.cc
   sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	  \
 			   -DSCRIBO_LOCAL_THRESHOLD_DEBUG \
 			   $(MAGICKXX_CPPFLAGS)
