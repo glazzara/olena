@@ -137,13 +137,11 @@ inline
 mln_concrete(I)
 @FUNCTION@(const Image<I>& input)
 {
-  trace::entering("@QUAL_NAME@");
+  mln_trace("@QUAL_NAME@");
 
   // FIXME: Replace this dummy statement with actual code.
   mln_concrete(I) output = duplicate(input);
   // ...
-
-  trace::exiting("@QUAL_NAME@");
   return output;
 }
 

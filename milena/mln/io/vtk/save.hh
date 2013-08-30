@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -181,41 +181,36 @@ namespace mln
       void
       save(const bin_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::vtk::save");
+	mln_trace("mln::io::vtk::save");
 	internal::bin_vtk_saver()(ima, filename);
-	trace::exiting("mln::io::vtk::save");
       }
 
       void
       save(const int_u8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::vtk::save");
+	mln_trace("mln::io::vtk::save");
 	internal::int_u8_vtk_saver()(ima, filename);
-	trace::exiting("mln::io::vtk::save");
       }
 
       void
       save(const unsigned_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::vtk::save");
+	mln_trace("mln::io::vtk::save");
 	internal::unsigned_vtk_saver()(ima, filename);
-	trace::exiting("mln::io::vtk::save");
       }
 
       void
       save(const float_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::vtk::save");
+	mln_trace("mln::io::vtk::save");
 	internal::float_vtk_saver()(ima, filename);
-	trace::exiting("mln::io::vtk::save");
       }
 
       void
       save(const rgb8_2complex_image3df& ima, const std::string& filename)
       {
-	trace::entering("mln::io::vtk::save");
+	mln_trace("mln::io::vtk::save");
 	internal::rgb8_vtk_saver()(ima, filename);
-	trace::exiting("mln::io::vtk::save");
       }
 
 

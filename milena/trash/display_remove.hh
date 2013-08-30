@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -33,7 +33,8 @@
 
 # include <map>
 # include <string>
-# include <mln/trace/all.hh>
+
+# include <mln/debug/trace.hh>
 
 
 namespace mln
@@ -56,7 +57,7 @@ namespace mln
       void
       remove()
       {
-	trace::entering("display::impl::remove");
+	mln_trace("display::impl::remove");
 
 	for (std::map<void*, std::string>::const_iterator it = map_saved_image_tmp_.begin ();
 	     it != map_saved_image_tmp_.end ();
@@ -65,8 +66,6 @@ namespace mln
 	    std::string s = "rm -f " + (*it).second;
 	    system (s.c_str ());
 	  }
-
-	trace::exiting("display::impl::remove");
       }
 
     } // end of namespace mln::display::impl
@@ -76,11 +75,9 @@ namespace mln
     void
     remove()
     {
-      trace::entering("display::remove");
+      mln_trace("display::remove");
 
       impl::remove();
-
-      trace::exiting("display::remove");
     }
 
 # endif // !MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -172,13 +172,11 @@ namespace mln
     typename get_helper<I>::type
     get(const Image<I>& ima)
     {
-      trace::entering("neighb::get");
+      mln_trace("neighb::get");
 
       mln_precondition(exact(ima).is_valid());
       typename neighb::get_helper<I>::type res =
 	neighb::get_helper<I>::run(exact(ima));
-
-      trace::exiting("neighb::get");
       return res;
     }
 

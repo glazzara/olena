@@ -1,5 +1,17 @@
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert remaining Milena code to mln_trace.
+
+	* doc/examples/devel/facade.cc.raw,
+	* doc/examples/devel/impl.cc.raw,
+	* mln/io/vtk/save.hh,
+	* mln/topo/skeleton/breadth_first_thinning.hh,
+	* mln/topo/skeleton/priority_driven_thinning.hh,
+	* new-header:
+	Here.
+
+2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the use of Pi in Milena's apps/mesh-segm-skel.
 
 	* apps/mesh-segm-skel/mesh-complex-max-curv-extrema.cc,

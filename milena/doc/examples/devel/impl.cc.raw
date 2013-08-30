@@ -10,11 +10,10 @@ namespace impl
   			    const Neighborhood<N>& nbh_,
   			    unsigned rank)
     {
-      trace::entering("impl::generic::erosion_tolerant");
+      mln_trace("impl::generic::erosion_tolerant");
 
       // Do it...
 
-      trace::exiting("impl::generic::erosion_tolerant");
       return output;
     }
 
@@ -27,12 +26,10 @@ namespace impl
 				  const Neighborhood<N>& nbh_,
 				  unsigned rank)
   {
-    trace::entering("impl::erosion_tolerant_on_set_fastest");
-
+    mln_trace("impl::erosion_tolerant_on_set_fastest");
 
     // Do it...
 
-    trace::exiting("impl::erosion_tolerant_on_set_fastest");
     return output;
   }
 

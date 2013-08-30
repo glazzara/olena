@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -69,7 +69,7 @@ namespace mln
       void
       save(trait::value::kind::any, const Image<I>& input_)
       {
-	trace::entering("display::impl::save");
+	mln_trace("display::impl::save");
 
 	const I& input = exact (input_);
 	image2d<value::rgb8> out = display::color_pretty(input);
@@ -84,8 +84,6 @@ namespace mln
 	io::ppm::save(out, path_tmp);
 
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
-
-	trace::exiting("display::impl::save");
       }
 
       template <typename I>
@@ -93,7 +91,7 @@ namespace mln
       void
       save(trait::value::kind::color, const Image<I>& input_)
       {
-	trace::entering("display::impl::save");
+	mln_trace("display::impl::save");
 
 	const I& input = exact (input_);
 
@@ -107,8 +105,6 @@ namespace mln
 	io::ppm::save(input, path_tmp);
 
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
-
-	trace::exiting("display::impl::save");
       }
 
     } // end of namespace mln::display::impl
@@ -119,13 +115,11 @@ namespace mln
     void
     save(const Image<I>& input_)
     {
-      trace::entering("display::save");
+      mln_trace("display::save");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
       impl::save(mln_trait_value_kind(mln_value(I)) (), input);
-
-      trace::exiting("display::save");
     }
 
 # endif // !MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2013 EPITA Research and Development Laboratory
 //
 // This file is part of Olena.
 //
@@ -68,12 +68,10 @@ namespace mln
       save_and_show_(const Image<I>& input,
 		     std::string cmd, int time)
       {
-	trace::entering("display::impl::save_and_show_");
+	mln_trace("display::impl::save_and_show_");
 
 	display::save(input);
  	show(input, cmd, time);
-
-	trace::exiting("display::impl::save_and_show_");
       }
 
     } // end of namespace mln::display::impl
@@ -84,11 +82,9 @@ namespace mln
     void
     save_and_show(const Image<I>& input_, std::string cmd = "display", int time = 0)
     {
-      trace::entering("display::save_and_show");
+      mln_trace("display::save_and_show");
 
       impl::save_and_show_(input_, cmd, time);
-
-      trace::exiting("display::save_and_show");
     }
 
 # endif // !MLN_INCLUDE_ONLY

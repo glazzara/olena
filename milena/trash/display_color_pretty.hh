@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2013 EPITA Research and Development Laboratory
 //
 // This file is part of Olena.
 //
@@ -117,7 +117,7 @@ namespace mln
       typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
       color_pretty(const Image<I>& input_)
       {
-	trace::entering("display::impl::color_pretty");
+	mln_trace("display::impl::color_pretty");
 
 	const I& input = exact (input_);
 
@@ -131,7 +131,6 @@ namespace mln
 	    output(p) = value::rgb8(color_value(input(p)));
 	}
 
-	trace::exiting("display::impl::color_pretty");
 	return output;
       }
 
@@ -143,7 +142,7 @@ namespace mln
 		       const p_set<mln_psite(I) >& s2_,
 		       const p_set<mln_psite(I) >& s3_)
       {
-	trace::entering("display::impl::color_pretty_rgb");
+	mln_trace("display::impl::color_pretty_rgb");
 
 	const I& input = exact (input_);
 
@@ -171,7 +170,6 @@ namespace mln
 	    output(p).blue() = 255;
 	}
 
-	trace::exiting("display::impl::color_pretty_rgb");
 	return output;
       }
 
@@ -186,7 +184,7 @@ namespace mln
     typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_)
     {
-      trace::entering("display::color_pretty");
+      mln_trace("display::color_pretty");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -196,7 +194,6 @@ namespace mln
 
       image2d<value::rgb8> output = impl::color_pretty(input);
 
-      trace::exiting("display::color_pretty");
       return output;
     }
 
@@ -208,11 +205,9 @@ namespace mln
 		     const p_set<mln_psite(I) >& s2_,
 		     const p_set<mln_psite(I) >& s3_)
     {
-      trace::entering("display::color_pretty_rgb");
+      mln_trace("display::color_pretty_rgb");
 
       image2d<value::rgb8> output = impl::color_pretty_rgb(input_, s1_, s2_, s3_);
-
-      trace::exiting("display::color_pretty_rgb");
       return output;
     }
 

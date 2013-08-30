@@ -4,7 +4,7 @@ mln_concrete(I)
 erosion_tolerant(const Image<I>& input, const Neighborhood<N>& nbh,
 		     unsigned rank)
 {
-  trace::entering("morpho::erosion_tolerant");
+  mln_trace("morpho::erosion_tolerant");
   mln_precondition(exact(input).is_valid());
   mln_precondition(exact(nbh).is_valid());
 
@@ -12,7 +12,5 @@ erosion_tolerant(const Image<I>& input, const Neighborhood<N>& nbh,
   	= internal::erosion_tolerant_dispatch(input,
 					      nbh,
 					      rank);
-
-  trace::exiting("morpho::erosion_tolerant");
   return output;
 }

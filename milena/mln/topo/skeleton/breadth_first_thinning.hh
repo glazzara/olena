@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -121,7 +121,7 @@ namespace mln
 			     G& detach,
 			     const Function_v2b<H>& constraint_)
       {
-	trace::entering("topo::skeleton::breadth_first_thinning");
+	mln_trace("topo::skeleton::breadth_first_thinning");
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
@@ -174,7 +174,6 @@ namespace mln
 	      }
 	  }
 
-	trace::exiting("topo::skeleton::breadth_first_thinning");
 	return output;
       }
 
