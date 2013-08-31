@@ -24,6 +24,9 @@ AM_CPPFLAGS += -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
+# Routines used in the computation of binary skeletons of 3D images.
+# FIXME: To be integrated into the library.
+noinst_HEADERS = image3d-skel.hh
 
 # FIXME: Really install these programs?
 # 2D cases.

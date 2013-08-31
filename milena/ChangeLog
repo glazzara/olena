@@ -1,5 +1,12 @@
 2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the distribution.
+
+	* apps/generic-skel/Makefile.am (noinst_HEADERS):
+	Add image3d-skel.hh.
+
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a Makefile inclusion in Milena's apps/generic-skel.
 
 	* apps/generic-skel/Makefile.am: Include
