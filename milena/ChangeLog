@@ -1,5 +1,13 @@
 2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not install Milena apps.
+
+	* apps/generic-skel/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am:
+	s/bin_PROGRAMS/noinst_PROGRAMS/.
+
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the distribution.
 
 	* apps/generic-skel/Makefile.am (noinst_HEADERS):

@@ -28,14 +28,13 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 # FIXME: To be integrated into the library.
 noinst_HEADERS = image3d-skel.hh
 
-# FIXME: Really install these programs?
 # 2D cases.
-bin_PROGRAMS =					\
+noinst_PROGRAMS =					\
   image2d-skel-unconstrained			\
   image2d-skel-with-end-points
 
 # 3D cases, slow versions.
-bin_PROGRAMS +=					\
+noinst_PROGRAMS +=					\
   image3d-skel-unconstrained			\
   image3d-skel-with-end-points			\
   image3d-skel-with-1d-isthmuses
@@ -102,5 +101,5 @@ MOSTLYCLEANFILES =				\
 generated_tests += test-mixed
 test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
-check-mixed: test-mixed $(bin_PROGRAMS)
+check-mixed: test-mixed $(noinst_PROGRAMS)
 	./test-mixed

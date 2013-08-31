@@ -23,7 +23,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-bin_PROGRAMS =
+noinst_PROGRAMS =
 TESTS = 
 MOSTLYCLEANFILES =
 
@@ -60,7 +60,7 @@ noinst_HEADERS = misc.hh
 
 # A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
-bin_PROGRAMS += mesh-complex-max-curv
+noinst_PROGRAMS += mesh-complex-max-curv
 TESTS += test-mesh-complex-max-curv
 MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
@@ -69,7 +69,7 @@ MOSTLYCLEANFILES += teapot-complex-max-curv.off
 # A program computing the max curvature at each (2-)face of the
 # surface of a triangle mesh and displaying its local minima
 # (in blue) and maxima (in red).
-bin_PROGRAMS += mesh-complex-max-curv-extrema
+noinst_PROGRAMS += mesh-complex-max-curv-extrema
 TESTS += test-mesh-complex-max-curv-extrema
 MOSTLYCLEANFILES +=					\
   socket-complex-max-curv-extrema.off		\
@@ -83,7 +83,7 @@ MOSTLYCLEANFILES +=					\
 # Segmentation program working on precomputed meshes with curvature
 # data.  Less accurate, since curvature is stored on triangles
 # (polygons), whereas the segmentation is performed on edges.
-bin_PROGRAMS += mesh-complex-segm
+noinst_PROGRAMS += mesh-complex-segm
 TESTS += test-mesh-complex-segm
 MOSTLYCLEANFILES +=				\
   socket-max-curv-segm.off			\
@@ -95,14 +95,14 @@ MOSTLYCLEANFILES +=				\
 # vertices, then average values are computed on edges (in the case of
 # `mesh-complex-segm', data are read from polygons, which implies an
 # extra averaging step).
-bin_PROGRAMS += mesh-complex-max-curv-segm
+noinst_PROGRAMS += mesh-complex-max-curv-segm
 TESTS += test-mesh-complex-max-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-segm.off		\
   teapot-complex-max-curv-segm.off
 
 # Likewise, but using pseudo-inverse curvature.
-bin_PROGRAMS += mesh-complex-pinv-curv-segm
+noinst_PROGRAMS += mesh-complex-pinv-curv-segm
 TESTS += test-mesh-complex-pinv-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-segm.off		\
@@ -123,7 +123,7 @@ edit = sed							\
          -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'
 
 # Performing a 2-collapse on a pseudo-manifold.
-bin_PROGRAMS += mesh-complex-2-collapse
+noinst_PROGRAMS += mesh-complex-2-collapse
 
 test-mesh-complex-2-collapse: test-mesh-complex-2-collapse.in Makefile
 	rm -f $@ $@.tmp
@@ -139,7 +139,7 @@ MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 
 # Program computing the max curvature from a mesh, then performing a
 # 2-collapse on it.
-bin_PROGRAMS += mesh-complex-max-curv-2-collapse
+noinst_PROGRAMS += mesh-complex-max-curv-2-collapse
 
 # FIXME: Factor action with test-mesh-complex-2-collapse's.
 test-mesh-complex-max-curv-2-collapse: test-mesh-complex-max-curv-2-collapse.in Makefile
@@ -158,7 +158,7 @@ MOSTLYCLEANFILES +=				\
 
 # Program computing the max curvature from a mesh, then performing a
 # 1-collapse on it.
-bin_PROGRAMS += mesh-complex-max-curv-1-collapse
+noinst_PROGRAMS += mesh-complex-max-curv-1-collapse
 
 # FIXME: Factor action with test-mesh-complex-1-collapse's.
 test-mesh-complex-max-curv-1-collapse: test-mesh-complex-max-curv-1-collapse.in Makefile
@@ -179,7 +179,7 @@ MOSTLYCLEANFILES +=				\
 ## ------------------------------------
 
 # Skeletonization program working on precomputed meshes with curvatures data.
-bin_PROGRAMS += mesh-complex-skel
+noinst_PROGRAMS += mesh-complex-skel
 mesh_complex_skel_SOURCES = mesh-complex-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-skel
 MOSTLYCLEANFILES +=				\
@@ -187,7 +187,7 @@ MOSTLYCLEANFILES +=				\
   teapot-max-curv-skel.off			\
   three-triangles-skel.off
 
-bin_PROGRAMS += mesh-complex-max-curv-skel
+noinst_PROGRAMS += mesh-complex-max-curv-skel
 mesh_complex_max_curv_skel_SOURCES =		\
   mesh-complex-max-curv-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-max-curv-skel
@@ -195,7 +195,7 @@ MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-skel.off		\
   teapot-complex-max-curv-skel.off
 
-bin_PROGRAMS += mesh-complex-pinv-curv-skel
+noinst_PROGRAMS += mesh-complex-pinv-curv-skel
 mesh_complex_pinv_curv_skel_SOURCES =		\
   mesh-complex-pinv-curv-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-pinv-curv-skel
@@ -209,7 +209,7 @@ MOSTLYCLEANFILES +=				\
 
 # Convert a binary OFF file (e.g. no value attached to faces) into a
 # VTK file.
-bin_PROGRAMS += off-to-vtk-bin
+noinst_PROGRAMS += off-to-vtk-bin
 
 ## ------------- ##
 ## Mixed tests.  ##
@@ -235,5 +235,5 @@ $(generated_tests): Makefile
 generated_tests = test-mixed
 test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
-check-mixed: test-mixed $(bin_PROGRAMS)
+check-mixed: test-mixed $(noinst_PROGRAMS)
 	./test-mixed
