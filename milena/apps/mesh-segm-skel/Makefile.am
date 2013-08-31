@@ -25,6 +25,7 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =
 TESTS = 
+EXTRA_DIST =
 MOSTLYCLEANFILES =
 
 # FIXME: Have program names embed the type of structure used (either
@@ -125,6 +126,7 @@ edit = sed							\
 # Performing a 2-collapse on a pseudo-manifold.
 noinst_PROGRAMS += mesh-complex-2-collapse
 
+EXTRA_DIST += test-mesh-complex-2-collapse.in
 test-mesh-complex-2-collapse: test-mesh-complex-2-collapse.in Makefile
 	rm -f $@ $@.tmp
 	srcdir='';				\
@@ -141,6 +143,7 @@ MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 # 2-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-2-collapse
 
+EXTRA_DIST += test-mesh-complex-max-curv-2-collapse.in
 # FIXME: Factor action with test-mesh-complex-2-collapse's.
 test-mesh-complex-max-curv-2-collapse: test-mesh-complex-max-curv-2-collapse.in Makefile
 	rm -f $@ $@.tmp
@@ -160,6 +163,7 @@ MOSTLYCLEANFILES +=				\
 # 1-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-1-collapse
 
+EXTRA_DIST += test-mesh-complex-max-curv-1-collapse.in
 # FIXME: Factor action with test-mesh-complex-1-collapse's.
 test-mesh-complex-max-curv-1-collapse: test-mesh-complex-max-curv-1-collapse.in Makefile
 	rm -f $@ $@.tmp
@@ -233,6 +237,7 @@ $(generated_tests): Makefile
 # submission.  Not part of the `check' target; triggered by the
 # `check-mixed' target.
 generated_tests = test-mixed
+EXTRA_DIST += test-mixed.in
 test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
 check-mixed: test-mixed $(noinst_PROGRAMS)

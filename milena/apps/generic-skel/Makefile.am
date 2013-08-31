@@ -99,6 +99,7 @@ MOSTLYCLEANFILES =				\
 # submission.  Not part of the `check' target; triggered by the
 # `check-mixed' target.
 generated_tests += test-mixed
+EXTRA_DIST += test-mixed.in
 test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
 check-mixed: test-mixed $(noinst_PROGRAMS)

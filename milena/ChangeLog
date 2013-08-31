@@ -1,5 +1,16 @@
 2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute sources of generated tests in Milena apps.
+
+	* apps/generic-skel/Makefile.am (EXTRA_DIST): Add test-mixed.in.
+	* apps/mesh-segm-skel/Makefile.am (EXTRA_DIST): Add
+	test-mesh-complex-2-collapse.in,
+	test-mesh-complex-max-curv-2-collapse.in,
+	test-mesh-complex-max-curv-1-collapse.in and
+	test-mixed.in.
+
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not install Milena apps.
 
 	* apps/generic-skel/Makefile.am,
