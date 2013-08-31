@@ -25,8 +25,27 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =
 TESTS = 
+generated_tests =
 EXTRA_DIST =
 MOSTLYCLEANFILES =
+
+# Use Make to generate tests instead of `configure', as advised by
+# Autoconf's manual (see section ``Installation Directory
+# Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'
+
+$(generated_tests): Makefile
+	rm -f $@ $@.tmp
+	srcdir=''; \
+	  test -f ./$@.in || srcdir=$(srcdir)/; \
+	  $(edit) $${srcdir}$@.in >$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
 
 # FIXME: Have program names embed the type of structure used (either
 # graph or complex).
@@ -112,49 +131,21 @@ MOSTLYCLEANFILES +=				\
 ## Collapses.
 ## ----------
 
-## FIXME: Generalize the generation of tests by make instead of
-## configure.
-# Use Make to generate tests instead of `configure', as advised by
-# Autoconf's manual (see section ``Installation Directory
-# Variables'').
-edit = sed							\
-         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
-         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
-         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
-         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'
-
 # Performing a 2-collapse on a pseudo-manifold.
 noinst_PROGRAMS += mesh-complex-2-collapse
 
+generated_tests += test-mesh-complex-2-collapse
 EXTRA_DIST += test-mesh-complex-2-collapse.in
-test-mesh-complex-2-collapse: test-mesh-complex-2-collapse.in Makefile
-	rm -f $@ $@.tmp
-	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
-	chmod a-w,a+x $@.tmp
-	mv $@.tmp $@
-
-TESTS += test-mesh-complex-2-collapse
-CLEANFILES = test-mesh-complex-2-collapse
+test-mesh-complex-2-collapse: $(srcdir)/test-mesh-complex-2-collapse.in
 MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 
 # Program computing the max curvature from a mesh, then performing a
 # 2-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-2-collapse
 
+generated_tests += test-mesh-complex-max-curv-2-collapse
 EXTRA_DIST += test-mesh-complex-max-curv-2-collapse.in
-# FIXME: Factor action with test-mesh-complex-2-collapse's.
-test-mesh-complex-max-curv-2-collapse: test-mesh-complex-max-curv-2-collapse.in Makefile
-	rm -f $@ $@.tmp
-	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
-	chmod a-w,a+x $@.tmp
-	mv $@.tmp $@
-
-TESTS += test-mesh-complex-max-curv-2-collapse
-CLEANFILES += test-mesh-complex-max-curv-2-collapse
+test-mesh-complex-max-curv-2-collapse: $(srcdir)/test-mesh-complex-max-curv-2-collapse.in
 MOSTLYCLEANFILES +=				\
   teapot-max-curv-2-collapse.vtk		\
   bunny-holefilled-max-curv-2-collapse.vtk
@@ -163,18 +154,9 @@ MOSTLYCLEANFILES +=				\
 # 1-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-1-collapse
 
+generated_tests += test-mesh-complex-max-curv-1-collapse
 EXTRA_DIST += test-mesh-complex-max-curv-1-collapse.in
-# FIXME: Factor action with test-mesh-complex-1-collapse's.
-test-mesh-complex-max-curv-1-collapse: test-mesh-complex-max-curv-1-collapse.in Makefile
-	rm -f $@ $@.tmp
-	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
-	chmod a-w,a+x $@.tmp
-	mv $@.tmp $@
-
-TESTS += test-mesh-complex-max-curv-1-collapse
-CLEANFILES += test-mesh-complex-max-curv-1-collapse
+test-mesh-complex-max-curv-1-collapse: $(srcdir)/test-mesh-complex-max-curv-1-collapse.in
 MOSTLYCLEANFILES +=				\
   teapot-max-curv-1-collapse.vtk		\
   bunny-holefilled-max-curv-1-collapse.vtk
@@ -219,26 +201,16 @@ noinst_PROGRAMS += off-to-vtk-bin
 ## Mixed tests.  ##
 ## ------------- ##
 
-# Use Make to generate Doxyfile instead of `configure', as advised by
-# Autoconf's manual (see section ``Installation Directory
-# Variables'').
-# FIXME: Generalize this approach to other tests.
-
-$(generated_tests): Makefile
-	rm -f $@ $@.tmp
-	srcdir=''; \
-	  test -f ./$@.in || srcdir=$(srcdir)/; \
-	  $(edit) $${srcdir}$@.in >$@.tmp
-	chmod +x $@.tmp
-	chmod a-w $@.tmp
-	mv $@.tmp $@
-
 # Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
 # submission.  Not part of the `check' target; triggered by the
 # `check-mixed' target.
-generated_tests = test-mixed
+generated_tests += test-mixed
 EXTRA_DIST += test-mixed.in
 test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
 check-mixed: test-mixed $(noinst_PROGRAMS)
 	./test-mixed
+
+
+TESTS += $(generated_tests)
+CLEANFILES = $(generated_tests)

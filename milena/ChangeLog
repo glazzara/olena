@@ -1,5 +1,11 @@
 2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor the generation of tests in Milena's apps/mesh-segm-skel.
+
+	* apps/mesh-segm-skel/Makefile.am: Here.
+
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute sources of generated tests in Milena apps.
 
 	* apps/generic-skel/Makefile.am (EXTRA_DIST): Add test-mixed.in.
