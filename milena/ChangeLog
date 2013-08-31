@@ -1,5 +1,13 @@
 2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes in Milena apps Makefiles.
+
+	* apps/generic-skel/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am:
+	Here.
+
+2013-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor the generation of tests in Milena's apps/mesh-segm-skel.
 
 	* apps/mesh-segm-skel/Makefile.am: Here.

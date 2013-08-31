@@ -24,9 +24,9 @@ APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =
-TESTS = 
 generated_tests =
 EXTRA_DIST =
+TESTS =
 MOSTLYCLEANFILES =
 
 # Use Make to generate tests instead of `configure', as advised by

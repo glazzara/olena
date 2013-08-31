@@ -39,19 +39,10 @@ noinst_PROGRAMS +=					\
   image3d-skel-with-end-points			\
   image3d-skel-with-1d-isthmuses
 
-EXTRA_DIST =					\
-  test-image2d-skel-unconstrained.in		\
-  test-image2d-skel-with-end-points.in
-
-# Use Make to generate Doxyfile instead of `configure', as advised by
+# Use Make to generate tests instead of `configure', as advised by
 # Autoconf's manual (see section ``Installation Directory
 # Variables'').
 edit = sed -e 's|@top_srcdir[@]|$(top_srcdir)|g'
-
-# Tests for the 2D case.
-generated_tests =				\
-  test-image2d-skel-unconstrained		\
-  test-image2d-skel-with-end-points
 
 $(generated_tests): Makefile
 	rm -f $@ $@.tmp
@@ -62,12 +53,19 @@ $(generated_tests): Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
+# Tests for the 2D case.
+generated_tests =				\
+  test-image2d-skel-unconstrained		\
+  test-image2d-skel-with-end-points
+
+EXTRA_DIST =					\
+  test-image2d-skel-unconstrained.in		\
+  test-image2d-skel-with-end-points.in
 test-image2d-skel-unconstrained: $(srcdir)/test-image2d-skel-unconstrained.in
 test-image2d-skel-with-end-points: $(srcdir)/test-image2d-skel-with-end-points.in
 
-CLEANFILES = $(generated_tests)
-
 TESTS = $(generated_tests)
+CLEANFILES = $(generated_tests)
 
 # Tests for the 3D case.
 # FIXME: Create real test cases with inputs passed as argument.
