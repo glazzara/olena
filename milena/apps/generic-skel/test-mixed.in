@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2012, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,6 +20,6 @@ set -ex
 
 img_dir=@top_srcdir@/milena/img
 
-./image2d-skel-unconstrained $img_dir/picasso.pbm picasso-skel-unconstrained.pbm
-./image2d-skel-with-end-points $img_dir/picasso.pbm picasso-skel-with-end-points.pbm
+./image2d-skel-unconstrained $img_dir/picasso.pbm picasso-skel-unconstrained-wadgmm-2010.pbm
+./image2d-skel-with-end-points $img_dir/picasso.pbm picasso-skel-with-end-points-wadgmm-2010.pbm
 ./image3d-skel-unconstrained

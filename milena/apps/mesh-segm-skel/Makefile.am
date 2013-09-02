@@ -24,7 +24,8 @@ APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =
-generated_tests =
+generated_checked_tests =
+generated_tests = $(generated_checked_tests)
 EXTRA_DIST =
 TESTS =
 MOSTLYCLEANFILES =
@@ -91,9 +92,10 @@ MOSTLYCLEANFILES += teapot-complex-max-curv.off
 # (in blue) and maxima (in red).
 noinst_PROGRAMS += mesh-complex-max-curv-extrema
 TESTS += test-mesh-complex-max-curv-extrema
-MOSTLYCLEANFILES +=					\
+MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-extrema.off		\
-  teapot-complex-max-curv-extrema.off
+  teapot-complex-max-curv-extrema.off		\
+  bunny-holefilled-complex-max-curv-extrema.off
 
 # FIXME: Implement (and exercise) mesh-complex-pinv-curv-extrema.
 
@@ -107,7 +109,8 @@ noinst_PROGRAMS += mesh-complex-segm
 TESTS += test-mesh-complex-segm
 MOSTLYCLEANFILES +=				\
   socket-max-curv-segm.off			\
-  teapot-max-curv-segm.off
+  teapot-max-curv-segm.off			\
+  bunny-holefilled-pinv-curv-segm.off
 
 # Program computing the max curvature from a mesh, then segmenting it.
 # The advantage of this program over `mesh-complex-segm' is that the
@@ -119,14 +122,16 @@ noinst_PROGRAMS += mesh-complex-max-curv-segm
 TESTS += test-mesh-complex-max-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-segm.off		\
-  teapot-complex-max-curv-segm.off
+  teapot-complex-max-curv-segm.off		\
+  bunny-holefilled-complex-max-curv-segm.off
 
 # Likewise, but using pseudo-inverse curvature.
 noinst_PROGRAMS += mesh-complex-pinv-curv-segm
 TESTS += test-mesh-complex-pinv-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-segm.off		\
-  teapot-complex-pinv-curv-segm.off
+  teapot-complex-pinv-curv-segm.off		\
+  bunny-holefilled-complex-pinv-curv-segm.off
 
 ## Collapses.
 ## ----------
@@ -134,7 +139,7 @@ MOSTLYCLEANFILES +=				\
 # Performing a 2-collapse on a pseudo-manifold.
 noinst_PROGRAMS += mesh-complex-2-collapse
 
-generated_tests += test-mesh-complex-2-collapse
+generated_checked_tests += test-mesh-complex-2-collapse
 EXTRA_DIST += test-mesh-complex-2-collapse.in
 test-mesh-complex-2-collapse: $(srcdir)/test-mesh-complex-2-collapse.in
 MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
@@ -143,7 +148,7 @@ MOSTLYCLEANFILES += pseudo-manifold-2-collapse.vtk
 # 2-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-2-collapse
 
-generated_tests += test-mesh-complex-max-curv-2-collapse
+generated_checked_tests += test-mesh-complex-max-curv-2-collapse
 EXTRA_DIST += test-mesh-complex-max-curv-2-collapse.in
 test-mesh-complex-max-curv-2-collapse: $(srcdir)/test-mesh-complex-max-curv-2-collapse.in
 MOSTLYCLEANFILES +=				\
@@ -154,7 +159,7 @@ MOSTLYCLEANFILES +=				\
 # 1-collapse on it.
 noinst_PROGRAMS += mesh-complex-max-curv-1-collapse
 
-generated_tests += test-mesh-complex-max-curv-1-collapse
+generated_checked_tests += test-mesh-complex-max-curv-1-collapse
 EXTRA_DIST += test-mesh-complex-max-curv-1-collapse.in
 test-mesh-complex-max-curv-1-collapse: $(srcdir)/test-mesh-complex-max-curv-1-collapse.in
 MOSTLYCLEANFILES +=				\
@@ -171,7 +176,8 @@ TESTS += test-mesh-complex-skel
 MOSTLYCLEANFILES +=				\
   socket-max-curv-skel.off			\
   teapot-max-curv-skel.off			\
-  three-triangles-skel.off
+  three-triangles-skel.off			\
+  bunny-holefilled-pinv-curv-skel.off
 
 noinst_PROGRAMS += mesh-complex-max-curv-skel
 mesh_complex_max_curv_skel_SOURCES =		\
@@ -179,7 +185,8 @@ mesh_complex_max_curv_skel_SOURCES =		\
 TESTS += test-mesh-complex-max-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-skel.off		\
-  teapot-complex-max-curv-skel.off
+  teapot-complex-max-curv-skel.off		\
+  bunny-holefilled-complex-max-curv-skel.off
 
 noinst_PROGRAMS += mesh-complex-pinv-curv-skel
 mesh_complex_pinv_curv_skel_SOURCES =		\
@@ -187,7 +194,8 @@ mesh_complex_pinv_curv_skel_SOURCES =		\
 TESTS += test-mesh-complex-pinv-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-skel.off		\
-  teapot-complex-pinv-curv-skel.off
+  teapot-complex-pinv-curv-skel.off		\
+  bunny-holefilled-complex-pinv-curv-skel.off
 
 ## ------------------------- ##
 ## Conversion applications.  ##
@@ -202,7 +210,7 @@ noinst_PROGRAMS += off-to-vtk-bin
 ## ------------- ##
 
 # Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
-# submission.  Not part of the `check' target; triggered by the
+# paper.  Not part of the `check' target; triggered by the
 # `check-mixed' target.
 generated_tests += test-mixed
 EXTRA_DIST += test-mixed.in
@@ -210,7 +218,13 @@ test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
 check-mixed: test-mixed $(noinst_PROGRAMS)
 	./test-mixed
+MOSTLYCLEANFILES +=						\
+  bunny-holefilled-complex-pinv-curv-skel-wadgmm-2010.off	\
+  bunny-holefilled-max-curv-2-collapse-wadgmm-2010.vtk		\
+  bunny-holefilled-max-curv-1-collapse-wadgmm-2010.vtk
 
 
-TESTS += $(generated_tests)
+# Check tests from generated_checked_tests (which is a subset of
+# generated_tests).
+TESTS += $(generated_checked_tests)
 CLEANFILES = $(generated_tests)

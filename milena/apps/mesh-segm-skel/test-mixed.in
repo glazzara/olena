@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2012 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2012, 2013 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,6 +20,6 @@ set -ex
 
 mesh_dir=@top_srcdir@/milena/mesh
 
-./mesh-complex-pinv-curv-skel $mesh_dir/bunny-holefilled.off 50 bunny-holefilled-complex-pinv-curv-skel.off
-./mesh-complex-max-curv-2-collapse $mesh_dir/bunny-holefilled.vtk 50 bunny-holefilled-max-curv-2-collapse.vtk
-./mesh-complex-max-curv-1-collapse $mesh_dir/bunny-holefilled.vtk 50 bunny-holefilled-max-curv-1-collapse.vtk
+./mesh-complex-pinv-curv-skel $mesh_dir/bunny-holefilled.off 50 bunny-holefilled-complex-pinv-curv-skel-wadgmm-2010.off
+./mesh-complex-max-curv-2-collapse $mesh_dir/bunny-holefilled.vtk 50 bunny-holefilled-max-curv-2-collapse-wadgmm-2010.vtk
+./mesh-complex-max-curv-1-collapse $mesh_dir/bunny-holefilled.vtk 50 bunny-holefilled-max-curv-1-collapse-wadgmm-2010.vtk

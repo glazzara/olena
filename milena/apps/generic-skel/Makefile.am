@@ -24,20 +24,11 @@ AM_CPPFLAGS += -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-# Routines used in the computation of binary skeletons of 3D images.
-# FIXME: To be integrated into the library.
-noinst_HEADERS = image3d-skel.hh
-
-# 2D cases.
-noinst_PROGRAMS =					\
-  image2d-skel-unconstrained			\
-  image2d-skel-with-end-points
-
-# 3D cases, slow versions.
-noinst_PROGRAMS +=					\
-  image3d-skel-unconstrained			\
-  image3d-skel-with-end-points			\
-  image3d-skel-with-1d-isthmuses
+generated_checked_tests =
+generated_tests = $(generated_checked_tests)
+TESTS =
+EXTRA_DIST =
+MOSTLYCLEANFILES =
 
 # Use Make to generate tests instead of `configure', as advised by
 # Autoconf's manual (see section ``Installation Directory
@@ -53,21 +44,36 @@ $(generated_tests): Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
-# Tests for the 2D case.
-generated_tests =				\
+# Routines used in the computation of binary skeletons of 3D images.
+# FIXME: To be integrated into the library.
+noinst_HEADERS = image3d-skel.hh
+
+# 2D cases.
+noinst_PROGRAMS =				\
+  image2d-skel-unconstrained			\
+  image2d-skel-with-end-points
+
+generated_checked_tests +=			\
   test-image2d-skel-unconstrained		\
   test-image2d-skel-with-end-points
-
-EXTRA_DIST =					\
+EXTRA_DIST +=					\
   test-image2d-skel-unconstrained.in		\
   test-image2d-skel-with-end-points.in
 test-image2d-skel-unconstrained: $(srcdir)/test-image2d-skel-unconstrained.in
 test-image2d-skel-with-end-points: $(srcdir)/test-image2d-skel-with-end-points.in
+MOSTLYCLEANFILES +=				\
+  tiny-skel-unconstrained.pbm			\
+  picasso-skel-unconstrained.pbm		\
+  tiny-skel-with-end-points.pbm			\
+  picasso-skel-with-end-points.pbm
 
-TESTS = $(generated_tests)
-CLEANFILES = $(generated_tests)
 
-# Tests for the 3D case.
+# 3D cases, slow versions.
+noinst_PROGRAMS +=				\
+  image3d-skel-unconstrained			\
+  image3d-skel-with-end-points			\
+  image3d-skel-with-1d-isthmuses
+
 # FIXME: Create real test cases with inputs passed as argument.
 TESTS +=					\
   image3d-skel-unconstrained			\
@@ -75,7 +81,7 @@ TESTS +=					\
   image3d-skel-with-1d-isthmuses
 
 # FIXME: Rename all outputs to have their names use their generator as prefix.
-MOSTLYCLEANFILES =				\
+MOSTLYCLEANFILES +=				\
   image3d-skel-unconstrained-input.raw		\
   image3d-skel-unconstrained-input.vtk		\
   image3d-skel-unconstrained-skel.raw		\
@@ -87,14 +93,10 @@ MOSTLYCLEANFILES =				\
   image3d-skel-with-1d-isthmuses-input.raw	\
   image3d-skel-with-1d-isthmuses-input.vtk	\
   image3d-skel-with-1d-isthmuses-skel.raw	\
-  image3d-skel-with-1d-isthmuses-skel.vtk	\
-  picasso-skel-unconstrained.pbm		\
-  picasso-skel-with-end-points.pbm		\
-  tiny-skel-unconstrained.pbm			\
-  tiny-skel-with-end-points.pbm
+  image3d-skel-with-1d-isthmuses-skel.vtk
 
 # Mixed tests corresponding to illustrations of the WADGMM 2010/LNCS
-# submission.  Not part of the `check' target; triggered by the
+# paper.  Not part of the `check' target; triggered by the
 # `check-mixed' target.
 generated_tests += test-mixed
 EXTRA_DIST += test-mixed.in
@@ -102,3 +104,12 @@ test-mixed: $(srcdir)/test-mixed.in
 .PHONY: check-mixed
 check-mixed: test-mixed $(noinst_PROGRAMS)
 	./test-mixed
+MOSTLYCLEANFILES +=					\
+  picasso-skel-unconstrained-wadgmm-2010.pbm		\
+  picasso-skel-with-end-points-wadgmm-2010.pbm
+
+
+# Check tests from generated_checked_tests (which is a subset of
+# generated_tests).
+TESTS += $(generated_checked_tests)
+CLEANFILES = $(generated_tests)
