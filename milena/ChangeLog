@@ -1,5 +1,13 @@
 2013-09-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add parentheses around complex operands of operator `|'.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-1-collapse.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-2-collapse.cc:
+	Here, as suggested by g++ 4.7.
+
+2013-09-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not run test-mixed in Milena apps with the `check' target.
 
 	* apps/generic-skel/test-mixed.in,

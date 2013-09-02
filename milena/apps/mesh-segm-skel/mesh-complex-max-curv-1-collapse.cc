@@ -237,7 +237,7 @@ main(int argc, char* argv[])
   // Set non minima triangles to true;
   mln::data::fill
     ((surface |
-      mln::pw::value(minima) == mln::pw::cst(mln::literal::zero)).rw(),
+      (mln::pw::value(minima) == mln::pw::cst(mln::literal::zero))).rw(),
      true);
   // Extend non minima values from triangles to edges.
   mln::data::paste (mln::morpho::dilation(mln::extend(surface | is_an_edge,
