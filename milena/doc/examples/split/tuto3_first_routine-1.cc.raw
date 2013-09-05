@@ -18,7 +18,6 @@
 
 #include <mln/pw/all.hh>
 
-#include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 
 namespace mln

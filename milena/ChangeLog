@@ -1,3 +1,10 @@
+2013-09-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove an unnecessary #include from an example of the tutorial.
+
+	* doc/examples/tuto3/first_routine.cc: Here.
+	* doc/examples/split/tuto3_first_routine-1.cc.raw: Regen.
+
 2013-09-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add parentheses around complex operands of operator `|'.
