@@ -31,6 +31,7 @@ EXTRA_DIST = 					\
   niblack_fast_weven_hodd.ref.pbm		\
   niblack_fast_wodd_hodd.ref.pbm		\
   sauvola_ms.ref.pbm				\
+  sauvola_ms_tiff.ref.pbm			\
   sauvola_ms_wodd_heven.ref.pbm			\
   sauvola_ms_weven_hodd.ref.pbm			\
   sauvola_ms_wodd_hodd.ref.pbm			\
@@ -60,6 +61,11 @@ check_PROGRAMS =				\
   wolf						\
   wolf_fast
 
+if HAVE_TIFF
+check_PROGRAMS += sauvola_ms_tiff
+sauvola_ms_tiff_CPPFLAGS = $(AM_CPPFLAGS) $(TIFF_CPPFLAGS)
+sauvola_ms_tiff_LDFLAGS = $(LDFLAGS) $(TIFF_LDFLAGS)
+endif HAVE_TIFF
 
 TESTS = $(check_PROGRAMS)
 

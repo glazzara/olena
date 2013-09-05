@@ -23,6 +23,7 @@ EXTRA_DIST =				\
   img/alignment_3.pbm			\
   img/alignment_4.pbm			\
   img/comp_on_borders.pbm		\
+  img/lena.tiff				\
   img/lena_weven_hodd.pgm		\
   img/lena_wodd_heven.pgm		\
   img/lena_wodd_hodd.pgm		\

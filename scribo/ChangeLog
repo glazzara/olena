@@ -1,3 +1,19 @@
+2013-09-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Exercise the multi-scale Sauvola binarization with a TIFF image.
+
+	* tests/img/lena.tiff: New.
+	Generated from Milena's lena.pgm using ImageMagick's convert.
+	* tests/Makefile.am (EXTRA_DIST): Add img/lena.tiff.
+	* tests/binarization/sauvola_ms_tiff.cc: New test.
+	* tests/binarization/sauvola_ms_tiff.ref.pbm: New reference output
+	image.
+	* tests/binarization/Makefile.am (check_PROGRAMS) [HAVE_TIFF]:
+	Add sauvola_ms_tiff.
+	(sauvola_ms_tiff_CPPFLAGS, sauvola_ms_tiff_LDFLAGS) [HAVE_TIFF]:
+	New.
+	(EXTRA_DIST): Add sauvola_ms_tiff.ref.pbm.
+
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Scribo: Fix the use of QT_LIBS.
