@@ -46,11 +46,6 @@ AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
 # "GEN ..." message, unless V=1 is passed to "make".
 AM_SILENT_RULES([yes])
 
-# Package metadata.
-# Contrary to config.h, milena/mln/version.hh is meant to be installed.
-## FIXME: Consider generating milena/mln/version.hh with `make' instead
-## of `configure'.
-AC_CONFIG_FILES([milena/mln/version.hh])
 
 
 ## --------------------- ##

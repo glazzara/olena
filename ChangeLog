@@ -1,3 +1,10 @@
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop generating milena/mln/version.hh in the build tree with configure.
+
+	* configure.ac: No longer configure milena/mln/version.hh, as
+	milena/Makefile now generates it the source tree instead.
+
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Untabify.
