@@ -1,5 +1,11 @@
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have `make regen' also regenerate Milena's mln/version.hh.
+
+	* Makefile.am (regen-am): Here.
+
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not harcode OLN_PACKAGE_AUTHORS in Milena's mln/version.hh.in.
 
 	* mln/version.hh.in (OLN_PACKAGE_AUTHORS): Set it to

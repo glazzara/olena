@@ -64,6 +64,16 @@ regen-am:
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
 	       mln headers.mk
+# Also regenerate mln/version.hh.  Again, the action is duplicated
+# (see target $(srcdir)/mln/version.hh below).  There's probably a
+# (portable) way to factor this.
+	rm -f $(srcdir)/mln/version.hh $(srcdir)/mln/version.hh.tmp
+	srcdir=''; \
+	  test -f ./$(srcdir)/mln/version.hh.in || srcdir=$(srcdir)/; \
+	  $(edit) $${srcdir}$(srcdir)/mln/version.hh.in \
+	    >$(srcdir)/mln/version.hh.tmp
+	chmod a-w $(srcdir)/mln/version.hh.tmp
+	mv $(srcdir)/mln/version.hh.tmp $(srcdir)/mln/version.hh
 
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
