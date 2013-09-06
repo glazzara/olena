@@ -1,3 +1,15 @@
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Generate Milena's mln/version.hh in the source tree.
+
+	* Makefile.am ($(srcdir)/mln/version.hh): New target, generating
+	mln/version.hh in the source tree using make instead of configure.
+	(edit): New.
+	(EXTRA_DIST): Add mln/version.hh.in
+	(nobase_nodist_include_HEADERS): Remove mln/version.hh.
+	* mln/version.hh: New (generated).
+	* headers.mk: Regen.
+
 2013-09-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove an unnecessary #include from an example of the tutorial.
