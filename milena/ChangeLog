@@ -1,5 +1,13 @@
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Force make to regen Milena's mln/version.hh before other files.
+
+	* Makefile.am (SUBDIRS): Prepend `.' to the list of subdirectories
+	to force make to honor this Makefile's targets before recursing in
+	Milena's subdirectories.
+
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have `make regen' also regenerate Milena's mln/version.hh.
 
 	* Makefile.am (regen-am): Here.

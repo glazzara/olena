@@ -15,10 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = 	\
-  doc 		\
-  mesh 	 	\
-  tests
+SUBDIRS = . doc mesh tests
 
 if ENABLE_APPS
   SUBDIRS += apps
