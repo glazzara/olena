@@ -1,5 +1,12 @@
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not harcode OLN_PACKAGE_AUTHORS in Milena's mln/version.hh.in.
+
+	* mln/version.hh.in (OLN_PACKAGE_AUTHORS): Set it to
+	@PACKAGE_AUTHORS@.
+
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate Milena's mln/version.hh in the source tree.
 
 	* Makefile.am ($(srcdir)/mln/version.hh): New target, generating

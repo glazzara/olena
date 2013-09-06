@@ -36,6 +36,6 @@
 #define OLN_PACKAGE_URL "@PACKAGE_URL@"
 
 /// Authors of the package.
-#define OLN_PACKAGE_AUTHORS "EPITA Research and Development Laboratory (LRDE)"
+#define OLN_PACKAGE_AUTHORS "@PACKAGE_AUTHORS@"
 
 #endif // ! MLN_VERSION_HH
