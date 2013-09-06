@@ -1,5 +1,13 @@
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Define PACKAGE_AUTHORS in configure.ac.
+
+	* configure.ac (PACKAGE_AUTHORS): New variable.  Define it both as
+	a C/C++ preprocessor symbol (using AC_DEFINE_UNQUOTED) and as an
+	Autoconf output variable (via AC_SUBST).
+
+2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop generating milena/mln/version.hh in the build tree with configure.
 
 	* configure.ac: No longer configure milena/mln/version.hh, as

@@ -46,6 +46,15 @@ AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-pax dist-bzip2
 # "GEN ..." message, unless V=1 is passed to "make".
 AM_SILENT_RULES([yes])
 
+# Package metadata.
+# Define this symbol in addition to what AC_INIT already defines
+# (PACKAGE_NAME, etc.)...
+PACKAGE_AUTHORS="EPITA Research and Development Laboratory (LRDE)"
+# - for config.hh
+AC_DEFINE_UNQUOTED([PACKAGE_AUTHORS], ["$PACKAGE_AUTHORS"],
+                   [Authors of the package.])
+# - and for milena/mln/version.hh.
+AC_SUBST([PACKAGE_AUTHORS])
 
 
 ## --------------------- ##
