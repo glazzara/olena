@@ -1,3 +1,9 @@
+2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Swilena: Remove Milena's build dir from the file inclusion path.
+
+	* python/Makefile.am (AM_CPPFLAGS): Here.
+
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix inclusion paths in Swilena.
