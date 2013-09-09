@@ -1,3 +1,9 @@
+2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Olena: Remove Milena's build dir from the file inclusion path.
+
+	* doc/Makefile.am (AM_CPPFLAGS): Here.
+
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Define PACKAGE_AUTHORS in configure.ac.
