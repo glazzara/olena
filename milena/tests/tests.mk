@@ -2,7 +2,7 @@
 
 ## Shared configuration for tests.
 
-## Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+## Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and Development
 ## Laboratory (LRDE)
 ##
 ## This file is part of Olena.
@@ -21,9 +21,10 @@
 
 include $(top_srcdir)/milena/common.mk
 
-# Look for Milena header in srcdir and for (generated) test headers
-# (like data.hh) in builddir.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+# Find Milena headers.
+AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Find test/data.hh (generated header).
+AM_CPPFLAGS += -I$(top_builddir)/milena
 
 TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(TESTS_CXXFLAGS)

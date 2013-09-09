@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -17,7 +18,9 @@
 include $(top_srcdir)/milena/common.mk
 
 # Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Find apps/data.hh (generated header).
+AM_CPPFLAGS += -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)

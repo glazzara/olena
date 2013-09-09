@@ -1,3 +1,22 @@
+2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: Do not look for headers in the build tree uselessly.
+
+	* tools/tools.mk (AM_CPPFLAGS): Remove Milena's build dir from the
+	file inclusion path.
+	Remove outdated FIXMEs.
+	* apps/constrained-connectivity/Makefile.am,
+	* apps/graph-morpho/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am,
+	* apps/morphers/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(AM_CPPFLAGS): Explain why $(top_builddir)/milena is part of the
+	file inclusion path.
+	* apps/generic-skel/Makefile.am,
+	* doc/Makefile.am,
+	* tests/tests.mk
+	(AM_CPPFLAGS): Uniformity changes.
+
 2013-09-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Force make to regen Milena's mln/version.hh before other files.

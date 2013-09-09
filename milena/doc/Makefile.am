@@ -16,9 +16,10 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Look for Milena headers in srcdir and for (generated) test headers
-# (like data.hh) in builddir.
-AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+# Find Milena headers.
+AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Find tests/data.hh and doc/tools/data.hh (generated headers).
+AM_CPPFLAGS += -I$(top_builddir)/milena
 
 DOXYGEN = doxygen
 

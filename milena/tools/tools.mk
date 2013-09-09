@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+# Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -17,18 +17,8 @@
 
 include $(top_srcdir)/milena/common.mk
 
-## FIXME: Revamp (see Olena 0.11's test suite).
-
-# Look for Milena headers in srcdir.
+# Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
-# Look for Milena headers in builddir.
-AM_CPPFLAGS += -I$(top_builddir)/milena
 
-# FIXME: Add
-#
-#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
-#
-# when oln.m4 (or just a part of it) is available in the distribution,
-# instead of using the hand-made TOOLS_CXXFLAGS.
 TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
