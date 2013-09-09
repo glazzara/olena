@@ -24,15 +24,13 @@ if HAVE_MAGICKXX
 noinst_PROGRAMS += content_in_hdoc_dae content_in_doc_dae
 
 content_in_hdoc_dae_CPPFLAGS = $(AM_CPPFLAGS) 		\
-			       $(MAGICKXX_CPPFLAGS) 	\
-			       -I$(top_builddir)
+			       $(MAGICKXX_CPPFLAGS)
 content_in_hdoc_dae_LDFLAGS  = $(AM_LDFLAGS) 		\
 			       -lpthread 		\
 			       $(MAGICKXX_LDFLAGS)
 
 content_in_doc_dae_CPPFLAGS = $(AM_CPPFLAGS) 		\
-			      $(MAGICKXX_CPPFLAGS) 	\
-			      -I$(top_builddir)
+			      $(MAGICKXX_CPPFLAGS)
 content_in_doc_dae_LDFLAGS  = $(AM_LDFLAGS) 		\
 			      -lpthread 		\
 			      $(MAGICKXX_LDFLAGS)

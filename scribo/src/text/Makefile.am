@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -27,8 +27,7 @@ if HAVE_TIFF
     noinst_PROGRAMS 	  	  += pbm_lines_recognition
     pbm_lines_recognition_CPPFLAGS = $(AM_CPPFLAGS) \
 		  		     $(TESSERACT_CPPFLAGS) \
-				     $(TIFF_CPPFLAGS) \
-				     -I$(top_builddir)
+				     $(TIFF_CPPFLAGS)
     pbm_lines_recognition_LDFLAGS  = $(AM_LDFLAGS) \
 			 	     $(TESSERACT_LDFLAGS) \
 				     $(TIFF_LDFLAGS) \
@@ -37,8 +36,7 @@ if HAVE_TIFF
     noinst_PROGRAMS	     += pbm_recognition
     pbm_recognition_CPPFLAGS  = $(AM_CPPFLAGS) \
 			        $(TESSERACT_CPPFLAGS) \
-			   	$(TIFF_CPPFLAGS) \
-			        -I$(top_builddir)
+				$(TIFF_CPPFLAGS)
     pbm_recognition_LDFLAGS   = $(AM_LDFLAGS) \
 			   	$(TESSERACT_LDFLAGS) \
 			   	$(TIFF_LDFLAGS) \

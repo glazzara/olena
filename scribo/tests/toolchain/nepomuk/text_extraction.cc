@@ -1,4 +1,4 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
+// Copyright (C) 2010, 2011, 2013 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of Olena.
@@ -27,10 +27,6 @@
 /// \file
 ///
 /// Test of scribo::toolchain::nepomuk::text_extraction
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <QtGui/QImage>
 #include <QtCore>

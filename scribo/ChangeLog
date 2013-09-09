@@ -1,3 +1,29 @@
+2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Scribo: Do not look for headers in the build tree uselessly.
+
+	* doc/Makefile.am (AM_CPPFLAGS): Remove Scribo's build dir from
+	the file inclusion path.
+	* src/Makefile.am
+	(pbm_text_in_doc_CPPFLAGS, text_recognition_in_picture_CPPFLAGS)
+	* src/contest/DAE-2011/Makefile.am
+	(content_in_hdoc_dae_CPPFLAGS, content_in_hdoc_dae_CPPFLAGS)
+	* src/contest/hbr-2013/Makefile.am (content_in_hdoc_hbr_CPPFLAGS)
+	* src/contest/hdlac-2011/Makefile.am (content_in_hdoc_hdlac_CPPFLAGS)
+	* src/contest/hnla-2013/Makefile.am (content_in_hdoc_hnla_CPPFLAGS)
+	* src/text/Makefile.am
+	(pbm_lines_recognition_CPPFLAGS, pbm_recognition_CPPFLAGS)
+	* src/toolchain/nepomuk/Makefile.am (text_extraction_CPPFLAGS)
+	* tests/toolchain/nepomuk/Makefile.am (text_extraction_CPPFLAGS):
+	Remove -I$(top_builddir).
+	* src/pbm_text_in_doc.cc,
+	* src/text/pbm_lines_recognition.cc
+	* src/text/pbm_recognition.cc
+	* src/text_recognition_in_picture.cc
+	* src/toolchain/nepomuk/text_extraction.cc
+	* tests/toolchain/nepomuk/text_extraction.cc
+	[HAVE_CONFIG_H]: Do not include config.h.
+
 2013-08-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify even more Scribo Makefiles thanks to AM_DEFAULT_SOURCE_EXT.

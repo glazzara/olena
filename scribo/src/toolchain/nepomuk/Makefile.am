@@ -30,8 +30,7 @@ text_extraction_CPPFLAGS = $(AM_CPPFLAGS) \
 		       	   $(MAGICKXX_CPPFLAGS) \
 			   $(TESSERACT_CPPFLAGS) \
 			   $(TIFF_CPPFLAGS) \
-	 		   $(QT_CPPFLAGS) \
-			   -I$(top_builddir)
+			   $(QT_CPPFLAGS)
 text_extraction_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(MAGICKXX_LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \

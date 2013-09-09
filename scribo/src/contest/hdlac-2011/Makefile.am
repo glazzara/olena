@@ -24,8 +24,7 @@ if HAVE_MAGICKXX
 noinst_PROGRAMS += content_in_hdoc_hdlac
 
 content_in_hdoc_hdlac_CPPFLAGS = $(AM_CPPFLAGS) 	\
-				 $(MAGICKXX_CPPFLAGS) 	\
-	  		    	 -I$(top_builddir)
+				 $(MAGICKXX_CPPFLAGS)
 content_in_hdoc_hdlac_LDFLAGS  = $(AM_LDFLAGS) 		\
 		      	       	 -lpthread 		\
 			   	 $(MAGICKXX_LDFLAGS)

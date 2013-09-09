@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -23,10 +23,6 @@
 // executable to be covered by the GNU General Public License.  This
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <libgen.h>
 #include <fstream>

@@ -16,9 +16,8 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Look for Scribo headers in srcdir and for (generated) test headers
-# (like data.hh) in builddir.
-AM_CPPFLAGS = -I$(top_srcdir)/scribo -I$(top_builddir)/scribo
+# Find Scribo headers.
+AM_CPPFLAGS = -I$(top_srcdir)/scribo
 
 DOXYGEN = doxygen
 
