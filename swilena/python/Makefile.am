@@ -23,7 +23,6 @@
 ## FIXME: Factor as much as possible.  See how we handled this in TC.
 
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
-TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
 AM_SWIGFLAGS = -Wall -c++ -python -I$(top_srcdir)/milena
 # We build modules, not plain libs.

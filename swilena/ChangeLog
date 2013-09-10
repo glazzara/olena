@@ -1,3 +1,10 @@
+2013-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Swilena: Remove lines `VARIABLE = @VARIABLE@' from Makefile.am's.
+
+	* python/Makefile.am: Here, as Automake 1.11+ already takes care
+	of this.
+
 2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Swilena: Remove Milena's build dir from the file inclusion path.
