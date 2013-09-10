@@ -20,5 +20,4 @@ include $(top_srcdir)/milena/common.mk
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
 
-TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)

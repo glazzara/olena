@@ -1,3 +1,17 @@
+2013-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: Remove lines `VARIABLE = @VARIABLE@' from Makefile.am's.
+
+	* apps/constrained-connectivity/Makefile.am,
+	* apps/generic-skel/Makefile.am,
+	* apps/graph-morpho/Makefile.am,
+	* apps/mesh-segm-skel/Makefile.am,
+	* apps/morphers/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am,
+	* tests/tests.mk,
+	* tools/tools.mk:
+	Here, as Automake 1.11+ already takes care of this.
+
 2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Do not look for headers in the build tree uselessly.

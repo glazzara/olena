@@ -26,27 +26,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena
 # Find test/data.hh (generated header).
 AM_CPPFLAGS += -I$(top_builddir)/milena
 
-TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(TESTS_CXXFLAGS)
-
-TESTS_CXXFLAGS_SPEED = @TESTS_CXXFLAGS_SPEED@
-TESTS_CXXFLAGS_DEBUG = @TESTS_CXXFLAGS_DEBUG@
-
-
-# Flags for optional dependencies.
-
-GDCM_CPPFLAGS = @GDCM_CPPFLAGS@
-GDCM_LDFLAGS = @GDCM_LDFLAGS@
-
-CFITSIO_CPPFLAGS = @CFITSIO_CPPFLAGS@
-CFITSIO_LDFLAGS = @CFITSIO_LDFLAGS@
-
-MAGICKXX_CPPFLAGS = @MAGICKXX_CPPFLAGS@
-MAGICKXX_LDFLAGS = @MAGICKXX_LDFLAGS@
-
-TIFF_CPPFLAGS = @TIFF_CPPFLAGS@
-TIFF_LDFLAGS = @TIFF_LDFLAGS@
-
 
 # Inject rules to compile tests (recursively), without running them.
 include $(top_srcdir)/build-aux/tests-recursive.mk

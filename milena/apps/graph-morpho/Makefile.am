@@ -22,9 +22,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena
 # Find apps/data.hh (generated header).
 AM_CPPFLAGS += -I$(top_builddir)/milena
 # Produce fast code.
-APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
-STRICT_ALIASING_CXXFLAGS = @STRICT_ALIASING_CXXFLAGS@
 
 noinst_HEADERS = convert.hh debug.hh make.hh morpho.hh make_complex2d.hh
 

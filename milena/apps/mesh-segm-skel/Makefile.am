@@ -22,7 +22,6 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena
 # Find apps/data.hh (generated header).
 AM_CPPFLAGS += -I$(top_builddir)/milena
 # Produce fast code.
-APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS =
