@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -17,7 +17,6 @@
 
 include $(top_srcdir)/scribo/common.mk
 
-SCRIBO_CXXFLAGS = @SCRIBO_CXXFLAGS@
 AM_CXXFLAGS = $(SCRIBO_CXXFLAGS)
 
 utilexecdir = $(libexecdir)/scribo

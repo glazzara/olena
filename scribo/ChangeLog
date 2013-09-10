@@ -1,3 +1,11 @@
+2013-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Scribo: Remove lines `VARIABLE = @VARIABLE@' from Makefile.am's.
+
+	* scribo.mk,
+	* tests/tests.mk:
+	Here, as Automake 1.11+ already takes care of this.
+
 2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Scribo: Do not look for headers in the build tree uselessly.

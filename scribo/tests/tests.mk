@@ -21,23 +21,7 @@
 
 include $(top_srcdir)/scribo/common.mk
 
-SCRIBO_TESTS_CXXFLAGS = @SCRIBO_TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(SCRIBO_TESTS_CXXFLAGS)
-
-# Flags for optional dependencies.
-
-MAGICKXX_CPPFLAGS = @MAGICKXX_CPPFLAGS@
-MAGICKXX_LDFLAGS = @MAGICKXX_LDFLAGS@
-
-TIFF_CPPFLAGS = @TIFF_CPPFLAGS@
-TIFF_LDFLAGS = @TIFF_LDFLAGS@
-
-QT_CPPFLAGS = @QT_CPPFLAGS@
-QT_LDFLAGS  = @QT_LDFLAGS@ @QT_LIBS@
-
-TESSERACT_CPPFLAGS = @TESSERACT_CPPFLAGS@
-TESSERACT_LDFLAGS = @TESSERACT_LDFLAGS@
-
 
 # Inject rules to compile tests (recursively), without running them.
 include $(top_srcdir)/build-aux/tests-recursive.mk
