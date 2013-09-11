@@ -1,5 +1,13 @@
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate more uniform Makefile helpers for unit tests.
+
+	* build-aux/build_unit_test.sh: Write Make variables with
+	parentheses instead of braces.
+	Add a space before `='.
+
+2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	* build-aux/build_unit_test.sh: Properly handle QT_LIBS.
 
 2013-09-09  Roland Levillain  <roland@lrde.epita.fr>

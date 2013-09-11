@@ -112,20 +112,20 @@ EOF
 
 	# Write specific flags if there are dependencies.
 	if ! (test -z "$IFDEF"); then
-	    cppflags="${NAME}_CPPFLAGS="
-	    ldflags="${NAME}_LDFLAGS="
+	    cppflags="${NAME}_CPPFLAGS ="
+	    ldflags="${NAME}_LDFLAGS ="
 	    for i in $IFDEF; do
-		cppflags="${cppflags} \${${i}_CPPFLAGS} -DHAVE_${i}"
-		ldflags="${ldflags} \${${i}_LDFLAGS} "
+		cppflags="${cppflags} \$(${i}_CPPFLAGS) -DHAVE_${i}"
+		ldflags="${ldflags} \$(${i}_LDFLAGS)"
 	    done
-	    echo "$cppflags \${AM_CPPFLAGS}" >>"$output"
-	    echo "$ldflags \${AM_LDFLAGS}" >>"$output"
+	    echo "$cppflags \$(AM_CPPFLAGS)" >>"$output"
+	    echo "$ldflags \$(AM_LDFLAGS)" >>"$output"
 
 	    # Local hack: Handle the special case of Qt, which defines
 	    # QT_LIBS, to be use for with ${NAME}_LDADD variables.
 	    for i in $IFDEF; do
 		if test "x$i" = xQT; then
-		    echo "${NAME}_LDADD= \${QT_LIBS} \${LDADD}" >>"$output"
+		    echo "${NAME}_LDADD = \$(QT_LIBS) \$(LDADD)" >>"$output"
 		fi
 	    done
 	fi
