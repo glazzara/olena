@@ -1,5 +1,14 @@
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Scribo: Fix the use of QT_LIBS.
+
+	* src/toolchain/nepomuk/Makefile.am
+	(text_extraction_LDFLAGS): Move $(QT_LIBS)...
+	(text_extraction_LDADD): ...here.
+	Add $(LDADD).
+
+2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen Scribo's unit-tests.mk.
 
 	* tests/unit_test/unit-tests.mk: Regen.

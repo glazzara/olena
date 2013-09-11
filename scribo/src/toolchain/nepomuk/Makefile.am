@@ -36,8 +36,8 @@ text_extraction_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
 	        	   $(QT_LDFLAGS) \
-			   $(QT_LIBS) \
 		      	   -lpthread
+text_extraction_LDADD    = $(QT_LIBS) $(LDADD)
 
 endif HAVE_TESSERACT
 endif HAVE_MAGICKXX
