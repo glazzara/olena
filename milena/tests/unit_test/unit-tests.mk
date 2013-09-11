@@ -7,8 +7,8 @@ if HAVE_BOOST_TUPLE
 check_PROGRAMS +=  \
 mln_accu_tuple
 
-mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS} -DHAVE_BOOST_TUPLE ${AM_CPPFLAGS}
-mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${AM_LDFLAGS}
+mln_accu_tuple_CPPFLAGS = $(BOOST_TUPLE_CPPFLAGS) -DHAVE_BOOST_TUPLE $(AM_CPPFLAGS)
+mln_accu_tuple_LDFLAGS = $(BOOST_TUPLE_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_BOOST_TUPLE
 
 # Starting a conditional unit test list.
@@ -17,10 +17,10 @@ check_PROGRAMS +=  \
 mln_io_fits_all \
 mln_io_fits_load
 
-mln_io_fits_all_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
-mln_io_fits_all_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_fits_load_CPPFLAGS= ${CFITSIO_CPPFLAGS} -DHAVE_CFITSIO ${AM_CPPFLAGS}
-mln_io_fits_load_LDFLAGS= ${CFITSIO_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_fits_all_CPPFLAGS = $(CFITSIO_CPPFLAGS) -DHAVE_CFITSIO $(AM_CPPFLAGS)
+mln_io_fits_all_LDFLAGS = $(CFITSIO_LDFLAGS) $(AM_LDFLAGS)
+mln_io_fits_load_CPPFLAGS = $(CFITSIO_CPPFLAGS) -DHAVE_CFITSIO $(AM_CPPFLAGS)
+mln_io_fits_load_LDFLAGS = $(CFITSIO_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_CFITSIO
 
 # Starting a conditional unit test list.
@@ -28,8 +28,8 @@ if HAVE_FFTW3
 check_PROGRAMS +=  \
 mln_transform_fft
 
-mln_transform_fft_CPPFLAGS= ${FFTW3_CPPFLAGS} -DHAVE_FFTW3 ${AM_CPPFLAGS}
-mln_transform_fft_LDFLAGS= ${FFTW3_LDFLAGS}  ${AM_LDFLAGS}
+mln_transform_fft_CPPFLAGS = $(FFTW3_CPPFLAGS) -DHAVE_FFTW3 $(AM_CPPFLAGS)
+mln_transform_fft_LDFLAGS = $(FFTW3_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_FFTW3
 
 # Starting a conditional unit test list.
@@ -39,12 +39,12 @@ mln_io_dicom_all \
 mln_io_dicom_load \
 mln_io_dicom_get_header
 
-mln_io_dicom_all_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
-mln_io_dicom_all_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_dicom_load_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
-mln_io_dicom_load_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_dicom_get_header_CPPFLAGS= ${GDCM_CPPFLAGS} -DHAVE_GDCM ${AM_CPPFLAGS}
-mln_io_dicom_get_header_LDFLAGS= ${GDCM_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_dicom_all_CPPFLAGS = $(GDCM_CPPFLAGS) -DHAVE_GDCM $(AM_CPPFLAGS)
+mln_io_dicom_all_LDFLAGS = $(GDCM_LDFLAGS) $(AM_LDFLAGS)
+mln_io_dicom_load_CPPFLAGS = $(GDCM_CPPFLAGS) -DHAVE_GDCM $(AM_CPPFLAGS)
+mln_io_dicom_load_LDFLAGS = $(GDCM_LDFLAGS) $(AM_LDFLAGS)
+mln_io_dicom_get_header_CPPFLAGS = $(GDCM_CPPFLAGS) -DHAVE_GDCM $(AM_CPPFLAGS)
+mln_io_dicom_get_header_LDFLAGS = $(GDCM_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_GDCM
 
 # Starting a conditional unit test list.
@@ -55,14 +55,14 @@ mln_io_magick_load \
 mln_io_magick_save \
 mln_io_magick_internal_init_magick
 
-mln_io_magick_all_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
-mln_io_magick_all_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_load_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
-mln_io_magick_load_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_save_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
-mln_io_magick_save_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_magick_internal_init_magick_CPPFLAGS= ${MAGICKXX_CPPFLAGS} -DHAVE_MAGICKXX ${AM_CPPFLAGS}
-mln_io_magick_internal_init_magick_LDFLAGS= ${MAGICKXX_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_magick_all_CPPFLAGS = $(MAGICKXX_CPPFLAGS) -DHAVE_MAGICKXX $(AM_CPPFLAGS)
+mln_io_magick_all_LDFLAGS = $(MAGICKXX_LDFLAGS) $(AM_LDFLAGS)
+mln_io_magick_load_CPPFLAGS = $(MAGICKXX_CPPFLAGS) -DHAVE_MAGICKXX $(AM_CPPFLAGS)
+mln_io_magick_load_LDFLAGS = $(MAGICKXX_LDFLAGS) $(AM_LDFLAGS)
+mln_io_magick_save_CPPFLAGS = $(MAGICKXX_CPPFLAGS) -DHAVE_MAGICKXX $(AM_CPPFLAGS)
+mln_io_magick_save_LDFLAGS = $(MAGICKXX_LDFLAGS) $(AM_LDFLAGS)
+mln_io_magick_internal_init_magick_CPPFLAGS = $(MAGICKXX_CPPFLAGS) -DHAVE_MAGICKXX $(AM_CPPFLAGS)
+mln_io_magick_internal_init_magick_LDFLAGS = $(MAGICKXX_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_MAGICKXX
 
 # Starting a conditional unit test list.
@@ -71,10 +71,10 @@ check_PROGRAMS +=  \
 mln_io_pdf_get_header \
 mln_io_pdf_load
 
-mln_io_pdf_get_header_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
-mln_io_pdf_get_header_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_pdf_load_CPPFLAGS= ${POPPLER_CPPFLAGS} -DHAVE_POPPLER ${AM_CPPFLAGS}
-mln_io_pdf_load_LDFLAGS= ${POPPLER_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_pdf_get_header_CPPFLAGS = $(POPPLER_CPPFLAGS) -DHAVE_POPPLER $(AM_CPPFLAGS)
+mln_io_pdf_get_header_LDFLAGS = $(POPPLER_LDFLAGS) $(AM_LDFLAGS)
+mln_io_pdf_load_CPPFLAGS = $(POPPLER_CPPFLAGS) -DHAVE_POPPLER $(AM_CPPFLAGS)
+mln_io_pdf_load_LDFLAGS = $(POPPLER_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_POPPLER
 
 # Starting a conditional unit test list.
@@ -83,10 +83,12 @@ check_PROGRAMS +=  \
 mln_convert_to_qimage \
 mln_convert_to_qimage_nocopy
 
-mln_convert_to_qimage_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
-mln_convert_to_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
-mln_convert_to_qimage_nocopy_CPPFLAGS= ${QT_CPPFLAGS} -DHAVE_QT ${AM_CPPFLAGS}
-mln_convert_to_qimage_nocopy_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
+mln_convert_to_qimage_CPPFLAGS = $(QT_CPPFLAGS) -DHAVE_QT $(AM_CPPFLAGS)
+mln_convert_to_qimage_LDFLAGS = $(QT_LDFLAGS) $(AM_LDFLAGS)
+mln_convert_to_qimage_LDADD = $(QT_LIBS) $(LDADD)
+mln_convert_to_qimage_nocopy_CPPFLAGS = $(QT_CPPFLAGS) -DHAVE_QT $(AM_CPPFLAGS)
+mln_convert_to_qimage_nocopy_LDFLAGS = $(QT_LDFLAGS) $(AM_LDFLAGS)
+mln_convert_to_qimage_nocopy_LDADD = $(QT_LIBS) $(LDADD)
 endif HAVE_QT
 
 # Starting a conditional unit test list.
@@ -95,10 +97,10 @@ check_PROGRAMS +=  \
 mln_io_tiff_all \
 mln_io_tiff_load
 
-mln_io_tiff_all_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
-mln_io_tiff_all_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
-mln_io_tiff_load_CPPFLAGS= ${TIFF_CPPFLAGS} -DHAVE_TIFF ${AM_CPPFLAGS}
-mln_io_tiff_load_LDFLAGS= ${TIFF_LDFLAGS}  ${AM_LDFLAGS}
+mln_io_tiff_all_CPPFLAGS = $(TIFF_CPPFLAGS) -DHAVE_TIFF $(AM_CPPFLAGS)
+mln_io_tiff_all_LDFLAGS = $(TIFF_LDFLAGS) $(AM_LDFLAGS)
+mln_io_tiff_load_CPPFLAGS = $(TIFF_CPPFLAGS) -DHAVE_TIFF $(AM_CPPFLAGS)
+mln_io_tiff_load_LDFLAGS = $(TIFF_LDFLAGS) $(AM_LDFLAGS)
 endif HAVE_TIFF
 
 # Starting non-conditional unit test list.
@@ -1344,6 +1346,7 @@ mln_value_sign \
 mln_value_super_value \
 mln_value_value_array \
 mln_value_viter \
+mln_version \
 mln_win_all \
 mln_win_backdiag2d \
 mln_win_ball \

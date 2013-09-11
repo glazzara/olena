@@ -1,3 +1,9 @@
+2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Regen Milena's unit-tests.mk.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2013-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Remove lines `VARIABLE = @VARIABLE@' from Makefile.am's.
