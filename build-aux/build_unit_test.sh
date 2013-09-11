@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory
 # (LRDE)
 #
 # This file is part of Olena.
@@ -120,6 +120,14 @@ EOF
 	    done
 	    echo "$cppflags \${AM_CPPFLAGS}" >>"$output"
 	    echo "$ldflags \${AM_LDFLAGS}" >>"$output"
+
+	    # Local hack: Handle the special case of Qt, which defines
+	    # QT_LIBS, to be use for with ${NAME}_LDADD variables.
+	    for i in $IFDEF; do
+		if test "x$i" = xQT; then
+		    echo "${NAME}_LDADD= \${QT_LIBS} \${LDADD}" >>"$output"
+		fi
+	    done
 	fi
     done
 

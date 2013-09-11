@@ -1,3 +1,7 @@
+2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	* build-aux/build_unit_test.sh: Properly handle QT_LIBS.
+
 2013-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Olena: Remove Milena's build dir from the file inclusion path.
