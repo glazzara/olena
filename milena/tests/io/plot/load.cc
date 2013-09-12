@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +37,4 @@ int main(int argc, char* argv[])
 
   for (unsigned i = 0; i < arr.nelements(); ++i)
     std::cout << arr[i] << std::endl;
-
-  return 0;
 }

@@ -125,6 +125,4 @@ int main(int argc, char* argv[])
   mln_VAR(edge_clo, morpho::closing::volume(edges, world::inter_pixel::e2e(), 25));
   mln_VAR(edge_wst, morpho::watershed::flooding(edge_clo, world::inter_pixel::e2e(), nbasins));
   io::ppm::save(world::inter_pixel::display_region(input, edge_wst.unmorph_(), literal::red), "edge_watershed.ppm");
-
-  return 0;
 }

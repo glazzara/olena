@@ -1,3 +1,11 @@
+2013-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: Remove `return 0;' statements at end of main().
+
+	* demos/inter_pixel/inter_pixel.cc,
+	* tests/io/plot/load.cc:
+	Here.
+
 2013-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Milena's unit-tests.mk.
