@@ -1,3 +1,16 @@
+2013-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Scribo: Remove `return 0;' statements at end of main().
+
+	* src/text_in_picture.cc,
+	* src/text_recognition_in_picture.cc,
+	* tests/convert/base64.cc,
+	* tests/estim/font_boldness.cc,
+	* tests/estim/font_color.cc,
+	* tests/toolchain/nepomuk/text_extraction.cc,
+	* tests/util/component_precise_outline.cc:
+	Here.
+
 2013-09-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise the multi-scale Sauvola binarization with a TIFF image.

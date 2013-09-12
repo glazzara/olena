@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -43,6 +43,4 @@ int main()
 
   volatile float ref = 18.44f;
   mln_assertion(val == ref);
-
-  return 0;
 }

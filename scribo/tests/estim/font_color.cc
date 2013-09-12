@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE).
+// Copyright (C) 2011, 2013 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -43,6 +43,4 @@ int main()
   value::rgb8 val = scribo::estim::font_color(input_rgb, input_bin);
 
   mln_assertion(val == value::rgb8(77, 146, 140));
-
-  return 0;
 }

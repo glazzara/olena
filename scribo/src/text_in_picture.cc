@@ -114,6 +114,4 @@ int main(int argc, char* argv[])
 					   comps.labeled_image(),
 					   comps.nelements()),
 		   options.arg("output.ppm"));
-
-  return 0;
 }

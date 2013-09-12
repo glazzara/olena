@@ -42,6 +42,4 @@ int main()
   mln_assertion(words.size() == 1);
   QString word = words.toList().at(0).toLower();
   mln_assertion(word == "wildly");
-
-  return 0;
 }

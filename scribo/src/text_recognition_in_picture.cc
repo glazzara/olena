@@ -213,6 +213,4 @@ int main(int argc, char* argv[])
 
   if (verbose)
     std::cout << output.nelements() << " text lines found." << std::endl;
-
-  return 0;
 }
