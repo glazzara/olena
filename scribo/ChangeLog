@@ -1,3 +1,14 @@
+2013-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Scribo: Define flags in proper Makefile helpers.
+
+	* common.mk (AM_CPPFLAGS): Remove -I$(top_builddir)/scribo and
+	I$(top_builddir)/milena.
+	Include this file...
+	* doc/Makefile.am: ...here.
+	(AM_CPPFLAGS): Remove.
+	* tests/tests.mk (AM_CPPFLAGS): Add -I$(top_builddir)/scribo.
+
 2013-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Scribo: Remove `return 0;' statements at end of main().

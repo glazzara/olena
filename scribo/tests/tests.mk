@@ -21,6 +21,9 @@
 
 include $(top_srcdir)/scribo/common.mk
 
+# Find test/data.hh (generated header).
+AM_CPPFLAGS += -I$(top_builddir)/scribo
+
 AM_CXXFLAGS = $(SCRIBO_TESTS_CXXFLAGS)
 
 # Inject rules to compile tests (recursively), without running them.
