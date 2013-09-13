@@ -17,14 +17,7 @@
 
 # Illustrations of morphers.
 
-include $(top_srcdir)/milena/common.mk
-
-# Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
-# Find apps/data.hh (generated header).
-AM_CPPFLAGS += -I$(top_builddir)/milena
-# Produce fast code.
-AM_CXXFLAGS = $(APPS_CXXFLAGS)
+include $(top_srcdir)/milena/apps/apps.mk
 
 noinst_PROGRAMS =				\
   mask+channel					\

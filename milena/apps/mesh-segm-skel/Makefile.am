@@ -15,14 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/milena/common.mk
-
-# Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
-# Find apps/data.hh (generated header).
-AM_CPPFLAGS += -I$(top_builddir)/milena
-# Produce fast code.
-AM_CXXFLAGS = $(APPS_CXXFLAGS)
+include $(top_srcdir)/milena/apps/apps.mk
 
 noinst_PROGRAMS =
 generated_checked_tests =
@@ -170,9 +163,10 @@ MOSTLYCLEANFILES +=				\
 ## More complex skeletonization chains.
 ## ------------------------------------
 
+noinst_HEADERS += save_bin_alt.hh
+
 # Skeletonization program working on precomputed meshes with curvatures data.
 noinst_PROGRAMS += mesh-complex-skel
-mesh_complex_skel_SOURCES = mesh-complex-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-skel
 MOSTLYCLEANFILES +=				\
   socket-max-curv-skel.off			\
@@ -181,8 +175,6 @@ MOSTLYCLEANFILES +=				\
   bunny-holefilled-pinv-curv-skel.off
 
 noinst_PROGRAMS += mesh-complex-max-curv-skel
-mesh_complex_max_curv_skel_SOURCES =		\
-  mesh-complex-max-curv-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-max-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-skel.off		\
@@ -190,8 +182,6 @@ MOSTLYCLEANFILES +=				\
   bunny-holefilled-complex-max-curv-skel.off
 
 noinst_PROGRAMS += mesh-complex-pinv-curv-skel
-mesh_complex_pinv_curv_skel_SOURCES =		\
-  mesh-complex-pinv-curv-skel.cc save_bin_alt.hh
 TESTS += test-mesh-complex-pinv-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-pinv-curv-skel.off		\

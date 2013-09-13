@@ -21,8 +21,6 @@
 
 include $(top_srcdir)/milena/common.mk
 
-# Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
 # Find test/data.hh (generated header).
 AM_CPPFLAGS += -I$(top_builddir)/milena
 

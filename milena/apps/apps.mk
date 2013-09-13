@@ -1,8 +1,8 @@
-## common.mk					-*- Makefile-Automake -*-
+## apps.mk					-*- Makefile-Automake -*-
 
-## Common Automake parameters.
+## Shared configuration for apps.
 
-## Copyright (C) 2010, 2013 EPITA Research and Development Laboratory (LRDE).
+## Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
 ##
 ## This file is part of Olena.
 ##
@@ -18,8 +18,12 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# C++ sources.
-AM_DEFAULT_SOURCE_EXT = .cc
+include $(top_srcdir)/milena/common.mk
 
-# Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Find apps/data.hh (generated header).
+AM_CPPFLAGS += -I$(top_builddir)/milena
+# Produce fast code.
+AM_CXXFLAGS = $(APPS_CXXFLAGS)
+
+# Inject rules to compile tests (recursively), without running them.
+include $(top_srcdir)/build-aux/tests-recursive.mk

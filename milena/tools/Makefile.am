@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/milena/tools/tools.mk
+include $(top_srcdir)/milena/common.mk
+
+# Produce fast code.
+AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
 
 # FIXME: Add some tests for these tools.
 bin_PROGRAMS =					\
