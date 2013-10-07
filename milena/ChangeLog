@@ -1,3 +1,11 @@
+2013-10-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: New test exercising fun_image with RGB component functions.
+
+	* tests/core/image/vmorph/fun_image_rgb.cc: New.
+	* tests/core/image/vmorph/Makefile.am (check_PROGRAMS):
+	Add fun_image_rgb.
+
 2013-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Factor Makefiles a bit more using file inclusion.
