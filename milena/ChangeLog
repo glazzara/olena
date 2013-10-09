@@ -1,5 +1,14 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Fix and update the Doxygen documentation.
+
+	* mln/arith/minus.hh,
+	* mln/fun/vv2v/diff_abs.hh,
+	* mln/math/diff_abs.hh:
+	Here.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Aesthetic changes.
 
 	* mln/arith/minus.hh,

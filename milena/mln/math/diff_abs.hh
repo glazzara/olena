@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -28,8 +28,7 @@
 # define MLN_MATH_DIFF_ABS_HH
 
 /// \file
-///
-/// Define diff_abs routine.
+/// \brief Routine computing the absolute difference of two values.
 ///
 /// \todo Do we want a specific version for vectorial types?
 
@@ -40,9 +39,11 @@ namespace mln
   namespace math
   {
 
-    /*! \brief The absolute difference between to values.
-      \ingroup mlnmath
-    */
+    /// \brief Return the absolute difference between \a v1 and \a v2.
+    ///
+    /// That is, compute \f$|v1 - v2|\f$.
+    ///
+    /// \ingroup mlnmath
     template <typename T>
     T diff_abs(const T& v1, const T& v2);
 

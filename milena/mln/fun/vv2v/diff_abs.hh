@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -27,8 +28,7 @@
 # define MLN_FUN_VV2V_DIFF_ABS_HH
 
 /// \file
-/// \brief Computing the absolute difference between two values using
-/// a functor.
+/// \brief Functor computing the absolute difference of two values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/math/diff_abs.hh>
@@ -43,13 +43,18 @@ namespace mln
     namespace vv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the diff_absimum of two values.
+      /// \brief Functor computing the absolute difference of two
+      /// values.
+      ///
+      /// \tparam V  The type of the values to compare.
       template <typename V>
       struct diff_abs : public Function_vv2v< diff_abs<V> >
       {
 	typedef V result;
+
+        /// \brief Compute the absolute difference of \a v1 and \a v2.
+        ///
+        /// That is, compute \f$|v1 - v2|\f$.
 	V operator()(const V& v1, const V& v2) const;
       };
 

@@ -28,8 +28,7 @@
 # define MLN_ARITH_MINUS_HH
 
 /// \file
-///
-/// Point-wise substraction between images.
+/// \brief Point-wise subtraction between images.
 ///
 /// \todo Speedup; some versions are not optimal.
 
@@ -85,7 +84,7 @@ namespace mln
   namespace arith
   {
 
-    /// Point-wise addition of images \p lhs and \p rhs.
+    /// Point-wise subtraction of images \p lhs and \p rhs.
     /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -98,7 +97,7 @@ namespace mln
       minus(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /// Point-wise addition of images \p lhs and \p rhs.
+    /// Point-wise subtraction of images \p lhs and \p rhs.
     /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -113,7 +112,7 @@ namespace mln
             const Function_v2v<F>& f);
 
 
-    /// Point-wise addition of images \p lhs and \p rhs.
+    /// Point-wise subtraction of images \p lhs and \p rhs.
     /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -128,12 +127,12 @@ namespace mln
       minus(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /// Point-wise addition of image \p rhs in image \p lhs.
+    /// Point-wise subtraction of image \p rhs in image \p lhs.
     /*!
-     * \param[in,out] lhs First operand image (subject to addition).
-     * \param[in] rhs Second operand image (to be added to \p lhs).
+     * \param[in,out] lhs First operand image (subject to subtraction).
+     * \param[in] rhs Second operand image (to be subtracted to \p lhs).
      *
-     * This addition performs: \n
+     * This subtraction performs: \n
      *   for all p of rhs.domain \n
      *     lhs(p) -= rhs(p)
      *
@@ -144,7 +143,7 @@ namespace mln
     minus_inplace(Image<L>& lhs, const Image<R>& rhs);
 
 
-    /// Point-wise addition of the value \p val to image \p input.
+    /// Point-wise subtraction of the value \p val to image \p input.
     /*!
      * \param[in] input The image.
      * \param[in] val The value.
@@ -157,7 +156,7 @@ namespace mln
       minus_cst(const Image<I>& input, const V& val);
 
 
-    /// Point-wise addition of the value \p val to image \p input.
+    /// Point-wise subtraction of the value \p val to image \p input.
     /*!
      * \param[in] input The image.
      * \param[in] val The value.
@@ -172,7 +171,7 @@ namespace mln
                 const Function_v2v<F>& f);
 
 
-    /// Point-wise addition of the value \p val to image \p input.
+    /// Point-wise subtraction of the value \p val to image \p input.
     /*!
      * \param[in,out] input The image.
      * \param[in] val The value.
