@@ -1,5 +1,13 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Add helpers to instantiate mln::interpolated and mln::tr_image.
+
+	* mln/core/image/imorph/interpolated.hh (mln::interpolate)
+	* mln/core/image/imorph/tr_image.hh (mln::apply_tr):
+	New functions.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Exercise mln::interpolated and mln::tr_image together.
 
 	* tests/core/image/imorph/interpolated-tr_image.cc: New.

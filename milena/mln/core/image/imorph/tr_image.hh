@@ -155,6 +155,19 @@ namespace mln
   };
 
 
+  /// \brief Helper routine to create an mln::tr_image morphed image.
+  template <typename S, typename I, typename T>
+  tr_image<S, I, T>
+  apply_tr(const Site_Set<S>& s, const Image<I>& ima,
+           const Function_v2v<T>& tr);
+
+  /// \brief Helper routine to create an mln::tr_image morphed
+  /// images.  The domain is deduced from \a ima.
+  template <typename I, typename T>
+  tr_image<mln_domain(I), I, T>
+  apply_tr(const Image<I>& ima, const Function_v2v<T>& tr);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -262,6 +275,27 @@ namespace mln
 		   const Function_v2v<T>& t)
   {
     tr_image<S,I,T> tmp(exact(s), exact(ima), exact(t));
+    return tmp;
+  }
+
+
+  /// transform.
+
+  template <typename S, typename I, typename T>
+  tr_image<S, I, T>
+  apply_tr(const Site_Set<S>& s, const Image<I>& ima,
+           const Function_v2v<T>& tr)
+  {
+    tr_image<S, I, T> tmp(exact(s), exact(ima), exact(tr));
+    return tmp;
+  }
+
+  template <typename I, typename T>
+  tr_image<mln_domain(I), I, T>
+  apply_tr(const Image<I>& ima, const Function_v2v<T>& tr)
+  {
+    tr_image<mln_domain(I), I, T> tmp(exact(ima).domain(), exact(ima),
+                                      exact(tr));
     return tmp;
   }
 

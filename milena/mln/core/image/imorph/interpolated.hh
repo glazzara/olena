@@ -138,6 +138,22 @@ namespace mln
   };
 
 
+  /** \brief Helper routine to create an mln::interpolated morphed
+      image.
+
+      Careful, the order of the template parameters is inverted
+      compared to mln::interpolated.  This is so that the routine can
+      be used this way:
+
+      \code
+      mln::interpolate<mln::fun::x2v::bilinear>(ima);
+      \encode
+
+      (i.e., so that parameter I can be deduced from \a ima).  */
+  template <template <class> class F, typename I>
+  interpolated<I, F> interpolate(Image<I>& ima);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -215,6 +231,15 @@ namespace mln
     return fun_(v);
   }
 
+
+  // interpolate.
+
+  template <template <class> class F, typename I>
+  interpolated<I, F> interpolate(Image<I>& ima)
+  {
+    interpolated<I, F> tmp(exact(ima));
+    return tmp;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
