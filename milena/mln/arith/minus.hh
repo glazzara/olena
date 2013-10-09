@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -108,7 +109,8 @@ namespace mln
      */
     template <typename L, typename R, typename F>
     mln_ch_value(L, mln_result(F))
-      minus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f);
+      minus(const Image<L>& lhs, const Image<R>& rhs,
+            const Function_v2v<F>& f);
 
 
     /// Point-wise addition of images \p lhs and \p rhs.
@@ -166,7 +168,8 @@ namespace mln
      */
     template <typename I, typename V, typename F>
     mln_ch_value(I, mln_result(F))
-      minus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f);
+      minus_cst(const Image<I>& input, const V& val,
+                const Function_v2v<F>& f);
 
 
     /// Point-wise addition of the value \p val to image \p input.
@@ -253,27 +256,19 @@ namespace mln
       template <typename L, typename R, typename O>
       inline
       void minus_(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs, O& output)
+                  trait::image::speed::any, const R& rhs,
+                  O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  output(p) = lhs(p) - rhs(p);
       }
 
-      template <typename L, typename R, typename F, typename O>
-      inline
-      void minus_(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs, const F& f, O& output)
-      {
-	mln_piter(L) p(lhs.domain());
-	for_all(p)
-	  output(p) = f(lhs(p) - rhs(p));
-      }
-
       template <typename L, typename R, typename O>
       inline
       void minus_(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs, O& output)
+                  trait::image::speed::fastest, const R& rhs,
+                  O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -282,10 +277,23 @@ namespace mln
 	  op.val() = lp.val() - rp.val();
       }
 
+
+      template <typename L, typename R, typename F, typename O>
+      inline
+      void minus_(trait::image::speed::any, const L& lhs,
+                  trait::image::speed::any, const R& rhs,
+                  const F& f, O& output)
+      {
+	mln_piter(L) p(lhs.domain());
+	for_all(p)
+	  output(p) = f(lhs(p) - rhs(p));
+      }
+
       template <typename L, typename R, typename F, typename O>
       inline
       void minus_(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs, const F& f, O& output)
+                  trait::image::speed::fastest, const R& rhs,
+                  const F& f, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -294,10 +302,11 @@ namespace mln
 	  op.val() = f(lp.val() - rp.val());
       }
 
+
       template <typename L, typename R>
       inline
       void minus_inplace_(trait::image::speed::any, L& lhs,
-			 trait::image::speed::any, const R& rhs)
+                          trait::image::speed::any, const R& rhs)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
@@ -307,7 +316,7 @@ namespace mln
       template <typename L, typename R>
       inline
       void minus_inplace_(trait::image::speed::fastest, L& lhs,
-			 trait::image::speed::fastest, const R& rhs)
+                          trait::image::speed::fastest, const R& rhs)
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -384,8 +393,8 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
-      mln_trait_op_minus(I, V) output = minus(input,
-					      pw::cst(val) | exact(input).domain());
+      mln_trait_op_minus(I, V) output =
+        minus(input, pw::cst(val) | exact(input).domain());
 
       return output;
     }
@@ -401,9 +410,8 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
-      mln_ch_value(I, mln_result(F)) output = minus(input,
-						    pw::cst(val) | exact(input).domain(),
-						    f);
+      mln_ch_value(I, mln_result(F)) output =
+        minus(input, pw::cst(val) | exact(input).domain(), f);
 
       return output;
     }

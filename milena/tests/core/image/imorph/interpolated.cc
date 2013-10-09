@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,37 +24,37 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+/// \brief Exercise mln::interpolated using mln::fun::x2v::bilinear.
+
 #include <iostream>
+
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/imorph/interpolated.hh>
+#include <mln/fun/x2v/bilinear.hh>
 
 #include <mln/algebra/vec.hh>
 
-#include <mln/data/fill.hh>
-
 #include <mln/debug/println.hh>
-
-#include <mln/fun/x2v/bilinear.hh>
-
 
 
 int main()
 {
   using namespace mln;
 
-  float tab[] = {1.,  3.,  5.,  7.,
-		 4.,  7.,  10., 13.,
-		 7.,  11., 15., 19.,
-		 10., 15., 20., 25.};
-  image2d<float> f = make::image2d(tab);
+  float tab[] = {1.f,  3.f,  5.f,  7.f,
+		 4.f,  7.f,  10.f, 13.f,
+		 7.f,  11.f, 15.f, 19.f,
+		 10.f, 15.f, 20.f, 25.f};
+  image2d<float> ima = make::image2d(tab);
 
-  interpolated<image2d<float>, fun::x2v::bilinear> inter(f);
+  interpolated<image2d<float>, fun::x2v::bilinear> inter(ima);
 
-  algebra::vec<2, float> v1 = make::vec(2.3, 0.6);
-  algebra::vec<2, float> v2 = make::vec(3.2, 1.8);
+  algebra::vec<2, float> v1 = make::vec(2.3f, 0.6f);
+  algebra::vec<2, float> v2 = make::vec(3.2f, 1.8f);
 
-  debug::println(f);
+  debug::println(ima);
 
-  std::cout << v1 << " : " << inter(v1) << std::endl;
-  std::cout << v2 << " : " << inter(v2) << std::endl;
+  std::cout << "inter(" << v1 << ") = " << inter(v1) << std::endl;
+  std::cout << "inter(" << v2 << ") = " << inter(v2) << std::endl;
 }

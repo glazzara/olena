@@ -1,3 +1,11 @@
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: Aesthetic changes.
+
+	* mln/arith/minus.hh,
+	* tests/core/image/imorph/interpolated.cc:
+	Here.
+
 2013-10-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: New test exercising fun_image with RGB component functions.
