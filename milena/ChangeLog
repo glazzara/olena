@@ -498,7 +498,7 @@
 
 	Add more tests.
 
-	* tests/core/alias/dpoint2d.cc: Exercise the substraction of a
+	* tests/core/alias/dpoint2d.cc: Exercise the subtraction of a
 	dpoint2d from a point2d.
 	* tests/core/alias/neighb2d.cc: New.
 	* tests/core/alias/Makefile.am (check_PROGRAMS): Add neighb2d.
