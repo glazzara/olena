@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2009, 2010, 2013 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,11 +18,11 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  decorated_image 				\
-  interpolated 					\
-  labeled_image 				\
-  safe_image 					\
-  tr_image 
-
+  decorated_image				\
+  interpolated					\
+  interpolated-tr_image				\
+  labeled_image					\
+  safe_image					\
+  tr_image
 
 TESTS = $(check_PROGRAMS)

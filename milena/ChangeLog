@@ -1,5 +1,13 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Exercise mln::interpolated and mln::tr_image together.
+
+	* tests/core/image/imorph/interpolated-tr_image.cc: New.
+	* tests/core/image/imorph/Makefile.am (check_PROGRAMS):
+	Add interpolated-tr_image.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Make rotation axis optional.
 
 	* mln/fun/x2x/rotation.hh
