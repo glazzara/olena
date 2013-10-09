@@ -1,5 +1,11 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Add a ``one-liner'' test to interpolated-tr_image.
+
+	* tests/core/image/imorph/interpolated-tr_image.cc: Here.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Add helpers to instantiate mln::interpolated and mln::tr_image.
 
 	* mln/core/image/imorph/interpolated.hh (mln::interpolate)

@@ -78,4 +78,10 @@ int main()
     R rotated(inter.domain(), inter, rotate);
     PRINTLN(rotated);
   }
+
+  // Equivalent ``one-liner''.
+  {
+    PRINTLN(apply_tr(interpolate<fun::x2v::bilinear>(safe(ima, 0.f).rw()),
+                     fun::x2x::rotation<2, float>(math::pi / 4)));
+  }
 }
