@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2013 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -28,8 +28,7 @@
 # define MLN_DEBUG_IOTA_SPE_HH
 
 /// \file
-///
-/// Specializations for mln::debug::iota.
+/// \brief Specializations of mln::debug::iota.
 
 # ifndef MLN_DEBUG_IOTA_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -60,8 +59,10 @@ namespace mln
       {
 	unsigned i = base_index;
 	mln_pixter(I) p(input);
+        typedef mln_value(I) V;
 	for_all(p)
-	  p.val() = static_cast<mln_value(I)>(++i % mln_max(mln_value(I)));
+	  p.val() =
+          static_cast<V>(++i % mln_max(typename trait::modulus_type<V>::ret));;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

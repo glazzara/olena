@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2011, 2012 EPITA Research and
+// Copyright (C) 2007, 2008, 2009, 2011, 2012, 2013 EPITA Research and
 // Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -27,12 +27,33 @@
 #ifndef MLN_DEBUG_IOTA_HH
 # define MLN_DEBUG_IOTA_HH
 
-/*! \file
- *
- * \brief Fill an image with successive values.
- */
+/// \file
+/// \brief Routine filling an image with successive values.
 
 # include <mln/core/concept/image.hh>
+
+namespace mln
+{
+  namespace trait
+  {
+    // FIXME: Move this to mln/trait/ and generalize it?
+
+    /* Local trait: Modulus type compatible with `unsigned'.
+
+       The `mln::debug::iota' routine below performs an operation
+       `i % m', where `i' is an `unsigned' value and `m' is the
+       image's maximum value type.  However, this operation is not
+       valid when `m' is a `float' or a `double'.  Hence the following
+       trait, returning `unsigned' for these floating-point
+       value types and `T' for any other value type T.  */
+    template <typename T> struct modulus_type         { typedef T ret; };
+    template <>           struct modulus_type<float>  { typedef unsigned ret; };
+    template <>           struct modulus_type<double> { typedef unsigned ret; };
+
+  } // end of namespace mln::debug
+
+} // end of namespace mln
+
 
 // Specializations are in:
 # include <mln/debug/iota.spe.hh>
@@ -68,8 +89,10 @@ namespace mln
       {
 	unsigned i = base_index;
 	mln_piter(I) p(input.domain());
+        typedef mln_value(I) V;
 	for_all(p)
-	  input(p) = ++i % mln_max(mln_value(I));
+	  input(p) =
+          static_cast<V>(++i % mln_max(typename trait::modulus_type<V>::ret));
       }
 
     } // end of namespace mln::debug::impl

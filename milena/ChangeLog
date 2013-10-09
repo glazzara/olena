@@ -1,5 +1,17 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Have mln::debug::iota work with images of floats.
+
+	* mln/debug/iota.hh (mln::trait::modulus<T>): New trait.
+	(mln::debug::impl::iota(trait::image::speed::any, I&, unsigned)):
+	* mln/debug/iota.spe.hh
+	(mln::debug::impl::iota(trait::image::speed::fastest, I&, unsigned)):
+	Here.
+	* tests/debug/iota.cc: Exercise mln::debug::iota with an image of
+	floats.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Introduce point-wise function bindings.
 
 	* mln/pw/bind.hh: New.

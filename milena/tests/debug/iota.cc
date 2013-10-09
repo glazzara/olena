@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -29,22 +30,48 @@
 
 #include <mln/debug/iota.hh>
 #include <mln/data/compare.hh>
+#include <mln/test/predicate.hh>
+
+#include <mln/pw/all.hh>
+#include <mln/fun/vv2v/diff_abs.hh>
+
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
+  // Exercise mln::debug::iota with an image of ints.
   {
-    int vs[4][4] = { {1, 2, 3, 4},
-		     {5, 6, 7, 8},
-		     {9, 10,11,12},
-		     {13,14,15,16} };
+    int vs[4][4] = { { 1,  2,  3,  4},
+		     { 5,  6,  7,  8},
+		     { 9, 10, 11, 12},
+		     {13, 14, 15, 16} };
 
     image2d<int> ref = make::image(vs);
     image2d<int> ima(4, 4);
 
     debug::iota(ima);
     mln_assertion(ima == ref);
+  }
+
+  // Exercise mln::debug::iota with an image of floats.
+  {
+    float vs[4][4] = { { 1.f,  2.f,  3.f,  4.f},
+                       { 5.f,  6.f,  7.f,  8.f},
+                       { 9.f, 10.f, 11.f, 12.f},
+                       {13.f, 14.f, 15.f, 16.f} };
+
+    image2d<float> ref = make::image(vs);
+    image2d<float> ima(4, 4);
+
+    debug::iota(ima);
+    // Use a ``tolerant'' comparison.
+    float threshold = 0.0001f;
+    mln_assertion(test::predicate(ima.domain(),
+                                  pw::bind(fun::vv2v::diff_abs<float>(),
+                                           pw::value(ima),
+                                           pw::value(ref))
+                                  < pw::cst(threshold)));
   }
 }
