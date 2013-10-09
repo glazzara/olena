@@ -1,5 +1,13 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Make rotation axis optional.
+
+	* mln/fun/x2x/rotation.hh
+	(rotation<n, C>::rotation(const C&, const algebra::vec<n,C>&)):
+	Provide a default version for the second argument.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Have mln::debug::iota work with images of floats.
 
 	* mln/debug/iota.hh (mln::trait::modulus<T>): New trait.

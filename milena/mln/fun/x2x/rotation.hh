@@ -162,9 +162,9 @@ namespace mln
 
 	/// Constructor without argument.
 	rotation();
-	/// Constructor with radian alpha and a facultative direction
+	/// Constructor with radian alpha and an optional direction
 	/// (rotation axis).
-	rotation(const C& alpha, const algebra::vec<n,C>& axis);
+	rotation(const C& alpha, const algebra::vec<n,C>& axis = literal::zero);
 	/// Constructor with quaternion
 	rotation(const algebra::quat& q);
 	/// Constructor with h_mat.
