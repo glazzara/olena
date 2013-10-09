@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -24,29 +25,39 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/debug/iota.hh>
+
 #include <mln/arith/minus.hh>
+
+#include <mln/debug/iota.hh>
 #include <mln/data/compare.hh>
+
 
 int main()
 {
   using namespace mln;
 
-  // debug::trace::quiet = false;
+  image2d<int> ima(3,3);
+  debug::iota(ima);
 
+  // Exercise unary minus.
   {
-    image2d<int> ima(3,3);
-    debug::iota(ima);
+    int vs[3][3] = {
+      {-1, -2, -3},
+      {-4, -5, -6},
+      {-7, -8, -9}
+    };
+    image2d<int> ref(make::image(vs));
+    mln_assertion(-ima == ref);
+  }
 
+  // Exercise binary minus.
+  {
     int vs[3][3] = {
       {0, 1, 2},
       {3, 4, 5},
       {6, 7, 8}
     };
-
     image2d<int> ref(make::image(vs));
-
-    mln_assertion (ima - 1 == ref);
+    mln_assertion(ima - 1 == ref);
   }
-
 }

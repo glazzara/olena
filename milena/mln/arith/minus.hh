@@ -42,6 +42,13 @@ namespace mln
   namespace trait
   {
 
+    template <typename I>
+    struct set_unary_< op::uminus, Image, I >
+    {
+      typedef mln_trait_op_uminus(mln_value(I)) value;
+      typedef mln_ch_value(I, value) ret;
+    };
+
     template <typename L, typename R>
     struct set_binary_< op::minus, Image, L, Image, R >
     {
@@ -58,6 +65,11 @@ namespace mln
 
   } // end of namespace mln::trait
 
+
+
+  template <typename I>
+  mln_trait_op_uminus(I)
+  operator-(const Image<I>& ima);
 
 
   template <typename L, typename R>
@@ -83,6 +95,16 @@ namespace mln
 
   namespace arith
   {
+
+    /// Negation (unary minus operation) of image \p ima.
+    /*!
+     * \param[in] ima Sole operand image.
+     * \result The result image.
+     */
+    template <typename I>
+    mln_trait_op_uminus(I)
+    uminus(const Image<I>& ima);
+
 
     /// Point-wise subtraction of images \p lhs and \p rhs.
     /*!
@@ -191,6 +213,18 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
+  template <typename I>
+  inline
+  mln_trait_op_uminus(I)
+  operator-(const Image<I>& ima)
+  {
+    mln_trace("operator::uminus");
+
+    mln_trait_op_uminus(I) output = arith::uminus(ima);
+
+    return output;
+  }
+
   template <typename L, typename R>
   inline
   mln_trait_op_minus(L,R)
@@ -251,6 +285,26 @@ namespace mln
 
     namespace impl
     {
+
+      template <typename I, typename O>
+      inline
+      void uminus_(trait::image::speed::any, const I& ima, O& output)
+      {
+        mln_piter(I) p(ima.domain());
+        for_all(p)
+          output(p) = -ima(p);
+      }
+
+      template <typename I, typename O>
+      inline
+      void uminus_(trait::image::speed::fastest, const I& ima, O& output)
+      {
+        mln_pixter(const I) ip(ima);
+        mln_pixter(O)       op(output);
+        for_all_2(ip, op)
+          op.val() = -ip.val();
+      }
+
 
       template <typename L, typename R, typename O>
       inline
@@ -327,6 +381,21 @@ namespace mln
 
 
     // Facades.
+
+
+    template <typename I>
+    inline
+    mln_trait_op_uminus(I)
+      uminus(const Image<I>& ima)
+    {
+      mln_trace("arith::uminus");
+
+      mln_trait_op_uminus(I) output;
+      initialize(output, ima);
+      impl::uminus_(mln_trait_image_speed(I)(), exact(ima), output);
+
+      return output;
+    }
 
 
     template <typename L, typename R>

@@ -1,5 +1,18 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Add support for unary minus on images.
+
+	* mln/arith/minus.hh
+	(mln::trait::set_unary_<op::uminus, Image, I>): New.
+	(mln::operator-(const Image<I>&))
+	(mln::arith::uminus(const Image<I>&))
+	(mln::arith::impl::uminus_(trait::image::speed::any, const I&, O&))
+	(mln::arith::impl::uminus_(trait::image::speed::fastest, const I&, O&)):
+	New.
+	* tests/arith/minus.cc: Exercise unary minus.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Exercise the unary plus operator on images.
 
 	* tests/arith/plus.cc: Here.
