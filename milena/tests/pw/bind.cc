@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
-// Laboratory (LRDE).
+// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -24,31 +23,39 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_PW_ALL_HH
-# define MLN_PW_ALL_HH
-
 /// \file
-/// \brief Inclusion of all "point-wise" expression tools.
+/// \brief Exercise mln::pw::bind with unary and binary functions
+/// bound to point-wise expressions.
+
+#include <mln/core/image/image2d.hh>
+
+#include <mln/pw/all.hh>
+#include <mln/fun/v2v/abs.hh>
+#include <mln/fun/vv2v/max.hh>
+
+#include <mln/arith/minus.hh>
+#include <mln/debug/iota.hh>
+#include <mln/test/predicate.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of "point-wise" expression tools.
-  namespace pw {}
+  image2d<int> pos_ints(3, 3);
+  debug::iota(pos_ints);
+  image2d<int> neg_ints = -pos_ints;
 
-} // end of namespace mln
+  // Exercise unary point-wise function binding.
+  mln_assertion(test::predicate(pos_ints.domain(),
+                                pw::bind(fun::v2v::abs<int>(),
+                                         pw::value(neg_ints))
+                                == pw::value(pos_ints)));
 
-
-# include <mln/pw/bind.hh>
-# include <mln/pw/cst.hh>
-# include <mln/pw/image.hh>
-# include <mln/pw/value.hh>
-# include <mln/pw/var.hh>
-
-
-// Extra include so that we can use operators in point-wise expressions.
-# include <mln/fun/ops.hh>
-
-
-#endif // ! MLN_PW_ALL_HH
+  // Exercise binary point-wise function binding.
+  mln_assertion(test::predicate(pos_ints.domain(),
+                                pw::bind(fun::vv2v::max<int>(),
+                                         pw::value(pos_ints),
+                                         pw::value(neg_ints))
+                                == pw::value(pos_ints)));
+}

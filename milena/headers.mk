@@ -1013,6 +1013,7 @@ mln/opt/element.hh \
 mln/opt/essential.hh \
 mln/opt/value.hh \
 mln/pw/all.hh \
+mln/pw/bind.hh \
 mln/pw/cst.hh \
 mln/pw/essential.hh \
 mln/pw/image.hh \

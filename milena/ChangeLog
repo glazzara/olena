@@ -1,5 +1,17 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Introduce point-wise function bindings.
+
+	* mln/pw/bind.hh: New.
+	* mln/pw/all.hh: Include mln/pw/bind.hh.
+	* tests/pw/bind.cc: New.
+	* tests/pw/Makefile.am (check_PROGRAMS): Add bind.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Add support for unary minus on images.
 
 	* mln/arith/minus.hh

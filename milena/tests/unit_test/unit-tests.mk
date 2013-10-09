@@ -1065,6 +1065,7 @@ mln_opt_element \
 mln_opt_essential \
 mln_opt_value \
 mln_pw_all \
+mln_pw_bind \
 mln_pw_cst \
 mln_pw_essential \
 mln_pw_image \
