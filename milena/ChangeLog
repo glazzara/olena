@@ -1,5 +1,12 @@
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Exercise the unary plus operator on images.
+
+	* tests/arith/plus.cc: Here.
+	Remove dead code.
+
+2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Fix and update the Doxygen documentation.
 
 	* mln/arith/minus.hh,

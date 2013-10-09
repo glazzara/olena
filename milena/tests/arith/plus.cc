@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -24,104 +25,40 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/debug/iota.hh>
+
 #include <mln/arith/plus.hh>
+
+#include <mln/debug/iota.hh>
 #include <mln/data/compare.hh>
+
 
 int main()
 {
   using namespace mln;
 
-  // debug::trace::quiet = false;
+  image2d<int> ima(3,3);
+  debug::iota(ima);
 
+  // Exercise unary plus.
   {
-    image2d<int> ima(3,3);
-    debug::iota(ima);
-
     int vs[3][3] = {
       { 4,  5,  6},
       { 7,  8,  9},
       {10, 11, 12}
     };
-
-    ima += 2;
     image2d<int> ref(make::image(vs));
-
-    mln_assertion (ima + 1 == ref);
+    mln_assertion (+ima == ima);
   }
 
+  // Exercise binary plus.
+  {
+    int vs[3][3] = {
+      { 4,  5,  6},
+      { 7,  8,  9},
+      {10, 11, 12}
+    };
+    ima += 2;
+    image2d<int> ref(make::image(vs));
+    mln_assertion (ima + 1 == ref);
+  }
 }
-
-
-
-// #include <mln/core/image/image2d.hh>
-// #include <mln/core/routine/duplicate.hh>
-// #include <mln/value/int_u8.hh>
-
-// #include <mln/arith/plus.hh>
-// #include <mln/arith/times.hh>
-// #include <mln/data/compare.hh>
-// #include <mln/fun/v2v/cast.hh>
-
-// #include <mln/debug/iota.hh>
-// #include <mln/debug/println.hh>
-
-
-
-// int main()
-// {
-//   using namespace mln;
-
-//   // debug::trace::quiet = false;
-
-//   {
-//     image2d<int> ref(3,3);
-//     debug::iota(ref);
-
-//     image2d<int> ima_i = duplicate(ref);
-//     ima_i += ima_i;
-//     mln_assertion(ima_i == 2 * ref);
-
-//     debug::println(ima_i);
-//     ima_i += 1;
-//     debug::println(ima_i);
-
-//     image2d<float> ima_f(3,3);
-//     debug::iota(ima_f);
-//     debug::println(ima_i + ima_f);
-
-//     point2d p(0, 0);
-//     std::cout << arith::plus<float>(ima_i, ima_i)(p) / 5 << std::endl;
-//   }
-
-// }
-
-
-
-// Bench:
-
-//   {
-//     unsigned size = 5000;
-//     image2d<unsigned char> ima_uc(size, size);
-//     image2d<unsigned> ima_u;
-//     ima_u = 2u + ima_uc;
-//   }
-//   {
-//     unsigned size = 5000;
-//     image2d<value::int_u8> ima_uc(size, size);
-//     image2d<unsigned> ima_u;
-//     ima_u = 2u + ima_uc;
-//   }
-
-//   {
-//     unsigned size = 5000;
-//     image2d<unsigned char> ima_uc(size, size);
-//     image2d<unsigned> ima_u;
-//     ima_u = ima_uc + ima_uc;
-//   }
-//   {
-//     unsigned size = 5000;
-//     image2d<value::int_u8> ima_u8(size, size);
-//     image2d<unsigned> ima_u;
-//     ima_u = ima_u8 + ima_u8;
-//   }
