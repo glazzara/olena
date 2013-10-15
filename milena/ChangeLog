@@ -1,3 +1,9 @@
+2013-10-15  Armand Leclercq  <marman.email@gmail.com>
+
+	Suppress user warnings from the use of mln_VAR with g++ 4.8.1.
+
+	* mln/core/var.hh (mln_VAR, mln_const_VAR): Here.
+
 2013-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Add a ``one-liner'' test to interpolated-tr_image.

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -40,13 +41,13 @@
 /// result to it.
 #define mln_VAR(Var, Expr)			\
 						\
-  typeof(Expr) Var = Expr;			\
-  typedef typeof(Expr) Var##_t
+  typedef typeof(Expr) Var##_t;                 \
+  Var##_t Var = Expr
 
 #define mln_const_VAR(Var, Expr)		\
 						\
-  const typeof(Expr) Var = Expr;		\
-  typedef const typeof(Expr) Var##_t
+  typedef const typeof(Expr) Var##_t;           \
+  Var##_t Var = Expr
 
 
 // mln_PITER
