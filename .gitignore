@@ -13,6 +13,7 @@ Makefile
 /*TAGS
 /*aclocal.m4
 /*stamp-*
+/INSTALL
 /_build*
 /_inst*
 /autom4te.cache*
