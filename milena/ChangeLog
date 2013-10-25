@@ -1,3 +1,15 @@
+2013-10-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Milena: Exercise mln::interpolated, mln::tr_image and mln::compose.
+
+	* tests/core/image/imorph/interpolated-tr_image-composed.cc: New.
+	* tests/core/image/imorph/interpolated-tr_image.cc:
+	Rename as...
+	* tests/core/image/imorph/interpolated-tr_image-rotation.cc:
+	...this.
+	Update comments.
+	* tests/core/image/imorph/Makefile.am (check_PROGRAMS): Update.
+
 2013-10-15  Armand Leclercq  <marman.email@gmail.com>
 
 	Suppress user warnings from the use of mln_VAR with g++ 4.8.1.

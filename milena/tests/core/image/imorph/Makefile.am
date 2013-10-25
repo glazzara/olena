@@ -20,7 +20,8 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   decorated_image				\
   interpolated					\
-  interpolated-tr_image				\
+  interpolated-tr_image-rotation		\
+  interpolated-tr_image-composed		\
   labeled_image					\
   safe_image					\
   tr_image

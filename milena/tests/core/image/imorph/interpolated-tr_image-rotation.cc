@@ -25,7 +25,7 @@
 
 /// \file
 /// \brief Exercise the mln::interpolated and mln::tr_image morphers
-/// together.
+/// together, using a rotation.
 
 #include <iostream>
 
