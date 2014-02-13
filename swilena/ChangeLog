@@ -65,11 +65,11 @@
 
 	Aesthetic changes in Swilena.
 
-	* swilena/box.ixx,
-	* swilena/box2d.i,
-	* swilena/image2d.ixx,
-	* swilena/image2d_point2d.i,
-	* swilena/morpho.ixx:
+	* box.ixx,
+	* box2d.i,
+	* image2d.ixx,
+	* image2d_point2d.i,
+	* morpho.ixx:
 	Here.
 
 2012-08-28  Roland Levillain  <roland@lrde.epita.fr>

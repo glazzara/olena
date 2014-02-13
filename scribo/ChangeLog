@@ -142,8 +142,8 @@
 
 	Display Scribo errors on std::cerr, not std::cout.
 
-	* scribo/scribo/text/merging.hh,
-	* scribo/scribo/text/recognition.hh:
+	* scribo/text/merging.hh,
+	* scribo/text/recognition.hh:
 	Here.
 
 2013-08-27  Roland Levillain  <roland@lrde.epita.fr>
@@ -1693,17 +1693,17 @@
 
 	Add a better support for different k values in Sauvola Multiscale.
 
-	* scribo/scribo/binarization/internal/sauvola_ms_functor.hh,
-	* scribo/scribo/binarization/sauvola_ms.hh,
-	* scribo/scribo/binarization/sauvola_ms_split.hh,
-	* scribo/scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
-	* scribo/scribo/toolchain/text_in_doc_preprocess.hh: Make use of
+	* scribo/binarization/internal/sauvola_ms_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/toolchain/internal/text_in_doc_preprocess_functor.hh,
+	* scribo/toolchain/text_in_doc_preprocess.hh: Make use of
 	k2, k3 and k4 variables.
 
-	* scribo/src/binarization/sauvola_ms.cc,
-	* scribo/src/binarization/sauvola_ms_debug.cc,
-	* scribo/src/binarization/sauvola_ms_fg.cc,
-	* scribo/src/binarization/sauvola_ms_split.cc: Fix program
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_debug.cc,
+	* src/binarization/sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_split.cc: Fix program
 	arguments.
 
 2012-05-11  Guillaume Lazzara  <z@lrde.epita.fr>

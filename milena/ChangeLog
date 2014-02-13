@@ -123,7 +123,7 @@
 	* common.mk (AM_CPPFLAGS): ...here.
 	Include it...
 	* doc/Makefile.am: ...here, to factor common parts.
-	* milena/apps/apps.mk: New file.
+	* apps/apps.mk: New file.
 	Include it...
 	* apps/constrained-connectivity/Makefile.am,
 	* apps/generic-skel/Makefile.am,
@@ -465,8 +465,8 @@
 	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc:
 	Display the size of the input.
 	Time the thinning step.
-	* milena/apps/generic-skel/test-mixed.in,
-	* milena/apps/mesh-segm-skel/test-mixed.in:
+	* apps/generic-skel/test-mixed.in,
+	* apps/mesh-segm-skel/test-mixed.in:
 	New.
 	* apps/generic-skel/Makefile.am (generated_tests): Add test-mixed.
 	(test-mixed): New target.
