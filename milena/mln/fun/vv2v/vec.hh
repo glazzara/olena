@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -28,10 +29,11 @@
 
 /// \file
 ///
-/// computing the vecimum of two values using a functor.
+/// Forming a vector (mln::algebra::vec) from two values of the same
+/// type using a functor.
 
 # include <mln/core/concept/function.hh>
-# include <mln/algebra/vec.hh>
+# include <mln/make/vec.hh>
 
 
 namespace mln
@@ -43,9 +45,8 @@ namespace mln
     namespace vv2v
     {
 
-      // FIXME: Doc.
-
-      /// \brief A functor computing the vecimum of two values.
+      /// \brief A functor forming a vector (mln::algebra::vec) from
+      /// two values of the same type.
       template <typename V>
       struct vec : public Function_vv2v< vec<V> >
       {
@@ -61,9 +62,7 @@ namespace mln
       algebra::vec<2,V>
       vec<V>::operator()(const V& v1, const V& v2) const
       {
-	algebra::vec<2,V> tmp;
-	tmp.set(v1, v2);
-	return tmp;
+	return make::vec(v1, v2);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

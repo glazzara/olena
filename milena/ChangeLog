@@ -1,3 +1,11 @@
+2014-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify the implementation of mln::fun::vv2v::algebra::vec.
+
+	* mln/fun/vv2v/vec.hh (mln::fun::vv2v::algebra::vec::operator()):
+	Here.
+	Fix the documentation.
+
 2011-01-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	* apps/bench/list2table: Generate a shorter table.
