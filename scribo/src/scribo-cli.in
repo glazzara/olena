@@ -1,4 +1,6 @@
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+#! /bin/sh
+
+# Copyright (C) 2010, 2014 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,17 +15,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-#!/bin/sh
 
 bdir="@utilexecdir@"
 bin=`basename $0`
+version="@PACKAGE_VERSION@"
 
 version()
 {
     cat <<EOF
-SCRIBO Command LIne tool, version 1.0
-Copyright (C) 2010 LRDE/EPITA
+Olena Scribo Module Command-Line Interface (CLI) tool, version $version
+Copyright (C) 2010, 2014 EPITA Research and Development Laboratory (LRDE)
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 EOF

@@ -1,3 +1,13 @@
+2014-03-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Scribo: Improve scribo-cli's `--version' option.
+
+	* src/scribo-cli.in: Move the shebang to the first line.
+	(version): Do not hard-code the version number
+	in scribo-cli.
+	Rephrase the copyright owner for uniformity reasons.
+	* src/Makefile.am (do_subst): Also substitute PACKAGE_VERSION.
+
 2013-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Scribo: Define flags in proper Makefile helpers.
