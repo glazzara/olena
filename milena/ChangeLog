@@ -1,5 +1,11 @@
 2014-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena: Improve the documentation of mln::test::positive.
+
+	* mln/test/positive.hh: Here.
+
+2014-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Milena: Simplify tests/pw/value.cc.
 
 	* tests/pw/value.cc: Here.

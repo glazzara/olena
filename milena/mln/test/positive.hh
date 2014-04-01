@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2014 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,8 @@
 
 /// \file
 ///
-/// Test if an image only contains positive values.
+/// Test if an image only contains positive or null
+/// (i.e. ``non-negative'') values.
 
 # include <mln/test/predicate.hh>
 # include <mln/pw/all.hh>
@@ -43,7 +44,13 @@ namespace mln
   namespace test
   {
 
-    /// Test if an image only contains positive values.
+    /// \brief Test if an image only contains positive or null
+    /// (i.e. ``non-negative'') values.
+    ///
+    /// This routine checks whether all the values of an image are
+    /// non-negative, thus considering includes 0 as a valid value
+    /// (which is usually not the case of the term ``positive'' in
+    /// English).
     template <typename I>
     bool positive(const Image<I>& input);
 
