@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,10 +24,11 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \brief Exercise mln::pw::value.
+
 #include <mln/core/image/image2d.hh>
 #include <mln/data/fill.hh>
 #include <mln/pw/all.hh>
-
 
 int main()
 {
@@ -37,13 +39,6 @@ int main()
 
   point2d p(1, 1);
   ima(p) = 51;
-  mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
-  mln_assertion( (pw::value(ima) == 51)(p) == true );
-
-//   {
-//     image2d<float> imaf(3,3);
-//     imaf(p) = 51;
-//     mln_assertion(((pw::value(ima) + pw::value(imaf))(p) / 20) - 5.1 < 0.00001);
-//   }
-
+  mln_assertion((pw::value(ima) == pw::cst(51))(p));
+  mln_assertion((pw::value(ima) == 51)(p));
 }
