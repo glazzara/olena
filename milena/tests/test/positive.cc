@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,36 +24,36 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \brief Exercise mln::test::positive.
+
 #include <mln/core/image/image2d.hh>
-#include <mln/data/fill.hh>
 #include <mln/test/positive.hh>
 
-
-// both test routines can be called with a p2b function
-
-template <typename F>
-void test_p2v(const mln::Function_v2v<F>&)
-{
-}
-
-template <typename F>
-void test_v2b(const mln::Function_v2b<F>&)
-{
-}
-
-
+#include <mln/data/fill.hh>
+#include <mln/debug/iota.hh>
 
 int main()
 {
   using namespace mln;
   typedef image2d<int> I;
 
-  I ima(1,1);
-  data::fill(ima, 0);
+  /* Null values.
 
-  test_v2b(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
+     Note that mln::test::positive actually checks whether all the
+     values of an image are non-negative, thus considering 0 as a
+     valid value (which is usually not the case of the term
+     ``positive'' in English). */
+  I zeros(3,3);
+  data::fill(zeros, 0);
+  mln_assertion(test::positive(zeros));
 
-  // FIXME: Dead code?
-  // test2(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
-  // test::positive(ima);
+  /* Positive (non-null) natural numbers.  */
+  I naturals(3,3);
+  debug::iota(naturals);
+  mln_assertion(test::positive(naturals));
+
+  /* Negative (non-null) numbers.  */
+  I negatives(3,3);
+  data::fill(negatives, -42);
+  mln_assertion(!test::positive(negatives));
 }
