@@ -1,3 +1,9 @@
+2012-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a precondition (Trac ticket #256).
+
+	* mln/core/internal/site_relative_iterator_base.hh: Here.
+
 2014-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Milena: Streamline mln/test/positive.cc.
