@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,7 @@ struct dest
 
 struct from_2
 {
-  operator dest() const { dest* tmp; return *tmp; }
+  operator dest() const { dest* tmp = 0; return *tmp; }
 };
 
 

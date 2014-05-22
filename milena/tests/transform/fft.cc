@@ -1,4 +1,4 @@
-// Copyright (C) 2004, 2012 EPITA Research and Development Laboratory
+// Copyright (C) 2004, 2012, 2014 EPITA Research and Development Laboratory.
 //
 // This file is part of Olena.
 //
@@ -86,12 +86,15 @@ int main ()
 
   io::pgm::save(out, "fft_trans_log.pgm");
 
-  for (int row = 40; row < im2.nrows() - 40; ++row)
-    for (int col = 0; col < im2.ncols(); ++col)
+  int nrows = im2.nrows();
+  int ncols = im2.ncols();
+  int hlen = 40;
+  for (int row = hlen; row < nrows - hlen; ++row)
+    for (int col = 0; col < ncols; ++col)
       opt::at(im2, row, col) = 0;
 
-  for (int row = 0; row < im2.nrows(); ++row)
-    for (int col = 40; col < im2.ncols() - 40; ++col)
+  for (int row = 0; row < nrows; ++row)
+    for (int col = hlen; col < ncols - hlen; ++col)
       opt::at(im2, row, col) = 0;
 
   fft = fourier.transformed_image_log_magn<int_u8>(true);
