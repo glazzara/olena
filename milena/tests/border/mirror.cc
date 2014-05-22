@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2011 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -24,7 +24,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-/// \file
+// Exercise mln::border::mirror.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -35,46 +35,54 @@
 #include <mln/data/paste_without_localization.hh>
 #include <mln/data/compare.hh>
 
-using namespace mln;
-
 int
-main (void)
+main()
 {
+  using namespace mln;
+
+  // image1d.
   {
-    image1d<int> ima(2, 3);
-    debug::iota(ima);
-    border::mirror(ima);
-    mln_assertion(opt::element(ima, 0) == 2);
-    mln_assertion(opt::element(ima, 1) == 2);
-    mln_assertion(opt::element(ima, 2) == 1);
-    mln_assertion(opt::element(ima, 3) == 1);
-    mln_assertion(opt::element(ima, 4) == 2);
-    mln_assertion(opt::element(ima, 5) == 2);
-    mln_assertion(opt::element(ima, 6) == 1);
-    mln_assertion(opt::element(ima, 7) == 1);
+    // A 2-pixel 1D image with a 3-pixel border.
+    image1d<unsigned> input(2, 3);
+    debug::iota(input);
+    border::mirror(input);
+
+    // Data are framed; other values form the border.
+    unsigned ref_data[8] =
+    //              ,-------------.
+      { 2, 2, 1, /* | */ 1, 2, /* | */ 2, 1, 1 };
+    //              `-------------'
+    image1d<unsigned> ref = make::image(ref_data);
+
+    image1d<unsigned> output(8, 0);
+    data::paste_without_localization(extended_to(input, input.vbbox()),
+                                     output);
+    mln_assertion(output == ref);
   }
 
-
-  // Image2d
+  // image2d.
   {
-    unsigned ref_data[6][7] = {
-      { 1, 1, 4, 5, 6, 3, 3 },
-      { 1, 1, 1, 2, 3, 3, 3 },
-      { 2, 1, 1, 2, 3, 3, 2 },
-      { 5, 4, 4, 5, 6, 6, 5 },
-      { 4, 4, 4, 5, 6, 6, 6 },
-      { 4, 4, 1, 2, 3, 6, 6 }
-    };
-
-
-    image2d<unsigned> ref = make::image(ref_data);
+    // A 2x3-pixel 2D image with a 2-pixel border.
     image2d<unsigned> input(2, 3, 2);
-    image2d<unsigned> res(6, 7, 0);
     debug::iota(input, 0);
     border::mirror(input);
 
-    data::paste_without_localization(extended_to(input, input.vbbox()), res);
+    // Data are framed; other values form the border.
+    unsigned ref_data[6][7] = {
+      { 1, 1,         4, 5, 6,         3, 3 },
+      { 1, 1,         1, 2, 3,         3, 3 },
+      //         ,----------------.
+      { 2, 1, /* | */ 1, 2, 3, /* | */ 3, 2 },
+      { 5, 4, /* | */ 4, 5, 6, /* | */ 6, 5 },
+      //         `----------------'
+      { 4, 4,         4, 5, 6,         6, 6 },
+      { 4, 4,         1, 2, 3,         6, 6 }
+    };
+    image2d<unsigned> ref = make::image(ref_data);
 
-    mln_assertion(res == ref);
+    image2d<unsigned> output(6, 7, 0);
+    data::paste_without_localization(extended_to(input, input.vbbox()),
+                                     output);
+    mln_assertion(output == ref);
   }
 }

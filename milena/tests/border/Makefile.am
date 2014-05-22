@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2010, 2011 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010, 2011, 2014 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -26,6 +26,7 @@ check_PROGRAMS =				\
   find						\
   get						\
   mirror					\
+  mirror_full					\
   resize_equal					\
   resize_image1d_1				\
   resize_image1d_2				\

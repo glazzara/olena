@@ -1,3 +1,10 @@
+2014-05-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve tests on mln::border::mirror.
+
+	* tests/border/mirror.cc: Revamp.
+	* tests/border/Makefile.am (check_PROGRAMS): Reenable mirror_full.
+
 2012-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a precondition (Trac ticket #256).
