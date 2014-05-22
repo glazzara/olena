@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -64,7 +65,7 @@ namespace mln
       ///
       /// \param  nbh_fg  The foreground neighborhood.
       /// \param  nbh_bg  The background neighborhood.
-      /// \apram  ima     The image.
+      /// \param  ima     The image.
       is_simple_point3d(const Neighborhood<N>& nbh_fg,
 			const Neighborhood<N>& nbh_bg,
 			const Image<I>& ima);

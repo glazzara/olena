@@ -1,4 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,7 @@ namespace mln
       /// Build a functor, and assign an image to it.
       ///
       /// \param  nbh  The (foreground) neighborhood.
-      /// \apram  ima  The image.
+      /// \param  ima  The image.
       is_not_end_point(const Neighborhood<N>& nbh, const Image<I>& ima);
 
       /// Set the underlying image.

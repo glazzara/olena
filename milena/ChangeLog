@@ -1,5 +1,15 @@
 2014-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Doxygen command names in Milena documentation.
+
+	* mln/topo/is_not_1d_isthmus.hh,
+	* mln/topo/is_not_end_point.hh,
+	* mln/topo/is_simple_point2d.hh,
+	* mln/topo/is_simple_point3d.hh:
+	Here.
+
+2014-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address Clang warnings in Milena.
 
 	* mln/core/image/dmorph/mutable_extension_ima.hh,
