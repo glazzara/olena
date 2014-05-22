@@ -1,3 +1,9 @@
+2014-05-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address Clang warnings in Swilena.
+
+	* dynamic_image2d.i: Here.
+
 2013-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Swilena: Remove lines `VARIABLE = @VARIABLE@' from Makefile.am's.

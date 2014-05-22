@@ -1,5 +1,6 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -152,7 +153,7 @@ namespace mln
     /// 3).
     dynamic_image2d(const box2d& b);
 
-    // FIXME: Add a virtual dtor?
+    virtual ~dynamic_image2d();
 
     /// Initialize an empty image.
     virtual void init_(const box2d& b);
@@ -230,6 +231,12 @@ namespace mln
 
   template <typename T>
   inline
+  dynamic_image2d<T>::~dynamic_image2d()
+  {
+  }
+
+  template <typename T>
+  inline
   void
   dynamic_image2d<T>::init_(const box2d& b)
   {
@@ -258,10 +265,11 @@ namespace mln
   template <typename T>
   inline
   const T&
-  dynamic_image2d<T>::operator()(const point2d& p) const
+  dynamic_image2d<T>::operator()(const point2d&) const
   {
-    // Dummy.
-    assert(false);
+    abort();
+    static T v;
+    return v;
   }
 
   // Dummy implementation, provided to have swig wrap the class (swig won't
@@ -269,10 +277,11 @@ namespace mln
   template <typename T>
   inline
   T&
-  dynamic_image2d<T>::operator()(const point2d& p)
+  dynamic_image2d<T>::operator()(const point2d&)
   {
-    // Dummy.
-    assert(false);
+    abort();
+    static T v;
+    return v;
   }
 
   template <typename T>
