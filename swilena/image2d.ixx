@@ -1,6 +1,6 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -82,12 +82,10 @@
     }
   }
 
-  // Instantiate base classes of mln::image2d<T> so that Swig knows it
-  // derives from mln::Image.
-  %template() mln::Image< mln::image2d< int > >;
-  %template() mln::internal::image_checked_< mln::image2d< T > >;
-  %template() mln::internal::image_base< T, mln::box2d, mln::image2d< T > >;
-  %template() mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
-  // Instantiate mln::image2d<T>
+  // Instantiate mln::image2d<T> and its (directly useful) base classes.
+  %template(Image_ ## I) mln::Image< mln::image2d< T > >;
+  %template(image_checked_ ## I) mln::internal::image_checked_< mln::image2d< T > >;
+  %template(image_base_ ## I) mln::internal::image_base< T, mln::box2d, mln::image2d< T > >;
+  %template(image_primary_ ## I) mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
   %template(I) mln::image2d< T >;
 %enddef // !instantiate_image2d

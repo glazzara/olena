@@ -1,3 +1,13 @@
+2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make Swilena compatible with SWIG 2.0.9+.
+
+	* image2d.ixx,
+	* neighb2d.i,
+	* window2d.i:
+	Give names to wrapped base classes, so that recent version of SWIG
+	actually considers them and allows upcasts.
+
 2014-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address Clang warnings in Swilena.

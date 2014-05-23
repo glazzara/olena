@@ -1,5 +1,6 @@
 //                                                              -*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -68,12 +69,10 @@ insert(const typename mln::dpoint<mln::grid::square, mln::def::coord>::coord&,
   }
 }
 
-// Instantiate base classes of mln::window2d so that Swig knows it
-// derives from mln::Window.
-%template() mln::internal::window_base<
+ // Instantiate mln::window2d and its base class.
+%template(Window_window2d) mln::internal::window_base<
   mln::dpoint<mln::grid::square, mln::def::coord >,
   mln::window< mln::dpoint<mln::grid::square, mln::def::coord > >
   >;
- // Instantiate mln::window2d.
 %template(window2d)
 mln::window< mln::dpoint<mln::grid::square,mln::def::coord > >;

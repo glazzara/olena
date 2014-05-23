@@ -1,5 +1,6 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -57,37 +58,37 @@
 	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&,
 	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&);
 
-// Instantiate base classes of mln::neighb2d so that Swig knows it
-// derives from mln::Neighborhood.
-%template() mln::Neighborhood<
+// Instantiate mln::neighb2d and its (directly useful) base classes.
+%template(Neighborhood_neighb2d) mln::Neighborhood<
   mln::neighb<
-    mln::window< mln::dpoint< mln::grid::square,mln::def::coord > >
+    mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
-%template() mln::internal::neighborhood_extra_impl<
+%template(neighborhood_extra_impl_neighb2d) mln::internal::neighborhood_extra_impl<
   mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
     mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
-%template() mln::internal::neighborhood_impl<
+%template(neighborhood_impl_neighb2d) mln::internal::neighborhood_impl<
   mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
     mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
-%template() mln::internal::neighborhood_base<
+%template(neighborhood_base_neighb2d) mln::internal::neighborhood_base<
   mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
     mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
-%template() mln::internal::neighb_base<
+%template(neighb_base_neighb2d) mln::internal::neighb_base<
   mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
     mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
-// Instantiate mln::neighb2d.
 %template(neighb2d)
-mln::neighb< mln::window < mln::dpoint< mln::grid::square, mln::def::coord > > >;
+mln::neighb<
+  mln::window < mln::dpoint< mln::grid::square, mln::def::coord > >
+>;
