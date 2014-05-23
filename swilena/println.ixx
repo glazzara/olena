@@ -1,5 +1,5 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -26,6 +26,10 @@
 
 /// \file println.ixx
 /// \brief A wrapper of mln::debug::println.
+
+%module println
+
+%include std_string.i
 
 %{
   #include "mln/debug/println.hh"

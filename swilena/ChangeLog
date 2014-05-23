@@ -1,5 +1,14 @@
 2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve Swilena's max-tree.py output.
+
+	* println.ixx: Include std_string.i to help SWIG wrap
+	mln::debug::println(const std::string&, const Image<I>&) and use
+	it...
+	* python/max-tree.py: ...here.
+
+2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Swilena's max-tree.py test fully work with SWIG 2.0.7.
 
 	* morpho.ixx: Give names to wrapped traits, to let SWIG properly
