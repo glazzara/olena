@@ -1,6 +1,6 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2013, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -71,13 +71,13 @@ namespace mln
 
 %define instantiate_dilation(Name, I, W)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::dilation< I, W >;
 %enddef
 
 %define instantiate_erosion(Name, I, W)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::erosion< I, W >;
 %enddef
 
@@ -95,13 +95,13 @@ namespace mln
 
 %define instantiate_closing(Name, I, N)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::elementary::closing< I, N >;
 %enddef
 
 %define instantiate_opening(Name, I, N)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::elementary::opening< I, N >;
 %enddef
 
@@ -117,19 +117,19 @@ namespace mln
 
 %define instantiate_gradient(Name, I, W)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::gradient< I, W >;
 %enddef
 
 %define instantiate_gradient_internal(Name, I, W)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::gradient_internal< I, W >;
 %enddef
 
 %define instantiate_gradient_external(Name, I, W)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::concrete< I >;
+  %template(Name ## _concrete_trait) mln::trait::concrete< I >;
   %template(Name) mln::morpho::gradient_external< I, W >;
 %enddef
 
@@ -165,7 +165,7 @@ namespace mln
 
 %define instantiate_watershed_flooding(Name, L, I, N)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::ch_value< I, L >;
+  %template(Name ## _ch_value_trait) mln::trait::ch_value< I, L >;
   %template(Name) mln::morpho::watershed::flooding< L, I, N >;
 %enddef
 
@@ -181,7 +181,7 @@ namespace mln
 
 %define instantiate_max_tree(Name, I, N)
   // Explicit instantiation of this trait for the return type.
-  %template() mln::trait::ch_value< I, mln_psite(I) >;
+  %template(Name ## _ch_value_trait) mln::trait::ch_value< I, mln_psite(I) >;
   %template(Name) mln::morpho::tree::max< I, N >;
 %enddef
 

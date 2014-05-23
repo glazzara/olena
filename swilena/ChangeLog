@@ -1,5 +1,14 @@
 2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make Swilena's max-tree.py test fully work with SWIG 2.0.7.
+
+	* morpho.ixx: Give names to wrapped traits, to let SWIG properly
+	deduce the return types of wrapped functions templates.
+	* python/max-tree.py: Reenable a previously disabled println
+	statement.
+
+2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Swilena compatible with SWIG 2.0.9+.
 
 	* image2d.ixx,
