@@ -1,3 +1,10 @@
+2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help SWIG wrap mln::internal::image_base.
+
+	* mln/core/internal/image_base.hh: Use mln::util::tracked_ptr
+	with its fully qualified name.
+
 2014-05-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Doxygen command names in Milena documentation.

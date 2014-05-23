@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2012, 2013, 2014 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -158,7 +158,7 @@ namespace mln
       const void* id_() const;
 
       /// \brief Hook to the image data.
-      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
+      const mln::util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
       /// \endcond
 
@@ -173,7 +173,7 @@ namespace mln
 
       /// \cond INTERNAL_API
       /// Internal data, sharable by several images.
-      util::tracked_ptr< internal::data<E> > data_;
+      mln::util::tracked_ptr< internal::data<E> > data_;
       /// \endcond
     };
 
@@ -269,7 +269,7 @@ namespace mln
 
     template <typename T, typename S, typename E>
     inline
-    const util::tracked_ptr< internal::data<E> >&
+    const mln::util::tracked_ptr< internal::data<E> >&
     image_base<T, S, E>::hook_data_() const
     {
       return data_;
