@@ -524,10 +524,18 @@ mail address follows.
 Bibliography
 ============
 
-Further information about Olena can be found into the following related
-papers.
+Further information about Olena and image processing can be found in
+the following papers.
 
 About Image Processing Programming:
+
+   * `Writing Reusable Digital Topology Algorithms in a Generic Image
+     Processing Framework`.  Roland Levillain, Thierry Géraud, Laurent
+     Najman.  In Ullrich Köthe, Annick Montanvert, Pierre Soille
+     (editors), WADGMM 2010 -- Proceedings of the Workshop on
+     Applications of Digital Geometry and Mathematical Morphology),
+     pages 140-153, Lecture Notes in Computer Science, volume 7346,
+     Springer-Verlag Berlin Heidelberg, 2012.
 
    * `Une approche générique du logiciel pour le traitement d'images
      préservant les performances`.  Roland Levillain, Thierry Géraud,
@@ -543,13 +551,6 @@ About Image Processing Programming:
      http://www.icip2010.org/
      Hong Kong, September 26 - 29, 2010.
 
-   * `Writing Reusable Digital Geometry Algorithms in a Generic Image
-     Processing Framework`.  Roland Levillain, Thierry Géraud, Laurent
-     Najman.  In the proceedings of the Workshop on Applications of
-     Digital Geometry and Mathematical Morphology (WADGMM)
-     http://mdigest.jrc.ec.europa.eu/wadgmm2010/
-     Istanbul, Turkey, August 22, 2010.
-
    * `Milena: Write Generic Morphological Algorithms Once, Run on Many
      Kinds of Images`.  Roland Levillain, Thierry Géraud, Laurent
      Najman.  In the proceedings of the 9th International Symposium on
@@ -562,13 +563,13 @@ About Image Processing Programming:
      of ECOOP PHD Oslo, Norway, June 2004.
 
    * `Generic Implementation of Morphological Image Operators`, Jérôme
-     Darbon, Thierry Géraud, and Alexandre Duret-Lutz, submitted to
-     International Symposium On Mathematical Morphology VI (ISMM
-     2002), April 3-5, 2002, Sydney, Australia.
+     Darbon, Thierry Géraud, and Alexandre Duret-Lutz.  In the
+     proceedings of the International Symposium On Mathematical
+     Morphology VI (ISMM 2002), April 3-5, 2002, Sydney, Australia.
 
    * `Applying Generic Programming to Image Processing`, Thierry
      Géraud, Yoann Fabre, and Alexandre Duret-Lutz.  In the
-     Proceedings of the IASTED International Conference on Applied
+     proceedings of the IASTED International Conference on Applied
      Informatics (AI'2001) - Symposium Advances in Computer
      Applications, ACTA Press, pages 577-581, Innsbruck, Austria,
      February 2001.
@@ -576,11 +577,15 @@ About Image Processing Programming:
    * `Obtaining Genericity for Image Processing and Pattern
      Recognition Algorithms`.  Thierry Géraud, Yoann Fabre, Alexandre
      Duret-Lutz, Dimitri Papadopoulos-Orfanos, and Jean-François
-     Mangin.  In the Proceedings of the 15th International Conference
+     Mangin.  In the proceedings of the 15th International Conference
      on Pattern Recognition (ICPR'2000), IEEE Computer Society,
      vol. 4, pages 816-819, Barcelona, Spain, September 2000.
 
 About Generic Programming Paradigm:
+
+   * `Towards a Software Architecture for Generic Image Processing`.
+     Roland Levillain.  Ph.D. thesis, Universit\'e Paris-Est,
+     Marne-la-Vallée, France, 2011.
 
    * `Semantics-Driven Genericity: A Sequel to the Static C++
      Object-Oriented Programming Paradigm (SCOOP 2)`.  Thierry Géraud,
@@ -592,18 +597,18 @@ About Generic Programming Paradigm:
 
    * `Static C++ Object-Oriented Programming (SCOOP)`, Nicolas Burrus,
      Alexandre Duret-Lutz, Thierry Géraud, David Lesage, and Raphaël
-     Poss.  In the Proceedings of the Workshop on Multiple Paradigm
-     with OO Languages (MPOOL'03) Anaheim, CA, October 2003.
+     Poss.  In the proceedings of the Workshop on Multiple Paradigm
+     with OO Languages (MPOOL'03), Anaheim, CA, October 2003.
 
    * `Generic Design Patterns in C++`.  Alexandre Duret-Lutz, Thierry
-     Géraud, and Akim Demaille.  In the Proceedings of the 6th USENIX
+     Géraud, and Akim Demaille.  In the proceedings of the 6th USENIX
      Conference on Object-Oriented Technologies and Systems
      (COOTS'2001), pages 189-202, San Antonio, Texas, USA,
      January-February 2001.
 
    * `Olena: a Component-Based Platform for Image Processing, mixing
      Generic, Generative and OO Programming`.  Alexandre Duret-Lutz.
-     In the Proceedings of the 2nd International Symposium on
+     In the proceedings of the 2nd International Symposium on
      Generative and Component-Based Software Engineering (GCSE 2000),
      Young Researchers Workshop (published in "Net.ObjectDays2000";
      ISBN 3-89683-932-2), pages 653-659, Erfurt, Germany, October
