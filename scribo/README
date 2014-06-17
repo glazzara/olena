@@ -91,7 +91,20 @@ KNOWN ISSUES
 Bibliography
 ============
 
-Further information about SCRIBO can be found into the following paper.
+Further information about SCRIBO and document image analysis can be
+found in the following papers.
+
+   * `Efficient Multiscale Sauvola's Binarization`.  Guillaume
+     Lazzara, Thierry Géraud.  In the International Journal of
+     Document Analysis and Recognition (IJDAR), volume 17, number 2,
+     pages 105-123, Springer Berlin Heidelberg, June 2014.
+
+   * `Planting, Growing and Pruning Trees: Connected Filters Applied
+     to Document Image Analysis`.  Guillaume Lazzara, Thierry Géraud,
+     Roland Levillain.  In the proceedings of the 11th IAPR
+     International Workshop on Document Analysis Systems (DAS)
+     http://das2014.sciencesconf.org/
+     Tours, France, April 7 - 10, 2014.
 
    * `The SCRIBO Module of the Olena Platform: a Free Software
      Framework for Document Image Analysis.`  Guillaume Lazzara,
@@ -100,7 +113,7 @@ Further information about SCRIBO can be found into the following paper.
      11th International Conference on Document Analysis and
      Recognition (ICDAR)
      http://www.icdar2011.org/
-     Beijing, China September 18 - 21, 2011.
+     Beijing, China, September 18 - 21, 2011.
 
 
    You can download this paper and related material from

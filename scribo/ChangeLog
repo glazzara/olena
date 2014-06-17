@@ -1,3 +1,9 @@
+2014-06-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the list of Scribo-related publications.
+
+	* README (Bibliography): Here.
+
 2014-03-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Scribo: Improve scribo-cli's `--version' option.
