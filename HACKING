@@ -1,4 +1,5 @@
-Copyright (C) 2009, 2010, 2013 EPITA Research and Development Laboratory (LRDE)
+Copyright (C) 2009, 2010, 2013, 2014 EPITA Research and Development
+Laboratory (LRDE)
 
 This file is part of Olena.
 
@@ -108,7 +109,7 @@ Things to remember before releasing a new version of Olena, roughly in
 this order:
 
    * Olena is designed to be released as a whole package
-     (`olena-x.y.tar.{gz,bz2}') *and* as seperate components
+     (`olena-x.y.tar.{gz,bz2}') and later as separate components
      (`milena-x.y.tar.{gz,bz2}', `olena-scribo-x.y.tar.{gz,bz2}',
      `swilena-x.y.tar.{gz,bz2}', etc.).  Both procedures should be
      checked.
@@ -123,26 +124,26 @@ this order:
    * Update revision numbers in `configure.ac' in the top-level and
      subprojects directories (`milena/', `scribo/', etc.).
 
-   * Create all packages using `make distcheck' (not just
+   * Create (all) packages using `make distcheck' (not just
      `make dist').
 
-   * Install the packages in `/lrde/dload/olena/x.y/', along with the
+   * Install the packages in `/lrde/dload/olena/x.y/', along with
      Olena's `NEWS' and `README' files, and Milena's documentation (in
      `/lrde/dload/olena/x.y./doc/') and ensure they are accessible
      from the Web.
 
    * Create a new page on the Olena Web site for the new release (e.g,
-     http://olena.lrde.epita.fr/OlenaXYZ for release x.y.z), update
+     https://olena.lrde.epita.fr/OlenaXYZ for release x.y.z), update
      the Download page (http://olena.lrde.epita.fr/Download) and make
      an announcement on the main page (http://olena.lrde.epita.fr/).
-     Also update the link under the Download item of the left bar
-     (http://olena.lrde.epita.fr/WebContents).
+     Also update the link under the Download item of the right-hand
+     side menu (https://www.lrde.epita.fr/wiki/Template:OlenaMenu).
 
    * Likewise, announce the release on the Olena Trac
      (https://trac.lrde.org/olena/).
 
    * Make an announce on the LRDE Web site as well
-     (http://www.lrde.epita.fr/cgi-bin/twiki/view/Lrde/News).
+     (https://www.lrde.epita.fr/wiki/Form:OlenaNews).
 
    * Finally, post an announce to annonce@lrde.epita.fr.  See the files
      `ANNOUNCE-x.y' at the root of the repository for models.
@@ -163,4 +164,5 @@ this order:
 
 .. Local Variables:
 .. mode: rst
+.. ispell-local-dictionary: "american"
 .. End:
