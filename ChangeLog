@@ -1,5 +1,13 @@
 2014-06-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update software version numbers.
+
+	* README (Required Software, Configuration, Supported Platforms)
+	* HACKING (Required Software):
+	Here.
+
+2014-06-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update instructions for releases.
 
 	* HACKING (Releasing): Here.

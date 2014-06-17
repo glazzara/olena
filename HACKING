@@ -61,7 +61,7 @@ the following extra programs if you want to work on the Olena project.
 
         - GNU Autoconf 2.61,
 
-        - GNU Automake 1.10,
+        - GNU Automake 1.11,
 
         - GNU Libtool 1.5.22.
 
@@ -69,7 +69,7 @@ the following extra programs if you want to work on the Olena project.
 
         - SWIG 1.3.35,
 
-        - Python 2.5.
+        - Python 2.4.
 
    * If you want to change and/or rebuild the documentation, the
      following tools are required:
@@ -80,9 +80,10 @@ the following extra programs if you want to work on the Olena project.
 
         - the `listings' LaTeX package,
 
-        - the `convert' utility from ImageMagick (6.3.7),
+        - the `convert' utility from ImageMagick (6.3.7) or
+          GraphicsMagick (1.3.12),
 
-        - HeVeA 1.10
+        - HeVeA 1.10,
 
         - LaTeX2HTML (or at minimum, its `html.sty' style file),
 

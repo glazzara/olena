@@ -1,5 +1,5 @@
-Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
-Laboratory (LRDE)
+Copyright (C) 2008, 2009, 2010, 2011, 2012, 2014 EPITA Research and
+Development Laboratory (LRDE)
 
 This file is part of Olena.
 
@@ -89,7 +89,7 @@ Optional:
 
    * to use various image types:
 
-        - Magick++
+        - Magick++ (either provided by ImageMagick or GraphicsMagick)
 
         - libtiff
 
@@ -148,9 +148,9 @@ In order to prepare the build process, you need to configure the source
 tree.
 
    Assuming your Olena distribution is uncompressed in directory
-`olena-1.0', follow these steps:
+`olena-2.0', follow these steps:
 
-     % cd olena-1.0
+     % cd olena-2.0
      % mkdir _build
      % cd _build
      % ../configure
@@ -452,10 +452,10 @@ Olena has been tested on the following configurations:
 ===========================  =============================================
 System                       Compiler
 ===========================  =============================================
-GNU/Linux on IA-32           g++ (GNU GCC) 3.3, 3.4, 4.0, 4.1, 4.2 and 4.3
-GNU/Linux on IA-32           icpc (Intel C/C++ Compiler) 10.1 and 11.0
-GNU/Linux on AMD64/Intel 64  g++ (GNU GCC) 4.1
-Mac OS X (10.5) on IA-32     g++ (GNU GCC) 4.0.1
+GNU/Linux on x86-64          g++ (GNU GCC) 4.7, 4.8
+GNU/Linux on x86-64          clang++ (LLVM) 3.5
+OS X (10.8) on Intel 64      g++ (GNU GCC) 4.8
+OS X (10.8) on Intel 64      clang++ (Apple LLVM) 5.0
 ===========================  =============================================
 
 
