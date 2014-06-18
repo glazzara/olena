@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -44,7 +44,7 @@
 #include <mln/util/graph.hh>
 #include <mln/accu/center.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_rag.hh>
 //#include <scribo/primitive/group/from_rag.hh>
 
@@ -54,8 +54,8 @@
 
 
 #include <scribo/fun/v2b/objects_small_filter.hh>
-#include <scribo/debug/save_bboxes_image.hh>
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/bboxes_image.hh>
+#include <scribo/debug/linked_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -172,40 +172,45 @@ int main(int argc, char* argv[])
 
   typedef image2d<value::label_16> L;
   value::label_16 nbboxes;
-  typedef object_image(L) objects_t;
-  objects_t objects = primitive::extract::objects(input, c8(), nbboxes);
+  typedef component_set<L> components_t;
+  components_t components = primitive::extract::components(input, c8(), nbboxes);
 
   /// First filtering.
-  objects_t filtered_objects
-    = scribo::filter::objects_small(objects, 6);
+  components_t filtered_components
+    = scribo::filter::components_small(components, 6);
 
-  filtered_objects
-    = scribo::filter::objects_thin(filtered_objects, 3);
+  filtered_components
+    = scribo::filter::components_thin(filtered_components, 3);
 
-  filtered_objects
-    = scribo::filter::objects_thick(filtered_objects,
+  filtered_components
+    = scribo::filter::objects_thick(filtered_components,
 				    math::min(input.ncols(), input.nrows()) / 6);
 
 
-  /// Getting objects links from a Region Adjacency graph.
-  mln_VAR(rag_data, primitive::link::with_rag(filtered_objects, c8()));
+  /// Getting components links from a Region Adjacency graph.
+  mln_VAR(rag_data, primitive::link::with_rag(filtered_components, c8()));
 
 
   mln_VAR(v_ima, scribo::graph::compute_vertex(accu::center<point2d>(),
 					       rag_data.first(),
-					       filtered_objects,
-					       filtered_objects.nlabels()));
+					       filtered_components.labeled_image(),
+					       filtered_components.nelements()));
 
   //FOR DEBUGGING PURPOSE
   {
     image2d<value::rgb8>
       before_grouping = data::convert(value::rgb8(), input);
 
+    // FIXME: Disabled, no longer compiles.
+#if 0
     scribo::draw::bounding_boxes(before_grouping,
-				 filtered_objects.bboxes(),
+				 filtered_components.bboxes(),
 				 literal::blue);
+#endif
 
-    mln_VAR(pv, mln::make::p_vertices_with_mass_centers(filtered_objects, rag_data.first()));
+    mln_VAR(pv,
+            mln::make::p_vertices_with_mass_centers(filtered_components.labeled_image(),
+                                                    rag_data.first()));
     mln::debug::draw_graph(before_grouping, pv, literal::green, literal::green);
 
     io::ppm::save(before_grouping,
@@ -227,7 +232,7 @@ int main(int argc, char* argv[])
 
 
 //     scribo::draw::bounding_boxes(after_grouping,
-// 				 filtered_objects.bboxes(),
+// 				 filtered_components.bboxes(),
 // 				 literal::blue);
 
 //     mln::debug::draw_graph(after_grouping, v_ima.domain(),

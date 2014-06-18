@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010, 2014 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -23,8 +23,9 @@ noinst_PROGRAMS = 				\
   group_from_several_left_links    		\
   group_from_single_link
 
+noinst_PROGRAMS += group_from_rag
 
 ## FIXME: Does not compile.
-## bin_PROGRAMS += group_from_rag   	    \
-##  		   group_from_graph 	    \
-##  		   group_from_several_graph
+## noinst_PROGRAMS +=				\
+##   group_from_graph				\
+##   group_from_several_graph
