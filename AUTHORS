@@ -27,10 +27,13 @@ Active LRDE Staff.
   - Overhaul of the dynamic-static bridge (Olena proto-1.0 and later).
   - Integration of GNU Libtool (Olena 0.10a and later).
   - SCOOP 2 and Static (Olena pre-1.0 and later).
-  - G++ and clang compatibility.
+  - Compatibility with compilers, libraries and tools.
 
 
 * **Myriam Robert-Seidowsky**	<myriam.robert-seidowsky@lrde.epita.fr>
+
+
+* **Yongchao Xu**		<yongchao.xu@lrde.epita.fr>
 
 
 ===============
@@ -54,22 +57,22 @@ Past contributors of LRDE Staff.
 
 * **Réda Dehak**		<reda@lrde.epita.fr>
 
-  - Management of the project.
+  - Project management (Olena 0.x).
   - Color conversions.
-  - Cleanup the sources.
+  - Sources cleanup.
 
 
 * **Akim Demaille**		<akim@lrde.epita.fr>
 
-  - Configuration system.
-  - Maintenance of code's clearness.
+  - Configuration system (Olena 0.x).
+  - Maintenance of the code's clearness.
 
 
 * **Alexandre Duret-Lutz**	<adl@lrde.epita.fr>
 
   - Maintenance of the source tree for several years.
   - Type system.
-  - Test system.
+  - Test system (Olena 0.x).
   - First documentation system.
   - Numerous hours spent on Olena to make it better.
 
@@ -197,17 +200,17 @@ Students from Class 2008.
 
 * **Tristan Croiset**
 
-  - Dynamic (Dyn) (Olena proto-1.0)
+  - Dynamic (Dyn) (Olena proto-1.0).
 
 
 * **Quentin Hocquet**
 
-  - SCOOL
+  - SCOOL language design and implementation.
 
 
 * **Thomas Moulard**
 
-  - SCOOL
+  - SCOOL language design and implementation.
 
 =========================
 Students from Class 2007.
@@ -231,7 +234,7 @@ Students from Class 2006.
 
 * **Simon Odou**
 
-  - Contributions to document the code.
+  - Contributions to code documentation.
   - Deconvolution.
   - Generic morphers.
   - SCOOP 2 (Olena proto-1.0).
@@ -244,10 +247,10 @@ Students from Class 2006.
 
 * **Damien Thivolle**
 
-  - Contributions to document the code.
-  - Generic morphers.
+  - Contributions to code documentation.
+  - Initial implementation of generic morphers.
   - Configuration system.
-  - Shapelets transform.
+  - Shapelets transform (Olena 0.10).
   - G++ 4.0 compatibility (Olena 0.10a).
   - Canvas for algorithms (Olena proto-1.0).
   - SCOOP 2 (Olena proto-1.0).
@@ -261,16 +264,16 @@ Students from Class 2005.
 
   - Color conversion.
   - Attribute opening and closing algorithms.
-  - New documentation system.
-  - Document the code.
-  - Cleanup the sources.
+  - Documentation system.
+  - Code documentation.
+  - Sources cleanup.
 
 
 * **Niels Van Vliet**
 
   - Color conversion.
   - Attribute opening and closing algorithms.
-  - Contributions to document the code.
+  - Contributions to code documentation.
   - Histograms.
 
 =========================
@@ -280,26 +283,26 @@ Students from Class 2004.
 * **Sylvain Berlemont**
 
   - Combinatorial maps.
-  - Cleanup the sources.
+  - Sources cleanup.
 
 
 * **Nicolas Burrus**
 
-  - Integre.
-  - Olena I/O.
+  - The Integre value type library (Olena 0.x).
+  - Olena I/Os.
   - Source tree.
 
 
 * **David Lesage**
 
   - Type system.
-  - New paradigm.
-  - Cleanup the sources.
+  - Programming paradigm.
+  - Sources cleanup.
 
 
 * **Astrid Wang**
 
-  - New documentation system.
+  - Documentation system.
   - Static arrays implementation.
 
 =========================
@@ -313,7 +316,7 @@ Students from Class 2003.
 
 * **Jean-Sébastien Mouret**
 
-  - Image I/O.
+  - Image I/Os.
   - Source tree and configuration system.
   - Fast morphological operators.
 
@@ -337,7 +340,7 @@ Students from Class 2003.
 * **Emmanuel Turquin**
 
   - Implementation of transforms.
-  - Integre.
+  - The Integre value type library (Olena 0.x).
 
 =========================
 Students from Class 2002.
@@ -354,7 +357,7 @@ Students from Class 2002.
 * **Rémi Coupet**
 
   - Olena morpho.
-  - Data types (pre-0.6).
+  - Data types (Olena pre-0.6).
   - Olena core.
   - Bibliographical research.
 
@@ -389,7 +392,7 @@ Students from Class 2001.
 
 * **Anthony Pinagot**
 
-  - Olena I/O.
+  - Olena I/Os.
   - Statistical operators.
   - FFT algorithm.
 
