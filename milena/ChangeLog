@@ -1,5 +1,12 @@
 2014-06-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Re-enable Milena test world/inter_pixel/display_edge.
+
+	* tests/world/inter_pixel/Makefile.am (check_PROGRAMS):
+	Add display edge.
+
+2014-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not use mln_VAR in Milena tests, apps and tools.
 
 	* apps/constrained-connectivity/constrained-connectivity.cc,
