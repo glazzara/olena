@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -25,7 +25,6 @@
 
 #include <cmath>
 
-#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/world/inter_pixel/immerse.hh>
@@ -74,7 +73,8 @@ int main()
 
   mln_assertion(compute(imax, d) == (make::image2d(refs) | is_separator()));
 
-  mln_VAR(g, compute(imax, d));
+  typedef image_if<image2d<int>, world::inter_pixel::is_separator> g_t;
+  g_t g = compute(imax, d);
 
   unsigned n_basins;
   debug::println(morpho::watershed::flooding(g, e2e(), n_basins));

@@ -1,3 +1,30 @@
+2014-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not use mln_VAR in Milena tests, apps and tools.
+
+	* apps/constrained-connectivity/constrained-connectivity.cc,
+	* tests/core/image/dmorph/transformed_image.cc,
+	* tests/core/image/dmorph/unproject_image.cc,
+	* tests/core/image/graph_image.cc,
+	* tests/morpho/tree/filter/filter.cc,
+	* tests/world/inter_pixel/compute.cc,
+	* tests/world/inter_pixel/display_edge.cc:
+	Here.
+	* tests/core/routine/extend.cc,
+	* tests/labeling/foreground.cc,
+	* tests/linear/sobel_2d.cc,
+	* tests/morpho/elementary/gradient.cc,
+	* tests/morpho/elementary/gradient_external.cc,
+	* tests/morpho/elementary/gradient_internal.cc,
+	* tests/morpho/elementary/laplacian.cc,
+	* tests/morpho/skeleton_constrained.cc,
+	* tests/morpho/tree/compute_attribute_image.cc,
+	* tests/morpho/tree/compute_parent.cc,
+	* tests/pw/image.cc,
+	* tests/world/inter_pixel/immerse.cc,
+	* tools/area_flooding.cc:
+	Do not include mln/core/var.hh.
+
 2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Help SWIG wrap mln::internal::image_base.

@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -26,7 +26,6 @@
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/dmorph/unproject_image.hh>
-#include <mln/core/var.hh>
 
 #include <mln/fun/v2v/projection.hh>
 
@@ -47,7 +46,10 @@ int main()
 
   fun::v2v::projection<point2d, 0> f;
 
-  mln_VAR( ima_, unproject(ima, make::box2d(3, 3), f) );
+  typedef unproject_image< image1d<int>,
+                           box2d,
+                           fun::v2v::projection<point2d, 0u> > ima__t;
+  ima__t ima_ = unproject(ima, make::box2d(3, 3), f);
   debug::println(ima_);
 
   ima_(point2d(1,1)) = 9;

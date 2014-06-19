@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
-// Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010, 2013, 2014 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -25,7 +25,6 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/var.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/core/alias/neighb2d.hh>

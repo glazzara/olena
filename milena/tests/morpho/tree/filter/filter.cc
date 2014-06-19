@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -25,7 +25,6 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
 #include <mln/pw/all.hh>
 
 #include <mln/value/int_u8.hh>
@@ -68,7 +67,9 @@ int main()
     A a = morpho::tree::compute_attribute_image(attribute_t (), tree);
 
     unsigned lambda = 5;
-    mln_VAR(predicate, pw::value(a) >= pw::cst(lambda));
+    typedef fun::geq_v2b_expr_< pw::value_<image2d<unsigned> >,
+                                pw::cst_<unsigned> > predicate_t;
+    predicate_t predicate = pw::value(a) >= pw::cst(lambda);
     I ref = morpho::closing::area(input, c4(), lambda);
 
     {

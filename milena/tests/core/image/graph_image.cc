@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,6 @@
 #include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/core/concept/function.hh>
 #include <mln/core/neighb.hh>
-#include <mln/core/var.hh>
 #include <mln/accu/shape/bbox.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
@@ -120,7 +119,10 @@ int main()
     iota(i) = 10 + i;
 
   // Create graph image.
-  mln_const_VAR(ima, (iota | pv));
+  typedef pw::image< fun::i2v::array<unsigned>,
+                     p_vertices< util::graph,
+                                 fun::i2v::array<point2d> > > ima_t;
+  ima_t ima = iota | pv;
 
   {
     // FIXME: Move this part to a special test case.

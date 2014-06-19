@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,7 +23,6 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/fun/p2p/translation.hh>
 #include <mln/debug/iota.hh>
@@ -42,8 +41,10 @@ int main()
   debug::iota(ima);
 
   dpoint2d dp(-1,+1);
-  mln_VAR( ima_, transform_domain( ima,
-				   fun::p2p::translation_t<point2d>(dp) ) );
+  typedef transformed_image< mln::image2d<int>,
+                             fun::p2p::translation_t<point2d> > ima__t;
+  ima__t ima_ = transform_domain( ima,
+                                  fun::p2p::translation_t<point2d>(dp) );
 
   box2d b_ = geom::bbox(ima_.domain());
 

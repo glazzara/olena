@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2013, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -85,8 +86,6 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/debug/println.hh>
 
-#include <mln/core/var.hh>
-
 
 int main(int argc, char* argv[])
 {
@@ -123,7 +122,8 @@ int main(int argc, char* argv[])
   debug::println("f:", f);
 
   // Compute the associated line graph gradient.
-  mln_VAR(g, world::inter_pixel::compute (f, fun::vv2v::diff_abs<int_u8>()));
+  typedef image_if<image2d<int_u8>, world::inter_pixel::is_separator> g_t;
+  g_t g = world::inter_pixel::compute (f, fun::vv2v::diff_abs<int_u8>());
 
   debug::println("g:", g);
 
@@ -131,7 +131,8 @@ int main(int argc, char* argv[])
   typedef morpho::watershed::topo_wst<g_t, world::inter_pixel::dbl_neighb2d> tree_t;
   tree_t tree(g, world::inter_pixel::e2e());
   tree.go();
-  mln_VAR(w, morpho::watershed::topological(tree));
+  typedef image_if<image2d<int_u8>, world::inter_pixel::is_separator> w_t;
+  w_t w = morpho::watershed::topological(tree);
   debug::println("w:", w);
 
   // Computing the set of values of W.
@@ -145,7 +146,11 @@ int main(int argc, char* argv[])
   for (std::set<int_u8>::const_iterator alpha = values.begin();
        alpha != values.end(); ++alpha)
     {
-      mln_VAR(alpha_cc, w | (pw::value(w) > pw::cst(*alpha)));
+      typedef image_if< w_t,
+                        fun::greater_v2b_expr_< pw::value_<w_t>,
+                                                pw::cst_<int_u8> > >
+        alpha_cc_t;
+      alpha_cc_t alpha_cc = w | (pw::value(w) > pw::cst(*alpha));
       std::cout << *alpha << "-cc:" << std::endl;
       /* FIXME: There should be variants of debug::println allowing
 	 the user to pass an optional ``support'' larger than the
@@ -201,7 +206,8 @@ int main(int argc, char* argv[])
   mln_ch_value_(w_t, int_u8) max_val =
     morpho::tree::compute_attribute_image_from(max_accu, t, init_max_val);
   // Attribute image of components' height.
-  mln_ch_value_(w_t, int_u8) height;
+  typedef mln_ch_value_(w_t, int_u8) height_t;
+  height_t height;
   initialize(height, w);
   for_all(e)
     height(e) = max_val(e) - min_val(e);
@@ -210,9 +216,16 @@ int main(int argc, char* argv[])
   // Thresholding W using first integer values with a condition on HEIGHT.
   for (unsigned alpha = 0; alpha <= 6; ++alpha)
     {
-      mln_VAR(alpha_alpha_cc,
-	      w | (pw::value(w) > pw::cst(alpha)
-		   || (pw::value(height) > pw::cst(alpha))));
+      typedef image_if< w_t,
+                        fun::or__v2b_expr_<
+                          fun::greater_v2b_expr_< pw::value_<w_t>,
+                                                  pw::cst_<unsigned> >,
+                          fun::greater_v2b_expr_< pw::value_<height_t>,
+                                                  pw::cst_<unsigned> > > >
+        alpha_alpha_cc_t;
+      alpha_alpha_cc_t alpha_alpha_cc =
+        w | (pw::value(w) > pw::cst(alpha)
+             || (pw::value(height) > pw::cst(alpha)));
       std::cout << "(" << alpha << ", " << alpha << ")-cc:" << std::endl;
       // FIXME: Same remark as above about println.
       debug::impl::println(w.unmorph_().domain(), alpha_alpha_cc);

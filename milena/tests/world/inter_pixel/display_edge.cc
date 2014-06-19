@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,7 +23,6 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/world/inter_pixel/immerse.hh>
@@ -62,18 +61,18 @@ int main()
     typedef image_if<I, is_pixel> Ix;
     Ix imax = immerse(ima);
 
-    mln_VAR(g, compute(imax, d));
+    image_if<I, is_separator> g = compute(imax, d);
     std::cout << g.unmorph_().bbox() << std::endl;
 
-    mln_VAR(out1, display_edge(g.unmorph_(), 0, 1));
+    I out1 = display_edge(g.unmorph_(), 0, 1);
     debug::println(out1);
-    mln_VAR(out2, display_edge(g.unmorph_(), 0, 2));
+    I out2 = display_edge(g.unmorph_(), 0, 2);
     debug::println(out2);
-    mln_VAR(out3, display_edge(g.unmorph_(), 0, 3));
+    I out3 = display_edge(g.unmorph_(), 0, 3);
     debug::println(out3);
-    mln_VAR(out4, display_edge(g.unmorph_(), 0, 4));
+    I out4 = display_edge(g.unmorph_(), 0, 4);
     debug::println(out4);
-    mln_VAR(out5, display_edge(g.unmorph_(), 0, 5));
+    I out5 = display_edge(g.unmorph_(), 0, 5);
     debug::println(out5);
   }
 
@@ -88,18 +87,18 @@ int main()
     typedef image_if<I, is_pixel> Ix;
     Ix imax = immerse(ima);
 
-    mln_VAR(g, compute(imax, d));
+    image_if<I, is_separator> g = compute(imax, d);
     std::cout << g.unmorph_().bbox() << std::endl;
 
-    mln_VAR(out1, display_edge(g.unmorph_(), 0, 1));
+    I out1 = display_edge(g.unmorph_(), 0, 1);
     debug::println(out1);
-    mln_VAR(out2, display_edge(g.unmorph_(), 0, 2));
+    I out2 = display_edge(g.unmorph_(), 0, 2);
     debug::println(out2);
-    mln_VAR(out3, display_edge(g.unmorph_(), 0, 3));
+    I out3 = display_edge(g.unmorph_(), 0, 3);
     debug::println(out3);
-    mln_VAR(out4, display_edge(g.unmorph_(), 0, 4));
+    I out4 = display_edge(g.unmorph_(), 0, 4);
     debug::println(out4);
-    mln_VAR(out5, display_edge(g.unmorph_(), 0, 5));
+    I out5 = display_edge(g.unmorph_(), 0, 5);
     debug::println(out5);
   }
 }

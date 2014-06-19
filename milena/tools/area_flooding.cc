@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2013, 2014 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -55,7 +55,6 @@
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/var.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing/area_on_vertices.hh>
