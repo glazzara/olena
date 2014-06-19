@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2014 EPITA Research and Development Laboratory
+// (LRDE).
 //
 // This file is part of Olena.
 //
@@ -56,8 +56,6 @@
 
 # include <mln/value/rgb8.hh>
 # include <mln/value/label_16.hh>
-
-# include <mln/core/var.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -126,7 +124,6 @@ namespace scribo
 	mln::util::array<box<P> > result;
 	std::vector<bool> to_keep(tableboxes.nelements(), true);
 
-	//FIXME: use mln_VAR?
 	typedef
 	  extension_ima<
 	      const image_if<L,

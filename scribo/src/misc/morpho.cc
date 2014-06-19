@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2013 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2013, 2014 EPITA Research and Development Laboratory
+// (LRDE).
 //
 // This file is part of Olena.
 //
@@ -41,7 +41,6 @@
 #include <mln/io/ppm/save.hh>
 
 #include <mln/transform/distance_and_influence_zone_geodesic.hh>
-#include <mln/core/var.hh>
 
 #include <mln/win/hline2d.hh>
 #include <mln/win/disk2d.hh>
@@ -76,7 +75,11 @@ int main(int argc, char *argv[])
   label_16 nlabels;
   image2d<label_16> lbl = labeling::blobs(input, c8(), nlabels);
 
-  mln_VAR(res, transform::distance_and_influence_zone_geodesic(lbl, c8(), mln_max(unsigned)));
+  typedef util::couple< image2d<unsigned>, image2d<label_16> > res_t;
+  res_t res =
+    transform::distance_and_influence_zone_geodesic(lbl,
+                                                    c8(),
+                                                    mln_max(unsigned));
 
   io::pgm::save(labeling::wrap(res.first()), "dmap.pgm");
   io::ppm::save(labeling::colorize(rgb8(), res.second(), nlabels), "iz.ppm");

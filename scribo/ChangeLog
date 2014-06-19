@@ -1,3 +1,18 @@
+2014-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not use mln_VAR in Scribo.
+
+	* scribo/debug/text_areas_image.hh,
+	* src/misc/dmap.cc,
+	* src/misc/morpho.cc,
+	* src/misc/rectangularity.cc,
+	* src/primitive/group/group_from_rag.cc:
+	Here.
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* src/text_recognition_in_picture.cc:
+	Do not include mln/core/var.hh.
+
 2014-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make src/primitive/group/group_from_rag.cc compile again.

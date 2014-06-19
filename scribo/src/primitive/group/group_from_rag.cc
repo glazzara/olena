@@ -25,7 +25,6 @@
 
 #include <iostream>
 
-#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/edge_image.hh>
 #include <mln/core/image/vertex_image.hh>
@@ -188,13 +187,16 @@ int main(int argc, char* argv[])
 
 
   /// Getting components links from a Region Adjacency graph.
-  mln_VAR(rag_data, primitive::link::with_rag(filtered_components, c8()));
+  typedef util::couple< util::graph, image2d<value::label_16> > rag_data_t;
+  rag_data_t rag_data = primitive::link::with_rag(filtered_components, c8());
 
 
-  mln_VAR(v_ima, scribo::graph::compute_vertex(accu::center<point2d>(),
-					       rag_data.first(),
-					       filtered_components.labeled_image(),
-					       filtered_components.nelements()));
+  typedef vertex_image<void, algebra::vec<2u, float>, util::graph> v_ima_t;
+  v_ima_t v_ima =
+    scribo::graph::compute_vertex(accu::center<point2d>(),
+                                  rag_data.first(),
+                                  filtered_components.labeled_image(),
+                                  filtered_components.nelements());
 
   //FOR DEBUGGING PURPOSE
   {
@@ -208,9 +210,10 @@ int main(int argc, char* argv[])
 				 literal::blue);
 #endif
 
-    mln_VAR(pv,
-            mln::make::p_vertices_with_mass_centers(filtered_components.labeled_image(),
-                                                    rag_data.first()));
+    typedef p_vertices<util::graph, mln::fun::i2v::array<point2d> > pv_t;
+    pv_t pv =
+      mln::make::p_vertices_with_mass_centers(filtered_components.labeled_image(),
+                                              rag_data.first());
     mln::debug::draw_graph(before_grouping, pv, literal::green, literal::green);
 
     io::ppm::save(before_grouping,

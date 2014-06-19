@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -25,7 +25,6 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
 
 #include <mln/literal/colors.hh>
 
@@ -68,7 +67,8 @@ int main(int argc, char *argv[])
   label_16 nlabels;
   image2d<label_16> lbl = labeling::blobs(input, c8(), nlabels);
 
-  mln_VAR(dmap, transform::distance_geodesic(lbl, c8(), mln_max(unsigned)));
+  typedef image2d<unsigned> dmap_t;
+  dmap_t dmap = transform::distance_geodesic(lbl, c8(), mln_max(unsigned));
 
   io::pgm::save(labeling::wrap(dmap), "dmap.pgm");
 

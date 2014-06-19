@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2014 EPITA Research and Development Laboratory
+// (LRDE).
 //
 // This file is part of Olena.
 //
@@ -36,7 +36,6 @@
 
 # include <mln/core/image/imorph/tr_image.hh>
 
-# include <mln/core/var.hh>
 # include <mln/core/routine/duplicate.hh>
 
 # include <mln/data/paste.hh>
@@ -103,7 +102,8 @@ namespace scribo
       for_all_comps(i, comps)
 	if (comps(i).is_valid())
 	{
-	  mln_VAR(tmp, duplicate(input_rgb | comps(i).bbox()));
+          typedef mln::sub_image<I, box2d> tmp_t;
+          tmp_t tmp = duplicate(input_rgb | comps(i).bbox());
 
 	  typedef mln::fun::x2x::translation<P::dim, float> trans_t;
 	  trans_t trans(dv - comps(i).bbox().pmin().to_vec());

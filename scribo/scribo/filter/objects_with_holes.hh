@@ -1,4 +1,4 @@
-// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
+// Copyright (C) 2009, 2010, 2011, 2013, 2014 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -66,7 +66,6 @@
 # include <mln/util/timer.hh>
 
 # include <mln/value/label_16.hh>
-# include <mln/core/var.hh>
 
 
 #include <mln/debug/filename.hh>

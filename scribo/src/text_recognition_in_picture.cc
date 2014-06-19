@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2013, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -98,7 +98,6 @@
 #include <scribo/toolchain/text_in_picture.hh>
 
 #include <mln/util/timer.hh>
-#include <mln/core/var.hh>
 
 
 #include <scribo/afp/components.hh>
