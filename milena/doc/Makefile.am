@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+# Copyright (C) 2007, 2008, 2009, 2010, 2013, 2014 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -601,10 +601,8 @@ CLEANFILES = $(PROGRAMS_examples)
 
 $(srcdir)/outputs.mk: $(srcdir)/gen-make-variable
 	rm -f $@.tmp
-# Ignore sources in examples/trash/.
 	$(srcdir)/gen-make-variable OUTPUTS				\
-	  `find $(srcdir)/examples					\
-               -name \*.cc -a \! -path $(srcdir)/examples/trash/\*	\
+	  `find $(srcdir)/examples -name \*.cc				\
 	     | sed -e 's,$(srcdir)/examples/,,'				\
 	           -e 'y,/,_,'						\
 	           -e 's,\(.*\)\.cc$$,$$(srcdir)/outputs/\1.txt,'`	\
@@ -618,10 +616,8 @@ MAINTAINERCLEANFILES += $(OUTPUTS)
 .PHONY: regen-outputs-mk
 regen-outputs-mk:
 	rm -f $(srcdir)/outputs.mk.tmp
-# Ignore sources in examples/trash/.
 	$(srcdir)/gen-make-variable OUTPUTS				\
-	  `find $(srcdir)/examples					\
-               -name \*.cc -a \! -path $(srcdir)/examples/trash/\*	\
+	  `find $(srcdir)/examples -name \*.cc				\
 	     | sed -e 's,$(srcdir)/examples/,,'				\
 	           -e 'y,/,_,'						\
 	           -e 's,\(.*\)\.cc$$,$$(srcdir)/outputs/\1.txt,'`	\
@@ -647,11 +643,9 @@ EXTRA_DIST += gen-examples-outputs-mk
 
 $(srcdir)/examples-outputs.mk: $(srcdir)/gen-examples-outputs-mk
 	rm -f $@.tmp
-# Ignore sources in examples/trash/.
 	cd $(srcdir) &&							\
 	  ./gen-examples-outputs-mk					\
-	    `find examples -name \*.cc -a \! -path examples/trash/\*	\
-	       | env LC_ALL=C sort`					\
+	    `find examples -name \*.cc | env LC_ALL=C sort`		\
 	    >examples-outputs.mk.tmp
 	mv -f $@.tmp $@
 	chmod -w $@
@@ -662,8 +656,7 @@ regen-examples-outputs-mk:
 	rm -f $(srcdir)/examples-outputs.mk.tmp
 	cd $(srcdir) &&							\
 	  ./gen-examples-outputs-mk					\
-	    `find examples -name \*.cc -a \! -path examples/trash/\*	\
-	       | env LC_ALL=C sort`					\
+	    `find examples -name \*.cc | env LC_ALL=C sort`		\
 	    >examples-outputs.mk.tmp
 	mv -f $(srcdir)/examples-outputs.mk.tmp $(srcdir)/examples-outputs.mk
 	chmod -w $(srcdir)/examples-outputs.mk

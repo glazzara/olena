@@ -1,5 +1,16 @@
 2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove mentions to trash/ directories in Milena.
+
+	* doc/Doxyfile.in (EXCLUDE)
+	* doc/Makefile.am ($(srcdir)/outputs.mk, regen-outputs-mk)
+	($(srcdir)/examples-outputs.mk, regen-examples-outputs-mk)
+	* doc/gen-figures-mk,
+	* doc/gen-split-outputs-mk:
+	Here.
+
+2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen files in Milena.
 
 	* doc/examples.mk: Regen.

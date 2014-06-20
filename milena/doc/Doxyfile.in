@@ -705,9 +705,7 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = @top_srcdir@/milena/sandbox \
-                         @top_srcdir@/milena/trash \
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
-                         @top_srcdir@/milena/doc/examples/trash \
                          @top_srcdir@/milena/doc/user-refman \
                          @top_srcdir@/milena/doc/devel-refman \
                          @top_srcdir@/milena/tests/unit_test
