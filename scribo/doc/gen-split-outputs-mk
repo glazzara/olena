@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2014 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -50,7 +50,6 @@ backslashify()
 inputs()
 {
   # Remove the .cc extension before sorting file names.
-  # FIXME: Or « find examples -name \*.cc -a \! -path examples/trash/\* » ?
   find examples -name \*.cc			\
     | sed 's/.cc$//'				\
     | sort					\

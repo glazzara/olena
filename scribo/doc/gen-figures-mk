@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2014 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,9 +25,9 @@ export LC_ALL=C
 inputs()
 {
   # Remove the .cc extension before sorting file names.
-  find examples -name \*.cc -a \! -path examples/trash/\*	\
-    | sed 's/.cc$//'						\
-    | sort							\
+  find examples -name \*.cc			\
+    | sed 's/.cc$//'				\
+    | sort					\
     | sed 's/$/.cc/'
 }
 
