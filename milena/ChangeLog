@@ -1,5 +1,11 @@
 2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen files in Milena.
+
+	* doc/examples.mk: Regen.
+
+2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove trash/ directories.
 
 	* doc/examples/trash/accu.cc,

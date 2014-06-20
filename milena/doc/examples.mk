@@ -40,37 +40,6 @@ EXAMPLES = \
   $(srcdir)/examples/paste.cc \
   $(srcdir)/examples/point-1.cc \
   $(srcdir)/examples/predicate-1.cc \
-  $(srcdir)/examples/trash/accu.cc \
-  $(srcdir)/examples/trash/box.cc \
-  $(srcdir)/examples/trash/cpp_issue.cc \
-  $(srcdir)/examples/trash/erosion.cc \
-  $(srcdir)/examples/trash/for_Z.cc \
-  $(srcdir)/examples/trash/graph.cc \
-  $(srcdir)/examples/trash/image2d.cc \
-  $(srcdir)/examples/trash/image_flat.cc \
-  $(srcdir)/examples/trash/image_if.cc \
-  $(srcdir)/examples/trash/image_plain.cc \
-  $(srcdir)/examples/trash/image_safe.cc \
-  $(srcdir)/examples/trash/labeling_algo.cc \
-  $(srcdir)/examples/trash/mk_graph.cc \
-  $(srcdir)/examples/trash/p_array.2.cc \
-  $(srcdir)/examples/trash/p_array.cc \
-  $(srcdir)/examples/trash/p_image.cc \
-  $(srcdir)/examples/trash/p_key.2.cc \
-  $(srcdir)/examples/trash/p_key.cc \
-  $(srcdir)/examples/trash/p_line2d.cc \
-  $(srcdir)/examples/trash/p_mutable_array_of.cc \
-  $(srcdir)/examples/trash/p_queue.cc \
-  $(srcdir)/examples/trash/p_run.cc \
-  $(srcdir)/examples/trash/p_vaccess.cc \
-  $(srcdir)/examples/trash/proxy.cc \
-  $(srcdir)/examples/trash/sub_image.cc \
-  $(srcdir)/examples/trash/sub_image_if.cc \
-  $(srcdir)/examples/trash/tuto_bis.cc \
-  $(srcdir)/examples/trash/tuto_one.cc \
-  $(srcdir)/examples/trash/vec.cc \
-  $(srcdir)/examples/trash/win_multiple.cc \
-  $(srcdir)/examples/trash/window.cc \
   $(srcdir)/examples/tuto2_first_image.cc \
   $(srcdir)/examples/tuto3/colorize.cc \
   $(srcdir)/examples/tuto3/first_routine.cc \
