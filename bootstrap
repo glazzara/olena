@@ -196,8 +196,7 @@ if $regen_p; then
   # * Outputs.
   rm -f milena/doc/outputs.mk.tmp
   milena/doc/gen-make-variable OUTPUTS				\
-    `find milena/doc/examples					\
-         -name \*.cc -a \! -path milena/doc/examples/trash/\*	\
+    `find milena/doc/examples -name \*.cc			\
        | sed -e 's,milena/doc/examples/,,'			\
              -e 'y,/,_,'					\
              -e 's,\(.*\)\.cc$,$(srcdir)/outputs/\1.txt,'`	\
@@ -209,7 +208,7 @@ if $regen_p; then
     cd milena/doc
     rm -f examples-outputs.mk.tmp
     ./gen-examples-outputs-mk					\
-      `find examples -name \*.cc -a \! -path examples/trash/\*	\
+      `find examples -name \*.cc				\
          | env LC_ALL=C sort`					\
       >examples-outputs.mk.tmp
     mv -f examples-outputs.mk.tmp examples-outputs.mk
