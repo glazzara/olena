@@ -1,4 +1,4 @@
-# Copyright (C) 2011, 2013 EPITA Research and Development Laboratory
+# Copyright (C) 2011, 2013, 2014 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -22,20 +22,6 @@ DOXYGEN = doxygen
 DOXYFILE = Doxyfile
 
 DATA_html_dirs =
-
-## --------------------- ##
-## LaTeX configuration.  ##
-## --------------------- ##
-
-include $(top_srcdir)/build-aux/tex.mk
-
-TEXI2DVI_FLAGS +=							\
-  -I $(srcdir) -I $(srcdir)/outputs -I $(srcdir)/outputs/split		\
-  -I $(srcdir)/img -I $(srcdir)/examples/split
-
-# Additional files for LaTeX compilations.
-DOC_PACKAGES = doxyfuns.sty scribo.sty
-
 
 # ----------------------- #
 # User Reference Manual.  #
@@ -200,10 +186,7 @@ $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 
 EXTRA_DIST +=					\
   $(DATA_html_dirs)				\
-  $(DOXYFILE).in				\
-  doxyfuns.sty					\
-  scribo.sty					\
-  tools/todoxygen.sh
+  $(DOXYFILE).in
 
 
 ## ---------- ##

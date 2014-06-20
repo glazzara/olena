@@ -5,9 +5,3 @@
 /Doxyfile_devel
 /devel-refman
 /devel-refman.pdf
-
-/figures/*.png
-
-/tutorial.hh
-/tutorial.pdf
-/tutorial/

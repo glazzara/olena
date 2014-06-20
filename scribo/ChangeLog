@@ -1,5 +1,31 @@
 2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove useless parts from the Scribo documentation machinery.
+
+	* doc/doxyfuns.sty,
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/examples/dummy.cc,
+	* doc/figures.mk,
+	* doc/gen-examples-outputs-mk,
+	* doc/gen-figures-mk,
+	* doc/gen-make-variable,
+	* doc/gen-split-examples-mk,
+	* doc/gen-split-outputs-mk,
+	* doc/graphicx.hva,
+	* doc/outputs.mk,
+	* doc/outputs/dummy.txt,
+	* doc/programs-examples.mk,
+	* doc/scribo.sty,
+	* doc/split-examples.mk,
+	* doc/split-outputs.mk,
+	* doc/tools/todoxygen.sh,
+	* doc/tutorial.tex:
+	Remove.
+	* doc/Makefile.am: Adjust and remove useless bits.
+
+2014-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove mentions to trash/ directories in Scribo.
 
 	* doc/gen-figures-mk,
