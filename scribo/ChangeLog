@@ -442,7 +442,7 @@
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* doc/Doxyflile.in: Fix include paths in documentation.
+	* doc/Doxyfile.in: Fix include paths in documentation.
 
 2013-04-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
