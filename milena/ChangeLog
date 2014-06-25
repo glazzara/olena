@@ -11653,7 +11653,7 @@
 	Update the list of non distributed headers.
 
 	* nodist-headers: Here.
-	From Thierry Géraud  <thierry.geraud@lrde.epita.fr>.
+	From Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>.
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -17400,7 +17400,7 @@
 	Typo in the documentation of mln::topo::complex.
 
 	* mln/topo/complex.hh: Here.
-	Reported by Thierry Géraud  <thierry.geraud@lrde.epita.fr>.
+	Reported by Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>.
 
 2009-06-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -43750,7 +43750,7 @@
 	* mln/trait/image/status.txt: Fix missing image type.
 
 
-2008-08-20  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+2008-08-20  Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>
 
 	Huge summer cleanup.
 
@@ -44393,7 +44393,7 @@
 	Add a selector.
 	* img/tiny.pbm: New.
 
-2008-06-27  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+2008-06-27  Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>
 
 	Add morpho elementary gradient and test.
 
@@ -44434,7 +44434,7 @@
 	image types can be delayed.
 	(mln_decl_unary_expr_): Likewise.
 
-2008-06-24  Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>
+2008-06-24  Thierry GÃƒÂ©raud  <thierry.geraud@lrde.epita.fr>
 
 	Add some technical documentation to iterator base classes.
 
@@ -45947,7 +45947,7 @@
 	* tests/core/point_set_compatibility.cc: Exercise
 	p_set< graph_psite<point2d> >.
 
-2008-06-26  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+2008-06-26  Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>
 	(mln::trait::bkd_qixter< const image3d<T>, W >)
 	(mln::trait::fwd_nixter< image3d<T>, W >)
 	(mln::trait::fwd_nixter< const image3d<T>, W >)
@@ -61314,5 +61314,5 @@
 
 Local Variables:
 ispell-local-dictionary: "american"
-coding: iso-latin-1
+coding: utf-8
 End:
