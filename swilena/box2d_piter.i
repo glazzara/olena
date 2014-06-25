@@ -107,7 +107,7 @@
 
 #if SWIGPYTHON
 
-// Handling iterators à la Python.
+// Handling iterators a la Python.
 
 %extend mln::box_fwd_piter_< mln::point<mln::grid::square, mln::def::coord> >
 {

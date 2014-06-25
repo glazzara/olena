@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-# -*- coding: latin-1 -*-
 
 # Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 #
@@ -27,12 +26,12 @@ from swilena import *
 # A 2-d (simplicial) complex and its adjacency graph.
 #
 #          v0      e3     v3
-#            o-----------o                v0----e3----v3      
-#           / \ ,-----. /                / \    |    /   
-#          / . \ \ t1/ /                /   \   t1  /    
-#      e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
-#        / /t0 \ \ ' /                /   t0  \   /      
-#       / `-----' \ /                /    |    \ /       
+#            o-----------o                v0----e3----v3
+#           / \ ,-----. /                / \    |    /
+#          / . \ \ t1/ /                /   \   t1  /
+#      e0 / / \ e1\ / / e4             e0.  ,e1'  `e4
+#        / /t0 \ \ ' /                /   t0  \   /
+#       / `-----' \ /                /    |    \ /
 #      o-----------o                v1----e2----v2
 #   v1      e2      v2
 #

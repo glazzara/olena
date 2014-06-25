@@ -109,7 +109,7 @@ namespace mln
      below)?  Probably not, as internal::image_base contains data
      (through a tracked_ptr).  */
   // \brief A semi-abstract class that serves as an entry point
-  // (called « director » by SWIG) for Python code.
+  // (called ``director'' by SWIG) for Python code.
   //
   // This class is not really abstract in the C++ sense, but it lacks
   // methods to be a real image class.

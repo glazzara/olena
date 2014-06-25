@@ -242,7 +242,7 @@ instantiate_complex_set_iterator_base(Name,
 				      mln::topo::face_fwd_iter< D >)
 
 #if SWIGPYTHON
-// Handling iterators à la Python.
+// Handling iterators a la Python.
 %extend mln::topo::face_fwd_iter< D >
 {
   mln::topo::face_fwd_iter< D >&

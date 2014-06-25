@@ -1,3 +1,13 @@
+2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove extended characters from Swilena.
+
+	* box2d_piter.i,
+	* complex.ixx,
+	* dynamic_image2d.i,
+	* python/complex2-misc.py:
+	Here, to convert these files to plain ASCII.
+
 2014-05-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve Swilena's max-tree.py output.
