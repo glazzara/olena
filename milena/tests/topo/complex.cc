@@ -56,7 +56,7 @@ int main()
                 o-----------o                v0----e3----v3      
                / \ ,-----. /                / \    |    /   
               / . \ \ t1/ /                /   \   t1  /    
-          e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
+          e0 / / \ e1\ / / e4             e0.  ,e1'  `e4  
             / /t0 \ \ ' /                /   t0  \   /      
            / `-----' \ /                /    |    \ /       
           o-----------o                v1----e2----v2
@@ -321,14 +321,14 @@ int main()
      Name                               Definition
      -----------------------------------------------------------------
      cell_fwd_iter<D>(c, f)             | Iterators on the set of the
-     cell_bkd_iter<D>(c, f)             | faces in the « cell »
+     cell_bkd_iter<D>(c, f)             | faces in the ``cell''
                                         | including p, i.e. the set of
                                         | all m-faces adjacent to p,
                                         | where m is in [0, n-1];
-                                        | this set is name « f-hat »
+                                        | this set is name ``f-hat''
 
      cell_boundary_fwd_iter<D>(c, f)    | Likewise, but excluding p;
-     cell_boundary_bkd_iter<D>(c, f)    | this set is named « p-hat* »
+     cell_boundary_bkd_iter<D>(c, f)    | this set is named ``p-hat*''
      -----------------------------------------------------------------
 
      We could also have generic iterators based on predicated, and

@@ -153,8 +153,8 @@ int main(int argc, char* argv[])
     io::ppm::save(ws_, "tmp_ws_superpose.ppm");
 
     // test% g++ -I. main.cc -DNDEBUG -O2
-    // main.cc: In function ‘int main(int, char**)’:
-    // main.cc:85: error: no matching function for call to ‘convert(mln::image2d<bool>&, mln::value::rgb8)’
+    // main.cc: In function `int main(int, char**)':
+    // main.cc:85: error: no matching function for call to `convert(mln::image2d<bool>&, mln::value::rgb8)'
 
     // /// Convert the image \p input by changing the value type.
     // ///

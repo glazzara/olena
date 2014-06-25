@@ -181,7 +181,7 @@ namespace mln
       volume<I>::take(const volume<I>& other)
       {
 	area__ += other.area__;
-	/* FIXME: Is it `t.area__' or `area__' ? Théo said it was
+	/* FIXME: Is it `t.area__' or `area__' ? ThÃ©o said it was
 	the latter, but both the ISMM 2005 paper and Olena 0.11 use
 	the former.  */
 	volume_ +=

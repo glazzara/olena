@@ -36,7 +36,7 @@
 ///
 /// Reference:
 ///   Fernand Meyer.  Un algorithme optimal de ligne de partage des
-///   eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
+///   eaux. In: Actes du 8Ã¨me CongrÃ¨s AFCET, Lyon-Villeurbanne, France
 ///   (1991), pages 847--859.
 
 # include <mln/trait/ch_value.hh>

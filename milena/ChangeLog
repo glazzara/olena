@@ -1,3 +1,27 @@
+2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Convert Milena to UTF-8.
+
+	* mln/accu/shape/volume.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/morpho/watershed/flooding.hh,
+	* mln/topo/skeleton/breadth_first_thinning.hh,
+	* mln/topo/skeleton/priority_driven_thinning.hh:
+	Here.
+	* tests/core/image/complex_image.cc,
+	* tests/core/image/complex_image.hh,
+	* tests/core/site_set/p_complex.cc,
+	* tests/make/attachment.cc,
+	* tests/make/detachment.cc,
+	* tests/morpho/complex_image_morpho.cc,
+	* tests/topo/complex.cc,
+	* tests/topo/is_facet.cc,
+	* apps/morphers/iz.cc:
+	Replace extended characters to convert to plain ASCII.
+	* mln/io/pdf/get_header.hh (mln::io::pdf::pdf_header::pdf_header):
+	Generate UTF-8 metadata.
+	* doc/Doxyfile.in (INPUT_ENCODING): Set to UTF-8.
+
 2012-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Exercise ASCII PPM file loading.

@@ -35,8 +35,8 @@
 /// to the definitions used in
 ///
 ///   Gilles Bertrand and Michel Couprie: Transformations topologiques
-///   discrètes.  In David Coeurjolly, Annick Montanvert and Jean-Marc
-///   Chassery, eds.: Géométrie discrète et images numériques.  Hermes
+///   discrÃ¨tes.  In David Coeurjolly, Annick Montanvert and Jean-Marc
+///   Chassery, eds.: GÃ©omÃ©trie discrÃ¨te et images numÃ©riques.  Hermes
 ///   Sciences Publications (2007), pages 187--209.
 
 # include <mln/core/routine/duplicate.hh>

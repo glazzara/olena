@@ -249,7 +249,7 @@ namespace mln
 
   // Operators.
 
-  // FIXME: Remove, or factor in a lower class (Théo removed it from
+  // FIXME: Remove, or factor in a lower class (ThÃ©o removed it from
   // the cleanup-2008 branch).
   template <typename L, typename R>
   inline
@@ -264,7 +264,7 @@ namespace mln
     return true;
   }
 
-  // FIXME: Remove, or factor in a lower class (Théo removed it from
+  // FIXME: Remove, or factor in a lower class (ThÃ©o removed it from
   // the cleanup-2008 branch).
   template <typename L, typename R>
   inline

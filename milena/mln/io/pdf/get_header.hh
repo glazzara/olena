@@ -88,7 +88,7 @@ namespace mln
 	is_encrypted = doc->is_encrypted();
 	is_linearized = doc->is_linearized();
 	is_locked = doc->is_locked();
-	metadata = doc->metadata().to_latin1();
+	metadata = doc->metadata().to_utf8();
       }
 
       // End of pdf_header implementation.
