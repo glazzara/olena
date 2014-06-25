@@ -1,3 +1,9 @@
+2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Convert dynamic-use-of-static-c++ to UTF-8.
+
+	* swig/run.in: Here.
+
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Normalize header guards.
