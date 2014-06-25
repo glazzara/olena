@@ -40,7 +40,7 @@
 // in this file.
 using namespace oln;
 
-// Data types are defined in the Intègre library, so they are
+// Data types are defined in the IntÃ¨gre library, so they are
 // in the ntg namespace.
 // In this file, we will neglect the 'ntg::' prefix.
 using namespace ntg;
