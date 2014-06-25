@@ -152,7 +152,7 @@ contributors.html: $(top_srcdir)/AUTHORS
 	@test -n "$(RST2HTML)"						\
 	  || { echo "error: rst2html not found during configure" >&2;	\
 	       exit 1; }
-	$(RST2HTML) --input-encoding=latin1 --output-encoding=latin1	\
+	$(RST2HTML) --input-encoding=UTF-8 --output-encoding=UTF-8	\
 	  --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet	\
 	  $< >$@
 

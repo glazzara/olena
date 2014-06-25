@@ -5,7 +5,7 @@ This package was written by and with the assistance of
 Active LRDE Staff.
 ==================
 
-* **Thierry Géraud**		<theo@lrde.epita.fr>
+* **Thierry GÃ©raud**		<theo@lrde.epita.fr>
 
   - Management of the project in the first place.
   - Type system.
@@ -50,12 +50,12 @@ Ph.D. students.
 Past contributors of LRDE Staff.
 ================================
 
-* **Jérôme Darbon**		<jerome@lrde.epita.fr>
+* **JÃ©rÃ´me Darbon**		<jerome@lrde.epita.fr>
 
   - Image morphology and Olena morpho.
 
 
-* **Réda Dehak**		<reda@lrde.epita.fr>
+* **RÃ©da Dehak**		<reda@lrde.epita.fr>
 
   - Project management (Olena 0.x).
   - Color conversions.
@@ -111,12 +111,12 @@ Students from Class 2015.
 Students from Class 2014.
 =========================
 
-* **Raphaël Boissel**		<raphael.boissel@lrde.epita.fr>
+* **RaphaÃ«l Boissel**		<raphael.boissel@lrde.epita.fr>
 
   - Graph implementation of a DIA toolchain in the SCRIBO module.
 
 
-* **Sébastien Crozet**		<sebastien.crozet@lrde.epita.fr>
+* **SÃ©bastien Crozet**		<sebastien.crozet@lrde.epita.fr>
 
   - Work on the tree of shapes.
 
@@ -139,7 +139,7 @@ Students from Class 2013.
 Students from Class 2012.
 =========================
 
-* **Frédéric Bour**		<frederic.bour@lrde.epita.fr>
+* **FrÃ©dÃ©ric Bour**		<frederic.bour@lrde.epita.fr>
 
   - Prototype of the upcoming functions system.
 
@@ -314,25 +314,25 @@ Students from Class 2003.
   - Color system.
 
 
-* **Jean-Sébastien Mouret**
+* **Jean-SÃ©bastien Mouret**
 
   - Image I/Os.
   - Source tree and configuration system.
   - Fast morphological operators.
 
 
-* **Quôc Peyrot**
+* **QuÃ´c Peyrot**
 
   - Watershed algorithm.
 
 
-* **Raphaël Poss**
+* **RaphaÃ«l Poss**
 
   - Source tree and configuration system.
   - Documentation.
 
 
-* **Yann Régis-Gianas**
+* **Yann RÃ©gis-Gianas**
 
   - Type system.
 
@@ -354,7 +354,7 @@ Students from Class 2002.
   - Wavelets.
 
 
-* **Rémi Coupet**
+* **RÃ©mi Coupet**
 
   - Olena morpho.
   - Data types (Olena pre-0.6).
@@ -385,7 +385,7 @@ Students from Class 2001.
 * **Vincent Berruchon**
 
 
-* **Renaud François**
+* **Renaud FranÃ§ois**
 
   - Bibliographical research.
 
@@ -397,7 +397,7 @@ Students from Class 2001.
   - FFT algorithm.
 
 
-* **Michaël Strauss**
+* **MichaÃ«l Strauss**
 
   - Image morphology.
   - Watershed algorithms.
@@ -416,7 +416,7 @@ Students from Class 2000.
 Other Contributors.
 ===================
 
-* **Arthur Crépin-Leblond**
+* **Arthur CrÃ©pin-Leblond**
 
   - SCRIBO module structured outputs (XML, HTML, PDF).
 
