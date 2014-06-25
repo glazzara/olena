@@ -126,7 +126,7 @@ IMAGE_PATH             = @top_srcdir@/scribo/doc/images	       \
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
-INPUT_ENCODING         = ISO-8859-1
+INPUT_ENCODING         = UTF-8
 CITE_BIB_FILES 	       = @abs_top_srcdir@/doc/doc.bib \
 		       	 @abs_top_srcdir@/doc/olena.bib
 LATEX_BIB_STYLE	       = plain

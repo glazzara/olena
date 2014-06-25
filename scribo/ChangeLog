@@ -1,3 +1,13 @@
+2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Convert Scribo to UTF-8.
+
+	* doc/mainpage.dox: Here.
+	* scribo/preprocessing/rotate_90.hh:
+	Replace extended characters to convert to plain ASCII.
+	Typos.
+	* doc/Doxyfile.in (INPUT_ENCODING): Set to UTF-8.
+
 2013-04-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* demo/xml2doc/main.cc: Add --template-path option.

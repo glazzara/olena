@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Fast +90/-90 degrees rotation.
+/// Fast +90/-90 degree rotation.
 
 
 # include <mln/core/concept/image.hh>
@@ -48,11 +48,11 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Perform a +90/-90 degrees rotation.
+    /*! \brief Perform a +90/-90 degree rotation.
 
       \param[in] input An image.
-      \param[in] positive If set to true, performs a +90° rotation,
-                          -90° otherwise.
+      \param[in] positive If set to true, performs a +90 degree rotation,
+                          -90 degree otherwise.
 
       \return A rotated image.
     */
@@ -60,7 +60,7 @@ namespace scribo
     mln_concrete(I)
     rotate_90(const Image<I>& input, bool positive);
 
-    /// \brief Performs a +90° rotation.
+    /// \brief Performs a +90 degree rotation.
     /// \overload
     //
     template <typename I>
