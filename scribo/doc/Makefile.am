@@ -56,7 +56,7 @@ edit = sed -e "s|@ID[@]|$(ID)|"					\
 	   -e 's,@builddir[@],$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	$(edit) $< >$@
+	$(edit) $(srcdir)/$(DOXYFILE).in >$@
 MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -94,8 +94,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/user-refman.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/user-refman.stamp; \
 	fi
 
 # Installing a directory located in the source dir is not supported by
@@ -137,7 +137,7 @@ edit_devel = sed							      \
 
 $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
-	$(edit) $< >$@.tmp
+	$(edit) $(srcdir)/$(DOXYFILE).in >$@.tmp
 	$(edit_devel) $@.tmp >$@
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
@@ -176,8 +176,8 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/devel-refman.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/devel-refman.stamp; \
 	fi
 
 ## -------------- ##
