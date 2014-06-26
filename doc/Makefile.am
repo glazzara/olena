@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2010, 2013 EPITA Research and
+# Copyright (C) 2007, 2008, 2009, 2010, 2013, 2014 EPITA Research and
 # Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -104,7 +104,7 @@ edit = sed -e "s|@ID[@]|$(ID)|"					\
 	   -e 's,@builddir[@],$(builddir),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	$(edit) $< >$@
+	$(edit) $(srcdir)/$(DOXYFILE).in >$@
 MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -132,8 +132,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/user-refman.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/user-refman.stamp; \
 	fi
 
 # Installing a directory located in the source dir is not supported by
@@ -154,7 +154,7 @@ contributors.html: $(top_srcdir)/AUTHORS
 	       exit 1; }
 	$(RST2HTML) --input-encoding=UTF-8 --output-encoding=UTF-8	\
 	  --stylesheet-path=$(srcdir)/doxygen.css --link-stylesheet	\
-	  $< >$@
+	  $(top_srcdir)/AUTHORS >$@
 
 
 ## -------------- ##
@@ -168,7 +168,7 @@ lrde_olena.bib: $(srcdir)/lrde.bib
 	       exit 1; }
 	$(BIB2BIB) -s plain -oc lrde_olena.cite -ob $@	\
 	  -c 'project = "Image" or project = "Olena"'	\
-	  -s year -r $<
+	  -s year -r $(srcdir)/lrde.bib
 
 # Warning: also generates lrde_olena_bib.html
 lrde_olena.html: lrde_olena.bib
@@ -180,7 +180,7 @@ lrde_olena.html: lrde_olena.bib
 # Mac OS X (see https://www.lri.fr/~filliatr/bibtex2html/).
 	env TMPDIR=. $(BIBTEX2HTML) -s plain -nokeywords		\
 	  -citefile lrde_olena.cite -noabstract -nofooter -labelname	\
-	  -nodoc -linebreak -nf urllrde PDF $<
+	  -nodoc -linebreak -nf urllrde PDF lrde_olena.bib
 
 
 EXTRA_DIST += 				\
