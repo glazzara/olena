@@ -119,7 +119,7 @@ SPLIT_EXAMPLES = \
 $(srcdir)/examples/split/accu-right-instantiation.cc.stamp: $(srcdir)/examples/accu-right-instantiation.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/accu-right-instantiation.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
@@ -127,15 +127,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/accu-right-instantiation.cc.sta
 $(srcdir)/examples/split/accu-right-instantiation-1.cc.raw: $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/accu-right-instantiation.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/accu-right-instantiation.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/borderthickness.cc.stamp: $(srcdir)/examples/borderthickness.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/borderthickness.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/borderthickness.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/borderthickness.cc.stamp
@@ -143,15 +143,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/borderthickness.cc.stamp
 $(srcdir)/examples/split/borderthickness-1.cc.raw: $(srcdir)/examples/split/borderthickness.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/borderthickness.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/borderthickness.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/box2d-bbox.cc.stamp: $(srcdir)/examples/box2d-bbox.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/box2d-bbox.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/box2d-bbox.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/box2d-bbox.cc.stamp
@@ -159,15 +159,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/box2d-bbox.cc.stamp
 $(srcdir)/examples/split/box2d-bbox-1.cc.raw: $(srcdir)/examples/split/box2d-bbox.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/box2d-bbox.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/box2d-bbox.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/domain-display.cc.stamp: $(srcdir)/examples/domain-display.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/domain-display.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/domain-display.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/domain-display.cc.stamp
@@ -175,15 +175,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/domain-display.cc.stamp
 $(srcdir)/examples/split/domain-display-1.cc.raw: $(srcdir)/examples/split/domain-display.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/domain-display.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/domain-display.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/dpoint-1.cc.stamp: $(srcdir)/examples/dpoint-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/dpoint-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/dpoint-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/dpoint-1.cc.stamp
@@ -191,15 +191,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/dpoint-1.cc.stamp
 $(srcdir)/examples/split/dpoint-1-1.cc.raw: $(srcdir)/examples/split/dpoint-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/dpoint-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/dpoint-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/estim-sites.cc.stamp: $(srcdir)/examples/estim-sites.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/estim-sites.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/estim-sites.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/estim-sites.cc.stamp
@@ -207,15 +207,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/estim-sites.cc.stamp
 $(srcdir)/examples/split/estim-sites-1.cc.raw: $(srcdir)/examples/split/estim-sites.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/estim-sites.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/estim-sites.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/extend.cc.stamp: $(srcdir)/examples/extend.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/extend.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/extend.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/extend.cc.stamp
@@ -223,15 +223,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/extend.cc.stamp
 $(srcdir)/examples/split/extend-1.cc.raw $(srcdir)/examples/split/extend-2.cc.raw $(srcdir)/examples/split/extend-3.cc.raw $(srcdir)/examples/split/extend-4.cc.raw $(srcdir)/examples/split/extend-5.cc.raw: $(srcdir)/examples/split/extend.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/extend.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/extend.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/extension-ignore.cc.stamp: $(srcdir)/examples/extension-ignore.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/extension-ignore.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/extension-ignore.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/extension-ignore.cc.stamp
@@ -239,15 +239,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/extension-ignore.cc.stamp
 $(srcdir)/examples/split/extension-ignore-1.cc.raw: $(srcdir)/examples/split/extension-ignore.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/extension-ignore.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/extension-ignore.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill.cc.stamp: $(srcdir)/examples/fill.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill.cc.stamp
@@ -255,15 +255,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill.cc.stamp
 $(srcdir)/examples/split/fill-1.cc.raw $(srcdir)/examples/split/fill-2.cc.raw $(srcdir)/examples/split/fill-3.cc.raw: $(srcdir)/examples/split/fill.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill-call-1.cc.stamp: $(srcdir)/examples/fill-call-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill-call-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill-call-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-call-1.cc.stamp
@@ -271,15 +271,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-call-1.cc.stamp
 $(srcdir)/examples/split/fill-call-1-1.cc.raw $(srcdir)/examples/split/fill-call-1-2.cc.raw $(srcdir)/examples/split/fill-call-1-3.cc.raw: $(srcdir)/examples/split/fill-call-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill-call-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill-call-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp: $(srcdir)/examples/fill-imageif-cfun.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill-imageif-cfun.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp
@@ -287,15 +287,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp
 $(srcdir)/examples/split/fill-imageif-cfun-1.cc.raw $(srcdir)/examples/split/fill-imageif-cfun-2.cc.raw $(srcdir)/examples/split/fill-imageif-cfun-3.cc.raw: $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill-imageif-cfun.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill-part-image.cc.stamp: $(srcdir)/examples/fill-part-image.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill-part-image.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill-part-image.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-part-image.cc.stamp
@@ -303,15 +303,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-part-image.cc.stamp
 $(srcdir)/examples/split/fill-part-image-1.cc.raw $(srcdir)/examples/split/fill-part-image-2.cc.raw: $(srcdir)/examples/split/fill-part-image.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill-part-image.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill-part-image.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill-subdomain.cc.stamp: $(srcdir)/examples/fill-subdomain.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill-subdomain.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill-subdomain.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-subdomain.cc.stamp
@@ -319,15 +319,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-subdomain.cc.stamp
 $(srcdir)/examples/split/fill-subdomain-1.cc.raw $(srcdir)/examples/split/fill-subdomain-2.cc.raw $(srcdir)/examples/split/fill-subdomain-3.cc.raw $(srcdir)/examples/split/fill-subdomain-4.cc.raw: $(srcdir)/examples/split/fill-subdomain.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill-subdomain.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill-subdomain.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp: $(srcdir)/examples/fill-subdomain-shorter.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fill-subdomain-shorter.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp
@@ -335,15 +335,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp
 $(srcdir)/examples/split/fill-subdomain-shorter-1.cc.raw $(srcdir)/examples/split/fill-subdomain-shorter-2.cc.raw: $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fill-subdomain-shorter.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/forall-piter.cc.stamp: $(srcdir)/examples/forall-piter.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/forall-piter.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/forall-piter.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/forall-piter.cc.stamp
@@ -351,15 +351,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/forall-piter.cc.stamp
 $(srcdir)/examples/split/forall-piter-1.cc.raw: $(srcdir)/examples/split/forall-piter.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/forall-piter.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/forall-piter.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/fun-p2v-1.cc.stamp: $(srcdir)/examples/fun-p2v-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/fun-p2v-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/fun-p2v-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/fun-p2v-1.cc.stamp
@@ -367,15 +367,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/fun-p2v-1.cc.stamp
 $(srcdir)/examples/split/fun-p2v-1-1.cc.raw: $(srcdir)/examples/split/fun-p2v-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/fun-p2v-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/fun-p2v-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/graph-data.cc.stamp: $(srcdir)/examples/graph-data.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/graph-data.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/graph-data.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/graph-data.cc.stamp
@@ -383,15 +383,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/graph-data.cc.stamp
 $(srcdir)/examples/split/graph-data-1.cc.raw $(srcdir)/examples/split/graph-data-2.cc.raw $(srcdir)/examples/split/graph-data-3.cc.raw $(srcdir)/examples/split/graph-data-4.cc.raw $(srcdir)/examples/split/graph-data-5.cc.raw $(srcdir)/examples/split/graph-data-6.cc.raw: $(srcdir)/examples/split/graph-data.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/graph-data.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/graph-data.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/graph-iter.cc.stamp: $(srcdir)/examples/graph-iter.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/graph-iter.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/graph-iter.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/graph-iter.cc.stamp
@@ -399,15 +399,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/graph-iter.cc.stamp
 $(srcdir)/examples/split/graph-iter-1.cc.raw $(srcdir)/examples/split/graph-iter-2.cc.raw $(srcdir)/examples/split/graph-iter-3.cc.raw $(srcdir)/examples/split/graph-iter-4.cc.raw: $(srcdir)/examples/split/graph-iter.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/graph-iter.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/graph-iter.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima-has.cc.stamp: $(srcdir)/examples/ima-has.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima-has.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima-has.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-has.cc.stamp
@@ -415,15 +415,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-has.cc.stamp
 $(srcdir)/examples/split/ima-has-1.cc.raw: $(srcdir)/examples/split/ima-has.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima-has.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima-has.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima-load.cc.stamp: $(srcdir)/examples/ima-load.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima-load.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima-load.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-load.cc.stamp
@@ -431,15 +431,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-load.cc.stamp
 $(srcdir)/examples/split/ima-load-1.cc.raw: $(srcdir)/examples/split/ima-load.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima-load.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima-load.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima-save.cc.stamp: $(srcdir)/examples/ima-save.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima-save.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima-save.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-save.cc.stamp
@@ -447,15 +447,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-save.cc.stamp
 $(srcdir)/examples/split/ima-save-1.cc.raw: $(srcdir)/examples/split/ima-save.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima-save.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima-save.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima-size.cc.stamp: $(srcdir)/examples/ima-size.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima-size.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima-size.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-size.cc.stamp
@@ -463,15 +463,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima-size.cc.stamp
 $(srcdir)/examples/split/ima-size-1.cc.raw: $(srcdir)/examples/split/ima-size.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima-size.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima-size.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-1.cc.stamp: $(srcdir)/examples/ima2d-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-1.cc.stamp
@@ -479,15 +479,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-1.cc.stamp
 $(srcdir)/examples/split/ima2d-1-1.cc.raw: $(srcdir)/examples/split/ima2d-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-2.cc.stamp: $(srcdir)/examples/ima2d-2.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-2.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-2.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-2.cc.stamp
@@ -495,15 +495,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-2.cc.stamp
 $(srcdir)/examples/split/ima2d-2-1.cc.raw: $(srcdir)/examples/split/ima2d-2.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-2.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-2.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-3.cc.stamp: $(srcdir)/examples/ima2d-3.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-3.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-3.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-3.cc.stamp
@@ -511,15 +511,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-3.cc.stamp
 $(srcdir)/examples/split/ima2d-3-1.cc.raw: $(srcdir)/examples/split/ima2d-3.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-3.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-3.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-4.cc.stamp: $(srcdir)/examples/ima2d-4.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-4.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-4.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-4.cc.stamp
@@ -527,15 +527,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-4.cc.stamp
 $(srcdir)/examples/split/ima2d-4-1.cc.raw: $(srcdir)/examples/split/ima2d-4.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-4.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-4.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-5.cc.stamp: $(srcdir)/examples/ima2d-5.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-5.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-5.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-5.cc.stamp
@@ -543,15 +543,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-5.cc.stamp
 $(srcdir)/examples/split/ima2d-5-1.cc.raw: $(srcdir)/examples/split/ima2d-5.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-5.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-5.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-6-clone.cc.stamp: $(srcdir)/examples/ima2d-6-clone.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-6-clone.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-6-clone.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-6-clone.cc.stamp
@@ -559,15 +559,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-6-clone.cc.stamp
 $(srcdir)/examples/split/ima2d-6-clone-1.cc.raw: $(srcdir)/examples/split/ima2d-6-clone.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-6-clone.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-6-clone.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-7.cc.stamp: $(srcdir)/examples/ima2d-7.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-7.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-7.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-7.cc.stamp
@@ -575,15 +575,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-7.cc.stamp
 $(srcdir)/examples/split/ima2d-7-1.cc.raw: $(srcdir)/examples/split/ima2d-7.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-7.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-7.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/ima2d-rot.cc.stamp: $(srcdir)/examples/ima2d-rot.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/ima2d-rot.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/ima2d-rot.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-rot.cc.stamp
@@ -591,15 +591,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/ima2d-rot.cc.stamp
 $(srcdir)/examples/split/ima2d-rot-1.cc.raw: $(srcdir)/examples/split/ima2d-rot.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/ima2d-rot.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/ima2d-rot.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/labeling-compute.cc.stamp: $(srcdir)/examples/labeling-compute.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/labeling-compute.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/labeling-compute.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/labeling-compute.cc.stamp
@@ -607,15 +607,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/labeling-compute.cc.stamp
 $(srcdir)/examples/split/labeling-compute-1.cc.raw $(srcdir)/examples/split/labeling-compute-2.cc.raw $(srcdir)/examples/split/labeling-compute-3.cc.raw $(srcdir)/examples/split/labeling-compute-4.cc.raw: $(srcdir)/examples/split/labeling-compute.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/labeling-compute.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/labeling-compute.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/logical-not.cc.stamp: $(srcdir)/examples/logical-not.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/logical-not.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/logical-not.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/logical-not.cc.stamp
@@ -623,15 +623,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/logical-not.cc.stamp
 $(srcdir)/examples/split/logical-not-1.cc.raw $(srcdir)/examples/split/logical-not-2.cc.raw $(srcdir)/examples/split/logical-not-3.cc.raw: $(srcdir)/examples/split/logical-not.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/logical-not.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/logical-not.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/mln_var.cc.stamp: $(srcdir)/examples/mln_var.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/mln_var.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/mln_var.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/mln_var.cc.stamp
@@ -639,15 +639,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/mln_var.cc.stamp
 $(srcdir)/examples/split/mln_var-1.cc.raw $(srcdir)/examples/split/mln_var-2.cc.raw $(srcdir)/examples/split/mln_var-3.cc.raw: $(srcdir)/examples/split/mln_var.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/mln_var.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/mln_var.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/parray-append.cc.stamp: $(srcdir)/examples/parray-append.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/parray-append.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/parray-append.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/parray-append.cc.stamp
@@ -655,15 +655,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/parray-append.cc.stamp
 $(srcdir)/examples/split/parray-append-1.cc.raw: $(srcdir)/examples/split/parray-append.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/parray-append.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/parray-append.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/parray-bbox.cc.stamp: $(srcdir)/examples/parray-bbox.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/parray-bbox.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/parray-bbox.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/parray-bbox.cc.stamp
@@ -671,15 +671,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/parray-bbox.cc.stamp
 $(srcdir)/examples/split/parray-bbox-1.cc.raw: $(srcdir)/examples/split/parray-bbox.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/parray-bbox.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/parray-bbox.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/paste.cc.stamp: $(srcdir)/examples/paste.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/paste.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/paste.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/paste.cc.stamp
@@ -687,15 +687,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/paste.cc.stamp
 $(srcdir)/examples/split/paste-1.cc.raw: $(srcdir)/examples/split/paste.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/paste.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/paste.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/paste-call-1.cc.stamp: $(srcdir)/examples/paste-call-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/paste-call-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/paste-call-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/paste-call-1.cc.stamp
@@ -703,15 +703,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/paste-call-1.cc.stamp
 $(srcdir)/examples/split/paste-call-1-1.cc.raw: $(srcdir)/examples/split/paste-call-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/paste-call-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/paste-call-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/point-1.cc.stamp: $(srcdir)/examples/point-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/point-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/point-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/point-1.cc.stamp
@@ -719,15 +719,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/point-1.cc.stamp
 $(srcdir)/examples/split/point-1-1.cc.raw: $(srcdir)/examples/split/point-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/point-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/point-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/predicate-1.cc.stamp: $(srcdir)/examples/predicate-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/predicate-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/predicate-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/predicate-1.cc.stamp
@@ -735,15 +735,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/predicate-1.cc.stamp
 $(srcdir)/examples/split/predicate-1-1.cc.raw: $(srcdir)/examples/split/predicate-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/predicate-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/predicate-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto2_first_image.cc.stamp: $(srcdir)/examples/tuto2_first_image.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto2_first_image.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto2_first_image.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto2_first_image.cc.stamp
@@ -751,15 +751,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto2_first_image.cc.stamp
 $(srcdir)/examples/split/tuto2_first_image-1.cc.raw $(srcdir)/examples/split/tuto2_first_image-2.cc.raw $(srcdir)/examples/split/tuto2_first_image-3.cc.raw $(srcdir)/examples/split/tuto2_first_image-4.cc.raw: $(srcdir)/examples/split/tuto2_first_image.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto2_first_image.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto2_first_image.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto3_colorize.cc.stamp: $(srcdir)/examples/tuto3/colorize.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto3/colorize.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_colorize.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_colorize.cc.stamp
@@ -767,15 +767,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_colorize.cc.stamp
 $(srcdir)/examples/split/tuto3_colorize-1.cc.raw: $(srcdir)/examples/split/tuto3_colorize.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto3_colorize.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto3_colorize.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto3_first_routine.cc.stamp: $(srcdir)/examples/tuto3/first_routine.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto3/first_routine.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_first_routine.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_first_routine.cc.stamp
@@ -783,15 +783,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_first_routine.cc.stamp
 $(srcdir)/examples/split/tuto3_first_routine-1.cc.raw $(srcdir)/examples/split/tuto3_first_routine-2.cc.raw $(srcdir)/examples/split/tuto3_first_routine-3.cc.raw $(srcdir)/examples/split/tuto3_first_routine-4.cc.raw $(srcdir)/examples/split/tuto3_first_routine-5.cc.raw $(srcdir)/examples/split/tuto3_first_routine-6.cc.raw $(srcdir)/examples/split/tuto3_first_routine-7.cc.raw $(srcdir)/examples/split/tuto3_first_routine-8.cc.raw: $(srcdir)/examples/split/tuto3_first_routine.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto3_first_routine.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto3_first_routine.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto3_println.cc.stamp: $(srcdir)/examples/tuto3/println.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto3/println.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_println.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_println.cc.stamp
@@ -799,15 +799,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_println.cc.stamp
 $(srcdir)/examples/split/tuto3_println-1.cc.raw $(srcdir)/examples/split/tuto3_println-2.cc.raw: $(srcdir)/examples/split/tuto3_println.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto3_println.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto3_println.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto3_trace.cc.stamp: $(srcdir)/examples/tuto3/trace.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto3/trace.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_trace.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_trace.cc.stamp
@@ -815,15 +815,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_trace.cc.stamp
 $(srcdir)/examples/split/tuto3_trace-1.cc.raw $(srcdir)/examples/split/tuto3_trace-2.cc.raw: $(srcdir)/examples/split/tuto3_trace.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto3_trace.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto3_trace.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto3_rw_image.cc.stamp: $(srcdir)/examples/tuto3_rw_image.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto3_rw_image.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
@@ -831,15 +831,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 $(srcdir)/examples/split/tuto3_rw_image-1.cc.raw $(srcdir)/examples/split/tuto3_rw_image-2.cc.raw $(srcdir)/examples/split/tuto3_rw_image-3.cc.raw $(srcdir)/examples/split/tuto3_rw_image-4.cc.raw $(srcdir)/examples/split/tuto3_rw_image-5.cc.raw $(srcdir)/examples/split/tuto3_rw_image-6.cc.raw $(srcdir)/examples/split/tuto3_rw_image-7.cc.raw: $(srcdir)/examples/split/tuto3_rw_image.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto3_rw_image.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto3_rw_image.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto4_point2d.cc.stamp: $(srcdir)/examples/tuto4/point2d.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto4/point2d.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto4_point2d.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_point2d.cc.stamp
@@ -847,15 +847,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_point2d.cc.stamp
 $(srcdir)/examples/split/tuto4_point2d-1.cc.raw: $(srcdir)/examples/split/tuto4_point2d.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto4_point2d.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto4_point2d.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp: $(srcdir)/examples/tuto4/site_set_create.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto4/site_set_create.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp
@@ -863,15 +863,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp
 $(srcdir)/examples/split/tuto4_site_set_create-1.cc.raw $(srcdir)/examples/split/tuto4_site_set_create-2.cc.raw $(srcdir)/examples/split/tuto4_site_set_create-3.cc.raw $(srcdir)/examples/split/tuto4_site_set_create-4.cc.raw $(srcdir)/examples/split/tuto4_site_set_create-5.cc.raw: $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto4_site_set_create.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp: $(srcdir)/examples/tuto4_genericity_and_algorithms.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/tuto4_genericity_and_algorithms.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp
@@ -879,15 +879,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/tuto4_genericity_and_algorithms
 $(srcdir)/examples/split/tuto4_genericity_and_algorithms-1.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-2.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-3.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-4.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-5.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-6.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-7.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-8.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-9.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-10.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-11.cc.raw $(srcdir)/examples/split/tuto4_genericity_and_algorithms-12.cc.raw: $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/tuto4_genericity_and_algorithms.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/win-create-1.cc.stamp: $(srcdir)/examples/win-create-1.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/win-create-1.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/win-create-1.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/win-create-1.cc.stamp
@@ -895,15 +895,15 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/win-create-1.cc.stamp
 $(srcdir)/examples/split/win-create-1-1.cc.raw: $(srcdir)/examples/split/win-create-1.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/win-create-1.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/win-create-1.cc.stamp; \
 	fi
 
 
 $(srcdir)/examples/split/win-create-2.cc.stamp: $(srcdir)/examples/win-create-2.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/examples/win-create-2.cc cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/examples/split/win-create-2.cc.stamp
 MAINTAINERCLEANFILES += $(srcdir)/examples/split/win-create-2.cc.stamp
@@ -911,6 +911,6 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/split/win-create-2.cc.stamp
 $(srcdir)/examples/split/win-create-2-1.cc.raw: $(srcdir)/examples/split/win-create-2.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/split/win-create-2.cc.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/split/win-create-2.cc.stamp; \
 	fi

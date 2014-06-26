@@ -15,7 +15,7 @@ SPLIT_OUTPUTS = \
 $(srcdir)/outputs/split/graph-iter.txt.stamp: $(srcdir)/outputs/graph-iter.txt
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< txt "" $(srcdir)/outputs/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/outputs/graph-iter.txt txt "" $(srcdir)/outputs/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/outputs/split/graph-iter.txt.stamp
 MAINTAINERCLEANFILES += $(srcdir)/outputs/split/graph-iter.txt.stamp
@@ -23,15 +23,15 @@ MAINTAINERCLEANFILES += $(srcdir)/outputs/split/graph-iter.txt.stamp
 $(srcdir)/outputs/split/graph-iter-1.txt $(srcdir)/outputs/split/graph-iter-2.txt $(srcdir)/outputs/split/graph-iter-3.txt $(srcdir)/outputs/split/graph-iter-4.txt: $(srcdir)/outputs/split/graph-iter.txt.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/outputs/split/graph-iter.txt.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/outputs/split/graph-iter.txt.stamp; \
 	fi
 
 
 $(srcdir)/outputs/split/tuto3_println.txt.stamp: $(srcdir)/outputs/tuto3_println.txt
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< txt "" $(srcdir)/outputs/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/outputs/tuto3_println.txt txt "" $(srcdir)/outputs/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/outputs/split/tuto3_println.txt.stamp
 MAINTAINERCLEANFILES += $(srcdir)/outputs/split/tuto3_println.txt.stamp
@@ -39,15 +39,15 @@ MAINTAINERCLEANFILES += $(srcdir)/outputs/split/tuto3_println.txt.stamp
 $(srcdir)/outputs/split/tuto3_println-1.txt $(srcdir)/outputs/split/tuto3_println-2.txt: $(srcdir)/outputs/split/tuto3_println.txt.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/outputs/split/tuto3_println.txt.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/outputs/split/tuto3_println.txt.stamp; \
 	fi
 
 
 $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp: $(srcdir)/outputs/tuto4_site_set_create.txt
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(srcdir)/tools/split_sample.sh $< txt "" $(srcdir)/outputs/split
+	$(srcdir)/tools/split_sample.sh $(srcdir)/outputs/tuto4_site_set_create.txt txt "" $(srcdir)/outputs/split
 	@mv -f $@.tmp $@
 EXTRA_DIST += $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp
 MAINTAINERCLEANFILES += $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp
@@ -55,6 +55,6 @@ MAINTAINERCLEANFILES += $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp
 $(srcdir)/outputs/split/tuto4_site_set_create-1.txt $(srcdir)/outputs/split/tuto4_site_set_create-2.txt $(srcdir)/outputs/split/tuto4_site_set_create-3.txt: $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/outputs/split/tuto4_site_set_create.txt.stamp; \
 	fi

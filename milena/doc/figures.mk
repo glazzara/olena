@@ -12,8 +12,8 @@ EXTEND_FIGURES = \
 $(EXTEND_FIGURES): $(srcdir)/examples/extend.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/extend.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/extend.stamp; \
 	fi
 
 FILL_FIGURES = \
@@ -22,8 +22,8 @@ FILL_FIGURES = \
 $(FILL_FIGURES): $(srcdir)/examples/fill.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill.stamp; \
 	fi
 
 FILL_IMAGEIF_CFUN_FIGURES = \
@@ -31,8 +31,8 @@ FILL_IMAGEIF_CFUN_FIGURES = \
 $(FILL_IMAGEIF_CFUN_FIGURES): $(srcdir)/examples/fill-imageif-cfun.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-imageif-cfun.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-imageif-cfun.stamp; \
 	fi
 
 FILL_SUBDOMAIN_FIGURES = \
@@ -43,8 +43,8 @@ FILL_SUBDOMAIN_FIGURES = \
 $(FILL_SUBDOMAIN_FIGURES): $(srcdir)/examples/fill-subdomain.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-subdomain.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-subdomain.stamp; \
 	fi
 
 IMA_SAVE_FIGURES = \
@@ -52,8 +52,8 @@ IMA_SAVE_FIGURES = \
 $(IMA_SAVE_FIGURES): $(srcdir)/examples/ima-save.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima-save.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima-save.stamp; \
 	fi
 
 IMA2D_ROT_FIGURES = \
@@ -62,8 +62,8 @@ IMA2D_ROT_FIGURES = \
 $(IMA2D_ROT_FIGURES): $(srcdir)/examples/ima2d-rot.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-rot.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-rot.stamp; \
 	fi
 
 LABELING_COMPUTE_FIGURES = \
@@ -72,8 +72,8 @@ LABELING_COMPUTE_FIGURES = \
 $(LABELING_COMPUTE_FIGURES): $(srcdir)/examples/labeling-compute.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/labeling-compute.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/labeling-compute.stamp; \
 	fi
 
 LOGICAL_NOT_FIGURES = \
@@ -83,8 +83,8 @@ LOGICAL_NOT_FIGURES = \
 $(LOGICAL_NOT_FIGURES): $(srcdir)/examples/logical-not.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/logical-not.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/logical-not.stamp; \
 	fi
 
 TUTO2_FIRST_IMAGE_FIGURES = \
@@ -92,8 +92,8 @@ TUTO2_FIRST_IMAGE_FIGURES = \
 $(TUTO2_FIRST_IMAGE_FIGURES): $(srcdir)/examples/tuto2_first_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto2_first_image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto2_first_image.stamp; \
 	fi
 
 TUTO3_COLORIZE_FIGURES = \
@@ -102,8 +102,8 @@ TUTO3_COLORIZE_FIGURES = \
 $(TUTO3_COLORIZE_FIGURES): $(srcdir)/examples/tuto3/colorize.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3/colorize.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3/colorize.stamp; \
 	fi
 
 TUTO3_RW_IMAGE_FIGURES = \
@@ -113,8 +113,8 @@ TUTO3_RW_IMAGE_FIGURES = \
 $(TUTO3_RW_IMAGE_FIGURES): $(srcdir)/examples/tuto3_rw_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3_rw_image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3_rw_image.stamp; \
 	fi
 
 TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES = \
@@ -127,8 +127,8 @@ TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES = \
 $(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES): $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp; \
 	fi
 
 # The list of all generated figures.

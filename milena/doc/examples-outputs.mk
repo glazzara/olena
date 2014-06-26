@@ -14,8 +14,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/accu-right-instantiation.stamp
 $(srcdir)/outputs/accu-right-instantiation.txt: $(srcdir)/examples/accu-right-instantiation.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/accu-right-instantiation.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/accu-right-instantiation.stamp; \
 	fi
 
 
@@ -32,8 +32,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/borderthickness.stamp
 $(srcdir)/outputs/borderthickness.txt: $(srcdir)/examples/borderthickness.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/borderthickness.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/borderthickness.stamp; \
 	fi
 
 
@@ -50,8 +50,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/box2d-bbox.stamp
 $(srcdir)/outputs/box2d-bbox.txt: $(srcdir)/examples/box2d-bbox.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/box2d-bbox.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/box2d-bbox.stamp; \
 	fi
 
 
@@ -68,8 +68,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/domain-display.stamp
 $(srcdir)/outputs/domain-display.txt: $(srcdir)/examples/domain-display.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/domain-display.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/domain-display.stamp; \
 	fi
 
 
@@ -86,8 +86,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/dpoint-1.stamp
 $(srcdir)/outputs/dpoint-1.txt: $(srcdir)/examples/dpoint-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/dpoint-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/dpoint-1.stamp; \
 	fi
 
 
@@ -104,8 +104,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/estim-sites.stamp
 $(srcdir)/outputs/estim-sites.txt: $(srcdir)/examples/estim-sites.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/estim-sites.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/estim-sites.stamp; \
 	fi
 
 
@@ -122,8 +122,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/extend.stamp
 $(srcdir)/outputs/extend.txt: $(srcdir)/examples/extend.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/extend.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/extend.stamp; \
 	fi
 
 
@@ -140,8 +140,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/extension-ignore.stamp
 $(srcdir)/outputs/extension-ignore.txt: $(srcdir)/examples/extension-ignore.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/extension-ignore.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/extension-ignore.stamp; \
 	fi
 
 
@@ -158,8 +158,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill-call-1.stamp
 $(srcdir)/outputs/fill-call-1.txt: $(srcdir)/examples/fill-call-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-call-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-call-1.stamp; \
 	fi
 
 
@@ -176,8 +176,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill-imageif-cfun.stamp
 $(srcdir)/outputs/fill-imageif-cfun.txt: $(srcdir)/examples/fill-imageif-cfun.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-imageif-cfun.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-imageif-cfun.stamp; \
 	fi
 
 
@@ -194,8 +194,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill-part-image.stamp
 $(srcdir)/outputs/fill-part-image.txt: $(srcdir)/examples/fill-part-image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-part-image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-part-image.stamp; \
 	fi
 
 
@@ -212,8 +212,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill-subdomain-shorter.stamp
 $(srcdir)/outputs/fill-subdomain-shorter.txt: $(srcdir)/examples/fill-subdomain-shorter.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-subdomain-shorter.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-subdomain-shorter.stamp; \
 	fi
 
 
@@ -230,8 +230,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill-subdomain.stamp
 $(srcdir)/outputs/fill-subdomain.txt: $(srcdir)/examples/fill-subdomain.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill-subdomain.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill-subdomain.stamp; \
 	fi
 
 
@@ -248,8 +248,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fill.stamp
 $(srcdir)/outputs/fill.txt: $(srcdir)/examples/fill.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fill.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fill.stamp; \
 	fi
 
 
@@ -266,8 +266,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/forall-piter.stamp
 $(srcdir)/outputs/forall-piter.txt: $(srcdir)/examples/forall-piter.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/forall-piter.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/forall-piter.stamp; \
 	fi
 
 
@@ -284,8 +284,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/fun-p2v-1.stamp
 $(srcdir)/outputs/fun-p2v-1.txt: $(srcdir)/examples/fun-p2v-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/fun-p2v-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/fun-p2v-1.stamp; \
 	fi
 
 
@@ -302,8 +302,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/graph-data.stamp
 $(srcdir)/outputs/graph-data.txt: $(srcdir)/examples/graph-data.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/graph-data.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/graph-data.stamp; \
 	fi
 
 
@@ -320,8 +320,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/graph-iter.stamp
 $(srcdir)/outputs/graph-iter.txt: $(srcdir)/examples/graph-iter.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/graph-iter.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/graph-iter.stamp; \
 	fi
 
 
@@ -338,8 +338,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima-has.stamp
 $(srcdir)/outputs/ima-has.txt: $(srcdir)/examples/ima-has.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima-has.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima-has.stamp; \
 	fi
 
 
@@ -356,8 +356,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima-load.stamp
 $(srcdir)/outputs/ima-load.txt: $(srcdir)/examples/ima-load.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima-load.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima-load.stamp; \
 	fi
 
 
@@ -374,8 +374,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima-save.stamp
 $(srcdir)/outputs/ima-save.txt: $(srcdir)/examples/ima-save.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima-save.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima-save.stamp; \
 	fi
 
 
@@ -392,8 +392,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima-size.stamp
 $(srcdir)/outputs/ima-size.txt: $(srcdir)/examples/ima-size.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima-size.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima-size.stamp; \
 	fi
 
 
@@ -410,8 +410,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-1.stamp
 $(srcdir)/outputs/ima2d-1.txt: $(srcdir)/examples/ima2d-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-1.stamp; \
 	fi
 
 
@@ -428,8 +428,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-2.stamp
 $(srcdir)/outputs/ima2d-2.txt: $(srcdir)/examples/ima2d-2.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-2.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-2.stamp; \
 	fi
 
 
@@ -446,8 +446,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-3.stamp
 $(srcdir)/outputs/ima2d-3.txt: $(srcdir)/examples/ima2d-3.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-3.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-3.stamp; \
 	fi
 
 
@@ -464,8 +464,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-4.stamp
 $(srcdir)/outputs/ima2d-4.txt: $(srcdir)/examples/ima2d-4.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-4.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-4.stamp; \
 	fi
 
 
@@ -482,8 +482,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-5.stamp
 $(srcdir)/outputs/ima2d-5.txt: $(srcdir)/examples/ima2d-5.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-5.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-5.stamp; \
 	fi
 
 
@@ -500,8 +500,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-6-clone.stamp
 $(srcdir)/outputs/ima2d-6-clone.txt: $(srcdir)/examples/ima2d-6-clone.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-6-clone.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-6-clone.stamp; \
 	fi
 
 
@@ -518,8 +518,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-7.stamp
 $(srcdir)/outputs/ima2d-7.txt: $(srcdir)/examples/ima2d-7.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-7.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-7.stamp; \
 	fi
 
 
@@ -536,8 +536,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/ima2d-rot.stamp
 $(srcdir)/outputs/ima2d-rot.txt: $(srcdir)/examples/ima2d-rot.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/ima2d-rot.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/ima2d-rot.stamp; \
 	fi
 
 
@@ -554,8 +554,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/labeling-compute.stamp
 $(srcdir)/outputs/labeling-compute.txt: $(srcdir)/examples/labeling-compute.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/labeling-compute.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/labeling-compute.stamp; \
 	fi
 
 
@@ -572,8 +572,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/logical-not.stamp
 $(srcdir)/outputs/logical-not.txt: $(srcdir)/examples/logical-not.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/logical-not.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/logical-not.stamp; \
 	fi
 
 
@@ -590,8 +590,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/mln_var.stamp
 $(srcdir)/outputs/mln_var.txt: $(srcdir)/examples/mln_var.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/mln_var.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/mln_var.stamp; \
 	fi
 
 
@@ -608,8 +608,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/parray-append.stamp
 $(srcdir)/outputs/parray-append.txt: $(srcdir)/examples/parray-append.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/parray-append.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/parray-append.stamp; \
 	fi
 
 
@@ -626,8 +626,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/parray-bbox.stamp
 $(srcdir)/outputs/parray-bbox.txt: $(srcdir)/examples/parray-bbox.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/parray-bbox.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/parray-bbox.stamp; \
 	fi
 
 
@@ -644,8 +644,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/paste-call-1.stamp
 $(srcdir)/outputs/paste-call-1.txt: $(srcdir)/examples/paste-call-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/paste-call-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/paste-call-1.stamp; \
 	fi
 
 
@@ -662,8 +662,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/paste.stamp
 $(srcdir)/outputs/paste.txt: $(srcdir)/examples/paste.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/paste.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/paste.stamp; \
 	fi
 
 
@@ -680,8 +680,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/point-1.stamp
 $(srcdir)/outputs/point-1.txt: $(srcdir)/examples/point-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/point-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/point-1.stamp; \
 	fi
 
 
@@ -698,8 +698,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/predicate-1.stamp
 $(srcdir)/outputs/predicate-1.txt: $(srcdir)/examples/predicate-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/predicate-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/predicate-1.stamp; \
 	fi
 
 
@@ -716,8 +716,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto2_first_image.stamp
 $(srcdir)/outputs/tuto2_first_image.txt: $(srcdir)/examples/tuto2_first_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto2_first_image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto2_first_image.stamp; \
 	fi
 
 
@@ -734,8 +734,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto3/colorize.stamp
 $(srcdir)/outputs/tuto3_colorize.txt: $(srcdir)/examples/tuto3/colorize.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3/colorize.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3/colorize.stamp; \
 	fi
 
 
@@ -752,8 +752,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto3/first_routine.stamp
 $(srcdir)/outputs/tuto3_first_routine.txt: $(srcdir)/examples/tuto3/first_routine.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3/first_routine.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3/first_routine.stamp; \
 	fi
 
 
@@ -770,8 +770,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto3/println.stamp
 $(srcdir)/outputs/tuto3_println.txt: $(srcdir)/examples/tuto3/println.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3/println.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3/println.stamp; \
 	fi
 
 
@@ -788,8 +788,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto3/trace.stamp
 $(srcdir)/outputs/tuto3_trace.txt: $(srcdir)/examples/tuto3/trace.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3/trace.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3/trace.stamp; \
 	fi
 
 
@@ -806,8 +806,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto3_rw_image.stamp
 $(srcdir)/outputs/tuto3_rw_image.txt: $(srcdir)/examples/tuto3_rw_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto3_rw_image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto3_rw_image.stamp; \
 	fi
 
 
@@ -824,8 +824,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto4/image.stamp
 $(srcdir)/outputs/tuto4_image.txt: $(srcdir)/examples/tuto4/image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto4/image.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto4/image.stamp; \
 	fi
 
 
@@ -842,8 +842,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto4/point2d.stamp
 $(srcdir)/outputs/tuto4_point2d.txt: $(srcdir)/examples/tuto4/point2d.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto4/point2d.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto4/point2d.stamp; \
 	fi
 
 
@@ -860,8 +860,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto4/site_set_create.stamp
 $(srcdir)/outputs/tuto4_site_set_create.txt: $(srcdir)/examples/tuto4/site_set_create.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto4/site_set_create.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto4/site_set_create.stamp; \
 	fi
 
 
@@ -878,8 +878,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp
 $(srcdir)/outputs/tuto4_genericity_and_algorithms.txt: $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp; \
 	fi
 
 
@@ -896,8 +896,8 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/win-create-1.stamp
 $(srcdir)/outputs/win-create-1.txt: $(srcdir)/examples/win-create-1.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/win-create-1.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/win-create-1.stamp; \
 	fi
 
 
@@ -914,6 +914,6 @@ MAINTAINERCLEANFILES += $(srcdir)/examples/win-create-2.stamp
 $(srcdir)/outputs/win-create-2.txt: $(srcdir)/examples/win-create-2.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/examples/win-create-2.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/examples/win-create-2.stamp; \
 	fi
