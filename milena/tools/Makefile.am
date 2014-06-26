@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
-# Laboratory (LRDE)
+# Copyright (C) 2008, 2009, 2010, 2011, 2013, 2014 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -58,13 +58,14 @@ simple_point_luts: simple_point3d_lut_26_6.hh
 
 CLEANFILES = simple_point3d_lut_26_6.txt
 simple_point3d_lut_26_6.txt: simple_point3d_lut_tbb$(EXEEXT)
-	./$< 26_6 >$@
+	./simple_point3d_lut_tbb$(EXEEXT) 26_6 >$@
 
 EXTRA_DIST = gen_cxx_lut
 CLEANFILES += simple_point3d_lut_26_6.hh
 simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt $(srcdir)/gen_cxx_lut
 	rm -f $@.tmp
-	$(srcdir)/gen_cxx_lut simple_point3d_lut_26_6 "(26, 6)" <$< >$@.tmp
+	$(srcdir)/gen_cxx_lut simple_point3d_lut_26_6 "(26, 6)" \
+	  <simple_point3d_lut_26_6.txt >$@.tmp
 	mv $@.tmp $@
 
 # Very long (both to compile and execute) optional test, checking the
@@ -73,7 +74,7 @@ simple_point3d_lut_26_6.hh: simple_point3d_lut_26_6.txt $(srcdir)/gen_cxx_lut
 
 .PHONY: check-extra
 check-extra: test_simple_point3d_lut_26_6$(EXEEXT)
-	./$<
+	./test_simple_point3d_lut_26_6$(EXEEXT)
 
 EXTRA_LTLIBRARIES = libsimple_point3d_lut_26_6.la
 libsimple_point3d_lut_26_6_la_SOURCES = simple_point3d_lut_26_6.cc

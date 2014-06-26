@@ -119,7 +119,7 @@ EOF
 $timestamp: $output
 	@rm -f \$@.tmp
 	@touch \$@.tmp
-	\$(srcdir)/tools/split_sample.sh \$< txt "" \$(srcdir)/$output_dir
+	\$(srcdir)/tools/split_sample.sh $output txt "" \$(srcdir)/$output_dir
 	@mv -f \$@.tmp \$@
 EXTRA_DIST += $timestamp
 MAINTAINERCLEANFILES += $timestamp
@@ -127,8 +127,8 @@ MAINTAINERCLEANFILES += $timestamp
 $targets: $timestamp
 ## Recover from the removal of \$@
 	@if test -f \$@; then :; else \\
-	  rm -f \$<; \\
-	  \$(MAKE) \$(AM_MAKEFLAGS) \$<; \\
+	  rm -f $timestamp; \\
+	  \$(MAKE) \$(AM_MAKEFLAGS) $timestamp; \\
 	fi
 EOF
     }

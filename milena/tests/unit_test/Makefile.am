@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013, 2014 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -41,7 +41,8 @@ regen-am:
 
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
-#	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
+#	$(top_srcdir)/build-aux/build_unit_test.sh \
+#         $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.

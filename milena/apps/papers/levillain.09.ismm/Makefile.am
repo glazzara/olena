@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010, 2011, 2013, 2014 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -40,18 +40,18 @@ MOSTLYCLEANFILES = $(noinst_DATA) graph-s.neato
 # FIXME: Also generate intermediate images (gradients, etc.).
 
 lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
-	./image2d$(EXEEXT) $< 1000 $@
+	./image2d$(EXEEXT) $(top_srcdir)/milena/img/lena.pgm 1000 $@
 
 graph-s.png: graph-s.neato
-	neato -Tpng $< >$@
-graph-s.neato: seeds.pgm graph$(EXEEXT)
-	./graph$(EXEEXT) $< 2 $@
+	neato -Tpng graph-s.neato >$@
+graph-s.neato: $(srcdir)/seeds.pgm graph$(EXEEXT)
+	./graph$(EXEEXT) $(srcdir)/seeds.pgm 2 $@
 
-m283-s.off: m283-c.off complex$(EXEEXT)
-	./complex$(EXEEXT) $< 100 $@
+m283-s.off: $(srcdir)/m283-c.off complex$(EXEEXT)
+	./complex$(EXEEXT) $(srcdir)/m283-c.off 100 $@
 
-classwst-graph.ppm: classseedsi.pbm classif-graph$(EXEEXT)
-	./classif-graph$(EXEEXT) $< 4 $@
+classwst-graph.ppm: $(srcdir)/classseedsi.pbm classif-graph$(EXEEXT)
+	./classif-graph$(EXEEXT) $(srcdir)/classseedsi.pbm 4 $@
 
-classwst-1complex.ppm: classseedsi.pbm classif-1complex$(EXEEXT)
-	./classif-1complex$(EXEEXT) $< 4 $@
+classwst-1complex.ppm: $(srcdir)/classseedsi.pbm classif-1complex$(EXEEXT)
+	./classif-1complex$(EXEEXT) $(srcdir)/classseedsi.pbm 4 $@

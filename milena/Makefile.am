@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009, 2012, 2013 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2012, 2013, 2014 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -74,7 +74,8 @@ regen-am:
 
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
-#	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
+#	$(top_srcdir)/build-aux/generate_dist_headers.sh \
+#         $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	cd $(srcdir)							\

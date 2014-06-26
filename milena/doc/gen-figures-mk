@@ -169,8 +169,8 @@ for file in `inputs`; do
 \$($fig_var): $timestamp
 ## Recover from the removal of \$@
 	@if test -f \$@; then :; else \\
-	  rm -f \$<; \\
-	  \$(MAKE) \$(AM_MAKEFLAGS) \$<; \\
+	  rm -f $timestamp; \\
+	  \$(MAKE) \$(AM_MAKEFLAGS) $timestamp; \\
 	fi
 
 EOF

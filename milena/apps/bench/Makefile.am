@@ -1,4 +1,5 @@
-# Copyright (C) 2010, 2011 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -108,8 +109,8 @@ EXTRA_DIST += test-dilation-lena-bench.in
 test-dilation-lena-bench: test-dilation-lena-bench.in Makefile
 	rm -f $@ $@.tmp
 	srcdir='';				\
-	  test -f ./$< || srcdir=$(srcdir)/;	\
-	  $(edit) $${srcdir}$< >>$@.tmp
+	  test -f ./test-dilation-lena-bench.in || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}test-dilation-lena-bench.in >>$@.tmp
 	chmod a-w,a+x $@.tmp
 	mv $@.tmp $@
 CLEANFILES = test-dilation-lena-bench

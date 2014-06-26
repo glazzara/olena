@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010, 2014 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -64,8 +64,8 @@ MAINTAINERCLEANFILES += $timestamp
 $output: $timestamp
 ## Recover from the removal of \$@
 	@if test -f \$@; then :; else \\
-	  rm -f \$<; \\
-	  \$(MAKE) \$(AM_MAKEFLAGS) \$<; \\
+	  rm -f $timestamp; \\
+	  \$(MAKE) \$(AM_MAKEFLAGS) $timestamp; \\
 	fi
 EOF
 done

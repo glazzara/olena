@@ -229,7 +229,7 @@ edit = sed -e "s|@ID[@]|$(ID)|"					\
 	   -e 's,@boostcppflags[@],$(BOOST_CPPFLAGS),g'
 
 $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	$(edit) $< >$@
+	$(edit) $(srcdir)/$(DOXYFILE).in >$@
 MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
 USER_REFMAN = user-refman
@@ -273,8 +273,8 @@ $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/user-refman.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/user-refman.stamp; \
 	fi
 
 # Installing a directory located in the source dir is not supported by
@@ -315,7 +315,7 @@ edit_devel = sed							      \
 
 $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
-	$(edit) $< >$@.tmp
+	$(edit) $(srcdir)/$(DOXYFILE).in >$@.tmp
 	$(edit_devel) $@.tmp >$@
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
@@ -358,8 +358,8 @@ $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/devel-refman.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/devel-refman.stamp; \
 	fi
 
 
@@ -393,7 +393,7 @@ $(srcdir)/$(TECHNICAL).stamp: $(srcdir)/technical.tex $(TECHNICAL_deps)
 	rm -rf $(TECHNICAL).tmp
 	mkdir $(TECHNICAL).tmp
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS) \
-	  -o $(TECHNICAL).tmp/$(TECHNICAL).html $<
+	  -o $(TECHNICAL).tmp/$(TECHNICAL).html $(srcdir)/technical.tex
 	rm -rf $(srcdir)/$(TECHNICAL)
 ## FIXME: moving directories between file systems is not portable.
 	mv $(TECHNICAL).tmp $(srcdir)/$(TECHNICAL)
@@ -404,8 +404,8 @@ MAINTAINERCLEANFILES += $(srcdir)/$(TECHNICAL).stamp
 $(srcdir)/$(TECHNICAL): $(srcdir)/$(TECHNICAL).stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/$(TECHNICAL).stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/$(TECHNICAL).stamp; \
 	fi
 DATA_html_dirs = $(TECHNICAL)
 
@@ -443,7 +443,7 @@ $(srcdir)/$(TUTORIAL).stamp: $(srcdir)/tutorial.tex $(TUTORIAL_deps)
 	rm -rf $(TUTORIAL).tmp
 	mkdir $(TUTORIAL).tmp
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
-	  -o $(TUTORIAL).tmp/$(TUTORIAL).html $<
+	  -o $(TUTORIAL).tmp/$(TUTORIAL).html $(srcdir)/tutorial.tex
 	rm -rf $(srcdir)/$(TUTORIAL)
 ## FIXME: moving directories between file systems is not portable.
 	mv $(TUTORIAL).tmp $(srcdir)/$(TUTORIAL)
@@ -454,8 +454,8 @@ MAINTAINERCLEANFILES += $(srcdir)/$(TUTORIAL).stamp
 $(srcdir)/$(TUTORIAL): $(srcdir)/$(TUTORIAL).stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/$(TUTORIAL).stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/$(TUTORIAL).stamp; \
 	fi
 DATA_html_dirs += $(TUTORIAL)
 
@@ -506,7 +506,7 @@ $(srcdir)/$(WHITE_PAPER).stamp: $(srcdir)/white-paper.tex $(WHITE_PAPER_deps)
 	mkdir $(WHITE_PAPER).tmp/figures
 	cp $(WHITE_PAPER_FIGURES) $(WHITE_PAPER).tmp/figures
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
-	  -o $(WHITE_PAPER).tmp/$(WHITE_PAPER).html $<
+	  -o $(WHITE_PAPER).tmp/$(WHITE_PAPER).html $(srcdir)/white-paper.tex
 	rm -rf $(srcdir)/$(WHITE_PAPER)
 ## FIXME: moving directories between file systems is not portable.
 	mv $(WHITE_PAPER).tmp $(srcdir)/$(WHITE_PAPER)
@@ -517,8 +517,8 @@ MAINTAINERCLEANFILES += $(srcdir)/$(WHITE_PAPER).stamp
 $(srcdir)/$(WHITE_PAPER): $(srcdir)/$(WHITE_PAPER).stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/$(WHITE_PAPER).stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/$(WHITE_PAPER).stamp; \
 	fi
 DATA_html_dirs += $(WHITE_PAPER)
 
@@ -556,7 +556,7 @@ $(srcdir)/$(REF_GUIDE).stamp: $(srcdir)/ref-guide.tex $(REF_GUIDE_deps)
 	rm -rf $(REF_GUIDE).tmp
 	mkdir $(REF_GUIDE).tmp
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
-	  -o $(REF_GUIDE).tmp/$(REF_GUIDE).html $<
+	  -o $(REF_GUIDE).tmp/$(REF_GUIDE).html $(srcdir)/ref-guide.tex
 	rm -rf $(srcdir)/$(REF_GUIDE)
 ## FIXME: moving directories between file systems is not portable.
 	mv $(REF_GUIDE).tmp $(srcdir)/$(REF_GUIDE)
@@ -567,8 +567,8 @@ MAINTAINERCLEANFILES += $(srcdir)/$(REF_GUIDE).stamp
 $(srcdir)/$(REF_GUIDE): $(srcdir)/$(REF_GUIDE).stamp
 ## Recover from the removal of $@.
 	@if test -d $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	  rm -f $(srcdir)/$(REF_GUIDE).stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/$(REF_GUIDE).stamp; \
 	fi
 DATA_html_dirs += $(REF_GUIDE)
 

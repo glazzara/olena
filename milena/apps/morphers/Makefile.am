@@ -1,4 +1,4 @@
-# Copyright (C) 2011, 2012, 2013 EPITA Research and Development
+# Copyright (C) 2011, 2012, 2013, 2014 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -40,7 +40,7 @@ iz_LDFLAGS = $(AM_LDFLAGS) $(MAGICKXX_LDFLAGS)
 
 # This target is phony: `iz' never writes `iz_output.ppm' actually.
 iz_output.ppm: iz$(EXEEXT) iz_input.pbm
-	./$< $(srcdir)/iz_input.pbm $@
+	./iz$(EXEEXT) $(srcdir)/iz_input.pbm $@
 # Likewise, the dependency of this target is a (wrong) shortcut.
 tmp_iz.avi: iz_output.ppm
 	mencoder "mf://tmp_iz*.png" -o tmp_iz.avi -ovc lavc -lavcopts vcodec=mjpeg -speed 50

@@ -1,3 +1,21 @@
+2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make Milena more compatible with BSD Make.
+
+	* apps/bench/Makefile.am,
+	* apps/morphers/Makefile.am,
+	* doc/Makefile.am,
+	* doc/gen-examples-outputs-mk,
+	* doc/gen-figures-mk,
+	* doc/gen-split-examples-mk,
+	* doc/gen-split-outputs-mk:
+	Do not use `$<' outside suffix rules.
+	* apps/papers/levillain.09.ismm/Makefile.am: Likewise.
+	Add explicit `$(srcdir)/' prefixes to prerequisites' paths.
+	* milena/Makefile.am,
+	* milena/tests/unit_test/Makefile.am:
+	Adjust comments.
+
 2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Convert Milena to UTF-8.
