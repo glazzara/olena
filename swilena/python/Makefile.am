@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009, 2010, 2012, 2013 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014 EPITA Research and
+# Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -65,9 +65,9 @@ python_PYTHON = swilena.py
 # generated, in our case), according to Automake's manual,
 all-local: data.py
 EXTRA_DIST = data.py.in
-data.py: data.py.in Makefile
+data.py: $(srcdir)/data.py.in Makefile
 	rm -f $@ $@.tmp
-	$(edit) $< >$@.tmp
+	$(edit) $(srcdir)/data.py.in >$@.tmp
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
