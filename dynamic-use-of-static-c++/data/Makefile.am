@@ -1,4 +1,5 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2005, 2009, 2014 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -27,7 +28,7 @@ libdyn_function_la_SOURCES = function.cc
 pkgdata_DATA = Makefile.template Makefile.repository
 
 Makefile.template: Makefile
-	cat $< | \
+	cat Makefile | \
 	sed -e 's|^srcdir = .*|srcdir = '`cd $(srcdir) && pwd`'|' \
 	    -e 's|^top_srcdir = .*|top_srcdir = '`cd $(top_srcdir) && pwd`'|' \
 	    -e 's|^top_builddir = .*|top_builddir = '`cd $(top_builddir) && pwd`'|' \
@@ -37,7 +38,7 @@ Makefile.template: Makefile
 	    -e 's|^VPATH = .*|VPATH = .|' > $@
 
 Makefile.repository: Makefile
-	cat $< | \
+	cat Makefile | \
 	sed -e 's|^srcdir = .*|srcdir = '`cd $(srcdir) && pwd`'|' \
 	    -e 's|^top_srcdir = .*|top_srcdir = '`cd $(top_srcdir) && pwd`'|' \
 	    -e 's|^top_builddir = .*|top_builddir = '`cd $(top_builddir) && pwd`'|' \

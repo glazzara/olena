@@ -1,3 +1,9 @@
+2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make dynamic-use-of-static-c++ more compatible with BSD Make.
+
+	* data/Makefile.am: Do not use `$<' outside suffix rules.
+
 2014-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Convert dynamic-use-of-static-c++ to UTF-8.
