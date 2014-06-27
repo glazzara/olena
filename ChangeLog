@@ -1,5 +1,11 @@
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use AX_CHECK_COMPILE_FLAG to check compiler support for `-pipe'.
+
+	* configure.ac: Here.
+
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Avoid warnings about unused local typedefs.
 
 	* m4/ax_check_compile_flag.m4: New.

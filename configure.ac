@@ -75,10 +75,11 @@ AC_PROG_CXX
 # Set `ICPC' to `yes' if the Intel C++ compiler is used.
 test $CXX --version 2>/dev/null | grep '\bICC\b' >/dev/null 2>&1 && ICPC=yes
 
+# Try to use pipes between compiler stages to speed the compilation up.
+AX_CHECK_COMPILE_FLAG([-pipe], [CXXFLAGS="$CXXFLAGS -pipe"])
+
 # GNU C++ compiler setup.
 if test "$GXX" = yes; then
-  # Speed up compiling times.
-  CXXFLAGS="$CXXFLAGS -pipe"
 
   # The code generated for mln::data::impl::memcpy__() by g++ 4.2 with
   # a high optimization level (`-O3') and without
