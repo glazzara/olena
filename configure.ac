@@ -78,21 +78,18 @@ test $CXX --version 2>/dev/null | grep '\bICC\b' >/dev/null 2>&1 && ICPC=yes
 # Try to use pipes between compiler stages to speed the compilation up.
 AX_CHECK_COMPILE_FLAG([-pipe], [CXXFLAGS="$CXXFLAGS -pipe"])
 
-# GNU C++ compiler setup.
-if test "$GXX" = yes; then
-
-  # The code generated for mln::data::impl::memcpy__() by g++ 4.2 with
-  # a high optimization level (`-O3') and without
-  # `-fno-strict-aliasing' might be wrong, at least with Debian's g++
-  # 4.2 on IA-32 (see also milena/mln/memcpy_.hh).  We observed this
-  # behavior with e.g. milena/apps/graph-morpho/samples-image2d.cc.
-  # Note that Debian's g++ 4.0, 4.1, 4.3 and 4.4 are fine.
-  #
-  # So, when the C++ compiler is g++ 4.2, set STRICT_ALIASING_CXXFLAGS
-  # to `-fno-strict-aliasing'.
-  if $CXX --version | head -n 1 | grep '\b4\.2' >/dev/null 2>&1; then
-    STRICT_ALIASING_CXXFLAGS=-fno-strict-aliasing
-  fi
+# The code generated for mln::data::impl::memcpy__() by g++ 4.2 with a
+# high optimization level (`-O3') and without `-fno-strict-aliasing'
+# might be wrong, at least with Debian's g++ 4.2 on IA-32 (see also
+# milena/mln/data/memcpy_.hh).  We observed this behavior with
+# e.g. milena/apps/graph-morpho/samples-image2d.cc.  Note that
+# Debian's g++ 4.0, 4.1, 4.3 and 4.4 are fine.
+#
+# So, when the C++ compiler is g++ 4.2, set STRICT_ALIASING_CXXFLAGS
+# to `-fno-strict-aliasing'.
+if test "$GXX" = yes \
+   && $CXX --version | head -n 1 | grep '\b4\.2' >/dev/null 2>&1; then
+     STRICT_ALIASING_CXXFLAGS=-fno-strict-aliasing
 fi
 AC_SUBST([STRICT_ALIASING_CXXFLAGS])
 

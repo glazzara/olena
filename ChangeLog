@@ -1,5 +1,9 @@
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Aesthetic changes.
+
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use AX_CHECK_COMPILE_FLAG to check compiler support for `-pipe'.
 
 	* configure.ac: Here.
