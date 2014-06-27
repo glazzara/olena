@@ -1,4 +1,4 @@
-// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2013, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -92,10 +92,10 @@ namespace scribo
 
 	unsigned accumulator = 0;
 
-	for (unsigned i = geom::min_row(input); i <= geom::max_row(input); ++i)
+	for (def::coord i = geom::min_row(input); i <= geom::max_row(input); ++i)
 	{
 	  accumulator = 0;
-	  for (unsigned j = geom::min_col(input); j <= geom::max_col(input); ++j)
+	  for (def::coord j = geom::min_col(input); j <= geom::max_col(input); ++j)
 	  {
 	    if (input.at_(i, j))
 	      ++accumulator;
@@ -124,10 +124,10 @@ namespace scribo
 
 	unsigned accumulator = 0;
 
-	for (unsigned j = geom::min_col(input); j <= geom::max_col(input); ++j)
+	for (def::coord j = geom::min_col(input); j <= geom::max_col(input); ++j)
 	{
 	  accumulator = 0;
-	  for (unsigned i = geom::min_row(input); i <= geom::max_row(input); ++i)
+	  for (def::coord i = geom::min_row(input); i <= geom::max_row(input); ++i)
 	  {
 	    if (input.at_(i, j))
 	      ++accumulator;

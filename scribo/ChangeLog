@@ -1,3 +1,23 @@
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address compiler warnings in Scribo.
+
+	* scribo/debug/logger.hh
+	(scribo::debug::internal::logger_::log) [!SCRIBO_NDEBUG]:
+	Avoid warnings about unused arguments in non-debug mode.
+	* scribo/layout/xy_cut.hh
+	(scribo::layout::internal::compute_hist_info_h)
+	(scribo::layout::internal::compute_hist_info_v):
+	Use `def::coord' instead of `int' as coordinate type, to avoid
+	comparisons between signed and unsigned values.
+	* src/misc/rectangularity.cc (main)
+	* tests/binarization/global_threshold.cc (main)
+	* tests/layout/xy_cut.cc (main):
+	Avoid warnings about unused arguments.
+	* tests/core/object_groups.cc (main): Likewise.
+	Use `unsigned' instead of `int' as count/id type, to avoid
+	comparisons between signed and unsigned values.
+
 2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make Scribo more compatible with BSD Make.

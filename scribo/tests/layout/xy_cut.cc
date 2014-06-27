@@ -1,4 +1,4 @@
-// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2013, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -34,7 +34,7 @@
 
 using namespace mln;
 
-int main(int argc, char** argv)
+int main()
 {
 
   image2d<bool> input;

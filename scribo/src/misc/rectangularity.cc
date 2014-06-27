@@ -50,7 +50,7 @@
 
 #include <scribo/make/debug_filename.hh>
 
-int main(int argc, char *argv[])
+int main(int /* argc */, char *argv[])
 {
   using namespace mln;
 

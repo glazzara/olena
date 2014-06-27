@@ -1,4 +1,4 @@
-// Copyright (C) 2011 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2011, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -38,15 +38,16 @@
 
 #include "tests/data.hh"
 
-int main(int argc, char *argv[])
+int main()
 {
   using namespace mln;
   using namespace scribo;
 
   std::string img = SCRIBO_IMG_DIR "/the_valleys.pbm";
 
-  static const int comp_to_group_ref[] = { 0, 1, 4, 2, 3, 2, 2, 4, 4, 2, 2, 2, 2 };
-  static const int pixel_area_ref[] = { 0, 3, 973, 39, 426 };
+  static const unsigned comp_to_group_ref[] =
+    { 0, 1, 4, 2, 3, 2, 2, 4, 4, 2, 2, 2, 2 };
+  static const unsigned pixel_area_ref[] = { 0, 3, 973, 39, 426 };
   static const box2d bbox_ref[] = {
     box2d(),
     make::box2d(0,91, 1,92),
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
     make::box2d(9,12, 36,64)
   };
 
-  static const int comp_ids_count_ref[] = { 0, 1, 7, 1, 3 };
+  static const unsigned comp_ids_count_ref[] = { 0, 1, 7, 1, 3 };
   static const int comp_ids_ref[][7] = {
     { 0, 0, 0, 0, 0, 0, 0 },
     { 1, 0, 0, 0, 0, 0, 0 },
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
   mln_assertion(group.comp_to_group().nelements() == 13);
 
   // Checking comp_to_group()
-  for (int i = 0; i < group.comp_to_group().nelements(); ++i)
+  for (unsigned i = 0; i < group.comp_to_group().nelements(); ++i)
     mln_assertion(group.comp_to_group()[i] == comp_to_group_ref[i]);
 
   // Checking group info data.
@@ -91,7 +92,8 @@ int main(int argc, char *argv[])
     mln_assertion(group(g).is_valid());
     mln_assertion(group(g).pixel_area() == pixel_area_ref[g]);
     mln_assertion(group(g).bbox() == bbox_ref[g]);
-    mln_assertion(group(g).component_ids().nelements() == comp_ids_count_ref[g]);
+    mln_assertion(group(g).component_ids().nelements()
+                  == comp_ids_count_ref[g]);
 
     for_all_elements(e, group(g).component_ids())
       mln_assertion(group(g).component_ids()[e] == comp_ids_ref[g][e]);

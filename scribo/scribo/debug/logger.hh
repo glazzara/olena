@@ -1,5 +1,5 @@
-// Copyright (C) 2011, 2012, 2013 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2011, 2012, 2013, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -334,6 +334,10 @@ namespace scribo
       void
       logger_::log(VerboseMode mode, const std::string& text)
       {
+        // Avoid warnings about unused arguments in non-debug mode.
+        (void) mode;
+        (void) text;
+
 # ifndef SCRIBO_NDEBUG
 	if (verbose_mode_ < mode)
 	  return;

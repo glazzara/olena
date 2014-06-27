@@ -1,5 +1,5 @@
-// Copyright (C) 2010, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -32,7 +32,7 @@
 
 #include <scribo/binarization/global_threshold.hh>
 
-int main(int argc, char *argv[])
+int main()
 {
   using namespace mln;
 
