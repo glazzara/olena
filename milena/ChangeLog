@@ -1,3 +1,10 @@
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the construction of mln::io::pdf::pdf_header.
+
+	* mln/io/pdf/get_header.hh
+	(mln::io::pdf::pdf_header::pdf_header::metadata): Fix type.
+
 2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Milena's Makefile bits in doc/.

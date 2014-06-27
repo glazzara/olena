@@ -1,4 +1,4 @@
-// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2013, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -65,7 +65,7 @@ namespace mln
 	bool is_encrypted;
 	bool is_linearized;
 	bool is_locked;
-	std::string metadata;
+	std::vector<char> metadata;
       };
 
 
