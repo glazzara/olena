@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 EPITA
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 EPITA
 # Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-m4_pattern_forbid([^OLN_])
+dnl Catch macros that are not expanded.
+m4_pattern_forbid([^(AX|OLN)_])
 
 AC_PREREQ([2.61])
 
@@ -106,6 +107,12 @@ case "$CXX" in
         WARNINGS_CXXFLAGS="-Wall -W"
         ;;
 esac
+
+# Avoid warnings about unused local typedefs, which are used as a
+# concept checking means in Milena (`-Wunused-local-typedefs' is
+# enabled by `-Wall' in GCC since version 4.8).
+AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
+  [WARNINGS_CXXFLAGS="$WARNINGS_CXXFLAGS -Wno-unused-local-typedefs"])
 
 
 # ------------------------------ #

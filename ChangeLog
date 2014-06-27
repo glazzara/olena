@@ -1,3 +1,14 @@
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Avoid warnings about unused local typedefs.
+
+	* m4/ax_check_compile_flag.m4: New.
+	Imported from
+	http://www.gnu.org/software/autoconf-archive/ax_check_compile_flag.html.
+	* configure.ac: Ensure AX_* macros are expanded.
+	(WARNINGS_CXXFLAGS): Add `-Wno-unused-local-typedefs' if the C++
+	compiler supports this flag.
+
 2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make Olena more compatible with BSD Make.
