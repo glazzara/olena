@@ -1,5 +1,12 @@
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add warning flags to Scribo compiler flags.
+
+	* configure.ac (SCRIBO_CXXFLAGS, SCRIBO_TESTS_CXXFLAGS):
+	Add $WARNINGS_CXXFLAGS.
+
+2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Aesthetic changes.
 
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
