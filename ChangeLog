@@ -1,3 +1,9 @@
+2014-07-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update texi2dvi from upstream.
+
+	* build-aux/texi2dvi: Update from Subversion Texinfo.
+
 2012-06-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix last warnings with Lintian.
