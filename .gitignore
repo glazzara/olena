@@ -1,11 +1,20 @@
 # Global.
-*~
 *.dSYM
+*.la
+*.lo
+*.log
+*.moc.cc
+*.o
 *.pyc
+*.qrc.cc
 *.stamp
+*.ui.h
+*~
 .deps
-Makefile.in
+.dirstamp
+.libs
 Makefile
+Makefile.in
 
 # Local.
 /*-stamp
@@ -17,15 +26,20 @@ Makefile
 /_build*
 /_inst*
 /autom4te.cache*
-/autoscan.log
 /config
 /config.cache*
 /config.h
 /config.h?in*
 /config.hin
-/config.log*
 /config.status*
 /configure
 /configure.scan
 /diffs.patch
+/libtool
 /stamp-h1
+
+/doc/contributors.html
+/doc/lrde_olena.bib
+/doc/lrde_olena.cite
+/doc/lrde_olena.html
+/doc/lrde_olena_bib.html
