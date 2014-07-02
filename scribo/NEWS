@@ -1,30 +1,52 @@
-* Scribo 0.1
+* Scribo 2.0a
 
-  	 * Initial release of Scribo, an Olena module for page
-           segmentation and text extraction in images. It is composed
-           of a set of functions and data structures and allows to
-           build dedicated page segmentation toolchains.
+	* The Scribo distribution now contains a Doxygen
+	  documentation.
 
-	 * New command line tool providing access document analysis
-           toolchains. It includes Page segmentation and text
-           extraction in document image, and text detection in
-           pictures.
+	* New logger class.
 
-	 * New tool to rebuild a document from an XML file to PDF,
-           HTML, SVG and Open Document. This tool preserves the layout
-           and extract photos and non text objects from the input
-           document image.
+	* Improve text recognition: recognition speed and storage of
+          the confidence.
 
-	 * New multi-scale binarization algorithm based on a Sauvola's
-           algorithm. It has been designed for document
-           binarization.
+	* New binarization algorithms: Wolf's, Otsu's, Niblack's and
+          Kim's.
 
-	 * New graphical tool to compute and display page segmentation
-           results.
+	* Speedup Sauvola's binarization algorithm.
 
-	 * Include support for PAGE XML outputs. Page segmentation
-           results are stored in this format which includes text and
-           objects information.
+	* Improve OCR result quality and processing time.
+
+	* Add support for Tesseract 3.02.
+
+	* Add the layout analysis algorithm XY-Cut.
+
+
+* Scribo 2.0	September 16, 2011
+
+	* Initial release of Scribo, an Olena module for page
+	  segmentation and text extraction in images. It is composed
+	  of a set of functions and data structures and allows to
+	  build dedicated page segmentation toolchains.
+
+	* New command line tool providing access document analysis
+	  toolchains. It includes Page segmentation and text
+	  extraction in document image, and text detection in
+	  pictures.
+
+	* New tool to rebuild a document from an XML file to PDF,
+	  HTML, SVG and Open Document. This tool preserves the layout
+	  and extract photos and non text objects from the input
+	  document image.
+
+	* New multi-scale binarization algorithm based on a Sauvola's
+	  algorithm. It has been designed for document
+	  binarization.
+
+	* New graphical tool to compute and display page segmentation
+	  results.
+
+	* Include support for PAGE XML outputs. Page segmentation
+	  results are stored in this format which includes text and
+	  objects information.
 
 
 
@@ -36,7 +58,8 @@ End:
 
 ----
 
-Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+Copyright (C) 2010, 2011, 2014 EPITA Research and Development
+Laboratory (LRDE).
 
 This file is part of Olena.
 
