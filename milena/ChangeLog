@@ -4580,7 +4580,7 @@
 	Rely on Argument-Dependent Lookup (ADL) in from_to_ overloads.
 
 	* mln/accu/count_labels.hh,
-	* mln/convert/from_to.hxx	,
+	* mln/convert/from_to.hxx,
 	* mln/convert/to.hh,
 	* mln/core/alias/point1d.hh,
 	* mln/core/alias/point2d.hh,
@@ -5248,7 +5248,7 @@
 
 2011-11-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Fix the initialization of all global constants (ticket #43)
+	Fix the initialization of all global constants (ticket #43).
 
 	* mln/debug/slices_2d.hh,
 	* mln/io/dump/get_header.hh,
@@ -5269,7 +5269,7 @@
 
 2011-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Fix invalid minimum value for builtin floating types. (ticket #247)
+	Fix invalid minimum value for builtin floating types (ticket #247).
 
 	* mln/value/builtin/floatings.hh: Here.
 
