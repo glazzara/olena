@@ -1,0 +1,66 @@
+* Milena 2.0a
+
+	* New algorithms:
+	  - mln::topo::skeleton::priority_driven_thinning.
+
+	* New routines:
+	  - mln::geom::crop,
+	  - mln::geom::crop_without_localization (image cropping).
+	  - mln::data::compute_in_window (accumulator-based
+	    computation using a sliding window).
+	  - mln::pw::bind (point-wise function binding).
+
+	* New I/Os functions:
+	  - mln::io::pdf::load (Poppler-based implementation).
+	  - mln::io::vtk::load, mln::io::vtk::save (preliminary
+	    built-in implementations).
+
+	* New tracing mechanism (mln_trace).
+
+	* Improve extensibility of mln::convert::from_to.
+
+	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
+
+	* Minimal support for FFTW 3 (Fast Fourrier Transform).
+
+	* Rename methods 'point_at_index', 'delta_index' and
+	  'index_of_point' as 'point_at_offset', 'delta_offset' and
+	  'offset_of_point'.
+
+	* Completely replace mln::morpho::meyer_wst with
+	  morpho::watershed::flooding.
+
+	* Demonstrate various examples of image morphers in
+	  milena/apps/morphers.
+
+	* Demonstrate various examples of 2D and 3D skeletonizations
+	  (thinnings) in milena/apps/generic-skel.
+
+	* Demonstrate various examples of curvature-based thinnings
+	  using 2- and 1-collapses in milena/apps/mesh-segm-skel.
+
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
+
+----
+
+Copyright (C) 2014 EPITA Research and Development Laboratory (LRDE).
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.

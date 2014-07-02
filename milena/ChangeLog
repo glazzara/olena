@@ -1,3 +1,9 @@
+2014-07-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a NEWS file to Milena.
+
+	* NEWS: New.
+
 2014-06-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the construction of mln::io::pdf::pdf_header.
