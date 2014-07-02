@@ -1,0 +1,49 @@
+* Swilena 2.0a
+
+	* Improved compatibility with all versions of SWIG 2 and
+	  Python 2.
+
+	* New meta-wrappers:
+	  - rgb (for mln::value::rgb<n>).
+	  - ppm (for mln::io::ppm::load<V>).
+	  - complex (for mln::topo::complex<D>).
+
+	* New data structure wrappers:
+	  - rgb8.i (for mln::value::rgb8).
+	  - image2d_rgb8 (for mln::image2d<mln::value::rgb8>).
+	  - image2d_point2d (for mln::image2d<mln::point2d>).
+	  - complex (for mln::topo::complex<2>).
+
+	* New routine wrappers:
+	  - in morpho: mln::morpho::tree::max<I, N>.
+
+	* New Python examples:
+	  - python/max-tree.py (max-tree computation).
+	  - python/complex2-misc.py (2D simplicial complex
+	    manipulation).
+
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
+
+----
+
+Copyright (C) 2014 EPITA Research and Development Laboratory (LRDE).
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.

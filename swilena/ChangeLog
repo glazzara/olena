@@ -1,3 +1,9 @@
+2014-07-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a NEWS file to Swilena.
+
+	* NEWS: New.
+
 2014-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make Swilena more compatible with BSD Make.
