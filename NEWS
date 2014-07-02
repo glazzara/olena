@@ -1,39 +1,23 @@
 * Olena 2.0a
 
-  * Olena Platform
+	* Compilation issues with recent versions of GCC (up to
+	  version 4.8) and Clang (up to version 3.5) have been
+	  addressed.
 
-	* Better documentation.
+	* Improved and more complete documentation.
 
-	* Fix compilation with the latest g++ versions (> 4.5).
+	* General cleanup of the distribution.
 
-	* Several bug fixes.
+	* Simplification of the build system.
 
-  * Milena
+	* Trimesh sources have been removed from Olena.  The parts of
+	  Trimesh that were actually used have been re-implemented
+	  using Milena.
 
-	* Rename 'point_at_index', 'delta_index' and 'index_of_point' to
-	  'point_at_offset', 'delta_offset' and 'offset_of_point'.
+	* Automake's silent rules and parallel tests have been
+	  enabled.
 
-	* Improve extensibility of convert::from_to.
-
-	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
-
-  * Scribo
-
-	* New logger class.
-
-	* Improve text recognition: recognition speed and storage of
-          the confidence.
-
-	* New binarization algorithms: Wolf's, Otsu's, Niblack's and
-          Kim's.
-
-	* Speedup Sauvola binarization algorithm.
-
-	* Improve OCR result quality and processing time.
-
-	* Add support for Tesseract 3.02.
-
-	* Add the layout analysis algorithm XY-Cut.
+	* Many bug fixes.
 
 
 * Olena 2.0	September 16, 2011
@@ -42,7 +26,7 @@
 	  for Document Image Analysis (DIA).
 
 	* Add compilation support for g++ 4.5 and some limited support
-          for clang.
+	  for clang.
 
 	* Compilation with multiple files is now possible using the
 	  MLN_WO_GLOBAL_VARS macro.
@@ -473,8 +457,8 @@ End:
 
 ----
 
-Copyright (C) 2001, 2002, 2003, 2004, 2007, 2009 EPITA Research and
-Development Laboratory (LRDE)
+Copyright (C) 2001, 2002, 2003, 2004, 2007, 2009, 2011, 2012, 2013,
+2014 EPITA Research and Development Laboratory (LRDE).
 
 This file is part of Olena.
 
