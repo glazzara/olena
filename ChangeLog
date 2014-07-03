@@ -1,5 +1,13 @@
 2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Pacify Clang w.r.t. unknown compiler flags.
+
+	* configure.ac: Do not add `-Wno-unused-local-typedefs' to
+	WARNINGS_CXXFLAGS if it is accepted by the compiler but produces a
+	warning.
+
+2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help configure find Poppler on OS X with the MacPorts.
 
 	* configure.ac: Use OLN_WITH_LIB instead of

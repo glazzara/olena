@@ -110,7 +110,8 @@ esac
 # concept checking means in Milena (`-Wunused-local-typedefs' is
 # enabled by `-Wall' in GCC since version 4.8).
 AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
-  [WARNINGS_CXXFLAGS="$WARNINGS_CXXFLAGS -Wno-unused-local-typedefs"])
+  [WARNINGS_CXXFLAGS="$WARNINGS_CXXFLAGS -Wno-unused-local-typedefs"], [:],
+  [-Werror])
 
 
 # ------------------------------ #
