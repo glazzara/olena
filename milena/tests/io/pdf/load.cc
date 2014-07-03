@@ -1,4 +1,4 @@
-// Copyright (C) 2013 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2013, 2014 EPITA Research and Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -23,23 +23,30 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+// Exercise mln::io::pdf::load.
+
 #include <mln/core/image/image2d.hh>
 #include <mln/data/compare.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pdf/load.hh>
+
 #include "tests/data.hh"
+
 
 int main()
 {
   using namespace mln;
 
+  // FIXME: Disabled (see below).
+#if 0
   image2d<value::rgb8> page0, page1, page2, page3;
 
   io::ppm::load(page0, MLN_TESTS_IMG_DIR "/example-0.ppm");
   io::ppm::load(page1, MLN_TESTS_IMG_DIR "/example-1.ppm");
   io::ppm::load(page2, MLN_TESTS_IMG_DIR "/example-2.ppm");
   io::ppm::load(page3, MLN_TESTS_IMG_DIR "/example-3.ppm");
+#endif
 
   // Loading full PDF.
   {
@@ -47,20 +54,29 @@ int main()
     io::pdf::load(arr, MLN_TESTS_IMG_DIR "/example.pdf", 75);
 
     mln_assertion(arr.size() == 4);
+  /* FIXME: Disabled, as various versions/installations of poppler
+     produce slightly different images (namely, version 0.18.4 on
+     Debian GNU/Linux 7.5 and version 0.24.5 from the MacPorts).  This
+     might be caused by different font configurations, too.  */
+#if 0
     mln_assertion(arr[0] == page0);
     mln_assertion(arr[1] == page1);
     mln_assertion(arr[2] == page2);
     mln_assertion(arr[3] == page3);
+#endif
   }
 
-  // Loading a page range
+  // Loading a page range.
   {
     util::array<image2d<value::rgb8> > arr;
     io::pdf::load(arr, MLN_TESTS_IMG_DIR "/example.pdf", 1, 2, 75);
 
     mln_assertion(arr.size() == 2);
+    // FIXME: Disabled (see above).
+#if 0
     mln_assertion(arr[0] == page1);
     mln_assertion(arr[1] == page2);
+#endif
   }
 
   // Loading specific pages.
@@ -72,8 +88,11 @@ int main()
     io::pdf::load(arr, MLN_TESTS_IMG_DIR "/example.pdf", pages, 75);
 
     mln_assertion(arr.size() == 2);
+    // FIXME: Disabled (see above).
+#if 0
     mln_assertion(arr[0] == page1);
     mln_assertion(arr[1] == page3);
+#endif
   }
 
   // Loading a specific page.
@@ -82,7 +101,10 @@ int main()
     io::pdf::load(ima, MLN_TESTS_IMG_DIR "/example.pdf", 3, 75);
 
     mln_assertion(ima.is_valid());
+    // FIXME: Disabled (see above).
+#if 0
     mln_assertion(ima == page3);
+#endif
   }
 
 }
