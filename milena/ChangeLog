@@ -1,5 +1,11 @@
 2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove mentions to `oldies' in the Milena reference guide.
+
+	* doc/ref-guide.tex: Here.
+
+2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable some tests depending on Poppler for compatibility reasons.
 
 	* tests/io/pdf/load.cc: Here.
