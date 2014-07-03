@@ -1,3 +1,21 @@
+2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address more compiler warnings in Scribo.
+
+	* scribo/debug/logger.hh
+	(scribo::debug::internal::logger_::log_image) [!SCRIBO_NDEBUG]:
+	Avoid warnings about unused arguments in non-debug mode.
+	* scribo/filter/objects_thick.hh (scribo::filter::objects_thick)
+	* scribo/primitive/extract/cells.hh
+	(scribo::primitive::extract::cells)
+	* scribo/primitive/extract/lines_h_single.hh
+	(scribo::primitive::extract::lines_h_single)
+	* scribo/primitive/extract/lines_v_single.hh
+	(scribo::primitive::extract::lines_v_single)
+	* src/primitive/group/group_from_rag.cc
+	(scribo::filter::graph_edges):
+	Avoid warnings about unused arguments.
+
 2014-07-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update Scribo's NEWS file.

@@ -398,6 +398,11 @@ namespace scribo
       logger_::log_image(Level dbg_level,
 			const Image<I>& ima, const char *name)
       {
+        // Avoid warnings about unused arguments in non-debug mode.
+        (void) dbg_level;
+        (void) ima;
+        (void) name;
+
 # ifndef SCRIBO_NDEBUG
 	if (level_ < dbg_level)
 	  return;

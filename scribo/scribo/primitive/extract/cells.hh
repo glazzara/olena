@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2011 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009, 2011, 2014 EPITA Research and Development
+// Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -84,7 +84,7 @@ namespace scribo
       mln::util::couple<mln::util::array<box<mln_site(I)> >,
 			mln::util::array<box<mln_site(I)> > >
       cells(const Image<I>& input_,
-	    const Neighborhood<N>& nbh_, const V& label_type)
+	    const Neighborhood<N>& nbh_, const V& /* label_type */)
       {
 	mln_trace("scribo::primitive::cells");
 

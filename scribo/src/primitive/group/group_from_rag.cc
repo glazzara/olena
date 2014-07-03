@@ -139,8 +139,8 @@ namespace scribo
     template <typename P, typename V, typename G, typename F, typename FP>
     edge_image<void,bool,G>
     graph_edges(const vertex_image<P,V,G>& v_ima,
-		const Function<F>& edge_values,
-		const Function<FP>& predicate)
+		const Function<F>& /* edge_values */,
+		const Function<FP>& /* predicate */)
     {
       typedef edge_image<void,bool,util::graph> e_filter_t;
       e_filter_t e_filter = mln::make::edge_image(v_ima, dist());

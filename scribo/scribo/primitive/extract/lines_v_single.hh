@@ -1,5 +1,5 @@
-// Copyright (C) 2009, 2010, 2011, 2012 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009, 2010, 2011, 2012, 2014 EPITA Research and
+// Development Laboratory (LRDE).
 //
 // This file is part of Olena.
 //
@@ -143,7 +143,7 @@ namespace scribo
       template <typename I, typename N, typename V>
       component_set<mln_ch_value(I,V)>
       lines_v_single(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, const V& nlines,
+		     const Neighborhood<N>& nbh_, const V& /* nlines */,
 		     unsigned min_line_length,
 		     float h_w_ratio)
       {
