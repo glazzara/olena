@@ -1,3 +1,12 @@
+2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help configure find Poppler on OS X with the MacPorts.
+
+	* configure.ac: Use OLN_WITH_LIB instead of
+	OLN_WITH_LIB_PKG_CONFIG to find the `poppler-cpp' package, as the
+	latter incorrectly sets compile and link flags on OS X when using
+	the MacPorts.
+
 2014-07-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update Olena's NEWS file.

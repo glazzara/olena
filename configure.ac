@@ -306,9 +306,8 @@ OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 # Poppler library.  #
 # ----------------- #
 
-OLN_WITH_LIB_PKG_CONFIG([poppler-cpp], [poppler/cpp/poppler-version.h], [poppler-cpp],
-                        [poppler], [POPPLER])
-
+OLN_WITH_LIB([poppler-cpp], [poppler/cpp/poppler-version.h], [poppler-cpp],
+             [poppler], [POPPLER])
 
 # --------------------------------- #
 # GDCM library (Grassroots DiCom).  #
