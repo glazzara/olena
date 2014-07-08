@@ -1,0 +1,56 @@
+The Olena Team is proud to announce the release of Olena 2.1.
+
+Olena is a platform dedicated to image processing and pattern
+recognition.  Its core component is a generic and efficient C++
+library called Milena.  Milena provides a framework to implement
+simple, fast, safe, reusable and extensible image processing tool
+chains.  The library provides many ready-to-use image data structures
+(regular 1D, 2D, 3D images, graph-based images, etc.) and algorithms.
+Milena's algorithms are built upon classical entities from the image
+processing field (images, points/sites, domains, neighborhoods, etc.).
+This design allows image processing developers and practitioners to
+easily understand, modify, develop and extend new algorithms while
+retaining the core traits of Milena: genericity and efficiency.
+
+On top of Milena, the Olena platform also features optional modules
+such as Swilena, a component exposing Milena to other languages thanks
+to the Simplified Wrapper and Interface Generator (SWIG); and the
+Scribo module for Document Image Analysis (see below).
+
+The Olena platform is Free Software.  It is distributed under the
+conditions of the GNU General Public License (GPL) version 2.  See the
+file COPYING shipped with the Olena distribution.
+
+Release notes are available at:
+  http://olena.lrde.epita.fr/Olena210
+
+You can download packages of the Olena 2.1 distribution here:
+
+  http://www.lrde.epita.fr/dload/olena/2.1/olena-2.1.tar.gz    (50 MB)
+  http://www.lrde.epita.fr/dload/olena/2.1/olena-2.1.tar.bz2   (37 MB)
+
+The SHA1 digests of theses packages are:
+
+  bae986faa08c908bd0e167e96c168033a53b5b47  olena-2.1.tar.gz
+  54f756b033a45d4c2fe1233c10fc43f99f9f552f  olena-2.1.tar.bz2
+
+This version is mostly a ``fix-up'' release of Olena 2.0, containing
+many corrections and improvements since the previous release.
+
+Here is a list of major changes since Olena 2.0:
+
+  * New and improved algorithms (binarization, skeletonization, layout
+    analysis) and I/O routines (PDF, VTK).
+
+  * Minimal support for FFTW 3 (Fast Fourier Transform).
+
+  * The Scribo distribution now contains a Doxygen
+    documentation.
+
+  * Support for modern toolchains and especially recent C++ compilers
+    (GCC 4.8, Clang 3.5).
+
+The file NEWS, milena/NEWS, scribo/NEWS and swilena/NEWS, included in
+the archive, contain a more complete list of user-visible changes.
+
+Please report any problem by e-mail to <olena-bugs@lrde.epita.fr>.
