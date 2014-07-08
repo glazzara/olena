@@ -1,3 +1,11 @@
+2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update copyright notices in Olena.
+
+	* doc/Doxyfile.in,
+	* doc/mainpage.dox:
+	Here.
+
 2014-07-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Pacify Clang w.r.t. unknown compiler flags.
