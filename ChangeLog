@@ -1,5 +1,14 @@
 2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Olena 2.1.
+
+	* NEWS,
+	* README,
+	* configure.ac:
+	Update version number.
+
+2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright notices in Olena.
 
 	* doc/Doxyfile.in,

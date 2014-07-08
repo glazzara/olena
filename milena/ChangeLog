@@ -1,5 +1,48 @@
 2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Milena 2.1.
+
+	* milena/NEWS,
+	* milena/doc/Doxyfile.in,
+	* milena/doc/milena.qhcp:
+	Update version number.
+	* milena/doc/figures/extend-1.ppm,
+	* milena/doc/figures/extend-2.ppm,
+	* milena/doc/figures/extend-3.ppm,
+	* milena/doc/figures/extend-4.ppm,
+	* milena/doc/figures/extend-5.ppm,
+	* milena/doc/figures/fill-1.ppm,
+	* milena/doc/figures/fill-2.ppm,
+	* milena/doc/figures/fill-imageif-cfun-1.ppm,
+	* milena/doc/figures/fill-subdomain-1.pbm,
+	* milena/doc/figures/fill-subdomain-2.ppm,
+	* milena/doc/figures/fill-subdomain-3.ppm,
+	* milena/doc/figures/fill-subdomain-4.ppm,
+	* milena/doc/figures/ima2d-rot-1.ppm,
+	* milena/doc/figures/ima2d-rot-2.ppm,
+	* milena/doc/figures/ima_save.pbm,
+	* milena/doc/figures/labeling-compute-1.pbm,
+	* milena/doc/figures/labeling-compute-2.ppm,
+	* milena/doc/figures/logical-not-1.pbm,
+	* milena/doc/figures/logical-not-2.pbm,
+	* milena/doc/figures/logical-not-3.pbm,
+	* milena/doc/figures/tuto2_first_image-1.pbm,
+	* milena/doc/figures/tuto3_colorize-1.pgm,
+	* milena/doc/figures/tuto3_colorize-2.ppm,
+	* milena/doc/figures/tuto3_rw_image-1.ppm,
+	* milena/doc/figures/tuto3_rw_image-2.ppm,
+	* milena/doc/figures/tuto3_rw_image-3.ppm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-1.ppm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-2.ppm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-3.pbm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-4.ppm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-5.ppm,
+	* milena/doc/figures/tuto4_genericity_and_algorithms-6.ppm,
+	* milena/mln/version.hh:
+	Regen.
+
+2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright notices in Milena.
 
 	* doc/Doxyfile.in,

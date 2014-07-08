@@ -27,10 +27,10 @@
 #define OLN_PACKAGE_NAME "Olena"
 
 // The full name and version of this package.
-#define OLN_PACKAGE_STRING "Olena 2.0a"
+#define OLN_PACKAGE_STRING "Olena 2.1"
 
 /// The version of this package.
-#define OLN_PACKAGE_VERSION "2.0a"
+#define OLN_PACKAGE_VERSION "2.1"
 
 /// Home page for this package.
 #define OLN_PACKAGE_URL "http://olena.lrde.epita.fr"

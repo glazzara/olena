@@ -1,5 +1,14 @@
 2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Scribo 2.1.
+
+	* scribo/NEWS,
+	* scribo/doc/Doxyfile.in,
+	* scribo/doc/scribo.qhcp:
+	Update version number.
+
+2014-07-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright notices in Scribo.
 
 	* README,

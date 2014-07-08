@@ -375,7 +375,7 @@ SEARCHENGINE           = YES
 
 GENERATE_QHP       = yes
 QHP_NAMESPACE      = "fr.epita.lrde.olena.scribo"
-QHP_VIRTUAL_FOLDER = "scribo-2.0"
+QHP_VIRTUAL_FOLDER = "scribo-2.1"
 QCH_FILE 	   = "@builddir@/scribo.qch"
 QHG_LOCATION       = "qhelpgenerator"
 

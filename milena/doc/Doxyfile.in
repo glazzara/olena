@@ -1148,7 +1148,7 @@ QHP_NAMESPACE          = "fr.epita.lrde.olena.milena"
 # Qt Help Project output. For more information please see
 # http://doc.trolltech.com/qthelpproject.html#virtual-folders
 
-QHP_VIRTUAL_FOLDER     = "milena-2.0"
+QHP_VIRTUAL_FOLDER     = "milena-2.1"
 
 # If QHP_CUST_FILTER_NAME is set, it specifies the name of a custom filter to
 # add. For more information please see

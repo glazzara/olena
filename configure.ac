@@ -25,7 +25,7 @@ AC_PREREQ([2.61])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Olena], [2.0a], [olena@lrde.epita.fr], [olena],
+AC_INIT([Olena], [2.1], [olena@lrde.epita.fr], [olena],
         [http://olena.lrde.epita.fr])
 
 # M4 macros.

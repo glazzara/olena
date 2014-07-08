@@ -1,4 +1,4 @@
-* Milena 2.0a
+* Milena 2.1	July 8, 2014
 
 	* New algorithms:
 	  - mln::topo::skeleton::priority_driven_thinning.
@@ -21,7 +21,7 @@
 
 	* Speed up I/O accesses with ImageMagick/GraphicsMagick.
 
-	* Minimal support for FFTW 3 (Fast Fourrier Transform).
+	* Minimal support for FFTW 3 (Fast Fourier Transform).
 
 	* Rename methods 'point_at_index', 'delta_index' and
 	  'index_of_point' as 'point_at_offset', 'delta_offset' and
